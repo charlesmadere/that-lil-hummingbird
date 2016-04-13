@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.charlesmadere.hummingbird.views.SimpleProgressView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/overlay"
     android:id="@+id/simpleProgressView"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:visibility="gone"
+    tools:visibility="visible">
     <ProgressBar
         android:layout_gravity="center"
         android:layout_height="wrap_content"

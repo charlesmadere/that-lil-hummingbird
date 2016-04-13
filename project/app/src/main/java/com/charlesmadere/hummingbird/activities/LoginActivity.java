@@ -58,7 +58,6 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void fetchCurrentUser() {
-        mSimpleProgressView.fadeIn();
         Api.getCurrentUser(new GetCurrentUserListener(this));
     }
 
@@ -77,6 +76,7 @@ public class LoginActivity extends BaseActivity {
             setContentView(R.layout.activity_login);
 
             if (CurrentUser.shouldBeFetched()) {
+                mSimpleProgressView.setVisibility(View.VISIBLE);
                 fetchCurrentUser();
             } else {
                 mUsernameContainer.setVisibility(View.VISIBLE);
@@ -102,7 +102,7 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 
-
+        mSimpleProgressView.fadeIn();
         Api.authenticate(new AuthInfo(username, password), new AuthenticateListener(this));
     }
 
