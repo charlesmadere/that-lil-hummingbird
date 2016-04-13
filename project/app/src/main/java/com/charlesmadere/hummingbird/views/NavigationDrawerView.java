@@ -21,7 +21,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class NavigationDrawerView extends ScrimInsetsFrameLayout {
 
@@ -94,11 +93,6 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout {
         mAvatar.setImageURI(Uri.parse(user.getAvatar()));
         mCoverImage.setImageURI(Uri.parse(user.getCoverImage()));
         mUsername.setText(user.getName());
-    }
-
-    @OnClick(R.id.vgNavigationHeader)
-    void onHeaderClick() {
-        // TODO
     }
 
     @Override

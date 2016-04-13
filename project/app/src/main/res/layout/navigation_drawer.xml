@@ -13,9 +13,8 @@
             android:layout_width="match_parent"
             android:orientation="vertical">
             <com.charlesmadere.hummingbird.views.RatioRelativeLayout
-                android:id="@+id/vgNavigationHeader"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/root_padding"
+                android:layout_marginBottom="@dimen/root_padding_half"
                 android:layout_width="match_parent"
                 app:fixed_side="width"
                 app:height_ratio="10"
@@ -35,7 +34,7 @@
                     android:id="@+id/tvUsername"
                     android:layout_alignParentBottom="true"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/root_padding"
+                    android:layout_marginBottom="@dimen/root_padding_half"
                     android:layout_marginEnd="@dimen/root_padding"
                     android:layout_marginStart="@dimen/root_padding"
                     android:layout_width="match_parent"
@@ -46,8 +45,8 @@
                     android:shadowDy="2"
                     android:shadowRadius="4"
                     android:textColor="@color/white"
-                    tools:text="Ryuko Matoi"
-                    style="@style/MediumOrBold" />
+                    android:textStyle="bold"
+                    tools:text="Ryuko Matoi" />
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/sdvAvatar"
                     android:layout_above="@id/tvUsername"
@@ -57,10 +56,6 @@
                     android:layout_width="@dimen/avatar_medium"
                     app:placeholderImage="@null"
                     app:roundAsCircle="true" />
-                <View
-                    android:background="?attr/selectableItemBackground"
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent" />
             </com.charlesmadere.hummingbird.views.RatioRelativeLayout>
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
                 app:entry="home"
