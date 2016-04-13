@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.SimpleProgressView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/overlay"
+    android:id="@+id/simpleProgressView"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <ProgressBar
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" />
+</com.charlesmadere.hummingbird.views.SimpleProgressView>

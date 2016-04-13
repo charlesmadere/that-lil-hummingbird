@@ -10,17 +10,15 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
-import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.views.SimpleProgressView;
 
 import java.lang.ref.WeakReference;
 
@@ -37,17 +35,14 @@ public class LoginActivity extends BaseActivity {
     @Bind(R.id.etUsername)
     EditText mUsernameField;
 
-    @Bind(R.id.progressBar)
-    ProgressBar mProgressBar;
+    @Bind(R.id.simpleProgressView)
+    SimpleProgressView mSimpleProgressView;
 
     @Bind(R.id.tilPassword)
     TextInputLayout mPasswordContainer;
 
     @Bind(R.id.tilUsername)
     TextInputLayout mUsernameContainer;
-
-    @Bind(R.id.tvTitle)
-    TextView mTitle;
 
 
     public static Intent getLaunchIntent(final Context context) {
@@ -63,11 +58,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void fetchCurrentUser() {
-        mTitle.setVisibility(View.GONE);
-        mUsernameContainer.setVisibility(View.GONE);
-        mPasswordContainer.setVisibility(View.GONE);
-        mProgressBar.setVisibility(View.VISIBLE);
-
+        mSimpleProgressView.fadeIn();
         Api.getCurrentUser(new GetCurrentUserListener(this));
     }
 
@@ -88,7 +79,6 @@ public class LoginActivity extends BaseActivity {
             if (CurrentUser.shouldBeFetched()) {
                 fetchCurrentUser();
             } else {
-                mTitle.setVisibility(View.VISIBLE);
                 mUsernameContainer.setVisibility(View.VISIBLE);
                 mPasswordContainer.setVisibility(View.VISIBLE);
             }
@@ -112,16 +102,12 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 
+
         Api.authenticate(new AuthInfo(username, password), new AuthenticateListener(this));
     }
 
     private void showError(@Nullable final String error) {
-        Timber.e(TAG, "Error logging in: \"" + error + '"');
-
-        mProgressBar.setVisibility(View.GONE);
-        mTitle.setVisibility(View.VISIBLE);
-        mUsernameContainer.setVisibility(View.VISIBLE);
-        mPasswordContainer.setVisibility(View.VISIBLE);
+        mSimpleProgressView.fadeOut();
 
         new AlertDialog.Builder(this)
                 .setMessage(TextUtils.isEmpty(error) ? getText(R.string.error_logging_in) : error)

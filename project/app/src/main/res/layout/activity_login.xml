@@ -1,50 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_gravity="center"
-    android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-    android:orientation="vertical">
-    <TextView
-        android:fontFamily="sans-serif-thin"
-        android:gravity="center"
-        android:id="@+id/tvTitle"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/root_padding_double"
-        android:layout_width="@dimen/login_form_width"
-        android:text="@string/hummingbird"
-        android:textSize="32sp"
-        android:visibility="gone" />
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tilUsername"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:visibility="gone">
-        <EditText
-            android:hint="@string/username"
-            android:id="@+id/etUsername"
-            android:imeOptions="actionNext"
-            android:inputType="textNoSuggestions"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent" />
-    </android.support.design.widget.TextInputLayout>
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tilPassword"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:visibility="gone">
-        <EditText
-            android:hint="@string/password"
-            android:id="@+id/etPassword"
-            android:imeOptions="actionGo"
-            android:inputType="textPassword"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent" />
-    </android.support.design.widget.TextInputLayout>
-    <ProgressBar
-        android:id="@+id/progressBar"
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:visibility="gone" />
-</LinearLayout>
+        android:orientation="vertical">
+        <TextView
+            android:fontFamily="sans-serif-thin"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/root_padding_double"
+            android:layout_width="@dimen/login_form_width"
+            android:text="@string/hummingbird"
+            android:textSize="32sp" />
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilUsername"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:visibility="invisible">
+            <EditText
+                android:hint="@string/username"
+                android:id="@+id/etUsername"
+                android:imeOptions="actionNext"
+                android:inputType="textNoSuggestions"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilPassword"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:visibility="invisible">
+            <EditText
+                android:hint="@string/password"
+                android:id="@+id/etPassword"
+                android:imeOptions="actionGo"
+                android:inputType="textPassword"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent" />
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+    <include
+        layout="@layout/simple_progress" />
+</merge>
