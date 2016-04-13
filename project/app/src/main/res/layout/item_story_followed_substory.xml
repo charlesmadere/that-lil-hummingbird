@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.StoryItemFollowedSubstoryView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:foreground="?attr/selectableItemBackground"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:paddingBottom="@dimen/root_padding_half"
+    android:paddingTop="@dimen/root_padding_half">
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdvAvatar"
+            android:layout_marginEnd="@dimen/root_padding"
+            style="@style/Avatar.Small" />
+        <TextView
+            android:id="@+id/tvUsername"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textColor="@color/colorAccent"
+            tools:text="Sirius201" />
+    </LinearLayout>
+</com.charlesmadere.hummingbird.views.StoryItemFollowedSubstoryView>

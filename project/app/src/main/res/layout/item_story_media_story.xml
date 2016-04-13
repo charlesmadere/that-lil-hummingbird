@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.StoryItemMediaStoryView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:foreground="?attr/selectableItemBackground"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    app:contentPaddingBottom="@dimen/root_padding_half"
+    app:contentPaddingLeft="@dimen/root_padding"
+    app:contentPaddingRight="@dimen/root_padding"
+    app:contentPaddingTop="@dimen/root_padding_half">
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdvPoster"
+            android:layout_marginEnd="@dimen/root_padding"
+            style="@style/AnimePoster" />
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tvTitle"
+                tools:text="The Disappearance of Haruhi Suzumiya"
+                style="@style/AnimeTitle" />
+            <TextView
+                android:id="@+id/tvShowType"
+                tools:text="@string/movie"
+                style="@style/AnimeShowType" />
+            <TextView
+                android:id="@+id/tvGenres"
+                tools:text="Comedy, Mystery, Romance"
+                style="@style/AnimeGenres" />
+            <LinearLayout
+                android:divider="@drawable/divider"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/root_padding"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:showDividers="beginning|middle">
+                <include
+                    android:id="@+id/simssvZero"
+                    layout="@layout/item_story_media_story_substory" />
+                <include
+                    android:id="@+id/simssvOne"
+                    layout="@layout/item_story_media_story_substory" />
+                <include
+                    android:id="@+id/simssvTwo"
+                    layout="@layout/item_story_media_story_substory" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</com.charlesmadere.hummingbird.views.StoryItemMediaStoryView>

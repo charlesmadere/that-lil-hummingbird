@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.StoryItemMediaStorySubstoryView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:foreground="?attr/selectableItemBackground"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:paddingBottom="@dimen/root_padding_half"
+    android:paddingTop="@dimen/root_padding_half">
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdvAvatar"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/root_padding_half"
+            style="@style/Avatar.Small" />
+        <TextView
+            android:id="@+id/tvAction"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/sdvAvatar"
+            android:layout_width="match_parent"
+            tools:text="ThatLilChestnut is currently watching." />
+        <TextView
+            android:id="@+id/tvTimeAgo"
+            android:layout_below="@id/tvAction"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/sdvAvatar"
+            android:layout_width="match_parent"
+            android:textColor="@color/secondaryText"
+            android:textSize="@dimen/text_small"
+            tools:text="2 days ago" />
+    </RelativeLayout>
+</com.charlesmadere.hummingbird.views.StoryItemMediaStorySubstoryView>

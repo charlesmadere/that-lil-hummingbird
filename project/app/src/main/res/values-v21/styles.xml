@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="DatePickerStyle" parent="android:Widget.Material.Light.DatePicker">
+        <item name="android:headerBackground">@color/colorPrimary</item>
+    </style>
+
+    <style name="MediumOrBold">
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="MediumOrRegular">
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+</resources>

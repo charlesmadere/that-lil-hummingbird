@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="login_form_width">340dp</dimen>
+    <dimen name="navigation_drawer_view_width">300dp</dimen>
+    <dimen name="root_padding">18dp</dimen>
+    <dimen name="root_padding_double">36dp</dimen>
+    <dimen name="root_padding_half">9dp</dimen>
+    <dimen name="root_padding_quadruple">72dp</dimen>
+
+</resources>

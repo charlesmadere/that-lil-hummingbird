@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/DrawerLayout">
+    <android.support.design.widget.CoordinatorLayout
+        style="@style/CoordinatorLayout">
+        <android.support.design.widget.AppBarLayout
+            style="@style/AppBarLayout">
+            <android.support.design.widget.CollapsingToolbarLayout
+                style="@style/CollapsingToolbarLayout">
+                <com.facebook.drawee.view.SimpleDraweeView
+                    style="@style/ParallaxCoverImage" />
+                <android.support.v7.widget.Toolbar
+                    style="@style/Toolbar.Parallax" />
+            </android.support.design.widget.CollapsingToolbarLayout>
+            <android.support.design.widget.TabLayout
+                style="@style/TabLayout.Parallax" />
+        </android.support.design.widget.AppBarLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </android.support.design.widget.CoordinatorLayout>
+    <include
+        layout="@layout/navigation_drawer" />
+</android.support.v4.widget.DrawerLayout>

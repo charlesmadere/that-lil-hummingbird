@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.NavigationDrawerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/NavigationDrawerView">
+    <ScrollView
+        android:fillViewport="true"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:overScrollMode="never">
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+            <com.charlesmadere.hummingbird.views.RatioRelativeLayout
+                android:id="@+id/vgNavigationHeader"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/root_padding"
+                android:layout_width="match_parent"
+                app:fixed_side="width"
+                app:height_ratio="10"
+                app:width_ratio="16">
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/sdvCoverImage"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    app:actualImageScaleType="centerCrop"
+                    tools:ignore="ContentDescription" />
+                <View
+                    android:background="@drawable/image_overlay"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent" />
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/tvUsername"
+                    android:layout_alignParentBottom="true"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/root_padding"
+                    android:layout_marginEnd="@dimen/root_padding"
+                    android:layout_marginStart="@dimen/root_padding"
+                    android:layout_width="match_parent"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:shadowColor="@color/black"
+                    android:shadowDy="2"
+                    android:shadowRadius="4"
+                    android:textColor="@color/white"
+                    tools:text="Ryuko Matoi"
+                    style="@style/MediumOrBold" />
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/sdvAvatar"
+                    android:layout_above="@id/tvUsername"
+                    android:layout_height="@dimen/avatar_medium"
+                    android:layout_marginBottom="@dimen/root_padding"
+                    android:layout_marginStart="@dimen/root_padding"
+                    android:layout_width="@dimen/avatar_medium"
+                    app:placeholderImage="@null"
+                    app:roundAsCircle="true" />
+                <View
+                    android:background="?attr/selectableItemBackground"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent" />
+            </com.charlesmadere.hummingbird.views.RatioRelativeLayout>
+            <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
+                app:entry="home"
+                style="@style/NavigationDrawerItemView" />
+            <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
+                app:entry="search"
+                style="@style/NavigationDrawerItemView" />
+            <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
+                app:entry="settings"
+                style="@style/NavigationDrawerItemView" />
+            <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
+                app:entry="hummingbird_on_the_web"
+                style="@style/NavigationDrawerItemView" />
+        </LinearLayout>
+    </ScrollView>
+</com.charlesmadere.hummingbird.views.NavigationDrawerView>

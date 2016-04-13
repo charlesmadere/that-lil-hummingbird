@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="NavigationDrawerItemView">
+        <attr name="entry" format="enum">
+            <enum name="home" value="0" />
+            <enum name="hummingbird_on_the_web" value="1" />
+            <enum name="search" value="2" />
+            <enum name="settings" value="3" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="RefreshLayout">
+        <attr name="scrolling_child" format="reference" />
+        <attr name="spinner_colors" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="View">
+        <attr name="fixed_side" format="enum">
+            <enum name="height" value="0" />
+            <enum name="width" value="1" />
+        </attr>
+        <attr name="height_ratio" format="integer" />
+        <attr name="width_ratio" format="integer" />
+    </declare-styleable>
+
+</resources>

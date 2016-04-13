@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="appBarLayout" type="id" />
+    <item name="collapsingToolbarLayout" type="id" />
+    <item name="coordinatorLayout" type="id" />
+    <item name="drawerLayout" type="id" />
+    <item name="navigationDrawerView" type="id" />
+    <item name="parallaxCoverImage" type="id" />
+    <item name="tabLayout" type="id" />
+    <item name="toolbar" type="id" />
+
+</resources>

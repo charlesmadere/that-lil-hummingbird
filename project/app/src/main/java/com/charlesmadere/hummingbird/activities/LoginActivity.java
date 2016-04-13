@@ -1,0 +1,190 @@
+package com.charlesmadere.hummingbird.activities;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.CurrentUser;
+import com.charlesmadere.hummingbird.misc.Timber;
+import com.charlesmadere.hummingbird.models.AuthInfo;
+import com.charlesmadere.hummingbird.models.ErrorInfo;
+import com.charlesmadere.hummingbird.models.User;
+import com.charlesmadere.hummingbird.networking.Api;
+import com.charlesmadere.hummingbird.networking.ApiResponse;
+
+import java.lang.ref.WeakReference;
+
+import butterknife.Bind;
+import butterknife.OnEditorAction;
+
+public class LoginActivity extends BaseActivity {
+
+    private static final String TAG = "LoginActivity";
+
+    @Bind(R.id.etPassword)
+    EditText mPasswordField;
+
+    @Bind(R.id.etUsername)
+    EditText mUsernameField;
+
+    @Bind(R.id.progressBar)
+    ProgressBar mProgressBar;
+
+    @Bind(R.id.tilPassword)
+    TextInputLayout mPasswordContainer;
+
+    @Bind(R.id.tilUsername)
+    TextInputLayout mUsernameContainer;
+
+    @Bind(R.id.tvTitle)
+    TextView mTitle;
+
+
+    public static Intent getLaunchIntent(final Context context) {
+        return new Intent(context, LoginActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    }
+
+    @Override
+    public String getActivityName() {
+        return TAG;
+    }
+
+    private void fetchCurrentUser() {
+        mTitle.setVisibility(View.GONE);
+        mUsernameContainer.setVisibility(View.GONE);
+        mPasswordContainer.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.VISIBLE);
+
+        Api.getCurrentUser(new GetCurrentUserListener(this));
+    }
+
+    private void goToCurrentUserActivity() {
+        startActivity(CurrentUserActivity.getLaunchIntent(this));
+        finish();
+    }
+
+    @Override
+    protected void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (CurrentUser.exists()) {
+            goToCurrentUserActivity();
+        } else {
+            setContentView(R.layout.activity_login);
+
+            if (CurrentUser.shouldBeFetched()) {
+                fetchCurrentUser();
+            } else {
+                mTitle.setVisibility(View.VISIBLE);
+                mUsernameContainer.setVisibility(View.VISIBLE);
+                mPasswordContainer.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    @OnEditorAction(R.id.etPassword)
+    boolean onPasswordEditorAction(final int actionId) {
+        if (actionId == EditorInfo.IME_ACTION_GO) {
+            performLogin();
+        }
+
+        return false;
+    }
+
+    private void performLogin() {
+        final String username = mUsernameField.getText().toString();
+        final String password = mPasswordField.getText().toString();
+
+        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
+            return;
+        }
+
+        Api.authenticate(new AuthInfo(username, password), new AuthenticateListener(this));
+    }
+
+    private void showError(@Nullable final String error) {
+        Timber.e(TAG, "Error logging in: \"" + error + '"');
+
+        mProgressBar.setVisibility(View.GONE);
+        mTitle.setVisibility(View.VISIBLE);
+        mUsernameContainer.setVisibility(View.VISIBLE);
+        mPasswordContainer.setVisibility(View.VISIBLE);
+
+        new AlertDialog.Builder(this)
+                .setMessage(TextUtils.isEmpty(error) ? getText(R.string.error_logging_in) : error)
+                .setNeutralButton(R.string.ok, null)
+                .show();
+    }
+
+
+    private static class AuthenticateListener implements ApiResponse<Void> {
+        private final WeakReference<LoginActivity> mActivityReference;
+
+        private AuthenticateListener(final LoginActivity activity) {
+            mActivityReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final LoginActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                if (error == null) {
+                    activity.showError(null);
+                } else {
+                    activity.showError(error.getError());
+                }
+            }
+        }
+
+        @Override
+        public void success(@Nullable final Void object) {
+            final LoginActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.fetchCurrentUser();
+            }
+        }
+    }
+
+
+    private static class GetCurrentUserListener implements ApiResponse<User> {
+        private final WeakReference<LoginActivity> mActivityReference;
+
+        private GetCurrentUserListener(final LoginActivity activity) {
+            mActivityReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final LoginActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.showError(null);
+            }
+        }
+
+        @Override
+        public void success(@Nullable final User user) {
+            final LoginActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.goToCurrentUserActivity();
+            }
+        }
+    }
+
+}

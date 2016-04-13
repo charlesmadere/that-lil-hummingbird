@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.StoryItemCommentView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:foreground="?attr/selectableItemBackground"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    app:contentPaddingBottom="@dimen/root_padding_half"
+    app:contentPaddingLeft="@dimen/root_padding"
+    app:contentPaddingRight="@dimen/root_padding"
+    app:contentPaddingTop="@dimen/root_padding_half">
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdvAvatar"
+            android:layout_marginEnd="@dimen/root_padding"
+            style="@style/Avatar.Large" />
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/sdvAvatar"
+            android:layout_width="match_parent"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_large"
+            tools:text="LimitB"
+            style="@style/MediumOrBold" />
+        <TextView
+            android:id="@+id/tvTimeAgo"
+            android:layout_below="@id/tvTitle"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/sdvAvatar"
+            android:layout_width="match_parent"
+            android:maxLines="2"
+            android:textColor="@color/secondaryText"
+            tools:text="an hour ago" />
+        <TextView
+            android:id="@+id/tvComment"
+            android:layout_below="@id/tvTimeAgo"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/root_padding"
+            android:layout_toEndOf="@id/sdvAvatar"
+            android:layout_width="match_parent"
+            tools:text="Hello, World!" />
+    </RelativeLayout>
+</com.charlesmadere.hummingbird.views.StoryItemCommentView>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.TimberEntryView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center_vertical"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/root_padding_half"
+    android:paddingEnd="@dimen/root_padding"
+    android:paddingStart="@dimen/root_padding"
+    android:paddingTop="@dimen/root_padding_half">
+    <TextView
+        android:gravity="center_vertical"
+        android:id="@+id/tvTagAndMessage"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        tools:text="HummingbirdMobile - Application created" />
+    <TextView
+        android:gravity="center_vertical"
+        android:id="@+id/tvStackTrace"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textSize="@dimen/text_small"
+        tools:text="NullPointerException" />
+</com.charlesmadere.hummingbird.views.TimberEntryView>

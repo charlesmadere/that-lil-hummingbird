@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="black">#000000</color>
+    <color name="colorAccent">#EC8660</color>
+    <color name="colorPrimary">#4B5360</color>
+    <color name="colorPrimaryDark">#2F343B</color>
+    <color name="colorPrimaryDarker">#272C33</color>
+    <color name="colorPrimaryDarkest">#131619</color>
+    <color name="divider">#DDDDDD</color>
+    <color name="overlay">#88000000</color>
+    <color name="placeholderGradientEnd">#BBBBBB</color>
+    <color name="placeholderGradientStart">#EEEEEE</color>
+    <color name="scrimInsetForeground">#4000</color>
+    <color name="secondaryText">#999999</color>
+    <color name="transparent">#00000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="windowBackground">#E6E6E6</color>
+
+    <integer-array name="spinner_colors">
+        <item>@color/colorAccent</item>
+        <item>@color/colorPrimary</item>
+        <item>@color/colorPrimaryDark</item>
+        <item>@color/colorPrimaryDarkest</item>
+    </integer-array>
+
+    <!-- debug colors -->
+    <color name="r">#FF0000</color>
+    <color name="g">#00FF00</color>
+    <color name="b">#0000FF</color>
+    <color name="c">#00FFFF</color>
+    <color name="m">#FF00FF</color>
+    <color name="y">#FFFF00</color>
+
+</resources>
