@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -36,6 +37,9 @@ public abstract class BaseUserActivity extends BaseDrawerActivity {
 
     private String mUsername;
     private User mUser;
+
+    @Bind(R.id.appBarLayout)
+    AppBarLayout mAppBarLayout;
 
     @Bind(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -106,8 +110,8 @@ public abstract class BaseUserActivity extends BaseDrawerActivity {
     private void setCoverImage() {
         final Uri uri = Uri.parse(mUser.getCoverImage());
         final ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
-                .setPostprocessor(new PalettePostprocessor(this, mCollapsingToolbarLayout,
-                        mDrawerLayout, mTabLayout))
+                .setPostprocessor(new PalettePostprocessor(this, mAppBarLayout,
+                        mCollapsingToolbarLayout, mTabLayout))
                 .build();
 
         final AbstractDraweeController controller = Fresco.newDraweeControllerBuilder()
