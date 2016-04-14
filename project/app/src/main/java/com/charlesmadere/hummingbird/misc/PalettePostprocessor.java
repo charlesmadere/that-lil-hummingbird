@@ -60,6 +60,7 @@ public final class PalettePostprocessor extends BasePostprocessor implements
         final int vibrantColor = palette.getVibrantColor(ContextCompat.getColor(context,
                 R.color.colorAccent));
 
+        collapsingToolbarLayout.setStatusBarScrimColor(darkMutedColor);
         collapsingToolbarLayout.setContentScrimColor(darkVibrantColor);
         tabLayout.setBackgroundColor(darkVibrantColor);
         tabLayout.setSelectedTabIndicatorColor(vibrantColor);
