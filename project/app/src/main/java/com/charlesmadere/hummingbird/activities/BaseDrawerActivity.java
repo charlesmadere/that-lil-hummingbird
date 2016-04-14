@@ -20,12 +20,12 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
         NavigationDrawerItemView.OnNavigationDrawerItemViewClickListener {
 
     @Bind(R.id.drawerLayout)
-    protected DrawerLayout drawerLayout;
+    protected DrawerLayout mDrawerLayout;
 
     @Bind(R.id.navigationDrawerView)
-    protected NavigationDrawerView navigationDrawerView;
+    protected NavigationDrawerView mNavigationDrawerView;
 
-    protected ActionBarDrawerToggle drawerToggle;
+    protected ActionBarDrawerToggle mDrawerToggle;
 
 
     protected static Intent createDrawerActivityIntent(final Context context, final Class c) {
@@ -33,7 +33,7 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
     }
 
     public void closeDrawer() {
-        drawerLayout.closeDrawer(navigationDrawerView);
+        mDrawerLayout.closeDrawer(mNavigationDrawerView);
     }
 
     protected NavigationDrawerItemView.Entry getSelectedNavigationDrawerItemViewEntry() {
@@ -41,7 +41,7 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
     }
 
     public boolean isDrawerVisible() {
-        return drawerLayout.isDrawerVisible(navigationDrawerView);
+        return mDrawerLayout.isDrawerVisible(mNavigationDrawerView);
     }
 
     protected boolean isUpNavigationEnabled() {
@@ -60,7 +60,7 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
     @Override
     public void onConfigurationChanged(final Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        drawerToggle.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     protected void onDrawerClosed() {
@@ -108,13 +108,13 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
 
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
-        return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
+        return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
     @Override
     protected void onPostCreate(final Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        drawerToggle.syncState();
+        mDrawerToggle.syncState();
     }
 
     @Override
@@ -125,7 +125,7 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
     }
 
     private void prepareDrawerLayout() {
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_drawer,
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open_drawer,
                 R.string.close_drawer) {
             @Override
             public void onDrawerClosed(final View drawerView) {
@@ -140,13 +140,13 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
             }
         };
 
-        drawerLayout.addDrawerListener(drawerToggle);
-        drawerToggle.setDrawerIndicatorEnabled(!isUpNavigationEnabled());
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+        mDrawerToggle.setDrawerIndicatorEnabled(!isUpNavigationEnabled());
     }
 
     private void prepareNavigationView() {
-        navigationDrawerView.setOnNavigationDrawerItemViewClickListener(this);
-        navigationDrawerView.setSelectedNavigationDrawerItemViewEntry(
+        mNavigationDrawerView.setOnNavigationDrawerItemViewClickListener(this);
+        mNavigationDrawerView.setSelectedNavigationDrawerItemViewEntry(
                 getSelectedNavigationDrawerItemViewEntry());
     }
 
