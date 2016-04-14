@@ -94,13 +94,18 @@ public abstract class BaseUserActivity extends BaseDrawerActivity {
         }
     }
 
+    private void setCoverImage() {
+        // tODO
+        mCoverImage.setImageURI(Uri.parse(mUser.getCoverImage()));
+    }
+
     private void showError() {
         // TODO
     }
 
     private void showUser(final User user) {
         mUser = user;
-        mCoverImage.setImageURI(Uri.parse(mUser.getCoverImage()));
+        setCoverImage();
         mViewPager.setAdapter(new UserFragmentAdapter(this, mUser));
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);
