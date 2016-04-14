@@ -12,11 +12,16 @@ import android.text.TextUtils;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.UserFragmentAdapter;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
+import com.charlesmadere.hummingbird.misc.PalettePostprocessor;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.AbstractDraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import java.lang.ref.WeakReference;
 
@@ -95,8 +100,16 @@ public abstract class BaseUserActivity extends BaseDrawerActivity {
     }
 
     private void setCoverImage() {
-        // tODO
-        mCoverImage.setImageURI(Uri.parse(mUser.getCoverImage()));
+        final Uri uri = Uri.parse(mUser.getCoverImage());
+        final ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
+                .setPostprocessor(new PalettePostprocessor(this, mTabLayout))
+                .build();
+
+        final AbstractDraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setImageRequest(request).setOldController(mCoverImage.getController())
+                .build();
+
+        mCoverImage.setController(controller);
     }
 
     private void showError() {
