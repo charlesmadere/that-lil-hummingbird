@@ -3,8 +3,10 @@ package com.charlesmadere.hummingbird.misc;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.graphics.Palette;
 
 import com.charlesmadere.hummingbird.R;
@@ -15,18 +17,25 @@ import java.lang.ref.WeakReference;
 public final class PalettePostprocessor extends BasePostprocessor implements
         Palette.PaletteAsyncListener {
 
-    private final WeakReference<Activity> mActivityReference;
-    private final WeakReference<TabLayout> mTabLayoutReference;
+    private final WeakReference<Activity> mActivity;
+    private final WeakReference<CollapsingToolbarLayout> mCollapsingToolbarLayout;
+    private final WeakReference<DrawerLayout> mDrawerLayout;
+    private final WeakReference<TabLayout> mTabLayout;
 
 
-    public PalettePostprocessor(final Activity activity, final TabLayout tabLayout) {
-        mActivityReference = new WeakReference<>(activity);
-        mTabLayoutReference = new WeakReference<>(tabLayout);
+    public PalettePostprocessor(final Activity activity,
+            final CollapsingToolbarLayout collapsingToolbarLayout, final DrawerLayout drawerLayout,
+            final TabLayout tabLayout) {
+        mActivity = new WeakReference<>(activity);
+        mCollapsingToolbarLayout = new WeakReference<>(collapsingToolbarLayout);
+        mDrawerLayout = new WeakReference<>(drawerLayout);
+        mTabLayout = new WeakReference<>(tabLayout);
     }
 
     private boolean isAlive() {
-        final Activity activity = mActivityReference.get();
-        return activity != null && !activity.isDestroyed() && mTabLayoutReference.get() != null;
+        final Activity activity = mActivity.get();
+        return activity != null && !activity.isDestroyed() && mCollapsingToolbarLayout.get() != null
+                && mDrawerLayout.get() != null && mTabLayout.get() != null;
     }
 
     @Override
@@ -35,9 +44,11 @@ public final class PalettePostprocessor extends BasePostprocessor implements
             return;
         }
 
-        final TabLayout tabLayout = mTabLayoutReference.get();
+        final CollapsingToolbarLayout collapsingToolbarLayout = mCollapsingToolbarLayout.get();
+        final DrawerLayout drawerLayout = mDrawerLayout.get();
+        final TabLayout tabLayout = mTabLayout.get();
 
-        if (tabLayout == null) {
+        if (collapsingToolbarLayout == null || drawerLayout == null || tabLayout == null) {
             return;
         }
 
@@ -49,6 +60,8 @@ public final class PalettePostprocessor extends BasePostprocessor implements
         final int vibrantColor = palette.getVibrantColor(ContextCompat.getColor(context,
                 R.color.colorAccent));
 
+        collapsingToolbarLayout.setContentScrimColor(darkVibrantColor);
+        tabLayout.setBackgroundColor(darkVibrantColor);
         tabLayout.setSelectedTabIndicatorColor(vibrantColor);
     }
 
