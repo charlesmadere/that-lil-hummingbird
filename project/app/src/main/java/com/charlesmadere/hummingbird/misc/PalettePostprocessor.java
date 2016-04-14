@@ -64,6 +64,9 @@ public final class PalettePostprocessor extends BasePostprocessor implements
         final int vibrantColor = palette.getVibrantColor(ContextCompat.getColor(context,
                 R.color.colorAccent));
 
+        // TODO use ValueAnimator
+        // https://stackoverflow.com/questions/2614545/animate-change-of-view-background-color-in-android
+
         appBarLayout.setBackgroundColor(darkVibrantColor);
         collapsingToolbarLayout.setStatusBarScrimColor(darkMutedColor);
         collapsingToolbarLayout.setContentScrimColor(darkVibrantColor);
