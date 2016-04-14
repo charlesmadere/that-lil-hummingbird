@@ -1,5 +1,6 @@
 package com.charlesmadere.hummingbird.misc;
 
+import android.animation.ArgbEvaluator;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -17,6 +18,9 @@ import java.lang.ref.WeakReference;
 public final class PalettePostprocessor extends BasePostprocessor implements
         Palette.PaletteAsyncListener {
 
+    private static final long TRANSITION_TIME_MS = 250L;
+
+    private final ArgbEvaluator mArgbEvaluator;
     private final WeakReference<Activity> mActivity;
     private final WeakReference<CollapsingToolbarLayout> mCollapsingToolbarLayout;
     private final WeakReference<DrawerLayout> mDrawerLayout;
@@ -30,12 +34,14 @@ public final class PalettePostprocessor extends BasePostprocessor implements
         mCollapsingToolbarLayout = new WeakReference<>(collapsingToolbarLayout);
         mDrawerLayout = new WeakReference<>(drawerLayout);
         mTabLayout = new WeakReference<>(tabLayout);
+        mArgbEvaluator = new ArgbEvaluator();
     }
 
     private boolean isAlive() {
         final Activity activity = mActivity.get();
-        return activity != null && !activity.isDestroyed() && mCollapsingToolbarLayout.get() != null
-                && mDrawerLayout.get() != null && mTabLayout.get() != null;
+        return activity != null && !activity.isDestroyed() &&
+                mCollapsingToolbarLayout.get() != null && mDrawerLayout.get() != null &&
+                mTabLayout.get() != null;
     }
 
     @Override
