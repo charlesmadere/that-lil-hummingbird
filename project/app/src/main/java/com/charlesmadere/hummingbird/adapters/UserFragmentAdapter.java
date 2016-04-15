@@ -14,6 +14,10 @@ import com.charlesmadere.hummingbird.models.WatchingStatus;
 
 public class UserFragmentAdapter extends FragmentStatePagerAdapter {
 
+    private static final WatchingStatus[] ORDER = { WatchingStatus.COMPLETED,
+            WatchingStatus.CURRENTLY_WATCHING, WatchingStatus.PLAN_TO_WATCH,
+            WatchingStatus.ON_HOLD, WatchingStatus.DROPPED };
+
     private final Context mContext;
     private final User mUser;
 
@@ -34,26 +38,27 @@ public class UserFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public Fragment getItem(final int position) {
+        final Fragment fragment;
+
         if (position == 0) {
-            return FeedFragment.create(mUser);
+            fragment = FeedFragment.create(mUser);
         } else {
-            --position;
-            final WatchingStatus watchingStatus = WatchingStatus.values()[position];
-            return AnimeLibraryFragment.create(mUser, watchingStatus);
+            final WatchingStatus watchingStatus = ORDER[position - 1];
+            fragment = AnimeLibraryFragment.create(mUser, watchingStatus);
         }
+
+        return fragment;
     }
 
     @Override
-    public CharSequence getPageTitle(int position) {
+    public CharSequence getPageTitle(final int position) {
         final int pageTitleResId;
 
         if (position == 0) {
             pageTitleResId = R.string.feed;
         } else {
-            --position;
-
-            final WatchingStatus watchingStatus = WatchingStatus.values()[position];
+            final WatchingStatus watchingStatus = ORDER[position - 1];
             pageTitleResId = watchingStatus.getTextResId();
         }
 

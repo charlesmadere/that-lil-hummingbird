@@ -1,15 +1,24 @@
 package com.charlesmadere.hummingbird.misc;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.annotation.ColorInt;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.Palette;
+import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.charlesmadere.hummingbird.R;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -26,25 +35,37 @@ public final class PaletteUtils {
     public static void applyParallaxColors(final String url, final Activity activity,
             final AppBarLayout appBarLayout, final CollapsingToolbarLayout collapsingToolbarLayout,
             final SimpleDraweeView simpleDraweeView, final TabLayout tabLayout) {
-        final ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(url))
-                .setPostprocessor(new PalettePostprocessor(activity, appBarLayout,
-                        collapsingToolbarLayout, tabLayout))
-                .build();
+        final Uri uri = Uri.parse(url);
 
-        final AbstractDraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setImageRequest(request).setOldController(simpleDraweeView.getController())
-                .build();
+        if (MiscUtils.isLowRamDevice()) {
+            simpleDraweeView.setImageURI(uri);
+        } else {
+            final ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(url))
+                    .setPostprocessor(new PalettePostprocessor(activity, appBarLayout,
+                            collapsingToolbarLayout, tabLayout))
+                    .build();
 
-        simpleDraweeView.setController(controller);
+            final AbstractDraweeController controller = Fresco.newDraweeControllerBuilder()
+                    .setImageRequest(request).setOldController(simpleDraweeView.getController())
+                    .build();
+
+            simpleDraweeView.setController(controller);
+        }
+    }
+
+    @ColorInt
+    private static int getDrawableColor(final View view, @Nullable Drawable drawable) {
+        if (drawable != null && drawable instanceof ColorDrawable) {
+            return ((ColorDrawable) drawable).getColor();
+        } else {
+            return ContextCompat.getColor(view.getContext(), R.color.transparent);
+        }
     }
 
 
     private static final class PalettePostprocessor extends BasePostprocessor implements
             Palette.PaletteAsyncListener {
 
-        private static final long TRANSITION_TIME_MS = 250L;
-
-        private final ArgbEvaluator mArgbEvaluator;
         private final WeakReference<Activity> mActivity;
         private final WeakReference<AppBarLayout> mAppBarLayout;
         private final WeakReference<CollapsingToolbarLayout> mCollapsingToolbarLayout;
@@ -57,7 +78,56 @@ public final class PaletteUtils {
             mAppBarLayout = new WeakReference<>(appBarLayout);
             mCollapsingToolbarLayout = new WeakReference<>(collapsingToolbarLayout);
             mTabLayout = new WeakReference<>(tabLayout);
-            mArgbEvaluator = new ArgbEvaluator();
+        }
+
+        private void applyColorsWithAnimation(final AppBarLayout appBarLayout,
+                final CollapsingToolbarLayout collapsingToolbarLayout, final TabLayout tabLayout,
+                @ColorInt final int darkMutedColor, @ColorInt final int darkVibrantColor,
+                @ColorInt final int vibrantColor) {
+            ArgbEvaluator argbEvaluator = new ArgbEvaluator();
+
+            ValueAnimator appBarAnimator = ValueAnimator.ofObject(argbEvaluator,
+                    getDrawableColor(appBarLayout, appBarLayout.getBackground()), darkVibrantColor);
+            appBarAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(final ValueAnimator animation) {
+                    appBarLayout.setBackgroundColor((int) animation.getAnimatedValue());
+                }
+            });
+
+            ValueAnimator collapsingToolbarStatusBarAnimator = ValueAnimator.ofObject(argbEvaluator,
+                    getDrawableColor(collapsingToolbarLayout, collapsingToolbarLayout.getStatusBarScrim()),
+                    darkMutedColor);
+            collapsingToolbarStatusBarAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(final ValueAnimator animation) {
+                    collapsingToolbarLayout.setStatusBarScrimColor((int) animation.getAnimatedValue());
+                }
+            });
+
+            ValueAnimator collapsingToolbarContentAnimator = ValueAnimator.ofObject(argbEvaluator,
+                    getDrawableColor(collapsingToolbarLayout, collapsingToolbarLayout.getContentScrim()),
+                    darkVibrantColor);
+            collapsingToolbarContentAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(final ValueAnimator animation) {
+                    collapsingToolbarLayout.setContentScrimColor((int) animation.getAnimatedValue());
+                }
+            });
+
+            collapsingToolbarContentAnimator.addListener(new SimpleAnimatorListener() {
+                @Override
+                public void onAnimationStart(final Animator animation) {
+                    tabLayout.setSelectedTabIndicatorColor(vibrantColor);
+                }
+            });
+
+            final AnimatorSet animatorSet = new AnimatorSet();
+            animatorSet.setDuration(appBarLayout.getResources().getInteger(R.integer.color_duration));
+            animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
+            animatorSet.playTogether(appBarAnimator, collapsingToolbarStatusBarAnimator,
+                    collapsingToolbarContentAnimator);
+            animatorSet.start();
         }
 
         private boolean isAlive() {
@@ -88,13 +158,8 @@ public final class PaletteUtils {
             final int vibrantColor = palette.getVibrantColor(ContextCompat.getColor(context,
                     R.color.colorAccent));
 
-            // TODO use ValueAnimator
-            // https://stackoverflow.com/questions/2614545/animate-change-of-view-background-color-in-android
-
-            appBarLayout.setBackgroundColor(darkVibrantColor);
-            collapsingToolbarLayout.setStatusBarScrimColor(darkMutedColor);
-            collapsingToolbarLayout.setContentScrimColor(darkVibrantColor);
-            tabLayout.setSelectedTabIndicatorColor(vibrantColor);
+            applyColorsWithAnimation(appBarLayout, collapsingToolbarLayout, tabLayout,
+                    darkMutedColor, darkVibrantColor, vibrantColor);
         }
 
         @Override

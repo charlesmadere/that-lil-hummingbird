@@ -1,16 +1,17 @@
 package com.charlesmadere.hummingbird.views;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.misc.SimpleAnimationListener;
+import com.charlesmadere.hummingbird.misc.SimpleAnimatorListener;
 
 public class SimpleProgressView extends FrameLayout {
 
@@ -29,33 +30,54 @@ public class SimpleProgressView extends FrameLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public void fadeIn() {
-        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
-        animation.setAnimationListener(new SimpleAnimationListener() {
+    private void fade(float start, float end, final int startVisibility, final int endVisibility) {
+        ValueAnimator animator = ValueAnimator.ofFloat(start, end);
+        animator.setDuration(getResources().getInteger(R.integer.color_duration));
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        animator.addListener(new SimpleAnimatorListener() {
             @Override
-            public void onAnimationStart(final Animation animation) {
-                setVisibility(VISIBLE);
+            public void onAnimationEnd(final Animator animation) {
+                setVisibility(endVisibility);
+            }
+
+            @Override
+            public void onAnimationStart(final Animator animation) {
+                setVisibility(startVisibility);
             }
         });
 
-        startAnimation(animation);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(final ValueAnimator animation) {
+                setAlpha((float) animation.getAnimatedValue());
+            }
+        });
+
+        animator.start();
+    }
+
+    public void fadeIn() {
+        fade(getAlpha(), 1f, VISIBLE, VISIBLE);
     }
 
     public void fadeOut() {
-        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_out);
-        animation.setAnimationListener(new SimpleAnimationListener() {
-            @Override
-            public void onAnimationEnd(final Animation animation) {
-                setVisibility(GONE);
-            }
-        });
+        fade(getAlpha(), 0f, getVisibility(), GONE);
+    }
 
-        startAnimation(animation);
+    public void hide() {
+        setAlpha(0f);
+        setVisibility(GONE);
     }
 
     @Override
     public boolean onTouchEvent(final MotionEvent event) {
         return true;
+    }
+
+    public void show() {
+        setAlpha(1f);
+        setVisibility(VISIBLE);
     }
 
 }

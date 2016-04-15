@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.charlesmadere.hummingbird.views.SimpleProgressView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:alpha="0"
     android:background="@color/overlay"
     android:id="@+id/simpleProgressView"
     android:layout_height="match_parent"

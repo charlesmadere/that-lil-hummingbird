@@ -76,7 +76,7 @@ public class LoginActivity extends BaseActivity {
             setContentView(R.layout.activity_login);
 
             if (CurrentUser.shouldBeFetched()) {
-                mSimpleProgressView.setVisibility(View.VISIBLE);
+                mSimpleProgressView.show();
                 fetchCurrentUser();
             } else {
                 mUsernameContainer.setVisibility(View.VISIBLE);
