@@ -82,6 +82,7 @@ public class AnimeActivity extends BaseDrawerActivity {
 
         final Intent intent = getIntent();
         mAnime = intent.getParcelableExtra(EXTRA_ANIME);
+        setTitle(mAnime.getTitle());
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mAnimeV2 = savedInstanceState.getParcelable(KEY_ANIME_V2);
