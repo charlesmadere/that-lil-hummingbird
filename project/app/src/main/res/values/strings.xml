@@ -21,9 +21,11 @@
     <string name="currently_watching">Currently Watching</string>
     <string name="currently_watching_library_is_empty">Currently watching library is empty</string>
     <string name="delimiter">,\u0020</string>
+    <string name="details">Details</string>
     <string name="dropped">Dropped</string>
     <string name="dropped_library_is_empty">Dropped library is empty</string>
     <string name="email">Email</string>
+    <string name="episodes">Episodes</string>
     <string name="error_loading_anime">Error loading anime! Please check your network connection and try again.</string>
     <string name="error_loading_anime_library">Error loading anime library</string>
     <string name="error_loading_completed_library">Error loading completed library</string>
@@ -44,6 +46,7 @@
     <string name="followers">Followers</string>
     <string name="following">Following</string>
     <string name="forums">Forums</string>
+    <string name="gallery">Gallery</string>
     <string name="github">GitHub</string>
     <string name="group_activity">Group Activity</string>
     <string name="groups">Groups</string>

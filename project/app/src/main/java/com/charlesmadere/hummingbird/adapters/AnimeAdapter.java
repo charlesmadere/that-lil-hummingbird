@@ -6,6 +6,10 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.fragments.AnimeDetailsFragment;
+import com.charlesmadere.hummingbird.fragments.AnimeEpisodesFragment;
+import com.charlesmadere.hummingbird.fragments.AnimeGalleryFragment;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 
 public class AnimeAdapter extends FragmentStatePagerAdapter {
@@ -26,20 +30,55 @@ public class AnimeAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        // TODO
-        return 0;
+        return 3;
     }
 
     @Override
     public Fragment getItem(final int position) {
-        // TODO
-        return null;
+        final Fragment fragment;
+
+        switch (position) {
+            case 0:
+                fragment = AnimeDetailsFragment.create(mAnimeV2);
+                break;
+
+            case 1:
+                fragment = AnimeEpisodesFragment.create(mAnimeV2.getLinks().getAnimeEpisodes());
+                break;
+
+            case 2:
+                fragment = AnimeGalleryFragment.create(mAnimeV2.getLinks().getGalleryImages());
+                break;
+
+            default:
+                throw new RuntimeException("illegal position: " + position);
+        }
+
+        return fragment;
     }
 
     @Override
     public CharSequence getPageTitle(final int position) {
-        // TODO
-        return super.getPageTitle(position);
+        final int pageTitleResId;
+
+        switch (position) {
+            case 0:
+                pageTitleResId = R.string.details;
+                break;
+
+            case 1:
+                pageTitleResId = R.string.episodes;
+                break;
+
+            case 2:
+                pageTitleResId = R.string.gallery;
+                break;
+
+            default:
+                throw new RuntimeException("illegal position: " + position);
+        }
+
+        return mContext.getText(pageTitleResId);
     }
 
 }
