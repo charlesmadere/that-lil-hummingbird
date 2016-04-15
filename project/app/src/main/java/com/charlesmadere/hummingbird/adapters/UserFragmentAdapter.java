@@ -14,8 +14,8 @@ import com.charlesmadere.hummingbird.models.WatchingStatus;
 
 public class UserFragmentAdapter extends FragmentStatePagerAdapter {
 
-    private static final WatchingStatus[] ORDER = { WatchingStatus.COMPLETED,
-            WatchingStatus.CURRENTLY_WATCHING, WatchingStatus.PLAN_TO_WATCH,
+    private static final WatchingStatus[] ORDER = { WatchingStatus.CURRENTLY_WATCHING,
+            WatchingStatus.COMPLETED, WatchingStatus.PLAN_TO_WATCH,
             WatchingStatus.ON_HOLD, WatchingStatus.DROPPED };
 
     private final Context mContext;
