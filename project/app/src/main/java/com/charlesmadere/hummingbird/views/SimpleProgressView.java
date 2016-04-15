@@ -58,11 +58,23 @@ public class SimpleProgressView extends FrameLayout {
     }
 
     public void fadeIn() {
-        fade(getAlpha(), 1f, VISIBLE, VISIBLE);
+        final float alpha = getAlpha();
+
+        if (alpha == 1f && getVisibility() == VISIBLE) {
+            return;
+        }
+
+        fade(alpha, 1f, VISIBLE, VISIBLE);
     }
 
     public void fadeOut() {
-        fade(getAlpha(), 0f, getVisibility(), GONE);
+        final float alpha = getAlpha();
+
+        if (alpha == 0f && getVisibility() == GONE) {
+            return;
+        }
+
+        fade(alpha, 0f, VISIBLE, GONE);
     }
 
     public void hide() {
