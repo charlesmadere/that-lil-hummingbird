@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.activities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
@@ -18,6 +20,7 @@ import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.views.SimpleProgressView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.lang.ref.WeakReference;
@@ -42,6 +45,9 @@ public abstract class BaseUserActivity extends BaseDrawerActivity {
     @Bind(R.id.parallaxCoverImage)
     SimpleDraweeView mCoverImage;
 
+    @Bind(R.id.simpleProgressView)
+    SimpleProgressView mSimpleProgressView;
+
     @Bind(R.id.tabLayout)
     TabLayout mTabLayout;
 
@@ -63,7 +69,7 @@ public abstract class BaseUserActivity extends BaseDrawerActivity {
     }
 
     private void fetchUser() {
-        // TODO
+        mSimpleProgressView.fadeIn();
         Api.getUser(mUsername, new GetUserListener(this));
     }
 
@@ -103,7 +109,29 @@ public abstract class BaseUserActivity extends BaseDrawerActivity {
     }
 
     private void showError() {
-        // TODO
+        mSimpleProgressView.fadeOut();
+
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.error_loading_user)
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(final DialogInterface dialog) {
+                        finish();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        finish();
+                    }
+                })
+                .setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        fetchUser();
+                    }
+                })
+                .show();
     }
 
     private void showUser(final User user) {
@@ -114,6 +142,7 @@ public abstract class BaseUserActivity extends BaseDrawerActivity {
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);
+        mSimpleProgressView.fadeOut();
     }
 
 

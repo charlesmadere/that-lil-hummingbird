@@ -24,6 +24,7 @@
     <string name="dropped">Dropped</string>
     <string name="dropped_library_is_empty">Dropped library is empty</string>
     <string name="email">Email</string>
+    <string name="error_loading_anime">Error loading anime! Please check your network connection and try again.</string>
     <string name="error_loading_anime_library">Error loading anime library</string>
     <string name="error_loading_completed_library">Error loading completed library</string>
     <string name="error_loading_currently_watching_library">Error loading currently watching library</string>
@@ -32,6 +33,7 @@
     <string name="error_loading_on_hold_library">Error loading on hold library</string>
     <string name="error_loading_plan_to_watch_library">Error loading plan to watch library</string>
     <string name="error_loading_timeline">Error loading timeline</string>
+    <string name="error_loading_user">Error loading user! Please check your network connection and try again.</string>
     <string name="error_logging_in">Error logging in! Please check your credentials and network connection and then try again.</string>
     <string name="explore">Explore</string>
     <string name="explore_anime">Explore Anime</string>
@@ -82,7 +84,9 @@
     <string name="rate_this_app">Rate this app</string>
     <string name="rating">Rating</string>
     <string name="recommendations">Recommendations</string>
+    <string name="refresh">Refresh</string>
     <string name="remove">Remove</string>
+    <string name="retry">Retry</string>
     <string name="reviews">Reviews</string>
     <string name="search">Search</string>
     <string name="search_for_">Search for…</string>

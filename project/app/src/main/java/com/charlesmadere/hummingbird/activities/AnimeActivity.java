@@ -1,18 +1,30 @@
 package com.charlesmadere.hummingbird.activities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.AnimeAdapter;
+import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.views.SimpleProgressView;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.lang.ref.WeakReference;
+
+import butterknife.Bind;
 
 public class AnimeActivity extends BaseDrawerActivity {
 
@@ -24,6 +36,24 @@ public class AnimeActivity extends BaseDrawerActivity {
     private AbsAnime mAnime;
     private AnimeV2 mAnimeV2;
 
+    @Bind(R.id.appBarLayout)
+    AppBarLayout mAppBarLayout;
+
+    @Bind(R.id.collapsingToolbarLayout)
+    CollapsingToolbarLayout mCollapsingToolbarLayout;
+
+    @Bind(R.id.parallaxCoverImage)
+    SimpleDraweeView mCoverImage;
+
+    @Bind(R.id.simpleProgressView)
+    SimpleProgressView mSimpleProgressView;
+
+    @Bind(R.id.tabLayout)
+    TabLayout mTabLayout;
+
+    @Bind(R.id.viewPager)
+    ViewPager mViewPager;
+
 
     public static Intent getLaunchIntent(final Context context, final AbsAnime anime) {
         return new Intent(context, AnimeActivity.class)
@@ -31,7 +61,7 @@ public class AnimeActivity extends BaseDrawerActivity {
     }
 
     private void fetchAnimeV2() {
-        // TODO
+        mSimpleProgressView.fadeIn();
         Api.getAnimeById(mAnime, new GetAnimeByIdListener(this));
     }
 
@@ -87,11 +117,39 @@ public class AnimeActivity extends BaseDrawerActivity {
 
     private void showAnimeV2(final AnimeV2 animeV2) {
         mAnimeV2 = animeV2;
-        // TODO
+        PaletteUtils.applyParallaxColors(mAnimeV2.getCoverImage(), this, mAppBarLayout,
+                mCollapsingToolbarLayout, mCoverImage, mTabLayout);
+        mViewPager.setAdapter(new AnimeAdapter(this, mAnimeV2));
+        mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
+        mViewPager.setOffscreenPageLimit(3);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mSimpleProgressView.fadeOut();
     }
 
     private void showError() {
-        // TODO
+        mSimpleProgressView.fadeOut();
+
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.error_loading_user)
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(final DialogInterface dialog) {
+                        finish();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        finish();
+                    }
+                })
+                .setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        fetchAnimeV2();
+                    }
+                })
+                .show();
     }
 
 

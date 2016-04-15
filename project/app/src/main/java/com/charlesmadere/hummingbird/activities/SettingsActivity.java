@@ -51,7 +51,7 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @OnClick(R.id.tvGitHub)
     void onGitHubClick() {
-        // TODO
+        openUrl("https://github.com/charlesmadere/that-lil-hummingbird");
     }
 
     @OnClick(R.id.tvLogViewer)
