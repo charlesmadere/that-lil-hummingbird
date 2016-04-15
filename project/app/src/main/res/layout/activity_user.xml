@@ -23,5 +23,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
     </android.support.design.widget.CoordinatorLayout>
     <include
+        layout="@layout/simple_progress" />
+    <include
         layout="@layout/navigation_drawer" />
 </android.support.v4.widget.DrawerLayout>
