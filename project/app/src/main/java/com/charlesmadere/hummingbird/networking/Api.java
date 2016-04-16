@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.networking;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.RetrofitUtils;
 import com.charlesmadere.hummingbird.misc.Timber;
@@ -121,7 +122,7 @@ public final class Api {
 
     public static void getAnimeByMyAnimeListId(final String id,
             final ApiResponse<AnimeV2> listener) {
-        getApi().getAnimeByMyAnimeListId(id).enqueue(new Callback<AnimeV2>() {
+        getApi().getAnimeByMyAnimeListId(Constants.API_KEY, id).enqueue(new Callback<AnimeV2>() {
             @Override
             public void onResponse(final Call<AnimeV2> call, final Response<AnimeV2> response) {
                 if (response.isSuccessful()) {
@@ -144,7 +145,7 @@ public final class Api {
     }
 
     public static void getAnimeById(final String id, final ApiResponse<AnimeV2> listener) {
-        getApi().getAnimeById(id).enqueue(new Callback<AnimeV2>() {
+        getApi().getAnimeById(Constants.API_KEY, id).enqueue(new Callback<AnimeV2>() {
             @Override
             public void onResponse(final Call<AnimeV2> call, final Response<AnimeV2> response) {
                 if (response.isSuccessful()) {

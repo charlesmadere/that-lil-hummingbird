@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.AnimeEpisodesAdapter;
 import com.charlesmadere.hummingbird.models.AnimeEpisode;
 
 import java.util.ArrayList;
@@ -61,7 +62,15 @@ public class AnimeEpisodesFragment extends BaseFragment {
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // TODO
+
+        if (mAnimeEpisodes == null || mAnimeEpisodes.isEmpty()) {
+            mEmpty.setVisibility(View.VISIBLE);
+        } else {
+            final AnimeEpisodesAdapter adapter = new AnimeEpisodesAdapter(getContext());
+            adapter.set(mAnimeEpisodes);
+            mRecyclerView.setAdapter(adapter);
+            mRecyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
 }

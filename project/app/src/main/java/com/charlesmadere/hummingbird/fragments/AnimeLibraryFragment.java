@@ -34,6 +34,11 @@ public class AnimeLibraryFragment extends BaseFragment implements
     private static final String KEY_USER = "User";
     private static final String KEY_WATCHING_STATUS = "WatchingStatus";
 
+    private ArrayList<LibraryEntry> mLibraryEntries;
+    private LibraryEntriesAdapter mAdapter;
+    private User mUser;
+    private WatchingStatus mWatchingStatus;
+
     @Bind(R.id.llEmpty)
     LinearLayout mEmpty;
 
@@ -51,11 +56,6 @@ public class AnimeLibraryFragment extends BaseFragment implements
 
     @Bind(R.id.tvError)
     TextView mErrorText;
-
-    private ArrayList<LibraryEntry> mLibraryEntries;
-    private LibraryEntriesAdapter mAdapter;
-    private User mUser;
-    private WatchingStatus mWatchingStatus;
 
 
     public static AnimeLibraryFragment create(final User user, final WatchingStatus watchingStatus) {

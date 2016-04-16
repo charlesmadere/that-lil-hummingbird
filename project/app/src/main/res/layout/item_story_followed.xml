@@ -2,14 +2,7 @@
 <com.charlesmadere.hummingbird.views.StoryItemFollowedView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:foreground="?attr/selectableItemBackground"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    app:contentPaddingBottom="@dimen/root_padding_half"
-    app:contentPaddingLeft="@dimen/root_padding"
-    app:contentPaddingRight="@dimen/root_padding"
-    app:contentPaddingTop="@dimen/root_padding_half">
+    style="@style/CardItem">
     <RelativeLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
@@ -30,13 +23,10 @@
         <TextView
             android:id="@+id/tvTimeAgo"
             android:layout_below="@id/tvTitle"
-            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/root_padding_half"
             android:layout_toEndOf="@id/sdvAvatar"
-            android:layout_width="match_parent"
-            android:maxLines="2"
-            android:textColor="@color/secondaryText"
-            tools:text="11 days ago" />
+            tools:text="11 days ago"
+            style="@style/TimeOrDate" />
         <LinearLayout
             android:divider="@drawable/divider"
             android:layout_below="@id/tvTimeAgo"

@@ -23,11 +23,9 @@
         <TextView
             android:id="@+id/tvTimeAgo"
             android:layout_below="@id/tvAction"
-            android:layout_height="wrap_content"
             android:layout_toEndOf="@id/sdvAvatar"
-            android:layout_width="match_parent"
-            android:textColor="@color/secondaryText"
             android:textSize="@dimen/text_small"
-            tools:text="2 days ago" />
+            tools:text="2 days ago"
+            style="@style/TimeOrDate" />
     </RelativeLayout>
 </com.charlesmadere.hummingbird.views.StoryItemMediaStorySubstoryView>

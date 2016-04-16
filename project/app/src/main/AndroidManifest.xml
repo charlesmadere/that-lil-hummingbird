@@ -16,6 +16,20 @@
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
         <activity
+            android:launchMode="singleTop"
+            android:name=".activities.CurrentUserActivity"
+            android:theme="@style/HummingbirdTheme.WithDrawer" />
+
+        <activity
+            android:label="@string/gallery"
+            android:name=".activities.GalleryActivity"
+            android:parentActivityName=".activities.GalleryActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.AnimeActivity" />
+        </activity>
+
+        <activity
             android:label="@string/hummingbird"
             android:launchMode="singleTop"
             android:name=".activities.LoginActivity"
@@ -25,11 +39,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:launchMode="singleTop"
-            android:name=".activities.CurrentUserActivity"
-            android:theme="@style/HummingbirdTheme.WithDrawer" />
 
         <activity
             android:label="@string/log_viewer"

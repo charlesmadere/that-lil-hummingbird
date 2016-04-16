@@ -175,7 +175,11 @@ public class AnimeActivity extends BaseDrawerActivity {
             final AnimeActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                activity.showAnimeV2(animeV2);
+                if (animeV2 == null) {
+                    activity.showError();
+                } else {
+                    activity.showAnimeV2(animeV2);
+                }
             }
         }
     }

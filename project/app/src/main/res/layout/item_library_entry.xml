@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.charlesmadere.hummingbird.views.LibraryEntryItemView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:foreground="?attr/selectableItemBackground"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    app:contentPaddingBottom="@dimen/root_padding_half"
-    app:contentPaddingLeft="@dimen/root_padding"
-    app:contentPaddingRight="@dimen/root_padding"
-    app:contentPaddingTop="@dimen/root_padding_half">
+    style="@style/CardItem">
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -35,13 +27,10 @@
                 tools:text="Comedy, Mystery, Romance"
                 style="@style/AnimeGenres" />
             <TextView
-                android:ellipsize="end"
                 android:id="@+id/tvSynopsis"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/root_padding"
-                android:layout_width="match_parent"
-                android:maxLines="5"
-                tools:text="It is mid-December, and SOS Brigade chief Haruhi Suzumiya announces that the Brigade is going to hold a Christmas party in their clubroom, with Japanese hotpot for dinner." />
+                tools:text="It is mid-December, and SOS Brigade chief Haruhi Suzumiya announces that the Brigade is going to hold a Christmas party in their clubroom, with Japanese hotpot for dinner."
+                style="@style/AnimeSynopsis" />
             <com.charlesmadere.hummingbird.views.KeyValueTextView
                 android:id="@+id/kvtvProgress"
                 android:layout_height="wrap_content"

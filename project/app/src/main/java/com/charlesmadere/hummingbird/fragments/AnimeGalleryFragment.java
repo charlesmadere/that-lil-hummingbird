@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.GalleryAdapter;
 import com.charlesmadere.hummingbird.models.GalleryImage;
 
 import java.util.ArrayList;
@@ -61,7 +62,15 @@ public class AnimeGalleryFragment extends BaseFragment {
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // TODO
+
+        if (mGalleryImages == null || mGalleryImages.isEmpty()) {
+            mEmpty.setVisibility(View.VISIBLE);
+        } else {
+            final GalleryAdapter adapter = new GalleryAdapter(getContext());
+            adapter.set(mGalleryImages);
+            mRecyclerView.setAdapter(adapter);
+            mRecyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
 }

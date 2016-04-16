@@ -60,9 +60,9 @@ public interface HummingbirdApi {
      */
 
     @GET("v2/anime/{id}")
-    Call<AnimeV2> getAnimeById(@Path("id") String id);
+    Call<AnimeV2> getAnimeById(@Header("X-Client-Id") String apiKey, @Path("id") String id);
 
     @GET("v2/anime/myanimelist:{malid}")
-    Call<AnimeV2> getAnimeByMyAnimeListId(@Path("malid") String malid);
+    Call<AnimeV2> getAnimeByMyAnimeListId(@Header("X-Client-Id") String apiKey, @Path("malid") String malid);
 
 }

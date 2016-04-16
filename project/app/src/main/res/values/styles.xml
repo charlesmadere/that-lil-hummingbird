@@ -28,6 +28,13 @@
         <item name="android:textColor">@color/secondaryText</item>
     </style>
 
+    <style name="AnimeSynopsis">
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:maxLines">5</item>
+    </style>
+
     <style name="AnimeTitle" parent="@style/MediumOrBold">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
@@ -63,6 +70,16 @@
     <style name="Avatar.Small">
         <item name="android:layout_height">@dimen/avatar_small</item>
         <item name="android:layout_width">@dimen/avatar_small</item>
+    </style>
+
+    <style name="CardItem">
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="contentPaddingBottom">@dimen/root_padding_half</item>
+        <item name="contentPaddingLeft">@dimen/root_padding</item>
+        <item name="contentPaddingRight">@dimen/root_padding</item>
+        <item name="contentPaddingTop">@dimen/root_padding_half</item>
     </style>
 
     <style name="CollapsingToolbarLayout">
@@ -208,6 +225,14 @@
 
     <style name="TabLayout.Parallax">
         <item name="android:elevation" tools:targetApi="lollipop">0dp</item>
+    </style>
+
+    <style name="TimeOrDate">
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/secondaryText</item>
     </style>
 
     <style name="Toolbar">
