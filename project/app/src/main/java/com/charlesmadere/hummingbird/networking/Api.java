@@ -125,10 +125,16 @@ public final class Api {
         getApi().getAnimeByMyAnimeListId(Constants.API_KEY, id).enqueue(new Callback<AnimeV2>() {
             @Override
             public void onResponse(final Call<AnimeV2> call, final Response<AnimeV2> response) {
+                AnimeV2 body = null;
+
                 if (response.isSuccessful()) {
-                    listener.success(response.body());
-                } else {
+                    body = response.body();
+                }
+
+                if (body == null) {
                     listener.failure(retrieveErrorInfo(response));
+                } else {
+                    listener.success(body);
                 }
             }
 
@@ -148,10 +154,16 @@ public final class Api {
         getApi().getAnimeById(Constants.API_KEY, id).enqueue(new Callback<AnimeV2>() {
             @Override
             public void onResponse(final Call<AnimeV2> call, final Response<AnimeV2> response) {
+                AnimeV2 body = null;
+
                 if (response.isSuccessful()) {
-                    listener.success(response.body());
-                } else {
+                    body = response.body();
+                }
+
+                if (body == null) {
                     listener.failure(retrieveErrorInfo(response));
+                } else {
+                    listener.success(body);
                 }
             }
 
@@ -223,10 +235,16 @@ public final class Api {
         getApi().getUser(username).enqueue(new Callback<User>() {
             @Override
             public void onResponse(final Call<User> call, final Response<User> response) {
+                User body = null;
+
                 if (response.isSuccessful()) {
-                    listener.success(response.body());
-                } else {
+                    body = response.body();
+                }
+
+                if (body == null) {
                     listener.failure(retrieveErrorInfo(response));
+                } else {
+                    listener.success(body);
                 }
             }
 

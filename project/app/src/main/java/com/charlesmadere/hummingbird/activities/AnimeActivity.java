@@ -171,15 +171,11 @@ public class AnimeActivity extends BaseDrawerActivity {
         }
 
         @Override
-        public void success(@Nullable final AnimeV2 animeV2) {
+        public void success(final AnimeV2 animeV2) {
             final AnimeActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                if (animeV2 == null) {
-                    activity.showError();
-                } else {
-                    activity.showAnimeV2(animeV2);
-                }
+                activity.showAnimeV2(animeV2);
             }
         }
     }

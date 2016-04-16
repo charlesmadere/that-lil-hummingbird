@@ -163,15 +163,11 @@ public abstract class BaseUserActivity extends BaseDrawerActivity {
         }
 
         @Override
-        public void success(@Nullable final User user) {
+        public void success(final User user) {
             final BaseUserActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                if (user == null) {
-                    activity.showError();
-                } else {
-                    activity.showUser(user);
-                }
+                activity.showUser(user);
             }
         }
     }
