@@ -4,11 +4,18 @@ import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class AnimeV2 extends AbsAnime implements Parcelable {
@@ -212,6 +219,26 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         private String mRomaji;
 
 
+        public String get(final Type type) {
+            switch (type) {
+                case CANONICAL:
+                    return getCanonical();
+
+                case ENGLISH:
+                    return getEnglish();
+
+                case JAPANESE:
+                    return getJapanese();
+
+                case ROMAJI:
+                    return getRomaji();
+
+                default:
+                    throw new RuntimeException("encountered illegal " + Type.class.getName()
+                            + ": " + type);
+            }
+        }
+
         public String getCanonical() {
             return mCanonical;
         }
@@ -262,6 +289,46 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
                 return new Titles[size];
             }
         };
+
+        public enum Type implements Parcelable {
+            CANONICAL(R.string.canonical),
+            ENGLISH(R.string.english),
+            JAPANESE(R.string.japanese),
+            ROMAJI(R.string.romaji);
+
+            private final int mTitleResId;
+
+            Type(@StringRes final int titleResId) {
+                mTitleResId = titleResId;
+            }
+
+            public int getTitleResId() {
+                return mTitleResId;
+            }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(final Parcel dest, final int flags) {
+                dest.writeInt(ordinal());
+            }
+
+            public static final Creator<Type> CREATOR = new Creator<Type>() {
+                @Override
+                public Type createFromParcel(final Parcel source) {
+                    final int ordinal = source.readInt();
+                    return values()[ordinal];
+                }
+
+                @Override
+                public Type[] newArray(final int size) {
+                    return new Type[size];
+                }
+            };
+        }
     }
 
 }
