@@ -109,6 +109,35 @@ public final class Api {
         getActivityFeed(user.getName(), listener);
     }
 
+    public static void getAnimeById(final AbsAnime anime, final ApiResponse<AnimeV2> listener) {
+        getAnimeById(anime.getId(), listener);
+    }
+
+    public static void getAnimeById(final String id, final ApiResponse<AnimeV2> listener) {
+        getApi().getAnimeById(Constants.API_KEY, id).enqueue(new Callback<AnimeV2>() {
+            @Override
+            public void onResponse(final Call<AnimeV2> call, final Response<AnimeV2> response) {
+                AnimeV2 body = null;
+
+                if (response.isSuccessful()) {
+                    body = response.body();
+                }
+
+                if (body == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    listener.success(body);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<AnimeV2> call, final Throwable t) {
+                Timber.e(TAG, "get anime (" + id + ") by id call failed ", t);
+                listener.failure(null);
+            }
+        });
+    }
+
     public static void getAnimeByMyAnimeListId(final AbsAnime anime,
             final ApiResponse<AnimeV2> listener) {
         if (anime.getVersion() == AbsAnime.Version.V1) {
@@ -140,36 +169,7 @@ public final class Api {
 
             @Override
             public void onFailure(final Call<AnimeV2> call, final Throwable t) {
-                Timber.e(TAG, "get anime (" + id + ") by my anime list id call failed", t);
-                listener.failure(null);
-            }
-        });
-    }
-
-    public static void getAnimeById(final AbsAnime anime, final ApiResponse<AnimeV2> listener) {
-        getAnimeById(anime.getId(), listener);
-    }
-
-    public static void getAnimeById(final String id, final ApiResponse<AnimeV2> listener) {
-        getApi().getAnimeById(Constants.API_KEY, id).enqueue(new Callback<AnimeV2>() {
-            @Override
-            public void onResponse(final Call<AnimeV2> call, final Response<AnimeV2> response) {
-                AnimeV2 body = null;
-
-                if (response.isSuccessful()) {
-                    body = response.body();
-                }
-
-                if (body == null) {
-                    listener.failure(retrieveErrorInfo(response));
-                } else {
-                    listener.success(body);
-                }
-            }
-
-            @Override
-            public void onFailure(final Call<AnimeV2> call, final Throwable t) {
-                Timber.e(TAG, "get anime (" + id + ") by id call failed ", t);
+                Timber.e(TAG, "get anime (" + id + ") by My Anime List id call failed", t);
                 listener.failure(null);
             }
         });

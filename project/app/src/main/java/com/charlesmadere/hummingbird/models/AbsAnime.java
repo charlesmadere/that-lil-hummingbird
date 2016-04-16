@@ -129,27 +129,6 @@ public abstract class AbsAnime implements Parcelable {
         dest.writeString(mSynopsis);
     }
 
-    public static final JsonDeserializer<AbsAnime> JSON_DESERIALIZER = new JsonDeserializer<AbsAnime>() {
-        @Override
-        public AbsAnime deserialize(final JsonElement json, final Type typeOfT,
-                final JsonDeserializationContext context) throws JsonParseException {
-            final JsonObject jsonObject = json.getAsJsonObject();
-
-            final AbsAnime anime;
-
-            if (jsonObject.has("title")) {
-                anime = context.deserialize(json, AnimeV1.class);
-            } else if (jsonObject.has("titles")) {
-                anime = context.deserialize(json, AnimeV2.class);
-            } else {
-                throw new RuntimeException(AbsAnime.class.getSimpleName() + " has neither a"
-                        + " \"title\" element nor a \"titles\" element.");
-            }
-
-            return anime;
-        }
-    };
-
 
     public enum ShowType implements Parcelable {
         @SerializedName("Movie")
@@ -233,5 +212,27 @@ public abstract class AbsAnime implements Parcelable {
             }
         };
     }
+
+
+    public static final JsonDeserializer<AbsAnime> JSON_DESERIALIZER = new JsonDeserializer<AbsAnime>() {
+        @Override
+        public AbsAnime deserialize(final JsonElement json, final Type typeOfT,
+                final JsonDeserializationContext context) throws JsonParseException {
+            final JsonObject jsonObject = json.getAsJsonObject();
+
+            final AbsAnime anime;
+
+            if (jsonObject.has("title")) {
+                anime = context.deserialize(json, AnimeV1.class);
+            } else if (jsonObject.has("titles")) {
+                anime = context.deserialize(json, AnimeV2.class);
+            } else {
+                throw new RuntimeException(AbsAnime.class.getSimpleName() + " has neither a"
+                        + " \"title\" element nor a \"titles\" element.");
+            }
+
+            return anime;
+        }
+    };
 
 }
