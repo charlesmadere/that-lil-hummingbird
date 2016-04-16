@@ -110,7 +110,11 @@ public final class Api {
     }
 
     public static void getAnimeById(final AbsAnime anime, final ApiResponse<AnimeV2> listener) {
-        getAnimeById(anime.getId(), listener);
+        if (anime.getVersion() == AbsAnime.Version.V1) {
+            getAnimeById(anime.getId(), listener);
+        } else {
+            listener.success((AnimeV2) anime);
+        }
     }
 
     public static void getAnimeById(final String id, final ApiResponse<AnimeV2> listener) {
@@ -144,8 +148,7 @@ public final class Api {
             final AnimeV1 animeV1 = (AnimeV1) anime;
             getAnimeByMyAnimeListId(animeV1.getMyAnimeListId(), listener);
         } else {
-            throw new IllegalArgumentException("encountered illegal " +
-                    AbsAnime.Version.class.getName() + ": " + anime.getVersion());
+            listener.success((AnimeV2) anime);
         }
     }
 
