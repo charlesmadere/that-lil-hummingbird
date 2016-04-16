@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.preferences;
 import android.content.Context;
 
 import com.charlesmadere.hummingbird.Hummingbird;
+import com.charlesmadere.hummingbird.models.AnimeV2;
 
 public final class Preferences {
 
@@ -25,7 +26,7 @@ public final class Preferences {
     }
 
     public static void eraseAll() {
-        erase(Account.TAG);
+        erase(Account.TAG, General.TAG);
     }
 
     public static final class Account {
@@ -40,6 +41,16 @@ public final class Preferences {
 
         public static void eraseAll() {
             erase(Account.TAG);
+        }
+    }
+
+    public static final class General {
+        private static final String TAG = Preferences.TAG + ".General";
+        public static final GsonPreference<AnimeV2.Titles.Type> TitleLanguage;
+
+        static {
+            TitleLanguage = new GsonPreference<>(TAG, "TitleLanguage", AnimeV2.Titles.Type.ENGLISH,
+                    AnimeV2.Titles.Type.class);
         }
     }
 

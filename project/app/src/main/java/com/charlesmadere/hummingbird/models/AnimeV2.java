@@ -8,6 +8,7 @@ import android.support.annotation.StringRes;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -96,7 +97,29 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
 
     @Override
     public String getTitle() {
-        return mTitles.getCanonical();
+        final Titles.Type type = Preferences.General.TitleLanguage.get();
+
+        if (type == null) {
+            return mTitles.getEnglish();
+        }
+
+        switch (type) {
+            case CANONICAL:
+                return mTitles.getCanonical();
+
+            case ENGLISH:
+                return mTitles.getEnglish();
+
+            case JAPANESE:
+                return mTitles.getJapanese();
+
+            case ROMAJI:
+                return mTitles.getRomaji();
+
+            default:
+                throw new RuntimeException("encountered illegal " + Titles.Type.class.getName()
+                        + ": " + type);
+        }
     }
 
     public Titles getTitles() {
@@ -291,9 +314,16 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         };
 
         public enum Type implements Parcelable {
+            @SerializedName("canonical")
             CANONICAL(R.string.canonical),
+
+            @SerializedName("english")
             ENGLISH(R.string.english),
+
+            @SerializedName("japanese")
             JAPANESE(R.string.japanese),
+
+            @SerializedName("romaji")
             ROMAJI(R.string.romaji);
 
             private final int mTitleResId;
