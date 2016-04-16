@@ -10,6 +10,7 @@
     <string name="app_written_by_charles_madere">App written by Charles Madere</string>
     <string name="back">Back</string>
     <string name="cancel">Cancel</string>
+    <string name="canonical">Canonical</string>
     <string name="clear">Clear</string>
     <string name="close_drawer">Close drawer</string>
     <string name="community">Community</string>
@@ -25,6 +26,7 @@
     <string name="dropped">Dropped</string>
     <string name="dropped_library_is_empty">Dropped library is empty</string>
     <string name="email">Email</string>
+    <string name="english">English</string>
     <string name="episodes">Episodes</string>
     <string name="error_loading_anime">Error loading anime! Please check your network connection and try again.</string>
     <string name="error_loading_anime_library">Error loading anime library</string>
@@ -54,6 +56,7 @@
     <string name="hummingbird">Hummingbird</string>
     <string name="hummingbird_on_the_web">Hummingbird on the Web</string>
     <string name="husbando">Husbando</string>
+    <string name="japanese">Japanese</string>
     <string name="library">Library</string>
     <string name="library_updates">Library Updates</string>
     <string name="log_viewer">Log Viewer</string>
@@ -93,6 +96,7 @@
     <string name="remove">Remove</string>
     <string name="retry">Retry</string>
     <string name="reviews">Reviews</string>
+    <string name="romaji">Romaji</string>
     <string name="search">Search</string>
     <string name="search_for_">Search for…</string>
     <string name="seen_x_of_y">Seen %1$d of %2$d</string>
