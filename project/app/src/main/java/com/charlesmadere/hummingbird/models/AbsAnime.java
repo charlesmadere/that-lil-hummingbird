@@ -149,7 +149,6 @@ public abstract class AbsAnime implements Parcelable {
         @SerializedName("TV")
         TV(R.string.tv);
 
-
         private final int mTextResId;
 
 
@@ -220,18 +219,11 @@ public abstract class AbsAnime implements Parcelable {
                 final JsonDeserializationContext context) throws JsonParseException {
             final JsonObject jsonObject = json.getAsJsonObject();
 
-            final AbsAnime anime;
-
-            if (jsonObject.has("title")) {
-                anime = context.deserialize(json, AnimeV1.class);
-            } else if (jsonObject.has("titles")) {
-                anime = context.deserialize(json, AnimeV2.class);
+            if (jsonObject.has("anime")) {
+                return context.deserialize(jsonObject, AnimeV2.class);
             } else {
-                throw new RuntimeException(AbsAnime.class.getSimpleName() + " has neither a"
-                        + " \"title\" element nor a \"titles\" element.");
+                return context.deserialize(json, AnimeV1.class);
             }
-
-            return anime;
         }
     };
 

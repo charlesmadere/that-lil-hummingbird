@@ -331,4 +331,15 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         }
     }
 
+
+    public static final JsonDeserializer<AnimeV2> JSON_DESERIALIZER = new JsonDeserializer<AnimeV2>() {
+        @Override
+        public AnimeV2 deserialize(final JsonElement json, final Type typeOfT,
+                final JsonDeserializationContext context) throws JsonParseException {
+            final JsonObject jsonObject = json.getAsJsonObject();
+            // TODO
+            return null;
+        }
+    };
+
 }
