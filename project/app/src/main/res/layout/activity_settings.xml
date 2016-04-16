@@ -22,6 +22,26 @@
                     <LinearLayout
                         style="@style/SettingsCardInternal">
                         <TextView
+                            android:text="@string/general"
+                            style="@style/SettingHeader" />
+                        <LinearLayout
+                            android:id="@+id/llAnimeTitleLanguage"
+                            style="@style/SettingItem">
+                            <TextView
+                                android:text="@string/anime_title_language"
+                                style="@style/SettingItemHeader" />
+                            <TextView
+                                android:id="@+id/tvAnimeTitleLanguage"
+                                tools:text="@string/english"
+                                style="@style/SettingItemBody" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    style="@style/SettingsCard">
+                    <LinearLayout
+                        style="@style/SettingsCardInternal">
+                        <TextView
                             android:text="@string/account"
                             style="@style/SettingHeader" />
                         <TextView
@@ -71,6 +91,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:padding="@dimen/root_padding"
                     android:textColor="@color/secondaryText"
                     android:textSize="@dimen/text_small"
                     tools:text="v1.0 (1)" />

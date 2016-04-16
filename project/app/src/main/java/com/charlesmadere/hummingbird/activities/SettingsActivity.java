@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.BuildConfig;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
+import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 
 import butterknife.Bind;
@@ -19,6 +20,9 @@ import butterknife.OnClick;
 public class SettingsActivity extends BaseDrawerActivity {
 
     private static final String TAG = "SettingsActivity";
+
+    @Bind(R.id.tvAnimeTitleLanguage)
+    TextView mAnimeTitleLanguage;
 
     @Bind(R.id.tvVersion)
     TextView mVersion;
@@ -42,6 +46,11 @@ public class SettingsActivity extends BaseDrawerActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+    }
+
+    @OnClick(R.id.llAnimeTitleLanguage)
+    void onAnimeTitleLanguageClick() {
+        // TODO
     }
 
     @OnClick(R.id.tvAuthor)
@@ -83,6 +92,7 @@ public class SettingsActivity extends BaseDrawerActivity {
     @Override
     protected void onViewsBound() {
         super.onViewsBound();
+        mAnimeTitleLanguage.setText(Preferences.General.TitleLanguage.get().getTitleResId());
         mVersion.setText(getString(R.string.version_format, BuildConfig.VERSION_NAME,
                 BuildConfig.VERSION_CODE));
     }

@@ -6,6 +6,7 @@
     <string name="anime">Anime</string>
     <string name="anime_library">Anime Library</string>
     <string name="anime_library_is_empty">Anime library is empty</string>
+    <string name="anime_title_language">Anime title language</string>
     <string name="apps">Apps</string>
     <string name="app_written_by_charles_madere">App written by Charles Madere</string>
     <string name="back">Back</string>
@@ -49,6 +50,7 @@
     <string name="following">Following</string>
     <string name="forums">Forums</string>
     <string name="gallery">Gallery</string>
+    <string name="general">General</string>
     <string name="github">GitHub</string>
     <string name="group_activity">Group Activity</string>
     <string name="groups">Groups</string>
