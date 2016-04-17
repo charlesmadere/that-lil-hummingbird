@@ -13,7 +13,7 @@ public class GalleryImage implements Parcelable {
     @SerializedName("original")
     private String mOriginal;
 
-    @SerializedName("thumbnail")
+    @SerializedName("thumb")
     private String mThumbnail;
 
 
