@@ -132,6 +132,14 @@
         <item name="android:textSize">@dimen/text_large</item>
     </style>
 
+    <style name="ListMessageTitle.Standalone">
+        <item name="android:layout_gravity">center_horizontal|top</item>
+        <item name="android:paddingEnd">@dimen/root_padding_double</item>
+        <item name="android:paddingStart">@dimen/root_padding_double</item>
+        <item name="android:paddingTop">@dimen/root_padding_quadruple</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
     <style name="MediumOrBold">
         <item name="android:textStyle">bold</item>
     </style>

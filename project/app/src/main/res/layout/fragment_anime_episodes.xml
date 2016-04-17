@@ -16,6 +16,5 @@
     <TextView
         android:id="@+id/tvEmpty"
         android:text="@string/no_episodes"
-        android:visibility="gone"
-        style="@style/ListMessageTitle" />
+        style="@style/ListMessageTitle.Standalone" />
 </FrameLayout>
