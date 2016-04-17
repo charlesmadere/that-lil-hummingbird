@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
+import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
 public class AnimeEpisode implements Parcelable {
@@ -70,7 +71,7 @@ public class AnimeEpisode implements Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeInt(mNumber);
-        dest.writeInt(mSeasonNumber);
+        ParcelableUtils.writeInteger(mSeasonNumber, dest);
         dest.writeParcelable(mAirDate, flags);
         dest.writeString(mId);
         dest.writeString(mSynopsis);
@@ -82,7 +83,7 @@ public class AnimeEpisode implements Parcelable {
         public AnimeEpisode createFromParcel(final Parcel source) {
             final AnimeEpisode ae = new AnimeEpisode();
             ae.mNumber = source.readInt();
-            ae.mSeasonNumber = source.readInt();
+            ae.mSeasonNumber = ParcelableUtils.readInteger(source);
             ae.mAirDate = source.readParcelable(SimpleDate.class.getClassLoader());
             ae.mId = source.readString();
             ae.mSynopsis = source.readString();
