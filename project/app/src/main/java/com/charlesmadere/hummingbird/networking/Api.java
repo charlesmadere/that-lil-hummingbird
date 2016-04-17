@@ -186,11 +186,8 @@ public final class Api {
             }
 
             @Override
-            public void success(@Nullable final User user) {
-                if (user != null) {
-                    CurrentUser.set(user);
-                }
-
+            public void success(final User user) {
+                CurrentUser.set(user);
                 listener.success(user);
             }
         });
