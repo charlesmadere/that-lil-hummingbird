@@ -394,7 +394,7 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
             // AbsAnime fields
             anime.mAgeRating = context.deserialize(animeJson.get("age_rating"), AgeRating.class);
             anime.mCommunityRating = animeJson.get("community_rating").getAsFloat();
-            anime.mEpisodeCount = animeJson.get("episode_count").getAsInt();
+            anime.mEpisodeCount = GsonUtils.getInteger(animeJson, "episode_count");
             anime.mEpisodeLength = animeJson.get("episode_length").getAsInt();
             anime.mShowType = context.deserialize(animeJson.get("show_type"), ShowType.class);
             anime.mCoverImage = animeJson.get("cover_image").getAsString();
@@ -412,7 +412,7 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
                     SimpleDate.class);
             anime.mPosterImage = animeJson.get("poster_image").getAsString();
             anime.mSlug = animeJson.get("slug").getAsString();
-            anime.mYoutubeVideoId = animeJson.get("youtube_video_id").getAsString();
+            anime.mYoutubeVideoId = GsonUtils.getString(animeJson, "youtube_video_id");
             anime.mTitles = context.deserialize(animeJson.get("titles"), Titles.class);
 
             return anime;

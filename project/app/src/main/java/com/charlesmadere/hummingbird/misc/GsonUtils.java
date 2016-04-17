@@ -8,6 +8,7 @@ import com.charlesmadere.hummingbird.models.SimpleDate;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
@@ -30,6 +31,32 @@ public final class GsonUtils {
         }
 
         return sGson;
+    }
+
+    @Nullable
+    public static Integer getInteger(final JsonObject json, final String name) {
+        if (json.has(name)) {
+            final JsonElement element = json.get(name);
+
+            if (!element.isJsonNull()) {
+                return element.getAsInt();
+            }
+        }
+
+        return null;
+    }
+
+    @Nullable
+    public static String getString(final JsonObject json, final String name) {
+        if (json.has(name)) {
+            final JsonElement element = json.get(name);
+
+            if (!element.isJsonNull()) {
+                return element.getAsString();
+            }
+        }
+
+        return null;
     }
 
     @Nullable
