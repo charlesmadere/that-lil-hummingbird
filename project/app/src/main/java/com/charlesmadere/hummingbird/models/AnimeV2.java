@@ -230,12 +230,15 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         @SerializedName("canonical")
         private String mCanonical;
 
+        @Nullable
         @SerializedName("english")
         private String mEnglish;
 
+        @Nullable
         @SerializedName("japanese")
         private String mJapanese;
 
+        @Nullable
         @SerializedName("romaji")
         private String mRomaji;
 
@@ -245,37 +248,51 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
                 return getCanonical();
             }
 
+            String title;
+
             switch (type) {
                 case CANONICAL:
                     return getCanonical();
 
                 case ENGLISH:
-                    return getEnglish();
+                    title = getEnglish();
+                    break;
 
                 case JAPANESE:
-                    return getJapanese();
+                    title = getJapanese();
+                    break;
 
                 case ROMAJI:
-                    return getRomaji();
+                    title = getRomaji();
+                    break;
 
                 default:
                     throw new RuntimeException("encountered illegal " + Type.class.getName()
                             + ": " + type);
             }
+
+            if (TextUtils.isEmpty(title)) {
+                title = getCanonical();
+            }
+
+            return title;
         }
 
         public String getCanonical() {
             return mCanonical;
         }
 
+        @Nullable
         public String getEnglish() {
             return mEnglish;
         }
 
+        @Nullable
         public String getJapanese() {
             return mJapanese;
         }
 
+        @Nullable
         public String getRomaji() {
             return mRomaji;
         }
