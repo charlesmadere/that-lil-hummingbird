@@ -11,9 +11,11 @@ public class AnimeEpisode implements Parcelable {
     @SerializedName("number")
     private int mNumber;
 
+    @Nullable
     @SerializedName("season_number")
-    private int mSeasonNumber;
+    private Integer mSeasonNumber;
 
+    @Nullable
     @SerializedName("airdate")
     private SimpleDate mAirDate;
 
@@ -28,6 +30,7 @@ public class AnimeEpisode implements Parcelable {
     private String mTitle;
 
 
+    @Nullable
     public SimpleDate getAirDate() {
         return mAirDate;
     }
@@ -40,7 +43,8 @@ public class AnimeEpisode implements Parcelable {
         return mNumber;
     }
 
-    public int getSeasonNumber() {
+    @Nullable
+    public Integer getSeasonNumber() {
         return mSeasonNumber;
     }
 
