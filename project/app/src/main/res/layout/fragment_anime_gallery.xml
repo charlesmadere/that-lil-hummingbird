@@ -12,6 +12,7 @@
         android:scrollbars="vertical"
         android:visibility="gone"
         app:layoutManager="GridLayoutManager"
+        app:spanCount="3"
         tools:visibility="visible" />
     <TextView
         android:id="@+id/tvEmpty"
