@@ -25,6 +25,10 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
     @SerializedName("genres")
     private ArrayList<String> mGenres;
 
+    @Nullable
+    @SerializedName("producers")
+    private ArrayList<String> mProducers;
+
     @SerializedName("bayesian_rating")
     private float mBayesianRating;
 
@@ -85,6 +89,11 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         return mPosterImage;
     }
 
+    @Nullable
+    public ArrayList<String> getProducers() {
+        return mProducers;
+    }
+
     public String getSlug() {
         return mSlug;
     }
@@ -119,10 +128,15 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         return mGenres != null && !mGenres.isEmpty();
     }
 
+    public boolean hasProducers() {
+        return mProducers != null && !mProducers.isEmpty();
+    }
+
     @Override
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);
         mGenres = source.createStringArrayList();
+        mProducers = source.createStringArrayList();
         mBayesianRating = source.readFloat();
         mLinks = source.readParcelable(Links.class.getClassLoader());
         mFinishedAiringDate = source.readParcelable(SimpleDate.class.getClassLoader());
@@ -137,6 +151,7 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
     public void writeToParcel(final Parcel dest, final int flags) {
         super.writeToParcel(dest, flags);
         dest.writeStringList(mGenres);
+        dest.writeStringList(mProducers);
         dest.writeFloat(mBayesianRating);
         dest.writeParcelable(mLinks, flags);
         dest.writeParcelable(mFinishedAiringDate, flags);
