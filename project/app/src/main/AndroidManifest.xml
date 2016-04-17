@@ -12,6 +12,7 @@
         android:theme="@style/HummingbirdTheme">
 
         <activity
+            android:label=""
             android:name=".activities.AnimeActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
@@ -64,6 +65,7 @@
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
         <activity
+            android:label=""
             android:name=".activities.UserActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 

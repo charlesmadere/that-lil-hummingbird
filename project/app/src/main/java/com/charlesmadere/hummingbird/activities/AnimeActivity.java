@@ -86,7 +86,6 @@ public class AnimeActivity extends BaseDrawerActivity implements
 
         final Intent intent = getIntent();
         mAnime = intent.getParcelableExtra(EXTRA_ANIME);
-        setTitle(mAnime.getTitle());
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mAnimeV2 = savedInstanceState.getParcelable(KEY_ANIME_V2);
@@ -129,6 +128,7 @@ public class AnimeActivity extends BaseDrawerActivity implements
 
     private void showAnimeV2(final AnimeV2 animeV2) {
         mAnimeV2 = animeV2;
+        setTitle(mAnimeV2.getTitle());
         PaletteUtils.applyParallaxColors(mAnimeV2.getCoverImage(), this, mAppBarLayout,
                 mCollapsingToolbarLayout, mCoverImage, mTabLayout);
         mViewPager.setAdapter(new AnimeAdapter(this, mAnimeV2));
