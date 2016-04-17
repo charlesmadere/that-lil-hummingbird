@@ -3,11 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:paddingBottom="@dimen/root_padding_half"
     android:paddingEnd="@dimen/root_padding_double"
     android:paddingStart="@dimen/root_padding_double"
     android:paddingTop="@dimen/root_padding"
     android:textColor="@color/colorAccent"
     android:textSize="@dimen/text_xlarge"
-    style="@style/MediumOrBold"
-    tools:text="Season 5" />
+    tools:text="Season 5"
+    style="@style/MediumOrBold" />
