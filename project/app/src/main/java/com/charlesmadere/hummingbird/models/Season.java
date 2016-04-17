@@ -2,23 +2,36 @@ package com.charlesmadere.hummingbird.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
+
+import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 
 public class Season implements Parcelable {
 
-    private final int mSeason;
+    @Nullable
+    private final Integer mSeason;
 
 
-    public Season(final int season) {
+    public Season(@Nullable final Integer season) {
         mSeason = season;
     }
 
-    public int getSeason() {
+    @Nullable
+    public Integer getSeason() {
         return mSeason;
+    }
+
+    public boolean hasSeason() {
+        return mSeason != null;
     }
 
     @Override
     public String toString() {
-        return String.valueOf(mSeason);
+        if (hasSeason()) {
+            return mSeason.toString();
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -28,13 +41,13 @@ public class Season implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeInt(mSeason);
+        ParcelableUtils.writeInteger(mSeason, dest);
     }
 
     public static final Creator<Season> CREATOR = new Creator<Season>() {
         @Override
         public Season createFromParcel(final Parcel source) {
-            return new Season(source.readInt());
+            return new Season(ParcelableUtils.readInteger(source));
         }
 
         @Override

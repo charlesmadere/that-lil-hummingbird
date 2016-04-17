@@ -31,11 +31,11 @@ public class AnimeEpisodesAdapter extends BaseMultiAdapter {
         Collections.sort(episodes, AnimeEpisode.COMPARATOR);
         boolean showSeasons = false;
 
-        if (episodes.get(0).getSeasonNumber() != null) {
-            final int seasonNumber = episodes.get(0).getSeasonNumber();
+        if (episodes.get(0).hasSeasonNumber()) {
+            final Integer seasonNumber = episodes.get(0).getSeasonNumber();
 
             for (final AnimeEpisode episode : episodes) {
-                if (episode.getSeasonNumber() != seasonNumber) {
+                if (!seasonNumber.equals(episode.getSeasonNumber())) {
                     showSeasons = true;
                     break;
                 }
@@ -52,7 +52,7 @@ public class AnimeEpisodesAdapter extends BaseMultiAdapter {
         list.add(season);
 
         for (final AnimeEpisode episode : episodes) {
-            if (episode.getSeasonNumber() != season.getSeason()) {
+            if (season.hasSeason() && !season.getSeason().equals(episode.getSeasonNumber())) {
                 season = new Season(episode.getSeasonNumber());
                 list.add(season);
             }

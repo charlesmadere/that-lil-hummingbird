@@ -31,8 +31,12 @@ public class SeasonItemView extends AppCompatTextView implements AdapterView<Sea
 
     @Override
     public void setContent(final Season content) {
-        setText(getResources().getString(R.string.season_x,
-                mNumberFormat.format(content.getSeason())));
+        if (content.hasSeason()) {
+            setText(getResources().getString(R.string.season_x, mNumberFormat.format(
+                    content.getSeason())));
+        } else {
+            setText(R.string.no_season);
+        }
     }
 
 }

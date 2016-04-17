@@ -62,6 +62,10 @@ public class AnimeEpisode implements Parcelable {
         return mTitle;
     }
 
+    public boolean hasSeasonNumber() {
+        return mSeasonNumber != null;
+    }
+
     public boolean hasSynopsis() {
         return !TextUtils.isEmpty(mSynopsis);
     }
