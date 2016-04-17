@@ -97,29 +97,7 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
 
     @Override
     public String getTitle() {
-        final Titles.Type type = Preferences.General.TitleLanguage.get();
-
-        if (type == null) {
-            return mTitles.getEnglish();
-        }
-
-        switch (type) {
-            case CANONICAL:
-                return mTitles.getCanonical();
-
-            case ENGLISH:
-                return mTitles.getEnglish();
-
-            case JAPANESE:
-                return mTitles.getJapanese();
-
-            case ROMAJI:
-                return mTitles.getRomaji();
-
-            default:
-                throw new RuntimeException("encountered illegal " + Titles.Type.class.getName()
-                        + ": " + type);
-        }
+        return mTitles.get(Preferences.General.TitleLanguage.get());
     }
 
     public Titles getTitles() {
@@ -242,7 +220,11 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         private String mRomaji;
 
 
-        public String get(final Type type) {
+        public String get(@Nullable final Type type) {
+            if (type == null) {
+                return getCanonical();
+            }
+
             switch (type) {
                 case CANONICAL:
                     return getCanonical();
