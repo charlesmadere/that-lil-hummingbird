@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
@@ -56,6 +57,10 @@ public class AnimeEpisode implements Parcelable {
 
     public String getTitle() {
         return mTitle;
+    }
+
+    public boolean hasSynopsis() {
+        return !TextUtils.isEmpty(mSynopsis);
     }
 
     @Override
