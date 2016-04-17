@@ -8,6 +8,7 @@ import android.support.annotation.StringRes;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -25,8 +26,9 @@ public abstract class AbsAnime implements Parcelable {
     @SerializedName("community_rating")
     protected float mCommunityRating;
 
+    @Nullable
     @SerializedName("episode_count")
-    protected int mEpisodeCount;
+    protected Integer mEpisodeCount;
 
     @SerializedName("episode_length")
     protected int mEpisodeLength;
@@ -57,7 +59,8 @@ public abstract class AbsAnime implements Parcelable {
         return mCoverImage;
     }
 
-    public int getEpisodeCount() {
+    @Nullable
+    public Integer getEpisodeCount() {
         return mEpisodeCount;
     }
 
@@ -109,7 +112,7 @@ public abstract class AbsAnime implements Parcelable {
     protected void readFromParcel(final Parcel source) {
         mAgeRating = source.readParcelable(AgeRating.class.getClassLoader());
         mCommunityRating = source.readFloat();
-        mEpisodeCount = source.readInt();
+        mEpisodeCount = ParcelableUtils.readInteger(source);
         mEpisodeLength = source.readInt();
         mShowType = source.readParcelable(ShowType.class.getClassLoader());
         mCoverImage = source.readString();
@@ -121,7 +124,7 @@ public abstract class AbsAnime implements Parcelable {
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeParcelable(mAgeRating, flags);
         dest.writeFloat(mCommunityRating);
-        dest.writeInt(mEpisodeCount);
+        ParcelableUtils.writeInteger(mEpisodeCount, dest);
         dest.writeInt(mEpisodeLength);
         dest.writeParcelable(mShowType, flags);
         dest.writeString(mCoverImage);
