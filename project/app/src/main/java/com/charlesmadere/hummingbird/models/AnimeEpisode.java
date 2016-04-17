@@ -5,8 +5,11 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.Comparator;
 
 public class AnimeEpisode implements Parcelable {
 
@@ -99,6 +102,19 @@ public class AnimeEpisode implements Parcelable {
         @Override
         public AnimeEpisode[] newArray(final int size) {
             return new AnimeEpisode[size];
+        }
+    };
+
+
+    public static final Comparator<AnimeEpisode> COMPARATOR = new Comparator<AnimeEpisode>() {
+        @Override
+        public int compare(final AnimeEpisode lhs, final AnimeEpisode rhs) {
+            if ((lhs.getSeasonNumber() == null || rhs.getSeasonNumber() == null) ||
+                    (lhs.getSeasonNumber().equals(rhs.getSeasonNumber()))) {
+                return MiscUtils.integerCompare(lhs.getNumber(), rhs.getNumber());
+            } else {
+                return MiscUtils.integerCompare(lhs.getSeasonNumber(), rhs.getSeasonNumber());
+            }
         }
     };
 
