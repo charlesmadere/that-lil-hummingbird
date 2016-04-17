@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.views.KeyValueTextView;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -100,7 +101,7 @@ public class AnimeDetailsFragment extends BaseFragment {
         mGenres.setText(mAnimeV2.getGenresString(getResources()));
         mAgeRating.setText(mAnimeV2.getAgeRating().getTextResId());
 
-        if (mAnimeV2.getEpisodeCount() > 1) {
+        if (mAnimeV2.getShowType() != AbsAnime.ShowType.MOVIE) {
             mEpisodeCount.setText(getResources().getQuantityString(R.plurals.x_episodes,
                     mAnimeV2.getEpisodeCount(), NumberFormat.getInstance()
                             .format(mAnimeV2.getEpisodeCount())));
