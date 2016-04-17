@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.fragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeV2;
+import com.charlesmadere.hummingbird.models.SimpleDate;
 import com.charlesmadere.hummingbird.views.KeyValueTextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -32,6 +34,9 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     @Bind(R.id.kvtvCommunityRating)
     KeyValueTextView mCommunityRating;
+
+    @Bind(R.id.kvtvAired)
+    KeyValueTextView mAired;
 
     @Bind(R.id.kvtvFinishedAiring)
     KeyValueTextView mFinishedAiring;
@@ -114,9 +119,17 @@ public class AnimeDetailsFragment extends BaseFragment {
         }
 
         if (mAnimeV2.getStartedAiringDate() != null) {
-            mStartedAiring.setText(getText(R.string.started_airing),
-                    mAnimeV2.getStartedAiringDate().getRelativeDateTimeText(getContext()));
-            mStartedAiring.setVisibility(View.VISIBLE);
+            if (mAnimeV2.getShowType() == AbsAnime.ShowType.MOVIE) {
+                setAiringDateView(mAired, R.string.aired, mAnimeV2.getStartedAiringDate());
+            } else {
+                setAiringDateView(mStartedAiring, R.string.started_airing,
+                        mAnimeV2.getStartedAiringDate());
+
+                if (mAnimeV2.getFinishedAiringDate() != null) {
+                    setAiringDateView(mFinishedAiring, R.string.finished_airing,
+                            mAnimeV2.getFinishedAiringDate());
+                }
+            }
         }
 
         if (mAnimeV2.getFinishedAiringDate() != null) {
@@ -138,6 +151,12 @@ public class AnimeDetailsFragment extends BaseFragment {
         startActivity(new Intent()
                 .setAction(Intent.ACTION_VIEW)
                 .setData(Uri.parse("https://www.youtube.com/watch?v=" + mAnimeV2.getYoutubeVideoId())));
+    }
+
+    private void setAiringDateView(final KeyValueTextView view, @StringRes final int keyTextResId,
+            final SimpleDate date) {
+        view.setText(getText(keyTextResId), date.getRelativeDateTimeText(getContext()));
+        view.setVisibility(View.VISIBLE);
     }
 
 }

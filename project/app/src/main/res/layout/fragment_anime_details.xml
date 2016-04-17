@@ -55,6 +55,13 @@
                     tools:visibility="visible"
                     style="@style/AnimeSynopsis" />
                 <com.charlesmadere.hummingbird.views.KeyValueTextView
+                    android:id="@+id/kvtvAired"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:visibility="gone"
+                    tools:text="Aired March 31st, 2014"
+                    tools:visibility="visible" />
+                <com.charlesmadere.hummingbird.views.KeyValueTextView
                     android:id="@+id/kvtvStartedAiring"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
