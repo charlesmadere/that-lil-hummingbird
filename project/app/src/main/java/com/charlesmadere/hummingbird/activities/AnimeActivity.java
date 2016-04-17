@@ -142,7 +142,7 @@ public class AnimeActivity extends BaseDrawerActivity implements
         mSimpleProgressView.fadeOut();
 
         new AlertDialog.Builder(this)
-                .setMessage(R.string.error_loading_user)
+                .setMessage(R.string.error_loading_anime)
                 .setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(final DialogInterface dialog) {
