@@ -106,7 +106,7 @@ public class AnimeDetailsFragment extends BaseFragment {
         mGenres.setText(mAnimeV2.getGenresString(getResources()));
         mAgeRating.setText(mAnimeV2.getAgeRating().getTextResId());
 
-        if (mAnimeV2.getShowType() != AbsAnime.ShowType.MOVIE) {
+        if (mAnimeV2.getShowType() != AbsAnime.ShowType.MOVIE && mAnimeV2.getEpisodeCount() != null) {
             mEpisodeCount.setText(getResources().getQuantityString(R.plurals.x_episodes,
                     mAnimeV2.getEpisodeCount(), NumberFormat.getInstance()
                             .format(mAnimeV2.getEpisodeCount())));
