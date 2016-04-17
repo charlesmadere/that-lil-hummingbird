@@ -104,10 +104,10 @@ public class LibraryEntryItemView extends CardView implements AdapterView<Librar
 
         final Resources res = getResources();
         mProgress.setText(res.getText(R.string.progress), anime.hasEpisodeCount() &&
-                anime.getEpisodeCount() >= 1 ? mNumberFormat.format(
-                mLibraryEntry.getEpisodesWatched()) : res.getString(R.string.progress_format,
+                anime.getEpisodeCount() >= 1 ? res.getString(R.string.progress_format,
                 mNumberFormat.format(mLibraryEntry.getEpisodesWatched()), mNumberFormat.format(
-                        anime.getEpisodeCount())));
+                        anime.getEpisodeCount())) : mNumberFormat.format(
+                mLibraryEntry.getEpisodesWatched()));
 
         if (mLibraryEntry.hasRating()) {
             mRating.setText(res.getText(R.string.rating), mLibraryEntry.getRating().getValue());
