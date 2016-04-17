@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:fillViewport="true"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
@@ -7,6 +8,70 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="vertical">
-
+        <android.support.v7.widget.CardView
+            style="@style/CardItem">
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/sdvPoster"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="@dimen/root_padding"
+                    android:layout_width="200dp"
+                    style="@style/AnimePoster" />
+                <TextView
+                    android:id="@+id/tvTitle"
+                    tools:text="KonoSuba: God's Blessing on This Wonderful World!"
+                    style="@style/AnimeTitle" />
+                <TextView
+                    android:id="@+id/tvShowType"
+                    tools:text="@string/movie"
+                    style="@style/AnimeShowType" />
+                <TextView
+                    android:id="@+id/tvGenres"
+                    tools:text="Comedy, Mystery, Romance"
+                    style="@style/AnimeGenres" />
+                <TextView
+                    android:id="@+id/tvEpisodeCount"
+                    tools:text="@string/pg13"
+                    style="@style/AgeRating" />
+                <android.support.v4.widget.Space
+                    android:layout_height="@dimen/root_padding_half"
+                    android:layout_width="match_parent" />
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/tvSynopsis"
+                    android:maxLines="250"
+                    tools:text="Kazuma Satou is a shut-in die-hard fan of games, anime, and manga. A traffic accident brings his disappointingly brief life to an end, or it should have, but he wakes up and sees a beautiful girl who introduces herself as a goddess. She asks him if he'd like to go to another world but he can only bring one thing with him. Kazumi chooses to bring the goddess. With that, he is transported to another world and his great adventure subjugating the demon king begins, but first the hard work of finding food, clothing, and shelter begins. Kazuma wants to live in peace, but the goddess raises one problem after another, and then the demon king's army has its eyes set on him."
+                    style="@style/AnimeSynopsis" />
+                <android.support.v4.widget.Space
+                    android:layout_height="@dimen/root_padding_half"
+                    android:layout_width="match_parent" />
+                <com.charlesmadere.hummingbird.views.KeyValueTextView
+                    android:id="@+id/tvStartedAiring"
+                    tools:text="Started airing March 31st, 2014"
+                    style="@style/TimeOrDate" />
+                <com.charlesmadere.hummingbird.views.KeyValueTextView
+                    android:id="@+id/tvFinishedAiring"
+                    tools:text="Finished airing August 31st, 2014"
+                    style="@style/TimeOrDate" />
+                <com.charlesmadere.hummingbird.views.KeyValueTextView
+                    android:id="@+id/tvCommunityRating"
+                    android:layout_marginTop="@dimen/root_padding_half"
+                    tools:text="Community rating 4.125"
+                    style="@style/TimeOrDate" />
+                <ImageButton
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="@string/youtube_link"
+                    android:id="@+id/ibYouTubeLink"
+                    android:layout_gravity="end"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/root_padding_half"
+                    android:layout_width="wrap_content"
+                    android:padding="@dimen/root_padding_half"
+                    android:src="@drawable/ic_video_library_black_24dp" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
     </LinearLayout>
 </ScrollView>

@@ -2,6 +2,11 @@
 <resources>
 
     <string name="account">Account</string>
+    <string name="age_rating_g">G</string>
+    <string name="age_rating_pg">PG</string>
+    <string name="age_rating_pg13">PG-13</string>
+    <string name="age_rating_r17">R17+</string>
+    <string name="age_rating_r18">R18+</string>
     <string name="all">All</string>
     <string name="anime">Anime</string>
     <string name="anime_library">Anime Library</string>
@@ -82,6 +87,7 @@
     <string name="open_source_on_github">Open source on GitHub</string>
     <string name="ova">OVA</string>
     <string name="password">Password</string>
+    <string name="pg13">PG13</string>
     <string name="plan_to_watch">Plan to Watch</string>
     <string name="plan_to_watch_library_is_empty">Plan to watch library is empty</string>
     <string name="privacy">Privacy</string>
@@ -130,6 +136,7 @@
     <string name="x_watched_episode_y">%1$s watched episode %2$s</string>
     <string name="x_y">%1$s %2$s</string>
     <string name="yes">Yes</string>
+    <string name="youtube_link">YouTube Link</string>
 
     <plurals name="followed_x_users">
         <item quantity="one">followed %1$s user</item>

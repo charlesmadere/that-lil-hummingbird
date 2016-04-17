@@ -2,26 +2,38 @@ package com.charlesmadere.hummingbird.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.StringRes;
 
+import com.charlesmadere.hummingbird.R;
 import com.google.gson.annotations.SerializedName;
 
 public enum AgeRating implements Parcelable {
 
     @SerializedName("G")
-    G,
+    G(R.string.age_rating_g),
 
     @SerializedName("PG")
-    PG,
+    PG(R.string.age_rating_pg),
 
     @SerializedName("PG13")
-    PG13,
+    PG13(R.string.age_rating_pg13),
 
     @SerializedName("R17+")
-    R17,
+    R17(R.string.age_rating_r17),
 
     @SerializedName("R18+")
-    R18;
+    R18(R.string.age_rating_r18);
 
+    private final int mTitleResId;
+
+
+    AgeRating(@StringRes final int titleResId) {
+        mTitleResId = titleResId;
+    }
+
+    public int getTitleResId() {
+        return mTitleResId;
+    }
 
     @Override
     public int describeContents() {

@@ -18,7 +18,6 @@ public enum AiringStatus implements Parcelable {
     @SerializedName("Not Yet Aired")
     NOT_YET_AIRED(R.string.not_yet_aired);
 
-
     private final int mTextResId;
 
 

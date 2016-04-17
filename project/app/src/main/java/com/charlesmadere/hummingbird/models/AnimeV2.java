@@ -133,6 +133,10 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         return mProducers != null && !mProducers.isEmpty();
     }
 
+    public boolean hasYoutubeVideoId() {
+        return !TextUtils.isEmpty(mYoutubeVideoId);
+    }
+
     @Override
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);
