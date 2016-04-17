@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeEpisodesAdapter;
+import com.charlesmadere.hummingbird.misc.SpaceItemDecoration;
 import com.charlesmadere.hummingbird.models.AnimeEpisode;
 
 import java.util.ArrayList;
@@ -62,6 +63,8 @@ public class AnimeEpisodesFragment extends BaseFragment {
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
 
         if (mAnimeEpisodes == null || mAnimeEpisodes.isEmpty()) {
             mEmpty.setVisibility(View.VISIBLE);
