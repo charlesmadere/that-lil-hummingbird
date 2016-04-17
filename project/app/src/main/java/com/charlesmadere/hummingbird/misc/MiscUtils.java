@@ -21,6 +21,10 @@ public final class MiscUtils {
         return res.getDimensionPixelSize(resourceId);
     }
 
+    public static int integerCompare(final int lhs, final int rhs) {
+        return lhs < rhs ? -1 : (lhs == rhs ? 0 : 1);
+    }
+
     public static boolean isLowRamDevice() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             final ActivityManager am = (ActivityManager) Hummingbird.get()
