@@ -21,6 +21,10 @@
 
     </style>
 
+    <style name="HummingbirdTheme.Dark">
+        <item name="android:windowBackground">@color/black</item>
+    </style>
+
     <style name="HummingbirdTheme.WithDrawer">
 
     </style>
