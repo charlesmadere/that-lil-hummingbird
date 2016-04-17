@@ -1,6 +1,5 @@
 package com.charlesmadere.hummingbird.fragments;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
@@ -11,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.SimpleDate;
@@ -149,9 +149,7 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     @OnClick(R.id.ibYouTubeLink)
     void onYouTubeLinkClick() {
-        startActivity(new Intent()
-                .setAction(Intent.ACTION_VIEW)
-                .setData(Uri.parse("https://www.youtube.com/watch?v=" + mAnimeV2.getYoutubeVideoId())));
+        openUrl(Constants.YOUTUBE_BASE_URL + mAnimeV2.getYoutubeVideoId());
     }
 
     private void setAiringDateView(final KeyValueTextView view, @StringRes final int keyTextResId,

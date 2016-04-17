@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -69,6 +70,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (mToolbar != null) {
             prepareToolbar();
         }
+    }
+
+    protected void openUrl(final String url) {
+        startActivity(new Intent()
+                .setAction(Intent.ACTION_VIEW)
+                .setData(Uri.parse(url)));
     }
 
     private void prepareToolbar() {

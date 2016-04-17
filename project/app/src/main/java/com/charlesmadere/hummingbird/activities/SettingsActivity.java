@@ -3,13 +3,13 @@ package com.charlesmadere.hummingbird.activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.BuildConfig;
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.preferences.Preferences;
@@ -72,12 +72,12 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @OnClick(R.id.tvAuthor)
     void onAuthorClick() {
-        openUrl("https://twitter.com/charlesmadere");
+        openUrl(Constants.CHARLES_TWITTER_URL);
     }
 
     @OnClick(R.id.tvGitHub)
     void onGitHubClick() {
-        openUrl("https://github.com/charlesmadere/that-lil-hummingbird");
+        openUrl(Constants.GITHUB_URL);
     }
 
     @OnClick(R.id.tvLogViewer)
@@ -87,7 +87,7 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @OnClick(R.id.tvRateThisApp)
     void onRateThisAppClick() {
-        openUrl("https://play.google.com/store/apps/details?id=" + getPackageName());
+        openUrl(Constants.PLAY_STORE_BASE_URL + getPackageName());
     }
 
     @OnClick(R.id.tvSignOut)
@@ -112,12 +112,6 @@ public class SettingsActivity extends BaseDrawerActivity {
         mAnimeTitleLanguage.setText(Preferences.General.TitleLanguage.get().getTitleResId());
         mVersion.setText(getString(R.string.version_format, BuildConfig.VERSION_NAME,
                 BuildConfig.VERSION_CODE));
-    }
-
-    private void openUrl(final String url) {
-        startActivity(new Intent()
-                .setAction(Intent.ACTION_VIEW)
-                .setData(Uri.parse(url)));
     }
 
 }
