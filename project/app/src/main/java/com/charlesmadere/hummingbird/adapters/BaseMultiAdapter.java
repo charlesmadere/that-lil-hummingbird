@@ -1,0 +1,23 @@
+package com.charlesmadere.hummingbird.adapters;
+
+import android.content.Context;
+
+import java.util.HashMap;
+
+public abstract class BaseMultiAdapter extends BaseAdapter<Object> {
+
+    private final HashMap<Class, Integer> mViewKey = getViewKeyMap();
+
+
+    protected BaseMultiAdapter(final Context context) {
+        super(context);
+    }
+
+    @Override
+    public final int getItemViewType(final int position) {
+        return mViewKey.get(getItem(position).getClass());
+    }
+
+    protected abstract HashMap<Class, Integer> getViewKeyMap();
+
+}

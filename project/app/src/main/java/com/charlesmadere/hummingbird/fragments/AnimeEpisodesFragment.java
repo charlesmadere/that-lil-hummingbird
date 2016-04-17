@@ -70,7 +70,7 @@ public class AnimeEpisodesFragment extends BaseFragment {
             mEmpty.setVisibility(View.VISIBLE);
         } else {
             final AnimeEpisodesAdapter adapter = new AnimeEpisodesAdapter(getContext());
-            adapter.set(mAnimeEpisodes);
+            adapter.setAnimeEpisodes(mAnimeEpisodes);
             mRecyclerView.setAdapter(adapter);
             mRecyclerView.setVisibility(View.VISIBLE);
         }
