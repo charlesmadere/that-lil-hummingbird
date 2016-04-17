@@ -123,8 +123,8 @@ public class AnimeDetailsFragment extends BaseFragment {
             mFinishedAiring.setVisibility(View.VISIBLE);
         }
 
-        mCommunityRating.setText(getString(R.string.community_rating_x,
-                mAnimeV2.getCommunityRating()));
+        mCommunityRating.setText(getText(R.string.community_rating),
+                String.valueOf(mAnimeV2.getCommunityRating()));
 
         if (mAnimeV2.hasYoutubeVideoId()) {
             mYouTubeLink.setVisibility(View.VISIBLE);

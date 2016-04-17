@@ -56,21 +56,24 @@
                     style="@style/AnimeSynopsis" />
                 <com.charlesmadere.hummingbird.views.KeyValueTextView
                     android:id="@+id/kvtvStartedAiring"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
                     android:visibility="gone"
                     tools:text="Started airing March 31st, 2014"
-                    tools:visibility="visible"
-                    style="@style/TimeOrDate" />
+                    tools:visibility="visible" />
                 <com.charlesmadere.hummingbird.views.KeyValueTextView
                     android:id="@+id/kvtvFinishedAiring"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
                     android:visibility="gone"
                     tools:text="Finished airing August 31st, 2014"
-                    tools:visibility="visible"
-                    style="@style/TimeOrDate" />
+                    tools:visibility="visible" />
                 <com.charlesmadere.hummingbird.views.KeyValueTextView
                     android:id="@+id/kvtvCommunityRating"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/root_padding_half"
-                    tools:text="Community rating 4.125"
-                    style="@style/TimeOrDate" />
+                    android:layout_width="wrap_content"
+                    tools:text="Community rating 4.125" />
                 <ImageButton
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="@string/youtube_link"
