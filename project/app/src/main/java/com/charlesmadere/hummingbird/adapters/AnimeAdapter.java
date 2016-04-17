@@ -10,12 +10,14 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.fragments.AnimeDetailsFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeEpisodesFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeGalleryFragment;
+import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 
 public class AnimeAdapter extends FragmentStatePagerAdapter {
 
     private final AnimeV2 mAnimeV2;
     private final Context mContext;
+    private final Impl mImpl;
 
 
     public AnimeAdapter(final FragmentActivity activity, final AnimeV2 animeV2) {
@@ -26,59 +28,160 @@ public class AnimeAdapter extends FragmentStatePagerAdapter {
         super(fm);
         mContext = context;
         mAnimeV2 = animeV2;
+
+        if (mAnimeV2.getShowType() == AbsAnime.ShowType.MOVIE) {
+            mImpl = new MovieImpl();
+        } else {
+            mImpl = new ShowImpl();
+        }
+    }
+
+    private AnimeDetailsFragment getAnimeDetailsFragment() {
+        return AnimeDetailsFragment.create(mAnimeV2);
+    }
+
+    private CharSequence getAnimeDetailsTitle() {
+        return mContext.getString(R.string.details);
+    }
+
+    private AnimeEpisodesFragment getAnimeEpisodesFragment() {
+        return AnimeEpisodesFragment.create(mAnimeV2.getLinks().getAnimeEpisodes());
+    }
+
+    private CharSequence getAnimeEpisodesTitle() {
+        return mContext.getString(R.string.episodes);
+    }
+
+    private AnimeGalleryFragment getAnimeGalleryFragment() {
+        return AnimeGalleryFragment.create(mAnimeV2.getLinks().getGalleryImages());
+    }
+
+    private CharSequence getAnimeGalleryTitle() {
+        return mContext.getString(R.string.gallery);
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return mImpl.getCount();
     }
 
     @Override
     public Fragment getItem(final int position) {
-        final Fragment fragment;
-
-        switch (position) {
-            case 0:
-                fragment = AnimeDetailsFragment.create(mAnimeV2);
-                break;
-
-            case 1:
-                fragment = AnimeEpisodesFragment.create(mAnimeV2.getLinks().getAnimeEpisodes());
-                break;
-
-            case 2:
-                fragment = AnimeGalleryFragment.create(mAnimeV2.getLinks().getGalleryImages());
-                break;
-
-            default:
-                throw new RuntimeException("illegal position: " + position);
-        }
-
-        return fragment;
+        return mImpl.getItem(position);
     }
 
     @Override
     public CharSequence getPageTitle(final int position) {
-        final int pageTitleResId;
+        return mImpl.getPageTitle(position);
+    }
 
-        switch (position) {
-            case 0:
-                pageTitleResId = R.string.details;
-                break;
 
-            case 1:
-                pageTitleResId = R.string.episodes;
-                break;
+    private interface Impl {
+        int getCount();
+        Fragment getItem(final int position);
+        CharSequence getPageTitle(final int position);
+    }
 
-            case 2:
-                pageTitleResId = R.string.gallery;
-                break;
-
-            default:
-                throw new RuntimeException("illegal position: " + position);
+    private class MovieImpl implements Impl {
+        @Override
+        public int getCount() {
+            return 2;
         }
 
-        return mContext.getText(pageTitleResId);
+        @Override
+        public Fragment getItem(final int position) {
+            final Fragment fragment;
+
+            switch (position) {
+                case 0:
+                    fragment = getAnimeDetailsFragment();
+                    break;
+
+                case 1:
+                    fragment = getAnimeGalleryFragment();
+                    break;
+
+                default:
+                    throw new RuntimeException("illegal position: " + position);
+            }
+
+            return fragment;
+        }
+
+        @Override
+        public CharSequence getPageTitle(final int position) {
+            final CharSequence title;
+
+            switch (position) {
+                case 0:
+                    title = getAnimeDetailsTitle();
+                    break;
+
+                case 1:
+                    title = getAnimeGalleryTitle();
+                    break;
+
+                default:
+                    throw new RuntimeException("illegal position: " + position);
+            }
+
+            return title;
+        }
+    }
+
+    private class ShowImpl implements Impl {
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        @Override
+        public Fragment getItem(final int position) {
+            final Fragment fragment;
+
+            switch (position) {
+                case 0:
+                    fragment = getAnimeDetailsFragment();
+                    break;
+
+                case 1:
+                    fragment = getAnimeEpisodesFragment();
+                    break;
+
+                case 2:
+                    fragment = getAnimeGalleryFragment();
+                    break;
+
+                default:
+                    throw new RuntimeException("illegal position: " + position);
+            }
+
+            return fragment;
+        }
+
+        @Override
+        public CharSequence getPageTitle(final int position) {
+            final CharSequence title;
+
+            switch (position) {
+                case 0:
+                    title = getAnimeDetailsTitle();
+                    break;
+
+                case 1:
+                    title = getAnimeEpisodesTitle();
+                    break;
+
+                case 2:
+                    title = getAnimeGalleryTitle();
+                    break;
+
+                default:
+                    throw new RuntimeException("illegal position: " + position);
+            }
+
+            return title;
+        }
     }
 
 }
