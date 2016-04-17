@@ -116,7 +116,7 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-    private static class AuthenticateListener implements ApiResponse<Void> {
+    private static class AuthenticateListener implements ApiResponse<String> {
         private final WeakReference<LoginActivity> mActivityReference;
 
         private AuthenticateListener(final LoginActivity activity) {
@@ -137,7 +137,7 @@ public class LoginActivity extends BaseActivity {
         }
 
         @Override
-        public void success(@Nullable final Void object) {
+        public void success(final String string) {
             final LoginActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
@@ -164,7 +164,7 @@ public class LoginActivity extends BaseActivity {
         }
 
         @Override
-        public void success(@Nullable final User user) {
+        public void success(final User user) {
             final LoginActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {

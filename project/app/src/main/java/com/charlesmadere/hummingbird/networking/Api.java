@@ -41,10 +41,16 @@ public final class Api {
             @Override
             public void onResponse(final Call<LibraryEntry> call,
                     final Response<LibraryEntry> response) {
+                LibraryEntry body = null;
+
                 if (response.isSuccessful()) {
-                    listener.success(response.body());
-                } else {
+                    body = response.body();
+                }
+
+                if (body == null) {
                     listener.failure(retrieveErrorInfo(response));
+                } else {
+                    listener.success(body);
                 }
             }
 
@@ -56,22 +62,22 @@ public final class Api {
         });
     }
 
-    public static void authenticate(final AuthInfo authInfo, final ApiResponse<Void> listener) {
+    public static void authenticate(final AuthInfo authInfo, final ApiResponse<String> listener) {
         getApi().authenticate(authInfo).enqueue(new Callback<String>() {
             @Override
             public void onResponse(final Call<String> call, final Response<String> response) {
-                if (response.isSuccessful()) {
-                    final String body = response.body();
+                String body = null;
 
-                    if (TextUtils.isEmpty(body)) {
-                        listener.failure(retrieveErrorInfo(response));
-                    } else {
-                        Preferences.Account.AuthToken.set(body);
-                        Preferences.Account.Username.set(authInfo.getUsername());
-                        listener.success(null);
-                    }
-                } else {
+                if (response.isSuccessful()) {
+                    body = response.body();
+                }
+
+                if (TextUtils.isEmpty(body)) {
                     listener.failure(retrieveErrorInfo(response));
+                } else {
+                    Preferences.Account.AuthToken.set(body);
+                    Preferences.Account.Username.set(authInfo.getUsername());
+                    listener.success(body);
                 }
             }
 
