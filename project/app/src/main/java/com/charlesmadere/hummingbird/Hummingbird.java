@@ -7,7 +7,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 
 public class Hummingbird extends Application {
 
-    private static final String TAG = "HummingbirdMobile";
+    private static final String TAG = "Hummingbird";
 
     private static Hummingbird sInstance;
 
