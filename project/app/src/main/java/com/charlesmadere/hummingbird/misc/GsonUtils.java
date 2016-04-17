@@ -1,10 +1,16 @@
 package com.charlesmadere.hummingbird.misc;
 
+import android.support.annotation.Nullable;
+
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.SimpleDate;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import java.util.ArrayList;
 
 public final class GsonUtils {
 
@@ -24,6 +30,22 @@ public final class GsonUtils {
         }
 
         return sGson;
+    }
+
+    @Nullable
+    public static ArrayList<String> getStringArrayList(final JsonObject json, final String name) {
+        if (json.has(name)) {
+            final JsonArray array = json.getAsJsonArray(name);
+            final ArrayList<String> strings = new ArrayList<>(array.size());
+
+            for (int i = 0; i < array.size(); ++i) {
+                strings.add(array.get(i).getAsString());
+            }
+
+            return strings;
+        } else {
+            return null;
+        }
     }
 
 }

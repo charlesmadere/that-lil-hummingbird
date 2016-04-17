@@ -8,6 +8,7 @@ import android.support.annotation.StringRes;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.GsonUtils;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -365,8 +366,35 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         public AnimeV2 deserialize(final JsonElement json, final Type typeOfT,
                 final JsonDeserializationContext context) throws JsonParseException {
             final JsonObject jsonObject = json.getAsJsonObject();
-            // TODO
-            return null;
+            final AnimeV2 anime = new AnimeV2();
+
+            final JsonObject animeJson = jsonObject.get("anime").getAsJsonObject();
+
+            // AbsAnime fields
+            anime.mAgeRating = context.deserialize(animeJson.get("age_rating"), AgeRating.class);
+            anime.mCommunityRating = animeJson.get("community_rating").getAsFloat();
+            anime.mEpisodeCount = animeJson.get("episode_count").getAsInt();
+            anime.mEpisodeLength = animeJson.get("episode_length").getAsInt();
+            anime.mShowType = context.deserialize(animeJson.get("show_type"), ShowType.class);
+            anime.mCoverImage = animeJson.get("cover_image").getAsString();
+            anime.mId = animeJson.get("id").getAsString();
+            anime.mSynopsis = animeJson.get("synopsis").getAsString();
+
+            // AnimeV2 fields
+            anime.mGenres = GsonUtils.getStringArrayList(animeJson, "genres");
+            anime.mProducers = GsonUtils.getStringArrayList(animeJson, "producers");
+            anime.mBayesianRating = animeJson.get("bayesian_rating").getAsFloat();
+            anime.mLinks = context.deserialize(jsonObject.get("linked"), Links.class);
+            anime.mFinishedAiringDate = context.deserialize(animeJson.get("finished_airing_date"),
+                    SimpleDate.class);
+            anime.mStartedAiringDate = context.deserialize(animeJson.get("started_airing_date"),
+                    SimpleDate.class);
+            anime.mPosterImage = animeJson.get("poster_image").getAsString();
+            anime.mSlug = animeJson.get("slug").getAsString();
+            anime.mYoutubeVideoId = animeJson.get("youtube_video_id").getAsString();
+            anime.mTitles = context.deserialize(animeJson.get("titles"), Titles.class);
+
+            return anime;
         }
     };
 

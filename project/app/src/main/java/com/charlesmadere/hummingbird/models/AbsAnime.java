@@ -20,29 +20,29 @@ import java.lang.reflect.Type;
 public abstract class AbsAnime implements Parcelable {
 
     @SerializedName("age_rating")
-    private AgeRating mAgeRating;
+    protected AgeRating mAgeRating;
 
     @SerializedName("community_rating")
-    private float mCommunityRating;
+    protected float mCommunityRating;
 
     @SerializedName("episode_count")
-    private int mEpisodeCount;
+    protected int mEpisodeCount;
 
     @SerializedName("episode_length")
-    private int mEpisodeLength;
+    protected int mEpisodeLength;
 
     @SerializedName("show_type")
-    private ShowType mShowType;
+    protected ShowType mShowType;
 
     @SerializedName("cover_image")
-    private String mCoverImage;
+    protected String mCoverImage;
 
     @SerializedName("id")
-    private String mId;
+    protected String mId;
 
     @Nullable
     @SerializedName("synopsis")
-    private String mSynopsis;
+    protected String mSynopsis;
 
 
     public AgeRating getAgeRating() {
