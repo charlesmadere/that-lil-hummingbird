@@ -24,15 +24,15 @@ public enum AgeRating implements Parcelable {
     @SerializedName("R18+")
     R18(R.string.age_rating_r18);
 
-    private final int mTitleResId;
+    private final int mTextResId;
 
 
-    AgeRating(@StringRes final int titleResId) {
-        mTitleResId = titleResId;
+    AgeRating(@StringRes final int textResId) {
+        mTextResId = textResId;
     }
 
-    public int getTitleResId() {
-        return mTitleResId;
+    public int getTextResId() {
+        return mTextResId;
     }
 
     @Override

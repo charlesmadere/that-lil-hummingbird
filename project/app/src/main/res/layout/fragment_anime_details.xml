@@ -33,8 +33,14 @@
                     tools:text="Comedy, Mystery, Romance"
                     style="@style/AnimeGenres" />
                 <TextView
-                    android:id="@+id/tvEpisodeCount"
+                    android:id="@+id/tvAgeRating"
                     tools:text="@string/pg13"
+                    style="@style/AgeRating" />
+                <TextView
+                    android:id="@+id/tvEpisodeCount"
+                    android:visibility="gone"
+                    tools:text="20 episodes"
+                    tools:visibility="visible"
                     style="@style/AgeRating" />
                 <android.support.v4.widget.Space
                     android:layout_height="@dimen/root_padding_half"
@@ -42,27 +48,31 @@
                 <TextView
                     android:ellipsize="end"
                     android:id="@+id/tvSynopsis"
+                    android:layout_marginBottom="@dimen/root_padding_half"
                     android:maxLines="250"
+                    android:visibility="gone"
                     tools:text="Kazuma Satou is a shut-in die-hard fan of games, anime, and manga. A traffic accident brings his disappointingly brief life to an end, or it should have, but he wakes up and sees a beautiful girl who introduces herself as a goddess. She asks him if he'd like to go to another world but he can only bring one thing with him. Kazumi chooses to bring the goddess. With that, he is transported to another world and his great adventure subjugating the demon king begins, but first the hard work of finding food, clothing, and shelter begins. Kazuma wants to live in peace, but the goddess raises one problem after another, and then the demon king's army has its eyes set on him."
+                    tools:visibility="visible"
                     style="@style/AnimeSynopsis" />
-                <android.support.v4.widget.Space
-                    android:layout_height="@dimen/root_padding_half"
-                    android:layout_width="match_parent" />
                 <com.charlesmadere.hummingbird.views.KeyValueTextView
-                    android:id="@+id/tvStartedAiring"
+                    android:id="@+id/kvtvStartedAiring"
+                    android:visibility="gone"
                     tools:text="Started airing March 31st, 2014"
+                    tools:visibility="visible"
                     style="@style/TimeOrDate" />
                 <com.charlesmadere.hummingbird.views.KeyValueTextView
-                    android:id="@+id/tvFinishedAiring"
+                    android:id="@+id/kvtvFinishedAiring"
+                    android:visibility="gone"
                     tools:text="Finished airing August 31st, 2014"
+                    tools:visibility="visible"
                     style="@style/TimeOrDate" />
                 <com.charlesmadere.hummingbird.views.KeyValueTextView
-                    android:id="@+id/tvCommunityRating"
+                    android:id="@+id/kvtvCommunityRating"
                     android:layout_marginTop="@dimen/root_padding_half"
                     tools:text="Community rating 4.125"
                     style="@style/TimeOrDate" />
                 <ImageButton
-                    android:background="?attr/selectableItemBackground"
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="@string/youtube_link"
                     android:id="@+id/ibYouTubeLink"
                     android:layout_gravity="end"

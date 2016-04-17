@@ -20,6 +20,7 @@
     <string name="clear">Clear</string>
     <string name="close_drawer">Close drawer</string>
     <string name="community">Community</string>
+    <string name="community_rating_x">Community rating %1$s</string>
     <string name="completed">Completed</string>
     <string name="completed_library_is_empty">Completed library is empty</string>
     <string name="contact">Contact</string>
@@ -51,6 +52,7 @@
     <string name="feed">Feed</string>
     <string name="feed_is_empty">Feed is empty</string>
     <string name="finished_airing">Finished Airing</string>
+    <string name="finished_airing_x">Finished airing %1$s</string>
     <string name="followers">Followers</string>
     <string name="following">Following</string>
     <string name="forums">Forums</string>
@@ -115,6 +117,8 @@
     <string name="sign_out">Sign out</string>
     <string name="sign_out_confirm">Are you sure that you want to sign out?</string>
     <string name="special">Special</string>
+    <string name="started_airing">Started airing</string>
+    <string name="started_airing_x">Started airing %1$s</string>
     <string name="timeline">Timeline</string>
     <string name="title">Title</string>
     <string name="trending_groups">Trending Groups</string>
@@ -137,6 +141,11 @@
     <string name="x_y">%1$s %2$s</string>
     <string name="yes">Yes</string>
     <string name="youtube_link">YouTube Link</string>
+
+    <plurals name="x_episodes">
+        <item quantity="one">%1$s episode</item>
+        <item quantity="other">%1$s episodes</item>
+    </plurals>
 
     <plurals name="followed_x_users">
         <item quantity="one">followed %1$s user</item>
