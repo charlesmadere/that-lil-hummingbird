@@ -106,7 +106,7 @@ public class AnimeDetailsFragment extends BaseFragment {
         mGenres.setText(mAnimeV2.getGenresString(getResources()));
         mAgeRating.setText(mAnimeV2.getAgeRating().getTextResId());
 
-        if (mAnimeV2.getShowType() != AbsAnime.ShowType.MOVIE && mAnimeV2.getEpisodeCount() != null) {
+        if (mAnimeV2.getShowType() != AbsAnime.ShowType.MOVIE && mAnimeV2.hasEpisodeCount()) {
             mEpisodeCount.setText(getResources().getQuantityString(R.plurals.x_episodes,
                     mAnimeV2.getEpisodeCount(), NumberFormat.getInstance()
                             .format(mAnimeV2.getEpisodeCount())));
@@ -119,21 +119,21 @@ public class AnimeDetailsFragment extends BaseFragment {
             mSynopsis.setText(R.string.no_synopsis_available);
         }
 
-        if (mAnimeV2.getStartedAiringDate() != null) {
+        if (mAnimeV2.hasStartedAiringDate()) {
             if (mAnimeV2.getShowType() == AbsAnime.ShowType.MOVIE) {
                 setAiringDateView(mAired, R.string.aired, mAnimeV2.getStartedAiringDate());
             } else {
                 setAiringDateView(mStartedAiring, R.string.started_airing,
                         mAnimeV2.getStartedAiringDate());
 
-                if (mAnimeV2.getFinishedAiringDate() != null) {
+                if (mAnimeV2.hasFinishedAiringDate()) {
                     setAiringDateView(mFinishedAiring, R.string.finished_airing,
                             mAnimeV2.getFinishedAiringDate());
                 }
             }
         }
 
-        if (mAnimeV2.getFinishedAiringDate() != null) {
+        if (mAnimeV2.hasFinishedAiringDate()) {
             mFinishedAiring.setText(getText(R.string.finished_airing),
                     mAnimeV2.getFinishedAiringDate().getRelativeDateTimeText(getContext()));
             mFinishedAiring.setVisibility(View.VISIBLE);
