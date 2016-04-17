@@ -87,7 +87,7 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @OnClick(R.id.tvRateThisApp)
     void onRateThisAppClick() {
-        // TODO
+        openUrl("https://play.google.com/store/apps/details?id=" + getPackageName());
     }
 
     @OnClick(R.id.tvSignOut)
