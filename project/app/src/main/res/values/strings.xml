@@ -111,6 +111,7 @@
     <string name="romaji">Romaji</string>
     <string name="search">Search</string>
     <string name="search_for_">Search for…</string>
+    <string name="season_x">Season %1$s</string>
     <string name="seen_x_of_y">Seen %1$d of %2$d</string>
     <string name="settings">Settings</string>
     <string name="share">Share</string>
