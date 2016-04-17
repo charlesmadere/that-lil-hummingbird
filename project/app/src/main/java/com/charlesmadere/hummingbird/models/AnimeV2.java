@@ -326,6 +326,7 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
             @SerializedName("romaji")
             ROMAJI(R.string.romaji);
 
+
             private final int mTitleResId;
 
             Type(@StringRes final int titleResId) {

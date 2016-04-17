@@ -142,7 +142,6 @@ public class AnimeV1 extends AbsAnime implements Parcelable {
 
 
     public static class Genre implements Parcelable {
-
         @SerializedName("name")
         private String mName;
 
