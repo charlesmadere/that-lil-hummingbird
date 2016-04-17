@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.BuildConfig;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
+import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 
@@ -50,7 +51,23 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @OnClick(R.id.llAnimeTitleLanguage)
     void onAnimeTitleLanguageClick() {
-        // TODO
+        final AnimeV2.Titles.Type[] values = AnimeV2.Titles.Type.values();
+        CharSequence items[] = new CharSequence[values.length];
+
+        for (int i = 0; i < items.length; ++i) {
+            items[i] = getText(values[i].getTitleResId());
+        }
+
+        new AlertDialog.Builder(this)
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        Preferences.General.TitleLanguage.set(values[which]);
+                        mAnimeTitleLanguage.setText(values[which].getTitleResId());
+                    }
+                })
+                .setTitle(R.string.anime_title_language)
+                .show();
     }
 
     @OnClick(R.id.tvAuthor)
