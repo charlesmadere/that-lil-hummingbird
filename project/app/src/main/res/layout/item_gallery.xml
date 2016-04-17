@@ -6,4 +6,4 @@
     android:layout_width="match_parent"
     app:actualImageScaleType="centerCrop"
     app:placeholderImage="@drawable/image_placeholder"
-    app:viewAspectRatio="0.69" />
+    app:viewAspectRatio="1" />

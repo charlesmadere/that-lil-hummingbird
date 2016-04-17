@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.GalleryAdapter;
+import com.charlesmadere.hummingbird.misc.SpaceItemDecoration;
 import com.charlesmadere.hummingbird.models.GalleryImage;
 
 import java.util.ArrayList;
@@ -62,6 +63,8 @@ public class AnimeGalleryFragment extends BaseFragment {
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding_half);
 
         if (mGalleryImages == null || mGalleryImages.isEmpty()) {
             mEmpty.setVisibility(View.VISIBLE);

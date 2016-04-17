@@ -10,7 +10,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeAdapter;
@@ -18,6 +17,7 @@ import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
+import com.charlesmadere.hummingbird.models.GalleryImage;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.GalleryItemView;
@@ -25,6 +25,7 @@ import com.charlesmadere.hummingbird.views.SimpleProgressView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 
 import butterknife.Bind;
 
@@ -112,7 +113,9 @@ public class AnimeActivity extends BaseDrawerActivity implements
 
     @Override
     public void onGalleryItemViewClick(final GalleryItemView v) {
-        Toast.makeText(this, "fdsafdsa", Toast.LENGTH_LONG).show();
+        final ArrayList<GalleryImage> galleryImages = mAnimeV2.getLinks().getGalleryImages();
+        final int position = galleryImages.indexOf(v.getGalleryImage());
+        startActivity(GalleryActivity.getLaunchIntent(this, galleryImages, position));
     }
 
     @Override
