@@ -1,5 +1,6 @@
 package com.charlesmadere.hummingbird.fragments;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -133,7 +134,9 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     @OnClick(R.id.ibYouTubeLink)
     void onYouTubeLinkClick() {
-        // TODO
+        startActivity(new Intent()
+                .setAction(Intent.ACTION_VIEW)
+                .setData(Uri.parse("https://www.youtube.com/watch?v=" + mAnimeV2.getYoutubeVideoId())));
     }
 
 }
