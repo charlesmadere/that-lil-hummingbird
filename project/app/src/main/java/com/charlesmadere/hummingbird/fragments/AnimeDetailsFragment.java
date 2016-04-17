@@ -1,13 +1,18 @@
 package com.charlesmadere.hummingbird.fragments;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.AnimeV2;
+import com.facebook.drawee.view.SimpleDraweeView;
 
+import butterknife.Bind;
 import butterknife.OnClick;
 
 public class AnimeDetailsFragment extends BaseFragment {
@@ -17,7 +22,32 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     private AnimeV2 mAnimeV2;
 
+    @Bind(R.id.ibYouTubeLink)
+    ImageButton mYouTubeLink;
 
+    @Bind(R.id.sdvPoster)
+    SimpleDraweeView mPoster;
+
+    @Bind(R.id.tvEpisodeCount)
+    TextView mEpisodeCount;
+
+    @Bind(R.id.tvFinishedAiring)
+    TextView mFinishedAiring;
+
+    @Bind(R.id.tvGenres)
+    TextView mGenres;
+
+    @Bind(R.id.tvShowType)
+    TextView mShowType;
+
+    @Bind(R.id.tvStartedAiring)
+    TextView mStartedAiring;
+
+    @Bind(R.id.tvSynopsis)
+    TextView mSynopsis;
+
+    @Bind(R.id.tvTitle)
+    TextView mTitle;
 
 
     public static AnimeDetailsFragment create(final AnimeV2 animeV2) {
@@ -53,7 +83,12 @@ public class AnimeDetailsFragment extends BaseFragment {
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // TODO
+
+        mPoster.setImageURI(Uri.parse(mAnimeV2.getPosterImage()));
+
+        if (mAnimeV2.hasYoutubeVideoId()) {
+            mYouTubeLink.setVisibility(View.VISIBLE);
+        }
     }
 
     @OnClick(R.id.ibYouTubeLink)
