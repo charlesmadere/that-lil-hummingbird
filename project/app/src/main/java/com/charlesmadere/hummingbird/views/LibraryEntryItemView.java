@@ -98,9 +98,8 @@ public class LibraryEntryItemView extends CardView implements AdapterView<Librar
 
         if (anime.hasSynopsis()) {
             mSynopsis.setText(anime.getSynopsis());
-            mSynopsis.setVisibility(VISIBLE);
         } else {
-            mSynopsis.setVisibility(GONE);
+            mSynopsis.setText(R.string.no_synopsis_available);
         }
 
         final Resources res = getResources();

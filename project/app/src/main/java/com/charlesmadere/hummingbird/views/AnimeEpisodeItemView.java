@@ -68,9 +68,8 @@ public class AnimeEpisodeItemView extends CardView implements AdapterView<AnimeE
 
         if (content.hasSynopsis()) {
             mSynopsis.setText(content.getSynopsis());
-            mSynopsis.setVisibility(VISIBLE);
         } else {
-            mSynopsis.setVisibility(GONE);
+            mSynopsis.setText(R.string.no_synopsis_available);
         }
     }
 

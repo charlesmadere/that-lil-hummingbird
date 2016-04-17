@@ -51,9 +51,7 @@
                     android:id="@+id/tvSynopsis"
                     android:layout_marginBottom="@dimen/root_padding_half"
                     android:maxLines="250"
-                    android:visibility="gone"
                     tools:text="Kazuma Satou is a shut-in die-hard fan of games, anime, and manga. A traffic accident brings his disappointingly brief life to an end, or it should have, but he wakes up and sees a beautiful girl who introduces herself as a goddess. She asks him if he'd like to go to another world but he can only bring one thing with him. Kazumi chooses to bring the goddess. With that, he is transported to another world and his great adventure subjugating the demon king begins, but first the hard work of finding food, clothing, and shelter begins. Kazuma wants to live in peace, but the goddess raises one problem after another, and then the demon king's army has its eyes set on him."
-                    tools:visibility="visible"
                     style="@style/AnimeSynopsis" />
                 <com.charlesmadere.hummingbird.views.KeyValueTextView
                     android:id="@+id/kvtvAired"

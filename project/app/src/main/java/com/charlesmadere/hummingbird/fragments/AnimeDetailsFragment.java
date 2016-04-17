@@ -115,7 +115,8 @@ public class AnimeDetailsFragment extends BaseFragment {
 
         if (mAnimeV2.hasSynopsis()) {
             mSynopsis.setText(mAnimeV2.getSynopsis());
-            mSynopsis.setVisibility(View.VISIBLE);
+        } else {
+            mSynopsis.setText(R.string.no_synopsis_available);
         }
 
         if (mAnimeV2.getStartedAiringDate() != null) {
