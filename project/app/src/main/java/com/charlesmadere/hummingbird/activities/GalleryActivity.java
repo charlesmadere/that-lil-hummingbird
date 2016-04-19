@@ -59,17 +59,7 @@ public class GalleryActivity extends BaseActivity {
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mStartingPosition = savedInstanceState.getInt(KEY_CURRENT_POSITION, mStartingPosition);
         }
-    }
 
-    @Override
-    protected void onSaveInstanceState(final Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(KEY_CURRENT_POSITION, mViewPager.getCurrentItem());
-    }
-
-    @Override
-    protected void onViewsBound() {
-        super.onViewsBound();
         mViewPager.setAdapter(new GalleryFragmentAdapter(this, mGalleryImages));
         mViewPager.setCurrentItem(mStartingPosition, false);
 
@@ -85,11 +75,23 @@ public class GalleryActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_CURRENT_POSITION, mViewPager.getCurrentItem());
+    }
+
+    @Override
+    protected void onViewsBound() {
+        super.onViewsBound();
+        mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
+    }
+
     private void updateToolbarSubtitle() {
         final ActionBar actionBar = getSupportActionBar();
         final NumberFormat numberFormat = NumberFormat.getInstance();
         actionBar.setSubtitle(getString(R.string.x_of_y, numberFormat.format(
-                mViewPager.getCurrentItem()), numberFormat.format(mGalleryImages.size())));
+                mViewPager.getCurrentItem() + 1), numberFormat.format(mGalleryImages.size())));
     }
 
 }
