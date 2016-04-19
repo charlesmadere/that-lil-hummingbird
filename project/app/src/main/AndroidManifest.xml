@@ -22,7 +22,7 @@
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
         <activity
-            android:label="@string/gallery"
+            android:label=""
             android:name=".activities.GalleryActivity"
             android:parentActivityName=".activities.GalleryActivity"
             android:theme="@style/HummingbirdTheme.Dark">

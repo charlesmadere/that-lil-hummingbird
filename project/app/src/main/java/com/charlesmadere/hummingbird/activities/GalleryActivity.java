@@ -75,21 +75,21 @@ public class GalleryActivity extends BaseActivity {
         mViewPager.setCurrentItem(mStartingPosition, false);
 
         if (mGalleryImages.size() > 1) {
-            updateToolbarSubtitle();
+            updateToolbarTitle();
 
             mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
                 @Override
                 public void onPageSelected(final int position) {
-                    updateToolbarSubtitle();
+                    updateToolbarTitle();
                 }
             });
         }
     }
 
-    private void updateToolbarSubtitle() {
+    private void updateToolbarTitle() {
         final ActionBar actionBar = getSupportActionBar();
         final NumberFormat numberFormat = NumberFormat.getInstance();
-        actionBar.setSubtitle(getString(R.string.x_of_y, numberFormat.format(
+        actionBar.setTitle(getString(R.string.x_of_y, numberFormat.format(
                 mViewPager.getCurrentItem() + 1), numberFormat.format(mGalleryImages.size())));
     }
 
