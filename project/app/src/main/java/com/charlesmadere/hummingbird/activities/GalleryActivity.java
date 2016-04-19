@@ -71,6 +71,7 @@ public class GalleryActivity extends BaseActivity {
 
     private void prepareViewPager() {
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
+        mViewPager.setOffscreenPageLimit(3);
         mViewPager.setAdapter(new GalleryFragmentAdapter(this, mGalleryImages));
         mViewPager.setCurrentItem(mStartingPosition, false);
 
