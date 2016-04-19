@@ -60,6 +60,17 @@ public class GalleryActivity extends BaseActivity {
             mStartingPosition = savedInstanceState.getInt(KEY_CURRENT_POSITION, mStartingPosition);
         }
 
+        prepareViewPager();
+    }
+
+    @Override
+    protected void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_CURRENT_POSITION, mViewPager.getCurrentItem());
+    }
+
+    private void prepareViewPager() {
+        mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setAdapter(new GalleryFragmentAdapter(this, mGalleryImages));
         mViewPager.setCurrentItem(mStartingPosition, false);
 
@@ -73,18 +84,6 @@ public class GalleryActivity extends BaseActivity {
                 }
             });
         }
-    }
-
-    @Override
-    protected void onSaveInstanceState(final Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(KEY_CURRENT_POSITION, mViewPager.getCurrentItem());
-    }
-
-    @Override
-    protected void onViewsBound() {
-        super.onViewsBound();
-        mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
     }
 
     private void updateToolbarSubtitle() {
