@@ -17,5 +17,6 @@
     <TextView
         android:id="@+id/tvEmpty"
         android:text="@string/no_gallery_images"
+        tools:visibility="visible"
         style="@style/ListMessageTitle.Standalone" />
 </FrameLayout>

@@ -43,6 +43,7 @@
     <string name="error_loading_currently_watching_library">Error loading currently watching library</string>
     <string name="error_loading_dropped_library">Error loading dropped library</string>
     <string name="error_loading_feed">Error loading feed</string>
+    <string name="error_loading_image">Error loading image</string>
     <string name="error_loading_on_hold_library">Error loading on hold library</string>
     <string name="error_loading_plan_to_watch_library">Error loading plan to watch library</string>
     <string name="error_loading_timeline">Error loading timeline</string>
@@ -141,6 +142,7 @@
     <string name="x_has_completed">%1$s has completed</string>
     <string name="x_has_dropped">%1$s has dropped</string>
     <string name="x_has_placed_on_hold">%1$s has placed on hold</string>
+    <string name="x_of_y">%1$s of %2$s</string>
     <string name="x_plans_to_watch">%1$s plans to watch</string>
     <string name="x_watched_episode_y">%1$s watched episode %2$s</string>
     <string name="x_y">%1$s %2$s</string>

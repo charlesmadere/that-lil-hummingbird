@@ -1,19 +1,21 @@
 package com.charlesmadere.hummingbird.fragments;
 
-import android.graphics.drawable.Animatable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.GalleryImage;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.AbstractDraweeController;
 import com.facebook.drawee.controller.BaseControllerListener;
-import com.facebook.drawee.controller.ControllerListener;
 import com.facebook.drawee.view.SimpleDraweeView;
-
-import java.lang.ref.WeakReference;
+import com.facebook.imagepipeline.image.ImageInfo;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import butterknife.Bind;
 
@@ -24,11 +26,11 @@ public class GalleryFragment extends BaseFragment {
 
     private GalleryImage mGalleryImage;
 
-    @Bind(R.id.progressBar)
-    ProgressBar mProgressBar;
-
     @Bind(R.id.sdvImage)
     SimpleDraweeView mImage;
+
+    @Bind(R.id.tvError)
+    TextView mError;
 
 
     public static GalleryFragment create(final GalleryImage galleryImage) {
@@ -65,47 +67,21 @@ public class GalleryFragment extends BaseFragment {
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // TODO
-    }
+        final ImageRequest request = ImageRequestBuilder.newBuilderWithSource(
+                Uri.parse(mGalleryImage.getOriginal())).build();
 
-    private void showError() {
-        // TODO
-    }
-
-    private void showImage() {
-        // TODO
-    }
-
-
-    private static class GetImageListener {
-        private final WeakReference<GalleryFragment> mFragmentReference;
-
-        private GetImageListener(GalleryFragment fragment) {
-            mFragmentReference = new WeakReference<>(fragment);
-
-            final ControllerListener controllerListener = new BaseControllerListener() {
-                @Override
-                public void onFailure(final String id, final Throwable throwable) {
-                    final GalleryFragment fragment = mFragmentReference.get();
-
-                    if (fragment != null && !fragment.isDestroyed()) {
-                        fragment.showError();
+        final AbstractDraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setControllerListener(new BaseControllerListener<ImageInfo>() {
+                    @Override
+                    public void onFailure(final String id, final Throwable throwable) {
+                        mError.setVisibility(View.VISIBLE);
                     }
-                }
+                })
+                .setOldController(mImage.getController())
+                .setImageRequest(request)
+                .build();
 
-                @Override
-                public void onFinalImageSet(final String id, final Object imageInfo,
-                        final Animatable animatable) {
-                    final GalleryFragment fragment = mFragmentReference.get();
-
-                    if (fragment != null && !fragment.isDestroyed()) {
-                        fragment.showImage();
-                    }
-                }
-            };
-        }
-
-
+        mImage.setController(controller);
     }
 
 }

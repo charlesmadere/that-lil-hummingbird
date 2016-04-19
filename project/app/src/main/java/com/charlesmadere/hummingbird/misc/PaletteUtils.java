@@ -46,7 +46,8 @@ public final class PaletteUtils {
                     .build();
 
             final AbstractDraweeController controller = Fresco.newDraweeControllerBuilder()
-                    .setImageRequest(request).setOldController(simpleDraweeView.getController())
+                    .setOldController(simpleDraweeView.getController())
+                    .setImageRequest(request)
                     .build();
 
             simpleDraweeView.setController(controller);
