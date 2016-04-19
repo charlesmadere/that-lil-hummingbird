@@ -95,6 +95,14 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         return mProducers;
     }
 
+    public String getProducersString(final Resources res) {
+        if (!hasProducers()) {
+            return "";
+        }
+
+        return TextUtils.join(res.getText(R.string.delimiter), mProducers);
+    }
+
     public String getSlug() {
         return mSlug;
     }

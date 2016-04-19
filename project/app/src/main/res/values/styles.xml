@@ -83,7 +83,12 @@
         <item name="android:layout_width">@dimen/avatar_small</item>
     </style>
 
-    <style name="CardItem">
+    <style name="BaseCard">
+        <item name="android:layout_marginEnd">@dimen/root_padding_half</item>
+        <item name="android:layout_marginStart">@dimen/root_padding_half</item>
+    </style>
+
+    <style name="CardItem" parent="BaseCard">
         <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
@@ -195,7 +200,7 @@
         <item name="placeholderImageScaleType">centerCrop</item>
     </style>
 
-    <style name="SettingsCard">
+    <style name="SettingsCardItem" parent="BaseCard">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginBottom">@dimen/root_padding</item>
         <item name="android:layout_width">match_parent</item>

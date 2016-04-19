@@ -41,6 +41,9 @@ public class AnimeDetailsFragment extends BaseFragment {
     @Bind(R.id.kvtvFinishedAiring)
     KeyValueTextView mFinishedAiring;
 
+    @Bind(R.id.kvtvProducers)
+    KeyValueTextView mProducers;
+
     @Bind(R.id.kvtvStartedAiring)
     KeyValueTextView mStartedAiring;
 
@@ -137,6 +140,12 @@ public class AnimeDetailsFragment extends BaseFragment {
             mFinishedAiring.setText(getText(R.string.finished_airing),
                     mAnimeV2.getFinishedAiringDate().getRelativeDateTimeText(getContext()));
             mFinishedAiring.setVisibility(View.VISIBLE);
+        }
+
+        if (mAnimeV2.hasProducers()) {
+            mProducers.setText(getResources().getQuantityText(R.plurals.producers,
+                    mAnimeV2.getProducers().size()), mAnimeV2.getProducersString(getResources()));
+            mProducers.setVisibility(View.VISIBLE);
         }
 
         mCommunityRating.setText(getText(R.string.community_rating),
