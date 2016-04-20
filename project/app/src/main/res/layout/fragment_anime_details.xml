@@ -107,6 +107,11 @@
                 android:layout_width="match_parent"
                 android:orientation="vertical">
                 <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textColor="?attr/textColorEmphasis"
+                    android:text="@string/synopsis" />
+                <TextView
                     android:id="@+id/tvSynopsis"
                     android:lineSpacingExtra="2dp"
                     android:maxLines="250"

@@ -130,6 +130,7 @@
     <string name="special">Special</string>
     <string name="started_airing">Started airing</string>
     <string name="started_airing_x">Started airing %1$s</string>
+    <string name="synopsis">Synopsis</string>
     <string name="timeline">Timeline</string>
     <string name="title">Title</string>
     <string name="trending_groups">Trending Groups</string>
