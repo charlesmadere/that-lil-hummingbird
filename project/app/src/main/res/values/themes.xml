@@ -18,6 +18,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="textColorEmphasis">@color/white</item>
         <item name="textColorPrimary">?android:attr/textColorPrimary</item>
         <item name="textColorSecondary">?android:attr/textColorSecondary</item>
         <item name="textColorTertiary">?android:attr/textColorTertiary</item>
@@ -29,6 +30,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="textColorEmphasis">@color/black</item>
         <item name="textColorPrimary">?android:attr/textColorPrimary</item>
         <item name="textColorSecondary">?android:attr/textColorSecondary</item>
         <item name="textColorTertiary">?android:attr/textColorTertiary</item>
