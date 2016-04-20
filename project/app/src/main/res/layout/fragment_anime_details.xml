@@ -30,13 +30,13 @@
                     android:id="@+id/tvShowType"
                     tools:text="@string/movie"
                     style="@style/AnimeShowType" />
-                <android.support.v4.widget.Space
-                    android:layout_height="@dimen/root_padding_half"
-                    android:layout_width="match_parent" />
                 <TextView
                     android:id="@+id/tvGenres"
                     tools:text="Comedy, Mystery, Romance"
                     style="@style/AnimeGenres" />
+                <android.support.v4.widget.Space
+                    android:layout_height="@dimen/root_padding_half"
+                    android:layout_width="match_parent" />
                 <TextView
                     android:id="@+id/tvAgeRating"
                     tools:text="@string/pg13"
