@@ -3,7 +3,6 @@ package com.charlesmadere.hummingbird.views;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -12,6 +11,7 @@ import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 
 public class KeyValueTextView extends AppCompatTextView {
 
@@ -34,9 +34,9 @@ public class KeyValueTextView extends AppCompatTextView {
         final TypedArray ta = getContext().obtainStyledAttributes(attrs,
                 R.styleable.KeyValueTextView);
         final int keyTextColor = ta.getColor(R.styleable.KeyValueTextView_keyTextColor,
-                ContextCompat.getColor(getContext(), R.attr.textColorPrimary));
+                MiscUtils.getAttrColor(getContext(), R.attr.textColorPrimary));
         final int valueTextColor = ta.getColor(R.styleable.KeyValueTextView_valueTextColor,
-                ContextCompat.getColor(getContext(), R.attr.textColorSecondary));
+                MiscUtils.getAttrColor(getContext(), R.attr.textColorSecondary));
         ta.recycle();
 
         mKeyTextSpan = new ForegroundColorSpan(keyTextColor);

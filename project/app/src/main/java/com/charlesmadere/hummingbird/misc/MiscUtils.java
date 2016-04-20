@@ -39,7 +39,7 @@ public final class MiscUtils {
     }
 
     @ColorInt
-    public static int getColor(final Context context, @AttrRes final int colorResId) {
+    public static int getAttrColor(final Context context, @AttrRes final int colorResId) {
         final TypedArray ta = context.obtainStyledAttributes(new int[] { colorResId } );
 
         if (ta.hasValue(0)) {
