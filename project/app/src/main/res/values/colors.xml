@@ -6,6 +6,8 @@
     <color name="colorPrimary">#4B5360</color>
     <color name="colorPrimaryDark">#2F343B</color>
     <color name="colorPrimaryDarker">#272C33</color>
+    <color name="darkGray">#333333</color>
+    <color name="mediumGray">#999999</color>
     <color name="divider">#DDDDDD</color>
     <color name="overlay">#88000000</color>
     <color name="placeholderGradientEnd">#BBBBBB</color>

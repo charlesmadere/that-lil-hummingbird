@@ -8,7 +8,7 @@
         <item name="android:lines">1</item>
         <item name="android:maxLines">1</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textColor">?attr/textColorTertiary</item>
+        <item name="android:textColor">?attr/textColorSecondary</item>
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
@@ -17,7 +17,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:maxLines">2</item>
-        <item name="android:textColor">?attr/textColorTertiary</item>
+        <item name="android:textColor">?attr/textColorSecondary</item>
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
@@ -51,7 +51,7 @@
     <style name="AnimeTitle" parent="@style/MediumOrBold">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textColor">?attr/textColorEmphasis</item>
+        <item name="android:textColor">?attr/textColorPrimary</item>
         <item name="android:textSize">@dimen/text_large</item>
     </style>
 
@@ -140,7 +140,7 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textColor">?attr/textColorTertiary</item>
+        <item name="android:textColor">?attr/textColorSecondary</item>
     </style>
 
     <style name="ListMessageTitle" parent="@style/MediumOrBold">
@@ -225,7 +225,7 @@
         <item name="android:paddingStart">@dimen/root_padding</item>
         <item name="android:paddingTop">@dimen/root_padding</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:textColor">?attr/textColorEmphasis</item>
+        <item name="android:textColor">?attr/textColorPrimary</item>
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
@@ -247,7 +247,7 @@
     <style name="SettingItemBody">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:textColor">?attr/textColorTertiary</item>
+        <item name="android:textColor">?attr/textColorPrimary</item>
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
@@ -276,7 +276,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:maxLines">1</item>
-        <item name="android:textColor">?attr/textColorTertiary</item>
+        <item name="android:textColor">?attr/textColorSecondary</item>
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
