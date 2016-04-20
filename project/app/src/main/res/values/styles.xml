@@ -221,7 +221,7 @@
         <item name="android:paddingStart">@dimen/root_padding</item>
         <item name="android:paddingTop">@dimen/root_padding</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">?attr/textColorEmphasis</item>
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
