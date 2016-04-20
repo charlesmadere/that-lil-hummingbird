@@ -22,6 +22,7 @@
         <item name="textColorPrimary">?android:attr/textColorPrimary</item>
         <item name="textColorSecondary">?android:attr/textColorSecondary</item>
         <item name="textColorTertiary">?android:attr/textColorTertiary</item>
+        <item name="android:textColor">?attr/textColorPrimary</item>
         <item name="android:windowBackground">@color/black</item>
     </style>
 
@@ -34,6 +35,7 @@
         <item name="textColorPrimary">?android:attr/textColorPrimary</item>
         <item name="textColorSecondary">?android:attr/textColorSecondary</item>
         <item name="textColorTertiary">?android:attr/textColorTertiary</item>
+        <item name="android:textColor">?attr/textColorPrimary</item>
         <item name="android:windowBackground">@color/windowBackground</item>
     </style>
 
