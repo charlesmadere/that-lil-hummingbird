@@ -14,15 +14,15 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/root_padding_half"
             style="@style/Avatar.Small" />
-        <TextView
-            android:id="@+id/tvAction"
+        <com.charlesmadere.hummingbird.views.KeyValueTextView
+            android:id="@+id/kvtvAction"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/sdvAvatar"
             android:layout_width="match_parent"
             tools:text="ThatLilChestnut is currently watching." />
         <TextView
             android:id="@+id/tvTimeAgo"
-            android:layout_below="@id/tvAction"
+            android:layout_below="@id/kvtvAction"
             android:layout_toEndOf="@id/sdvAvatar"
             android:textSize="@dimen/text_small"
             tools:text="2 days ago"

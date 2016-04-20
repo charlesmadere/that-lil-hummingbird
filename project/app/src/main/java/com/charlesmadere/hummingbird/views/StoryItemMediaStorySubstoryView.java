@@ -5,10 +5,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -27,16 +23,15 @@ import butterknife.ButterKnife;
 
 public class StoryItemMediaStorySubstoryView extends FrameLayout implements View.OnClickListener {
 
+    @Bind(R.id.kvtvAction)
+    KeyValueTextView mAction;
+
     @Bind(R.id.sdvAvatar)
     SimpleDraweeView mAvatar;
-
-    @Bind(R.id.tvAction)
-    TextView mAction;
 
     @Bind(R.id.tvTimeAgo)
     TextView mTimeAgo;
 
-    private ForegroundColorSpan mAccentColorSpan;
     private NumberFormat mNumberFormat;
     private Substory mSubstory;
     private User mUser;
@@ -55,15 +50,6 @@ public class StoryItemMediaStorySubstoryView extends FrameLayout implements View
     public StoryItemMediaStorySubstoryView(final Context context, final AttributeSet attrs,
             final int defStyleAttr, final int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-    private ForegroundColorSpan getAccentColorSpan() {
-        if (mAccentColorSpan == null) {
-            mAccentColorSpan = new ForegroundColorSpan(ContextCompat.getColor(getContext(),
-                    R.color.colorAccent));
-        }
-
-        return mAccentColorSpan;
     }
 
     public Substory getSubstory() {
@@ -105,30 +91,30 @@ public class StoryItemMediaStorySubstoryView extends FrameLayout implements View
 
         switch (mSubstory.getType()) {
             case WATCHED_EPISODE:
-                actionText = res.getString(R.string.x_watched_episode_y, username,
-                        mNumberFormat.format(mSubstory.getEpisodeNumber()));
+                actionText = res.getString(R.string.watched_episode_x, mNumberFormat.format(
+                        mSubstory.getEpisodeNumber()));
                 break;
 
             case WATCHLIST_STATUS_UPDATE:
                 switch (mSubstory.getNewStatus()) {
                     case COMPLETED:
-                        actionText = res.getString(R.string.x_has_completed, username);
+                        actionText = res.getString(R.string.has_completed);
                         break;
 
                     case CURRENTLY_WATCHING:
-                        actionText = res.getString(R.string.x_is_currently_watching, username);
+                        actionText = res.getString(R.string.is_currently_watching);
                         break;
 
                     case DROPPED:
-                        actionText = res.getString(R.string.x_has_dropped, username);
+                        actionText = res.getString(R.string.has_dropped);
                         break;
 
                     case ON_HOLD:
-                        actionText = res.getString(R.string.x_has_placed_on_hold, username);
+                        actionText = res.getString(R.string.has_placed_on_hold);
                         break;
 
                     case PLAN_TO_WATCH:
-                        actionText = res.getString(R.string.x_plans_to_watch, username);
+                        actionText = res.getString(R.string.plans_to_watch);
                         break;
 
                     default:
@@ -144,10 +130,7 @@ public class StoryItemMediaStorySubstoryView extends FrameLayout implements View
 
         }
 
-        final SpannableString actionSpannable = new SpannableString(actionText);
-        actionSpannable.setSpan(getAccentColorSpan(), 0, username.length(),
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        mAction.setText(actionSpannable);
+        mAction.setText(username, actionText);
     }
 
 }

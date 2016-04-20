@@ -64,10 +64,14 @@
     <string name="github">GitHub</string>
     <string name="group_activity">Group Activity</string>
     <string name="groups">Groups</string>
+    <string name="has_completed">has completed</string>
+    <string name="has_dropped">has dropped</string>
+    <string name="has_placed_on_hold">has placed on hold</string>
     <string name="home">Home</string>
     <string name="hummingbird">Hummingbird</string>
     <string name="hummingbird_on_the_web">Hummingbird on the Web</string>
     <string name="husbando">Husbando</string>
+    <string name="is_currently_watching">is currently watching</string>
     <string name="japanese">Japanese</string>
     <string name="library">Library</string>
     <string name="library_updates">Library Updates</string>
@@ -97,6 +101,7 @@
     <string name="pg13">PG13</string>
     <string name="plan_to_watch">Plan to Watch</string>
     <string name="plan_to_watch_library_is_empty">Plan to watch library is empty</string>
+    <string name="plans_to_watch">plans to watch</string>
     <string name="privacy">Privacy</string>
     <string name="profile">Profile</string>
     <string name="progress">Progress</string>
@@ -135,6 +140,7 @@
     <string name="user_activity">User Activity</string>
     <string name="version_format">v%1$s (%2$d)</string>
     <string name="waifu">Waifu</string>
+    <string name="watched_episode_x">watched episode %1$s</string>
     <string name="whats_trending">What\'s Trending</string>
     <string name="write_something_">Write something…</string>
     <string name="x_complete">%1$s Complete</string>
