@@ -116,12 +116,6 @@ public class AnimeDetailsFragment extends BaseFragment {
             mEpisodeCount.setVisibility(View.VISIBLE);
         }
 
-        if (mAnimeV2.hasSynopsis()) {
-            mSynopsis.setText(mAnimeV2.getSynopsis());
-        } else {
-            mSynopsis.setText(R.string.no_synopsis_available);
-        }
-
         if (mAnimeV2.hasStartedAiringDate()) {
             if (mAnimeV2.getShowType() == AbsAnime.ShowType.MOVIE) {
                 setAiringDateView(mAired, R.string.aired, mAnimeV2.getStartedAiringDate());
@@ -153,6 +147,12 @@ public class AnimeDetailsFragment extends BaseFragment {
 
         if (mAnimeV2.hasYoutubeVideoId()) {
             mYouTubeLink.setVisibility(View.VISIBLE);
+        }
+
+        if (mAnimeV2.hasSynopsis()) {
+            mSynopsis.setText(mAnimeV2.getSynopsis());
+        } else {
+            mSynopsis.setText(R.string.no_synopsis_available);
         }
     }
 
