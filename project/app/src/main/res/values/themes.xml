@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="AlertDialogTheme_Dark" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AlertDialogTheme_Light" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
@@ -9,23 +13,39 @@
 
     </style>
 
-    <style name="BaseHummingbirdTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@color/windowBackground</item>
-        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+    <style name="BaseHummingbirdTheme_Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/black</item>
+        <item name="alertDialogTheme">@style/AlertDialogTheme_Dark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="textColorPrimary">@color/textColorPrimaryDarkEnabled</item>
+        <item name="textColorSecondary">@color/textColorSecondaryDarkEnabled</item>
+        <item name="textPrimary">@drawable/text_primary_dark</item>
+        <item name="textSecondary">@drawable/text_secondary_dark</item>
     </style>
 
-    <style name="HummingbirdTheme" parent="BaseHummingbirdTheme">
+    <style name="BaseHummingbirdTheme_Light" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/windowBackground</item>
+        <item name="alertDialogTheme">@style/AlertDialogTheme_Light</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="textColorPrimary">@color/textColorPrimaryLightEnabled</item>
+        <item name="textColorSecondary">@color/textColorSecondaryLightEnabled</item>
+        <item name="textPrimary">@drawable/text_primary_light</item>
+        <item name="textSecondary">@drawable/text_secondary_light</item>
+    </style>
+
+    <style name="HummingbirdTheme_Light" parent="BaseHummingbirdTheme_Dark">
 
     </style>
 
-    <style name="HummingbirdTheme.Dark">
-        <item name="android:windowBackground">@color/black</item>
+    <style name="HummingbirdTheme_Dark" parent="BaseHummingbirdTheme_Dark">
+
     </style>
 
-    <style name="HummingbirdTheme.WithDrawer">
+    <style name="HummingbirdTheme_Light.WithDrawer">
 
     </style>
 

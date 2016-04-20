@@ -9,23 +9,23 @@
         android:fullBackupContent="true"
         android:name=".Hummingbird"
         android:supportsRtl="true"
-        android:theme="@style/HummingbirdTheme">
+        android:theme="@style/HummingbirdTheme_Light">
 
         <activity
             android:label=""
             android:name=".activities.AnimeActivity"
-            android:theme="@style/HummingbirdTheme.WithDrawer" />
+            android:theme="@style/HummingbirdTheme_Light.WithDrawer" />
 
         <activity
             android:launchMode="singleTop"
             android:name=".activities.CurrentUserActivity"
-            android:theme="@style/HummingbirdTheme.WithDrawer" />
+            android:theme="@style/HummingbirdTheme_Light.WithDrawer" />
 
         <activity
             android:label=""
             android:name=".activities.GalleryActivity"
             android:parentActivityName=".activities.GalleryActivity"
-            android:theme="@style/HummingbirdTheme.Dark">
+            android:theme="@style/HummingbirdTheme_Dark">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.AnimeActivity" />
@@ -47,7 +47,7 @@
             android:launchMode="singleTop"
             android:name=".activities.LogViewerActivity"
             android:parentActivityName=".activities.SettingsActivity"
-            android:theme="@style/HummingbirdTheme.WithDrawer">
+            android:theme="@style/HummingbirdTheme_Light.WithDrawer">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.SettingsActivity" />
@@ -57,18 +57,18 @@
             android:label="@string/search"
             android:launchMode="singleTop"
             android:name=".activities.SearchActivity"
-            android:theme="@style/HummingbirdTheme.WithDrawer" />
+            android:theme="@style/HummingbirdTheme_Light.WithDrawer" />
 
         <activity
             android:label="@string/settings"
             android:launchMode="singleTop"
             android:name=".activities.SettingsActivity"
-            android:theme="@style/HummingbirdTheme.WithDrawer" />
+            android:theme="@style/HummingbirdTheme_Light.WithDrawer" />
 
         <activity
             android:label=""
             android:name=".activities.UserActivity"
-            android:theme="@style/HummingbirdTheme.WithDrawer" />
+            android:theme="@style/HummingbirdTheme_Light.WithDrawer" />
 
     </application>
 

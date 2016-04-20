@@ -1,22 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AlertDialogTheme_V21" parent="android:Theme.Material.Light.Dialog">
+    <style name="AlertDialogTheme_Dark_V21" parent="android:Theme.Material.Dialog">
         <item name="android:colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="DatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">
+    <style name="AlertDialogTheme_Light_V21" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="DatePickerDialogTheme_Dark" parent="android:Theme.Material.Dialog">
         <item name="android:colorAccent">@color/colorAccent</item>
         <item name="android:datePickerStyle">@style/DatePickerStyle</item>
     </style>
 
-    <style name="HummingbirdTheme" parent="BaseHummingbirdTheme">
-        <item name="android:alertDialogTheme">@style/AlertDialogTheme_V21</item>
-        <item name="android:datePickerDialogTheme">@style/DatePickerDialogTheme</item>
+    <style name="DatePickerDialogTheme_Light" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:datePickerStyle">@style/DatePickerStyle</item>
+    </style>
+
+    <style name="HummingbirdTheme_Dark" parent="BaseHummingbirdTheme_Dark">
+        <item name="android:alertDialogTheme">@style/AlertDialogTheme_Dark_V21</item>
+        <item name="android:datePickerDialogTheme">@style/DatePickerDialogTheme_Dark</item>
         <item name="android:navigationBarColor">@color/colorPrimaryDarkest</item>
     </style>
 
-    <style name="HummingbirdTheme.WithDrawer">
+    <style name="HummingbirdTheme_Light" parent="BaseHummingbirdTheme_Light">
+        <item name="android:alertDialogTheme">@style/AlertDialogTheme_Light_V21</item>
+        <item name="android:datePickerDialogTheme">@style/DatePickerDialogTheme_Light</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryDarkest</item>
+    </style>
+
+    <style name="HummingbirdTheme_Light.WithDrawer">
         <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>

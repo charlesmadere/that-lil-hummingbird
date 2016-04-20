@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:padding="@dimen/root_padding"
-                    android:textColor="@color/secondaryText"
+                    android:textColor="?attr/textSecondary"
                     android:textSize="@dimen/text_small"
                     tools:text="v1.0 (1)" />
             </LinearLayout>

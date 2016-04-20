@@ -13,7 +13,7 @@ import com.charlesmadere.hummingbird.R;
 
 public class KeyValueTextView extends AppCompatTextView {
 
-    private ForegroundColorSpan mSecondaryTextColorSpan;
+    private ForegroundColorSpan mTextColorSecondarySpan;
 
 
     public KeyValueTextView(final Context context, final AttributeSet attrs) {
@@ -28,8 +28,8 @@ public class KeyValueTextView extends AppCompatTextView {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mSecondaryTextColorSpan = new ForegroundColorSpan(ContextCompat.getColor(getContext(),
-                R.color.secondaryText));
+        mTextColorSecondarySpan = new ForegroundColorSpan(ContextCompat.getColor(getContext(),
+                R.attr.textColorPrimary))
     }
 
     public void setText(final CharSequence key, final CharSequence value) {
@@ -39,7 +39,7 @@ public class KeyValueTextView extends AppCompatTextView {
             setText(key);
         } else {
             final SpannableStringBuilder spannable = new SpannableStringBuilder(value);
-            spannable.setSpan(mSecondaryTextColorSpan, 0, spannable.length(),
+            spannable.setSpan(mTextColorSecondarySpan, 0, spannable.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             spannable.insert(0, " ");
             spannable.insert(0, key);

@@ -12,7 +12,14 @@
     <color name="placeholderGradientEnd">#BBBBBB</color>
     <color name="placeholderGradientStart">#EEEEEE</color>
     <color name="scrimInsetForeground">#4000</color>
-    <color name="secondaryText">#999999</color>
+    <color name="textColorPrimaryDarkDisabled">#4DFFFFFF</color>
+    <color name="textColorPrimaryDarkEnabled">#FFFFFFFF</color>
+    <color name="textColorPrimaryLightDisabled">#39000000</color>
+    <color name="textColorPrimaryLightEnabled">#DE000000</color>
+    <color name="textColorSecondaryDarkDisabled">#36FFFFFF</color>
+    <color name="textColorSecondaryDarkEnabled">#B3FFFFFF</color>
+    <color name="textColorSecondaryLightDisabled">#24000000</color>
+    <color name="textColorSecondaryLightEnabled">#8A000000</color>
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFF</color>
     <color name="windowBackground">#E6E6E6</color>
