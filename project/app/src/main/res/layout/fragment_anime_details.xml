@@ -9,13 +9,11 @@
         android:layout_width="match_parent"
         android:orientation="vertical">
         <com.facebook.drawee.view.SimpleDraweeView
-            android:elevation="@dimen/root_padding_half"
             android:id="@+id/sdvPoster"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/root_padding_double"
             android:layout_marginTop="@dimen/root_padding"
             android:layout_width="200dp"
-            tools:ignore="UnusedAttribute"
             style="@style/AnimePoster" />
         <android.support.v7.widget.CardView
             android:layout_marginBottom="@dimen/root_padding"
