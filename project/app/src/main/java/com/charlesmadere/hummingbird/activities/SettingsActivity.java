@@ -66,7 +66,7 @@ public class SettingsActivity extends BaseDrawerActivity {
                         mAnimeTitleLanguage.setText(values[which].getTitleResId());
                     }
                 })
-                .setTitle(R.string.anime_title_language)
+                .setTitle(R.string.preferred_anime_title_language)
                 .show();
     }
 

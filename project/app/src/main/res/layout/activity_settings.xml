@@ -28,7 +28,7 @@
                             android:id="@+id/llAnimeTitleLanguage"
                             style="@style/SettingItem">
                             <TextView
-                                android:text="@string/anime_title_language"
+                                android:text="@string/preferred_anime_title_language"
                                 style="@style/SettingItemHeader" />
                             <TextView
                                 android:id="@+id/tvAnimeTitleLanguage"

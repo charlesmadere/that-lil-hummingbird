@@ -12,7 +12,6 @@
     <string name="anime">Anime</string>
     <string name="anime_library">Anime Library</string>
     <string name="anime_library_is_empty">Anime library is empty</string>
-    <string name="anime_title_language">Anime title language</string>
     <string name="apps">Apps</string>
     <string name="app_written_by_charles_madere">App written by Charles Madere</string>
     <string name="back">Back</string>
@@ -102,6 +101,7 @@
     <string name="plan_to_watch">Plan to Watch</string>
     <string name="plan_to_watch_library_is_empty">Plan to watch library is empty</string>
     <string name="plans_to_watch">plans to watch</string>
+    <string name="preferred_anime_title_language">Preferred anime title language</string>
     <string name="privacy">Privacy</string>
     <string name="profile">Profile</string>
     <string name="progress">Progress</string>
