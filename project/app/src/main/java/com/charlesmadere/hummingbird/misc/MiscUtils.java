@@ -3,7 +3,10 @@ package com.charlesmadere.hummingbird.misc;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.os.Build;
+import android.support.annotation.AttrRes;
+import android.support.annotation.ColorInt;
 import android.support.v4.app.ActivityManagerCompat;
 
 import com.charlesmadere.hummingbird.Hummingbird;
@@ -32,6 +35,20 @@ public final class MiscUtils {
             return ActivityManagerCompat.isLowRamDevice(am);
         } else {
             return true;
+        }
+    }
+
+    @ColorInt
+    public static int getColor(final Context context, @AttrRes final int colorResId) {
+        final TypedArray ta = context.obtainStyledAttributes(new int[] { colorResId } );
+
+        if (ta.hasValue(0)) {
+            final int color = ta.getColor(0, -1);
+            ta.recycle();
+
+            return color;
+        } else {
+            throw new RuntimeException("unable to find colorResId: " + colorResId);
         }
     }
 

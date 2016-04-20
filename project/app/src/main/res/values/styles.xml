@@ -8,7 +8,7 @@
         <item name="android:lines">1</item>
         <item name="android:maxLines">1</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textColor">?attr/textSecondary</item>
+        <item name="android:textColor">?attr/textColorSecondary</item>
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
@@ -17,7 +17,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:maxLines">2</item>
-        <item name="android:textColor">?attr/textSecondary</item>
+        <item name="android:textColor">?attr/textColorSecondary</item>
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
@@ -36,7 +36,7 @@
         <item name="android:lines">1</item>
         <item name="android:maxLines">1</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textColor">?attr/textSecondary</item>
+        <item name="android:textColor">?attr/textColorSecondary</item>
     </style>
 
     <style name="AnimeSynopsis">
@@ -242,7 +242,7 @@
     <style name="SettingItemBody">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:textColor">?attr/textSecondary</item>
+        <item name="android:textColor">?attr/textColorSecondary</item>
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
@@ -271,7 +271,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:maxLines">1</item>
-        <item name="android:textColor">?attr/textSecondary</item>
+        <item name="android:textColor">?attr/textColorSecondary</item>
     </style>
 
     <style name="Toolbar">
