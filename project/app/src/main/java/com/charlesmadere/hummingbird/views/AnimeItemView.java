@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 
@@ -15,6 +16,8 @@ import butterknife.ButterKnife;
 
 public class AnimeItemView extends CardView implements AdapterView<AbsAnime>,
         View.OnClickListener {
+
+    private AbsAnime mAnime;
 
     @Bind(R.id.tvTitle)
     TextView mTitle;
@@ -29,9 +32,14 @@ public class AnimeItemView extends CardView implements AdapterView<AbsAnime>,
         super(context, attrs, defStyleAttr);
     }
 
+    public AbsAnime getAnime() {
+        return mAnime;
+    }
+
     @Override
     public void onClick(final View v) {
-        // TODO
+        final Context context = getContext();
+        context.startActivity(AnimeActivity.getLaunchIntent(context, mAnime));
     }
 
     @Override
@@ -48,7 +56,8 @@ public class AnimeItemView extends CardView implements AdapterView<AbsAnime>,
 
     @Override
     public void setContent(final AbsAnime content) {
-        mTitle.setText(content.getTitle());
+        mAnime = content;
+        mTitle.setText(mAnime.getTitle());
     }
 
 }
