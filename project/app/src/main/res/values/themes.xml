@@ -2,11 +2,11 @@
 <resources>
 
     <style name="AlertDialogTheme_Dark" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="colorAccent">?attr/colorAccent</item>
+        <item name="colorAccent">@color/orange</item>
     </style>
 
     <style name="AlertDialogTheme_Light" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="colorAccent">?attr/colorAccent</item>
+        <item name="colorAccent">@color/orange</item>
     </style>
 
     <style name="AppBarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
