@@ -1,22 +1,19 @@
 package com.charlesmadere.hummingbird.fragments;
 
+import android.graphics.drawable.Animatable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.GalleryImage;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.AbstractDraweeController;
 import com.facebook.drawee.controller.BaseControllerListener;
-import com.facebook.drawee.drawable.ProgressBarDrawable;
-import com.facebook.drawee.drawable.ScalingUtils;
-import com.facebook.drawee.generic.GenericDraweeHierarchy;
-import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.request.ImageRequest;
@@ -30,6 +27,9 @@ public class GalleryFragment extends BaseFragment {
     private static final String KEY_GALLERY_IMAGE = "GalleryImage";
 
     private GalleryImage mGalleryImage;
+
+    @Bind(R.id.progressBar)
+    ProgressBar mProgressBar;
 
     @Bind(R.id.sdvImage)
     SimpleDraweeView mImage;
@@ -72,16 +72,6 @@ public class GalleryFragment extends BaseFragment {
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final ProgressBarDrawable progressBarDrawable = new ProgressBarDrawable();
-        progressBarDrawable.setColor(MiscUtils.getAttrColor(getContext(), R.attr.colorAccent));
-
-        final GenericDraweeHierarchy hierarchy = new GenericDraweeHierarchyBuilder(getResources())
-                .setActualImageScaleType(ScalingUtils.ScaleType.CENTER_INSIDE)
-                .setProgressBarImage(progressBarDrawable)
-                .build();
-
-        mImage.setHierarchy(hierarchy);
-
         final ImageRequest request = ImageRequestBuilder.newBuilderWithSource(
                 Uri.parse(mGalleryImage.getOriginal())).build();
 
@@ -89,7 +79,14 @@ public class GalleryFragment extends BaseFragment {
                 .setControllerListener(new BaseControllerListener<ImageInfo>() {
                     @Override
                     public void onFailure(final String id, final Throwable throwable) {
+                        mProgressBar.setVisibility(View.GONE);
                         mError.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onFinalImageSet(final String id, final ImageInfo imageInfo,
+                            final Animatable animatable) {
+                        mProgressBar.setVisibility(View.GONE);
                     }
                 })
                 .setOldController(mImage.getController())
