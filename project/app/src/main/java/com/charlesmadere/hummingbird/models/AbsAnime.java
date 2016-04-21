@@ -47,6 +47,7 @@ public abstract class AbsAnime implements Parcelable {
     protected String mSynopsis;
 
 
+    @Nullable
     public AgeRating getAgeRating() {
         return mAgeRating;
     }
@@ -92,6 +93,10 @@ public abstract class AbsAnime implements Parcelable {
     public abstract String getTitle();
 
     public abstract Version getVersion();
+
+    public boolean hasAgeRating() {
+        return mAgeRating != null;
+    }
 
     public boolean hasEpisodeCount() {
         return mEpisodeCount != null;

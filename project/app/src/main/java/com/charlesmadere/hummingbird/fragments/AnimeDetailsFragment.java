@@ -112,7 +112,10 @@ public class AnimeDetailsFragment extends BaseFragment {
             mGenres.setVisibility(View.VISIBLE);
         }
 
-        mAgeRating.setText(mAnimeV2.getAgeRating().getTextResId());
+        if (mAnimeV2.hasAgeRating()) {
+            mAgeRating.setText(mAnimeV2.getAgeRating().getTextResId());
+            mAgeRating.setVisibility(View.VISIBLE);
+        }
 
         if (mAnimeV2.getShowType() != AbsAnime.ShowType.MOVIE && mAnimeV2.hasEpisodeCount()) {
             mEpisodeCount.setText(getResources().getQuantityString(R.plurals.x_episodes,
