@@ -59,6 +59,8 @@ public class GalleryActivity extends BaseActivity {
         hideStatusBar();
         setContentView(R.layout.activity_gallery);
 
+        mToolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
+
         final Intent intent = getIntent();
         mGalleryImages = intent.getParcelableArrayListExtra(EXTRA_GALLERY_IMAGES);
         mStartingPosition = intent.getIntExtra(EXTRA_STARTING_POSITION, 0);
