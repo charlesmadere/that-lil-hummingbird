@@ -85,6 +85,7 @@
     <string name="no_episodes">No episodes</string>
     <string name="no_feed_content">No feed content</string>
     <string name="no_gallery_images">No gallery images</string>
+    <string name="no_results_for_x">No results for %1$s</string>
     <string name="no_season">No Season</string>
     <string name="no_synopsis_available">No synopsis available</string>
     <string name="no_timeline_content">No timeline content</string>
@@ -121,6 +122,7 @@
     <string name="search">Search</string>
     <string name="search_">Search…</string>
     <string name="search_for_">Search for…</string>
+    <string name="search_for_x_failed">Search for %1$s failed</string>
     <string name="season_x">Season %1$s</string>
     <string name="seen_x_of_y">Seen %1$d of %2$d</string>
     <string name="settings">Settings</string>

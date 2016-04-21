@@ -11,10 +11,14 @@ import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.models.AnimeV1;
+import com.charlesmadere.hummingbird.adapters.AnimeAdapter;
+import com.charlesmadere.hummingbird.misc.SpaceItemDecoration;
+import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
@@ -32,7 +36,8 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
     private static final String KEY_QUERY = "Query";
     private static final long SEARCH_DELAY_MS = 400L;
 
-    private ArrayList<AnimeV1> mAnime;
+    private AnimeAdapter mAdapter;
+    private ArrayList<AbsAnime> mAnime;
     private Handler mHandler;
     private String mQuery;
 
@@ -136,32 +141,43 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
         outState.putString(KEY_QUERY, mQuery);
     }
 
-    private void showAnime(final ArrayList<AnimeV1> anime) {
+    @Override
+    protected void onViewsBound() {
+        super.onViewsBound();
+
+        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
+        mAdapter = new AnimeAdapter(this);
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private void showAnime(final ArrayList<AbsAnime> anime) {
         mAnime = anime;
-        // TODO
+        mAdapter.set(anime);
+        mInitialSearchMessage.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.VISIBLE);
     }
 
     private void showErrorMessage() {
-        // TODO
+        Toast.makeText(this, getString(R.string.search_for_x_failed, mQuery), Toast.LENGTH_LONG).show();
     }
 
     private void showEmptyMessage() {
-        // TODO
+        Toast.makeText(this, getString(R.string.no_results_for_x, mQuery), Toast.LENGTH_LONG).show();
     }
 
 
-    private static class Search implements ApiResponse<ArrayList<AnimeV1>>, Runnable {
-        private final WeakReference<SearchActivity> mActivityReference;
+    private static class Search implements ApiResponse<ArrayList<AbsAnime>>, Runnable {
         private final String mQuery;
+        private final WeakReference<SearchActivity> mActivity;
 
         private Search(final SearchActivity activity, final String query) {
-            mActivityReference = new WeakReference<>(activity);
             mQuery = query;
+            mActivity = new WeakReference<>(activity);
         }
 
         @Override
         public void failure(@Nullable final ErrorInfo error) {
-            final SearchActivity activity = mActivityReference.get();
+            final SearchActivity activity = mActivity.get();
 
             if (activity != null && !activity.isDestroyed() &&
                     mQuery.equalsIgnoreCase(activity.mQuery)) {
@@ -170,7 +186,7 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
         }
 
         private boolean isAlive() {
-            final SearchActivity activity = mActivityReference.get();
+            final SearchActivity activity = mActivity.get();
             return activity != null && !activity.isDestroyed();
         }
 
@@ -182,8 +198,8 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
         }
 
         @Override
-        public void success(@Nullable final ArrayList<AnimeV1> anime) {
-            final SearchActivity activity = mActivityReference.get();
+        public void success(@Nullable final ArrayList<AbsAnime> anime) {
+            final SearchActivity activity = mActivity.get();
 
             if (activity != null && !activity.isDestroyed() &&
                     mQuery.equalsIgnoreCase(activity.mQuery)) {

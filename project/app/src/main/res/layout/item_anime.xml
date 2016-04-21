@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.AnimeItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/CardItem">
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tvTitle"
+            tools:text="Kill La Kill"
+            style="@style/AnimeTitle" />
+    </LinearLayout>
+</com.charlesmadere.hummingbird.views.AnimeItemView>

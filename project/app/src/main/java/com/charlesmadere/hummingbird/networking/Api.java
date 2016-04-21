@@ -215,6 +215,32 @@ public final class Api {
         getLibraryEntries(Preferences.Account.Username.get(), watchingStatus, listener);
     }
 
+    public static void getFavoriteAnime(final String username,
+            final ApiResponse<ArrayList<AbsAnime>> listener) {
+        getApi().getFavoriteAnime(username).enqueue(new Callback<ArrayList<AbsAnime>>() {
+            @Override
+            public void onResponse(final Call<ArrayList<AbsAnime>> call,
+                    final Response<ArrayList<AbsAnime>> response) {
+                if (response.isSuccessful()) {
+                    listener.success(response.body());
+                } else {
+                    listener.failure(retrieveErrorInfo(response));
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<ArrayList<AbsAnime>> call, final Throwable t) {
+                Timber.e(TAG, "get favorite anime for user (" + username + ") failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
+    public static void getFavoriteAnime(final User user,
+            final ApiResponse<ArrayList<AbsAnime>> listener) {
+        getFavoriteAnime(user.getName(), listener);
+    }
+
     public static void getLibraryEntries(final String username,
             @Nullable final WatchingStatus watchingStatus,
             final ApiResponse<ArrayList<LibraryEntry>> listener) {
@@ -292,11 +318,11 @@ public final class Api {
     }
 
     public static void searchAnimeByTitle(final String query,
-            final ApiResponse<ArrayList<AnimeV1>> listener) {
-        getApi().searchAnimeByTitle(query).enqueue(new Callback<ArrayList<AnimeV1>>() {
+            final ApiResponse<ArrayList<AbsAnime>> listener) {
+        getApi().searchAnimeByTitle(query).enqueue(new Callback<ArrayList<AbsAnime>>() {
             @Override
-            public void onResponse(final Call<ArrayList<AnimeV1>> call,
-                    final Response<ArrayList<AnimeV1>> response) {
+            public void onResponse(final Call<ArrayList<AbsAnime>> call,
+                    final Response<ArrayList<AbsAnime>> response) {
                 if (response.isSuccessful()) {
                     listener.success(response.body());
                 } else {
@@ -305,7 +331,7 @@ public final class Api {
             }
 
             @Override
-            public void onFailure(final Call<ArrayList<AnimeV1>> call, final Throwable t) {
+            public void onFailure(final Call<ArrayList<AbsAnime>> call, final Throwable t) {
                 Timber.e(TAG, "search for \"" + query + "\" failed", t);
                 listener.failure(null);
             }

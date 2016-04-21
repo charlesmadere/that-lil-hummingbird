@@ -1,6 +1,6 @@
 package com.charlesmadere.hummingbird.networking;
 
-import com.charlesmadere.hummingbird.models.AnimeV1;
+import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
@@ -37,7 +37,7 @@ public interface HummingbirdApi {
     Call<ArrayList<Story>> getActivityFeed(@Path("username") String username);
 
     @GET("v1/users/{username}/favorite_anime")
-    Call<ArrayList<AnimeV1>> getFavoriteAnime(@Path("username") String username);
+    Call<ArrayList<AbsAnime>> getFavoriteAnime(@Path("username") String username);
 
     @GET("v1/users/{username}/library")
     Call<ArrayList<LibraryEntry>> getLibraryEntries(@Path("username") String username,
@@ -51,7 +51,7 @@ public interface HummingbirdApi {
             @Path("id") String id);
 
     @GET("v1/search/anime")
-    Call<ArrayList<AnimeV1>> searchAnimeByTitle(@Query("query") String query);
+    Call<ArrayList<AbsAnime>> searchAnimeByTitle(@Query("query") String query);
 
 
     /*
