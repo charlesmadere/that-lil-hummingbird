@@ -372,7 +372,7 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
                 mTitleResId = titleResId;
             }
 
-            public int getTitleResId() {
+            public int getTextResId() {
                 return mTitleResId;
             }
 

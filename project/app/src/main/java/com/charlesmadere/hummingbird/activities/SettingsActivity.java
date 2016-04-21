@@ -55,7 +55,7 @@ public class SettingsActivity extends BaseDrawerActivity {
         CharSequence items[] = new CharSequence[values.length];
 
         for (int i = 0; i < items.length; ++i) {
-            items[i] = getText(values[i].getTitleResId());
+            items[i] = getString(values[i].getTextResId());
         }
 
         new AlertDialog.Builder(this)
@@ -63,7 +63,7 @@ public class SettingsActivity extends BaseDrawerActivity {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
                         Preferences.General.TitleLanguage.set(values[which]);
-                        mAnimeTitleLanguage.setText(values[which].getTitleResId());
+                        mAnimeTitleLanguage.setText(values[which].getTextResId());
                     }
                 })
                 .setTitle(R.string.preferred_anime_title_language)
@@ -109,7 +109,7 @@ public class SettingsActivity extends BaseDrawerActivity {
     @Override
     protected void onViewsBound() {
         super.onViewsBound();
-        mAnimeTitleLanguage.setText(Preferences.General.TitleLanguage.get().getTitleResId());
+        mAnimeTitleLanguage.setText(Preferences.General.TitleLanguage.get().getTextResId());
         mVersion.setText(getString(R.string.version_format, BuildConfig.VERSION_NAME,
                 BuildConfig.VERSION_CODE));
     }
