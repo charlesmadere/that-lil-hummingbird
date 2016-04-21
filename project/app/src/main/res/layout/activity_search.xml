@@ -22,7 +22,7 @@
         <TextView
             android:id="@+id/tvInitialSearchMessage"
             android:text="@string/initial_search_message"
-            tools:visibility="visible"
+            android:visibility="visible"
             style="@style/ListMessageTitle.Standalone" />
     </FrameLayout>
 </LinearLayout>
