@@ -56,7 +56,7 @@ public final class PaletteUtils {
 
     @ColorInt
     private static int getDrawableColor(final View view, @Nullable Drawable drawable) {
-        if (drawable != null && drawable instanceof ColorDrawable) {
+        if (drawable instanceof ColorDrawable) {
             return ((ColorDrawable) drawable).getColor();
         } else {
             return ContextCompat.getColor(view.getContext(), R.color.transparent);
