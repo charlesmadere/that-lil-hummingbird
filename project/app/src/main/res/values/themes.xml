@@ -19,9 +19,10 @@
         <item name="colorDivider">@color/dividerDark</item>
         <item name="colorPrimary">@color/bar</item>
         <item name="colorPrimaryDark">@color/barDark</item>
-        <item name="colorTextPrimary">?android:attr/textColorPrimary</item>
-        <item name="colorTextSecondary">?android:attr/textColorSecondary</item>
+        <item name="colorTextPrimary">@color/white</item>
+        <item name="colorTextSecondary">@color/offWhite</item>
         <item name="android:textColor">?attr/colorTextPrimary</item>
+        <item name="android:windowBackground">@color/offBlack</item>
     </style>
 
     <style name="BaseHummingbirdTheme_Light" parent="Theme.AppCompat.Light.NoActionBar">
