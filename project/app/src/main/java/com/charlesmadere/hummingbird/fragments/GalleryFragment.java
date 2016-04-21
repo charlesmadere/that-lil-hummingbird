@@ -76,7 +76,7 @@ public class GalleryFragment extends BaseFragment {
         progressBarDrawable.setColor(MiscUtils.getAttrColor(getContext(), R.attr.colorAccent));
 
         final GenericDraweeHierarchy hierarchy = new GenericDraweeHierarchyBuilder(getResources())
-                .setActualImageScaleType(ScalingUtils.ScaleType.FIT_XY)
+                .setActualImageScaleType(ScalingUtils.ScaleType.CENTER_INSIDE)
                 .setProgressBarImage(progressBarDrawable)
                 .build();
 
