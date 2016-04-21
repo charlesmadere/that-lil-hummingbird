@@ -4,6 +4,7 @@
     <attr name="colorDivider" format="color" />
     <attr name="colorTextPrimary" format="color" />
     <attr name="colorTextSecondary" format="color" />
+    <attr name="ic_video_library_24dp" format="reference" />
 
     <declare-styleable name="KeyValueTextView">
         <attr name="keyTextColor" format="color" />
