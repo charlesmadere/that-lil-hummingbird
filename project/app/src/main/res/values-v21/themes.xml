@@ -2,20 +2,20 @@
 <resources>
 
     <style name="AlertDialogTheme_Dark_V21" parent="android:Theme.Material.Dialog">
-        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:colorAccent">?attr/colorAccent</item>
     </style>
 
     <style name="AlertDialogTheme_Light_V21" parent="android:Theme.Material.Light.Dialog">
-        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:colorAccent">?attr/colorAccent</item>
     </style>
 
     <style name="DatePickerDialogTheme_Dark" parent="android:Theme.Material.Dialog">
-        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:colorAccent">?attr/colorAccent</item>
         <item name="android:datePickerStyle">@style/DatePickerStyle</item>
     </style>
 
     <style name="DatePickerDialogTheme_Light" parent="android:Theme.Material.Light.Dialog">
-        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:colorAccent">?attr/colorAccent</item>
         <item name="android:datePickerStyle">@style/DatePickerStyle</item>
     </style>
 

@@ -8,6 +8,7 @@ import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.RetrofitUtils;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.AbsAnime;
+import com.charlesmadere.hummingbird.models.AnimeEpisode;
 import com.charlesmadere.hummingbird.models.AnimeV1;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.AuthInfo;
@@ -131,6 +132,12 @@ public final class Api {
 
                 if (response.isSuccessful()) {
                     body = response.body();
+
+                    final AnimeV2.Links links = body.getLinks();
+
+                    if (links.hasAnimeEpisodes()) {
+                        AnimeEpisode.sort(links.getAnimeEpisodes());
+                    }
                 }
 
                 if (body == null) {
@@ -282,6 +289,27 @@ public final class Api {
         }
 
         return errorInfo;
+    }
+
+    public static void searchAnimeByTitle(final String query,
+            final ApiResponse<ArrayList<AnimeV1>> listener) {
+        getApi().searchAnimeByTitle(query).enqueue(new Callback<ArrayList<AnimeV1>>() {
+            @Override
+            public void onResponse(final Call<ArrayList<AnimeV1>> call,
+                    final Response<ArrayList<AnimeV1>> response) {
+                if (response.isSuccessful()) {
+                    listener.success(response.body());
+                } else {
+                    listener.failure(retrieveErrorInfo(response));
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<ArrayList<AnimeV1>> call, final Throwable t) {
+                Timber.e(TAG, "search for \"" + query + "\" failed", t);
+                listener.failure(null);
+            }
+        });
     }
 
     private static HummingbirdApi getApi() {

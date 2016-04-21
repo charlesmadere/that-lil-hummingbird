@@ -2,7 +2,7 @@
 <resources>
 
     <style name="DatePickerStyle" parent="android:Widget.Material.Light.DatePicker">
-        <item name="android:headerBackground">@color/colorPrimary</item>
+        <item name="android:headerBackground">?attr/colorPrimary</item>
     </style>
 
     <style name="MediumOrBold">

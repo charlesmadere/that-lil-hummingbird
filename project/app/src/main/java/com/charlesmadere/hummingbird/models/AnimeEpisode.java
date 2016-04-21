@@ -6,19 +6,20 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.MiscUtils;
-import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class AnimeEpisode implements Parcelable {
 
     @SerializedName("number")
     private int mNumber;
 
-    @Nullable
     @SerializedName("season_number")
-    private Integer mSeasonNumber;
+    private int mSeason;
 
     @Nullable
     @SerializedName("airdate")
@@ -48,9 +49,8 @@ public class AnimeEpisode implements Parcelable {
         return mNumber;
     }
 
-    @Nullable
-    public Integer getSeasonNumber() {
-        return mSeasonNumber;
+    public int getSeason() {
+        return mSeason;
     }
 
     @Nullable
@@ -62,8 +62,12 @@ public class AnimeEpisode implements Parcelable {
         return mTitle;
     }
 
-    public boolean hasSeasonNumber() {
-        return mSeasonNumber != null;
+    public boolean hasAirDate() {
+        return mAirDate != null;
+    }
+
+    public boolean hasSeason() {
+        return mSeason >= 1;
     }
 
     public boolean hasSynopsis() {
@@ -83,7 +87,7 @@ public class AnimeEpisode implements Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeInt(mNumber);
-        ParcelableUtils.writeInteger(mSeasonNumber, dest);
+        dest.writeInt(mSeason);
         dest.writeParcelable(mAirDate, flags);
         dest.writeString(mId);
         dest.writeString(mSynopsis);
@@ -95,7 +99,7 @@ public class AnimeEpisode implements Parcelable {
         public AnimeEpisode createFromParcel(final Parcel source) {
             final AnimeEpisode ae = new AnimeEpisode();
             ae.mNumber = source.readInt();
-            ae.mSeasonNumber = ParcelableUtils.readInteger(source);
+            ae.mSeason = source.readInt();
             ae.mAirDate = source.readParcelable(SimpleDate.class.getClassLoader());
             ae.mId = source.readString();
             ae.mSynopsis = source.readString();
@@ -109,16 +113,49 @@ public class AnimeEpisode implements Parcelable {
         }
     };
 
+    public static void sort(@Nullable final List<AnimeEpisode> list) {
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+
+        final ArrayList<AnimeEpisode> episodesWithSeasons = new ArrayList<>();
+        final ArrayList<AnimeEpisode> episodesWithoutSeasons = new ArrayList<>();
+
+        for (final AnimeEpisode episode : list) {
+            if (episode.hasSeason()) {
+                episodesWithSeasons.add(episode);
+            } else {
+                episodesWithoutSeasons.add(episode);
+            }
+        }
+
+        list.clear();
+
+        if (!episodesWithSeasons.isEmpty()) {
+            Collections.sort(episodesWithSeasons, COMPARATOR);
+            list.addAll(episodesWithSeasons);
+        }
+
+        if (!episodesWithoutSeasons.isEmpty()) {
+            Collections.sort(episodesWithoutSeasons, COMPARATOR);
+            list.addAll(episodesWithoutSeasons);
+        }
+    }
 
     public static final Comparator<AnimeEpisode> COMPARATOR = new Comparator<AnimeEpisode>() {
         @Override
         public int compare(final AnimeEpisode lhs, final AnimeEpisode rhs) {
-            if ((lhs.getSeasonNumber() == null || rhs.getSeasonNumber() == null) ||
-                    (lhs.getSeasonNumber().equals(rhs.getSeasonNumber()))) {
-                return MiscUtils.integerCompare(lhs.getNumber(), rhs.getNumber());
-            } else {
-                return MiscUtils.integerCompare(lhs.getSeasonNumber(), rhs.getSeasonNumber());
+            int compare = MiscUtils.integerCompare(lhs.getSeason(), rhs.getSeason());
+            if (compare != 0) {
+                return compare;
             }
+
+            compare = MiscUtils.integerCompare(lhs.getNumber(), rhs.getNumber());
+            if (compare != 0) {
+                return compare;
+            }
+
+            return lhs.getTitle().compareToIgnoreCase(rhs.getTitle());
         }
     };
 

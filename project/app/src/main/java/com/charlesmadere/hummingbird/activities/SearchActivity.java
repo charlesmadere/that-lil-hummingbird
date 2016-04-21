@@ -3,13 +3,44 @@ package com.charlesmadere.hummingbird.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.Nullable;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
+import com.charlesmadere.hummingbird.models.AnimeV1;
+import com.charlesmadere.hummingbird.models.ErrorInfo;
+import com.charlesmadere.hummingbird.networking.Api;
+import com.charlesmadere.hummingbird.networking.ApiResponse;
 
-public class SearchActivity extends BaseDrawerActivity {
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+
+import butterknife.Bind;
+
+public class SearchActivity extends BaseActivity implements MenuItemCompat.OnActionExpandListener,
+        SearchView.OnQueryTextListener {
 
     private static final String TAG = "SearchActivity";
+    private static final String KEY_ANIME = "Anime";
+    private static final String KEY_QUERY = "Query";
+    private static final long SEARCH_DELAY_MS = 400L;
+
+    private ArrayList<AnimeV1> mAnime;
+    private Handler mHandler;
+    private String mQuery;
+
+    @Bind(R.id.recyclerView)
+    RecyclerView mRecyclerView;
+
+    @Bind(R.id.tvInitialSearchMessage)
+    TextView mInitialSearchMessage;
 
 
     public static Intent getLaunchIntent(final Context context) {
@@ -22,14 +53,147 @@ public class SearchActivity extends BaseDrawerActivity {
     }
 
     @Override
-    protected NavigationDrawerItemView.Entry getSelectedNavigationDrawerItemViewEntry() {
-        return NavigationDrawerItemView.Entry.SEARCH;
-    }
-
-    @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
+            mAnime = savedInstanceState.getParcelableArrayList(KEY_ANIME);
+            mQuery = savedInstanceState.getString(KEY_QUERY);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_search, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null);
+        }
+
+        super.onDestroy();
+    }
+
+    @Override
+    public boolean onMenuItemActionCollapse(final MenuItem item) {
+        finish();
+        return false;
+    }
+
+    @Override
+    public boolean onMenuItemActionExpand(final MenuItem item) {
+        return false;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        final MenuItem searchMenuItem = menu.findItem(R.id.miSearch);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchMenuItem);
+        searchView.setQueryHint(getString(R.string.search_));
+        MenuItemCompat.expandActionView(searchMenuItem);
+
+        if (!TextUtils.isEmpty(mQuery)) {
+            searchView.setQuery(mQuery, false);
+        }
+
+        MenuItemCompat.setOnActionExpandListener(searchMenuItem, this);
+        searchView.setOnQueryTextListener(this);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        if (TextUtils.isEmpty(newText) || TextUtils.getTrimmedLength(newText) == 0) {
+            return false;
+        }
+
+        mQuery = newText.trim();
+
+        if (mHandler == null) {
+            mHandler = new Handler();
+        } else {
+            mHandler.removeCallbacksAndMessages(null);
+        }
+
+        mHandler.postDelayed(new Search(this, mQuery), SEARCH_DELAY_MS);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(final String query) {
+        // intentionally empty
+        return false;
+    }
+
+    @Override
+    protected void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(KEY_ANIME, mAnime);
+        outState.putString(KEY_QUERY, mQuery);
+    }
+
+    private void showAnime(final ArrayList<AnimeV1> anime) {
+        mAnime = anime;
+        // TODO
+    }
+
+    private void showErrorMessage() {
+        // TODO
+    }
+
+    private void showEmptyMessage() {
+        // TODO
+    }
+
+
+    private static class Search implements ApiResponse<ArrayList<AnimeV1>>, Runnable {
+        private final WeakReference<SearchActivity> mActivityReference;
+        private final String mQuery;
+
+        private Search(final SearchActivity activity, final String query) {
+            mActivityReference = new WeakReference<>(activity);
+            mQuery = query;
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final SearchActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed() &&
+                    mQuery.equalsIgnoreCase(activity.mQuery)) {
+                activity.showErrorMessage();
+            }
+        }
+
+        private boolean isAlive() {
+            final SearchActivity activity = mActivityReference.get();
+            return activity != null && !activity.isDestroyed();
+        }
+
+        @Override
+        public void run() {
+            if (isAlive()) {
+                Api.searchAnimeByTitle(mQuery, this);
+            }
+        }
+
+        @Override
+        public void success(@Nullable final ArrayList<AnimeV1> anime) {
+            final SearchActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed() &&
+                    mQuery.equalsIgnoreCase(activity.mQuery)) {
+                if (anime == null || anime.isEmpty()) {
+                    activity.showEmptyMessage();
+                } else {
+                    activity.showAnime(anime);
+                }
+            }
+        }
     }
 
 }

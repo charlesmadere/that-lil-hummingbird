@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AnimeEpisode;
-import com.charlesmadere.hummingbird.models.SimpleDate;
 
 import java.text.NumberFormat;
 
@@ -58,12 +57,11 @@ public class AnimeEpisodeItemView extends CardView implements AdapterView<AnimeE
         mEpisodeNumber.setText(mNumberFormat.format(content.getNumber()));
         mTitle.setText(content.getTitle());
 
-        final SimpleDate airDate = content.getAirDate();
-        if (airDate == null) {
-            mAirDate.setVisibility(GONE);
-        } else {
-            mAirDate.setText(airDate.getRelativeDateTimeText(getContext()));
+        if (content.hasAirDate()) {
+            mAirDate.setText(content.getAirDate().getRelativeDateTimeText(getContext()));
             mAirDate.setVisibility(VISIBLE);
+        } else {
+            mAirDate.setVisibility(GONE);
         }
 
         if (content.hasSynopsis()) {

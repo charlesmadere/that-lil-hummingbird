@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 
 public class NavigationDrawerItemView extends SelectableTextView {
 
@@ -78,9 +79,11 @@ public class NavigationDrawerItemView extends SelectableTextView {
         updateTextAndIcon();
     }
 
+    @SuppressWarnings("ResourceAsColor")
     private void updateTextAndIcon() {
-        final int colorResId = isSelected() ? R.color.colorAccent : R.color.white;
-        final int color = ContextCompat.getColor(getContext(), colorResId);
+        final int color = isSelected() ? MiscUtils.getAttrColor(getContext(), R.attr.colorAccent)
+                : ContextCompat.getColor(getContext(), R.color.white);
+
         setTextColor(color);
         setText(mEntry.getTextResId());
 

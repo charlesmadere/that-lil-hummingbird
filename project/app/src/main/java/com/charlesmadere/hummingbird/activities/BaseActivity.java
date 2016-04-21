@@ -1,5 +1,6 @@
 package com.charlesmadere.hummingbird.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +27,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Bind(R.id.toolbar)
     protected Toolbar mToolbar;
 
+
+    protected static Intent createDrawerActivityIntent(final Context context, final Class c) {
+        return new Intent(context, c).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+    }
 
     public abstract String getActivityName();
 

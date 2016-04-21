@@ -191,19 +191,31 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
 
 
     public static class Links implements Parcelable {
+        @Nullable
         @SerializedName("episodes")
         private ArrayList<AnimeEpisode> mAnimeEpisodes;
 
+        @Nullable
         @SerializedName("gallery_images")
         private ArrayList<GalleryImage> mGalleryImages;
 
 
+        @Nullable
         public ArrayList<AnimeEpisode> getAnimeEpisodes() {
             return mAnimeEpisodes;
         }
 
+        @Nullable
         public ArrayList<GalleryImage> getGalleryImages() {
             return mGalleryImages;
+        }
+
+        public boolean hasAnimeEpisodes() {
+            return mAnimeEpisodes != null && !mAnimeEpisodes.isEmpty();
+        }
+
+        public boolean hasGalleryImages() {
+            return mGalleryImages != null && !mGalleryImages.isEmpty();
         }
 
         @Override

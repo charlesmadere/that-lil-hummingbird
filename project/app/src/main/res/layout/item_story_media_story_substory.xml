@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/sdvAvatar"
             android:layout_width="match_parent"
-            app:keyTextColor="@color/colorAccent"
+            app:keyTextColor="?attr/colorAccent"
             app:valueTextColor="?attr/textColorPrimary"
             tools:text="ThatLilChestnut is currently watching." />
         <TextView

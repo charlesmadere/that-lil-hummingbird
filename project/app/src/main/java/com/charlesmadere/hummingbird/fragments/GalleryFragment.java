@@ -2,13 +2,13 @@ package com.charlesmadere.hummingbird.fragments;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.GalleryImage;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.AbstractDraweeController;
@@ -73,7 +73,7 @@ public class GalleryFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         final ProgressBarDrawable progressBarDrawable = new ProgressBarDrawable();
-        progressBarDrawable.setColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+        progressBarDrawable.setColor(MiscUtils.getAttrColor(getContext(), R.attr.colorAccent));
 
         final GenericDraweeHierarchy hierarchy = new GenericDraweeHierarchyBuilder(getResources())
                 .setActualImageScaleType(ScalingUtils.ScaleType.CENTER_INSIDE)

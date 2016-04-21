@@ -70,6 +70,7 @@
     <string name="hummingbird">Hummingbird</string>
     <string name="hummingbird_on_the_web">Hummingbird on the Web</string>
     <string name="husbando">Husbando</string>
+    <string name="initial_search_message">Once you begin typing, search results will be displayed here.</string>
     <string name="is_currently_watching">is currently watching</string>
     <string name="japanese">Japanese</string>
     <string name="library">Library</string>
@@ -118,6 +119,7 @@
     <string name="reviews">Reviews</string>
     <string name="romaji">Romaji</string>
     <string name="search">Search</string>
+    <string name="search_">Search…</string>
     <string name="search_for_">Search for…</string>
     <string name="season_x">Season %1$s</string>
     <string name="seen_x_of_y">Seen %1$d of %2$d</string>

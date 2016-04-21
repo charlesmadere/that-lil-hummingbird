@@ -7,7 +7,6 @@ import com.charlesmadere.hummingbird.models.AnimeEpisode;
 import com.charlesmadere.hummingbird.models.Season;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,14 +27,13 @@ public class AnimeEpisodesAdapter extends BaseMultiAdapter {
     public void setAnimeEpisodes(final List<AnimeEpisode> episodes) {
         // type hell
 
-        Collections.sort(episodes, AnimeEpisode.COMPARATOR);
         boolean showSeasons = false;
 
-        if (episodes.get(0).hasSeasonNumber()) {
-            final Integer seasonNumber = episodes.get(0).getSeasonNumber();
+        if (episodes.get(0).hasSeason()) {
+            final int seasonNumber = episodes.get(0).getSeason();
 
             for (final AnimeEpisode episode : episodes) {
-                if (!seasonNumber.equals(episode.getSeasonNumber())) {
+                if (seasonNumber != episode.getSeason()) {
                     showSeasons = true;
                     break;
                 }
@@ -48,12 +46,12 @@ public class AnimeEpisodesAdapter extends BaseMultiAdapter {
         }
 
         final ArrayList list = new ArrayList();
-        Season season = new Season(episodes.get(0).getSeasonNumber());
+        Season season = new Season(episodes.get(0).getSeason());
         list.add(season);
 
         for (final AnimeEpisode episode : episodes) {
-            if (season.hasSeason() && !season.getSeason().equals(episode.getSeasonNumber())) {
-                season = new Season(episode.getSeasonNumber());
+            if (season.hasSeason() && season.getSeason() != episode.getSeason()) {
+                season = new Season(episode.getSeason());
                 list.add(season);
             }
 

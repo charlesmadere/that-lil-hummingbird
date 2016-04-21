@@ -62,17 +62,21 @@ public final class GsonUtils {
     @Nullable
     public static ArrayList<String> getStringArrayList(final JsonObject json, final String name) {
         if (json.has(name)) {
-            final JsonArray array = json.getAsJsonArray(name);
-            final ArrayList<String> strings = new ArrayList<>(array.size());
+            final JsonElement element = json.get(name);
 
-            for (int i = 0; i < array.size(); ++i) {
-                strings.add(array.get(i).getAsString());
+            if (!element.isJsonNull()) {
+                final JsonArray array = json.getAsJsonArray(name);
+                final ArrayList<String> strings = new ArrayList<>(array.size());
+
+                for (int i = 0; i < array.size(); ++i) {
+                    strings.add(array.get(i).getAsString());
+                }
+
+                return strings;
             }
-
-            return strings;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
 }

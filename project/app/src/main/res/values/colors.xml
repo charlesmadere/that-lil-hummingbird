@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="bar">#4B5360</color>
+    <color name="barDark">#2F343B</color>
     <color name="black">#000000</color>
-    <color name="colorAccent">#EC8660</color>
-    <color name="colorPrimary">#4B5360</color>
-    <color name="colorPrimaryDark">#2F343B</color>
-    <color name="colorPrimaryDarker">#272C33</color>
-    <color name="darkGray">#333333</color>
-    <color name="mediumGray">#999999</color>
-    <color name="divider">#DDDDDD</color>
+    <color name="dividerDark">#22FFFFFF</color>
+    <color name="dividerLight">#AAFFFFFF</color>
+    <color name="grayDark">#333333</color>
+    <color name="grayMedium">#999999</color>
+    <color name="orange">#EC8660</color>
     <color name="overlay">#88000000</color>
     <color name="placeholderGradientEnd">#BBBBBB</color>
     <color name="placeholderGradientStart">#EEEEEE</color>
@@ -18,9 +18,9 @@
     <color name="windowBackground">#E6E6E6</color>
 
     <integer-array name="spinner_colors">
-        <item>@color/colorAccent</item>
-        <item>@color/colorPrimary</item>
-        <item>@color/colorPrimaryDark</item>
+        <item>@color/orange</item>
+        <item>@color/bar</item>
+        <item>@color/barDark</item>
     </integer-array>
 
     <!-- debug colors -->

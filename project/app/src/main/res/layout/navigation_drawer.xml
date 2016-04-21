@@ -66,6 +66,8 @@
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
                 app:entry="settings"
                 style="@style/NavigationDrawerItemView" />
+            <View
+                style="@style/NavigationDrawerDividerView" />
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
                 app:entry="hummingbird_on_the_web"
                 style="@style/NavigationDrawerItemView" />

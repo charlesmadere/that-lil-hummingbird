@@ -2,11 +2,11 @@
 <resources>
 
     <style name="AlertDialogTheme_Dark" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">?attr/colorAccent</item>
     </style>
 
     <style name="AlertDialogTheme_Light" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">?attr/colorAccent</item>
     </style>
 
     <style name="AppBarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -15,9 +15,10 @@
 
     <style name="BaseHummingbirdTheme_Dark" parent="Theme.AppCompat.NoActionBar">
         <item name="alertDialogTheme">@style/AlertDialogTheme_Dark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/orange</item>
+        <item name="colorPrimary">@color/bar</item>
+        <item name="colorPrimaryDark">@color/barDark</item>
+        <item name="dividerColor">@color/dividerDark</item>
         <item name="textColorPrimary">?android:attr/textColorPrimary</item>
         <item name="textColorSecondary">?android:attr/textColorSecondary</item>
         <item name="android:textColor">?attr/textColorPrimary</item>
@@ -26,11 +27,12 @@
 
     <style name="BaseHummingbirdTheme_Light" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="alertDialogTheme">@style/AlertDialogTheme_Light</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="textColorPrimary">@color/darkGray</item>
-        <item name="textColorSecondary">@color/mediumGray</item>
+        <item name="colorAccent">@color/orange</item>
+        <item name="colorPrimary">@color/bar</item>
+        <item name="colorPrimaryDark">@color/barDark</item>
+        <item name="dividerColor">@color/dividerLight</item>
+        <item name="textColorPrimary">@color/grayDark</item>
+        <item name="textColorSecondary">@color/grayMedium</item>
         <item name="android:textColor">?attr/textColorPrimary</item>
         <item name="android:windowBackground">@color/windowBackground</item>
     </style>

@@ -152,12 +152,12 @@ public final class PaletteUtils {
             }
 
             final Context context = tabLayout.getContext();
-            final int darkMutedColor = palette.getDarkMutedColor(ContextCompat.getColor(context,
-                    R.color.colorPrimaryDark));
-            final int darkVibrantColor = palette.getDarkVibrantColor(ContextCompat.getColor(context,
-                    R.color.colorPrimary));
-            final int vibrantColor = palette.getVibrantColor(ContextCompat.getColor(context,
-                    R.color.colorAccent));
+            final int darkMutedColor = palette.getDarkMutedColor(MiscUtils.getAttrColor(context,
+                    R.attr.colorPrimaryDark));
+            final int darkVibrantColor = palette.getDarkVibrantColor(MiscUtils.getAttrColor(context,
+                    R.attr.colorPrimary));
+            final int vibrantColor = palette.getVibrantColor(MiscUtils.getAttrColor(context,
+                    R.attr.colorAccent));
 
             applyColorsWithAnimation(appBarLayout, collapsingToolbarLayout, tabLayout,
                     darkMutedColor, darkVibrantColor, vibrantColor);

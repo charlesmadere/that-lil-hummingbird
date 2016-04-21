@@ -56,8 +56,7 @@
         <activity
             android:label="@string/search"
             android:launchMode="singleTop"
-            android:name=".activities.SearchActivity"
-            android:theme="@style/HummingbirdTheme_Light.WithDrawer" />
+            android:name=".activities.SearchActivity" />
 
         <activity
             android:label="@string/settings"
