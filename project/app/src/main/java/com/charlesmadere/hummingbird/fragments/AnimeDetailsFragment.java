@@ -140,7 +140,7 @@ public class AnimeDetailsFragment extends BaseFragment {
 
         if (mAnimeV2.hasFinishedAiringDate()) {
             mFinishedAiring.setText(getText(R.string.finished_airing),
-                    mAnimeV2.getFinishedAiringDate().getRelativeDateTimeText(getContext()));
+                    mAnimeV2.getFinishedAiringDate().getRelativeTimeText(getContext()));
             mFinishedAiring.setVisibility(View.VISIBLE);
         }
 
@@ -171,7 +171,7 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     private void setAiringDateView(final KeyValueTextView view, @StringRes final int keyTextResId,
             final SimpleDate date) {
-        view.setText(getText(keyTextResId), date.getRelativeDateTimeText(getContext()));
+        view.setText(getText(keyTextResId), date.getRelativeTimeText(getContext()));
         view.setVisibility(View.VISIBLE);
     }
 

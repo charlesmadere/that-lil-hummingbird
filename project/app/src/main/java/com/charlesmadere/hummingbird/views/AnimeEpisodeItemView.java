@@ -58,7 +58,7 @@ public class AnimeEpisodeItemView extends CardView implements AdapterView<AnimeE
         mTitle.setText(content.getTitle());
 
         if (content.hasAirDate()) {
-            mAirDate.setText(content.getAirDate().getRelativeDateTimeText(getContext()));
+            mAirDate.setText(content.getAirDate().getRelativeTimeText(getContext()));
             mAirDate.setVisibility(VISIBLE);
         } else {
             mAirDate.setVisibility(GONE);

@@ -76,7 +76,7 @@ public class StoryItemCommentView extends CardView implements AdapterView<Story>
         mTitle.setText(poster.getName());
 
         final Substory substory = mStory.getCommentSubstory();
-        mTimeAgo.setText(substory.getCreatedAt().getRelativeDateTimeText(getContext()));
+        mTimeAgo.setText(substory.getCreatedAt().getRelativeTimeText(getContext()));
         mComment.setText(substory.getComment());
     }
 
