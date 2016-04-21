@@ -95,6 +95,7 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
 
     @Override
     public boolean onMenuItemActionExpand(final MenuItem item) {
+        // intentionally empty
         return false;
     }
 
