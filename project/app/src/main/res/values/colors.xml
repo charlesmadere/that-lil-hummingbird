@@ -8,6 +8,7 @@
     <color name="dividerLight">#AAFFFFFF</color>
     <color name="grayDark">#333333</color>
     <color name="grayMedium">#999999</color>
+    <color name="offWhite">#E6E6E6</color>
     <color name="orange">#EC8660</color>
     <color name="overlay">#88000000</color>
     <color name="placeholderGradientEnd">#BBBBBB</color>
@@ -15,7 +16,6 @@
     <color name="scrimInsetForeground">#4000</color>
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="windowBackground">#E6E6E6</color>
 
     <integer-array name="spinner_colors">
         <item>@color/orange</item>

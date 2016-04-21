@@ -22,7 +22,6 @@
         <item name="colorTextPrimary">?android:attr/textColorPrimary</item>
         <item name="colorTextSecondary">?android:attr/textColorSecondary</item>
         <item name="android:textColor">?attr/colorTextPrimary</item>
-        <item name="android:windowBackground">@color/black</item>
     </style>
 
     <style name="BaseHummingbirdTheme_Light" parent="Theme.AppCompat.Light.NoActionBar">
@@ -34,7 +33,7 @@
         <item name="colorTextPrimary">@color/grayDark</item>
         <item name="colorTextSecondary">@color/grayMedium</item>
         <item name="android:textColor">?attr/colorTextPrimary</item>
-        <item name="android:windowBackground">@color/windowBackground</item>
+        <item name="android:windowBackground">@color/offWhite</item>
     </style>
 
     <style name="HummingbirdTheme_Dark" parent="BaseHummingbirdTheme_Dark">
