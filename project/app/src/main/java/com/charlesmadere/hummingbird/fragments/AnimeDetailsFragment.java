@@ -18,6 +18,7 @@ import com.charlesmadere.hummingbird.views.KeyValueTextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.text.NumberFormat;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -151,7 +152,7 @@ public class AnimeDetailsFragment extends BaseFragment {
         }
 
         mCommunityRating.setText(getText(R.string.community_rating),
-                String.valueOf(mAnimeV2.getCommunityRating()));
+                String.format(Locale.getDefault(), "%.4f", mAnimeV2.getCommunityRating()));
 
         if (mAnimeV2.hasYoutubeVideoId()) {
             mYouTubeLink.setVisibility(View.VISIBLE);
