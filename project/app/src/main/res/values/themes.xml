@@ -13,6 +13,10 @@
 
     </style>
 
+    <style name="BaseHummingbirdTheme_Black" parent="HummingbirdTheme_Dark">
+        <item name="android:windowBackground">@color/black</item>
+    </style>
+
     <style name="BaseHummingbirdTheme_Dark" parent="Theme.AppCompat.NoActionBar">
         <item name="alertDialogTheme">@style/AlertDialogTheme_Dark</item>
         <item name="colorAccent">@color/orange</item>
@@ -39,19 +43,19 @@
         <item name="android:windowBackground">@color/offWhite</item>
     </style>
 
-    <style name="HummingbirdTheme_Black" parent="HummingbirdTheme_Dark">
-        <item name="android:windowBackground">@color/black</item>
+    <style name="HummingbirdTheme_Black" parent="BaseHummingbirdTheme_Black">
+
     </style>
 
     <style name="HummingbirdTheme_Dark" parent="BaseHummingbirdTheme_Dark">
 
     </style>
 
-    <style name="HummingbirdTheme_Light" parent="BaseHummingbirdTheme_Dark">
+    <style name="HummingbirdTheme_Dark.WithDrawer">
 
     </style>
 
-    <style name="HummingbirdTheme_Dark.WithDrawer">
+    <style name="HummingbirdTheme_Light" parent="BaseHummingbirdTheme_Dark">
 
     </style>
 

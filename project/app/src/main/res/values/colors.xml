@@ -15,6 +15,7 @@
     <color name="placeholderGradientEnd">#BBBBBB</color>
     <color name="placeholderGradientStart">#EEEEEE</color>
     <color name="scrimInsetForeground">#4000</color>
+    <color name="translucent">#66000000</color>
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFF</color>
 
