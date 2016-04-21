@@ -12,7 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.adapters.AnimeAdapter;
+import com.charlesmadere.hummingbird.adapters.AnimeFragmentAdapter;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeV2;
@@ -131,7 +131,7 @@ public class AnimeActivity extends BaseDrawerActivity implements
         setTitle(mAnimeV2.getTitle());
         PaletteUtils.applyParallaxColors(mAnimeV2.getCoverImage(), this, mAppBarLayout,
                 mCollapsingToolbarLayout, mCoverImage, mTabLayout);
-        mViewPager.setAdapter(new AnimeAdapter(this, mAnimeV2));
+        mViewPager.setAdapter(new AnimeFragmentAdapter(this, mAnimeV2));
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);

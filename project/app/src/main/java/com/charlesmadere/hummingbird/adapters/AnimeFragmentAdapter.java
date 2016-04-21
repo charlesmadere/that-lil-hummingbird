@@ -13,18 +13,18 @@ import com.charlesmadere.hummingbird.fragments.AnimeGalleryFragment;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 
-public class AnimeAdapter extends FragmentStatePagerAdapter {
+public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
 
     private final AnimeV2 mAnimeV2;
     private final Context mContext;
     private final Impl mImpl;
 
 
-    public AnimeAdapter(final FragmentActivity activity, final AnimeV2 animeV2) {
+    public AnimeFragmentAdapter(final FragmentActivity activity, final AnimeV2 animeV2) {
         this(activity, activity.getSupportFragmentManager(), animeV2);
     }
 
-    public AnimeAdapter(final Context context, final FragmentManager fm, final AnimeV2 animeV2) {
+    public AnimeFragmentAdapter(final Context context, final FragmentManager fm, final AnimeV2 animeV2) {
         super(fm);
         mContext = context;
         mAnimeV2 = animeV2;
