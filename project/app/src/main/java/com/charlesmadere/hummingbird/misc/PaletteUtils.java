@@ -84,8 +84,7 @@ public final class PaletteUtils {
 
         private void applyColorsWithAnimation(final AppBarLayout appBarLayout,
                 final CollapsingToolbarLayout collapsingToolbarLayout, final TabLayout tabLayout,
-                @ColorInt final int darkMutedColor, @ColorInt final int darkVibrantColor,
-                @ColorInt final int vibrantColor) {
+                @ColorInt final int darkVibrantColor, @ColorInt final int vibrantColor) {
             ArgbEvaluator argbEvaluator = new ArgbEvaluator();
 
             ValueAnimator appBarAnimator = ValueAnimator.ofObject(argbEvaluator,
@@ -99,13 +98,13 @@ public final class PaletteUtils {
 
             int statusBarScrimColor = getDrawableColor(collapsingToolbarLayout,
                     collapsingToolbarLayout.getStatusBarScrim());
-            ValueAnimator collapsingToolbarStatusBarAnimator = ValueAnimator.ofObject(argbEvaluator,
-                    statusBarScrimColor, darkMutedColor);
             final ColorDrawable statusBarScrim = new ColorDrawable(statusBarScrimColor);
-            LayerDrawable layerDrawable = new LayerDrawable(new Drawable[] { statusBarScrim,
-                    new ColorDrawable( ContextCompat.getColor(collapsingToolbarLayout.getContext(),
-                            R.color.translucent)) });
-            collapsingToolbarLayout.setStatusBarScrim(layerDrawable);
+            collapsingToolbarLayout.setStatusBarScrim(new LayerDrawable(new Drawable[] {
+                    statusBarScrim, new ColorDrawable(ContextCompat.getColor(
+                    collapsingToolbarLayout.getContext(), R.color.translucent)) } ));
+
+            ValueAnimator collapsingToolbarStatusBarAnimator = ValueAnimator.ofObject(argbEvaluator,
+                    statusBarScrimColor, darkVibrantColor);
             collapsingToolbarStatusBarAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(final ValueAnimator animation) {
@@ -159,15 +158,13 @@ public final class PaletteUtils {
             }
 
             final Context context = tabLayout.getContext();
-            final int darkMutedColor = palette.getDarkMutedColor(MiscUtils.getAttrColor(context,
-                    R.attr.colorPrimaryDark));
             final int darkVibrantColor = palette.getDarkVibrantColor(MiscUtils.getAttrColor(context,
                     R.attr.colorPrimary));
             final int vibrantColor = palette.getVibrantColor(MiscUtils.getAttrColor(context,
                     R.attr.colorAccent));
 
             applyColorsWithAnimation(appBarLayout, collapsingToolbarLayout, tabLayout,
-                    darkMutedColor, darkVibrantColor, vibrantColor);
+                    darkVibrantColor, vibrantColor);
         }
 
         @Override
