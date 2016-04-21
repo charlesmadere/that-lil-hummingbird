@@ -9,6 +9,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
@@ -96,13 +97,19 @@ public final class PaletteUtils {
                 }
             });
 
+            int statusBarScrimColor = getDrawableColor(collapsingToolbarLayout,
+                    collapsingToolbarLayout.getStatusBarScrim());
             ValueAnimator collapsingToolbarStatusBarAnimator = ValueAnimator.ofObject(argbEvaluator,
-                    getDrawableColor(collapsingToolbarLayout, collapsingToolbarLayout.getStatusBarScrim()),
-                    darkMutedColor);
+                    statusBarScrimColor, darkMutedColor);
+            final ColorDrawable statusBarScrim = new ColorDrawable(statusBarScrimColor);
+            LayerDrawable layerDrawable = new LayerDrawable(new Drawable[] { statusBarScrim,
+                    new ColorDrawable( ContextCompat.getColor(collapsingToolbarLayout.getContext(),
+                            R.color.translucent)) });
+            collapsingToolbarLayout.setStatusBarScrim(layerDrawable);
             collapsingToolbarStatusBarAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(final ValueAnimator animation) {
-                    collapsingToolbarLayout.setStatusBarScrimColor((int) animation.getAnimatedValue());
+                    statusBarScrim.setColor((int) animation.getAnimatedValue());
                 }
             });
 
