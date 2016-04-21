@@ -65,6 +65,10 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mAnime = savedInstanceState.getParcelableArrayList(KEY_ANIME);
             mQuery = savedInstanceState.getString(KEY_QUERY);
+
+            if (mAnime != null && !mAnime.isEmpty()) {
+                showAnime(mAnime);
+            }
         }
     }
 
