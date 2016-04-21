@@ -25,7 +25,7 @@
             android:label=""
             android:name=".activities.GalleryActivity"
             android:parentActivityName=".activities.GalleryActivity"
-            android:theme="@style/HummingbirdTheme_Dark">
+            android:theme="@style/HummingbirdTheme_Black">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.AnimeActivity" />

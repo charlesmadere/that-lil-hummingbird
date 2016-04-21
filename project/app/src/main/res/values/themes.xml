@@ -37,6 +37,10 @@
         <item name="android:windowBackground">@color/offWhite</item>
     </style>
 
+    <style name="HummingbirdTheme_Black" parent="HummingbirdTheme_Dark">
+        <item name="android:windowBackground">@color/black</item>
+    </style>
+
     <style name="HummingbirdTheme_Dark" parent="BaseHummingbirdTheme_Dark">
 
     </style>
