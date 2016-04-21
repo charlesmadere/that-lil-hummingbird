@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
 
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
@@ -23,6 +24,12 @@ public class CurrentUserActivity extends BaseUserActivity {
     @Override
     protected NavigationDrawerItemView.Entry getSelectedNavigationDrawerItemViewEntry() {
         return NavigationDrawerItemView.Entry.HOME;
+    }
+
+    @Override
+    protected void onViewsBound() {
+        super.onViewsBound();
+        mAvatar.setVisibility(View.GONE);
     }
 
 }

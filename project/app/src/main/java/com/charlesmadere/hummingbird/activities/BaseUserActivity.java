@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -37,22 +38,25 @@ public abstract class BaseUserActivity extends BaseDrawerActivity {
     private User mUser;
 
     @Bind(R.id.appBarLayout)
-    AppBarLayout mAppBarLayout;
+    protected AppBarLayout mAppBarLayout;
 
     @Bind(R.id.collapsingToolbarLayout)
-    CollapsingToolbarLayout mCollapsingToolbarLayout;
+    protected CollapsingToolbarLayout mCollapsingToolbarLayout;
+
+    @Bind(R.id.sdvAvatar)
+    protected SimpleDraweeView mAvatar;
 
     @Bind(R.id.parallaxCoverImage)
-    SimpleDraweeView mCoverImage;
+    protected SimpleDraweeView mCoverImage;
 
     @Bind(R.id.simpleProgressView)
-    SimpleProgressView mSimpleProgressView;
+    protected SimpleProgressView mSimpleProgressView;
 
     @Bind(R.id.tabLayout)
-    TabLayout mTabLayout;
+    protected TabLayout mTabLayout;
 
     @Bind(R.id.viewPager)
-    ViewPager mViewPager;
+    protected ViewPager mViewPager;
 
 
     public static Intent getLaunchIntent(final Context context, final User user) {
@@ -138,6 +142,7 @@ public abstract class BaseUserActivity extends BaseDrawerActivity {
         mUser = user;
         PaletteUtils.applyParallaxColors(mUser.getCoverImage(), this, mAppBarLayout,
                 mCollapsingToolbarLayout, mCoverImage, mTabLayout);
+        mAvatar.setImageURI(Uri.parse(user.getAvatar()));
         mViewPager.setAdapter(new UserFragmentAdapter(this, mUser));
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);
