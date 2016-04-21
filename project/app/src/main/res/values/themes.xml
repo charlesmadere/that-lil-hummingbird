@@ -19,9 +19,9 @@
         <item name="colorDivider">@color/dividerDark</item>
         <item name="colorPrimary">@color/bar</item>
         <item name="colorPrimaryDark">@color/barDark</item>
-        <item name="textColorPrimary">?android:attr/textColorPrimary</item>
-        <item name="textColorSecondary">?android:attr/textColorSecondary</item>
-        <item name="android:textColor">?attr/textColorPrimary</item>
+        <item name="colorTextPrimary">?android:attr/textColorPrimary</item>
+        <item name="colorTextSecondary">?android:attr/textColorSecondary</item>
+        <item name="android:textColor">?attr/colorTextPrimary</item>
         <item name="android:windowBackground">@color/black</item>
     </style>
 
@@ -31,9 +31,9 @@
         <item name="colorDivider">@color/dividerLight</item>
         <item name="colorPrimary">@color/bar</item>
         <item name="colorPrimaryDark">@color/barDark</item>
-        <item name="textColorPrimary">@color/grayDark</item>
-        <item name="textColorSecondary">@color/grayMedium</item>
-        <item name="android:textColor">?attr/textColorPrimary</item>
+        <item name="colorTextPrimary">@color/grayDark</item>
+        <item name="colorTextSecondary">@color/grayMedium</item>
+        <item name="android:textColor">?attr/colorTextPrimary</item>
         <item name="android:windowBackground">@color/windowBackground</item>
     </style>
 

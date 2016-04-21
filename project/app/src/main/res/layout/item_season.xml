@@ -6,7 +6,7 @@
     android:paddingEnd="@dimen/root_padding_double"
     android:paddingStart="@dimen/root_padding_double"
     android:paddingTop="@dimen/root_padding"
-    android:textColor="?attr/textColorPrimary"
+    android:textColor="?attr/colorTextPrimary"
     android:textSize="@dimen/text_xlarge"
     tools:text="Season 5"
     style="@style/MediumOrBold" />

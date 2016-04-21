@@ -21,13 +21,13 @@
             android:layout_toEndOf="@id/sdvAvatar"
             android:layout_width="match_parent"
             app:keyTextColor="?attr/colorAccent"
-            app:valueTextColor="?attr/textColorPrimary"
+            app:valueTextColor="?attr/colorTextPrimary"
             tools:text="ThatLilChestnut is currently watching." />
         <TextView
             android:id="@+id/tvTimeAgo"
             android:layout_below="@id/kvtvAction"
             android:layout_toEndOf="@id/sdvAvatar"
-            android:textColor="?attr/textColorSecondary"
+            android:textColor="?attr/colorTextSecondary"
             android:textSize="@dimen/text_small"
             tools:text="2 days ago"
             style="@style/TimeOrDate" />

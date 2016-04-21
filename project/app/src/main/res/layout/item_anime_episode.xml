@@ -12,7 +12,7 @@
             android:layout_alignParentEnd="true"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:textColor="?attr/textColorSecondary"
+            android:textColor="?attr/colorTextSecondary"
             android:textSize="@dimen/text_xxlarge"
             tools:text="12" />
         <LinearLayout
