@@ -11,6 +11,8 @@ import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 
+import java.text.NumberFormat;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -18,6 +20,16 @@ public class AnimeItemView extends CardView implements AdapterView<AbsAnime>,
         View.OnClickListener {
 
     private AbsAnime mAnime;
+    private NumberFormat mNumberFormat;
+
+    @Bind(R.id.tvEpisodeCount)
+    TextView mEpisodeCount;
+
+    @Bind(R.id.tvGenres)
+    TextView mGenres;
+
+    @Bind(R.id.tvShowType)
+    TextView mShowType;
 
     @Bind(R.id.tvTitle)
     TextView mTitle;
@@ -52,12 +64,29 @@ public class AnimeItemView extends CardView implements AdapterView<AbsAnime>,
 
         ButterKnife.bind(this);
         setOnClickListener(this);
+        mNumberFormat = NumberFormat.getInstance();
     }
 
     @Override
     public void setContent(final AbsAnime content) {
         mAnime = content;
         mTitle.setText(mAnime.getTitle());
+        mShowType.setText(mAnime.getShowType().getTextResId());
+
+        if (mAnime.hasGenres()) {
+            mGenres.setText(mAnime.getGenresString(getResources()));
+            mGenres.setVisibility(VISIBLE);
+        } else {
+            mGenres.setVisibility(GONE);
+        }
+
+        if (mAnime.hasEpisodeCount()) {
+            mEpisodeCount.setText(getResources().getQuantityString(R.plurals.x_episodes,
+                    mAnime.getEpisodeCount(), mNumberFormat.format(mAnime.getEpisodeCount())));
+            mEpisodeCount.setVisibility(VISIBLE);
+        } else {
+            mEpisodeCount.setVisibility(GONE);
+        }
     }
 
 }

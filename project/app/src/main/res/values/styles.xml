@@ -12,6 +12,14 @@
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
+    <style name="AnimeEpisodeCount">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">?attr/textColorSecondary</item>
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
     <style name="AnimeGenres">
         <item name="android:ellipsize">end</item>
         <item name="android:layout_height">wrap_content</item>
@@ -19,6 +27,7 @@
         <item name="android:maxLines">2</item>
         <item name="android:textColor">?attr/textColorSecondary</item>
         <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:visibility">gone</item>
     </style>
 
     <style name="AnimePoster">

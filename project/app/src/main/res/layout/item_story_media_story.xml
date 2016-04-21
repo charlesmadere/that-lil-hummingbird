@@ -25,6 +25,7 @@
             <TextView
                 android:id="@+id/tvGenres"
                 tools:text="Comedy, Mystery, Romance"
+                tools:visibility="visible"
                 style="@style/AnimeGenres" />
             <LinearLayout
                 android:divider="@drawable/divider"

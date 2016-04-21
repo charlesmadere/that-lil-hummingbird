@@ -106,7 +106,12 @@ public class AnimeDetailsFragment extends BaseFragment {
         mPoster.setImageURI(Uri.parse(mAnimeV2.getPosterImage()));
         mTitle.setText(mAnimeV2.getTitle());
         mShowType.setText(mAnimeV2.getShowType().getTextResId());
-        mGenres.setText(mAnimeV2.getGenresString(getResources()));
+
+        if (mAnimeV2.hasGenres()) {
+            mGenres.setText(mAnimeV2.getGenresString(getResources()));
+            mGenres.setVisibility(View.VISIBLE);
+        }
+
         mAgeRating.setText(mAnimeV2.getAgeRating().getTextResId());
 
         if (mAnimeV2.getShowType() != AbsAnime.ShowType.MOVIE && mAnimeV2.hasEpisodeCount()) {

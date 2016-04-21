@@ -37,23 +37,17 @@
                 <TextView
                     android:id="@+id/tvGenres"
                     tools:text="Comedy, Mystery, Romance"
+                    tools:visibility="visible"
                     style="@style/AnimeGenres" />
-                <android.support.v4.widget.Space
-                    android:layout_height="@dimen/root_padding_half"
-                    android:layout_width="match_parent" />
                 <TextView
                     android:id="@+id/tvAgeRating"
                     tools:text="@string/pg13"
                     style="@style/AgeRating" />
                 <TextView
                     android:id="@+id/tvEpisodeCount"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:textColor="?attr/textColorSecondary"
-                    android:textSize="@dimen/text_small"
-                    android:visibility="gone"
                     tools:text="20 episodes"
-                    tools:visibility="visible" />
+                    tools:visibility="visible"
+                    style="@style/AnimeEpisodeCount" />
                 <android.support.v4.widget.Space
                     android:layout_height="@dimen/root_padding_half"
                     android:layout_width="match_parent" />

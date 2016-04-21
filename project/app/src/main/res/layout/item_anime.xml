@@ -10,5 +10,18 @@
             android:id="@+id/tvTitle"
             tools:text="Kill La Kill"
             style="@style/AnimeTitle" />
+        <TextView
+            android:id="@+id/tvShowType"
+            tools:text="@string/movie"
+            style="@style/AnimeShowType" />
+        <TextView
+            android:id="@+id/tvGenres"
+            tools:text="Comedy, Mystery, Romance"
+            style="@style/AnimeGenres" />
+        <TextView
+            android:id="@+id/tvEpisodeCount"
+            tools:text="20 episodes"
+            tools:visibility="visible"
+            style="@style/AnimeEpisodeCount" />
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.AnimeItemView>
