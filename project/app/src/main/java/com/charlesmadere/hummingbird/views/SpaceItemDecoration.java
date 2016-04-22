@@ -1,4 +1,4 @@
-package com.charlesmadere.hummingbird.misc;
+package com.charlesmadere.hummingbird.views;
 
 import android.graphics.Rect;
 import android.support.annotation.DimenRes;
@@ -73,12 +73,7 @@ public final class SpaceItemDecoration {
                         spacing);
             }
         } else {
-            // Maybe we shouldn't throw an exception here, and should instead just return a no-op
-            // ItemDecoration implementation. However doing it this way currently works for all
-            // of our current cases, and prevents us from attempting to apply this code for cases
-            // that don't exactly match.
-            throw new IllegalArgumentException("the given LayoutManager (" +
-                    lm.getClass().getSimpleName() + ") isn't a supported type");
+            itemDecoration = new RecyclerView.ItemDecoration() {};
         }
 
         view.addItemDecoration(itemDecoration);

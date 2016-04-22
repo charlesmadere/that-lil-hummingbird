@@ -100,6 +100,13 @@
         <item name="android:layout_marginStart">@dimen/root_padding_half</item>
     </style>
 
+    <style name="BaseListOrGrid">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:scrollbars">vertical</item>
+    </style>
+
     <style name="CardItem" parent="BaseCard">
         <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:layout_height">wrap_content</item>
@@ -175,8 +182,13 @@
         <item name="android:visibility">gone</item>
     </style>
 
-    <style name="ListOrGrid">
+    <style name="ListOrGrid" parent="BaseListOrGrid">
         <item name="layoutManager">LinearLayoutManager</item>
+    </style>
+
+    <style name="ListOrGrid.WithPadding">
+        <item name="android:paddingEnd">@dimen/root_padding_half</item>
+        <item name="android:paddingStart">@dimen/root_padding_half</item>
     </style>
 
     <style name="MediumOrBold">

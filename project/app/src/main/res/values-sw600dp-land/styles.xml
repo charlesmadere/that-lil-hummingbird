@@ -2,7 +2,7 @@
 <resources>
 
     <style name="GalleryGrid">
-        <item name="spanCount">5</item>
+        <item name="spanCount">6</item>
     </style>
 
     <style name="ListOrGrid" parent="BaseListOrGrid">

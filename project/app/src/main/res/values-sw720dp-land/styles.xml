@@ -2,12 +2,12 @@
 <resources>
 
     <style name="GalleryGrid">
-        <item name="spanCount">5</item>
+        <item name="spanCount">8</item>
     </style>
 
     <style name="ListOrGrid" parent="BaseListOrGrid">
         <item name="layoutManager">StaggeredGridLayoutManager</item>
-        <item name="spanCount">2</item>
+        <item name="spanCount">3</item>
     </style>
 
 </resources>

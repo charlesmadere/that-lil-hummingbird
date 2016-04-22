@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.StoriesAdapter;
-import com.charlesmadere.hummingbird.misc.SpaceItemDecoration;
+import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Story;
 import com.charlesmadere.hummingbird.models.User;

@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeAdapter;
-import com.charlesmadere.hummingbird.misc.SpaceItemDecoration;
+import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.networking.Api;

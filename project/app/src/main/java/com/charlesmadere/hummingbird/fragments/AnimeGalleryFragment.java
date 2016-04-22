@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.GalleryAdapter;
-import com.charlesmadere.hummingbird.misc.SpaceItemDecoration;
+import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 import com.charlesmadere.hummingbird.models.GalleryImage;
 
 import java.util.ArrayList;
