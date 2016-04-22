@@ -74,8 +74,16 @@ public final class SpaceItemDecoration {
                         spacing);
             }
         } else if (lm instanceof StaggeredGridLayoutManager) {
-            // TODO
-            itemDecoration = new RecyclerView.ItemDecoration() {};
+            final StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) lm;
+            final int columns = sglm.getSpanCount();
+
+            if (sglm.getOrientation() == StaggeredGridLayoutManager.HORIZONTAL) {
+                itemDecoration = new HorizontalGridSpaceItemDecoration(includeStartEndEdge,
+                        spacing, columns);
+            } else {
+                itemDecoration = new VerticalGridSpaceItemDecoration(includeStartEndEdge,
+                        spacing, columns);
+            }
         } else {
             // Maybe we shouldn't throw an exception here, and should instead just return a no-op
             // ItemDecoration implementation. However doing it this way currently works for all
