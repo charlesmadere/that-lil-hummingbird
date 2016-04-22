@@ -75,14 +75,11 @@ public final class SpaceItemDecoration {
             }
         } else if (lm instanceof StaggeredGridLayoutManager) {
             final StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) lm;
-            final int columns = sglm.getSpanCount();
 
             if (sglm.getOrientation() == StaggeredGridLayoutManager.HORIZONTAL) {
-                itemDecoration = new HorizontalGridSpaceItemDecoration(includeStartEndEdge,
-                        spacing, columns);
+                itemDecoration = new HorizontalStaggeredGridSpaceItemDecoration(spacing);
             } else {
-                itemDecoration = new VerticalGridSpaceItemDecoration(includeStartEndEdge,
-                        spacing, columns);
+                itemDecoration = new VerticalStaggeredGridSpaceItemDecoration(spacing);
             }
         } else {
             // Maybe we shouldn't throw an exception here, and should instead just return a no-op
@@ -269,6 +266,30 @@ public final class SpaceItemDecoration {
             } else if (position + 1 != getCount(parent)) {
                 outRect.bottom = spacing;
             }
+        }
+    }
+
+    private static class HorizontalStaggeredGridSpaceItemDecoration extends BaseSpaceItemDecoration {
+        private HorizontalStaggeredGridSpaceItemDecoration(final int spacing) {
+            super(false, spacing);
+        }
+
+        @Override
+        protected void getItemOffsets(final Rect outRect, final View view,
+                final RecyclerView parent, final RecyclerView.State state, final int position) {
+            outRect.right = spacing;
+        }
+    }
+
+    private static class VerticalStaggeredGridSpaceItemDecoration extends BaseSpaceItemDecoration {
+        private VerticalStaggeredGridSpaceItemDecoration(final int spacing) {
+            super(false, spacing);
+        }
+
+        @Override
+        protected void getItemOffsets(final Rect outRect, final View view,
+                final RecyclerView parent, final RecyclerView.State state, final int position) {
+            outRect.bottom = spacing;
         }
     }
 
