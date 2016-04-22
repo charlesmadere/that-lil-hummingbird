@@ -18,6 +18,7 @@ public class FloatPreference extends Preference<Float> {
     @Override
     public Float get() {
         if (exists()) {
+            // at this point, returning the fallback value is impossible
             return readSharedPreferences().getFloat(getKey(), 0f);
         } else {
             return getDefaultValue();

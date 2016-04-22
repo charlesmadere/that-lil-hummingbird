@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.preferences;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.charlesmadere.hummingbird.misc.GsonUtils;
 import com.google.gson.Gson;
@@ -13,12 +14,14 @@ public class GsonPreference<T> extends Preference<T> {
     private final Type mType;
 
 
-    public GsonPreference(final String name, final String key, final T defaultValue,
-            final Type type) {
+    public GsonPreference(final String name, final String key, final Type type,
+            @Nullable final T defaultValue) {
         super(name, key, defaultValue);
         mType = type;
-        mStringPreference = new StringPreference(name, key, defaultValue == null ? null :
-                getGson().toJson(defaultValue, type));
+
+        final String defaultValueJson = defaultValue == null ? null :
+                getGson().toJson(defaultValue, type);
+        mStringPreference = new StringPreference(name, key, defaultValueJson);
     }
 
     @Override

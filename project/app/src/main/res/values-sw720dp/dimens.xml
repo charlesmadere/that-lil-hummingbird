@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="list_item_height">52dp</dimen>
+    <dimen name="login_form_width">360dp</dimen>
+    <dimen name="navigation_drawer_view_width">320dp</dimen>
+    <dimen name="parallax_cover_image_height">256dp</dimen>
+    <dimen name="root_padding">20dp</dimen>
+    <dimen name="root_padding_double">40dp</dimen>
+    <dimen name="root_padding_half">10dp</dimen>
+    <dimen name="root_padding_quadruple">80dp</dimen>
+
+</resources>

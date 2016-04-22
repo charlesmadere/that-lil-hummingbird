@@ -18,6 +18,7 @@ public class IntegerPreference extends Preference<Integer> {
     @Override
     public Integer get() {
         if (exists()) {
+            // at this point, returning the fallback value is impossible
             return readSharedPreferences().getInt(getKey(), 0);
         } else {
             return getDefaultValue();

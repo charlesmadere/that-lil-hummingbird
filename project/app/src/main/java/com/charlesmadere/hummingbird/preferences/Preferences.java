@@ -49,8 +49,8 @@ public final class Preferences {
         public static final GsonPreference<AnimeV2.Titles.Type> TitleLanguage;
 
         static {
-            TitleLanguage = new GsonPreference<>(TAG, "TitleLanguage", AnimeV2.Titles.Type.ENGLISH,
-                    AnimeV2.Titles.Type.class);
+            TitleLanguage = new GsonPreference<>(TAG, "TitleLanguage", AnimeV2.Titles.Type.class,
+                    AnimeV2.Titles.Type.ENGLISH);
         }
     }
 

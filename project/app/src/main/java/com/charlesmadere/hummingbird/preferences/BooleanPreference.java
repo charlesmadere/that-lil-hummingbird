@@ -18,6 +18,7 @@ public class BooleanPreference extends Preference<Boolean> {
     @Override
     public Boolean get() {
         if (exists()) {
+            // at this point, returning the fallback value is impossible
             return readSharedPreferences().getBoolean(getKey(), false);
         } else {
             return getDefaultValue();

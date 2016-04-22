@@ -110,7 +110,7 @@ public abstract class Preference<T> {
      * @param notifyListeners
      * true if you want listeners to be notified, false if not
      */
-    public void delete(final boolean notifyListeners) {
+    public final void delete(final boolean notifyListeners) {
         writeSharedPreferences().remove(mKey).apply();
 
         if (notifyListeners) {

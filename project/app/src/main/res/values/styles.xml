@@ -133,6 +133,10 @@
         <item name="android:layout_width">match_parent</item>
     </style>
 
+    <style name="GalleryGrid">
+        <item name="spanCount">3</item>
+    </style>
+
     <style name="ListMessageContainer">
         <item name="android:clickable">true</item>
         <item name="android:layout_height">match_parent</item>
@@ -169,6 +173,10 @@
         <item name="android:paddingStart">@dimen/root_padding_double</item>
         <item name="android:paddingTop">@dimen/root_padding_quadruple</item>
         <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="ListOrGrid">
+        <item name="layoutManager">LinearLayoutManager</item>
     </style>
 
     <style name="MediumOrBold">
