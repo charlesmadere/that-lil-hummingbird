@@ -100,6 +100,12 @@
         <item name="android:layout_marginStart">@dimen/root_padding_half</item>
     </style>
 
+    <style name="BaseSettingsCardItem">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/root_padding</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
     <style name="BaseListOrGrid">
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">match_parent</item>
@@ -243,10 +249,8 @@
         <item name="placeholderImageScaleType">centerCrop</item>
     </style>
 
-    <style name="SettingsCardItem" parent="BaseCard">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">@dimen/root_padding</item>
-        <item name="android:layout_width">match_parent</item>
+    <style name="SettingsCardItem" parent="BaseSettingsCardItem">
+
     </style>
 
     <style name="SettingsCardInternal">

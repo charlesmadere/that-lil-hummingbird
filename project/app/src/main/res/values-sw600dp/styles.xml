@@ -5,4 +5,9 @@
         <item name="spanCount">4</item>
     </style>
 
+    <style name="SettingsCardItem" parent="BaseSettingsCardItem">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_width">380dp</item>
+    </style>
+
 </resources>
