@@ -5,6 +5,7 @@ import android.support.annotation.DimenRes;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 /**
@@ -72,8 +73,16 @@ public final class SpaceItemDecoration {
                 itemDecoration = new VerticalLinearSpaceItemDecoration(includeStartEndEdge,
                         spacing);
             }
-        } else {
+        } else if (lm instanceof StaggeredGridLayoutManager) {
+            // TODO
             itemDecoration = new RecyclerView.ItemDecoration() {};
+        } else {
+            // Maybe we shouldn't throw an exception here, and should instead just return a no-op
+            // ItemDecoration implementation. However doing it this way currently works for all
+            // of our current cases, and prevents us from attempting to apply this code for cases
+            // that don't exactly match.
+            throw new IllegalArgumentException("the given LayoutManager (" +
+                    lm.getClass().getSimpleName() + ") isn't a supported type");
         }
 
         view.addItemDecoration(itemDecoration);
