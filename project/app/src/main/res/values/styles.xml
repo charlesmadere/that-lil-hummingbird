@@ -250,7 +250,8 @@
     </style>
 
     <style name="SettingsCardItem" parent="BaseSettingsCardItem">
-
+        <item name="android:layout_marginEnd">@dimen/root_padding_half</item>
+        <item name="android:layout_marginStart">@dimen/root_padding_half</item>
     </style>
 
     <style name="SettingsCardInternal">
