@@ -2,12 +2,15 @@ package com.charlesmadere.hummingbird.misc;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.v4.app.ActivityManagerCompat;
+import android.view.KeyCharacterMap;
+import android.view.KeyEvent;
 
 import com.charlesmadere.hummingbird.Hummingbird;
 import com.charlesmadere.hummingbird.R;
@@ -30,6 +33,26 @@ public final class MiscUtils {
         } else {
             throw new RuntimeException("unable to find colorResId: " + colorResId);
         }
+    }
+
+    public static int getNavigationBarHeight(final Resources res) {
+        if (KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK)) {
+            return 0;
+        }
+
+        int resourceId;
+
+        if (res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            resourceId = res.getIdentifier("navigation_bar_height_landscape", "dimen", "android");
+        } else {
+            resourceId = res.getIdentifier("navigation_bar_height", "dimen", "android");
+        }
+
+        if (resourceId == 0) {
+            resourceId = R.dimen.navigation_bar_height;
+        }
+
+        return res.getDimensionPixelSize(resourceId);
     }
 
     public static int getStatusBarHeight(final Resources res) {
