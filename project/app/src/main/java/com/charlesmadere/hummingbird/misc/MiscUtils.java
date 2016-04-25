@@ -36,7 +36,8 @@ public final class MiscUtils {
     }
 
     public static int getNavigationBarHeight(final Resources res) {
-        if (KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK)) {
+        if (KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK) &&
+                !Build.FINGERPRINT.contains("generic")) {
             return 0;
         }
 
