@@ -65,6 +65,10 @@
             android:theme="@style/HummingbirdTheme_Light.WithDrawer" />
 
         <activity
+            android:launchMode="singleTop"
+            android:name=".activities.SplashActivity" />
+
+        <activity
             android:label=""
             android:name=".activities.UserActivity"
             android:theme="@style/HummingbirdTheme_Light.WithDrawer" />
