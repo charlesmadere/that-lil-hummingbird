@@ -4,8 +4,8 @@
     <color name="bar">#4B5360</color>
     <color name="barDark">#2F343B</color>
     <color name="black">#000000</color>
-    <color name="dividerDark">#22FFFFFF</color>
-    <color name="dividerLight">#AAFFFFFF</color>
+    <color name="dividerDark">#666666</color>
+    <color name="dividerLight">#CCCCCC</color>
     <color name="grayDark">#333333</color>
     <color name="grayMedium">#999999</color>
     <color name="offBlack">#232323</color>
