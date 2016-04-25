@@ -43,6 +43,19 @@
         <item name="android:windowBackground">@color/offWhite</item>
     </style>
 
+    <style name="BaseHummingbirdTheme_Splash" parent="Theme.AppCompat.NoActionBar">
+        <item name="alertDialogTheme">@style/AlertDialogTheme_Dark</item>
+        <item name="colorAccent">@color/orange</item>
+        <item name="colorDivider">@color/dividerDark</item>
+        <item name="colorPrimary">@color/bar</item>
+        <item name="colorPrimaryDark">@color/barDark</item>
+        <item name="colorTextPrimary">@color/white</item>
+        <item name="colorTextSecondary">@color/offWhite</item>
+        <item name="ic_video_library_24dp">@drawable/ic_video_library_white_24dp</item>
+        <item name="android:textColor">?attr/colorTextPrimary</item>
+        <item name="android:windowBackground">@color/barDark</item>
+    </style>
+
     <style name="HummingbirdTheme_Black" parent="BaseHummingbirdTheme_Black">
 
     </style>
@@ -60,6 +73,10 @@
     </style>
 
     <style name="HummingbirdTheme_Light.WithDrawer">
+
+    </style>
+
+    <style name="HummingbirdTheme_Splash" parent="BaseHummingbirdTheme_Splash">
 
     </style>
 

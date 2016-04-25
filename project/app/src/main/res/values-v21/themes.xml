@@ -28,19 +28,24 @@
         <item name="android:datePickerDialogTheme">@style/DatePickerDialogTheme_Dark</item>
     </style>
 
-    <style name="HummingbirdTheme_Light" parent="BaseHummingbirdTheme_Light">
-        <item name="android:alertDialogTheme">@style/AlertDialogTheme_Light_V21</item>
-        <item name="android:datePickerDialogTheme">@style/DatePickerDialogTheme_Light</item>
-    </style>
-
     <style name="HummingbirdTheme_Dark.WithDrawer">
         <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 
+    <style name="HummingbirdTheme_Light" parent="BaseHummingbirdTheme_Light">
+        <item name="android:alertDialogTheme">@style/AlertDialogTheme_Light_V21</item>
+        <item name="android:datePickerDialogTheme">@style/DatePickerDialogTheme_Light</item>
+    </style>
+
     <style name="HummingbirdTheme_Light.WithDrawer">
         <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+
+    <style name="HummingbirdTheme_Splash" parent="BaseHummingbirdTheme_Splash">
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
 </resources>
