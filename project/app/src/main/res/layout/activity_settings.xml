@@ -79,6 +79,10 @@
                             android:text="@string/rate_this_app"
                             style="@style/SettingItem" />
                         <TextView
+                            android:id="@+id/tvRewatchIntroAnimation"
+                            android:text="@string/rewatch_intro_animation"
+                            style="@style/SettingItem" />
+                        <TextView
                             android:id="@+id/tvLogViewer"
                             android:text="@string/log_viewer"
                             style="@style/SettingItem" />

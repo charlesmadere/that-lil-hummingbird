@@ -90,6 +90,11 @@ public class SettingsActivity extends BaseDrawerActivity {
         openUrl(Constants.PLAY_STORE_BASE_URL + getPackageName());
     }
 
+    @OnClick(R.id.tvRewatchIntroAnimation)
+    void onRewatchIntroAnimationClick() {
+        startActivity(SplashActivity.getLaunchIntent(this));
+    }
+
     @OnClick(R.id.tvSignOut)
     void onSignOutClick() {
         new AlertDialog.Builder(this)
