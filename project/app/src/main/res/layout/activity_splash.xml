@@ -11,7 +11,9 @@
         android:id="@+id/ivSplash"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_width="match_parent" />
+        android:layout_width="match_parent"
+        android:scaleType="center"
+        android:src="@drawable/one" />
     <com.charlesmadere.hummingbird.views.NavigationBarSpaceView
         android:layout_height="wrap_content"
         android:layout_width="match_parent" />
