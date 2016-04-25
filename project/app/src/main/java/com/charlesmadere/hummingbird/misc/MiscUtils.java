@@ -14,6 +14,20 @@ import com.charlesmadere.hummingbird.R;
 
 public final class MiscUtils {
 
+    @ColorInt
+    public static int getAttrColor(final Context context, @AttrRes final int colorResId) {
+        final TypedArray ta = context.obtainStyledAttributes(new int[] { colorResId } );
+
+        if (ta.hasValue(0)) {
+            final int color = ta.getColor(0, -1);
+            ta.recycle();
+
+            return color;
+        } else {
+            throw new RuntimeException("unable to find colorResId: " + colorResId);
+        }
+    }
+
     public static int getStatusBarHeight(final Resources res) {
         int resourceId = res.getIdentifier("status_bar_height", "dimen", "android");
 
@@ -35,20 +49,6 @@ public final class MiscUtils {
             return ActivityManagerCompat.isLowRamDevice(am);
         } else {
             return true;
-        }
-    }
-
-    @ColorInt
-    public static int getAttrColor(final Context context, @AttrRes final int colorResId) {
-        final TypedArray ta = context.obtainStyledAttributes(new int[] { colorResId } );
-
-        if (ta.hasValue(0)) {
-            final int color = ta.getColor(0, -1);
-            ta.recycle();
-
-            return color;
-        } else {
-            throw new RuntimeException("unable to find colorResId: " + colorResId);
         }
     }
 
