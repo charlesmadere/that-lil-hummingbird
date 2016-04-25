@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.widget.ImageView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.CurrentUser;
 
 import butterknife.Bind;
 
@@ -14,7 +15,7 @@ public class SplashActivity extends BaseActivity {
 
     private static final String CNAME = SplashActivity.class.getCanonicalName();
     private static final String TAG = "SplashActivity";
-    private static final String EXTRA_FINISH = CNAME + ".Finish";
+    private static final String EXTRA_REWATCH = CNAME + ".Rewatch";
 
     private static final long ANIM_TIME_MS = 1500L;
 
@@ -26,7 +27,7 @@ public class SplashActivity extends BaseActivity {
 
     public static Intent getLaunchIntent(final Context context) {
         return new Intent(context, SplashActivity.class)
-                .putExtra(EXTRA_FINISH, true);
+                .putExtra(EXTRA_REWATCH, true);
     }
 
     @Override
@@ -34,9 +35,22 @@ public class SplashActivity extends BaseActivity {
         return TAG;
     }
 
+    private void goToLoginActivity() {
+        startActivity(LoginActivity.getLaunchIntent(this));
+        finish();
+    }
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        final Intent intent = getIntent();
+
+        if (intent == null || !intent.getBooleanExtra(EXTRA_REWATCH, false) &&
+                CurrentUser.exists() || CurrentUser.shouldBeFetched()) {
+            goToLoginActivity();
+        }
+
         setContentView(R.layout.activity_splash);
 
         mHandler = new Handler();
@@ -48,13 +62,11 @@ public class SplashActivity extends BaseActivity {
                     return;
                 }
 
-                final Intent intent = getIntent();
-
-                if (intent == null || !intent.getBooleanExtra(EXTRA_FINISH, false)) {
-                    startActivity(LoginActivity.getLaunchIntent(SplashActivity.this));
+                if (intent == null || !intent.getBooleanExtra(EXTRA_REWATCH, false)) {
+                    goToLoginActivity();
+                } else {
+                    finish();
                 }
-
-                finish();
             }
         };
 
