@@ -22,6 +22,10 @@ public final class MiscUtils {
             final int color = ta.getColor(0, -1);
             ta.recycle();
 
+            if (color == -1) {
+                throw new RuntimeException("unable to find colorResId: " + colorResId);
+            }
+
             return color;
         } else {
             throw new RuntimeException("unable to find colorResId: " + colorResId);
