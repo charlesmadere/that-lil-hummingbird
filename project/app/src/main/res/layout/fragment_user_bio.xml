@@ -43,16 +43,12 @@
                     android:id="@+id/kvtvLastUpdate"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:visibility="gone"
-                    tools:text="Last update 2 days ago"
-                    tools:visibility="visible" />
+                    tools:text="Last update 2 days ago" />
                 <com.charlesmadere.hummingbird.views.KeyValueTextView
                     android:id="@+id/kvtvLifeSpentOnAnime"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:visibility="gone"
-                    tools:text="Life spent on anime 24 hours"
-                    tools:visibility="visible" />
+                    tools:text="Life spent on anime 24 hours" />
                 <com.charlesmadere.hummingbird.views.KeyValueTextView
                     android:id="@+id/kvtvWaifuOrHusbando"
                     android:layout_height="wrap_content"

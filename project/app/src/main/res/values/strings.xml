@@ -73,6 +73,7 @@
     <string name="initial_search_message">Once you begin typing, search results will be displayed here.</string>
     <string name="is_currently_watching">is currently watching</string>
     <string name="japanese">Japanese</string>
+    <string name="last_update">Last update</string>
     <string name="library">Library</string>
     <string name="library_updates">Library Updates</string>
     <string name="log_viewer">Log Viewer</string>

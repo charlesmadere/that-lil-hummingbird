@@ -24,11 +24,9 @@ public class User implements Parcelable {
     @SerializedName("show_adult_content")
     private Boolean mShowAdultContent;
 
-    @Nullable
     @SerializedName("life_spent_on_anime")
-    private Integer mLifeSpentOnAnime;
+    private long mLifeSpentOnAnime;
 
-    @Nullable
     @SerializedName("last_library_update")
     private SimpleDate mLastLibraryUpdate;
 
@@ -104,14 +102,16 @@ public class User implements Parcelable {
         return mFavorites;
     }
 
-    @Nullable
     public SimpleDate getLastLibraryUpdate() {
         return mLastLibraryUpdate;
     }
 
-    @Nullable
-    public Integer getLifeSpentOnAnime() {
+    public long getLifeSpentOnAnimeMinutes() {
         return mLifeSpentOnAnime;
+    }
+
+    public long getLifeSpentOnAnimeSeconds() {
+        return getLifeSpentOnAnimeMinutes() * 60L;
     }
 
     public String getName() {
@@ -157,6 +157,10 @@ public class User implements Parcelable {
         return mWebsite;
     }
 
+    public boolean hasBio() {
+        return !TextUtils.isEmpty(mBio);
+    }
+
     public boolean hasFavorites() {
         return mFavorites != null && !mFavorites.isEmpty();
     }
@@ -172,6 +176,10 @@ public class User implements Parcelable {
     public boolean hasWaifuOrHusbando() {
         return !TextUtils.isEmpty(mWaifu) && !TextUtils.isEmpty(mWaifuCharId) &&
                 !TextUtils.isEmpty(mWaifuSlug) && mWaifuOrHusbando != null;
+    }
+
+    public boolean hasWebsite() {
+        return !TextUtils.isEmpty(mWebsite);
     }
 
     public boolean isNsfwContentAllowed() {
@@ -197,7 +205,7 @@ public class User implements Parcelable {
         dest.writeTypedList(mFavorites);
         ParcelableUtils.writeBoolean(mOnline, dest);
         ParcelableUtils.writeBoolean(mShowAdultContent, dest);
-        ParcelableUtils.writeInteger(mLifeSpentOnAnime, dest);
+        dest.writeLong(mLifeSpentOnAnime);
         dest.writeParcelable(mLastLibraryUpdate, flags);
         dest.writeString(mAvatar);
         dest.writeString(mAvatarSmall);
@@ -220,7 +228,7 @@ public class User implements Parcelable {
             u.mFavorites = source.createTypedArrayList(Favorite.CREATOR);
             u.mOnline = ParcelableUtils.readBoolean(source);
             u.mShowAdultContent = ParcelableUtils.readBoolean(source);
-            u.mLifeSpentOnAnime = ParcelableUtils.readInteger(source);
+            u.mLifeSpentOnAnime = source.readLong();
             u.mLastLibraryUpdate = source.readParcelable(SimpleDate.class.getClassLoader());
             u.mAvatar = source.readString();
             u.mAvatarSmall = source.readString();
