@@ -83,7 +83,8 @@ public class UserBioFragment extends BaseFragment {
         mLastUpdate.setText(getText(R.string.last_update), mUser.getLastLibraryUpdate()
                 .getRelativeTimeText(getContext()));
 
-        mLifeSpentOnAnime.setText(DateUtils.formatElapsedTime(mUser.getLifeSpentOnAnimeSeconds()));
+        mLifeSpentOnAnime.setText(getText(R.string.life_spent_on_anime),
+                DateUtils.formatElapsedTime(mUser.getLifeSpentOnAnimeSeconds()));
 
         if (mUser.hasWaifuOrHusbando()) {
             mWaifuOrHusbando.setText(getText(mUser.getWaifuOrHusbando().getTextResId()),
