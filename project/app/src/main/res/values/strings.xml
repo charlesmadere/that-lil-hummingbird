@@ -126,6 +126,7 @@
     <string name="search">Search</string>
     <string name="search_">Search…</string>
     <string name="search_for_">Search for…</string>
+    <string name="search_for_anime_">Search for anime…</string>
     <string name="search_for_x_failed">Search for %1$s failed</string>
     <string name="season_x">Season %1$s</string>
     <string name="seen_x_of_y">Seen %1$d of %2$d</string>
