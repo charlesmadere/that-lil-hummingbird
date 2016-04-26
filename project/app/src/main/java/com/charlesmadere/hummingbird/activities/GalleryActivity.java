@@ -23,10 +23,12 @@ public class GalleryActivity extends BaseActivity {
     private static final String CNAME = GalleryActivity.class.getCanonicalName();
     private static final String EXTRA_GALLERY_IMAGES = CNAME + ".GalleryImages";
     private static final String EXTRA_STARTING_POSITION = CNAME + ".StartingPosition";
+    private static final String EXTRA_URL = CNAME + ".Url";
     private static final String KEY_CURRENT_POSITION = "CurrentPosition";
 
     private ArrayList<GalleryImage> mGalleryImages;
     private int mStartingPosition;
+    private String mUrl;
 
     @BindView(R.id.viewPager)
     ViewPager mViewPager;
@@ -42,6 +44,11 @@ public class GalleryActivity extends BaseActivity {
         return new Intent(context, GalleryActivity.class)
                 .putExtra(EXTRA_GALLERY_IMAGES, galleryImages)
                 .putExtra(EXTRA_STARTING_POSITION, startingPosition);
+    }
+
+    public static Intent getLaunchIntent(final Context context, final String url) {
+        return new Intent(context, GalleryActivity.class)
+                .putExtra(EXTRA_URL, url);
     }
 
     @Override
@@ -65,6 +72,7 @@ public class GalleryActivity extends BaseActivity {
         final Intent intent = getIntent();
         mGalleryImages = intent.getParcelableArrayListExtra(EXTRA_GALLERY_IMAGES);
         mStartingPosition = intent.getIntExtra(EXTRA_STARTING_POSITION, 0);
+        mUrl = intent.getStringExtra(EXTRA_URL);
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mStartingPosition = savedInstanceState.getInt(KEY_CURRENT_POSITION, mStartingPosition);
@@ -87,8 +95,14 @@ public class GalleryActivity extends BaseActivity {
     private void prepareViewPager() {
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);
-        mViewPager.setAdapter(new GalleryFragmentAdapter(this, mGalleryImages));
-        mViewPager.setCurrentItem(mStartingPosition, false);
+
+        if (mGalleryImages == null) {
+            mViewPager.setAdapter(new GalleryFragmentAdapter(this, mUrl));
+        } else {
+            mViewPager.setAdapter(new GalleryFragmentAdapter(this, mGalleryImages));
+            mViewPager.setCurrentItem(mStartingPosition, false);
+        }
+
         updateToolbarTitle();
     }
 

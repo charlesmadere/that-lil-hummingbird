@@ -35,6 +35,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">100dp</item>
         <item name="actualImageScaleType">centerCrop</item>
+        <item name="overlayImageScaleType">centerCrop</item>
         <item name="placeholderImage">@drawable/image_placeholder</item>
         <item name="viewAspectRatio">0.69</item>
     </style>

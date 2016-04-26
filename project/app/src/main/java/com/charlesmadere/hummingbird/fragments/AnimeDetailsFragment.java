@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.GalleryActivity;
 import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeV2;
@@ -98,6 +99,11 @@ public class AnimeDetailsFragment extends BaseFragment {
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         return inflater.inflate(R.layout.fragment_anime_details, container, false);
+    }
+
+    @OnClick(R.id.sdvPoster)
+    void onPosterClick() {
+        startActivity(GalleryActivity.getLaunchIntent(getContext(), mAnimeV2.getPosterImage()));
     }
 
     @Override

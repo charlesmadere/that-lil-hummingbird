@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class GalleryFragmentAdapter extends FragmentStatePagerAdapter {
 
     private final ArrayList<GalleryImage> mGalleryImages;
+    private final String mUrl;
 
 
     public GalleryFragmentAdapter(final FragmentActivity activity,
@@ -24,16 +25,35 @@ public class GalleryFragmentAdapter extends FragmentStatePagerAdapter {
             final ArrayList<GalleryImage> galleryImages) {
         super(fm);
         mGalleryImages = galleryImages;
+        mUrl = null;
+    }
+
+    public GalleryFragmentAdapter(final FragmentActivity activity, final String url) {
+        this(activity.getSupportFragmentManager(), url);
+    }
+
+    public GalleryFragmentAdapter(final FragmentManager fm, final String url) {
+        super(fm);
+        mGalleryImages = null;
+        mUrl = url;
     }
 
     @Override
     public int getCount() {
-        return mGalleryImages.size();
+        if (mGalleryImages == null) {
+            return 1;
+        } else {
+            return mGalleryImages.size();
+        }
     }
 
     @Override
     public Fragment getItem(final int position) {
-        return GalleryFragment.create(mGalleryImages.get(position));
+        if (mGalleryImages == null) {
+            return GalleryFragment.create(mUrl);
+        } else {
+            return GalleryFragment.create(mGalleryImages.get(position));
+        }
     }
 
 }
