@@ -24,9 +24,9 @@ import butterknife.BindView;
 public class GalleryFragment extends BaseFragment {
 
     private static final String TAG = "GalleryFragment";
-    private static final String KEY_GALLERY_IMAGE = "GalleryImage";
+    private static final String KEY_URL = "Url";
 
-    private GalleryImage mGalleryImage;
+    private String mUrl;
 
     @BindView(R.id.progressBar)
     ProgressBar mProgressBar;
@@ -39,8 +39,12 @@ public class GalleryFragment extends BaseFragment {
 
 
     public static GalleryFragment create(final GalleryImage galleryImage) {
+        return create(galleryImage.getOriginal());
+    }
+
+    public static GalleryFragment create(final String url) {
         final Bundle args = new Bundle(1);
-        args.putParcelable(KEY_GALLERY_IMAGE, galleryImage);
+        args.putString(KEY_URL, url);
 
         final GalleryFragment fragment = new GalleryFragment();
         fragment.setArguments(args);
@@ -58,7 +62,7 @@ public class GalleryFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
 
         final Bundle args = getArguments();
-        mGalleryImage = args.getParcelable(KEY_GALLERY_IMAGE);
+        mUrl = args.getString(KEY_URL);
     }
 
     @Override
@@ -73,7 +77,7 @@ public class GalleryFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         final ImageRequest request = ImageRequestBuilder.newBuilderWithSource(
-                Uri.parse(mGalleryImage.getOriginal())).build();
+                Uri.parse(mUrl)).build();
 
         final AbstractDraweeController controller = Fresco.newDraweeControllerBuilder()
                 .setControllerListener(new BaseControllerListener<ImageInfo>() {
