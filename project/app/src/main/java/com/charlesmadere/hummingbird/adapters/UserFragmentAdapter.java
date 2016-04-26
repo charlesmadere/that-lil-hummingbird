@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.fragments.AnimeLibraryFragment;
 import com.charlesmadere.hummingbird.fragments.FeedFragment;
+import com.charlesmadere.hummingbird.fragments.UserBioFragment;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 
@@ -34,18 +35,26 @@ public class UserFragmentAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return WatchingStatus.values().length + 1;
+        return WatchingStatus.values().length + 2;
     }
 
     @Override
     public Fragment getItem(final int position) {
         final Fragment fragment;
 
-        if (position == 0) {
-            fragment = FeedFragment.create(mUser);
-        } else {
-            final WatchingStatus watchingStatus = ORDER[position - 1];
-            fragment = AnimeLibraryFragment.create(mUser, watchingStatus);
+        switch (position) {
+            case 0:
+                fragment = UserBioFragment.create(mUser);
+                break;
+
+            case 1:
+                fragment = FeedFragment.create(mUser);
+                break;
+
+            default:
+                final WatchingStatus watchingStatus = ORDER[position - 2];
+                fragment = AnimeLibraryFragment.create(mUser, watchingStatus);
+                break;
         }
 
         return fragment;
@@ -55,11 +64,19 @@ public class UserFragmentAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(final int position) {
         final int pageTitleResId;
 
-        if (position == 0) {
-            pageTitleResId = R.string.feed;
-        } else {
-            final WatchingStatus watchingStatus = ORDER[position - 1];
-            pageTitleResId = watchingStatus.getTextResId();
+        switch (position) {
+            case 0:
+                pageTitleResId = R.string.bio;
+                break;
+
+            case 1:
+                pageTitleResId = R.string.feed;
+                break;
+
+            default:
+                final WatchingStatus watchingStatus = ORDER[position - 2];
+                pageTitleResId = watchingStatus.getTextResId();
+                break;
         }
 
         return mContext.getText(pageTitleResId);
