@@ -109,8 +109,9 @@ public class GalleryActivity extends BaseActivity {
     private void updateToolbarTitle() {
         final ActionBar actionBar = getSupportActionBar();
         final NumberFormat numberFormat = NumberFormat.getInstance();
+        final int size = mGalleryImages == null ? 1 : mGalleryImages.size();
         actionBar.setTitle(getString(R.string.x_of_y, numberFormat.format(
-                mViewPager.getCurrentItem() + 1), numberFormat.format(mGalleryImages.size())));
+                mViewPager.getCurrentItem() + 1), numberFormat.format(size)));
     }
 
 }
