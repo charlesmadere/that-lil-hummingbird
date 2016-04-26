@@ -104,7 +104,7 @@ public class SettingsActivity extends BaseDrawerActivity {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
                         CurrentUser.logout();
-                        startActivity(LoginActivity.getLaunchIntent(SettingsActivity.this));
+                        startActivity(LoginActivity.getNewTaskLaunchIntent(SettingsActivity.this));
                         finish();
                     }
                 })

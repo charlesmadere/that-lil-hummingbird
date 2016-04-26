@@ -48,8 +48,11 @@ public class LoginActivity extends BaseActivity {
     public static Intent getLaunchIntent(final Context context) {
         return new Intent(context, LoginActivity.class)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    }
+
+    public static Intent getNewTaskLaunchIntent(final Context context) {
+        return getLaunchIntent(context).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
     @Override

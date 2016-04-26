@@ -301,6 +301,10 @@
         <item name="android:textSize">@dimen/text_large</item>
     </style>
 
+    <style name="SplashStatusBarSpace">
+        <item name="always_show">false</item>
+    </style>
+
     <style name="TabLayout">
         <item name="android:background">@null</item>
         <item name="android:elevation" tools:targetApi="lollipop">@dimen/root_padding_half</item>

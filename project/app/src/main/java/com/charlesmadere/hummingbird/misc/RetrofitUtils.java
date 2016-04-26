@@ -14,7 +14,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public final class RetrofitUtils {
 
-    private static final String BASE_URL = "https://hummingbird.me/api/";
     private static final String TAG = "RetrofitUtils";
 
     private static HummingbirdApi sHummingbirdApi;
@@ -38,7 +37,7 @@ public final class RetrofitUtils {
             sRetrofit = new Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .addConverterFactory(new EnumConverterFactory())
-                    .baseUrl(BASE_URL)
+                    .baseUrl(Constants.BASE_API_URL)
                     .build();
         }
 

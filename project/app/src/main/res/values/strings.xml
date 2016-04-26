@@ -67,7 +67,6 @@
     <string name="has_dropped">has dropped</string>
     <string name="has_placed_on_hold">has placed on hold</string>
     <string name="home">Home</string>
-    <string name="hummingbird">Hummingbird</string>
     <string name="hummingbird_on_the_web">Hummingbird on the Web</string>
     <string name="husbando">Husbando</string>
     <string name="initial_search_message">Once you begin typing, search results will be displayed here.</string>
@@ -136,6 +135,7 @@
     <string name="started_airing">Started airing</string>
     <string name="started_airing_x">Started airing %1$s</string>
     <string name="synopsis">Synopsis</string>
+    <string name="that_lil_hummingbird">That Li\'l Hummingbird</string>
     <string name="timeline">Timeline</string>
     <string name="title">Title</string>
     <string name="trending_groups">Trending Groups</string>

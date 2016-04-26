@@ -31,12 +31,12 @@ public class KeyValueTextView extends AppCompatTextView {
     }
 
     private void parseAttributes(final AttributeSet attrs) {
-        final TypedArray ta = getContext().obtainStyledAttributes(attrs,
-                R.styleable.KeyValueTextView);
+        final Context context = getContext();
+        final TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.KeyValueTextView);
         final int keyTextColor = ta.getColor(R.styleable.KeyValueTextView_keyTextColor,
-                MiscUtils.getAttrColor(getContext(), R.attr.colorTextPrimary));
+                MiscUtils.getAttrColor(context, R.attr.colorTextPrimary));
         final int valueTextColor = ta.getColor(R.styleable.KeyValueTextView_valueTextColor,
-                MiscUtils.getAttrColor(getContext(), R.attr.colorTextSecondary));
+                MiscUtils.getAttrColor(context, R.attr.colorTextSecondary));
         ta.recycle();
 
         mKeyTextSpan = new ForegroundColorSpan(keyTextColor);

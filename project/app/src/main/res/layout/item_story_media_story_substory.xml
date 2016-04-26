@@ -27,7 +27,6 @@
             android:id="@+id/tvTimeAgo"
             android:layout_below="@id/kvtvAction"
             android:layout_toEndOf="@id/sdvAvatar"
-            android:textColor="?attr/colorTextSecondary"
             android:textSize="@dimen/text_small"
             tools:text="2 days ago"
             style="@style/TimeOrDate" />

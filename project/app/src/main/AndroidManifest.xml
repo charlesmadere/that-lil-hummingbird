@@ -7,9 +7,10 @@
     <application
         android:allowBackup="true"
         android:fullBackupContent="true"
+        android:label="@string/that_lil_hummingbird"
         android:name=".Hummingbird"
         android:supportsRtl="true"
-        android:theme="@style/HummingbirdTheme_Light">
+        android:theme="@style/HummingbirdTheme_Splash">
 
         <activity
             android:label=""
@@ -25,17 +26,17 @@
             android:label=""
             android:name=".activities.GalleryActivity"
             android:parentActivityName=".activities.GalleryActivity"
-            android:theme="@style/HummingbirdTheme_Black">
+            android:theme="@style/HummingbirdTheme_Gallery">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.AnimeActivity" />
         </activity>
 
         <activity
-            android:label="@string/hummingbird"
             android:launchMode="singleTop"
             android:name=".activities.LoginActivity"
-            android:windowSoftInputMode="adjustResize" />
+            android:theme="@style/HummingbirdTheme_Light"
+            android:windowSoftInputMode="adjustResize|stateUnchanged" />
 
         <activity
             android:label="@string/log_viewer"
@@ -51,7 +52,8 @@
         <activity
             android:label="@string/search"
             android:launchMode="singleTop"
-            android:name=".activities.SearchActivity" />
+            android:name=".activities.SearchActivity"
+            android:theme="@style/HummingbirdTheme_Light" />
 
         <activity
             android:label="@string/settings"

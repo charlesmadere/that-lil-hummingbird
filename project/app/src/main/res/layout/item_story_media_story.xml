@@ -28,7 +28,7 @@
                 tools:visibility="visible"
                 style="@style/AnimeGenres" />
             <LinearLayout
-                android:divider="@drawable/divider"
+                android:divider="?attr/dividerDrawable"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/root_padding"
                 android:layout_width="match_parent"

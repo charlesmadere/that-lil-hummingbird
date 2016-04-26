@@ -22,10 +22,10 @@ public final class MiscUtils {
         final TypedArray ta = context.obtainStyledAttributes(new int[] { colorResId } );
 
         if (ta.hasValue(0)) {
-            final int color = ta.getColor(0, -1);
+            final int color = ta.getColor(0, 0);
             ta.recycle();
 
-            if (color == -1) {
+            if (color == 0) {
                 throw new RuntimeException("unable to find colorResId: " + colorResId);
             }
 
