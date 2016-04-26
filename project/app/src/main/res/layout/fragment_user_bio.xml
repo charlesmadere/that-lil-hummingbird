@@ -16,85 +16,6 @@
                 android:layout_width="match_parent"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/tvTitle"
-                    tools:text="KonoSuba: God's Blessing on This Wonderful World!"
-                    style="@style/AnimeTitle" />
-                <TextView
-                    android:id="@+id/tvShowType"
-                    tools:text="@string/movie"
-                    style="@style/AnimeShowType" />
-                <TextView
-                    android:id="@+id/tvGenres"
-                    tools:text="Comedy, Mystery, Romance"
-                    tools:visibility="visible"
-                    style="@style/AnimeGenres" />
-                <TextView
-                    android:id="@+id/tvAgeRating"
-                    tools:text="@string/pg13"
-                    tools:visibility="visible"
-                    style="@style/AgeRating" />
-                <TextView
-                    android:id="@+id/tvEpisodeCount"
-                    tools:text="20 episodes"
-                    tools:visibility="visible"
-                    style="@style/AnimeEpisodeCount" />
-                <android.support.v4.widget.Space
-                    android:layout_height="@dimen/root_padding_half"
-                    android:layout_width="match_parent" />
-                <com.charlesmadere.hummingbird.views.KeyValueTextView
-                    android:id="@+id/kvtvAired"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:visibility="gone"
-                    tools:text="Aired March 31st, 2014"
-                    tools:visibility="visible" />
-                <com.charlesmadere.hummingbird.views.KeyValueTextView
-                    android:id="@+id/kvtvStartedAiring"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:visibility="gone"
-                    tools:text="Started airing March 31st, 2014"
-                    tools:visibility="visible" />
-                <com.charlesmadere.hummingbird.views.KeyValueTextView
-                    android:id="@+id/kvtvFinishedAiring"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:visibility="gone"
-                    tools:text="Finished airing August 31st, 2014"
-                    tools:visibility="visible" />
-                <com.charlesmadere.hummingbird.views.KeyValueTextView
-                    android:id="@+id/kvtvCommunityRating"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    tools:text="Community rating 4.125" />
-                <com.charlesmadere.hummingbird.views.KeyValueTextView
-                    android:id="@+id/kvtvProducers"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:visibility="gone"
-                    tools:text="Nintendo, Microsoft, Google"
-                    tools:visibility="visible" />
-                <ImageButton
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/youtube_link"
-                    android:id="@+id/ibYouTubeLink"
-                    android:layout_gravity="end"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:padding="@dimen/root_padding_half"
-                    android:src="?attr/ic_video_library_24dp"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
-            android:layout_marginBottom="@dimen/root_padding"
-            style="@style/CardItem">
-            <LinearLayout
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:orientation="vertical">
-                <TextView
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/root_padding_half"
                     android:layout_width="wrap_content"
@@ -109,6 +30,73 @@
                     android:maxLines="250"
                     tools:text="Kazuma Satou is a shut-in die-hard fan of games, anime, and manga. A traffic accident brings his disappointingly brief life to an end, or it should have, but he wakes up and sees a beautiful girl who introduces herself as a goddess. She asks him if he'd like to go to another world but he can only bring one thing with him. Kazumi chooses to bring the goddess. With that, he is transported to another world and his great adventure subjugating the demon king begins, but first the hard work of finding food, clothing, and shelter begins. Kazuma wants to live in peace, but the goddess raises one problem after another, and then the demon king's army has its eyes set on him."
                     style="@style/AnimeSynopsis" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_marginBottom="@dimen/root_padding"
+            style="@style/CardItem">
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
+                <com.charlesmadere.hummingbird.views.KeyValueTextView
+                    android:id="@+id/kvtvLastUpdate"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:visibility="gone"
+                    tools:text="Last update 2 days ago"
+                    tools:visibility="visible" />
+                <com.charlesmadere.hummingbird.views.KeyValueTextView
+                    android:id="@+id/kvtvLifeSpentOnAnime"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:visibility="gone"
+                    tools:text="Life spent on anime 24 hours"
+                    tools:visibility="visible" />
+                <com.charlesmadere.hummingbird.views.KeyValueTextView
+                    android:id="@+id/kvtvWaifuOrHusbando"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:visibility="gone"
+                    tools:text="Waifu Ryuko Matoi"
+                    tools:visibility="visible" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/cvWebsite"
+            android:layout_marginBottom="@dimen/root_padding"
+            android:visibility="gone"
+            tools:visibility="visible"
+            style="@style/CardItem.NoPadding">
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/root_padding_half"
+                    android:layout_marginEnd="@dimen/root_padding"
+                    android:layout_marginStart="@dimen/root_padding"
+                    android:layout_marginTop="@dimen/root_padding_half"
+                    android:layout_width="wrap_content"
+                    android:text="@string/website"
+                    style="@style/MediumOrBold" />
+                <TextView
+                    android:background="?attr/selectableItemBackground"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:id="@+id/tvWebsite"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:minHeight="@dimen/list_item_height"
+                    android:paddingBottom="@dimen/root_padding_half"
+                    android:paddingEnd="@dimen/root_padding"
+                    android:paddingStart="@dimen/root_padding"
+                    android:paddingTop="@dimen/root_padding_half"
+                    android:singleLine="true"
+                    tools:text="http://www.google.com/" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
     </LinearLayout>

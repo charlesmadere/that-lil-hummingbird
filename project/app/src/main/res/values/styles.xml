@@ -123,6 +123,13 @@
         <item name="contentPaddingTop">@dimen/root_padding_half</item>
     </style>
 
+    <style name="CardItem.NoPadding">
+        <item name="contentPaddingBottom">0dp</item>
+        <item name="contentPaddingLeft">0dp</item>
+        <item name="contentPaddingRight">0dp</item>
+        <item name="contentPaddingTop">0dp</item>
+    </style>
+
     <style name="CollapsingToolbarLayout">
         <item name="android:fitsSystemWindows">true</item>
         <item name="android:id">@id/collapsingToolbarLayout</item>
