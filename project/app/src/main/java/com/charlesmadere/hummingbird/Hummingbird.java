@@ -20,7 +20,7 @@ public class Hummingbird extends Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
-        Timber.d(TAG, "Application created");
+        Timber.d(TAG, "Application created (debug: " + BuildConfig.DEBUG + ')');
         Fresco.initialize(this);
     }
 
