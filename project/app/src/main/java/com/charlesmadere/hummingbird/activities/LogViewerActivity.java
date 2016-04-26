@@ -15,20 +15,20 @@ import com.charlesmadere.hummingbird.adapters.TimberEntriesAdapter;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class LogViewerActivity extends BaseDrawerActivity implements
         SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "LogViewerActivity";
 
-    @Bind(R.id.llEmpty)
+    @BindView(R.id.llEmpty)
     LinearLayout mEmpty;
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
 
-    @Bind(R.id.refreshLayout)
+    @BindView(R.id.refreshLayout)
     RefreshLayout mRefreshLayout;
 
     private TimberEntriesAdapter mAdapter;

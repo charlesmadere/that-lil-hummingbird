@@ -20,7 +20,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 public class AnimeDetailsFragment extends BaseFragment {
@@ -30,43 +30,43 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     private AnimeV2 mAnimeV2;
 
-    @Bind(R.id.ibYouTubeLink)
+    @BindView(R.id.ibYouTubeLink)
     ImageButton mYouTubeLink;
 
-    @Bind(R.id.kvtvCommunityRating)
+    @BindView(R.id.kvtvCommunityRating)
     KeyValueTextView mCommunityRating;
 
-    @Bind(R.id.kvtvAired)
+    @BindView(R.id.kvtvAired)
     KeyValueTextView mAired;
 
-    @Bind(R.id.kvtvFinishedAiring)
+    @BindView(R.id.kvtvFinishedAiring)
     KeyValueTextView mFinishedAiring;
 
-    @Bind(R.id.kvtvProducers)
+    @BindView(R.id.kvtvProducers)
     KeyValueTextView mProducers;
 
-    @Bind(R.id.kvtvStartedAiring)
+    @BindView(R.id.kvtvStartedAiring)
     KeyValueTextView mStartedAiring;
 
-    @Bind(R.id.sdvPoster)
+    @BindView(R.id.sdvPoster)
     SimpleDraweeView mPoster;
 
-    @Bind(R.id.tvAgeRating)
+    @BindView(R.id.tvAgeRating)
     TextView mAgeRating;
 
-    @Bind(R.id.tvEpisodeCount)
+    @BindView(R.id.tvEpisodeCount)
     TextView mEpisodeCount;
 
-    @Bind(R.id.tvGenres)
+    @BindView(R.id.tvGenres)
     TextView mGenres;
 
-    @Bind(R.id.tvShowType)
+    @BindView(R.id.tvShowType)
     TextView mShowType;
 
-    @Bind(R.id.tvSynopsis)
+    @BindView(R.id.tvSynopsis)
     TextView mSynopsis;
 
-    @Bind(R.id.tvTitle)
+    @BindView(R.id.tvTitle)
     TextView mTitle;
 
 

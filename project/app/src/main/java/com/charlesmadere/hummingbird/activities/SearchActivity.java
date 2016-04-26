@@ -17,16 +17,16 @@ import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeAdapter;
-import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class SearchActivity extends BaseActivity implements MenuItemCompat.OnActionExpandListener,
         SearchView.OnQueryTextListener {
@@ -41,10 +41,10 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
     private Handler mHandler;
     private String mQuery;
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
 
-    @Bind(R.id.tvInitialSearchMessage)
+    @BindView(R.id.tvInitialSearchMessage)
     TextView mInitialSearchMessage;
 
 

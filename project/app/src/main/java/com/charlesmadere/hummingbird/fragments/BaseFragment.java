@@ -9,10 +9,12 @@ import android.view.View;
 import com.charlesmadere.hummingbird.misc.Timber;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public abstract class BaseFragment extends Fragment {
 
     private boolean mIsDestroyed;
+    private Unbinder mUnbinder;
 
 
     public abstract String getFragmentName();
@@ -36,14 +38,18 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        ButterKnife.unbind(this);
+        if (mUnbinder != null) {
+            mUnbinder.unbind();
+            mUnbinder = null;
+        }
+
         super.onDestroyView();
     }
 
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
     }
 
     protected void openUrl(final String url) {

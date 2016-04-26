@@ -26,6 +26,11 @@ public class SeasonItemView extends AppCompatTextView implements AdapterView<Sea
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+
+        if (isInEditMode()) {
+            return;
+        }
+
         mNumberFormat = NumberFormat.getInstance();
     }
 

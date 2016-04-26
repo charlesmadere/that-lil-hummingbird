@@ -13,7 +13,7 @@ import com.charlesmadere.hummingbird.models.AbsAnime;
 
 import java.text.NumberFormat;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AnimeItemView extends CardView implements AdapterView<AbsAnime>,
@@ -22,16 +22,16 @@ public class AnimeItemView extends CardView implements AdapterView<AbsAnime>,
     private AbsAnime mAnime;
     private NumberFormat mNumberFormat;
 
-    @Bind(R.id.tvEpisodeCount)
+    @BindView(R.id.tvEpisodeCount)
     TextView mEpisodeCount;
 
-    @Bind(R.id.tvGenres)
+    @BindView(R.id.tvGenres)
     TextView mGenres;
 
-    @Bind(R.id.tvShowType)
+    @BindView(R.id.tvShowType)
     TextView mShowType;
 
-    @Bind(R.id.tvTitle)
+    @BindView(R.id.tvTitle)
     TextView mTitle;
 
 

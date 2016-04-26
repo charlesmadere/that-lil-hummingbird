@@ -18,32 +18,32 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class StoryItemFollowedView extends CardView implements AdapterView<Story>,
         View.OnClickListener {
 
-    @Bind(R.id.sdvAvatar)
-    SimpleDraweeView mAvatar;
-
-    @Bind(R.id.sifsvZero)
-    StoryItemFollowedSubstoryView mSubstoryZero;
-
-    @Bind(R.id.sifsvOne)
-    StoryItemFollowedSubstoryView mSubstoryOne;
-
-    @Bind(R.id.sifsvTwo)
-    StoryItemFollowedSubstoryView mSubstoryTwo;
-
-    @Bind(R.id.tvTimeAgo)
-    TextView mTimeAgo;
-
-    @Bind(R.id.tvTitle)
-    TextView mTitle;
-
     private NumberFormat mNumberFormat;
     private Story mStory;
+
+    @BindView(R.id.sdvAvatar)
+    SimpleDraweeView mAvatar;
+
+    @BindView(R.id.sifsvZero)
+    StoryItemFollowedSubstoryView mSubstoryZero;
+
+    @BindView(R.id.sifsvOne)
+    StoryItemFollowedSubstoryView mSubstoryOne;
+
+    @BindView(R.id.sifsvTwo)
+    StoryItemFollowedSubstoryView mSubstoryTwo;
+
+    @BindView(R.id.tvTimeAgo)
+    TextView mTimeAgo;
+
+    @BindView(R.id.tvTitle)
+    TextView mTitle;
 
 
     public StoryItemFollowedView(final Context context, final AttributeSet attrs) {

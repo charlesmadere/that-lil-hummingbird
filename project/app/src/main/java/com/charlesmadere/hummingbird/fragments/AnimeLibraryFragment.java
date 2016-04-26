@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.LibraryEntriesAdapter;
-import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.User;
@@ -20,11 +19,12 @@ import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
+import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class AnimeLibraryFragment extends BaseFragment implements
         SwipeRefreshLayout.OnRefreshListener {
@@ -39,22 +39,22 @@ public class AnimeLibraryFragment extends BaseFragment implements
     private User mUser;
     private WatchingStatus mWatchingStatus;
 
-    @Bind(R.id.llEmpty)
+    @BindView(R.id.llEmpty)
     LinearLayout mEmpty;
 
-    @Bind(R.id.llError)
+    @BindView(R.id.llError)
     LinearLayout mError;
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
 
-    @Bind(R.id.refreshLayout)
+    @BindView(R.id.refreshLayout)
     RefreshLayout mRefreshLayout;
 
-    @Bind(R.id.tvEmpty)
+    @BindView(R.id.tvEmpty)
     TextView mEmptyText;
 
-    @Bind(R.id.tvError)
+    @BindView(R.id.tvError)
     TextView mErrorText;
 
 

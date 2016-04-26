@@ -19,7 +19,7 @@ import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class GalleryFragment extends BaseFragment {
 
@@ -28,13 +28,13 @@ public class GalleryFragment extends BaseFragment {
 
     private GalleryImage mGalleryImage;
 
-    @Bind(R.id.progressBar)
+    @BindView(R.id.progressBar)
     ProgressBar mProgressBar;
 
-    @Bind(R.id.sdvImage)
+    @BindView(R.id.sdvImage)
     SimpleDraweeView mImage;
 
-    @Bind(R.id.tvError)
+    @BindView(R.id.tvError)
     TextView mError;
 
 

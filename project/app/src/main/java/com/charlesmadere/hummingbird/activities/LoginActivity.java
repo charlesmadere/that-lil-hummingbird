@@ -22,26 +22,26 @@ import com.charlesmadere.hummingbird.views.SimpleProgressView;
 
 import java.lang.ref.WeakReference;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnEditorAction;
 
 public class LoginActivity extends BaseActivity {
 
     private static final String TAG = "LoginActivity";
 
-    @Bind(R.id.etPassword)
+    @BindView(R.id.etPassword)
     EditText mPasswordField;
 
-    @Bind(R.id.etUsername)
+    @BindView(R.id.etUsername)
     EditText mUsernameField;
 
-    @Bind(R.id.simpleProgressView)
+    @BindView(R.id.simpleProgressView)
     SimpleProgressView mSimpleProgressView;
 
-    @Bind(R.id.tilPassword)
+    @BindView(R.id.tilPassword)
     TextInputLayout mPasswordContainer;
 
-    @Bind(R.id.tilUsername)
+    @BindView(R.id.tilUsername)
     TextInputLayout mUsernameContainer;
 
 

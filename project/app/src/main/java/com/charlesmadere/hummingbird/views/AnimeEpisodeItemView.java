@@ -11,23 +11,23 @@ import com.charlesmadere.hummingbird.models.AnimeEpisode;
 
 import java.text.NumberFormat;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AnimeEpisodeItemView extends CardView implements AdapterView<AnimeEpisode> {
 
     private NumberFormat mNumberFormat;
 
-    @Bind(R.id.tvEpisodeNumber)
+    @BindView(R.id.tvEpisodeNumber)
     TextView mEpisodeNumber;
 
-    @Bind(R.id.tvSynopsis)
+    @BindView(R.id.tvSynopsis)
     TextView mSynopsis;
 
-    @Bind(R.id.tvAirDate)
+    @BindView(R.id.tvAirDate)
     TextView mAirDate;
 
-    @Bind(R.id.tvTitle)
+    @BindView(R.id.tvTitle)
     TextView mTitle;
 
 

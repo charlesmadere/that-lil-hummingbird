@@ -13,17 +13,17 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 import com.charlesmadere.hummingbird.views.NavigationDrawerView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public abstract class BaseDrawerActivity extends BaseActivity implements
         NavigationDrawerItemView.OnNavigationDrawerItemViewClickListener {
 
     protected ActionBarDrawerToggle mDrawerToggle;
 
-    @Bind(R.id.drawerLayout)
+    @BindView(R.id.drawerLayout)
     protected DrawerLayout mDrawerLayout;
 
-    @Bind(R.id.navigationDrawerView)
+    @BindView(R.id.navigationDrawerView)
     protected NavigationDrawerView mNavigationDrawerView;
 
 

@@ -9,12 +9,12 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.GalleryAdapter;
-import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 import com.charlesmadere.hummingbird.models.GalleryImage;
+import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class AnimeGalleryFragment extends BaseFragment {
 
@@ -23,10 +23,10 @@ public class AnimeGalleryFragment extends BaseFragment {
 
     private ArrayList<GalleryImage> mGalleryImages;
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
 
-    @Bind(R.id.tvEmpty)
+    @BindView(R.id.tvEmpty)
     TextView mEmpty;
 
 

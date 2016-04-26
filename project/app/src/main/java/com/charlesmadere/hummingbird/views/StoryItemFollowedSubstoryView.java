@@ -15,18 +15,18 @@ import com.charlesmadere.hummingbird.models.Substory;
 import com.charlesmadere.hummingbird.models.User;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class StoryItemFollowedSubstoryView extends FrameLayout implements View.OnClickListener {
 
-    @Bind(R.id.sdvAvatar)
+    private Substory mSubstory;
+
+    @BindView(R.id.sdvAvatar)
     SimpleDraweeView mAvatar;
 
-    @Bind(R.id.tvUsername)
+    @BindView(R.id.tvUsername)
     TextView mUsername;
-
-    private Substory mSubstory;
 
 
     public StoryItemFollowedSubstoryView(final Context context, final AttributeSet attrs) {

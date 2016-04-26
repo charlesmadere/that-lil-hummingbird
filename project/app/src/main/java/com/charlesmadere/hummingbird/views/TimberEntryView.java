@@ -14,18 +14,18 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.misc.Timber;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TimberEntryView extends LinearLayout implements AdapterView<Timber.BaseEntry> {
 
-    @Bind(R.id.tvStackTrace)
+    private StyleSpan mBoldSpan;
+
+    @BindView(R.id.tvStackTrace)
     TextView mStackTrace;
 
-    @Bind(R.id.tvTagAndMessage)
+    @BindView(R.id.tvTagAndMessage)
     TextView mTagAndMessage;
-
-    private StyleSpan mBoldSpan;
 
 
     public TimberEntryView(final Context context, final AttributeSet attrs) {

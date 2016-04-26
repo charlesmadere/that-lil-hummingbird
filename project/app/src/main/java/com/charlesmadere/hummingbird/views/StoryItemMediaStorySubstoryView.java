@@ -18,23 +18,23 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.text.NumberFormat;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class StoryItemMediaStorySubstoryView extends FrameLayout implements View.OnClickListener {
 
-    @Bind(R.id.kvtvAction)
-    KeyValueTextView mAction;
-
-    @Bind(R.id.sdvAvatar)
-    SimpleDraweeView mAvatar;
-
-    @Bind(R.id.tvTimeAgo)
-    TextView mTimeAgo;
-
     private NumberFormat mNumberFormat;
     private Substory mSubstory;
     private User mUser;
+
+    @BindView(R.id.kvtvAction)
+    KeyValueTextView mAction;
+
+    @BindView(R.id.sdvAvatar)
+    SimpleDraweeView mAvatar;
+
+    @BindView(R.id.tvTimeAgo)
+    TextView mTimeAgo;
 
 
     public StoryItemMediaStorySubstoryView(final Context context, final AttributeSet attrs) {

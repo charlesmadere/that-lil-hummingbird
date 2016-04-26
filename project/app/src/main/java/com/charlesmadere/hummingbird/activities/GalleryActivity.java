@@ -14,7 +14,8 @@ import com.charlesmadere.hummingbird.models.GalleryImage;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
+import butterknife.OnPageChange;
 
 public class GalleryActivity extends BaseActivity {
 
@@ -27,7 +28,7 @@ public class GalleryActivity extends BaseActivity {
     private ArrayList<GalleryImage> mGalleryImages;
     private int mStartingPosition;
 
-    @Bind(R.id.viewPager)
+    @BindView(R.id.viewPager)
     ViewPager mViewPager;
 
 
@@ -72,6 +73,11 @@ public class GalleryActivity extends BaseActivity {
         prepareViewPager();
     }
 
+    @OnPageChange(R.id.viewPager)
+    void onViewPagerPageChange() {
+        updateToolbarTitle();
+    }
+
     @Override
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -83,17 +89,7 @@ public class GalleryActivity extends BaseActivity {
         mViewPager.setOffscreenPageLimit(3);
         mViewPager.setAdapter(new GalleryFragmentAdapter(this, mGalleryImages));
         mViewPager.setCurrentItem(mStartingPosition, false);
-
-        if (mGalleryImages.size() > 1) {
-            updateToolbarTitle();
-
-            mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-                @Override
-                public void onPageSelected(final int position) {
-                    updateToolbarTitle();
-                }
-            });
-        }
+        updateToolbarTitle();
     }
 
     private void updateToolbarTitle() {

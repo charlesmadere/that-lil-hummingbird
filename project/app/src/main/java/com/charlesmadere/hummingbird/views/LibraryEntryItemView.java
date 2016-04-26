@@ -17,35 +17,35 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.text.NumberFormat;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class LibraryEntryItemView extends CardView implements AdapterView<LibraryEntry>,
         View.OnClickListener {
 
-    @Bind(R.id.kvtvProgress)
-    KeyValueTextView mProgress;
-
-    @Bind(R.id.kvtvRating)
-    KeyValueTextView mRating;
-
-    @Bind(R.id.sdvPoster)
-    SimpleDraweeView mPoster;
-
-    @Bind(R.id.tvGenres)
-    TextView mGenres;
-
-    @Bind(R.id.tvShowType)
-    TextView mShowType;
-
-    @Bind(R.id.tvSynopsis)
-    TextView mSynopsis;
-
-    @Bind(R.id.tvTitle)
-    TextView mTitle;
-
     private LibraryEntry mLibraryEntry;
     private NumberFormat mNumberFormat;
+
+    @BindView(R.id.kvtvProgress)
+    KeyValueTextView mProgress;
+
+    @BindView(R.id.kvtvRating)
+    KeyValueTextView mRating;
+
+    @BindView(R.id.sdvPoster)
+    SimpleDraweeView mPoster;
+
+    @BindView(R.id.tvGenres)
+    TextView mGenres;
+
+    @BindView(R.id.tvShowType)
+    TextView mShowType;
+
+    @BindView(R.id.tvSynopsis)
+    TextView mSynopsis;
+
+    @BindView(R.id.tvTitle)
+    TextView mTitle;
 
 
     public LibraryEntryItemView(final Context context, final AttributeSet attrs) {

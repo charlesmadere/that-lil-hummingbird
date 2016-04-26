@@ -18,34 +18,34 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class StoryItemMediaStoryView extends CardView implements AdapterView<Story>,
         View.OnClickListener {
 
-    @Bind(R.id.sdvPoster)
+    private Story mStory;
+
+    @BindView(R.id.sdvPoster)
     SimpleDraweeView mPoster;
 
-    @Bind(R.id.simssvZero)
+    @BindView(R.id.simssvZero)
     StoryItemMediaStorySubstoryView mSubstoryZero;
 
-    @Bind(R.id.simssvOne)
+    @BindView(R.id.simssvOne)
     StoryItemMediaStorySubstoryView mSubstoryOne;
 
-    @Bind(R.id.simssvTwo)
+    @BindView(R.id.simssvTwo)
     StoryItemMediaStorySubstoryView mSubstoryTwo;
 
-    @Bind(R.id.tvGenres)
+    @BindView(R.id.tvGenres)
     TextView mGenres;
 
-    @Bind(R.id.tvShowType)
+    @BindView(R.id.tvShowType)
     TextView mShowType;
 
-    @Bind(R.id.tvTitle)
+    @BindView(R.id.tvTitle)
     TextView mTitle;
-
-    private Story mStory;
 
 
     public StoryItemMediaStoryView(final Context context, final AttributeSet attrs) {

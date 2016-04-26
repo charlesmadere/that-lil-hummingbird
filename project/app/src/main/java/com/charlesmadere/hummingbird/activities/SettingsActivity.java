@@ -15,17 +15,17 @@ import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 public class SettingsActivity extends BaseDrawerActivity {
 
     private static final String TAG = "SettingsActivity";
 
-    @Bind(R.id.tvAnimeTitleLanguage)
+    @BindView(R.id.tvAnimeTitleLanguage)
     TextView mAnimeTitleLanguage;
 
-    @Bind(R.id.tvVersion)
+    @BindView(R.id.tvVersion)
     TextView mVersion;
 
 

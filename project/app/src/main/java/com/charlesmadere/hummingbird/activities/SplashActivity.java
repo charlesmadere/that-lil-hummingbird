@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class SplashActivity extends BaseActivity {
 
@@ -19,11 +19,11 @@ public class SplashActivity extends BaseActivity {
 
     private static final long ANIM_TIME_MS = 1500L;
 
-
     private Handler mHandler;
 
-    @Bind(R.id.ivSplash)
+    @BindView(R.id.ivSplash)
     ImageView mSplash;
+
 
     public static Intent getLaunchIntent(final Context context) {
         return new Intent(context, SplashActivity.class)

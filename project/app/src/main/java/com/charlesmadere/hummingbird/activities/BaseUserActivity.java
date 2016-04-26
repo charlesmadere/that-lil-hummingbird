@@ -26,7 +26,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.lang.ref.WeakReference;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public abstract class BaseUserActivity extends BaseDrawerActivity {
 
@@ -37,25 +37,25 @@ public abstract class BaseUserActivity extends BaseDrawerActivity {
     private String mUsername;
     private User mUser;
 
-    @Bind(R.id.appBarLayout)
+    @BindView(R.id.appBarLayout)
     protected AppBarLayout mAppBarLayout;
 
-    @Bind(R.id.collapsingToolbarLayout)
+    @BindView(R.id.collapsingToolbarLayout)
     protected CollapsingToolbarLayout mCollapsingToolbarLayout;
 
-    @Bind(R.id.sdvAvatar)
+    @BindView(R.id.sdvAvatar)
     protected SimpleDraweeView mAvatar;
 
-    @Bind(R.id.parallaxCoverImage)
+    @BindView(R.id.parallaxCoverImage)
     protected SimpleDraweeView mCoverImage;
 
-    @Bind(R.id.simpleProgressView)
+    @BindView(R.id.simpleProgressView)
     protected SimpleProgressView mSimpleProgressView;
 
-    @Bind(R.id.tabLayout)
+    @BindView(R.id.tabLayout)
     protected TabLayout mTabLayout;
 
-    @Bind(R.id.viewPager)
+    @BindView(R.id.viewPager)
     protected ViewPager mViewPager;
 
 

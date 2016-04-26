@@ -19,21 +19,21 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class NavigationDrawerView extends ScrimInsetsFrameLayout {
 
-    @Bind(R.id.sdvAvatar)
+    private NavigationDrawerItemView[] mNavigationDrawerItemViews;
+
+    @BindView(R.id.sdvAvatar)
     SimpleDraweeView mAvatar;
 
-    @Bind(R.id.sdvCoverImage)
+    @BindView(R.id.sdvCoverImage)
     SimpleDraweeView mCoverImage;
 
-    @Bind(R.id.tvUsername)
+    @BindView(R.id.tvUsername)
     TextView mUsername;
-
-    private NavigationDrawerItemView[] mNavigationDrawerItemViews;
 
 
     public NavigationDrawerView(final Context context, final AttributeSet attrs) {

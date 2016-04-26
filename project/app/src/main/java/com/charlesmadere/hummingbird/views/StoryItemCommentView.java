@@ -15,25 +15,25 @@ import com.charlesmadere.hummingbird.models.Substory;
 import com.charlesmadere.hummingbird.models.User;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class StoryItemCommentView extends CardView implements AdapterView<Story>,
         View.OnClickListener {
 
-    @Bind(R.id.sdvAvatar)
+    private Story mStory;
+
+    @BindView(R.id.sdvAvatar)
     SimpleDraweeView mAvatar;
 
-    @Bind(R.id.tvComment)
+    @BindView(R.id.tvComment)
     TextView mComment;
 
-    @Bind(R.id.tvTimeAgo)
+    @BindView(R.id.tvTimeAgo)
     TextView mTimeAgo;
 
-    @Bind(R.id.tvTitle)
+    @BindView(R.id.tvTitle)
     TextView mTitle;
-
-    private Story mStory;
 
 
     public StoryItemCommentView(final Context context, final AttributeSet attrs) {

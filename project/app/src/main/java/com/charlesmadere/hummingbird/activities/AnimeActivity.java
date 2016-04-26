@@ -27,7 +27,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class AnimeActivity extends BaseDrawerActivity implements
         GalleryItemView.OnGalleryItemViewClickListener {
@@ -40,22 +40,22 @@ public class AnimeActivity extends BaseDrawerActivity implements
     private AbsAnime mAnime;
     private AnimeV2 mAnimeV2;
 
-    @Bind(R.id.appBarLayout)
+    @BindView(R.id.appBarLayout)
     AppBarLayout mAppBarLayout;
 
-    @Bind(R.id.collapsingToolbarLayout)
+    @BindView(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout mCollapsingToolbarLayout;
 
-    @Bind(R.id.parallaxCoverImage)
+    @BindView(R.id.parallaxCoverImage)
     SimpleDraweeView mCoverImage;
 
-    @Bind(R.id.simpleProgressView)
+    @BindView(R.id.simpleProgressView)
     SimpleProgressView mSimpleProgressView;
 
-    @Bind(R.id.tabLayout)
+    @BindView(R.id.tabLayout)
     TabLayout mTabLayout;
 
-    @Bind(R.id.viewPager)
+    @BindView(R.id.viewPager)
     ViewPager mViewPager;
 
 

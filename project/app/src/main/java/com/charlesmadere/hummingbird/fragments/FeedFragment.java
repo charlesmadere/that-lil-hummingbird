@@ -11,18 +11,18 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.StoriesAdapter;
-import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Story;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
+import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class FeedFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -30,16 +30,16 @@ public class FeedFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private static final String KEY_STORIES = "Stories";
     private static final String KEY_USER = "User";
 
-    @Bind(R.id.llEmpty)
+    @BindView(R.id.llEmpty)
     LinearLayout mEmpty;
 
-    @Bind(R.id.llError)
+    @BindView(R.id.llError)
     LinearLayout mError;
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
 
-    @Bind(R.id.refreshLayout)
+    @BindView(R.id.refreshLayout)
     RefreshLayout mRefreshLayout;
 
     private ArrayList<Story> mStories;
