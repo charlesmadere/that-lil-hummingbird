@@ -5,5 +5,4 @@
     android:layout_width="match_parent"
     app:actualImageScaleType="centerCrop"
     app:placeholderImage="@drawable/image_placeholder"
-    app:pressedStateOverlayImage="?attr/selectableItemBackground"
     app:viewAspectRatio="1" />

@@ -101,7 +101,7 @@ public class AnimeDetailsFragment extends BaseFragment {
         return inflater.inflate(R.layout.fragment_anime_details, container, false);
     }
 
-    @OnClick(R.id.sdvPoster)
+    @OnClick(R.id.cvPoster)
     void onPosterClick() {
         startActivity(GalleryActivity.getLaunchIntent(getContext(), mAnimeV2.getPosterImage()));
     }
