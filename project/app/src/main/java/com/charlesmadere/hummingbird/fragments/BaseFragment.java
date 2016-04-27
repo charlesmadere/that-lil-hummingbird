@@ -13,6 +13,8 @@ import butterknife.Unbinder;
 
 public abstract class BaseFragment extends Fragment {
 
+    private static final String TAG = "BaseFragment";
+
     private boolean mIsDestroyed;
     private Unbinder mUnbinder;
 
@@ -26,7 +28,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Timber.d(getFragmentName(), '"' + getFragmentName() + "\" created");
+        Timber.d(TAG, '"' + getFragmentName() + "\" created");
         mIsDestroyed = false;
     }
 
