@@ -95,6 +95,7 @@
     <string name="no_season">No Season</string>
     <string name="no_synopsis_available">No synopsis available</string>
     <string name="no_timeline_content">No timeline content</string>
+    <string name="none">none</string>
     <string name="not_yet_aired">Not Yet Aired</string>
     <string name="nsfw">NSFW</string>
     <string name="ok">OK</string>
@@ -173,6 +174,41 @@
     <plurals name="x_episodes">
         <item quantity="one">%1$s episode</item>
         <item quantity="other">%1$s episodes</item>
+    </plurals>
+
+    <plurals name="x_days">
+        <item quantity="one">%1$s day</item>
+        <item quantity="other">%1$s days</item>
+    </plurals>
+
+    <plurals name="x_hours">
+        <item quantity="one">%1$s hour</item>
+        <item quantity="other">%1$s hours</item>
+    </plurals>
+
+    <plurals name="x_minutes">
+        <item quantity="one">%1$s minute</item>
+        <item quantity="other">%1$s minutes</item>
+    </plurals>
+
+    <plurals name="x_months">
+        <item quantity="one">%1$s month</item>
+        <item quantity="other">%1$s months</item>
+    </plurals>
+
+    <plurals name="x_seconds">
+        <item quantity="one">%1$s second</item>
+        <item quantity="other">%1$s seconds</item>
+    </plurals>
+
+    <plurals name="x_weeks">
+        <item quantity="one">%1$s week</item>
+        <item quantity="other">%1$s weeks</item>
+    </plurals>
+
+    <plurals name="x_years">
+        <item quantity="one">%1$s year</item>
+        <item quantity="other">%1$s years</item>
     </plurals>
 
     <plurals name="followed_x_users">

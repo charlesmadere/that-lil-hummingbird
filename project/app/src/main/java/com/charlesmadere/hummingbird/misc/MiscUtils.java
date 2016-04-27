@@ -9,13 +9,23 @@ import android.os.Build;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.v4.app.ActivityManagerCompat;
+import android.text.TextUtils;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 
 import com.charlesmadere.hummingbird.Hummingbird;
 import com.charlesmadere.hummingbird.R;
 
+import java.text.NumberFormat;
+
 public final class MiscUtils {
+
+    private static final long MINUTE_IN_SECONDS = 60L;
+    private static final long HOUR_IN_SECONDS = MINUTE_IN_SECONDS * 60L;
+    private static final long DAY_IN_SECONDS = HOUR_IN_SECONDS * 24L;
+    private static final long WEEK_IN_SECONDS = DAY_IN_SECONDS * 7L;
+    private static final long YEAR_IN_SECONDS = DAY_IN_SECONDS * 365L;
+
 
     @ColorInt
     public static int getAttrColor(final Context context, @AttrRes final int colorResId) {
@@ -33,6 +43,82 @@ public final class MiscUtils {
         } else {
             throw new RuntimeException("unable to find colorResId: " + colorResId);
         }
+    }
+
+    public static CharSequence getElapsedTime(final Resources res, long seconds) {
+        if (seconds <= 0) {
+            return res.getText(R.string.none);
+        }
+
+        final NumberFormat numberFormat = NumberFormat.getInstance();
+        final StringBuilder string = new StringBuilder();
+
+        final int years = (int) (seconds / YEAR_IN_SECONDS);
+        if (years >= 1) {
+            seconds = seconds - (years * YEAR_IN_SECONDS);
+
+            string.append(res.getQuantityString(R.plurals.x_years, years,
+                    numberFormat.format(years)));
+        }
+
+        final int weeks = (int) (seconds / WEEK_IN_SECONDS);
+        if (weeks >= 1) {
+            seconds = seconds - (weeks * WEEK_IN_SECONDS);
+
+            if (!TextUtils.isEmpty(string)) {
+                string.append(res.getText(R.string.delimiter));
+            }
+
+            string.append(res.getQuantityString(R.plurals.x_weeks, weeks,
+                    numberFormat.format(weeks)));
+        }
+
+        final int days = (int) (seconds / DAY_IN_SECONDS);
+        if (days >= 1) {
+            seconds = seconds - (days * DAY_IN_SECONDS);
+
+            if (!TextUtils.isEmpty(string)) {
+                string.append(res.getText(R.string.delimiter));
+            }
+
+            string.append(res.getQuantityString(R.plurals.x_days, days,
+                    numberFormat.format(days)));
+        }
+
+        final int hours = (int) (seconds / HOUR_IN_SECONDS);
+        if (hours >= 1) {
+            seconds = seconds - (hours * HOUR_IN_SECONDS);
+
+            if (!TextUtils.isEmpty(string)) {
+                string.append(res.getText(R.string.delimiter));
+            }
+
+            string.append(res.getQuantityString(R.plurals.x_hours, hours,
+                    numberFormat.format(hours)));
+        }
+
+        final int minutes = (int) (seconds / MINUTE_IN_SECONDS);
+        if (minutes >= 1) {
+            seconds = seconds - (minutes * MINUTE_IN_SECONDS);
+
+            if (!TextUtils.isEmpty(string)) {
+                string.append(res.getText(R.string.delimiter));
+            }
+
+            string.append(res.getQuantityString(R.plurals.x_minutes, minutes,
+                    numberFormat.format(minutes)));
+        }
+
+        if (seconds >= 1L) {
+            if (TextUtils.isEmpty(string)) {
+                string.append(res.getText(R.string.delimiter));
+            }
+
+            string.append(res.getQuantityString(R.plurals.x_seconds, (int) seconds,
+                    numberFormat.format(seconds)));
+        }
+
+        return string;
     }
 
     public static int getNavigationBarHeight(final Resources res) {

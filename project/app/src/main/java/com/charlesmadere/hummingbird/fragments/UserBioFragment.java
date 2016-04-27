@@ -2,13 +2,13 @@ package com.charlesmadere.hummingbird.fragments;
 
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.views.KeyValueTextView;
 
@@ -79,7 +79,7 @@ public class UserBioFragment extends BaseFragment {
                 .getRelativeTimeText(getContext()));
 
         mLifeSpentOnAnime.setText(getText(R.string.life_spent_on_anime),
-                DateUtils.formatElapsedTime(mUser.getLifeSpentOnAnimeSeconds()));
+                MiscUtils.getElapsedTime(getResources(), mUser.getLifeSpentOnAnimeSeconds()));
 
         if (mUser.hasWaifuOrHusbando()) {
             mWaifuOrHusbando.setText(getText(mUser.getWaifuOrHusbando().getTextResId()),
