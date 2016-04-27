@@ -45,7 +45,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
     private AnimeEpisodesFragment getAnimeEpisodesFragment() {
-        return AnimeEpisodesFragment.create(mAnimeV2.getLinks().getAnimeEpisodes());
+        return AnimeEpisodesFragment.create(mAnimeV2.getAnimeEpisodes());
     }
 
     private CharSequence getAnimeEpisodesTitle() {
@@ -53,7 +53,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
     private AnimeGalleryFragment getAnimeGalleryFragment() {
-        return AnimeGalleryFragment.create(mAnimeV2.getLinks().getGalleryImages());
+        return AnimeGalleryFragment.create(mAnimeV2.getGalleryImages());
     }
 
     private CharSequence getAnimeGalleryTitle() {

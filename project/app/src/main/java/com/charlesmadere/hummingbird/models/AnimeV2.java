@@ -58,6 +58,11 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
     private Titles mTitles;
 
 
+    @Nullable
+    public ArrayList<AnimeEpisode> getAnimeEpisodes() {
+        return mLinks.mAnimeEpisodes;
+    }
+
     public float getBayesianRating() {
         return mBayesianRating;
     }
@@ -66,6 +71,11 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
     @Override
     public SimpleDate getFinishedAiringDate() {
         return mFinishedAiringDate;
+    }
+
+    @Nullable
+    public ArrayList<GalleryImage> getGalleryImages() {
+        return mLinks.mGalleryImages;
     }
 
     @Nullable
@@ -80,10 +90,6 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         }
 
         return TextUtils.join(res.getText(R.string.delimiter), mGenres);
-    }
-
-    public Links getLinks() {
-        return mLinks;
     }
 
     public String getPosterImage() {
@@ -130,6 +136,14 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
     @Nullable
     public String getYoutubeVideoId() {
         return mYoutubeVideoId;
+    }
+
+    public boolean hasAnimeEpisodes() {
+        return mLinks.mAnimeEpisodes != null && !mLinks.mAnimeEpisodes.isEmpty();
+    }
+
+    public boolean hasGalleryImages() {
+        return mLinks.mGalleryImages != null && !mLinks.mGalleryImages.isEmpty();
     }
 
     @Override
@@ -199,24 +213,6 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         @SerializedName("gallery_images")
         private ArrayList<GalleryImage> mGalleryImages;
 
-
-        @Nullable
-        public ArrayList<AnimeEpisode> getAnimeEpisodes() {
-            return mAnimeEpisodes;
-        }
-
-        @Nullable
-        public ArrayList<GalleryImage> getGalleryImages() {
-            return mGalleryImages;
-        }
-
-        public boolean hasAnimeEpisodes() {
-            return mAnimeEpisodes != null && !mAnimeEpisodes.isEmpty();
-        }
-
-        public boolean hasGalleryImages() {
-            return mGalleryImages != null && !mGalleryImages.isEmpty();
-        }
 
         @Override
         public int describeContents() {

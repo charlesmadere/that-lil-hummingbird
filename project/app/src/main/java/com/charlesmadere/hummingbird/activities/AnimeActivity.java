@@ -17,7 +17,6 @@ import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
-import com.charlesmadere.hummingbird.models.GalleryImage;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.GalleryItemView;
@@ -25,7 +24,6 @@ import com.charlesmadere.hummingbird.views.SimpleProgressView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 
 import butterknife.BindView;
 
@@ -112,9 +110,7 @@ public class AnimeActivity extends BaseDrawerActivity implements
 
     @Override
     public void onGalleryItemViewClick(final GalleryItemView v) {
-        final ArrayList<GalleryImage> galleryImages = mAnimeV2.getLinks().getGalleryImages();
-        final int position = galleryImages.indexOf(v.getGalleryImage());
-        startActivity(GalleryActivity.getLaunchIntent(this, galleryImages, position));
+        startActivity(GalleryActivity.getLaunchIntent(this, mAnimeV2, v.getGalleryImage()));
     }
 
     @Override

@@ -10,7 +10,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.models.GalleryImage;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.AbstractDraweeController;
 import com.facebook.drawee.controller.BaseControllerListener;
@@ -37,10 +36,6 @@ public class GalleryFragment extends BaseFragment {
     @BindView(R.id.tvError)
     TextView mError;
 
-
-    public static GalleryFragment create(final GalleryImage galleryImage) {
-        return create(galleryImage.getOriginal());
-    }
 
     public static GalleryFragment create(final String url) {
         final Bundle args = new Bundle(1);

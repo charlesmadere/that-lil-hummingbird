@@ -6,54 +6,31 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.charlesmadere.hummingbird.fragments.GalleryFragment;
-import com.charlesmadere.hummingbird.models.GalleryImage;
 
 import java.util.ArrayList;
 
 public class GalleryFragmentAdapter extends FragmentStatePagerAdapter {
 
-    private final ArrayList<GalleryImage> mGalleryImages;
-    private final String mUrl;
+    private final ArrayList<String> mUrls;
 
 
-    public GalleryFragmentAdapter(final FragmentActivity activity,
-            final ArrayList<GalleryImage> galleryImages) {
-        this(activity.getSupportFragmentManager(), galleryImages);
+    public GalleryFragmentAdapter(final FragmentActivity activity, final ArrayList<String> urls) {
+        this(activity.getSupportFragmentManager(), urls);
     }
 
-    public GalleryFragmentAdapter(final FragmentManager fm,
-            final ArrayList<GalleryImage> galleryImages) {
+    public GalleryFragmentAdapter(final FragmentManager fm, final ArrayList<String> urls) {
         super(fm);
-        mGalleryImages = galleryImages;
-        mUrl = null;
-    }
-
-    public GalleryFragmentAdapter(final FragmentActivity activity, final String url) {
-        this(activity.getSupportFragmentManager(), url);
-    }
-
-    public GalleryFragmentAdapter(final FragmentManager fm, final String url) {
-        super(fm);
-        mGalleryImages = null;
-        mUrl = url;
+        mUrls = urls;
     }
 
     @Override
     public int getCount() {
-        if (mGalleryImages == null) {
-            return 1;
-        } else {
-            return mGalleryImages.size();
-        }
+        return mUrls.size();
     }
 
     @Override
     public Fragment getItem(final int position) {
-        if (mGalleryImages == null) {
-            return GalleryFragment.create(mUrl);
-        } else {
-            return GalleryFragment.create(mGalleryImages.get(position));
-        }
+        return GalleryFragment.create(mUrls.get(position));
     }
 
 }

@@ -133,10 +133,8 @@ public final class Api {
                 if (response.isSuccessful()) {
                     body = response.body();
 
-                    final AnimeV2.Links links = body.getLinks();
-
-                    if (links.hasAnimeEpisodes()) {
-                        AnimeEpisode.sort(links.getAnimeEpisodes());
+                    if (body.hasAnimeEpisodes()) {
+                        AnimeEpisode.sort(body.getAnimeEpisodes());
                     }
                 }
 

@@ -103,7 +103,8 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     @OnClick(R.id.cvPoster)
     void onPosterClick() {
-        startActivity(GalleryActivity.getLaunchIntent(getContext(), mAnimeV2.getPosterImage()));
+        startActivity(GalleryActivity.getLaunchIntent(getContext(), mAnimeV2,
+                mAnimeV2.getPosterImage()));
     }
 
     @Override
