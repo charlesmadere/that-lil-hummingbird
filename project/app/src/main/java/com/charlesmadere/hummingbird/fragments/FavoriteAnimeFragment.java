@@ -127,7 +127,7 @@ public class FavoriteAnimeFragment extends BaseFragment implements
     private void showEmpty() {
         mRecyclerView.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
-        mError.setVisibility(View.VISIBLE);
+        mEmpty.setVisibility(View.VISIBLE);
         mRefreshLayout.setRefreshing(false);
     }
 
