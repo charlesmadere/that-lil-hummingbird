@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.InternalAnimeItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="horizontal">
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sdvPoster"
+        android:layout_marginEnd="@dimen/root_padding"
+        style="@style/AnimePoster" />
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:id="@+id/tvTitle"
+            tools:text="The Disappearance of Haruhi Suzumiya"
+            style="@style/AnimeTitle" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:id="@+id/tvShowType"
+            tools:text="@string/movie"
+            style="@style/AnimeShowType" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:id="@+id/tvGenres"
+            tools:text="Comedy, Mystery, Romance"
+            tools:visibility="visible"
+            style="@style/AnimeGenres" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:id="@+id/tvSynopsis"
+            android:layout_marginTop="@dimen/root_padding"
+            tools:text="It is mid-December, and SOS Brigade chief Haruhi Suzumiya announces that the Brigade is going to hold a Christmas party in their clubroom, with Japanese hotpot for dinner."
+            style="@style/AnimeSynopsis" />
+        <android.support.v4.widget.Space
+            android:layout_height="@dimen/root_padding_half"
+            android:layout_width="match_parent" />
+        <com.charlesmadere.hummingbird.views.KeyValueTextView
+            android:id="@+id/kvtvProgress"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            tools:text="Progress 3 / 12"
+            tools:visibility="visible" />
+        <com.charlesmadere.hummingbird.views.KeyValueTextView
+            android:id="@+id/kvtvRating"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            tools:text="Rating 2.5"
+            tools:visibility="visible" />
+    </LinearLayout>
+</com.charlesmadere.hummingbird.views.InternalAnimeItemView>
