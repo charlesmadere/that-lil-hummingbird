@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.adapters.AnimeAdapter;
+import com.charlesmadere.hummingbird.adapters.AnimeSearchAdapter;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -36,7 +36,7 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
     private static final String KEY_QUERY = "Query";
     private static final long SEARCH_DELAY_MS = 400L;
 
-    private AnimeAdapter mAdapter;
+    private AnimeSearchAdapter mAdapter;
     private ArrayList<AbsAnime> mAnime;
     private Handler mHandler;
     private String mQuery;
@@ -151,7 +151,7 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
         super.onViewsBound();
 
         SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
-        mAdapter = new AnimeAdapter(this);
+        mAdapter = new AnimeSearchAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
     }
 

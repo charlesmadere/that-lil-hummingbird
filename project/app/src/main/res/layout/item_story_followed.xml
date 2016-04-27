@@ -11,16 +11,16 @@
             android:layout_marginEnd="@dimen/root_padding"
             app:placeholderImage="@drawable/image_placeholder"
             style="@style/Avatar.Medium" />
-        <TextView
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvTitle"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/sdvAvatar"
             android:layout_width="match_parent"
             android:textColor="?attr/colorTextPrimary"
             android:textSize="@dimen/text_large"
-            tools:text="ThatLilChestnut followed 1 user"
-            style="@style/MediumOrBold" />
-        <TextView
+            app:typeface="teko_semibold"
+            tools:text="ThatLilChestnut followed 1 user" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvTimeAgo"
             android:layout_below="@id/tvTitle"
             android:layout_marginBottom="@dimen/root_padding_half"

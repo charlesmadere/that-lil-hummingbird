@@ -15,7 +15,7 @@
             android:id="@+id/llError"
             style="@style/ListMessageContainer">
             <com.charlesmadere.hummingbird.views.TypefaceTextView
-                android:text="@string/error_loading_feed"
+                android:text="@string/error_loading_favorites"
                 style="@style/ListMessageTitle" />
             <com.charlesmadere.hummingbird.views.TypefaceTextView
                 android:text="@string/pull_to_refresh_to_try_again"
@@ -25,7 +25,7 @@
             android:id="@+id/llEmpty"
             style="@style/ListMessageContainer">
             <com.charlesmadere.hummingbird.views.TypefaceTextView
-                android:text="@string/no_feed_content"
+                android:text="@string/no_favorites"
                 style="@style/ListMessageTitle" />
             <com.charlesmadere.hummingbird.views.TypefaceTextView
                 android:text="@string/pull_to_refresh_to_check_again"

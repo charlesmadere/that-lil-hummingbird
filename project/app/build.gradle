@@ -36,7 +36,7 @@ dependencies {
     // Facebook's Fresco
     compile 'com.facebook.fresco:fresco:0.9.0'
 
-    // Google GSON
+    // Google's GSON
     compile 'com.google.code.gson:gson:2.6.2'
 
     // Square's Retrofit

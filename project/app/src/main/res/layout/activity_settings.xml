@@ -21,19 +21,19 @@
                     style="@style/SettingsCardItem">
                     <LinearLayout
                         style="@style/SettingsCardInternal">
-                        <TextView
+                        <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:text="@string/general"
-                            style="@style/SettingHeader" />
+                            style="@style/SettingsCardHeader" />
                         <LinearLayout
                             android:id="@+id/llAnimeTitleLanguage"
-                            style="@style/SettingItem">
-                            <TextView
+                            style="@style/SettingsItem">
+                            <com.charlesmadere.hummingbird.views.TypefaceTextView
                                 android:text="@string/preferred_anime_title_language"
-                                style="@style/SettingItemHeader" />
-                            <TextView
+                                style="@style/SettingsItemHeader" />
+                            <com.charlesmadere.hummingbird.views.TypefaceTextView
                                 android:id="@+id/tvAnimeTitleLanguage"
                                 tools:text="@string/english"
-                                style="@style/SettingItemBody" />
+                                style="@style/SettingsItemBody" />
                         </LinearLayout>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
@@ -41,51 +41,51 @@
                     style="@style/SettingsCardItem">
                     <LinearLayout
                         style="@style/SettingsCardInternal">
-                        <TextView
+                        <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:text="@string/account"
-                            style="@style/SettingHeader" />
-                        <TextView
+                            style="@style/SettingsCardHeader" />
+                        <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:id="@+id/tvSignOut"
                             android:text="@string/sign_out"
-                            style="@style/SettingItem" />
+                            style="@style/SettingsItem" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
                     style="@style/SettingsCardItem">
                     <LinearLayout
                         style="@style/SettingsCardInternal">
-                        <TextView
+                        <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:text="@string/credits"
-                            style="@style/SettingHeader" />
-                        <TextView
+                            style="@style/SettingsCardHeader" />
+                        <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:id="@+id/tvAuthor"
                             android:text="@string/app_written_by_charles_madere"
-                            style="@style/SettingItem" />
-                        <TextView
+                            style="@style/SettingsItem" />
+                        <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:id="@+id/tvGitHub"
                             android:text="@string/open_source_on_github"
-                            style="@style/SettingItem" />
+                            style="@style/SettingsItem" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
                     style="@style/SettingsCardItem">
                     <LinearLayout
                         style="@style/SettingsCardInternal">
-                        <TextView
+                        <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:text="@string/miscellaneous"
-                            style="@style/SettingHeader" />
-                        <TextView
+                            style="@style/SettingsCardHeader" />
+                        <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:id="@+id/tvRateThisApp"
                             android:text="@string/rate_this_app"
-                            style="@style/SettingItem" />
-                        <TextView
+                            style="@style/SettingsItem" />
+                        <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:id="@+id/tvRewatchIntroAnimation"
                             android:text="@string/rewatch_intro_animation"
-                            style="@style/SettingItem" />
-                        <TextView
+                            style="@style/SettingsItem" />
+                        <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:id="@+id/tvLogViewer"
                             android:text="@string/log_viewer"
-                            style="@style/SettingItem" />
+                            style="@style/SettingsItem" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <TextView

@@ -2,26 +2,9 @@
 <com.charlesmadere.hummingbird.views.AnimeItemView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/CardItem">
-    <LinearLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/tvTitle"
-            tools:text="Kill La Kill"
-            style="@style/AnimeTitle" />
-        <TextView
-            android:id="@+id/tvShowType"
-            tools:text="@string/movie"
-            style="@style/AnimeShowType" />
-        <TextView
-            android:id="@+id/tvGenres"
-            tools:text="Comedy, Mystery, Romance"
-            style="@style/AnimeGenres" />
-        <TextView
-            android:id="@+id/tvEpisodeCount"
-            tools:text="20 episodes"
-            tools:visibility="visible"
-            style="@style/AnimeEpisodeCount" />
-    </LinearLayout>
+
+    <com.charlesmadere.hummingbird.views.TypefaceTextView
+        android:id="@+id/tvTitle"
+        tools:text="Hello, World!"
+        style="@style/AnimeTitle" />
 </com.charlesmadere.hummingbird.views.AnimeItemView>

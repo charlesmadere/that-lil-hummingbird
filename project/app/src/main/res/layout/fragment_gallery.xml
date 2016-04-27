@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         app:actualImageScaleType="centerInside" />
-    <TextView
+    <com.charlesmadere.hummingbird.views.TypefaceTextView
         android:id="@+id/tvError"
         android:layout_gravity="center"
         android:text="@string/error_loading_image"

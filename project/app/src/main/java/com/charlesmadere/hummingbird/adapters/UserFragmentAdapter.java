@@ -8,12 +8,17 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.fragments.AnimeLibraryFragment;
+import com.charlesmadere.hummingbird.fragments.FavoriteAnimeFragment;
 import com.charlesmadere.hummingbird.fragments.FeedFragment;
 import com.charlesmadere.hummingbird.fragments.UserBioFragment;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 
 public class UserFragmentAdapter extends FragmentStatePagerAdapter {
+
+    public static final int POSITION_FAVORITES = 0;
+    public static final int POSITION_BIO = 1;
+    public static final int POSITION_FEED = 2;
 
     private static final WatchingStatus[] ORDER = { WatchingStatus.CURRENTLY_WATCHING,
             WatchingStatus.COMPLETED, WatchingStatus.PLAN_TO_WATCH,
@@ -35,7 +40,7 @@ public class UserFragmentAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return WatchingStatus.values().length + 2;
+        return WatchingStatus.values().length + 3;
     }
 
     @Override
@@ -43,16 +48,20 @@ public class UserFragmentAdapter extends FragmentStatePagerAdapter {
         final Fragment fragment;
 
         switch (position) {
-            case 0:
+            case POSITION_FAVORITES:
+                fragment = FavoriteAnimeFragment.create(mUser);
+                break;
+
+            case POSITION_BIO:
                 fragment = UserBioFragment.create(mUser);
                 break;
 
-            case 1:
+            case POSITION_FEED:
                 fragment = FeedFragment.create(mUser);
                 break;
 
             default:
-                final WatchingStatus watchingStatus = ORDER[position - 2];
+                final WatchingStatus watchingStatus = ORDER[position - 3];
                 fragment = AnimeLibraryFragment.create(mUser, watchingStatus);
                 break;
         }
@@ -65,16 +74,20 @@ public class UserFragmentAdapter extends FragmentStatePagerAdapter {
         final int pageTitleResId;
 
         switch (position) {
-            case 0:
+            case POSITION_FAVORITES:
+                pageTitleResId = R.string.favorites;
+                break;
+
+            case POSITION_BIO:
                 pageTitleResId = R.string.bio;
                 break;
 
-            case 1:
+            case POSITION_FEED:
                 pageTitleResId = R.string.feed;
                 break;
 
             default:
-                final WatchingStatus watchingStatus = ORDER[position - 2];
+                final WatchingStatus watchingStatus = ORDER[position - 3];
                 pageTitleResId = watchingStatus.getTextResId();
                 break;
         }

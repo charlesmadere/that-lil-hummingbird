@@ -58,11 +58,12 @@
         <item name="android:textColor">?attr/colorTextPrimary</item>
     </style>
 
-    <style name="AnimeTitle" parent="@style/MediumOrBold">
+    <style name="AnimeTitle">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textColor">?attr/colorTextPrimary</item>
-        <item name="android:textSize">@dimen/text_large</item>
+        <item name="android:textSize">@dimen/text_xxlarge</item>
+        <item name="typeface">teko_semibold</item>
     </style>
 
     <style name="AppBarLayout">
@@ -113,6 +114,21 @@
         <item name="android:scrollbars">vertical</item>
     </style>
 
+    <style name="CardHeader">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/root_padding_half</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">?attr/colorTextPrimary</item>
+        <item name="typeface">open_sans_extra_bold</item>
+    </style>
+
+    <style name="CardHeader.WithMargins">
+        <item name="android:layout_marginBottom">@dimen/root_padding_half</item>
+        <item name="android:layout_marginEnd">@dimen/root_padding</item>
+        <item name="android:layout_marginStart">@dimen/root_padding</item>
+        <item name="android:layout_marginTop">@dimen/root_padding_half</item>
+    </style>
+
     <style name="CardItem" parent="BaseCard">
         <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:layout_height">wrap_content</item>
@@ -128,6 +144,13 @@
         <item name="contentPaddingLeft">0dp</item>
         <item name="contentPaddingRight">0dp</item>
         <item name="contentPaddingTop">0dp</item>
+    </style>
+
+    <style name="CardParagraph">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/root_padding_half</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:lineSpacingExtra">2dp</item>
     </style>
 
     <style name="CollapsingToolbarLayout">
@@ -169,21 +192,22 @@
     </style>
 
     <style name="ListMessageSubtitle">
-        <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textColor">?attr/colorTextSecondary</item>
+        <item name="typeface">open_sans_regular</item>
     </style>
 
-    <style name="ListMessageTitle" parent="@style/MediumOrBold">
+    <style name="ListMessageTitle">
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textColor">?attr/colorTextSecondary</item>
         <item name="android:textSize">@dimen/text_large</item>
+        <item name="typeface">open_sans_bold</item>
     </style>
 
     <style name="ListMessageTitle.Standalone">
@@ -204,14 +228,6 @@
         <item name="android:paddingStart">@dimen/root_padding_half</item>
     </style>
 
-    <style name="MediumOrBold">
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="MediumOrRegular">
-
-    </style>
-
     <style name="NavigationDrawerDividerView">
         <item name="android:background">@color/dividerDark</item>
         <item name="android:layout_height">1dp</item>
@@ -220,7 +236,7 @@
         <item name="android:layout_width">match_parent</item>
     </style>
 
-    <style name="NavigationDrawerItemView" parent="MediumOrRegular">
+    <style name="NavigationDrawerItemView">
         <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:drawablePadding">@dimen/root_padding</item>
         <item name="android:ellipsize">end</item>
@@ -256,6 +272,13 @@
         <item name="placeholderImageScaleType">centerCrop</item>
     </style>
 
+    <style name="SettingsCardHeader" parent="CardHeader">
+        <item name="android:layout_marginBottom">@dimen/root_padding_half</item>
+        <item name="android:layout_marginEnd">@dimen/root_padding</item>
+        <item name="android:layout_marginStart">@dimen/root_padding</item>
+        <item name="android:layout_marginTop">@dimen/root_padding_half</item>
+    </style>
+
     <style name="SettingsCardItem" parent="BaseSettingsCardItem">
         <item name="android:layout_marginEnd">@dimen/root_padding_half</item>
         <item name="android:layout_marginStart">@dimen/root_padding_half</item>
@@ -267,19 +290,7 @@
         <item name="android:orientation">vertical</item>
     </style>
 
-    <style name="SettingHeader" parent="@style/MediumOrBold">
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingBottom">@dimen/root_padding_half</item>
-        <item name="android:paddingEnd">@dimen/root_padding</item>
-        <item name="android:paddingStart">@dimen/root_padding</item>
-        <item name="android:paddingTop">@dimen/root_padding</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:textColor">?attr/colorTextPrimary</item>
-        <item name="android:textSize">@dimen/text_small</item>
-    </style>
-
-    <style name="SettingItem">
+    <style name="SettingsItem">
         <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_height">wrap_content</item>
@@ -294,14 +305,14 @@
         <item name="android:textSize">@dimen/text_large</item>
     </style>
 
-    <style name="SettingItemBody">
+    <style name="SettingsItemBody">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textColor">?attr/colorTextSecondary</item>
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
-    <style name="SettingItemHeader">
+    <style name="SettingsItemHeader">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textColor">?attr/colorTextPrimary</item>

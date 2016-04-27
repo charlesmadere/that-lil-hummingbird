@@ -53,11 +53,12 @@ public class TimberEntryView extends LinearLayout implements AdapterView<Timber.
     public void setContent(final Timber.BaseEntry content) {
         final SpannableStringBuilder tagAndMessage = new SpannableStringBuilder(content.getTag());
         tagAndMessage.setSpan(mBoldSpan, 0, tagAndMessage.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        tagAndMessage.append(" - ");
+        tagAndMessage.append(": ");
         tagAndMessage.append(content.getMessage());
         mTagAndMessage.setText(tagAndMessage);
 
         if (content.hasStackTrace()) {
+            mStackTrace.setText(content.getStackTrace());
             mStackTrace.setVisibility(VISIBLE);
         } else {
             mStackTrace.setVisibility(GONE);

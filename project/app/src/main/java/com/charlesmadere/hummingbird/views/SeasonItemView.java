@@ -1,7 +1,6 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
 import com.charlesmadere.hummingbird.R;
@@ -10,7 +9,7 @@ import com.charlesmadere.hummingbird.models.Season;
 
 import java.text.NumberFormat;
 
-public class SeasonItemView extends AppCompatTextView implements AdapterView<Season> {
+public class SeasonItemView extends TypefaceTextView implements AdapterView<Season> {
 
     private NumberFormat mNumberFormat;
 

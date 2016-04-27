@@ -8,7 +8,7 @@
         android:visibility="gone"
         tools:visibility="visible"
         style="@style/ListOrGrid" />
-    <TextView
+    <com.charlesmadere.hummingbird.views.TypefaceTextView
         android:id="@+id/tvEmpty"
         android:text="@string/no_episodes"
         tools:visibility="visible"

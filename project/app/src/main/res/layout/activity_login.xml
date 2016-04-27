@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:orientation="vertical">
-        <TextView
-            android:fontFamily="sans-serif-thin"
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:gravity="center"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/root_padding_double"
             android:layout_width="@dimen/central_content_width"
             android:text="@string/that_lil_hummingbird"
-            android:textSize="32sp" />
+            android:textSize="32sp"
+            app:typeface="open_sans_bold" />
         <android.support.design.widget.TextInputLayout
             android:id="@+id/tilUsername"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:visibility="invisible">
-            <EditText
+            <com.charlesmadere.hummingbird.views.TypefaceEditText
                 android:hint="@string/username"
                 android:id="@+id/etUsername"
                 android:imeOptions="actionNext"
@@ -32,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:visibility="invisible">
-            <EditText
+            <com.charlesmadere.hummingbird.views.TypefaceEditText
                 android:hint="@string/password"
                 android:id="@+id/etPassword"
                 android:imeOptions="actionGo"

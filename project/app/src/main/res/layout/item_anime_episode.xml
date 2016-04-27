@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.charlesmadere.hummingbird.views.AnimeEpisodeItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/CardItem">
     <RelativeLayout
         android:layout_height="match_parent"
         android:layout_width="wrap_content"
         android:minHeight="@dimen/list_item_height">
-        <TextView
-            android:fontFamily="sans-serif-light"
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvEpisodeNumber"
             android:layout_alignParentEnd="true"
             android:layout_height="wrap_content"
@@ -15,6 +15,7 @@
             android:paddingStart="@dimen/root_padding_half"
             android:textColor="?attr/colorTextSecondary"
             android:textSize="@dimen/text_xxlarge"
+            app:typeface="open_sans_light"
             tools:ignore="RtlSymmetry"
             tools:text="12" />
         <LinearLayout
@@ -24,15 +25,15 @@
             android:layout_toStartOf="@id/tvEpisodeNumber"
             android:layout_width="match_parent"
             android:orientation="vertical">
-            <TextView
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
                 android:id="@+id/tvTitle"
                 tools:text="Naturals Election"
                 style="@style/AnimeTitle" />
-            <TextView
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
                 android:id="@+id/tvAirDate"
                 tools:text="11/28/1989"
                 style="@style/TimeOrDate" />
-            <TextView
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
                 android:id="@+id/tvSynopsis"
                 android:layout_marginTop="@dimen/root_padding_half"
                 tools:text="It is mid-December, and SOS Brigade chief Haruhi Suzumiya announces that the Brigade is going to hold a Christmas party in their clubroom, with Japanese hotpot for dinner."

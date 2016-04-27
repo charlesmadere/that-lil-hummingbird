@@ -29,7 +29,7 @@
                     android:background="@drawable/image_overlay"
                     android:layout_height="match_parent"
                     android:layout_width="match_parent" />
-                <TextView
+                <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:ellipsize="end"
                     android:id="@+id/tvUsername"
                     android:layout_alignParentBottom="true"
@@ -45,7 +45,7 @@
                     android:shadowDy="2"
                     android:shadowRadius="4"
                     android:textColor="@color/white"
-                    android:textStyle="bold"
+                    app:typeface="open_sans_bold"
                     tools:text="Ryuko Matoi" />
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/sdvAvatar"

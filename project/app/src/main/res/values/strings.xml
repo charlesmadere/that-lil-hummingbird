@@ -42,6 +42,7 @@
     <string name="error_loading_completed_library">Error loading completed library</string>
     <string name="error_loading_currently_watching_library">Error loading currently watching library</string>
     <string name="error_loading_dropped_library">Error loading dropped library</string>
+    <string name="error_loading_favorites">Error loading favorites</string>
     <string name="error_loading_feed">Error loading feed</string>
     <string name="error_loading_image">Error loading image</string>
     <string name="error_loading_on_hold_library">Error loading on hold library</string>
@@ -52,6 +53,7 @@
     <string name="explore">Explore</string>
     <string name="explore_anime">Explore Anime</string>
     <string name="explore_manga">Explore Manga</string>
+    <string name="favorites">Favorites</string>
     <string name="feed">Feed</string>
     <string name="feed_is_empty">Feed is empty</string>
     <string name="finished_airing">Finished airing</string>
@@ -86,6 +88,7 @@
     <string name="music">Music</string>
     <string name="no_bio_available">No bio available</string>
     <string name="no_episodes">No episodes</string>
+    <string name="no_favorites">No favorites</string>
     <string name="no_feed_content">No feed content</string>
     <string name="no_gallery_images">No gallery images</string>
     <string name="no_results_for_x">No results for %1$s</string>

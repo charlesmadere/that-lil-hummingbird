@@ -27,13 +27,26 @@
     </declare-styleable>
 
     <declare-styleable name="View">
-        <attr name="always_show" format="boolean" />
         <attr name="fixed_side" format="enum">
             <enum name="height" value="0" />
             <enum name="width" value="1" />
         </attr>
         <attr name="height_ratio" format="integer" />
         <attr name="width_ratio" format="integer" />
+
+        <attr name="always_show" format="boolean" />
+
+        <attr name="typeface" format="enum">
+            <enum name="open_sans_bold" value="0" />
+            <enum name="open_sans_extra_bold" value="1" />
+            <enum name="open_sans_italic" value="2" />
+            <enum name="open_sans_light" value="3" />
+            <enum name="open_sans_light_italic" value="4" />
+            <enum name="open_sans_regular" value="5" />
+            <enum name="open_sans_semibold" value="6" />
+            <enum name="teko_regular" value="7" />
+            <enum name="teko_semibold" value="8" />
+        </attr>
     </declare-styleable>
 
 </resources>

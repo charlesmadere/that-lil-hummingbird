@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.charlesmadere.hummingbird.views.StoryItemCommentView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/CardItem">
     <RelativeLayout
@@ -9,22 +10,22 @@
             android:id="@+id/sdvAvatar"
             android:layout_marginEnd="@dimen/root_padding"
             style="@style/Avatar.Large" />
-        <TextView
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvTitle"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/sdvAvatar"
             android:layout_width="match_parent"
             android:textColor="?attr/colorTextPrimary"
-            android:textSize="@dimen/text_large"
-            tools:text="LimitB"
-            style="@style/MediumOrBold" />
-        <TextView
+            android:textSize="@dimen/text_xlarge"
+            app:typeface="teko_semibold"
+            tools:text="LimitB" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvTimeAgo"
             android:layout_below="@id/tvTitle"
             android:layout_toEndOf="@id/sdvAvatar"
             tools:text="an hour ago"
             style="@style/TimeOrDate" />
-        <TextView
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvComment"
             android:layout_below="@id/tvTimeAgo"
             android:layout_height="wrap_content"

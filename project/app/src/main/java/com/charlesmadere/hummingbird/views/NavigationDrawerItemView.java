@@ -8,13 +8,16 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
+import com.charlesmadere.hummingbird.misc.TypefaceStore;
+import com.charlesmadere.hummingbird.models.TypefaceEntry;
 
-public class NavigationDrawerItemView extends SelectableTextView {
+public class NavigationDrawerItemView extends AppCompatTextView {
 
     private Entry mEntry;
 
@@ -86,6 +89,8 @@ public class NavigationDrawerItemView extends SelectableTextView {
 
         setTextColor(color);
         setText(mEntry.getTextResId());
+        setTypeface(isSelected() ? TypefaceStore.get(TypefaceEntry.OPEN_SANS_BOLD) :
+                TypefaceStore.get(TypefaceEntry.OPEN_SANS_SEMIBOLD));
 
         Drawable icon = ContextCompat.getDrawable(getContext(), mEntry.getIconResId());
         icon = DrawableCompat.wrap(icon);

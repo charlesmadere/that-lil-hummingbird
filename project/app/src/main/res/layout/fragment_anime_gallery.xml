@@ -14,7 +14,7 @@
         app:layoutManager="GridLayoutManager"
         tools:visibility="visible"
         style="@style/GalleryGrid" />
-    <TextView
+    <com.charlesmadere.hummingbird.views.TypefaceTextView
         android:id="@+id/tvEmpty"
         android:text="@string/no_gallery_images"
         tools:visibility="visible"

@@ -14,15 +14,15 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:orientation="vertical">
-            <TextView
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
                 android:id="@+id/tvTitle"
                 tools:text="The Disappearance of Haruhi Suzumiya"
                 style="@style/AnimeTitle" />
-            <TextView
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
                 android:id="@+id/tvShowType"
                 tools:text="@string/movie"
                 style="@style/AnimeShowType" />
-            <TextView
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
                 android:id="@+id/tvGenres"
                 tools:text="Comedy, Mystery, Romance"
                 tools:visibility="visible"

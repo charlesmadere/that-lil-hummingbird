@@ -19,7 +19,7 @@
             android:visibility="gone"
             app:layoutManager="LinearLayoutManager"
             tools:visibility="visible" />
-        <TextView
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvInitialSearchMessage"
             android:text="@string/initial_search_message"
             android:visibility="visible"

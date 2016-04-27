@@ -23,7 +23,7 @@
             app:keyTextColor="?attr/colorAccent"
             app:valueTextColor="?attr/colorTextPrimary"
             tools:text="ThatLilChestnut is currently watching." />
-        <TextView
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvTimeAgo"
             android:layout_below="@id/kvtvAction"
             android:layout_toEndOf="@id/sdvAvatar"

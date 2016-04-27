@@ -13,6 +13,7 @@ import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.views.KeyValueTextView;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class UserBioFragment extends BaseFragment {
 
@@ -74,12 +75,6 @@ public class UserBioFragment extends BaseFragment {
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (mUser.hasBio()) {
-            mBio.setText(mUser.getBio());
-        } else {
-            mBio.setText(R.string.no_bio_available);
-        }
-
         mLastUpdate.setText(getText(R.string.last_update), mUser.getLastLibraryUpdate()
                 .getRelativeTimeText(getContext()));
 
@@ -96,6 +91,17 @@ public class UserBioFragment extends BaseFragment {
             mWebsiteText.setText(mUser.getWebsite());
             mWebsiteCard.setVisibility(View.VISIBLE);
         }
+
+        if (mUser.hasBio()) {
+            mBio.setText(mUser.getBio());
+        } else {
+            mBio.setText(R.string.no_bio_available);
+        }
+    }
+
+    @OnClick(R.id.tvWebsite)
+    void onWebsiteClick() {
+        openUrl(mUser.getWebsite());
     }
 
 }

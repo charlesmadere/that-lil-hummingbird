@@ -25,10 +25,10 @@
                 <LinearLayout
                     android:id="@+id/llEmpty"
                     style="@style/ListMessageContainer">
-                    <TextView
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
                         android:text="@string/log_viewer_is_empty"
                         style="@style/ListMessageTitle" />
-                    <TextView
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
                         android:text="@string/pull_to_refresh_to_check_again"
                         style="@style/ListMessageSubtitle" />
                 </LinearLayout>

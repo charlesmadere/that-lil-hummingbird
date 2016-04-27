@@ -32,8 +32,10 @@ public abstract class BaseUserActivity extends BaseDrawerActivity {
 
     private static final String CNAME = BaseUserActivity.class.getCanonicalName();
     private static final String EXTRA_USERNAME = CNAME + ".Username";
+    private static final String KEY_STARTING_POSITION = "StartingPosition";
     private static final String KEY_USER = "User";
 
+    private int mStartingPosition;
     private String mUsername;
     private User mUser;
 
@@ -87,6 +89,7 @@ public abstract class BaseUserActivity extends BaseDrawerActivity {
 
         if (TextUtils.isEmpty(mUsername)) {
             mUser = CurrentUser.get();
+            mUsername = mUser.getName();
             setTitle(R.string.home);
         } else {
             setTitle(mUsername);
@@ -94,6 +97,13 @@ public abstract class BaseUserActivity extends BaseDrawerActivity {
             if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
                 mUser = savedInstanceState.getParcelable(KEY_USER);
             }
+        }
+
+        mStartingPosition = UserFragmentAdapter.POSITION_FEED;
+
+        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
+            mStartingPosition = savedInstanceState.getInt(KEY_STARTING_POSITION,
+                    mStartingPosition);
         }
 
         if (mUser == null) {
@@ -106,6 +116,7 @@ public abstract class BaseUserActivity extends BaseDrawerActivity {
     @Override
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putInt(KEY_STARTING_POSITION, mViewPager.getCurrentItem());
 
         if (mUser != null) {
             outState.putParcelable(KEY_USER, mUser);
@@ -144,6 +155,7 @@ public abstract class BaseUserActivity extends BaseDrawerActivity {
                 mCollapsingToolbarLayout, mCoverImage, mTabLayout);
         mAvatar.setImageURI(Uri.parse(user.getAvatar()));
         mViewPager.setAdapter(new UserFragmentAdapter(this, mUser));
+        mViewPager.setCurrentItem(mStartingPosition, false);
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);

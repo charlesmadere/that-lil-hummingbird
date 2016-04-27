@@ -3,7 +3,6 @@ package com.charlesmadere.hummingbird.views;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatTextView;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -13,7 +12,7 @@ import android.util.AttributeSet;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 
-public class KeyValueTextView extends AppCompatTextView {
+public class KeyValueTextView extends TypefaceTextView {
 
     private ForegroundColorSpan mKeyTextSpan;
     private ForegroundColorSpan mValueTextSpan;
