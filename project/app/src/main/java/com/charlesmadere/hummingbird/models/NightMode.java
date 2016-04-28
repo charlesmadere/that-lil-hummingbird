@@ -5,15 +5,20 @@ import android.os.Parcelable;
 import android.support.annotation.StringRes;
 
 import com.charlesmadere.hummingbird.R;
+import com.google.gson.annotations.SerializedName;
 
 public enum NightMode implements Parcelable {
 
+    @SerializedName("auto")
     AUTO(R.string.auto),
 
+    @SerializedName("night_no")
     NIGHT_NO(R.string.day),
 
+    @SerializedName("night_yes")
     NIGHT_YES(R.string.night),
 
+    @SerializedName("system")
     SYSTEM(R.string.system);
 
     private final int mTextResId;
