@@ -1,42 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AlertDialogTheme_Dark_V21" parent="android:Theme.Material.Dialog">
+    <style name="AlertDialogTheme_V21" parent="android:Theme.Material.Light.Dialog">
         <item name="android:colorAccent">?attr/colorAccent</item>
-    </style>
-
-    <style name="AlertDialogTheme_Light_V21" parent="android:Theme.Material.Light.Dialog">
-        <item name="android:colorAccent">?attr/colorAccent</item>
-    </style>
-
-    <style name="DatePickerDialogTheme_Dark" parent="android:Theme.Material.Dialog">
-        <item name="android:colorAccent">?attr/colorAccent</item>
-        <item name="android:datePickerStyle">@style/DatePickerStyle</item>
     </style>
 
     <style name="DatePickerDialogTheme_Light" parent="android:Theme.Material.Light.Dialog">
-        <item name="android:colorAccent">?attr/colorAccent</item>
+        <item name="android:colorAccent">@color/orange</item>
         <item name="android:datePickerStyle">@style/DatePickerStyle</item>
     </style>
 
-    <style name="HummingbirdTheme_Dark" parent="BaseHummingbirdTheme_Dark">
-        <item name="android:alertDialogTheme">@style/AlertDialogTheme_Dark_V21</item>
-        <item name="android:datePickerDialogTheme">@style/DatePickerDialogTheme_Dark</item>
+    <style name="DatePickerStyle" parent="android:Widget.Material.Light.DatePicker">
+        <item name="android:headerBackground">@color/bar</item>
     </style>
 
-    <style name="HummingbirdTheme_Dark.WithDrawer">
+    <style name="HummingbirdTheme" parent="BaseHummingbirdTheme">
+        <item name="android:alertDialogTheme">@style/AlertDialogTheme_V21</item>
+        <item name="android:datePickerDialogTheme">@style/DatePickerDialogTheme</item>
+    </style>
+
+    <style name="HummingbirdTheme.WithDrawer">
         <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 
-    <style name="HummingbirdTheme_Light" parent="BaseHummingbirdTheme_Light">
-        <item name="android:alertDialogTheme">@style/AlertDialogTheme_Light_V21</item>
-        <item name="android:datePickerDialogTheme">@style/DatePickerDialogTheme_Light</item>
-    </style>
-
-    <style name="HummingbirdTheme_Light.WithDrawer">
-        <item name="android:statusBarColor">@color/transparent</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    <style name="HummingbirdTheme_Gallery" parent="BaseHummingbirdTheme_Gallery">
+        <item name="android:statusBarColor">@color/translucent</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <style name="HummingbirdTheme_Splash" parent="BaseHummingbirdTheme_Splash">

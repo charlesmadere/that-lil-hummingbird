@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AlertDialogTheme_V21" parent="android:Theme.Material.Dialog">
+        <item name="android:colorAccent">@color/orange</item>
+    </style>
+
+    <style name="DatePickerDialogTheme" parent="android:Theme.Material.Dialog">
+        <item name="android:colorAccent">@color/orange</item>
+        <item name="android:datePickerStyle">@style/DatePickerStyle</item>
+    </style>
+
+    <style name="DatePickerStyle" parent="android:Widget.Material.DatePicker">
+        <item name="android:headerBackground">@color/bar</item>
+    </style>
+
+</resources>

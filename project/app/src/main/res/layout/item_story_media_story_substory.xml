@@ -21,7 +21,7 @@
             android:layout_toEndOf="@id/sdvAvatar"
             android:layout_width="match_parent"
             app:keyTextColor="?attr/colorAccent"
-            app:valueTextColor="?attr/colorTextPrimary"
+            app:valueTextColor="?android:attr/textColorPrimary"
             tools:text="ThatLilChestnut is currently watching." />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvTimeAgo"

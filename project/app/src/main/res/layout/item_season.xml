@@ -7,7 +7,7 @@
     android:paddingEnd="@dimen/root_padding_double"
     android:paddingStart="@dimen/root_padding_double"
     android:paddingTop="@dimen/root_padding"
-    android:textColor="?attr/colorTextPrimary"
+    android:textColor="?android:attr/textColorPrimary"
     android:textSize="@dimen/text_xlarge"
     app:typeface="open_sans_extra_bold"
     tools:text="Season 5" />

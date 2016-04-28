@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <attr name="colorTextPrimary" format="color" />
-    <attr name="colorTextSecondary" format="color" />
-    <attr name="dividerColor" format="color" />
-    <attr name="dividerDrawable" format="reference" />
-    <attr name="ic_video_library_24dp" format="reference" />
-
     <declare-styleable name="KeyValueTextView">
         <attr name="keyTextColor" format="color" />
         <attr name="valueTextColor" format="color" />

@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:paddingStart="@dimen/root_padding_half"
-            android:textColor="?attr/colorTextSecondary"
+            android:textColor="?android:attr/textColorSecondary"
             android:textSize="@dimen/text_xxlarge"
             app:typeface="open_sans_light"
             tools:ignore="RtlSymmetry"

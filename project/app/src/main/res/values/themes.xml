@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AlertDialogTheme_Dark" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="colorAccent">@color/orange</item>
-    </style>
-
-    <style name="AlertDialogTheme_Light" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/orange</item>
     </style>
 
@@ -13,59 +9,37 @@
 
     </style>
 
-    <style name="BaseHummingbirdTheme_Dark" parent="Theme.AppCompat.NoActionBar">
-        <item name="alertDialogTheme">@style/AlertDialogTheme_Dark</item>
+    <style name="BaseHummingbirdTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="colorAccent">@color/orange</item>
         <item name="colorPrimary">@color/bar</item>
         <item name="colorPrimaryDark">@color/barDark</item>
-        <item name="colorTextPrimary">@color/white</item>
-        <item name="colorTextSecondary">@color/offWhite</item>
-        <item name="dividerColor">@color/dividerDark</item>
-        <item name="dividerDrawable">@drawable/divider_dark</item>
-        <item name="ic_video_library_24dp">@drawable/ic_video_library_white_24dp</item>
-        <item name="android:textColor">?attr/colorTextPrimary</item>
-        <item name="android:windowBackground">@color/offBlack</item>
+        <item name="android:windowBackground">@color/windowBackground</item>
     </style>
 
-    <style name="BaseHummingbirdTheme_Gallery" parent="HummingbirdTheme_Dark">
+    <style name="BaseHummingbirdTheme_Gallery" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorAccent">@color/orange</item>
+        <item name="colorPrimary">@color/bar</item>
+        <item name="colorPrimaryDark">@color/barDark</item>
         <item name="android:windowBackground">@color/black</item>
     </style>
 
-    <style name="BaseHummingbirdTheme_Light" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="alertDialogTheme">@style/AlertDialogTheme_Light</item>
+    <style name="BaseHummingbirdTheme_Splash" parent="Theme.AppCompat.NoActionBar">
         <item name="colorAccent">@color/orange</item>
         <item name="colorPrimary">@color/bar</item>
         <item name="colorPrimaryDark">@color/barDark</item>
-        <item name="colorTextPrimary">@color/grayDark</item>
-        <item name="colorTextSecondary">@color/grayMedium</item>
-        <item name="dividerColor">@color/dividerLight</item>
-        <item name="dividerDrawable">@drawable/divider_light</item>
-        <item name="ic_video_library_24dp">@drawable/ic_video_library_black_24dp</item>
-        <item name="android:textColor">?attr/colorTextPrimary</item>
-        <item name="android:windowBackground">@color/offWhite</item>
-    </style>
-
-    <style name="BaseHummingbirdTheme_Splash" parent="HummingbirdTheme_Dark">
         <item name="android:windowBackground">@color/barDark</item>
     </style>
 
+    <style name="HummingbirdTheme" parent="BaseHummingbirdTheme">
+
+    </style>
+
+    <style name="HummingbirdTheme.WithDrawer">
+
+    </style>
+
     <style name="HummingbirdTheme_Gallery" parent="BaseHummingbirdTheme_Gallery">
-
-    </style>
-
-    <style name="HummingbirdTheme_Dark" parent="BaseHummingbirdTheme_Dark">
-
-    </style>
-
-    <style name="HummingbirdTheme_Dark.WithDrawer">
-
-    </style>
-
-    <style name="HummingbirdTheme_Light" parent="BaseHummingbirdTheme_Light">
-
-    </style>
-
-    <style name="HummingbirdTheme_Light.WithDrawer">
 
     </style>
 

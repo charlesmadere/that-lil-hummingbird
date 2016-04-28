@@ -8,7 +8,7 @@
         <item name="android:lines">1</item>
         <item name="android:maxLines">1</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textColor">?attr/colorTextSecondary</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:textSize">@dimen/text_small</item>
         <item name="android:visibility">gone</item>
     </style>
@@ -16,7 +16,7 @@
     <style name="AnimeEpisodeCount">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textColor">?attr/colorTextSecondary</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:textSize">@dimen/text_small</item>
         <item name="android:visibility">gone</item>
     </style>
@@ -26,7 +26,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:maxLines">2</item>
-        <item name="android:textColor">?attr/colorTextSecondary</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:textSize">@dimen/text_small</item>
         <item name="android:visibility">gone</item>
     </style>
@@ -46,7 +46,7 @@
         <item name="android:lines">1</item>
         <item name="android:maxLines">1</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textColor">?attr/colorTextSecondary</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
@@ -55,13 +55,13 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:maxLines">5</item>
-        <item name="android:textColor">?attr/colorTextPrimary</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
     <style name="AnimeTitle">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textColor">?attr/colorTextPrimary</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:textSize">@dimen/text_xxlarge</item>
         <item name="typeface">teko_semibold</item>
     </style>
@@ -99,6 +99,7 @@
     <style name="BaseCard">
         <item name="android:layout_marginEnd">@dimen/root_padding_half</item>
         <item name="android:layout_marginStart">@dimen/root_padding_half</item>
+        <item name="android:theme">@style/CardView</item>
     </style>
 
     <style name="BaseSettingsCardItem">
@@ -118,7 +119,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginBottom">@dimen/root_padding_half</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textColor">?attr/colorTextPrimary</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="typeface">open_sans_extra_bold</item>
     </style>
 
@@ -196,7 +197,7 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textColor">?attr/colorTextSecondary</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="typeface">open_sans_light</item>
     </style>
 
@@ -205,7 +206,7 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textColor">?attr/colorTextSecondary</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:textSize">@dimen/text_large</item>
         <item name="typeface">open_sans_bold</item>
     </style>
@@ -229,7 +230,7 @@
     </style>
 
     <style name="NavigationDrawerDividerView">
-        <item name="android:background">@color/dividerDark</item>
+        <item name="android:background">@color/divider</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:layout_marginBottom">@dimen/root_padding_half</item>
         <item name="android:layout_marginTop">@dimen/root_padding_half</item>
@@ -301,21 +302,21 @@
         <item name="android:paddingEnd">@dimen/root_padding</item>
         <item name="android:paddingStart">@dimen/root_padding</item>
         <item name="android:paddingTop">@dimen/root_padding_half</item>
-        <item name="android:textColor">?attr/colorTextPrimary</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:textSize">@dimen/text_large</item>
     </style>
 
     <style name="SettingsItemBody">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textColor">?attr/colorTextSecondary</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
     <style name="SettingsItemHeader">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textColor">?attr/colorTextPrimary</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:textSize">@dimen/text_large</item>
     </style>
 
@@ -341,7 +342,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:maxLines">1</item>
-        <item name="android:textColor">?attr/colorTextSecondary</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 

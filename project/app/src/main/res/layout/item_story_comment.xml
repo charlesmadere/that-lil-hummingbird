@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/sdvAvatar"
             android:layout_width="match_parent"
-            android:textColor="?attr/colorTextPrimary"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="@dimen/text_xlarge"
             app:typeface="teko_semibold"
             tools:text="LimitB" />
