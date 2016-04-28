@@ -33,9 +33,9 @@ public class KeyValueTextView extends TypefaceTextView {
         final Context context = getContext();
         final TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.KeyValueTextView);
         final int keyTextColor = ta.getColor(R.styleable.KeyValueTextView_keyTextColor,
-                MiscUtils.getAttrColor(context, R.attr.colorTextPrimary));
+                MiscUtils.getAttrColor(context, android.R.attr.textColorPrimary));
         final int valueTextColor = ta.getColor(R.styleable.KeyValueTextView_valueTextColor,
-                MiscUtils.getAttrColor(context, R.attr.colorTextSecondary));
+                MiscUtils.getAttrColor(context, android.R.attr.textColorSecondary));
         ta.recycle();
 
         mKeyTextSpan = new ForegroundColorSpan(keyTextColor);
