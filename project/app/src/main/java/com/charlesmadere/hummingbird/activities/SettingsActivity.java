@@ -129,7 +129,7 @@ public class SettingsActivity extends BaseDrawerActivity {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
                         Preferences.General.Theme.set(values[which]);
-                        mAnimeTitleLanguage.setText(values[which].getTextResId());
+                        mTheme.setText(values[which].getTextResId());
                     }
                 })
                 .setTitle(R.string.preferred_anime_title_language)
