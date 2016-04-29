@@ -9,6 +9,7 @@ public enum TypefaceEntry {
     OPEN_SANS_LIGHT_ITALIC("OpenSans-LightItalic.ttf"),
     OPEN_SANS_REGULAR("OpenSans-Regular.ttf"),
     OPEN_SANS_SEMIBOLD("OpenSans-Semibold.ttf"),
+    TEKO_BOLD("Teko-Bold.ttf"),
     TEKO_REGULAR("Teko-Regular.ttf"),
     TEKO_SEMIBOLD("Teko-SemiBold.ttf");
 

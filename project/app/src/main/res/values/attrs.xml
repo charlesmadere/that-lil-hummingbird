@@ -38,8 +38,9 @@
             <enum name="open_sans_light_italic" value="4" />
             <enum name="open_sans_regular" value="5" />
             <enum name="open_sans_semibold" value="6" />
-            <enum name="teko_regular" value="7" />
-            <enum name="teko_semibold" value="8" />
+            <enum name="teko_bold" value="7" />
+            <enum name="teko_regular" value="8" />
+            <enum name="teko_semibold" value="9" />
         </attr>
     </declare-styleable>
 
