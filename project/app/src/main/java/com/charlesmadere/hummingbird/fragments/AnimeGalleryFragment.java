@@ -8,19 +8,24 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.GalleryActivity;
 import com.charlesmadere.hummingbird.adapters.GalleryAdapter;
+import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.GalleryImage;
+import com.charlesmadere.hummingbird.views.GalleryItemView;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 
-public class AnimeGalleryFragment extends BaseFragment {
+public class AnimeGalleryFragment extends BaseFragment implements GalleryItemView.OnClickListener {
 
     private static final String TAG = "AnimeGalleryFragment";
+    private static final String KEY_ANIME = "Anime";
     private static final String KEY_GALLERY_IMAGES = "GalleryImages";
 
+    private AnimeV2 mAnime;
     private ArrayList<GalleryImage> mGalleryImages;
 
     @BindView(R.id.recyclerView)
@@ -30,8 +35,10 @@ public class AnimeGalleryFragment extends BaseFragment {
     TextView mEmpty;
 
 
-    public static AnimeGalleryFragment create(final ArrayList<GalleryImage> galleryImages) {
-        final Bundle args = new Bundle(1);
+    public static AnimeGalleryFragment create(final AnimeV2 anime,
+            final ArrayList<GalleryImage> galleryImages) {
+        final Bundle args = new Bundle(2);
+        args.putParcelable(KEY_ANIME, anime);
         args.putParcelableArrayList(KEY_GALLERY_IMAGES, galleryImages);
 
         final AnimeGalleryFragment fragment = new AnimeGalleryFragment();
@@ -46,10 +53,16 @@ public class AnimeGalleryFragment extends BaseFragment {
     }
 
     @Override
+    public void onClick(final GalleryItemView v) {
+        startActivity(GalleryActivity.getLaunchIntent(getContext(), mAnime, v.getGalleryImage()));
+    }
+
+    @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         final Bundle args = getArguments();
+        mAnime = args.getParcelable(KEY_ANIME);
         mGalleryImages = args.getParcelableArrayList(KEY_GALLERY_IMAGES);
     }
 
@@ -69,7 +82,7 @@ public class AnimeGalleryFragment extends BaseFragment {
         if (mGalleryImages == null || mGalleryImages.isEmpty()) {
             mEmpty.setVisibility(View.VISIBLE);
         } else {
-            final GalleryAdapter adapter = new GalleryAdapter(getContext());
+            final GalleryAdapter adapter = new GalleryAdapter(getContext(), this);
             adapter.set(mGalleryImages);
             mRecyclerView.setAdapter(adapter);
             mRecyclerView.setVisibility(View.VISIBLE);

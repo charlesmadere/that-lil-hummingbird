@@ -15,21 +15,21 @@ import com.charlesmadere.hummingbird.models.AnimeV2;
 
 public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
 
-    private final AnimeV2 mAnimeV2;
+    private final AnimeV2 mAnime;
     private final Context mContext;
     private final Impl mImpl;
 
 
-    public AnimeFragmentAdapter(final FragmentActivity activity, final AnimeV2 animeV2) {
-        this(activity, activity.getSupportFragmentManager(), animeV2);
+    public AnimeFragmentAdapter(final FragmentActivity activity, final AnimeV2 anime) {
+        this(activity, activity.getSupportFragmentManager(), anime);
     }
 
-    public AnimeFragmentAdapter(final Context context, final FragmentManager fm, final AnimeV2 animeV2) {
+    public AnimeFragmentAdapter(final Context context, final FragmentManager fm, final AnimeV2 anime) {
         super(fm);
         mContext = context;
-        mAnimeV2 = animeV2;
+        mAnime = anime;
 
-        if (mAnimeV2.getShowType() == AbsAnime.ShowType.MOVIE) {
+        if (mAnime.getShowType() == AbsAnime.ShowType.MOVIE) {
             mImpl = new MovieImpl();
         } else {
             mImpl = new ShowImpl();
@@ -37,7 +37,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
     private AnimeDetailsFragment getAnimeDetailsFragment() {
-        return AnimeDetailsFragment.create(mAnimeV2);
+        return AnimeDetailsFragment.create(mAnime);
     }
 
     private CharSequence getAnimeDetailsTitle() {
@@ -45,7 +45,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
     private AnimeEpisodesFragment getAnimeEpisodesFragment() {
-        return AnimeEpisodesFragment.create(mAnimeV2.getAnimeEpisodes());
+        return AnimeEpisodesFragment.create(mAnime.getAnimeEpisodes());
     }
 
     private CharSequence getAnimeEpisodesTitle() {
@@ -53,7 +53,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
     private AnimeGalleryFragment getAnimeGalleryFragment() {
-        return AnimeGalleryFragment.create(mAnimeV2.getGalleryImages());
+        return AnimeGalleryFragment.create(mAnime, mAnime.getGalleryImages());
     }
 
     private CharSequence getAnimeGalleryTitle() {

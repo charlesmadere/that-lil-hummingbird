@@ -19,7 +19,6 @@ import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
-import com.charlesmadere.hummingbird.views.GalleryItemView;
 import com.charlesmadere.hummingbird.views.SimpleProgressView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -27,8 +26,7 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class AnimeActivity extends BaseDrawerActivity implements
-        GalleryItemView.OnGalleryItemViewClickListener {
+public class AnimeActivity extends BaseDrawerActivity {
 
     private static final String CNAME = AnimeActivity.class.getCanonicalName();
     private static final String TAG = "AnimeActivity";
@@ -106,11 +104,6 @@ public class AnimeActivity extends BaseDrawerActivity implements
         } else {
             showAnimeV2(mAnimeV2);
         }
-    }
-
-    @Override
-    public void onGalleryItemViewClick(final GalleryItemView v) {
-        startActivity(GalleryActivity.getLaunchIntent(this, mAnimeV2, v.getGalleryImage()));
     }
 
     @Override

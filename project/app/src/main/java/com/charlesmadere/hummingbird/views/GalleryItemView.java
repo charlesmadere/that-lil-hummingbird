@@ -13,8 +13,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.ButterKnife;
 
-public class GalleryItemView extends SimpleDraweeView implements AdapterView<GalleryImage>,
-        View.OnClickListener {
+public class GalleryItemView extends SimpleDraweeView implements AdapterView<GalleryImage> {
 
     private GalleryImage mGalleryImage;
 
@@ -39,15 +38,6 @@ public class GalleryItemView extends SimpleDraweeView implements AdapterView<Gal
     }
 
     @Override
-    public void onClick(final View v) {
-        final Context context = v.getContext();
-
-        if (context instanceof OnGalleryItemViewClickListener) {
-            ((OnGalleryItemViewClickListener) context).onGalleryItemViewClick(this);
-        }
-    }
-
-    @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
 
@@ -56,7 +46,6 @@ public class GalleryItemView extends SimpleDraweeView implements AdapterView<Gal
         }
 
         ButterKnife.bind(this);
-        setOnClickListener(this);
     }
 
     @Override
@@ -65,9 +54,22 @@ public class GalleryItemView extends SimpleDraweeView implements AdapterView<Gal
         setImageURI(Uri.parse(mGalleryImage.getThumbnail()));
     }
 
+    public void setOnClickListener(final OnClickListener l) {
+        if (l == null) {
+            setClickable(false);
+        } else {
+            setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    l.onClick(GalleryItemView.this);
+                }
+            });
+        }
+    }
 
-    public interface OnGalleryItemViewClickListener {
-        void onGalleryItemViewClick(final GalleryItemView v);
+
+    public interface OnClickListener {
+        void onClick(final GalleryItemView v);
     }
 
 }
