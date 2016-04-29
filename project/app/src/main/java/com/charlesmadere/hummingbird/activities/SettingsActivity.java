@@ -12,6 +12,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.models.AnimeV2;
+import com.charlesmadere.hummingbird.models.NightMode;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 
@@ -24,6 +25,9 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @BindView(R.id.tvAnimeTitleLanguage)
     TextView mAnimeTitleLanguage;
+
+    @BindView(R.id.tvTheme)
+    TextView mTheme;
 
     @BindView(R.id.tvVersion)
     TextView mVersion;
@@ -111,10 +115,32 @@ public class SettingsActivity extends BaseDrawerActivity {
                 .show();
     }
 
+    @OnClick(R.id.llTheme)
+    void onThemeClick() {
+        final NightMode[] values = NightMode.values();
+        CharSequence items[] = new CharSequence[values.length];
+
+        for (int i = 0; i < items.length; ++i) {
+            items[i] = getString(values[i].getTextResId());
+        }
+
+        new AlertDialog.Builder(this)
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        Preferences.General.Theme.set(values[which]);
+                        mAnimeTitleLanguage.setText(values[which].getTextResId());
+                    }
+                })
+                .setTitle(R.string.preferred_anime_title_language)
+                .show();
+    }
+
     @Override
     protected void onViewsBound() {
         super.onViewsBound();
         mAnimeTitleLanguage.setText(Preferences.General.TitleLanguage.get().getTextResId());
+        mTheme.setText(Preferences.General.Theme.get().getTextResId());
         mVersion.setText(getString(R.string.version_format, BuildConfig.VERSION_NAME,
                 BuildConfig.VERSION_CODE));
     }

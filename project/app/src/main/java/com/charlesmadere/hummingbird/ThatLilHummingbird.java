@@ -1,18 +1,23 @@
 package com.charlesmadere.hummingbird;
 
 import android.app.Application;
+import android.support.v7.app.AppCompatDelegate;
 
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
-public class Hummingbird extends Application {
+public class ThatLilHummingbird extends Application {
 
-    private static final String TAG = "Hummingbird";
+    private static final String TAG = "ThatLilHummingbird";
 
-    private static Hummingbird sInstance;
+    private static ThatLilHummingbird sInstance;
 
 
-    public static Hummingbird get() {
+    static {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+    }
+
+    public static ThatLilHummingbird get() {
         return sInstance;
     }
 

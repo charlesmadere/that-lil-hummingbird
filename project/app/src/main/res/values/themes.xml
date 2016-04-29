@@ -24,6 +24,10 @@
         <item name="android:windowBackground">@color/black</item>
     </style>
 
+    <style name="BaseHummingbirdTheme_Login" parent="BaseHummingbirdTheme">
+
+    </style>
+
     <style name="BaseHummingbirdTheme_Splash" parent="Theme.AppCompat.NoActionBar">
         <item name="colorAccent">@color/orange</item>
         <item name="colorPrimary">@color/bar</item>
@@ -40,6 +44,10 @@
     </style>
 
     <style name="HummingbirdTheme_Gallery" parent="BaseHummingbirdTheme_Gallery">
+
+    </style>
+
+    <style name="HummingbirdTheme_Login" parent="BaseHummingbirdTheme_Login">
 
     </style>
 

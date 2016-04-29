@@ -176,6 +176,7 @@ public abstract class AbsAnime implements Parcelable {
             mTextResId = textResId;
         }
 
+        @StringRes
         public int getTextResId() {
             return mTextResId;
         }

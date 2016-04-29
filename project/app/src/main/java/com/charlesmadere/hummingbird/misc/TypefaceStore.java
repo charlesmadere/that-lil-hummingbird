@@ -3,7 +3,7 @@ package com.charlesmadere.hummingbird.misc;
 import android.content.Context;
 import android.graphics.Typeface;
 
-import com.charlesmadere.hummingbird.Hummingbird;
+import com.charlesmadere.hummingbird.ThatLilHummingbird;
 import com.charlesmadere.hummingbird.models.TypefaceEntry;
 
 import java.io.File;
@@ -35,7 +35,7 @@ public final class TypefaceStore {
             final String path = BASE_PATH + typefaceEntry.getPath();
             Timber.d(TAG, "Loading Typeface \"" + path + '"');
 
-            final Context context = Hummingbird.get();
+            final Context context = ThatLilHummingbird.get();
             typeface = Typeface.createFromAsset(context.getAssets(), path);
             STORE.put(typefaceEntry, typeface);
         }

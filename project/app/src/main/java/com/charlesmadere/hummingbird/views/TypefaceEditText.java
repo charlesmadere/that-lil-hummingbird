@@ -23,6 +23,10 @@ public class TypefaceEditText extends AppCompatEditText {
     }
 
     private void parseAttributes(final AttributeSet attrs) {
+        if (isInEditMode()) {
+            return;
+        }
+
         final TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.View);
         final int typefaceEntryOrdinal = ta.getInt(R.styleable.View_typeface,
                 TypefaceEntry.OPEN_SANS_REGULAR.ordinal());

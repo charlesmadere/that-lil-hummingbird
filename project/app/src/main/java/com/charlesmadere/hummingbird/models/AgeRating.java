@@ -31,6 +31,7 @@ public enum AgeRating implements Parcelable {
         mTextResId = textResId;
     }
 
+    @StringRes
     public int getTextResId() {
         return mTextResId;
     }

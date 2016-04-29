@@ -23,6 +23,7 @@ public enum WaifuOrHusbando implements Parcelable {
         mTextResId = textResId;
     }
 
+    @StringRes
     public int getTextResId() {
         return mTextResId;
     }

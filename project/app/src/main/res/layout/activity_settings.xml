@@ -35,6 +35,17 @@
                                 tools:text="@string/english"
                                 style="@style/SettingsItemBody" />
                         </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/llTheme"
+                            style="@style/SettingsItem">
+                            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                                android:text="@string/theme"
+                                style="@style/SettingsItemHeader" />
+                            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                                android:id="@+id/tvTheme"
+                                tools:text="@string/system"
+                                style="@style/SettingsItemBody" />
+                        </LinearLayout>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView

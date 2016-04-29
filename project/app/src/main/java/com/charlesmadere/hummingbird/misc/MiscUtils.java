@@ -13,8 +13,8 @@ import android.text.TextUtils;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 
-import com.charlesmadere.hummingbird.Hummingbird;
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.ThatLilHummingbird;
 
 import java.text.NumberFormat;
 
@@ -158,7 +158,7 @@ public final class MiscUtils {
 
     public static boolean isLowRamDevice() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            final ActivityManager am = (ActivityManager) Hummingbird.get()
+            final ActivityManager am = (ActivityManager) ThatLilHummingbird.get()
                     .getSystemService(Context.ACTIVITY_SERVICE);
             return ActivityManagerCompat.isLowRamDevice(am);
         } else {

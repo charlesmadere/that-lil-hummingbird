@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.charlesmadere.hummingbird.Hummingbird;
+import com.charlesmadere.hummingbird.ThatLilHummingbird;
 
 import java.lang.ref.WeakReference;
 import java.util.Iterator;
@@ -132,7 +132,7 @@ public abstract class Preference<T> {
     public abstract T get();
 
     public final Context getContext() {
-        return Hummingbird.get();
+        return ThatLilHummingbird.get();
     }
 
     /**

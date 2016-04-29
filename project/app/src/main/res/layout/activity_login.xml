@@ -1,47 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <ScrollView
         android:layout_gravity="center"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:orientation="vertical">
-        <com.charlesmadere.hummingbird.views.TypefaceTextView
-            android:gravity="center"
-            android:layout_gravity="center"
+        android:layout_width="wrap_content">
+        <LinearLayout
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/root_padding_double"
             android:layout_width="@dimen/central_content_width"
-            android:text="@string/that_lil_hummingbird"
-            android:textSize="32sp"
-            app:typeface="open_sans_bold" />
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/tilUsername"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:visibility="invisible">
-            <com.charlesmadere.hummingbird.views.TypefaceEditText
-                android:hint="@string/username"
-                android:id="@+id/etUsername"
-                android:imeOptions="actionNext"
-                android:inputType="textNoSuggestions"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/root_padding"
+            android:paddingTop="@dimen/root_padding">
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:gravity="center"
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent" />
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/tilPassword"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:visibility="invisible">
-            <com.charlesmadere.hummingbird.views.TypefaceEditText
-                android:hint="@string/password"
-                android:id="@+id/etPassword"
-                android:imeOptions="actionGo"
-                android:inputType="textPassword"
+                android:layout_marginBottom="@dimen/root_padding_double"
+                android:layout_width="match_parent"
+                android:text="@string/that_lil_hummingbird"
+                android:textSize="32sp"
+                app:typeface="open_sans_bold" />
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/tilUsername"
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent" />
-        </android.support.design.widget.TextInputLayout>
-    </LinearLayout>
+                android:layout_width="match_parent"
+                android:visibility="invisible"
+                tools:visibility="visible">
+                <com.charlesmadere.hummingbird.views.TypefaceEditText
+                    android:hint="@string/username"
+                    android:id="@+id/etUsername"
+                    android:imeOptions="actionNext"
+                    android:inputType="textNoSuggestions"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent" />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/tilPassword"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:visibility="invisible"
+                tools:visibility="visible">
+                <com.charlesmadere.hummingbird.views.TypefaceEditText
+                    android:hint="@string/password"
+                    android:id="@+id/etPassword"
+                    android:imeOptions="actionGo"
+                    android:inputType="textPassword"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+    </ScrollView>
     <include
         layout="@layout/simple_progress" />
 </merge>

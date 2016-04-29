@@ -2,7 +2,7 @@
 <resources>
 
     <style name="AlertDialogTheme_V21" parent="android:Theme.Material.Light.Dialog">
-        <item name="android:colorAccent">?attr/colorAccent</item>
+        <item name="android:colorAccent">@color/orange</item>
     </style>
 
     <style name="DatePickerDialogTheme_Light" parent="android:Theme.Material.Light.Dialog">
@@ -22,16 +22,6 @@
     <style name="HummingbirdTheme.WithDrawer">
         <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-    </style>
-
-    <style name="HummingbirdTheme_Gallery" parent="BaseHummingbirdTheme_Gallery">
-        <item name="android:statusBarColor">@color/translucent</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-    </style>
-
-    <style name="HummingbirdTheme_Splash" parent="BaseHummingbirdTheme_Splash">
-        <item name="android:statusBarColor">@color/translucent</item>
-        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
 </resources>

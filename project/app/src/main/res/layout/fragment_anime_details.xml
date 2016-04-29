@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:visibility="gone"
-                    tools:text="Nintendo, Microsoft, Google"
+                    tools:text="Producers Nintendo, Microsoft, Google"
                     tools:visibility="visible" />
                 <ImageButton
                     android:background="?attr/selectableItemBackgroundBorderless"

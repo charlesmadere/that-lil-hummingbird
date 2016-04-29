@@ -42,14 +42,17 @@ public enum WatchingStatus implements Parcelable {
         mTextResId = textResId;
     }
 
+    @StringRes
     public int getEmptyTextResId() {
         return mEmptyTextResId;
     }
 
+    @StringRes
     public int getErrorTextResId() {
         return mErrorTextResId;
     }
 
+    @StringRes
     public int getTextResId() {
         return mTextResId;
     }

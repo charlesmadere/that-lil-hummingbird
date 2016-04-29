@@ -25,6 +25,7 @@ public enum AiringStatus implements Parcelable {
         mTextResId = textResId;
     }
 
+    @StringRes
     public int getTextResId() {
         return mTextResId;
     }

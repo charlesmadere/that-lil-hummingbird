@@ -8,7 +8,7 @@
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:label="@string/that_lil_hummingbird"
-        android:name=".Hummingbird"
+        android:name=".ThatLilHummingbird"
         android:supportsRtl="true"
         android:theme="@style/HummingbirdTheme_Splash">
 
@@ -25,18 +25,18 @@
         <activity
             android:label=""
             android:name=".activities.GalleryActivity"
-            android:parentActivityName=".activities.GalleryActivity"
-            android:theme="@style/HummingbirdTheme_Gallery">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.AnimeActivity" />
-        </activity>
+            android:theme="@style/HummingbirdTheme_Gallery" />
 
         <activity
             android:launchMode="singleTop"
             android:name=".activities.LoginActivity"
-            android:theme="@style/HummingbirdTheme"
-            android:windowSoftInputMode="adjustResize|stateUnchanged" />
+            android:parentActivityName=".activities.SplashActivity"
+            android:theme="@style/HummingbirdTheme_Login"
+            android:windowSoftInputMode="adjustResize|stateUnchanged">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.SplashActivity" />
+        </activity>
 
         <activity
             android:label="@string/log_viewer"
@@ -53,13 +53,23 @@
             android:label="@string/search"
             android:launchMode="singleTop"
             android:name=".activities.SearchActivity"
-            android:theme="@style/HummingbirdTheme" />
+            android:parentActivityName=".activities.CurrentUserActivity"
+            android:theme="@style/HummingbirdTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.CurrentUserActivity" />
+        </activity>
 
         <activity
             android:label="@string/settings"
             android:launchMode="singleTop"
             android:name=".activities.SettingsActivity"
-            android:theme="@style/HummingbirdTheme.WithDrawer" />
+            android:parentActivityName=".activities.CurrentUserActivity"
+            android:theme="@style/HummingbirdTheme.WithDrawer">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.CurrentUserActivity" />
+        </activity>
 
         <activity
             android:launchMode="singleTop"
