@@ -59,7 +59,7 @@ public class SettingsActivity extends BaseDrawerActivity {
         CharSequence items[] = new CharSequence[values.length];
 
         for (int i = 0; i < items.length; ++i) {
-            items[i] = getString(values[i].getTextResId());
+            items[i] = getText(values[i].getTextResId());
         }
 
         new AlertDialog.Builder(this)
@@ -121,7 +121,7 @@ public class SettingsActivity extends BaseDrawerActivity {
         CharSequence items[] = new CharSequence[values.length];
 
         for (int i = 0; i < items.length; ++i) {
-            items[i] = getString(values[i].getTextResId());
+            items[i] = getText(values[i].getTextResId());
         }
 
         new AlertDialog.Builder(this)
