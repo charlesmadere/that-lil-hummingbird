@@ -1,11 +1,15 @@
 package com.charlesmadere.hummingbird;
 
+import android.app.Activity;
 import android.app.Application;
 import android.support.v7.app.AppCompatDelegate;
 
+import com.charlesmadere.hummingbird.misc.ActivityRegister;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.NightMode;
 import com.facebook.drawee.backends.pipeline.Fresco;
+
+import java.util.ArrayList;
 
 public class ThatLilHummingbird extends Application {
 
@@ -24,7 +28,17 @@ public class ThatLilHummingbird extends Application {
     }
 
     public static void restart() {
-        // TODO
+        final ArrayList<Activity> activities = ActivityRegister.get();
+
+        if (activities == null || activities.isEmpty()) {
+            return;
+        }
+
+        for (final Activity activity : activities) {
+            activity.finish();
+        }
+
+        activities.clear();
     }
 
     @Override
