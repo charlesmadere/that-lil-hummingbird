@@ -8,6 +8,7 @@ import com.charlesmadere.hummingbird.models.LibraryUpdate;
 import com.charlesmadere.hummingbird.models.NewsFeed;
 import com.charlesmadere.hummingbird.models.Story;
 import com.charlesmadere.hummingbird.models.User;
+import com.charlesmadere.hummingbird.models.UserStories;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 
 import java.util.ArrayList;
