@@ -15,6 +15,7 @@ public class ThatLilHummingbird extends Application {
 
 
     static {
+        // noinspection WrongConstant
         AppCompatDelegate.setDefaultNightMode(NightMode.getDefault().getThemeValue());
     }
 
