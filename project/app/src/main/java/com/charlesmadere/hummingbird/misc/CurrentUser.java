@@ -19,11 +19,6 @@ public final class CurrentUser {
         return sCurrentUser;
     }
 
-    public static synchronized void logout() {
-        Preferences.Account.eraseAll();
-        sCurrentUser = null;
-    }
-
     public static synchronized void set(final User user) {
         Timber.d(TAG, "current user set to \"" + user.getName() + '"');
         sCurrentUser = user;
@@ -32,6 +27,12 @@ public final class CurrentUser {
     public static boolean shouldBeFetched() {
         return Preferences.Account.AuthToken.exists() && Preferences.Account.Username.exists()
                 && get() == null;
+    }
+
+    public static synchronized void signOut() {
+        Preferences.Account.eraseAll();
+        sCurrentUser = null;
+        Timber.d(TAG, "current user signed out");
     }
 
 }

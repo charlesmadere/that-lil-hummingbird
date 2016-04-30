@@ -16,6 +16,10 @@ public class CurrentUserActivity extends BaseUserActivity {
         return BaseUserActivity.getLaunchIntent(context, CurrentUser.get());
     }
 
+    public static Intent getNewTaskLaunchIntent(final Context context) {
+        return getLaunchIntent(context).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    }
+
     @Override
     public String getActivityName() {
         return TAG;
