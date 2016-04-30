@@ -132,7 +132,7 @@ public class SettingsActivity extends BaseDrawerActivity {
                         mTheme.setText(values[which].getTextResId());
                     }
                 })
-                .setTitle(R.string.preferred_anime_title_language)
+                .setTitle(R.string.theme)
                 .show();
     }
 
