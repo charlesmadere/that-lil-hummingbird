@@ -11,11 +11,10 @@ import com.charlesmadere.hummingbird.ThatLilHummingbird;
 import java.lang.ref.WeakReference;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 
 public abstract class Preference<T> {
 
-    private final List<WeakReference<OnPreferenceChangeListener<T>>> mListeners;
+    private final LinkedList<WeakReference<OnPreferenceChangeListener<T>>> mListeners;
     private final String mKey;
     private final String mName;
     private final T mDefaultValue;
