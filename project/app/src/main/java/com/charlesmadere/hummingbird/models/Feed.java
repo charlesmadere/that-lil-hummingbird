@@ -51,14 +51,18 @@ public class Feed implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        // TODO
+        dest.writeTypedList(mGroups);
+        dest.writeTypedList(mUsers);
+        dest.writeParcelable(mMetadata, flags);
     }
 
     public static final Creator<Feed> CREATOR = new Creator<Feed>() {
         @Override
         public Feed createFromParcel(final Parcel source) {
             final Feed f = new Feed();
-            // TODO
+            f.mGroups = source.createTypedArrayList(Group.CREATOR);
+            f.mUsers = source.createTypedArrayList(User.CREATOR);
+            f.mMetadata = source.readParcelable(Metadata.class.getClassLoader());
             return f;
         }
 
