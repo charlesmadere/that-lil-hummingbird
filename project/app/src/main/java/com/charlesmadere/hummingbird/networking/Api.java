@@ -193,6 +193,11 @@ public final class Api {
         return RetrofitUtils.getHummingbirdApi();
     }
 
+    private static String getAuthTokenCookieString() {
+        final String authToken = Preferences.Account.AuthToken.get();
+        return "token=" + authToken + ';';
+    }
+
     public static void getCurrentUser(final ApiResponse<User> listener) {
         getUser(Preferences.Account.Username.get(), new ApiResponse<User>() {
             @Override
