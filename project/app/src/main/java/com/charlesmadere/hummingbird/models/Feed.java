@@ -36,6 +36,14 @@ public class Feed implements Parcelable {
         return mUsers;
     }
 
+    public boolean hasGroups() {
+        return mGroups != null && !mGroups.isEmpty();
+    }
+
+    public boolean hasUsers() {
+        return mUsers != null && !mUsers.isEmpty();
+    }
+
     @Override
     public int describeContents() {
         return 0;
