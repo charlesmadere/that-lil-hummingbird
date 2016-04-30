@@ -32,7 +32,6 @@ public class ThatLilHummingbird extends Application {
 
     public static void restart() {
         Timber.d(TAG, "Application is now restarting");
-
         final ArrayList<Activity> activities = ActivityRegister.get();
 
         if (activities == null || activities.isEmpty()) {
