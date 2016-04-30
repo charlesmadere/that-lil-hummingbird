@@ -11,12 +11,21 @@ import java.util.ArrayList;
 public class Feed implements Parcelable {
 
     @Nullable
+    @SerializedName("groups")
+    private ArrayList<Group> mGroups;
+
+    @Nullable
     @SerializedName("users")
     private ArrayList<User> mUsers;
 
     @SerializedName("meta")
     private Metadata mMetadata;
 
+
+    @Nullable
+    public ArrayList<Group> getGroups() {
+        return mGroups;
+    }
 
     public Metadata getMetadata() {
         return mMetadata;
