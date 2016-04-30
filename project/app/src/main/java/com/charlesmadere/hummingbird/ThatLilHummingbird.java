@@ -1,5 +1,6 @@
 package com.charlesmadere.hummingbird;
 
+import android.app.Activity;
 import android.app.Application;
 import android.support.v7.app.AppCompatDelegate;
 
@@ -17,6 +18,14 @@ public class ThatLilHummingbird extends Application {
     static {
         // noinspection WrongConstant
         AppCompatDelegate.setDefaultNightMode(NightMode.getDefault().getThemeValue());
+    }
+
+    public static void attach(final Activity activity) {
+        // TODO
+    }
+
+    public static void detach(final Activity activity) {
+        // TODO
     }
 
     public static ThatLilHummingbird get() {
