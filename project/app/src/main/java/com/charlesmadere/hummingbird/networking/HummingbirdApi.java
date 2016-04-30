@@ -26,31 +26,31 @@ public interface HummingbirdApi {
      * https://github.com/hummingbird-me/hummingbird/wiki/API-v1-Methods
      */
 
-    @POST("/v1/libaries/{id}")
+    @POST("api/v1/libaries/{id}")
     Call<LibraryEntry> addOrUpdateLibraryEntry(@Path("id") String id,
             @Body LibraryUpdate libraryUpdate);
 
-    @POST("v1/users/authenticate")
+    @POST("api/v1/users/authenticate")
     Call<String> authenticate(@Body AuthInfo authInfo);
 
-    @GET("v1/users/{username}/feed")
+    @GET("api/v1/users/{username}/feed")
     Call<ArrayList<Story>> getActivityFeed(@Path("username") String username);
 
-    @GET("v1/users/{username}/favorite_anime")
+    @GET("api/v1/users/{username}/favorite_anime")
     Call<ArrayList<AbsAnime>> getFavoriteAnime(@Path("username") String username);
 
-    @GET("v1/users/{username}/library")
+    @GET("api/v1/users/{username}/library")
     Call<ArrayList<LibraryEntry>> getLibraryEntries(@Path("username") String username,
             @Query("status") WatchingStatus watchingStatus);
 
-    @GET("v1/users/{username}")
+    @GET("api/v1/users/{username}")
     Call<User> getUser(@Path("username") String username);
 
-    @POST("v1/libraries/{id}/remove")
+    @POST("api/v1/libraries/{id}/remove")
     Call<Boolean> removeLibraryEntry(@Header("auth_token") String authToken,
             @Path("id") String id);
 
-    @GET("v1/search/anime")
+    @GET("api/v1/search/anime")
     Call<ArrayList<AbsAnime>> searchAnimeByTitle(@Query("query") String query);
 
 
@@ -59,10 +59,22 @@ public interface HummingbirdApi {
      * https://github.com/hummingbird-me/hummingbird/wiki/API-v2-Methods
      */
 
-    @GET("v2/anime/{id}")
+    @GET("api/v2/anime/{id}")
     Call<AnimeV2> getAnimeById(@Header("X-Client-Id") String apiKey, @Path("id") String id);
 
-    @GET("v2/anime/myanimelist:{malid}")
+    @GET("api/v2/anime/myanimelist:{malid}")
     Call<AnimeV2> getAnimeByMyAnimeListId(@Header("X-Client-Id") String apiKey, @Path("malid") String malid);
+
+
+    /*
+     * internal API
+     */
+
+    @GET("stories")
+    Call<Void> getNewsFeed(@Header("cookie") String authToken, @Query("news_feed") Boolean newsFeed,
+            @Query("page") Integer page);
+
+    @GET("stories")
+    Call<Void> getUserStories(@Header("cookie") String authToken, @Path("user_id") String userId);
 
 }
