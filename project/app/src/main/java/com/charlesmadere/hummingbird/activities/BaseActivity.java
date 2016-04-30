@@ -15,6 +15,7 @@ import android.view.MenuItem;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.Timber;
+import com.charlesmadere.hummingbird.preferences.Preferences;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,6 +55,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
+        getDelegate().setLocalNightMode(Preferences.General.Theme.get().getThemeValue());
         super.onCreate(savedInstanceState);
         Timber.d(TAG, '"' + getActivityName() + "\" created");
     }

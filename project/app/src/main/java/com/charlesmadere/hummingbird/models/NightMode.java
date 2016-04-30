@@ -26,6 +26,10 @@ public enum NightMode implements Parcelable {
     private final int mThemeValue;
 
 
+    public static NightMode getDefault() {
+        return SYSTEM;
+    }
+
     NightMode(@StringRes final int textResId, @AppCompatDelegate.NightMode final int themeValue) {
         mTextResId = textResId;
         mThemeValue = themeValue;

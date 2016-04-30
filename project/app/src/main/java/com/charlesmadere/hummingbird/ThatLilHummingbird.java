@@ -4,6 +4,7 @@ import android.app.Application;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.charlesmadere.hummingbird.misc.Timber;
+import com.charlesmadere.hummingbird.models.NightMode;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
 public class ThatLilHummingbird extends Application {
@@ -14,7 +15,7 @@ public class ThatLilHummingbird extends Application {
 
 
     static {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        AppCompatDelegate.setDefaultNightMode(NightMode.getDefault().getThemeValue());
     }
 
     public static ThatLilHummingbird get() {
