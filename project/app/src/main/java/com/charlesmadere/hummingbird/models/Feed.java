@@ -2,10 +2,17 @@ package com.charlesmadere.hummingbird.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class Feed implements Parcelable {
+
+    @Nullable
+    @SerializedName("users")
+    private ArrayList<User> mUsers;
 
     @SerializedName("meta")
     private Metadata mMetadata;
@@ -13,6 +20,11 @@ public class Feed implements Parcelable {
 
     public Metadata getMetadata() {
         return mMetadata;
+    }
+
+    @Nullable
+    public ArrayList<User> getUsers() {
+        return mUsers;
     }
 
     @Override
