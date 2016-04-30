@@ -5,6 +5,7 @@ import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.LibraryUpdate;
+import com.charlesmadere.hummingbird.models.NewsFeed;
 import com.charlesmadere.hummingbird.models.Story;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
@@ -72,10 +73,11 @@ public interface HummingbirdApi {
      */
 
     @GET("stories")
-    Call<Void> getNewsFeed(@Header("cookie") String authToken, @Query("news_feed") Boolean newsFeed,
-            @Query("page") Integer page);
+    Call<NewsFeed> getNewsFeed(@Header("cookie") String authToken,
+            @Query("news_feed") Boolean newsFeed, @Query("page") Integer page);
 
     @GET("stories")
-    Call<Void> getUserStories(@Header("cookie") String authToken, @Path("user_id") String userId);
+    Call<UserStories> getUserStories(@Header("cookie") String authToken,
+            @Path("user_id") String userId);
 
 }
