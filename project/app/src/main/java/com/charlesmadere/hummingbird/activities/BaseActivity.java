@@ -57,6 +57,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         // noinspection WrongConstant
         getDelegate().setLocalNightMode(Preferences.General.Theme.get().getThemeValue());
+
         super.onCreate(savedInstanceState);
         Timber.d(TAG, '"' + getActivityName() + "\" created");
     }
