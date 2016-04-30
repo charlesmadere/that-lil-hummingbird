@@ -14,7 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.ThatLilHummingbird;
+import com.charlesmadere.hummingbird.misc.ActivityRegister;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 
@@ -58,14 +58,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         // noinspection WrongConstant
         getDelegate().setLocalNightMode(Preferences.General.Theme.get().getThemeValue());
+
         super.onCreate(savedInstanceState);
         Timber.d(TAG, '"' + getActivityName() + "\" created");
-        ThatLilHummingbird.attach(this);
+        ActivityRegister.attach(this);
     }
 
     @Override
     protected void onDestroy() {
-        ThatLilHummingbird.detach(this);
+        ActivityRegister.detach(this);
         super.onDestroy();
     }
 
