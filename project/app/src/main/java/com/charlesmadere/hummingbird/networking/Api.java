@@ -189,6 +189,10 @@ public final class Api {
         });
     }
 
+    private static HummingbirdApi getApi() {
+        return RetrofitUtils.getHummingbirdApi();
+    }
+
     public static void getCurrentUser(final ApiResponse<User> listener) {
         getUser(Preferences.Account.Username.get(), new ApiResponse<User>() {
             @Override
@@ -334,10 +338,6 @@ public final class Api {
                 listener.failure(null);
             }
         });
-    }
-
-    private static HummingbirdApi getApi() {
-        return RetrofitUtils.getHummingbirdApi();
     }
 
 }
