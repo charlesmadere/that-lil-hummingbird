@@ -3,7 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class NewsFeed implements Parcelable {
+public class Feed implements Parcelable {
 
     // TODO
 
@@ -18,16 +18,16 @@ public class NewsFeed implements Parcelable {
         // TODO
     }
 
-    public static final Creator<NewsFeed> CREATOR = new Creator<NewsFeed>() {
+    public static final Creator<Feed> CREATOR = new Creator<Feed>() {
         @Override
-        public NewsFeed createFromParcel(final Parcel source) {
+        public Feed createFromParcel(final Parcel source) {
             // TODO
             return null;
         }
 
         @Override
-        public NewsFeed[] newArray(final int size) {
-            return new NewsFeed[size];
+        public Feed[] newArray(final int size) {
+            return new Feed[size];
         }
     };
 
