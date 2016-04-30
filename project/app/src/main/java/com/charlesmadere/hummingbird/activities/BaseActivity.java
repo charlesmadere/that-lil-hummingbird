@@ -54,6 +54,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    @SuppressWarnings("WrongConstant")
     protected void onCreate(final Bundle savedInstanceState) {
         getDelegate().setLocalNightMode(Preferences.General.Theme.get().getThemeValue());
         super.onCreate(savedInstanceState);
