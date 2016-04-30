@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.BuildConfig;
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.ThatLilHummingbird;
 import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.models.AnimeV2;
@@ -128,8 +129,14 @@ public class SettingsActivity extends BaseDrawerActivity {
                 .setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
+                        if (Preferences.General.Theme.get().equals(values[which])) {
+                            return;
+                        }
+
                         Preferences.General.Theme.set(values[which]);
                         mTheme.setText(values[which].getTextResId());
+
+                        showRestartDialog();
                     }
                 })
                 .setTitle(R.string.theme)
@@ -143,6 +150,19 @@ public class SettingsActivity extends BaseDrawerActivity {
         mTheme.setText(Preferences.General.Theme.get().getTextResId());
         mVersion.setText(getString(R.string.version_format, BuildConfig.VERSION_NAME,
                 BuildConfig.VERSION_CODE));
+    }
+
+    private void showRestartDialog() {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.the_app_will_now_restart)
+                .setNeutralButton(R.string.ok, null)
+                .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(final DialogInterface dialog) {
+                        ThatLilHummingbird.restart();
+                    }
+                })
+                .show();
     }
 
 }

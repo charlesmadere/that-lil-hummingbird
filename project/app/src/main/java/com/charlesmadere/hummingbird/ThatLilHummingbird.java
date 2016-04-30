@@ -23,6 +23,10 @@ public class ThatLilHummingbird extends Application {
         return sInstance;
     }
 
+    public static void restart() {
+        // TODO
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
