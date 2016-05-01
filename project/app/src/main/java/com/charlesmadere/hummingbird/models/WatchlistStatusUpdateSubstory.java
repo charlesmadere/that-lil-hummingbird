@@ -21,6 +21,11 @@ public class WatchlistStatusUpdateSubstory extends AbsSubstory implements Parcel
     }
 
     @Override
+    public String toString() {
+        return getType().toString() + ':' + mNewStatus.toString();
+    }
+
+    @Override
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);
         mNewStatus = source.readParcelable(NewStatus.class.getClassLoader());
