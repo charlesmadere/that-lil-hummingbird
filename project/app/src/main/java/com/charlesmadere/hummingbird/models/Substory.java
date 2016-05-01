@@ -28,6 +28,10 @@ public class Substory implements Parcelable {
     private String mComment;
 
     @Nullable
+    @SerializedName("reply")
+    private String mReply;
+
+    @Nullable
     @SerializedName("story_id")
     private String mStoryId;
 
@@ -72,6 +76,11 @@ public class Substory implements Parcelable {
     }
 
     @Nullable
+    public String getReply() {
+        return mReply;
+    }
+
+    @Nullable
     public String getStoryId() {
         return mStoryId;
     }
@@ -102,6 +111,7 @@ public class Substory implements Parcelable {
         dest.writeParcelable(mNewStatus, flags);
         dest.writeParcelable(mCreatedAt, flags);
         dest.writeString(mComment);
+        dest.writeString(mReply);
         dest.writeString(mStoryId);
         dest.writeString(mUserId);
         dest.writeParcelable(mType, flags);
@@ -117,6 +127,7 @@ public class Substory implements Parcelable {
             s.mNewStatus = source.readParcelable(NewStatus.class.getClassLoader());
             s.mCreatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
             s.mComment = source.readString();
+            s.mReply = source.readString();
             s.mStoryId = source.readString();
             s.mUserId = source.readString();
             s.mType = source.readParcelable(Type.class.getClassLoader());
