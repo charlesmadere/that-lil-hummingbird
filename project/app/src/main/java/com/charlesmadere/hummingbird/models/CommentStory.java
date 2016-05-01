@@ -1,10 +1,17 @@
 package com.charlesmadere.hummingbird.models;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class CommentStory extends AbsStory {
+
+    @Nullable
+    @SerializedName("recent_liker_ids")
+    private ArrayList<String> mRecentLikerIds;
 
     @SerializedName("is_liked")
     private boolean mIsLiked;
@@ -24,9 +31,18 @@ public class CommentStory extends AbsStory {
         return mPosterId;
     }
 
+    @Nullable
+    public ArrayList<String> getRecentLikerIds() {
+        return mRecentLikerIds;
+    }
+
     @Override
     public Type getType() {
         return Type.COMMENT;
+    }
+
+    public boolean hasRecentLikerIds() {
+        return mRecentLikerIds != null && !mRecentLikerIds.isEmpty();
     }
 
     public boolean isLiked() {
@@ -36,6 +52,7 @@ public class CommentStory extends AbsStory {
     @Override
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);
+        mRecentLikerIds = source.createStringArrayList();
         mIsLiked = source.readInt() != 0;
         mGroupId = source.readString();
         mPosterId = source.readString();
@@ -44,6 +61,7 @@ public class CommentStory extends AbsStory {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         super.writeToParcel(dest, flags);
+        dest.writeStringList(mRecentLikerIds);
         dest.writeInt(mIsLiked ? 1 : 0);
         dest.writeString(mGroupId);
         dest.writeString(mPosterId);
