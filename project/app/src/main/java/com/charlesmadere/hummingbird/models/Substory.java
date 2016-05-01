@@ -103,6 +103,7 @@ public class Substory implements Parcelable {
         dest.writeParcelable(mCreatedAt, flags);
         dest.writeString(mComment);
         dest.writeString(mStoryId);
+        dest.writeString(mUserId);
         dest.writeParcelable(mType, flags);
         dest.writeParcelable(mFollowedUser, flags);
     }
@@ -117,6 +118,7 @@ public class Substory implements Parcelable {
             s.mCreatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
             s.mComment = source.readString();
             s.mStoryId = source.readString();
+            s.mUserId = source.readString();
             s.mType = source.readParcelable(Type.class.getClassLoader());
             s.mFollowedUser = source.readParcelable(User.class.getClassLoader());
             return s;
