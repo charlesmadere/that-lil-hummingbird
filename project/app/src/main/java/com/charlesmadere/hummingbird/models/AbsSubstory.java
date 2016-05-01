@@ -51,8 +51,14 @@ public abstract class AbsSubstory implements Parcelable {
 
 
     public enum Type implements Parcelable {
+        @SerializedName("reply")
+        REPLY,
+
         @SerializedName("watched_episode")
-        WATCHED_EPISODE;
+        WATCHED_EPISODE,
+
+        @SerializedName("watchlist_status_update")
+        WATCHLIST_STATUS_UPDATE;
 
 
         @Override
