@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
+import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -17,6 +18,10 @@ public class Feed implements Parcelable {
     @Nullable
     @SerializedName("group_members")
     private ArrayList<GroupMember> mGroupMembers;
+
+    @Nullable
+    @SerializedName("stories")
+    private ArrayList<AbsStory> mStories;
 
     @Nullable
     @SerializedName("users")
@@ -41,6 +46,11 @@ public class Feed implements Parcelable {
     }
 
     @Nullable
+    public ArrayList<AbsStory> getStories() {
+        return mStories;
+    }
+
+    @Nullable
     public ArrayList<User> getUsers() {
         return mUsers;
     }
@@ -51,6 +61,10 @@ public class Feed implements Parcelable {
 
     public boolean hasGroups() {
         return mGroups != null && !mGroups.isEmpty();
+    }
+
+    public boolean hasStories() {
+        return mStories != null && !mStories.isEmpty();
     }
 
     public boolean hasUsers() {
@@ -66,6 +80,7 @@ public class Feed implements Parcelable {
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeTypedList(mGroups);
         dest.writeTypedList(mGroupMembers);
+        ParcelableUtils.writeAbsStoryListToParcel(mStories, dest, flags);
         dest.writeTypedList(mUsers);
         dest.writeParcelable(mMetadata, flags);
     }
@@ -76,6 +91,7 @@ public class Feed implements Parcelable {
             final Feed f = new Feed();
             f.mGroups = source.createTypedArrayList(Group.CREATOR);
             f.mGroupMembers = source.createTypedArrayList(GroupMember.CREATOR);
+            f.mStories = ParcelableUtils.readAbsStoryListFromParcel(source);
             f.mUsers = source.createTypedArrayList(User.CREATOR);
             f.mMetadata = source.readParcelable(Metadata.class.getClassLoader());
             return f;
