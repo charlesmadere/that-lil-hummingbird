@@ -7,6 +7,7 @@ import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AbsStory;
 import com.charlesmadere.hummingbird.models.AnimeV1;
 import com.charlesmadere.hummingbird.models.AnimeV2;
+import com.charlesmadere.hummingbird.models.MediaStory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -194,6 +195,78 @@ public final class ParcelableUtils {
         }
 
         dest.writeString(value);
+    }
+
+    @Nullable
+    @SuppressWarnings("unchecked")
+    public static <T extends MediaStory.AbsMedia> T readMediaStoryAbsMediaFromParcel(
+            final Parcel source) {
+        final MediaStory.AbsMedia.Type type = source.readParcelable(
+                MediaStory.AbsMedia.Type.class.getClassLoader());
+
+        if (type == null) {
+            return null;
+        }
+
+        final MediaStory.AbsMedia media;
+
+        switch (type) {
+            case ANIME:
+                media = source.readParcelable(MediaStory.AnimeMedia.class.getClassLoader());
+                break;
+
+            case MANGA:
+                media = source.readParcelable(MediaStory.MangaMedia.class.getClassLoader());
+                break;
+
+            default:
+                throw new RuntimeException("Encountered a " + MediaStory.Type.class.getName()
+                        + " (" + type + ") that hasn't been added as a possible value.");
+        }
+
+        return (T) media;
+    }
+
+    @Nullable
+    public static ArrayList<MediaStory.AbsMedia> readMediaStoryAbsMediaListFromParcel(
+            final Parcel source) {
+        final int count = source.readInt();
+
+        if (count == 0) {
+            return null;
+        }
+
+        final ArrayList<MediaStory.AbsMedia> list = new ArrayList<>(count);
+
+        for (int i = 0; i < count; ++i) {
+            list.add(readMediaStoryAbsMediaFromParcel(source));
+        }
+
+        return list;
+    }
+
+    public static void writeMediaStoryAbsMediaToParcel(@Nullable final MediaStory.AbsMedia media,
+            final Parcel dest, final int flags) {
+        if (media == null) {
+            dest.writeParcelable(null, flags);
+        } else {
+            dest.writeParcelable(media.getType(), flags);
+            dest.writeParcelable(media, flags);
+        }
+    }
+
+    public static void writeMediaStoryAbsMediaListToParcel(
+            @Nullable final List<MediaStory.AbsMedia> list, final Parcel dest, final int flags) {
+        if (list == null || list.isEmpty()) {
+            dest.writeInt(0);
+            return;
+        }
+
+        dest.writeInt(list.size());
+
+        for (final MediaStory.AbsMedia media : list) {
+            writeMediaStoryAbsMediaToParcel(media, dest, flags);
+        }
     }
 
 }
