@@ -24,6 +24,10 @@ public class Feed implements Parcelable {
     private ArrayList<AbsStory> mStories;
 
     @Nullable
+    @SerializedName("substories")
+    private ArrayList<AbsSubstory> mSubstories;
+
+    @Nullable
     @SerializedName("users")
     private ArrayList<User> mUsers;
 
@@ -51,6 +55,11 @@ public class Feed implements Parcelable {
     }
 
     @Nullable
+    public ArrayList<AbsSubstory> getSubstories() {
+        return mSubstories;
+    }
+
+    @Nullable
     public ArrayList<User> getUsers() {
         return mUsers;
     }
@@ -67,6 +76,10 @@ public class Feed implements Parcelable {
         return mStories != null && !mStories.isEmpty();
     }
 
+    public boolean hasSubstories() {
+        return mSubstories != null && !mSubstories.isEmpty();
+    }
+
     public boolean hasUsers() {
         return mUsers != null && !mUsers.isEmpty();
     }
@@ -81,6 +94,7 @@ public class Feed implements Parcelable {
         dest.writeTypedList(mGroups);
         dest.writeTypedList(mGroupMembers);
         ParcelableUtils.writeAbsStoryListToParcel(mStories, dest, flags);
+        ParcelableUtils.writeAbsSubstoryListToParcel(mSubstories, dest, flags);
         dest.writeTypedList(mUsers);
         dest.writeParcelable(mMetadata, flags);
     }
@@ -92,6 +106,7 @@ public class Feed implements Parcelable {
             f.mGroups = source.createTypedArrayList(Group.CREATOR);
             f.mGroupMembers = source.createTypedArrayList(GroupMember.CREATOR);
             f.mStories = ParcelableUtils.readAbsStoryListFromParcel(source);
+            f.mSubstories = ParcelableUtils.readAbsSubstoryListFromParcel(source);
             f.mUsers = source.createTypedArrayList(User.CREATOR);
             f.mMetadata = source.readParcelable(Metadata.class.getClassLoader());
             return f;
