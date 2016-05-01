@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-public class MediaStory extends AbsStory {
+public class MediaStory extends AbsStory implements Parcelable {
 
     @SerializedName("media")
     private Media mMedia;

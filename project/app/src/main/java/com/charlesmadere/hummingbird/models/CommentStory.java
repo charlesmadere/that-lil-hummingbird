@@ -1,13 +1,14 @@
 package com.charlesmadere.hummingbird.models;
 
 import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class CommentStory extends AbsStory {
+public class CommentStory extends AbsStory implements Parcelable {
 
     @Nullable
     @SerializedName("recent_liker_ids")
