@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-public class WatchlistStatusUpdateSubstory extends WatchedEpisodeSubstory implements Parcelable {
+public class WatchlistStatusUpdateSubstory extends AbsSubstory implements Parcelable {
 
     @SerializedName("new_status")
     private NewStatus mNewStatus;

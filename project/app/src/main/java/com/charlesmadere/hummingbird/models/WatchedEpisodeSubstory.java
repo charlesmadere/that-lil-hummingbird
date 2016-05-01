@@ -3,7 +3,17 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class WatchedEpisodeSubstory  extends AbsSubstory implements Parcelable {
+import com.google.gson.annotations.SerializedName;
+
+public class WatchedEpisodeSubstory extends AbsSubstory implements Parcelable {
+
+    @SerializedName("episode_number")
+    private int mEpisodeNumber;
+
+
+    public int getEpisodeNumber() {
+        return mEpisodeNumber;
+    }
 
     @Override
     public Type getType() {
@@ -13,13 +23,13 @@ public class WatchedEpisodeSubstory  extends AbsSubstory implements Parcelable {
     @Override
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);
-
+        mEpisodeNumber = source.readInt();
     }
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         super.writeToParcel(dest, flags);
-
+        dest.writeInt(mEpisodeNumber);
     }
 
     public static final Creator<WatchedEpisodeSubstory> CREATOR = new Creator<WatchedEpisodeSubstory>() {
