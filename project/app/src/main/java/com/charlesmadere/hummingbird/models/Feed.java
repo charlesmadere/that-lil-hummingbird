@@ -15,12 +15,21 @@ public class Feed implements Parcelable {
     private ArrayList<Group> mGroups;
 
     @Nullable
+    @SerializedName("group_members")
+    private ArrayList<GroupMember> mGroupMembers;
+
+    @Nullable
     @SerializedName("users")
     private ArrayList<User> mUsers;
 
     @SerializedName("meta")
     private Metadata mMetadata;
 
+
+    @Nullable
+    public ArrayList<GroupMember> getGroupMembers() {
+        return mGroupMembers;
+    }
 
     @Nullable
     public ArrayList<Group> getGroups() {
@@ -34,6 +43,10 @@ public class Feed implements Parcelable {
     @Nullable
     public ArrayList<User> getUsers() {
         return mUsers;
+    }
+
+    public boolean hasGroupMembers() {
+        return mGroupMembers != null && !mGroupMembers.isEmpty();
     }
 
     public boolean hasGroups() {
@@ -52,6 +65,7 @@ public class Feed implements Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeTypedList(mGroups);
+        dest.writeTypedList(mGroupMembers);
         dest.writeTypedList(mUsers);
         dest.writeParcelable(mMetadata, flags);
     }
@@ -61,6 +75,7 @@ public class Feed implements Parcelable {
         public Feed createFromParcel(final Parcel source) {
             final Feed f = new Feed();
             f.mGroups = source.createTypedArrayList(Group.CREATOR);
+            f.mGroupMembers = source.createTypedArrayList(GroupMember.CREATOR);
             f.mUsers = source.createTypedArrayList(User.CREATOR);
             f.mMetadata = source.readParcelable(Metadata.class.getClassLoader());
             return f;
