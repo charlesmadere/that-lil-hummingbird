@@ -18,7 +18,8 @@ public final class TypefaceStore {
 
     public static synchronized Typeface get(final int typefaceEntryOrdinal) {
         if (typefaceEntryOrdinal < 0 || typefaceEntryOrdinal >= TypefaceEntry.values().length) {
-            throw new IllegalArgumentException("typefaceEntryOrdinal parameter is out of bounds");
+            throw new IllegalArgumentException("typefaceEntryOrdinal parameter is out of bounds: "
+                    + typefaceEntryOrdinal);
         }
 
         return get(TypefaceEntry.values()[typefaceEntryOrdinal]);

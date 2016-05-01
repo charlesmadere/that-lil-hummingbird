@@ -25,7 +25,7 @@ public class StoriesAdapter extends BaseAdapter<Story> {
 
             default:
                 throw new IllegalArgumentException("encountered unknown " +
-                        Story.Type.class.getSimpleName() + ": " + getItem(position).getType());
+                        Story.Type.class.getName() + ": " + getItem(position).getType());
         }
     }
 
