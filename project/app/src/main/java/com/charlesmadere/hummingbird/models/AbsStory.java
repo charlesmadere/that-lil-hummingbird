@@ -7,13 +7,46 @@ import com.google.gson.annotations.SerializedName;
 
 public abstract class AbsStory implements Parcelable {
 
+    @SerializedName("adult")
+    private boolean mAdult;
+
+    @SerializedName("substory_count")
+    private int mSubstoryCount;
+
+    @SerializedName("total_votes")
+    private int mTotalVotes;
+
     @SerializedName("created_at")
     private SimpleDate mCreatedAt;
 
     @SerializedName("id")
     private String mId;
 
+    @SerializedName("user_id")
+    private String mUserId;
+
+
+    public SimpleDate getCreatedAt() {
+        return mCreatedAt;
+    }
+
+    public String getId() {
+        return mId;
+    }
+
+    public int getSubstoryCount() {
+        return mSubstoryCount;
+    }
+
+    public int getTotalVotes() {
+        return mTotalVotes;
+    }
+
     public abstract Type getType();
+
+    public String getUserId() {
+        return mUserId;
+    }
 
     @Override
     public int describeContents() {
@@ -21,14 +54,22 @@ public abstract class AbsStory implements Parcelable {
     }
 
     protected void readFromParcel(final Parcel source) {
+        mAdult = source.readInt() != 0;
+        mSubstoryCount = source.readInt();
+        mTotalVotes = source.readInt();
         mCreatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
         mId = source.readString();
+        mUserId = source.readString();
     }
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
+        dest.writeInt(mAdult ? 1 : 0);
+        dest.writeInt(mSubstoryCount);
+        dest.writeInt(mTotalVotes);
         dest.writeParcelable(mCreatedAt, flags);
         dest.writeString(mId);
+        dest.writeString(mUserId);
     }
 
 
