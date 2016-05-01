@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
 public class MediaStory extends AbsStory implements Parcelable {
@@ -106,9 +107,31 @@ public class MediaStory extends AbsStory implements Parcelable {
 
 
     public static class AnimeMedia extends AbsMedia implements Parcelable {
+        private AbsAnime mAnime;
+
+        public AbsAnime getAnime() {
+            return mAnime;
+        }
+
         @Override
         public Type getType() {
             return Type.ANIME;
+        }
+
+        @Override
+        protected void readFromParcel(final Parcel source) {
+            super.readFromParcel(source);
+            mAnime = ParcelableUtils.readAbsAnimeFromParcel(source);
+        }
+
+        public void setAnime(final AbsAnime anime) {
+            mAnime = anime;
+        }
+
+        @Override
+        public void writeToParcel(final Parcel dest, final int flags) {
+            super.writeToParcel(dest, flags);
+            ParcelableUtils.writeAbsAnimeToParcel(mAnime, dest, flags);
         }
 
         public static final Creator<AnimeMedia> CREATOR = new Creator<AnimeMedia>() {
