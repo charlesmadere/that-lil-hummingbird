@@ -4,6 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -104,6 +109,20 @@ public abstract class AbsStory implements Parcelable {
         MEDIA_STORY;
 
 
+        public static Type from(final String type) {
+            switch (type) {
+                case "comment":
+                    return COMMENT;
+
+                case "media_story":
+                    return MEDIA_STORY;
+
+                default:
+                    throw new IllegalArgumentException("encountered unknown " +
+                            Type.class.getName() + ": \"" + type + '"');
+            }
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -127,5 +146,33 @@ public abstract class AbsStory implements Parcelable {
             }
         };
     }
+
+
+    public static final JsonDeserializer<AbsStory> JSON_DESERIALIZER = new JsonDeserializer<AbsStory>() {
+        @Override
+        public AbsStory deserialize(final JsonElement json, final java.lang.reflect.Type typeOfT,
+                final JsonDeserializationContext context) throws JsonParseException {
+            final JsonObject jsonObject = json.getAsJsonObject();
+            final Type type = Type.from(jsonObject.get("type").getAsString());
+
+            final AbsStory story;
+
+            switch (type) {
+                case COMMENT:
+                    story = context.deserialize(json, CommentStory.class);
+                    break;
+
+                case MEDIA_STORY:
+                    story = context.deserialize(json, MediaStory.class);
+                    break;
+
+                default:
+                    throw new RuntimeException("encountered unknown " + Type.class.getName() +
+                            ": " + type);
+            }
+
+            return story;
+        }
+    };
 
 }
