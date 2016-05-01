@@ -31,6 +31,10 @@ public class Substory implements Parcelable {
     @SerializedName("story_id")
     private String mStoryId;
 
+    @Nullable
+    @SerializedName("user_id")
+    private String mUserId;
+
     @SerializedName("substory_type")
     private Type mType;
 
@@ -74,6 +78,11 @@ public class Substory implements Parcelable {
 
     public Type getType() {
         return mType;
+    }
+
+    @Nullable
+    public String getUserId() {
+        return mUserId;
     }
 
     @Override
