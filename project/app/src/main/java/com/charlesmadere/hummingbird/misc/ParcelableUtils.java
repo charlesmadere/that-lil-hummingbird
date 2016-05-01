@@ -5,9 +5,13 @@ import android.support.annotation.Nullable;
 
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AbsStory;
+import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.AnimeV1;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.MediaStory;
+import com.charlesmadere.hummingbird.models.ReplySubstory;
+import com.charlesmadere.hummingbird.models.WatchedEpisodeSubstory;
+import com.charlesmadere.hummingbird.models.WatchlistStatusUpdateSubstory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,6 +154,79 @@ public final class ParcelableUtils {
 
         for (final AbsStory story : list) {
             writeAbsStoryToParcel(story, dest, flags);
+        }
+    }
+
+    @Nullable
+    @SuppressWarnings("unchecked")
+    public static <T extends AbsSubstory> T readAbsSubstoryFromParcel(final Parcel source) {
+        final AbsSubstory.Type type = source.readParcelable(AbsSubstory.Type.class.getClassLoader());
+
+        if (type == null) {
+            return null;
+        }
+
+        final AbsSubstory substory;
+
+        switch (type) {
+            case REPLY:
+                substory = source.readParcelable(ReplySubstory.class.getClassLoader());
+                break;
+
+            case WATCHED_EPISODE:
+                substory = source.readParcelable(WatchedEpisodeSubstory.class.getClassLoader());
+                break;
+
+            case WATCHLIST_STATUS_UPDATE:
+                substory = source.readParcelable(WatchlistStatusUpdateSubstory.class.getClassLoader());
+                break;
+
+            default:
+                throw new RuntimeException("Encountered a " + AbsSubstory.Type.class.getName()
+                        + " (" + type + ") that hasn't been added as a possible value.");
+        }
+
+        return (T) substory;
+    }
+
+    @Nullable
+    public static ArrayList<AbsSubstory> readAbsSubstoryListFromParcel(final Parcel source) {
+        final int count = source.readInt();
+
+        if (count == 0) {
+            return null;
+        }
+
+        final ArrayList<AbsSubstory> list = new ArrayList<>(count);
+
+        for (int i = 0; i < count; ++i) {
+            list.add(readAbsSubstoryFromParcel(source));
+        }
+
+        return list;
+    }
+
+    public static void writeAbsSubstoryToParcel(@Nullable final AbsSubstory substory,
+            final Parcel dest, final int flags) {
+        if (substory == null) {
+            dest.writeParcelable(null, flags);
+        } else {
+            dest.writeParcelable(substory.getType(), flags);
+            dest.writeParcelable(substory, flags);
+        }
+    }
+
+    public static void writeAbsSubstoryListToParcel(@Nullable final List<AbsSubstory> list,
+            final Parcel dest, final int flags) {
+        if (list == null || list.isEmpty()) {
+            dest.writeInt(0);
+            return;
+        }
+
+        dest.writeInt(list.size());
+
+        for (final AbsSubstory substory : list) {
+            writeAbsSubstoryToParcel(substory, dest, flags);
         }
     }
 
