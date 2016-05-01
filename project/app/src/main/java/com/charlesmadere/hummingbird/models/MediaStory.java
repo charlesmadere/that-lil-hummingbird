@@ -8,10 +8,10 @@ import com.google.gson.annotations.SerializedName;
 public class MediaStory extends AbsStory implements Parcelable {
 
     @SerializedName("media")
-    private Media mMedia;
+    private AbsMedia mMedia;
 
 
-    public Media getMedia() {
+    public AbsMedia getMedia() {
         return mMedia;
     }
 
@@ -23,7 +23,7 @@ public class MediaStory extends AbsStory implements Parcelable {
     @Override
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);
-        mMedia = source.readParcelable(Media.class.getClassLoader());
+        mMedia = source.readParcelable(AbsMedia.class.getClassLoader());
     }
 
     @Override
@@ -47,51 +47,37 @@ public class MediaStory extends AbsStory implements Parcelable {
     };
 
 
-    public static class Media implements Parcelable {
+    public static abstract class AbsMedia implements Parcelable {
         @SerializedName("id")
         private String mId;
-
-        @SerializedName("type")
-        private Type mType;
 
         public String getId() {
             return mId;
         }
 
-        public Type getType() {
-            return mType;
-        }
+        public abstract Type getType();
 
         @Override
         public int describeContents() {
             return 0;
         }
 
+        protected void readFromParcel(final Parcel source) {
+            mId = source.readString();
+        }
+
         @Override
         public void writeToParcel(final Parcel dest, final int flags) {
             dest.writeString(mId);
-            dest.writeParcelable(mType, flags);
         }
-
-        public static final Creator<Media> CREATOR = new Creator<Media>() {
-            @Override
-            public Media createFromParcel(final Parcel source) {
-                final Media m = new Media();
-                m.mId = source.readString();
-                m.mType = source.readParcelable(Type.class.getClassLoader());
-                return m;
-            }
-
-            @Override
-            public Media[] newArray(final int size) {
-                return new Media[size];
-            }
-        };
 
 
         public enum Type implements Parcelable {
             @SerializedName("anime")
-            ANIME;
+            ANIME,
+
+            @SerializedName("manga")
+            MANGA;
 
             @Override
             public int describeContents() {
@@ -116,6 +102,50 @@ public class MediaStory extends AbsStory implements Parcelable {
                 }
             };
         }
+    }
+
+
+    public static class AnimeMedia extends AbsMedia implements Parcelable {
+        @Override
+        public Type getType() {
+            return Type.ANIME;
+        }
+
+        public static final Creator<AnimeMedia> CREATOR = new Creator<AnimeMedia>() {
+            @Override
+            public AnimeMedia createFromParcel(final Parcel source) {
+                final AnimeMedia am = new AnimeMedia();
+                am.readFromParcel(source);
+                return am;
+            }
+
+            @Override
+            public AnimeMedia[] newArray(final int size) {
+                return new AnimeMedia[size];
+            }
+        };
+    }
+
+
+    public static class MangaMedia extends AbsMedia implements Parcelable {
+        @Override
+        public Type getType() {
+            return Type.MANGA;
+        }
+
+        public static final Creator<MangaMedia> CREATOR = new Creator<MangaMedia>() {
+            @Override
+            public MangaMedia createFromParcel(final Parcel source) {
+                final MangaMedia mm = new MangaMedia();
+                mm.readFromParcel(source);
+                return mm;
+            }
+
+            @Override
+            public MangaMedia[] newArray(final int size) {
+                return new MangaMedia[size];
+            }
+        };
     }
 
 }
