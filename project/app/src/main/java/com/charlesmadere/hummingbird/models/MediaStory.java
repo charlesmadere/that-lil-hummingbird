@@ -59,6 +59,11 @@ public class MediaStory extends AbsStory implements Parcelable {
         public abstract Type getType();
 
         @Override
+        public String toString() {
+            return getType().toString();
+        }
+
+        @Override
         public int describeContents() {
             return 0;
         }

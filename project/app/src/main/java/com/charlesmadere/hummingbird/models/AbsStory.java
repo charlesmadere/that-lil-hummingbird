@@ -65,6 +65,11 @@ public abstract class AbsStory implements Parcelable {
     }
 
     @Override
+    public String toString() {
+        return getType().toString();
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
