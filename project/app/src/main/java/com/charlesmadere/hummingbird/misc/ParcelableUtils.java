@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.support.annotation.Nullable;
 
 import com.charlesmadere.hummingbird.models.AbsAnime;
+import com.charlesmadere.hummingbird.models.AbsStory;
 import com.charlesmadere.hummingbird.models.AnimeV1;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 
@@ -79,6 +80,75 @@ public final class ParcelableUtils {
 
         for (final AbsAnime anime : list) {
             writeAbsAnimeToParcel(anime, dest, flags);
+        }
+    }
+
+    @Nullable
+    @SuppressWarnings("unchecked")
+    public static <T extends AbsStory> T readAbsStoryFromParcel(final Parcel source) {
+        final AbsStory.Type type = source.readParcelable(AbsStory.Type.class.getClassLoader());
+
+        if (type == null) {
+            return null;
+        }
+
+        final AbsStory story;
+
+        switch (type) {
+            case COMMENT:
+                story = source.readParcelable(AnimeV1.class.getClassLoader());
+                break;
+
+            case MEDIA_STORY:
+                story = source.readParcelable(AnimeV2.class.getClassLoader());
+                break;
+
+            default:
+                throw new RuntimeException("Encountered a " + AbsStory.Type.class.getName()
+                        + " (" + type + ") that hasn't been added as a possible value.");
+        }
+
+        return (T) story;
+    }
+
+    @Nullable
+    public static ArrayList<AbsStory> readAbsStoryListFromParcel(final Parcel source) {
+        final int count = source.readInt();
+
+        if (count == 0) {
+            return null;
+        }
+
+        final ArrayList<AbsStory> list = new ArrayList<>(count);
+
+        for (int i = 0; i < count; ++i) {
+            list.add(readAbsStoryFromParcel(source));
+        }
+
+        return list;
+    }
+
+    public static void writeAbsStoryToParcel(@Nullable final AbsStory story, final Parcel dest,
+            final int flags) {
+        if (story == null) {
+            dest.writeParcelable(null, flags);
+        } else {
+            dest.writeParcelable(story.getType(), flags);
+            dest.writeParcelable(story, flags);
+        }
+    }
+
+    public static void writeAbsStoryListToParcel(@Nullable final List<AbsStory> list,
+            final Parcel dest, final int flags) {
+        if (list == null || list.isEmpty()) {
+            dest.writeInt(0);
+            return;
+        }
+
+        dest.writeInt(list.size());
+
+        for (final AbsStory story : list) {
+            writeAbsStoryToParcel(story, dest, flags);
         }
     }
 
