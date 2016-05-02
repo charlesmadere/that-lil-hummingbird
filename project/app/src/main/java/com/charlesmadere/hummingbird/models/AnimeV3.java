@@ -17,6 +17,9 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
     @SerializedName("genres")
     private ArrayList<String> mGenres;
 
+    @SerializedName("started_airing_date_known")
+    private boolean mStartedAiringDateKnown;
+
     @Nullable
     @SerializedName("age_rating_guide")
     private String mAgeRatingGuide;
@@ -27,6 +30,12 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
     @Nullable
     @SerializedName("english_title")
     private String mEnglishTitle;
+
+    @SerializedName("poster_image")
+    private String mPosterImage;
+
+    @SerializedName("poster_image_thumb")
+    private String mPosterImageThumb;
 
     @Nullable
     @SerializedName("romaji_title")
@@ -57,6 +66,14 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
         return TextUtils.join(res.getText(R.string.delimiter), mGenres);
     }
 
+    public String getPosterImage() {
+        return mPosterImage;
+    }
+
+    public String getPosterImageThumb() {
+        return mPosterImageThumb;
+    }
+
     @Nullable
     @Override
     public SimpleDate getStartedAiringDate() {
@@ -78,13 +95,20 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
         return mGenres != null && !mGenres.isEmpty();
     }
 
+    public boolean isStartedAiringDateKnown() {
+        return mStartedAiringDateKnown;
+    }
+
     @Override
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);
         mGenres = source.createStringArrayList();
+        mStartedAiringDateKnown = source.readInt() != 0;
         mAgeRatingGuide = source.readString();
         mCanonicalTitle = source.readString();
         mEnglishTitle = source.readString();
+        mPosterImage = source.readString();
+        mPosterImageThumb = source.readString();
         mRomajiTitle = source.readString();
     }
 
@@ -92,9 +116,12 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
     public void writeToParcel(final Parcel dest, final int flags) {
         super.writeToParcel(dest, flags);
         dest.writeStringList(mGenres);
+        dest.writeInt(mStartedAiringDateKnown ? 1 : 0);
         dest.writeString(mAgeRatingGuide);
         dest.writeString(mCanonicalTitle);
         dest.writeString(mEnglishTitle);
+        dest.writeString(mPosterImage);
+        dest.writeString(mPosterImageThumb);
         dest.writeString(mRomajiTitle);
     }
 
