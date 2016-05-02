@@ -17,6 +17,10 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
     @SerializedName("genres")
     private ArrayList<String> mGenres;
 
+    @Nullable
+    @SerializedName("age_rating_guide")
+    private String mAgeRatingGuide;
+
     @SerializedName("canonical_title")
     private String mCanonicalTitle;
 
@@ -28,6 +32,11 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
     @SerializedName("romaji_title")
     private String mRomajiTitle;
 
+
+    @Nullable
+    public String getAgeRatingGuide() {
+        return mAgeRatingGuide;
+    }
 
     public String getCanonicalTitle() {
         return mCanonicalTitle;
@@ -73,6 +82,7 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);
         mGenres = source.createStringArrayList();
+        mAgeRatingGuide = source.readString();
         mCanonicalTitle = source.readString();
         mEnglishTitle = source.readString();
         mRomajiTitle = source.readString();
@@ -82,6 +92,7 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
     public void writeToParcel(final Parcel dest, final int flags) {
         super.writeToParcel(dest, flags);
         dest.writeStringList(mGenres);
+        dest.writeString(mAgeRatingGuide);
         dest.writeString(mCanonicalTitle);
         dest.writeString(mEnglishTitle);
         dest.writeString(mRomajiTitle);
