@@ -88,6 +88,11 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
     }
 
     @Nullable
+    public String getRomajiTitle() {
+        return mRomajiTitle;
+    }
+
+    @Nullable
     @Override
     public SimpleDate getStartedAiringDate() {
         return mStartedAiring;
