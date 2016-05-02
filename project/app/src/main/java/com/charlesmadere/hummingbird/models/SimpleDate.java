@@ -22,8 +22,8 @@ public class SimpleDate implements Parcelable {
     private static final SimpleDateFormat[] FORMATS = {
             // this one is the "right" way according to the Android docs but is causing exceptions
             // new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault()),
-            new SimpleDateFormat("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS", Locale.getDefault()),
-            new SimpleDateFormat("yyyy'-'MM'-'dd", Locale.getDefault())
+            new SimpleDateFormat("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS", Locale.US),
+            new SimpleDateFormat("yyyy'-'MM'-'dd", Locale.US)
     };
 
     private final Date mDate;
