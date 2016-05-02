@@ -23,9 +23,21 @@ public class CommentStory extends AbsStory implements Parcelable {
     @SerializedName("poster_id")
     private String mPosterId;
 
+    // hydrated fields
+    private Group mGroup;
+    private User mPoster;
+
+
+    public Group getGroup() {
+        return mGroup;
+    }
 
     public String getGroupId() {
         return mGroupId;
+    }
+
+    public User getPoster() {
+        return mPoster;
     }
 
     public String getPosterId() {
@@ -50,6 +62,14 @@ public class CommentStory extends AbsStory implements Parcelable {
         return mIsLiked;
     }
 
+    public void setGroup(final Group group) {
+        mGroup = group;
+    }
+
+    public void setPoster(final User poster) {
+        mPoster = poster;
+    }
+
     @Override
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);
@@ -57,6 +77,8 @@ public class CommentStory extends AbsStory implements Parcelable {
         mIsLiked = source.readInt() != 0;
         mGroupId = source.readString();
         mPosterId = source.readString();
+        mGroup = source.readParcelable(Group.class.getClassLoader());
+        mPoster = source.readParcelable(User.class.getClassLoader());
     }
 
     @Override
@@ -66,6 +88,8 @@ public class CommentStory extends AbsStory implements Parcelable {
         dest.writeInt(mIsLiked ? 1 : 0);
         dest.writeString(mGroupId);
         dest.writeString(mPosterId);
+        dest.writeParcelable(mGroup, flags);
+        dest.writeParcelable(mPoster, flags);
     }
 
     public static final Creator<CommentStory> CREATOR = new Creator<CommentStory>() {
