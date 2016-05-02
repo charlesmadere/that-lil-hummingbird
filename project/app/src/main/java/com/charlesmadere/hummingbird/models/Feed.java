@@ -12,6 +12,10 @@ import java.util.ArrayList;
 public class Feed implements Parcelable {
 
     @Nullable
+    @SerializedName("anime")
+    private ArrayList<AbsAnime> mAnime;
+
+    @Nullable
     @SerializedName("stories")
     private ArrayList<AbsStory> mStories;
 
@@ -34,6 +38,11 @@ public class Feed implements Parcelable {
     @SerializedName("meta")
     private Metadata mMetadata;
 
+
+    @Nullable
+    public ArrayList<AbsAnime> getAnime() {
+        return mAnime;
+    }
 
     @Nullable
     public ArrayList<GroupMember> getGroupMembers() {
@@ -62,6 +71,10 @@ public class Feed implements Parcelable {
     @Nullable
     public ArrayList<User> getUsers() {
         return mUsers;
+    }
+
+    public boolean hasAnime() {
+        return mAnime != null && !mAnime.isEmpty();
     }
 
     public boolean hasGroupMembers() {
@@ -143,6 +156,7 @@ public class Feed implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
+        ParcelableUtils.writeAbsAnimeListToParcel(mAnime, dest, flags);
         ParcelableUtils.writeAbsStoryListToParcel(mStories, dest, flags);
         ParcelableUtils.writeAbsSubstoryListToParcel(mSubstories, dest, flags);
         dest.writeTypedList(mGroups);
@@ -155,6 +169,7 @@ public class Feed implements Parcelable {
         @Override
         public Feed createFromParcel(final Parcel source) {
             final Feed f = new Feed();
+            f.mAnime = ParcelableUtils.readAbsAnimeListFromParcel(source);
             f.mStories = ParcelableUtils.readAbsStoryListFromParcel(source);
             f.mSubstories = ParcelableUtils.readAbsSubstoryListFromParcel(source);
             f.mGroups = source.createTypedArrayList(Group.CREATOR);
