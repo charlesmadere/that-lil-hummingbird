@@ -319,6 +319,7 @@ public final class Api {
                 if (body == null) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
+                    feed.hydrate();
                     feed.merge(body);
                     listener.success(feed);
                 }
