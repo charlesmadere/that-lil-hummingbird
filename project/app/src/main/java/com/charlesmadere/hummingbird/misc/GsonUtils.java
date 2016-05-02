@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AbsStory;
+import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.SimpleDate;
 import com.google.gson.Gson;
@@ -27,6 +28,7 @@ public final class GsonUtils {
             sGson = new GsonBuilder()
                     .registerTypeAdapter(AbsAnime.class, AbsAnime.JSON_DESERIALIZER)
                     .registerTypeAdapter(AbsStory.class, AbsStory.JSON_DESERIALIZER)
+                    .registerTypeAdapter(AbsSubstory.class, AbsSubstory.JSON_DESERIALIZER)
                     .registerTypeAdapter(AnimeV2.class, AnimeV2.JSON_DESERIALIZER)
                     .registerTypeAdapter(SimpleDate.class, SimpleDate.JSON_DESERIALIZER)
                     .create();
