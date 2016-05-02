@@ -4,7 +4,6 @@ import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
@@ -259,14 +258,14 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         private String mRomaji;
 
 
-        public String get(@Nullable final Type type) {
-            if (type == null) {
+        public String get(@Nullable final TitleType titleType) {
+            if (titleType == null) {
                 return getCanonical();
             }
 
             String title;
 
-            switch (type) {
+            switch (titleType) {
                 case CANONICAL:
                     return getCanonical();
 
@@ -283,8 +282,8 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
                     break;
 
                 default:
-                    throw new RuntimeException("encountered illegal " + Type.class.getName()
-                            + ": " + type);
+                    throw new RuntimeException("encountered unknown " +
+                            TitleType.class.getSimpleName() + ": " + titleType);
             }
 
             if (TextUtils.isEmpty(title)) {
@@ -347,55 +346,6 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
                 return new Titles[size];
             }
         };
-
-        public enum Type implements Parcelable {
-            @SerializedName("canonical")
-            CANONICAL(R.string.canonical),
-
-            @SerializedName("english")
-            ENGLISH(R.string.english),
-
-            @SerializedName("japanese")
-            JAPANESE(R.string.japanese),
-
-            @SerializedName("romaji")
-            ROMAJI(R.string.romaji);
-
-
-            private final int mTitleResId;
-
-            Type(@StringRes final int titleResId) {
-                mTitleResId = titleResId;
-            }
-
-            @StringRes
-            public int getTextResId() {
-                return mTitleResId;
-            }
-
-            @Override
-            public int describeContents() {
-                return 0;
-            }
-
-            @Override
-            public void writeToParcel(final Parcel dest, final int flags) {
-                dest.writeInt(ordinal());
-            }
-
-            public static final Creator<Type> CREATOR = new Creator<Type>() {
-                @Override
-                public Type createFromParcel(final Parcel source) {
-                    final int ordinal = source.readInt();
-                    return values()[ordinal];
-                }
-
-                @Override
-                public Type[] newArray(final int size) {
-                    return new Type[size];
-                }
-            };
-        }
     }
 
 

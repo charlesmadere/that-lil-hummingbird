@@ -3,8 +3,8 @@ package com.charlesmadere.hummingbird.preferences;
 import android.content.Context;
 
 import com.charlesmadere.hummingbird.ThatLilHummingbird;
-import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.NightMode;
+import com.charlesmadere.hummingbird.models.TitleType;
 
 public final class Preferences {
 
@@ -47,12 +47,12 @@ public final class Preferences {
 
     public static final class General {
         private static final String TAG = Preferences.TAG + ".General";
-        public static final GsonPreference<AnimeV2.Titles.Type> TitleLanguage;
+        public static final GsonPreference<TitleType> TitleLanguage;
         public static final GsonPreference<NightMode> Theme;
 
         static {
-            TitleLanguage = new GsonPreference<>(TAG, "TitleLanguage", AnimeV2.Titles.Type.class,
-                    AnimeV2.Titles.Type.ENGLISH);
+            TitleLanguage = new GsonPreference<>(TAG, "TitleLanguage", TitleType.class,
+                    TitleType.ENGLISH);
             Theme = new GsonPreference<>(TAG, "NightMode", NightMode.class, NightMode.SYSTEM);
         }
     }
