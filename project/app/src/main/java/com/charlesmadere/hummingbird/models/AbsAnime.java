@@ -207,7 +207,7 @@ public abstract class AbsAnime implements Parcelable {
 
 
     public enum Version implements Parcelable {
-        V1, V2;
+        V1, V2, V3;
 
         @Override
         public int describeContents() {
