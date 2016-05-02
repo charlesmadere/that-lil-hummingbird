@@ -21,6 +21,14 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
     private boolean mStartedAiringDateKnown;
 
     @Nullable
+    @SerializedName("finished_airing")
+    private SimpleDate mFinishedAiring;
+
+    @Nullable
+    @SerializedName("started_airing")
+    private SimpleDate mStartedAiring;
+
+    @Nullable
     @SerializedName("age_rating_guide")
     private String mAgeRatingGuide;
 
@@ -54,7 +62,7 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
     @Nullable
     @Override
     public SimpleDate getFinishedAiringDate() {
-        return null;
+        return mFinishedAiring;
     }
 
     @Override
@@ -77,7 +85,7 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
     @Nullable
     @Override
     public SimpleDate getStartedAiringDate() {
-        return null;
+        return mStartedAiring;
     }
 
     @Override
@@ -104,6 +112,8 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
         super.readFromParcel(source);
         mGenres = source.createStringArrayList();
         mStartedAiringDateKnown = source.readInt() != 0;
+        mFinishedAiring = source.readParcelable(SimpleDate.class.getClassLoader());
+        mStartedAiring = source.readParcelable(SimpleDate.class.getClassLoader());
         mAgeRatingGuide = source.readString();
         mCanonicalTitle = source.readString();
         mEnglishTitle = source.readString();
@@ -117,6 +127,8 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
         super.writeToParcel(dest, flags);
         dest.writeStringList(mGenres);
         dest.writeInt(mStartedAiringDateKnown ? 1 : 0);
+        dest.writeParcelable(mFinishedAiring, flags);
+        dest.writeParcelable(mStartedAiring, flags);
         dest.writeString(mAgeRatingGuide);
         dest.writeString(mCanonicalTitle);
         dest.writeString(mEnglishTitle);
