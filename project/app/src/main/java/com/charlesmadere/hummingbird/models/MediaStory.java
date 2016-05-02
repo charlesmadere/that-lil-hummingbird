@@ -4,6 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
 public class MediaStory extends AbsStory implements Parcelable {
@@ -85,6 +90,21 @@ public class MediaStory extends AbsStory implements Parcelable {
             @SerializedName("manga")
             MANGA;
 
+
+            public static Type from(final String type) {
+                switch (type) {
+                    case "anime":
+                        return ANIME;
+
+                    case "manga":
+                        return MANGA;
+
+                    default:
+                        throw new IllegalArgumentException("encountered unknown " +
+                                Type.class.getName() + ": \"" + type + '"');
+                }
+            }
+
             @Override
             public int describeContents() {
                 return 0;
@@ -108,6 +128,33 @@ public class MediaStory extends AbsStory implements Parcelable {
                 }
             };
         }
+
+        public static final JsonDeserializer<AbsMedia> JSON_DESERIALIZER = new JsonDeserializer<AbsMedia>() {
+            @Override
+            public AbsMedia deserialize(final JsonElement json, final java.lang.reflect.Type typeOfT,
+                    final JsonDeserializationContext context) throws JsonParseException {
+                final JsonObject jsonObject = json.getAsJsonObject();
+                final Type type = Type.from(jsonObject.get("type").getAsString());
+
+                final AbsMedia media;
+
+                switch (type) {
+                    case ANIME:
+                        media = context.deserialize(json, AnimeMedia.class);
+                        break;
+
+                    case MANGA:
+                        media = context.deserialize(json, MangaMedia.class);
+                        break;
+
+                    default:
+                        throw new RuntimeException("encountered unknown " + Type.class.getName()
+                                + ": \"" + type + '"');
+                }
+
+                return media;
+            }
+        };
     }
 
 
