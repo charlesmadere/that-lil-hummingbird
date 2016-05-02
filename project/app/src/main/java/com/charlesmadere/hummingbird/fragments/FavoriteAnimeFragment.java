@@ -60,7 +60,7 @@ public class FavoriteAnimeFragment extends BaseFragment implements
 
     private void fetchFavorites() {
         mRefreshLayout.setRefreshing(true);
-        Api.getFavoriteAnime(mUser, new GetFavoritesListener(this));
+        Api.getFavoriteAnime(mUser.getName(), new GetFavoritesListener(this));
     }
 
     @Override

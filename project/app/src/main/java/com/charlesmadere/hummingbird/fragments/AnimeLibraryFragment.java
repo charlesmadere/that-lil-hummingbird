@@ -71,7 +71,7 @@ public class AnimeLibraryFragment extends BaseFragment implements
 
     private void fetchLibraryEntries() {
         mRefreshLayout.setRefreshing(true);
-        Api.getLibraryEntries(mUser, mWatchingStatus, new GetLibraryEntriesListener(this));
+        Api.getLibraryEntries(mUser.getName(), mWatchingStatus, new GetLibraryEntriesListener(this));
     }
 
     @Override
