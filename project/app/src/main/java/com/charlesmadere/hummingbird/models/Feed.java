@@ -262,7 +262,7 @@ public class Feed implements Parcelable {
     };
 
 
-    private static class Metadata implements Parcelable {
+    public static class Metadata implements Parcelable {
         @SerializedName("cursor")
         private int mCursor;
 
