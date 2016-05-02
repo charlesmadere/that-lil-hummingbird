@@ -241,10 +241,12 @@ public abstract class AbsAnime implements Parcelable {
                 final JsonDeserializationContext context) throws JsonParseException {
             final JsonObject jsonObject = json.getAsJsonObject();
 
-            if (jsonObject.has("anime")) {
-                return context.deserialize(jsonObject, AnimeV2.class);
+            if (jsonObject.has("title")) {
+                return context.deserialize(jsonObject, AnimeV1.class);
+            } else if (jsonObject.has("anime")) {
+                return context.deserialize(json, AnimeV2.class);
             } else {
-                return context.deserialize(json, AnimeV1.class);
+                return context.deserialize(json, AnimeV3.class);
             }
         }
     };
