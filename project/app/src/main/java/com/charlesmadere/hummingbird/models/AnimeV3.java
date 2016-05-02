@@ -60,6 +60,11 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
     }
 
     @Nullable
+    public String getEnglishTitle() {
+        return mEnglishTitle;
+    }
+
+    @Nullable
     @Override
     public SimpleDate getFinishedAiringDate() {
         return mFinishedAiring;
