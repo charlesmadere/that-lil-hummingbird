@@ -146,7 +146,27 @@ public class Feed implements Parcelable {
     }
 
     private void hydrateStory(final MediaStory story) {
-        // TODO
+        final MediaStory.AbsMedia media = story.getMedia();
+
+        switch (media.getType()) {
+            case ANIME:
+                if (hasAnime()) {
+                    final MediaStory.AnimeMedia animeMedia = (MediaStory.AnimeMedia) media;
+                    final String animeId = animeMedia.getId();
+
+                    for (final AbsAnime anime : mAnime) {
+                        if (animeId.equalsIgnoreCase(anime.getId())) {
+                            animeMedia.setAnime(anime);
+                            break;
+                        }
+                    }
+                }
+                break;
+
+            default:
+                throw new RuntimeException("encountered unknown " +
+                        MediaStory.AbsMedia.Type.class.getName() + ": \"" + media.getType() + '"');
+        }
     }
 
     @Override
