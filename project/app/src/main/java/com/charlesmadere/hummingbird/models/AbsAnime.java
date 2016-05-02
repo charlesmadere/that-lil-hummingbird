@@ -20,6 +20,7 @@ import java.lang.reflect.Type;
 
 public abstract class AbsAnime implements Parcelable {
 
+    @Nullable
     @SerializedName("age_rating")
     protected AgeRating mAgeRating;
 
