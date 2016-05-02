@@ -169,6 +169,14 @@ public class Feed implements Parcelable {
         }
     }
 
+    public void merge(@Nullable final Feed feed) {
+        if (feed == null) {
+            return;
+        }
+
+        // TODO
+    }
+
     @Override
     public int describeContents() {
         return 0;
