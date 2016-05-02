@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.adapters.StoriesAdapter;
+import com.charlesmadere.hummingbird.adapters.FeedAdapter;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
-import com.charlesmadere.hummingbird.models.Story;
+import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
@@ -20,14 +20,13 @@ import com.charlesmadere.hummingbird.views.RefreshLayout;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 
 import butterknife.BindView;
 
 public class FeedFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "FeedFragment";
-    private static final String KEY_STORIES = "Stories";
+    private static final String KEY_FEED = "Feed";
     private static final String KEY_USER = "User";
 
     @BindView(R.id.llEmpty)
@@ -42,8 +41,8 @@ public class FeedFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @BindView(R.id.refreshLayout)
     RefreshLayout mRefreshLayout;
 
-    private ArrayList<Story> mStories;
-    private StoriesAdapter mAdapter;
+    private Feed mFeed;
+    private FeedAdapter mAdapter;
     private User mUser;
 
 
@@ -57,9 +56,9 @@ public class FeedFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         return fragment;
     }
 
-    private void fetchActivityFeed() {
+    private void fetchFeed() {
         mRefreshLayout.setRefreshing(true);
-        Api.getActivityFeed(mUser, new GetCurrentUserActivityFeedListener(this));
+        Api.getUserStories(mUser.getName(), new GetUserStoriesListener(this));
     }
 
     @Override
@@ -75,7 +74,7 @@ public class FeedFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         mUser = args.getParcelable(KEY_USER);
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mStories = savedInstanceState.getParcelableArrayList(KEY_STORIES);
+            mFeed = savedInstanceState.getParcelable(KEY_FEED);
         }
     }
 
@@ -88,15 +87,15 @@ public class FeedFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
-        fetchActivityFeed();
+        fetchFeed();
     }
 
     @Override
     public void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if (mStories != null && !mStories.isEmpty()) {
-            outState.putParcelableArrayList(KEY_STORIES, mStories);
+        if (mFeed != null) {
+            outState.putParcelable(KEY_FEED, mFeed);
         }
     }
 
@@ -105,14 +104,14 @@ public class FeedFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         super.onViewCreated(view, savedInstanceState);
 
         mRefreshLayout.setOnRefreshListener(this);
-        mAdapter = new StoriesAdapter(getContext());
+        mAdapter = new FeedAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
         SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
 
-        if (mStories == null || mStories.isEmpty()) {
-            fetchActivityFeed();
+        if (mFeed == null) {
+            fetchFeed();
         } else {
-            showList(mStories);
+            showFeed(mFeed);
         }
     }
 
@@ -130,9 +129,9 @@ public class FeedFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         mRefreshLayout.setRefreshing(false);
     }
 
-    private void showList(final ArrayList<Story> stories) {
-        mStories = stories;
-        mAdapter.set(stories);
+    private void showFeed(final Feed feed) {
+        mFeed = feed;
+        mAdapter.set(feed);
         mEmpty.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
@@ -140,11 +139,10 @@ public class FeedFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
 
-    private static class GetCurrentUserActivityFeedListener implements
-            ApiResponse<ArrayList<Story>> {
+    private static class GetUserStoriesListener implements ApiResponse<Feed> {
         private final WeakReference<FeedFragment> mFragmentReference;
 
-        private GetCurrentUserActivityFeedListener(final FeedFragment fragment) {
+        private GetUserStoriesListener(final FeedFragment fragment) {
             mFragmentReference = new WeakReference<>(fragment);
         }
 
@@ -158,14 +156,14 @@ public class FeedFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         }
 
         @Override
-        public void success(@Nullable final ArrayList<Story> stories) {
+        public void success(final Feed feed) {
             final FeedFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {
-                if (stories == null || stories.isEmpty()) {
-                    fragment.showEmpty();
+                if (feed.hasStories()) {
+                    fragment.showFeed(feed);
                 } else {
-                    fragment.showList(stories);
+                    fragment.showEmpty();
                 }
             }
         }
