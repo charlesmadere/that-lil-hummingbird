@@ -244,11 +244,6 @@ public final class Api {
         });
     }
 
-    public static void getFavoriteAnime(final User user,
-            final ApiResponse<ArrayList<AbsAnime>> listener) {
-        getFavoriteAnime(user.getName(), listener);
-    }
-
     public static void getLibraryEntries(final String username,
             @Nullable final WatchingStatus watchingStatus,
             final ApiResponse<ArrayList<LibraryEntry>> listener) {
@@ -270,12 +265,6 @@ public final class Api {
                 listener.failure(null);
             }
         });
-    }
-
-    public static void getLibraryEntries(final User user,
-            @Nullable final WatchingStatus watchingStatus,
-            final ApiResponse<ArrayList<LibraryEntry>> listener) {
-        getLibraryEntries(user.getName(), watchingStatus, listener);
     }
 
     public static void getNewsFeed(final ApiResponse<Feed> listener) {
@@ -353,6 +342,32 @@ public final class Api {
             @Override
             public void onFailure(final Call<User> call, final Throwable t) {
                 Timber.e(TAG, "get user (" + username + ") call failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
+    public static void getUserStories(final String username, final ApiResponse<Feed> listener) {
+        getApi().getUserStories(getAuthTokenCookieString(), username).enqueue(new Callback<Feed>() {
+            @Override
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
+                Feed body = null;
+
+                if (response.isSuccessful()) {
+                    body = response.body();
+                }
+
+                if (body == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    body.hydrate();
+                    listener.success(body);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get user (" + username + ") stories call failed", t);
                 listener.failure(null);
             }
         });
