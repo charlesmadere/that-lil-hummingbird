@@ -90,6 +90,8 @@ public class Feed implements Parcelable {
         }
 
         for (final AbsStory story : mStories) {
+            story.setSubstories(mSubstories);
+
             switch (story.getType()) {
                 case COMMENT:
                     hydrateStory((CommentStory) story);
@@ -107,7 +109,27 @@ public class Feed implements Parcelable {
     }
 
     private void hydrateStory(final CommentStory story) {
-        // TODO
+        if (hasGroups()) {
+            final String groupId = story.getGroupId();
+
+            for (final Group group : mGroups) {
+                if (groupId.equalsIgnoreCase(group.getId())) {
+                    story.setGroup(group);
+                    break;
+                }
+            }
+        }
+
+        if (hasUsers()) {
+            final String posterId = story.getPosterId();
+
+            for (final User user : mUsers) {
+                if (posterId.equalsIgnoreCase(user.getName())) {
+                    story.setPoster(user);
+                    break;
+                }
+            }
+        }
     }
 
     private void hydrateStory(final MediaStory story) {

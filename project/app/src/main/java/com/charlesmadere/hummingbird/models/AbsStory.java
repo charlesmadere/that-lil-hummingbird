@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
+import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -37,6 +38,9 @@ public abstract class AbsStory implements Parcelable {
     @SerializedName("user_id")
     private String mUserId;
 
+    // hydrated fields
+    private ArrayList<AbsSubstory> mSubstories;
+
 
     public SimpleDate getCreatedAt() {
         return mCreatedAt;
@@ -44,6 +48,10 @@ public abstract class AbsStory implements Parcelable {
 
     public String getId() {
         return mId;
+    }
+
+    public ArrayList<AbsSubstory> getSubstories() {
+        return mSubstories;
     }
 
     public int getSubstoryCount() {
@@ -69,6 +77,24 @@ public abstract class AbsStory implements Parcelable {
         return mSubstoryIds != null && !mSubstoryIds.isEmpty();
     }
 
+    public void setSubstories(@Nullable final ArrayList<AbsSubstory> substories) {
+        if (!hasSubstoryIds() || substories == null || substories.isEmpty()) {
+            return;
+        }
+
+        mSubstories = new ArrayList<>();
+
+        for (final String substoryId : mSubstoryIds) {
+            for (final AbsSubstory substory : substories) {
+                if (substoryId.equalsIgnoreCase(substory.getId())) {
+                    mSubstories.add(substory);
+                }
+            }
+        }
+
+        mSubstories.trimToSize();
+    }
+
     @Override
     public String toString() {
         return getType().toString();
@@ -87,6 +113,7 @@ public abstract class AbsStory implements Parcelable {
         mCreatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
         mId = source.readString();
         mUserId = source.readString();
+        mSubstories = ParcelableUtils.readAbsSubstoryListFromParcel(source);
     }
 
     @Override
@@ -98,6 +125,7 @@ public abstract class AbsStory implements Parcelable {
         dest.writeParcelable(mCreatedAt, flags);
         dest.writeString(mId);
         dest.writeString(mUserId);
+        ParcelableUtils.writeAbsSubstoryListToParcel(mSubstories, dest, flags);
     }
 
 
