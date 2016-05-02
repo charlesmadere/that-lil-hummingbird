@@ -24,8 +24,8 @@ public class StoriesAdapter extends BaseAdapter<Story> {
                 return R.layout.item_story_media_story;
 
             default:
-                throw new IllegalArgumentException("encountered unknown " +
-                        Story.Type.class.getName() + ": " + getItem(position).getType());
+                throw new RuntimeException("encountered unknown " + Story.Type.class.getName()
+                        + ": " + getItem(position).getType());
         }
     }
 
