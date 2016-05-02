@@ -13,6 +13,7 @@ import com.charlesmadere.hummingbird.models.AnimeV1;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
+import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.LibraryUpdate;
 import com.charlesmadere.hummingbird.models.Story;
@@ -251,8 +252,8 @@ public final class Api {
     public static void getLibraryEntries(final String username,
             @Nullable final WatchingStatus watchingStatus,
             final ApiResponse<ArrayList<LibraryEntry>> listener) {
-        getApi().getLibraryEntries(username, watchingStatus)
-                .enqueue(new Callback<ArrayList<LibraryEntry>>() {
+        getApi().getLibraryEntries(username, watchingStatus).enqueue(
+                new Callback<ArrayList<LibraryEntry>>() {
             @Override
             public void onResponse(final Call<ArrayList<LibraryEntry>> call,
                     final Response<ArrayList<LibraryEntry>> response) {
@@ -275,6 +276,60 @@ public final class Api {
             @Nullable final WatchingStatus watchingStatus,
             final ApiResponse<ArrayList<LibraryEntry>> listener) {
         getLibraryEntries(user.getName(), watchingStatus, listener);
+    }
+
+    public static void getNewsFeed(final ApiResponse<Feed> listener) {
+        getApi().getNewsFeed(getAuthTokenCookieString(), Boolean.TRUE, 1).enqueue(
+                new Callback<Feed>() {
+            @Override
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
+                Feed body = null;
+
+                if (response.isSuccessful()) {
+                    body = response.body();
+                }
+
+                if (body == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    body.hydrate();
+                    listener.success(body);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get news feed failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
+    public static void getNewsFeed(final Feed feed, final ApiResponse<Feed> listener) {
+        getApi().getNewsFeed(getAuthTokenCookieString(), Boolean.TRUE,
+                feed.getMetadata().getCursor()).enqueue(new Callback<Feed>() {
+            @Override
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
+                Feed body = null;
+
+                if (response.isSuccessful()) {
+                    body = response.body();
+                }
+
+                if (body == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    feed.merge(body);
+                    listener.success(feed);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get news feed failed", t);
+                listener.failure(null);
+            }
+        });
     }
 
     public static void getUser(final String username, final ApiResponse<User> listener) {
