@@ -84,6 +84,36 @@ public class Feed implements Parcelable {
         return mUsers != null && !mUsers.isEmpty();
     }
 
+    public void hydrate() {
+        if (!hasStories()) {
+            return;
+        }
+
+        for (final AbsStory story : mStories) {
+            switch (story.getType()) {
+                case COMMENT:
+                    hydrateStory((CommentStory) story);
+                    break;
+
+                case MEDIA_STORY:
+                    hydrateStory((MediaStory) story);
+                    break;
+
+                default:
+                    throw new RuntimeException("encountered unknown " +
+                            AbsStory.Type.class.getName() + ": \"" + story.getType() + '"');
+            }
+        }
+    }
+
+    private void hydrateStory(final CommentStory story) {
+        // TODO
+    }
+
+    private void hydrateStory(final MediaStory story) {
+        // TODO
+    }
+
     @Override
     public int describeContents() {
         return 0;
