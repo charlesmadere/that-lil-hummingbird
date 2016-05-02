@@ -174,7 +174,55 @@ public class Feed implements Parcelable {
             return;
         }
 
-        // TODO
+        if (feed.hasAnime()) {
+            if (hasAnime()) {
+                mAnime.addAll(feed.getAnime());
+            } else {
+                mAnime = feed.getAnime();
+            }
+        }
+
+        if (feed.hasGroupMembers()) {
+            if (hasGroupMembers()) {
+                mGroupMembers.addAll(feed.getGroupMembers());
+            } else {
+                mGroupMembers = feed.getGroupMembers();
+            }
+        }
+
+        if (feed.hasGroups()) {
+            if (hasGroups()) {
+                mGroups.addAll(feed.getGroups());
+            } else {
+                mGroups = feed.getGroups();
+            }
+        }
+
+        if (feed.hasStories()) {
+            if (hasStories()) {
+                mStories.addAll(feed.getStories());
+            } else {
+                mStories = feed.getStories();
+            }
+        }
+
+        if (feed.hasSubstories()) {
+            if (hasSubstories()) {
+                mSubstories.addAll(feed.getSubstories());
+            } else {
+                mSubstories = feed.getSubstories();
+            }
+        }
+
+        if (feed.hasUsers()) {
+            if (hasUsers()) {
+                mUsers.addAll(feed.getUsers());
+            } else {
+                mUsers = feed.getUsers();
+            }
+        }
+
+        mMetadata.setCursor(feed.getMetadata().getCursor() + 1);
     }
 
     @Override
@@ -223,8 +271,8 @@ public class Feed implements Parcelable {
             return mCursor;
         }
 
-        public void incrementCursor() {
-            ++mCursor;
+        public void setCursor(final int cursor) {
+            mCursor = cursor;
         }
 
         @Override
