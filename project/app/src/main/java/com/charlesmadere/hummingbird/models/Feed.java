@@ -12,20 +12,20 @@ import java.util.ArrayList;
 public class Feed implements Parcelable {
 
     @Nullable
-    @SerializedName("groups")
-    private ArrayList<Group> mGroups;
-
-    @Nullable
-    @SerializedName("group_members")
-    private ArrayList<GroupMember> mGroupMembers;
-
-    @Nullable
     @SerializedName("stories")
     private ArrayList<AbsStory> mStories;
 
     @Nullable
     @SerializedName("substories")
     private ArrayList<AbsSubstory> mSubstories;
+
+    @Nullable
+    @SerializedName("groups")
+    private ArrayList<Group> mGroups;
+
+    @Nullable
+    @SerializedName("group_members")
+    private ArrayList<GroupMember> mGroupMembers;
 
     @Nullable
     @SerializedName("users")
@@ -91,10 +91,10 @@ public class Feed implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeTypedList(mGroups);
-        dest.writeTypedList(mGroupMembers);
         ParcelableUtils.writeAbsStoryListToParcel(mStories, dest, flags);
         ParcelableUtils.writeAbsSubstoryListToParcel(mSubstories, dest, flags);
+        dest.writeTypedList(mGroups);
+        dest.writeTypedList(mGroupMembers);
         dest.writeTypedList(mUsers);
         dest.writeParcelable(mMetadata, flags);
     }
@@ -103,10 +103,10 @@ public class Feed implements Parcelable {
         @Override
         public Feed createFromParcel(final Parcel source) {
             final Feed f = new Feed();
-            f.mGroups = source.createTypedArrayList(Group.CREATOR);
-            f.mGroupMembers = source.createTypedArrayList(GroupMember.CREATOR);
             f.mStories = ParcelableUtils.readAbsStoryListFromParcel(source);
             f.mSubstories = ParcelableUtils.readAbsSubstoryListFromParcel(source);
+            f.mGroups = source.createTypedArrayList(Group.CREATOR);
+            f.mGroupMembers = source.createTypedArrayList(GroupMember.CREATOR);
             f.mUsers = source.createTypedArrayList(User.CREATOR);
             f.mMetadata = source.readParcelable(Metadata.class.getClassLoader());
             return f;
