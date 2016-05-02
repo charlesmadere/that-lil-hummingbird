@@ -123,14 +123,14 @@ public class MediaStory extends AbsStory implements Parcelable {
             return Type.ANIME;
         }
 
+        public void setAnime(final AbsAnime anime) {
+            mAnime = anime;
+        }
+
         @Override
         protected void readFromParcel(final Parcel source) {
             super.readFromParcel(source);
             mAnime = ParcelableUtils.readAbsAnimeFromParcel(source);
-        }
-
-        public void setAnime(final AbsAnime anime) {
-            mAnime = anime;
         }
 
         @Override
