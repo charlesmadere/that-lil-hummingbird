@@ -67,7 +67,7 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
 
     @Override
     public void setContent(final MediaStory content) {
-
+        // TODO
     }
 
 }

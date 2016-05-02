@@ -58,7 +58,7 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
 
     @Override
     public void setContent(final CommentStory content) {
-
+        // TODO
     }
 
 }
