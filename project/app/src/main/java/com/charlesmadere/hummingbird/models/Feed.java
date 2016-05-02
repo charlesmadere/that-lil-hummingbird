@@ -215,6 +215,10 @@ public class Feed implements Parcelable {
             return mCursor;
         }
 
+        public void incrementCursor() {
+            ++mCursor;
+        }
+
         @Override
         public int describeContents() {
             return 0;
