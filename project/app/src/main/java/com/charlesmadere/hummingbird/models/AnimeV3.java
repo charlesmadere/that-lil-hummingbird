@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -100,7 +101,37 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
 
     @Override
     public String getTitle() {
-        return null;
+        final TitleType titleType = Preferences.General.TitleLanguage.get();
+
+        if (titleType == null) {
+            return getCanonicalTitle();
+        }
+
+        String title;
+
+        switch (titleType) {
+            case CANONICAL:
+                return getCanonicalTitle();
+
+            case ENGLISH:
+                title = getEnglishTitle();
+                break;
+
+            case JAPANESE:
+            case ROMAJI:
+                title = getRomajiTitle();
+                break;
+
+            default:
+                throw new RuntimeException("encountered unknown " +
+                        TitleType.class.getSimpleName() + ": " + titleType);
+        }
+
+        if (TextUtils.isEmpty(title)) {
+            title = getCanonicalTitle();
+        }
+
+        return title;
     }
 
     @Override
