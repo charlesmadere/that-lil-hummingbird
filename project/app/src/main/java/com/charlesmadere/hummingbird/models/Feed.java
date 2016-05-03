@@ -99,11 +99,20 @@ public class Feed implements Parcelable {
 
     public void hydrate() {
         if (!hasStories()) {
+            // nothing to do
             return;
         }
 
+        if (hasSubstories()) {
+            for (final AbsSubstory substory : mSubstories) {
+                if (substory.getType() == AbsSubstory.Type.REPLY) {
+                    ((ReplySubstory) substory).hydrate(mUsers);
+                }
+            }
+        }
+
         for (final AbsStory story : mStories) {
-            story.setSubstories(mSubstories);
+            story.hydrate(mSubstories, mUsers);
 
             switch (story.getType()) {
                 case COMMENT:

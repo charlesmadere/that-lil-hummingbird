@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class ReplySubstory extends AbsSubstory implements Parcelable {
 
     @SerializedName("reply")
@@ -13,7 +15,7 @@ public class ReplySubstory extends AbsSubstory implements Parcelable {
     @SerializedName("user_id")
     private String mUserId;
 
-    @SerializedName("user")
+    // hydrated fields
     private User mUser;
 
 
@@ -34,8 +36,13 @@ public class ReplySubstory extends AbsSubstory implements Parcelable {
         return mUserId;
     }
 
-    public void setUser(final User user) {
-        mUser = user;
+    public void hydrate(final ArrayList<User> users) {
+        for (final User user : users) {
+            if (user.getName().equalsIgnoreCase(mUserId)) {
+                mUser = user;
+                break;
+            }
+        }
     }
 
     @Override

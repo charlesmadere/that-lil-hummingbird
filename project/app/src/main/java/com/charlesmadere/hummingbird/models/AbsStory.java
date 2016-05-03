@@ -40,6 +40,7 @@ public abstract class AbsStory implements Parcelable {
 
     // hydrated fields
     private ArrayList<AbsSubstory> mSubstories;
+    private User mUser;
 
 
     public SimpleDate getCreatedAt() {
@@ -69,6 +70,10 @@ public abstract class AbsStory implements Parcelable {
 
     public abstract Type getType();
 
+    public User getUser() {
+        return mUser;
+    }
+
     public String getUserId() {
         return mUserId;
     }
@@ -77,22 +82,28 @@ public abstract class AbsStory implements Parcelable {
         return mSubstoryIds != null && !mSubstoryIds.isEmpty();
     }
 
-    public void setSubstories(@Nullable final ArrayList<AbsSubstory> substories) {
-        if (!hasSubstoryIds() || substories == null || substories.isEmpty()) {
-            return;
-        }
+    public void hydrate(@Nullable final ArrayList<AbsSubstory> substories,
+            final ArrayList<User> users) {
+        if (hasSubstoryIds() && substories != null && !substories.isEmpty()) {
+            mSubstories = new ArrayList<>();
 
-        mSubstories = new ArrayList<>();
-
-        for (final String substoryId : mSubstoryIds) {
-            for (final AbsSubstory substory : substories) {
-                if (substoryId.equalsIgnoreCase(substory.getId())) {
-                    mSubstories.add(substory);
+            for (final String substoryId : mSubstoryIds) {
+                for (final AbsSubstory substory : substories) {
+                    if (substoryId.equalsIgnoreCase(substory.getId())) {
+                        mSubstories.add(substory);
+                    }
                 }
             }
+
+            mSubstories.trimToSize();
         }
 
-        mSubstories.trimToSize();
+        for (final User user : users) {
+            if (mUserId.equalsIgnoreCase(user.getName())) {
+                mUser = user;
+                break;
+            }
+        }
     }
 
     @Override
@@ -114,6 +125,7 @@ public abstract class AbsStory implements Parcelable {
         mId = source.readString();
         mUserId = source.readString();
         mSubstories = ParcelableUtils.readAbsSubstoryListFromParcel(source);
+        mUser = source.readParcelable(User.class.getClassLoader());
     }
 
     @Override
@@ -126,6 +138,7 @@ public abstract class AbsStory implements Parcelable {
         dest.writeString(mId);
         dest.writeString(mUserId);
         ParcelableUtils.writeAbsSubstoryListToParcel(mSubstories, dest, flags);
+        dest.writeParcelable(mUser, flags);
     }
 
 
