@@ -50,6 +50,10 @@ public class AnimeV1 extends AbsAnime implements Parcelable {
         return mAlternateTitle;
     }
 
+    public String getCoverImage() {
+        return mCoverImage;
+    }
+
     @Nullable
     @Override
     public SimpleDate getFinishedAiringDate() {

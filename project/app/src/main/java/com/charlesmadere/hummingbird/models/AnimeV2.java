@@ -69,6 +69,10 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         return mBayesianRating;
     }
 
+    public String getCoverImage() {
+        return mCoverImage;
+    }
+
     @Nullable
     @Override
     public SimpleDate getFinishedAiringDate() {
