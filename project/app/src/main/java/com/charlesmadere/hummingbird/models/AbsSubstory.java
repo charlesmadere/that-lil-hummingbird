@@ -61,6 +61,9 @@ public abstract class AbsSubstory implements Parcelable {
 
 
     public enum Type implements Parcelable {
+        @SerializedName("followed")
+        FOLLOWED,
+
         @SerializedName("reply")
         REPLY,
 
@@ -73,6 +76,9 @@ public abstract class AbsSubstory implements Parcelable {
 
         public static Type from(final String type) {
             switch (type) {
+                case "followed":
+                    return FOLLOWED;
+
                 case "reply":
                     return REPLY;
 
@@ -122,6 +128,10 @@ public abstract class AbsSubstory implements Parcelable {
             final AbsSubstory substory;
 
             switch (type) {
+                case FOLLOWED:
+                    substory = context.deserialize(json, FollowedSubstory.class);
+                    break;
+
                 case REPLY:
                     substory = context.deserialize(json, ReplySubstory.class);
                     break;
