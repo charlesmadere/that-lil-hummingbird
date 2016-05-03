@@ -94,7 +94,7 @@ public class StoryItemMediaStoryView extends CardView implements AdapterView<Sto
             mGenres.setVisibility(GONE);
         }
 
-        mPoster.setImageURI(Uri.parse(media.getCoverImage()));
+        mPoster.setImageURI(Uri.parse(media.getThumbnail()));
         final ArrayList<Substory> substories = mStory.getSubstories();
         final User user = mStory.getUser();
 

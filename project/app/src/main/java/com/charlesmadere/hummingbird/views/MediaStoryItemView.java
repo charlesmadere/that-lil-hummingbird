@@ -106,7 +106,7 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
             mGenres.setVisibility(GONE);
         }
 
-        mPoster.setImageURI(Uri.parse(anime.getCoverImage()));
+        mPoster.setImageURI(Uri.parse(anime.getThumbnail()));
     }
 
 }
