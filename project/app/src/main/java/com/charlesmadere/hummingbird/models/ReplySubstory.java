@@ -38,10 +38,11 @@ public class ReplySubstory extends AbsSubstory implements Parcelable {
 
     public void hydrate(final ArrayList<User> users) {
         for (final User user : users) {
-            if (user.getName().equalsIgnoreCase(mUserId)) {
-                mUser = user;
-                break;
-            }
+            // TODO we need the new AbsUser class
+//            if (user.getName().equalsIgnoreCase(mUserId)) {
+//                mUser = user;
+//                break;
+//            }
         }
     }
 
