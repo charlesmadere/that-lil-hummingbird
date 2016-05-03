@@ -37,9 +37,6 @@ public abstract class AbsAnime implements Parcelable {
     @SerializedName("show_type")
     protected ShowType mShowType;
 
-    @SerializedName("cover_image")
-    protected String mCoverImage;
-
     @SerializedName("id")
     protected String mId;
 
@@ -55,10 +52,6 @@ public abstract class AbsAnime implements Parcelable {
 
     public float getCommunityRating() {
         return mCommunityRating;
-    }
-
-    public String getCoverImage() {
-        return mCoverImage;
     }
 
     @Nullable
@@ -79,6 +72,8 @@ public abstract class AbsAnime implements Parcelable {
         return mId;
     }
 
+    public abstract String getImage();
+
     public ShowType getShowType() {
         return mShowType;
     }
@@ -90,6 +85,8 @@ public abstract class AbsAnime implements Parcelable {
     public String getSynopsis() {
         return mSynopsis;
     }
+
+    public abstract String getThumbnail();
 
     public abstract String getTitle();
 
@@ -133,7 +130,6 @@ public abstract class AbsAnime implements Parcelable {
         mEpisodeCount = ParcelableUtils.readInteger(source);
         mEpisodeLength = source.readInt();
         mShowType = source.readParcelable(ShowType.class.getClassLoader());
-        mCoverImage = source.readString();
         mId = source.readString();
         mSynopsis = source.readString();
     }
@@ -145,7 +141,6 @@ public abstract class AbsAnime implements Parcelable {
         ParcelableUtils.writeInteger(mEpisodeCount, dest);
         dest.writeInt(mEpisodeLength);
         dest.writeParcelable(mShowType, flags);
-        dest.writeString(mCoverImage);
         dest.writeString(mId);
         dest.writeString(mSynopsis);
     }

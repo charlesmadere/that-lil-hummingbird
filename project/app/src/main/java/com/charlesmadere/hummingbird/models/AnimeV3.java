@@ -80,6 +80,11 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
         return TextUtils.join(res.getText(R.string.delimiter), mGenres);
     }
 
+    @Override
+    public String getImage() {
+        return mPosterImage;
+    }
+
     public String getPosterImage() {
         return mPosterImage;
     }
@@ -97,6 +102,11 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
     @Override
     public SimpleDate getStartedAiringDate() {
         return mStartedAiring;
+    }
+
+    @Override
+    public String getThumbnail() {
+        return mPosterImageThumb;
     }
 
     @Override

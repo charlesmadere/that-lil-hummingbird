@@ -43,6 +43,9 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
     @SerializedName("started_airing_Date")
     private SimpleDate mStartedAiringDate;
 
+    @SerializedName("cover_image")
+    private String mCoverImage;
+
     @SerializedName("poster_image")
     private String mPosterImage;
 
@@ -91,6 +94,11 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         return TextUtils.join(res.getText(R.string.delimiter), mGenres);
     }
 
+    @Override
+    public String getImage() {
+        return mPosterImage;
+    }
+
     public String getPosterImage() {
         return mPosterImage;
     }
@@ -116,6 +124,11 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
     @Override
     public SimpleDate getStartedAiringDate() {
         return mStartedAiringDate;
+    }
+
+    @Override
+    public String getThumbnail() {
+        return mPosterImage;
     }
 
     @Override
@@ -167,6 +180,7 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         mLinks = source.readParcelable(Links.class.getClassLoader());
         mFinishedAiringDate = source.readParcelable(SimpleDate.class.getClassLoader());
         mStartedAiringDate = source.readParcelable(SimpleDate.class.getClassLoader());
+        mCoverImage = source.readString();
         mPosterImage = source.readString();
         mSlug = source.readString();
         mYoutubeVideoId = source.readString();
@@ -182,6 +196,7 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         dest.writeParcelable(mLinks, flags);
         dest.writeParcelable(mFinishedAiringDate, flags);
         dest.writeParcelable(mStartedAiringDate, flags);
+        dest.writeString(mCoverImage);
         dest.writeString(mPosterImage);
         dest.writeString(mSlug);
         dest.writeString(mYoutubeVideoId);
