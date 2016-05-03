@@ -11,6 +11,7 @@ import com.charlesmadere.hummingbird.BuildConfig;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.ThatLilHummingbird;
 import com.charlesmadere.hummingbird.misc.Constants;
+import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.models.NightMode;
 import com.charlesmadere.hummingbird.models.TitleType;
 import com.charlesmadere.hummingbird.preferences.Preferences;
@@ -107,7 +108,7 @@ public class SettingsActivity extends BaseDrawerActivity {
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
-                        ThatLilHummingbird.signOut();
+                        CurrentUser.signOut();
                     }
                 })
                 .show();
