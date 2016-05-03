@@ -1,7 +1,12 @@
 package com.charlesmadere.hummingbird.misc;
 
+import android.app.Activity;
+
+import com.charlesmadere.hummingbird.activities.LoginActivity;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.preferences.Preferences;
+
+import java.util.ArrayList;
 
 public final class CurrentUser {
 
@@ -24,7 +29,7 @@ public final class CurrentUser {
         sCurrentUser = user;
     }
 
-    public static boolean shouldBeFetched() {
+    public static synchronized boolean shouldBeFetched() {
         return Preferences.Account.AuthToken.exists() && Preferences.Account.Username.exists()
                 && get() == null;
     }
@@ -33,6 +38,21 @@ public final class CurrentUser {
         Preferences.Account.eraseAll();
         sCurrentUser = null;
         Timber.d(TAG, "current user signed out");
+
+        final ArrayList<Activity> activities = ActivityRegister.get();
+
+        if (activities == null || activities.isEmpty()) {
+            return;
+        }
+
+        final Activity activity = activities.get(0);
+        activity.startActivity(LoginActivity.getNewTaskLaunchIntent(activity));
+
+        for (final Activity a : activities) {
+            a.finish();
+        }
+
+        activities.clear();
     }
 
 }

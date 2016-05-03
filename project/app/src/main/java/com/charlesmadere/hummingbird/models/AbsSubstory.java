@@ -136,7 +136,7 @@ public abstract class AbsSubstory implements Parcelable {
 
                 default:
                     throw new RuntimeException("encountered unknown " + Type.class.getName() +
-                            ": " + type);
+                            ": \"" + type + '"');
             }
 
             return substory;

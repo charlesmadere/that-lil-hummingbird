@@ -45,8 +45,8 @@ public final class ParcelableUtils {
                 break;
 
             default:
-                throw new RuntimeException("Encountered a " + AbsAnime.Version.class.getName()
-                        + " (" + version + ") that hasn't been added as a possible value.");
+                throw new RuntimeException("encountered unknown " +
+                        AbsAnime.Version.class.getName() + ": \"" + version + '"');
         }
 
         return (T) anime;
@@ -114,8 +114,8 @@ public final class ParcelableUtils {
                 break;
 
             default:
-                throw new RuntimeException("Encountered a " + AbsStory.Type.class.getName()
-                        + " (" + type + ") that hasn't been added as a possible value.");
+                throw new RuntimeException("encountered unknown " + AbsStory.Type.class.getName()
+                        + ": \"" + type + '"');
         }
 
         return (T) story;
@@ -187,8 +187,8 @@ public final class ParcelableUtils {
                 break;
 
             default:
-                throw new RuntimeException("Encountered a " + AbsSubstory.Type.class.getName()
-                        + " (" + type + ") that hasn't been added as a possible value.");
+                throw new RuntimeException("encountered unknown " +
+                        AbsSubstory.Type.class.getName() + ": \"" + type + '"');
         }
 
         return (T) substory;
@@ -302,8 +302,8 @@ public final class ParcelableUtils {
                 break;
 
             default:
-                throw new RuntimeException("Encountered a " + MediaStory.Type.class.getName()
-                        + " (" + type + ") that hasn't been added as a possible value.");
+                throw new RuntimeException("encountered unknown " + MediaStory.Type.class.getName()
+                        + ": \"" + type + '"');
         }
 
         return (T) media;

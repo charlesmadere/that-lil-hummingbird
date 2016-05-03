@@ -13,8 +13,9 @@ public interface AdapterView<T> {
             super(itemView);
 
             if (!(itemView instanceof AdapterView)) {
-                throw new RuntimeException("itemView (" + itemView.getClass().getSimpleName()
-                        + ") must implement " + AdapterView.class.getSimpleName());
+                throw new IllegalArgumentException("itemView (" +
+                        itemView.getClass().getSimpleName() + ") must implement " +
+                        AdapterView.class.getSimpleName());
             }
         }
 

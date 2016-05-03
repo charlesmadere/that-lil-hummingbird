@@ -29,7 +29,7 @@ public class DoublePreference extends Preference<Double> {
                 return Double.valueOf(value);
             } catch (final NumberFormatException e) {
                 // this Exception should never happen
-                throw new IllegalStateException("Error parsing DoublePreference's (" + getName()
+                throw new RuntimeException("Error parsing DoublePreference's (" + getName()
                         + ':' + getKey() + ") value: \"" + value + '"', e);
             }
         } else {

@@ -196,7 +196,7 @@ public abstract class AbsStory implements Parcelable {
 
                 default:
                     throw new RuntimeException("encountered unknown " + Type.class.getName() +
-                            ": " + type);
+                            ": \"" + type + '"');
             }
 
             return story;

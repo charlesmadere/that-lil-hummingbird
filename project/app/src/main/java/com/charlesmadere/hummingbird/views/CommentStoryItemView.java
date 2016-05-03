@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.CommentStory;
+import com.charlesmadere.hummingbird.models.User;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
@@ -16,6 +18,8 @@ import butterknife.ButterKnife;
 
 public class CommentStoryItemView extends CardView implements AdapterView<CommentStory>,
         View.OnClickListener {
+
+    private CommentStory mCommentStory;
 
     @BindView(R.id.sdvAvatar)
     SimpleDraweeView mAvatar;
@@ -58,6 +62,13 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
 
     @Override
     public void setContent(final CommentStory content) {
+        mCommentStory = content;
+
+        final User user = mCommentStory.getPoster();
+        mAvatar.setImageURI(Uri.parse(user.getAvatar()));
+        mTitle.setText(user.getName());
+        mTimeAgo.setText(mCommentStory.getCreatedAt().getRelativeTimeText(getContext()));
+
         // TODO
     }
 

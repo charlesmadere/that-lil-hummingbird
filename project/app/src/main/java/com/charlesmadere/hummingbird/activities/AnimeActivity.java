@@ -90,6 +90,7 @@ public class AnimeActivity extends BaseDrawerActivity {
         if (mAnimeV2 == null) {
             switch (mAnime.getVersion()) {
                 case V1:
+                case V3:
                     fetchAnimeV2();
                     break;
 
@@ -98,8 +99,8 @@ public class AnimeActivity extends BaseDrawerActivity {
                     break;
 
                 default:
-                    throw new RuntimeException("encountered illegal " +
-                            AbsAnime.Version.class.getName() + ": " + mAnime.getVersion());
+                    throw new RuntimeException("encountered unknown " +
+                            AbsAnime.Version.class.getName() + ": \"" + mAnime.getVersion() + '"');
             }
         } else {
             showAnimeV2(mAnimeV2);

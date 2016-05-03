@@ -25,7 +25,7 @@ public class StoriesAdapter extends BaseAdapter<Story> {
 
             default:
                 throw new RuntimeException("encountered unknown " + Story.Type.class.getName()
-                        + ": " + getItem(position).getType());
+                        + ": \"" + getItem(position).getType() + '"');
         }
     }
 

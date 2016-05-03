@@ -102,7 +102,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
                     break;
 
                 default:
-                    throw new RuntimeException("illegal position: " + position);
+                    throw new IllegalArgumentException("illegal position: " + position);
             }
 
             return fragment;
@@ -122,7 +122,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
                     break;
 
                 default:
-                    throw new RuntimeException("illegal position: " + position);
+                    throw new IllegalArgumentException("illegal position: " + position);
             }
 
             return title;
@@ -153,7 +153,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
                     break;
 
                 default:
-                    throw new RuntimeException("illegal position: " + position);
+                    throw new IllegalArgumentException("illegal position: " + position);
             }
 
             return fragment;
@@ -177,7 +177,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
                     break;
 
                 default:
-                    throw new RuntimeException("illegal position: " + position);
+                    throw new IllegalArgumentException("illegal position: " + position);
             }
 
             return title;

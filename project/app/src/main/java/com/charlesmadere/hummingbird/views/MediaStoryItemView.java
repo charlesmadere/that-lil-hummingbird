@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.MediaStory;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -16,6 +18,8 @@ import butterknife.ButterKnife;
 
 public class MediaStoryItemView extends CardView implements AdapterView<MediaStory>,
         View.OnClickListener {
+
+    private MediaStory mMediaStory;
 
     @BindView(R.id.sdvPoster)
     SimpleDraweeView mPoster;
@@ -50,7 +54,16 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
 
     @Override
     public void onClick(final View v) {
-        // TODO
+        final MediaStory.AbsMedia media = mMediaStory.getMedia();
+
+        switch (media.getType()) {
+            case ANIME:
+                break;
+
+            default:
+                throw new RuntimeException("encountered unknown " +
+                        MediaStory.AbsMedia.Type.class.getName() + ": \"" + media.getType() + '"');
+        }
     }
 
     @Override
@@ -67,7 +80,33 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
 
     @Override
     public void setContent(final MediaStory content) {
-        // TODO
+        mMediaStory = content;
+        final MediaStory.AbsMedia media = mMediaStory.getMedia();
+
+        switch (media.getType()) {
+            case ANIME:
+                setContent((MediaStory.AnimeMedia) media);
+                break;
+
+            default:
+                throw new RuntimeException("encountered unknown " +
+                        MediaStory.AbsMedia.Type.class.getName() + ": \"" + media.getType() + '"');
+        }
+    }
+
+    private void setContent(final MediaStory.AnimeMedia media) {
+        final AbsAnime anime = media.getAnime();
+        mTitle.setText(anime.getTitle());
+        mShowType.setText(anime.getShowType().getTextResId());
+
+        if (anime.hasGenres()) {
+            mGenres.setText(anime.getGenresString(getResources()));
+            mGenres.setVisibility(VISIBLE);
+        } else {
+            mGenres.setVisibility(GONE);
+        }
+
+        mPoster.setImageURI(Uri.parse(anime.getCoverImage()));
     }
 
 }

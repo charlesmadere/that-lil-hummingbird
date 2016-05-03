@@ -124,7 +124,7 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
 
             default:
                 throw new RuntimeException("encountered unknown " +
-                        TitleType.class.getSimpleName() + ": " + titleType);
+                        TitleType.class.getSimpleName() + ": \"" + titleType + '"');
         }
 
         if (TextUtils.isEmpty(title)) {

@@ -27,7 +27,7 @@ public final class TypefaceStore {
 
     public static synchronized Typeface get(final TypefaceEntry typefaceEntry) {
         if (typefaceEntry == null) {
-            throw new NullPointerException("typefaceEntry parameter can't be null");
+            throw new IllegalArgumentException("typefaceEntry parameter can't be null");
         }
 
         Typeface typeface = STORE.get(typefaceEntry);

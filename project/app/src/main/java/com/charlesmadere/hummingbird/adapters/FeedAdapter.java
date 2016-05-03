@@ -22,8 +22,8 @@ public class FeedAdapter extends BaseAdapter<AbsStory> {
                 return R.layout.item_media_story;
 
             default:
-                throw new RuntimeException("encountered unknown " +
-                        AbsStory.Type.class.getName() + ": " + getItem(position).getType());
+                throw new RuntimeException("encountered unknown " + AbsStory.Type.class.getName()
+                        + ": \"" + getItem(position).getType() + '"');
         }
     }
 
