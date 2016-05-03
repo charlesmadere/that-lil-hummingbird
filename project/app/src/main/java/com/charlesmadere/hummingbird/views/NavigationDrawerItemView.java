@@ -89,8 +89,11 @@ public class NavigationDrawerItemView extends AppCompatTextView {
 
         setTextColor(color);
         setText(mEntry.getTextResId());
-        setTypeface(isSelected() ? TypefaceStore.get(TypefaceEntry.OPEN_SANS_BOLD) :
-                TypefaceStore.get(TypefaceEntry.OPEN_SANS_SEMIBOLD));
+
+        if (!isInEditMode()) {
+            setTypeface(isSelected() ? TypefaceStore.get(TypefaceEntry.OPEN_SANS_BOLD) :
+                    TypefaceStore.get(TypefaceEntry.OPEN_SANS_SEMIBOLD));
+        }
 
         Drawable icon = ContextCompat.getDrawable(getContext(), mEntry.getIconResId());
         icon = DrawableCompat.wrap(icon);
