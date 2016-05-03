@@ -53,19 +53,19 @@ public class WatchlistStatusUpdateSubstory extends AbsSubstory implements Parcel
 
 
     public enum NewStatus implements Parcelable {
-        @SerializedName("completed")
+        @SerializedName("Completed")
         COMPLETED,
 
-        @SerializedName("currently_watching")
+        @SerializedName("Currently Watching")
         CURRENTLY_WATCHING,
 
-        @SerializedName("dropped")
+        @SerializedName("Dropped")
         DROPPED,
 
-        @SerializedName("on_hold")
+        @SerializedName("On Hold")
         ON_HOLD,
 
-        @SerializedName("plan_to_watch")
+        @SerializedName("Plan to Watch")
         PLAN_TO_WATCH;
 
 
