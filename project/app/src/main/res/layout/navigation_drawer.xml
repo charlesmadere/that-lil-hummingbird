@@ -17,7 +17,7 @@
                 android:layout_marginBottom="@dimen/root_padding_half"
                 android:layout_width="match_parent"
                 app:fixed_side="width"
-                app:height_ratio="10"
+                app:height_ratio="9"
                 app:width_ratio="16">
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/sdvCoverImage"
@@ -71,6 +71,12 @@
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
                 app:entry="hummingbird_on_the_web"
                 style="@style/NavigationDrawerItemView" />
+            <ImageView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:scaleType="centerInside"
+                android:src="@drawable/atsuka_drawer"
+                tools:ignore="ContentDescription" />
         </LinearLayout>
     </ScrollView>
 </com.charlesmadere.hummingbird.views.NavigationDrawerView>
