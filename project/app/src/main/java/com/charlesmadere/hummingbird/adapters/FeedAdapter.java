@@ -18,6 +18,9 @@ public class FeedAdapter extends BaseAdapter<AbsStory> {
             case COMMENT:
                 return R.layout.item_comment_story;
 
+            case FOLLOWED:
+                return R.layout.item_followed_story;
+
             case MEDIA_STORY:
                 return R.layout.item_media_story;
 

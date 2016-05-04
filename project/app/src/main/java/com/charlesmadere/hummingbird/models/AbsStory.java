@@ -146,6 +146,9 @@ public abstract class AbsStory implements Parcelable {
         @SerializedName("comment")
         COMMENT,
 
+        @SerializedName("followed")
+        FOLLOWED,
+
         @SerializedName("media_story")
         MEDIA_STORY;
 
@@ -154,6 +157,9 @@ public abstract class AbsStory implements Parcelable {
             switch (type) {
                 case "comment":
                     return COMMENT;
+
+                case "followed":
+                    return FOLLOWED;
 
                 case "media_story":
                     return MEDIA_STORY;
@@ -201,6 +207,10 @@ public abstract class AbsStory implements Parcelable {
             switch (type) {
                 case COMMENT:
                     story = context.deserialize(json, CommentStory.class);
+                    break;
+
+                case FOLLOWED:
+                    story = context.deserialize(json, FollowedStory.class);
                     break;
 
                 case MEDIA_STORY:

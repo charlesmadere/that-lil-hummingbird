@@ -119,6 +119,9 @@ public class Feed implements Parcelable {
                     hydrateStory((CommentStory) story);
                     break;
 
+                case FOLLOWED:
+                    hydrateStory((FollowedStory) story);
+
                 case MEDIA_STORY:
                     hydrateStory((MediaStory) story);
                     break;
@@ -152,6 +155,10 @@ public class Feed implements Parcelable {
                 }
             }
         }
+    }
+
+    private void hydrateStory(final FollowedStory story) {
+        // TODO
     }
 
     private void hydrateStory(final MediaStory story) {

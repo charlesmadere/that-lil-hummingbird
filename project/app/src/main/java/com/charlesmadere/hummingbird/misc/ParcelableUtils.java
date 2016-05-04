@@ -9,6 +9,9 @@ import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.AnimeV1;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.AnimeV3;
+import com.charlesmadere.hummingbird.models.CommentStory;
+import com.charlesmadere.hummingbird.models.FollowedStory;
+import com.charlesmadere.hummingbird.models.FollowedSubstory;
 import com.charlesmadere.hummingbird.models.MediaStory;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
 import com.charlesmadere.hummingbird.models.WatchedEpisodeSubstory;
@@ -106,11 +109,15 @@ public final class ParcelableUtils {
 
         switch (type) {
             case COMMENT:
-                story = source.readParcelable(AnimeV1.class.getClassLoader());
+                story = source.readParcelable(CommentStory.class.getClassLoader());
+                break;
+
+            case FOLLOWED:
+                story = source.readParcelable(FollowedStory.class.getClassLoader());
                 break;
 
             case MEDIA_STORY:
-                story = source.readParcelable(AnimeV2.class.getClassLoader());
+                story = source.readParcelable(MediaStory.class.getClassLoader());
                 break;
 
             default:
@@ -174,6 +181,10 @@ public final class ParcelableUtils {
         final AbsSubstory substory;
 
         switch (type) {
+            case FOLLOWED:
+                substory = source.readParcelable(FollowedSubstory.class.getClassLoader());
+                break;
+
             case REPLY:
                 substory = source.readParcelable(ReplySubstory.class.getClassLoader());
                 break;

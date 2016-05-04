@@ -30,11 +30,9 @@ public class User implements Parcelable {
     @SerializedName("last_library_update")
     private SimpleDate mLastLibraryUpdate;
 
-    @Nullable
     @SerializedName("avatar")
     private String mAvatar;
 
-    @Nullable
     @SerializedName("avatar_small")
     private String mAvatarSmall;
 
@@ -77,12 +75,10 @@ public class User implements Parcelable {
     private WaifuOrHusbando mWaifuOrHusbando;
 
 
-    @Nullable
     public String getAvatar() {
         return mAvatar;
     }
 
-    @Nullable
     public String getAvatarSmall() {
         return mAvatarSmall;
     }

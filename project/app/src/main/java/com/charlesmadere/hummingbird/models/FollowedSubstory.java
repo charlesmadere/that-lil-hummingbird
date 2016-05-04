@@ -23,6 +23,14 @@ public class FollowedSubstory extends AbsSubstory implements Parcelable {
         return mUserId;
     }
 
+    public User getUser() {
+        return mUser;
+    }
+
+    public void setUser(final User user) {
+        mUser = user;
+    }
+
     @Override
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);

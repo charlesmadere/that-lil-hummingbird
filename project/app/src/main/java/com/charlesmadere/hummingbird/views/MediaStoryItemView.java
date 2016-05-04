@@ -21,17 +21,17 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
 
     private MediaStory mMediaStory;
 
+    @BindView(R.id.msivZero)
+    MediaSubstoryItemView mSubstoryZero;
+
+    @BindView(R.id.msivOne)
+    MediaSubstoryItemView mSubstoryOne;
+
+    @BindView(R.id.msivTwo)
+    MediaSubstoryItemView mSubstoryTwo;
+
     @BindView(R.id.sdvPoster)
     SimpleDraweeView mPoster;
-
-    @BindView(R.id.simssvZero)
-    StoryItemMediaStorySubstoryView mSubstoryZero;
-
-    @BindView(R.id.simssvOne)
-    StoryItemMediaStorySubstoryView mSubstoryOne;
-
-    @BindView(R.id.simssvTwo)
-    StoryItemMediaStorySubstoryView mSubstoryTwo;
 
     @BindView(R.id.tvGenres)
     TextView mGenres;
@@ -58,6 +58,7 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
 
         switch (media.getType()) {
             case ANIME:
+                // TODO
                 break;
 
             default:
