@@ -121,6 +121,7 @@ public class Feed implements Parcelable {
 
                 case FOLLOWED:
                     hydrateStory((FollowedStory) story);
+                    break;
 
                 case MEDIA_STORY:
                     hydrateStory((MediaStory) story);
