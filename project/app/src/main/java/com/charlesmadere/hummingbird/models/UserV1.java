@@ -3,14 +3,13 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class User implements Parcelable {
+public class UserV1 extends AbsUser implements Parcelable {
 
     @Nullable
     @SerializedName("favorites")
@@ -36,11 +35,6 @@ public class User implements Parcelable {
     @SerializedName("avatar_small")
     private String mAvatarSmall;
 
-    @Nullable
-    @SerializedName("bio")
-    private String mBio;
-
-    @Nullable
     @SerializedName("cover_image")
     private String mCoverImage;
 
@@ -51,30 +45,11 @@ public class User implements Parcelable {
     private String mUrl;
 
     @Nullable
-    @SerializedName("waifu")
-    private String mWaifu;
-
-    @Nullable
-    @SerializedName("waifu_char_id")
-    private String mWaifuCharId;
-
-    @Nullable
-    @SerializedName("waifu_slug")
-    private String mWaifuSlug;
-
-    @Nullable
-    @SerializedName("website")
-    private String mWebsite;
-
-    @Nullable
     @SerializedName("title_language_preference")
     private TitleLanguagePreference mTitleLanguagePreference;
 
-    @Nullable
-    @SerializedName("waifu_or_husbando")
-    private WaifuOrHusbando mWaifuOrHusbando;
 
-
+    @Override
     public String getAvatar() {
         return mAvatar;
     }
@@ -83,19 +58,19 @@ public class User implements Parcelable {
         return mAvatarSmall;
     }
 
-    @Nullable
-    public String getBio() {
-        return mBio;
-    }
-
-    @Nullable
-    public String getCoverImage() {
+    @Override
+    public String getCover() {
         return mCoverImage;
     }
 
     @Nullable
     public ArrayList<Favorite> getFavorites() {
         return mFavorites;
+    }
+
+    @Override
+    public String getId() {
+        return mName;
     }
 
     public SimpleDate getLastLibraryUpdate() {
@@ -128,54 +103,13 @@ public class User implements Parcelable {
         return mUrl;
     }
 
-    @Nullable
-    public String getWaifu() {
-        return mWaifu;
-    }
-
-    @Nullable
-    public String getWaifuCharId() {
-        return mWaifuCharId;
-    }
-
-    @Nullable
-    public WaifuOrHusbando getWaifuOrHusbando() {
-        return mWaifuOrHusbando;
-    }
-
-    @Nullable
-    public String getWaifuSlug() {
-        return mWaifuSlug;
-    }
-
-    @Nullable
-    public String getWebsite() {
-        return mWebsite;
-    }
-
-    public boolean hasBio() {
-        return !TextUtils.isEmpty(mBio);
+    @Override
+    public Version getVersion() {
+        return Version.V1;
     }
 
     public boolean hasFavorites() {
         return mFavorites != null && !mFavorites.isEmpty();
-    }
-
-    public boolean hasHusbando() {
-        return hasWaifuOrHusbando() && mWaifuOrHusbando == WaifuOrHusbando.HUSBANDO;
-    }
-
-    public boolean hasWaifu() {
-        return hasWaifuOrHusbando() && mWaifuOrHusbando == WaifuOrHusbando.WAIFU;
-    }
-
-    public boolean hasWaifuOrHusbando() {
-        return !TextUtils.isEmpty(mWaifu) && !TextUtils.isEmpty(mWaifuCharId) &&
-                !TextUtils.isEmpty(mWaifuSlug) && mWaifuOrHusbando != null;
-    }
-
-    public boolean hasWebsite() {
-        return !TextUtils.isEmpty(mWebsite);
     }
 
     public boolean isNsfwContentAllowed() {
@@ -205,22 +139,16 @@ public class User implements Parcelable {
         dest.writeParcelable(mLastLibraryUpdate, flags);
         dest.writeString(mAvatar);
         dest.writeString(mAvatarSmall);
-        dest.writeString(mBio);
         dest.writeString(mCoverImage);
         dest.writeString(mName);
         dest.writeString(mUrl);
-        dest.writeString(mWaifu);
-        dest.writeString(mWaifuCharId);
-        dest.writeString(mWaifuSlug);
-        dest.writeString(mWebsite);
         dest.writeParcelable(mTitleLanguagePreference, flags);
-        dest.writeParcelable(mWaifuOrHusbando, flags);
     }
 
-    public static final Creator<User> CREATOR = new Creator<User>() {
+    public static final Creator<UserV1> CREATOR = new Creator<UserV1>() {
         @Override
-        public User createFromParcel(final Parcel source) {
-            final User u = new User();
+        public UserV1 createFromParcel(final Parcel source) {
+            final UserV1 u = new UserV1();
             u.mFavorites = source.createTypedArrayList(Favorite.CREATOR);
             u.mOnline = ParcelableUtils.readBoolean(source);
             u.mShowAdultContent = ParcelableUtils.readBoolean(source);
@@ -228,22 +156,16 @@ public class User implements Parcelable {
             u.mLastLibraryUpdate = source.readParcelable(SimpleDate.class.getClassLoader());
             u.mAvatar = source.readString();
             u.mAvatarSmall = source.readString();
-            u.mBio = source.readString();
             u.mCoverImage = source.readString();
             u.mName = source.readString();
             u.mUrl = source.readString();
-            u.mWaifu = source.readString();
-            u.mWaifuCharId = source.readString();
-            u.mWaifuSlug = source.readString();
-            u.mWebsite = source.readString();
             u.mTitleLanguagePreference = source.readParcelable(SimpleDate.class.getClassLoader());
-            u.mWaifuOrHusbando = source.readParcelable(WaifuOrHusbando.class.getClassLoader());
             return u;
         }
 
         @Override
-        public User[] newArray(final int size) {
-            return new User[size];
+        public UserV1[] newArray(final int size) {
+            return new UserV1[size];
         }
     };
 
