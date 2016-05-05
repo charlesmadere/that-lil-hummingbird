@@ -34,7 +34,7 @@ public class MediaStory extends AbsStory implements Parcelable {
 
     @Override
     public String toString() {
-        return getType().toString() + ':' + mMedia.getType().toString();
+        return getType().toString() + ':' + mMedia.toString();
     }
 
     @Override
