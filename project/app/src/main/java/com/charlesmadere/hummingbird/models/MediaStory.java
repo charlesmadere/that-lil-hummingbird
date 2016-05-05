@@ -33,6 +33,11 @@ public class MediaStory extends AbsStory implements Parcelable {
     }
 
     @Override
+    public String toString() {
+        return getType().toString() + ':' + mMedia.getType().toString();
+    }
+
+    @Override
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);
         mMedia = ParcelableUtils.readMediaStoryAbsMediaFromParcel(source);
@@ -70,11 +75,6 @@ public class MediaStory extends AbsStory implements Parcelable {
         public abstract Type getType();
 
         public abstract void hydrate(final Feed feed);
-
-        @Override
-        public String toString() {
-            return getType().toString();
-        }
 
         @Override
         public int describeContents() {
@@ -190,6 +190,11 @@ public class MediaStory extends AbsStory implements Parcelable {
         }
 
         @Override
+        public String toString() {
+            return getType().toString() + ':' + mAnime.getTitle();
+        }
+
+        @Override
         protected void readFromParcel(final Parcel source) {
             super.readFromParcel(source);
             mAnime = ParcelableUtils.readAbsAnimeFromParcel(source);
@@ -226,6 +231,11 @@ public class MediaStory extends AbsStory implements Parcelable {
         @Override
         public void hydrate(final Feed feed) {
 
+        }
+
+        @Override
+        public String toString() {
+            return getType().toString();
         }
 
         public static final Creator<MangaMedia> CREATOR = new Creator<MangaMedia>() {

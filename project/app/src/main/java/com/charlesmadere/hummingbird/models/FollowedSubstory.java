@@ -33,6 +33,11 @@ public class FollowedSubstory extends AbsSubstory implements Parcelable {
     }
 
     @Override
+    public String toString() {
+        return getType().toString() + ':' + mUser.getName();
+    }
+
+    @Override
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);
         mUserId = source.readString();
