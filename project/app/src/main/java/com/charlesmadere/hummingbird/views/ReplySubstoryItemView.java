@@ -9,7 +9,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -17,7 +16,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ReplySubstoryItemView extends FrameLayout implements AdapterView<ReplySubstory> {
+public class ReplySubstoryItemView extends FrameLayout {
 
     @BindView(R.id.kvtvReply)
     KeyValueTextView mReply;
@@ -55,7 +54,6 @@ public class ReplySubstoryItemView extends FrameLayout implements AdapterView<Re
         ButterKnife.bind(this);
     }
 
-    @Override
     public void setContent(final ReplySubstory content) {
         final AbsUser user = content.getUser();
         mAvatar.setImageURI(Uri.parse(user.getAvatarSmall()));

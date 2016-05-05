@@ -98,17 +98,17 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
         }
 
         final ArrayList<AbsSubstory> substories = mMediaStory.getSubstories();
-        mMediaZero.setContent(substories.get(0));
+        mMediaZero.setContent(substories.get(0), mMediaStory.getUser());
 
         if (substories.size() >= 2) {
-            mMediaOne.setContent(substories.get(1));
+            mMediaOne.setContent(substories.get(1), mMediaStory.getUser());
             mMediaOne.setVisibility(VISIBLE);
         } else {
             mMediaOne.setVisibility(GONE);
         }
 
         if (substories.size() >= 3) {
-            mMediaTwo.setContent(substories.get(2));
+            mMediaTwo.setContent(substories.get(2), mMediaStory.getUser());
             mMediaTwo.setVisibility(VISIBLE);
         } else {
             mMediaTwo.setVisibility(GONE);

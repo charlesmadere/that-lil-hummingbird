@@ -10,7 +10,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.FollowedSubstory;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -18,8 +17,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FollowedSubstoryItemView extends FrameLayout implements AdapterView<FollowedSubstory>,
-        View.OnClickListener {
+public class FollowedSubstoryItemView extends FrameLayout implements View.OnClickListener {
 
     private FollowedSubstory mFollowedSubstory;
 
@@ -62,7 +60,6 @@ public class FollowedSubstoryItemView extends FrameLayout implements AdapterView
         setOnClickListener(this);
     }
 
-    @Override
     public void setContent(final FollowedSubstory content) {
         mFollowedSubstory = content;
 

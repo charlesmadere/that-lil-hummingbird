@@ -2,22 +2,27 @@ package com.charlesmadere.hummingbird.views;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
+import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.WatchedEpisodeSubstory;
 import com.charlesmadere.hummingbird.models.WatchlistStatusUpdateSubstory;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.text.NumberFormat;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MediaSubstoryItemView extends FrameLayout implements AdapterView<AbsSubstory> {
+public class MediaSubstoryItemView extends FrameLayout {
+
+    private NumberFormat mNumberFormat;
 
     @BindView(R.id.kvtvAction)
     KeyValueTextView mAction;
@@ -53,17 +58,20 @@ public class MediaSubstoryItemView extends FrameLayout implements AdapterView<Ab
         }
 
         ButterKnife.bind(this);
+        mNumberFormat = NumberFormat.getInstance();
     }
 
-    @Override
-    public void setContent(final AbsSubstory content) {
+    public void setContent(final AbsSubstory content, final AbsUser user) {
+        mAvatar.setImageURI(Uri.parse(user.getAvatarSmall()));
+        mTimeAgo.setText(content.getCreatedAt().getRelativeTimeText(getContext()));
+
         switch (content.getType()) {
             case WATCHED_EPISODE:
-                setContent((WatchedEpisodeSubstory) content);
+                setContent((WatchedEpisodeSubstory) content, user);
                 break;
 
             case WATCHLIST_STATUS_UPDATE:
-                setContent((WatchlistStatusUpdateSubstory) content);
+                setContent((WatchlistStatusUpdateSubstory) content, user);
                 break;
 
             default:
@@ -72,12 +80,14 @@ public class MediaSubstoryItemView extends FrameLayout implements AdapterView<Ab
         }
     }
 
-    private void setContent(final WatchedEpisodeSubstory content) {
-        // TODO
+    private void setContent(final WatchedEpisodeSubstory content, final AbsUser user) {
+        mAction.setText(user.getName(), getResources().getString(R.string.x_watched_episode_y,
+                user.getName(), mNumberFormat.format(content.getEpisodeNumber())));
     }
 
-    private void setContent(final WatchlistStatusUpdateSubstory content) {
-        // TODO
+    private void setContent(final WatchlistStatusUpdateSubstory content, final AbsUser user) {
+        mAction.setText(user.getName(), getResources().getString(
+                content.getNewStatus().getTextResId()));
     }
 
 }

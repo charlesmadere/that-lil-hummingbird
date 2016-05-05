@@ -2,7 +2,9 @@ package com.charlesmadere.hummingbird.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.StringRes;
 
+import com.charlesmadere.hummingbird.R;
 import com.google.gson.annotations.SerializedName;
 
 public class WatchlistStatusUpdateSubstory extends AbsSubstory implements Parcelable {
@@ -54,20 +56,31 @@ public class WatchlistStatusUpdateSubstory extends AbsSubstory implements Parcel
 
     public enum NewStatus implements Parcelable {
         @SerializedName("Completed")
-        COMPLETED,
+        COMPLETED(R.string.has_completed),
 
         @SerializedName("Currently Watching")
-        CURRENTLY_WATCHING,
+        CURRENTLY_WATCHING(R.string.is_currently_watching),
 
         @SerializedName("Dropped")
-        DROPPED,
+        DROPPED(R.string.has_dropped),
 
         @SerializedName("On Hold")
-        ON_HOLD,
+        ON_HOLD(R.string.has_placed_on_hold),
 
         @SerializedName("Plan to Watch")
-        PLAN_TO_WATCH;
+        PLAN_TO_WATCH(R.string.plans_to_watch);
 
+        private final int mTextResId;
+
+
+        NewStatus(@StringRes final int textResId) {
+            mTextResId = textResId;
+        }
+
+        @StringRes
+        public int getTextResId() {
+            return mTextResId;
+        }
 
         @Override
         public int describeContents() {
