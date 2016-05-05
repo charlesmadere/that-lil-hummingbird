@@ -10,8 +10,11 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsAnime;
+import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.MediaStory;
 import com.facebook.drawee.view.SimpleDraweeView;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,13 +25,13 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
     private MediaStory mMediaStory;
 
     @BindView(R.id.msivZero)
-    MediaSubstoryItemView mSubstoryZero;
+    MediaSubstoryItemView mMediaZero;
 
     @BindView(R.id.msivOne)
-    MediaSubstoryItemView mSubstoryOne;
+    MediaSubstoryItemView mMediaOne;
 
     @BindView(R.id.msivTwo)
-    MediaSubstoryItemView mSubstoryTwo;
+    MediaSubstoryItemView mMediaTwo;
 
     @BindView(R.id.sdvPoster)
     SimpleDraweeView mPoster;
@@ -93,10 +96,28 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
                 throw new RuntimeException("encountered unknown " +
                         MediaStory.AbsMedia.Type.class.getName() + ": \"" + media.getType() + '"');
         }
+
+        final ArrayList<AbsSubstory> substories = mMediaStory.getSubstories();
+        mMediaZero.setContent(substories.get(0));
+
+        if (substories.size() >= 2) {
+            mMediaOne.setContent(substories.get(1));
+            mMediaOne.setVisibility(VISIBLE);
+        } else {
+            mMediaOne.setVisibility(GONE);
+        }
+
+        if (substories.size() >= 3) {
+            mMediaTwo.setContent(substories.get(2));
+            mMediaTwo.setVisibility(VISIBLE);
+        } else {
+            mMediaTwo.setVisibility(GONE);
+        }
     }
 
     private void setContent(final MediaStory.AnimeMedia media) {
         final AbsAnime anime = media.getAnime();
+        mPoster.setImageURI(Uri.parse(anime.getThumbnail()));
         mTitle.setText(anime.getTitle());
         mShowType.setText(anime.getShowType().getTextResId());
 
@@ -106,8 +127,6 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
         } else {
             mGenres.setVisibility(GONE);
         }
-
-        mPoster.setImageURI(Uri.parse(anime.getThumbnail()));
     }
 
 }

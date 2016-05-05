@@ -2,7 +2,6 @@
 <com.charlesmadere.hummingbird.views.MediaSubstoryItemView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:foreground="?attr/selectableItemBackground"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:paddingBottom="@dimen/root_padding_half"
@@ -20,7 +19,6 @@
             android:layout_toEndOf="@id/sdvAvatar"
             android:layout_width="match_parent"
             app:keyTextColor="?attr/colorAccent"
-            app:valueTextColor="?android:attr/textColorPrimary"
             tools:text="ThatLilChestnut is currently watching." />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvTimeAgo"

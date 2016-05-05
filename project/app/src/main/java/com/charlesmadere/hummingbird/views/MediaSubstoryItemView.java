@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -18,10 +17,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MediaSubstoryItemView extends FrameLayout implements AdapterView<AbsSubstory>,
-        View.OnClickListener {
-
-    private AbsSubstory mAbsSubstory;
+public class MediaSubstoryItemView extends FrameLayout implements AdapterView<AbsSubstory> {
 
     @BindView(R.id.kvtvAction)
     KeyValueTextView mAction;
@@ -49,23 +45,6 @@ public class MediaSubstoryItemView extends FrameLayout implements AdapterView<Ab
     }
 
     @Override
-    public void onClick(final View v) {
-        switch (mAbsSubstory.getType()) {
-            case WATCHED_EPISODE:
-                // TODO
-                break;
-
-            case WATCHLIST_STATUS_UPDATE:
-                // TODO
-                break;
-
-            default:
-                throw new IllegalStateException("can't handle click for " +
-                        AbsSubstory.Type.class.getName() + ": \"" + mAbsSubstory.getType() + '"');
-        }
-    }
-
-    @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
 
@@ -74,25 +53,22 @@ public class MediaSubstoryItemView extends FrameLayout implements AdapterView<Ab
         }
 
         ButterKnife.bind(this);
-        setOnClickListener(this);
     }
 
     @Override
     public void setContent(final AbsSubstory content) {
-        mAbsSubstory = content;
-
-        switch (mAbsSubstory.getType()) {
+        switch (content.getType()) {
             case WATCHED_EPISODE:
-                setContent((WatchedEpisodeSubstory) mAbsSubstory);
+                setContent((WatchedEpisodeSubstory) content);
                 break;
 
             case WATCHLIST_STATUS_UPDATE:
-                setContent((WatchlistStatusUpdateSubstory) mAbsSubstory);
+                setContent((WatchlistStatusUpdateSubstory) content);
                 break;
 
             default:
                 throw new IllegalArgumentException("encountered illegal " +
-                        AbsSubstory.Type.class.getName() + ": \"" + mAbsSubstory.getType() + '"');
+                        AbsSubstory.Type.class.getName() + ": \"" + content.getType() + '"');
         }
     }
 
