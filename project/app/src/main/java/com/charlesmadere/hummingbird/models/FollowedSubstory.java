@@ -28,8 +28,16 @@ public class FollowedSubstory extends AbsSubstory implements Parcelable {
         return mUser;
     }
 
-    public void setUser(final AbsUser user) {
-        mUser = user;
+    @Override
+    public void hydrate(final Feed feed) {
+        super.hydrate(feed);
+
+        for (final AbsUser user : feed.getUsers()) {
+            if (mUserId.equalsIgnoreCase(user.getId())) {
+                mUser = user;
+                break;
+            }
+        }
     }
 
     @Override
