@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class CommentStoryItemView extends CardView implements AdapterView<CommentStory>,
         View.OnClickListener {
@@ -58,6 +59,11 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
     public CommentStoryItemView(final Context context, final AttributeSet attrs,
             final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    @OnClick(R.id.sdvAvatar)
+    void onAvatarClick() {
+        // TODO
     }
 
     @Override

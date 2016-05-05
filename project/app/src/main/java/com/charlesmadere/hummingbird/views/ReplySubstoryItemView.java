@@ -5,7 +5,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -18,10 +17,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ReplySubstoryItemView extends FrameLayout implements AdapterView<ReplySubstory>,
-        View.OnClickListener {
-
-    private ReplySubstory mReplySubstory;
+public class ReplySubstoryItemView extends FrameLayout implements AdapterView<ReplySubstory> {
 
     @BindView(R.id.kvtvReply)
     KeyValueTextView mReply;
@@ -49,11 +45,6 @@ public class ReplySubstoryItemView extends FrameLayout implements AdapterView<Re
     }
 
     @Override
-    public void onClick(final View v) {
-        // TODO
-    }
-
-    @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
 
@@ -62,17 +53,14 @@ public class ReplySubstoryItemView extends FrameLayout implements AdapterView<Re
         }
 
         ButterKnife.bind(this);
-        setOnClickListener(this);
     }
 
     @Override
     public void setContent(final ReplySubstory content) {
-        mReplySubstory = content;
-
-        final AbsUser user = mReplySubstory.getUser();
+        final AbsUser user = content.getUser();
         mAvatar.setImageURI(Uri.parse(user.getAvatarSmall()));
-        mReply.setText(user.getName(), mReplySubstory.getReply());
-        mTimeAgo.setText(mReplySubstory.getCreatedAt().getRelativeTimeText(getContext()));
+        mReply.setText(user.getName(), content.getReply());
+        mTimeAgo.setText(content.getCreatedAt().getRelativeTimeText(getContext()));
     }
 
 }
