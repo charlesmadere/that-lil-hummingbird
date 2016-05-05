@@ -97,7 +97,6 @@ public class MediaStory extends AbsStory implements Parcelable {
             @SerializedName("manga")
             MANGA;
 
-
             public static Type from(final String type) {
                 switch (type) {
                     case "anime":
