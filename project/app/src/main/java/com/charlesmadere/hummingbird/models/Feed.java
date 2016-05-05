@@ -103,86 +103,26 @@ public class Feed implements Parcelable {
             return;
         }
 
+        if (hasGroupMembers()) {
+            for (final GroupMember groupMember : mGroupMembers) {
+                groupMember.hydrate(this);
+            }
+        }
+
+        if (hasGroups()) {
+            for (final Group group : mGroups) {
+                group.hydrate(this);
+            }
+        }
+
         if (hasSubstories()) {
             for (final AbsSubstory substory : mSubstories) {
-                if (substory.getType() == AbsSubstory.Type.REPLY) {
-                    ((ReplySubstory) substory).hydrate(mUsers);
-                }
+                substory.hydrate(this);
             }
         }
 
         for (final AbsStory story : mStories) {
-            story.hydrate(mSubstories, mUsers);
-
-            switch (story.getType()) {
-                case COMMENT:
-                    hydrateStory((CommentStory) story);
-                    break;
-
-                case FOLLOWED:
-                    hydrateStory((FollowedStory) story);
-                    break;
-
-                case MEDIA_STORY:
-                    hydrateStory((MediaStory) story);
-                    break;
-
-                default:
-                    throw new RuntimeException("encountered unknown " +
-                            AbsStory.Type.class.getName() + ": \"" + story.getType() + '"');
-            }
-        }
-    }
-
-    private void hydrateStory(final CommentStory story) {
-        if (hasGroups()) {
-            final String groupId = story.getGroupId();
-
-            for (final Group group : mGroups) {
-                if (groupId.equalsIgnoreCase(group.getId())) {
-                    story.setGroup(group);
-                    break;
-                }
-            }
-        }
-
-        if (hasUsers()) {
-            final String posterId = story.getPosterId();
-
-            for (final AbsUser user : mUsers) {
-                if (posterId.equalsIgnoreCase(user.getId())) {
-                    story.setPoster(user);
-                    break;
-                }
-            }
-        }
-    }
-
-    private void hydrateStory(final FollowedStory story) {
-        // TODO
-    }
-
-    private void hydrateStory(final MediaStory story) {
-        final MediaStory.AbsMedia media = story.getMedia();
-
-        switch (media.getType()) {
-            case ANIME:
-                if (hasAnime()) {
-                    final MediaStory.AnimeMedia animeMedia = (MediaStory.AnimeMedia) media;
-                    final String animeId = animeMedia.getId();
-
-                    for (final AbsAnime anime : mAnime) {
-                        if (animeId.equalsIgnoreCase(anime.getId())) {
-                            animeMedia.setAnime(anime);
-                            break;
-                        }
-                    }
-                }
-                break;
-
-            default:
-                throw new RuntimeException("encountered unknown " +
-                        MediaStory.AbsMedia.Type.class.getName() + ": \"" + media.getType() + '"');
+            story.hydrate(this);
         }
     }
 

@@ -6,8 +6,6 @@ import android.os.Parcelable;
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-
 public class ReplySubstory extends AbsSubstory implements Parcelable {
 
     @SerializedName("reply")
@@ -37,13 +35,15 @@ public class ReplySubstory extends AbsSubstory implements Parcelable {
         return mUserId;
     }
 
-    public void hydrate(final ArrayList<AbsUser> users) {
-        for (final AbsUser user : users) {
-            // TODO we need the new AbsUser class
-//            if (mUserId.equalsIgnoreCase(user.getName())) {
-//                mUser = user;
-//                break;
-//            }
+    @Override
+    public void hydrate(final Feed feed) {
+        super.hydrate(feed);
+
+        for (final AbsUser user : feed.getUsers()) {
+            if (mUserId.equalsIgnoreCase(user.getId())) {
+                mUser = user;
+                break;
+            }
         }
     }
 

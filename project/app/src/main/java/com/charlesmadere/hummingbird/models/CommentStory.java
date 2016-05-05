@@ -59,16 +59,27 @@ public class CommentStory extends AbsStory implements Parcelable {
         return mRecentLikerIds != null && !mRecentLikerIds.isEmpty();
     }
 
+    @Override
+    public void hydrate(final Feed feed) {
+        super.hydrate(feed);
+
+        for (final AbsUser user : feed.getUsers()) {
+            if (mPosterId.equalsIgnoreCase(user.getId())) {
+                mPoster = user;
+                break;
+            }
+        }
+
+        for (final Group group : feed.getGroups()) {
+            if (mGroupId.equalsIgnoreCase(group.getId())) {
+                mGroup = group;
+                break;
+            }
+        }
+    }
+
     public boolean isLiked() {
         return mIsLiked;
-    }
-
-    public void setGroup(final Group group) {
-        mGroup = group;
-    }
-
-    public void setPoster(final AbsUser poster) {
-        mPoster = poster;
     }
 
     @Override

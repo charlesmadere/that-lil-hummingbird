@@ -36,6 +36,10 @@ public abstract class AbsSubstory implements Parcelable {
 
     public abstract Type getType();
 
+    public void hydrate(final Feed feed) {
+        // method intentionally blank, children can override
+    }
+
     @Override
     public String toString() {
         return getType().toString();

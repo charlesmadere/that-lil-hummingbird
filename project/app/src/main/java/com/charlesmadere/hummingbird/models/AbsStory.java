@@ -82,13 +82,19 @@ public abstract class AbsStory implements Parcelable {
         return mSubstoryIds != null && !mSubstoryIds.isEmpty();
     }
 
-    public void hydrate(@Nullable final ArrayList<AbsSubstory> substories,
-            final ArrayList<AbsUser> users) {
-        if (hasSubstoryIds() && substories != null && !substories.isEmpty()) {
+    public void hydrate(final Feed feed) {
+        for (final AbsUser user : feed.getUsers()) {
+            if (mUserId.equalsIgnoreCase(user.getId())) {
+                mUser = user;
+                break;
+            }
+        }
+
+        if (hasSubstoryIds() && feed.hasSubstories()) {
             mSubstories = new ArrayList<>();
 
             for (final String substoryId : mSubstoryIds) {
-                for (final AbsSubstory substory : substories) {
+                for (final AbsSubstory substory : feed.getSubstories()) {
                     if (substoryId.equalsIgnoreCase(substory.getId())) {
                         mSubstories.add(substory);
                     }
@@ -96,13 +102,6 @@ public abstract class AbsStory implements Parcelable {
             }
 
             mSubstories.trimToSize();
-        }
-
-        for (final AbsUser user : users) {
-            if (mUserId.equalsIgnoreCase(user.getId())) {
-                mUser = user;
-                break;
-            }
         }
     }
 

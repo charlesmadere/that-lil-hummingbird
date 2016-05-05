@@ -22,6 +22,9 @@ public class GroupMember implements Parcelable {
     @SerializedName("user_id")
     private String mUserId;
 
+    // hydrated fields
+    private AbsUser mUser;
+
 
     public String getGroupId() {
         return mGroupId;
@@ -37,6 +40,15 @@ public class GroupMember implements Parcelable {
 
     public String getUserId() {
         return mUserId;
+    }
+
+    public void hydrate(final Feed feed) {
+        for (final AbsUser user : feed.getUsers()) {
+            if (mUserId.equalsIgnoreCase(user.getId())) {
+                mUser = user;
+                break;
+            }
+        }
     }
 
     public boolean isPending() {

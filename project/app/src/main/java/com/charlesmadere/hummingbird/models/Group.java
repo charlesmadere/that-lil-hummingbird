@@ -2,8 +2,11 @@ package com.charlesmadere.hummingbird.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 public class Group implements Parcelable {
 
@@ -34,6 +37,10 @@ public class Group implements Parcelable {
     @SerializedName("name")
     private String mName;
 
+    // hydrated fields
+    @Nullable
+    private ArrayList<GroupMember> mGroupMembers;
+
 
     public String getAbout() {
         return mAbout;
@@ -59,6 +66,11 @@ public class Group implements Parcelable {
         return mCurrentMemberId;
     }
 
+    @Nullable
+    public ArrayList<GroupMember> getGroupMembers() {
+        return mGroupMembers;
+    }
+
     public String getId() {
         return mId;
     }
@@ -69,6 +81,22 @@ public class Group implements Parcelable {
 
     public String getName() {
         return mName;
+    }
+
+    public boolean hasGroupMembers() {
+        return mGroupMembers != null && !mGroupMembers.isEmpty();
+    }
+
+    public void hydrate(final Feed feed) {
+        mGroupMembers = new ArrayList<>();
+
+        for (final GroupMember groupMember : feed.getGroupMembers()) {
+            if (mId.equalsIgnoreCase(groupMember.getGroupId())) {
+                mGroupMembers.add(groupMember);
+            }
+        }
+
+        mGroupMembers.trimToSize();
     }
 
     @Override
@@ -87,6 +115,7 @@ public class Group implements Parcelable {
         dest.writeString(mCurrentMemberId);
         dest.writeString(mId);
         dest.writeString(mName);
+        dest.writeTypedList(mGroupMembers);
     }
 
     public static final Creator<Group> CREATOR = new Creator<Group>() {
@@ -102,6 +131,7 @@ public class Group implements Parcelable {
             g.mCurrentMemberId = source.readString();
             g.mId = source.readString();
             g.mName = source.readString();
+            g.mGroupMembers = source.createTypedArrayList(GroupMember.CREATOR);
             return g;
         }
 
