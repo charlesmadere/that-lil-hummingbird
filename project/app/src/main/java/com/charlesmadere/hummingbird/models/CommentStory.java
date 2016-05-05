@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
@@ -18,6 +19,10 @@ public class CommentStory extends AbsStory implements Parcelable {
     @SerializedName("is_liked")
     private boolean mIsLiked;
 
+    @SerializedName("comment")
+    private String mComment;
+
+    @Nullable
     @SerializedName("group_id")
     private String mGroupId;
 
@@ -29,10 +34,16 @@ public class CommentStory extends AbsStory implements Parcelable {
     private Group mGroup;
 
 
+    public String getComment() {
+        return mComment;
+    }
+
+    @Nullable
     public Group getGroup() {
         return mGroup;
     }
 
+    @Nullable
     public String getGroupId() {
         return mGroupId;
     }
@@ -55,6 +66,10 @@ public class CommentStory extends AbsStory implements Parcelable {
         return Type.COMMENT;
     }
 
+    public boolean hasGroupId() {
+        return !TextUtils.isEmpty(mGroupId);
+    }
+
     public boolean hasRecentLikerIds() {
         return mRecentLikerIds != null && !mRecentLikerIds.isEmpty();
     }
@@ -70,10 +85,12 @@ public class CommentStory extends AbsStory implements Parcelable {
             }
         }
 
-        for (final Group group : feed.getGroups()) {
-            if (mGroupId.equalsIgnoreCase(group.getId())) {
-                mGroup = group;
-                break;
+        if (hasGroupId()) {
+            for (final Group group : feed.getGroups()) {
+                if (mGroupId.equalsIgnoreCase(group.getId())) {
+                    mGroup = group;
+                    break;
+                }
             }
         }
     }
@@ -87,6 +104,7 @@ public class CommentStory extends AbsStory implements Parcelable {
         super.readFromParcel(source);
         mRecentLikerIds = source.createStringArrayList();
         mIsLiked = source.readInt() != 0;
+        mComment = source.readString();
         mGroupId = source.readString();
         mPosterId = source.readString();
         mPoster = ParcelableUtils.readAbsUserFromParcel(source);
@@ -98,6 +116,7 @@ public class CommentStory extends AbsStory implements Parcelable {
         super.writeToParcel(dest, flags);
         dest.writeStringList(mRecentLikerIds);
         dest.writeInt(mIsLiked ? 1 : 0);
+        dest.writeString(mComment);
         dest.writeString(mGroupId);
         dest.writeString(mPosterId);
         ParcelableUtils.writeAbsUserToParcel(mPoster, dest, flags);

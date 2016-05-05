@@ -34,5 +34,25 @@
             android:layout_width="match_parent"
             android:maxLines="6"
             tools:text="Hello, World!" />
+        <LinearLayout
+            android:id="@+id/llReplies"
+            android:layout_below="@id/tvComment"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/root_padding"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:showDividers="beginning|middle"
+            android:visibility="gone"
+            tools:visibility="visible">
+            <include
+                android:id="@+id/rsivZero"
+                layout="@layout/item_reply_substory" />
+            <include
+                android:id="@+id/rsivOne"
+                layout="@layout/item_reply_substory" />
+            <include
+                android:id="@+id/rsivTwo"
+                layout="@layout/item_reply_substory" />
+        </LinearLayout>
     </RelativeLayout>
 </com.charlesmadere.hummingbird.views.CommentStoryItemView>

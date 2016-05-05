@@ -5,13 +5,18 @@ import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.CommentStory;
+import com.charlesmadere.hummingbird.models.ReplySubstory;
 import com.facebook.drawee.view.SimpleDraweeView;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,6 +25,18 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
         View.OnClickListener {
 
     private CommentStory mCommentStory;
+
+    @BindView(R.id.llReplies)
+    LinearLayout mReplies;
+
+    @BindView(R.id.rsivZero)
+    ReplySubstoryItemView mReplyZero;
+
+    @BindView(R.id.rsivOne)
+    ReplySubstoryItemView mReplyOne;
+
+    @BindView(R.id.rsivTwo)
+    ReplySubstoryItemView mReplyTwo;
 
     @BindView(R.id.sdvAvatar)
     SimpleDraweeView mAvatar;
@@ -67,9 +84,31 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
         final AbsUser user = mCommentStory.getPoster();
         mAvatar.setImageURI(Uri.parse(user.getAvatar()));
         mTitle.setText(user.getName());
+        mComment.setText(mCommentStory.getComment());
         mTimeAgo.setText(mCommentStory.getCreatedAt().getRelativeTimeText(getContext()));
 
-        // TODO
+        if (content.hasSubstoryIds()) {
+            final ArrayList<AbsSubstory> substories = mCommentStory.getSubstories();
+            mReplyZero.setContent((ReplySubstory) substories.get(0));
+
+            if (substories.size() >= 2) {
+                mReplyOne.setContent((ReplySubstory) substories.get(1));
+                mReplyOne.setVisibility(VISIBLE);
+            } else {
+                mReplyOne.setVisibility(GONE);
+            }
+
+            if (substories.size() >= 3) {
+                mReplyTwo.setContent((ReplySubstory) substories.get(2));
+                mReplyTwo.setVisibility(VISIBLE);
+            } else {
+                mReplyTwo.setVisibility(GONE);
+            }
+
+            mReplies.setVisibility(VISIBLE);
+        } else {
+            mReplies.setVisibility(GONE);
+        }
     }
 
 }
