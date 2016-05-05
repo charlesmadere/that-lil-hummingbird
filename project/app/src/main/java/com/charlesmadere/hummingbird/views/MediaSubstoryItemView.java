@@ -81,8 +81,8 @@ public class MediaSubstoryItemView extends FrameLayout {
     }
 
     private void setContent(final WatchedEpisodeSubstory content, final AbsUser user) {
-        mAction.setText(user.getName(), getResources().getString(R.string.x_watched_episode_y,
-                user.getName(), mNumberFormat.format(content.getEpisodeNumber())));
+        mAction.setText(user.getName(), getResources().getString(R.string.watched_episode_x,
+                mNumberFormat.format(content.getEpisodeNumber())));
     }
 
     private void setContent(final WatchlistStatusUpdateSubstory content, final AbsUser user) {
