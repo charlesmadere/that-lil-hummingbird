@@ -5,7 +5,14 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
+
+import java.lang.reflect.Type;
 
 public abstract class AbsUser implements Parcelable {
 
@@ -36,12 +43,14 @@ public abstract class AbsUser implements Parcelable {
 
     public abstract String getAvatar();
 
+    public abstract String getAvatarSmall();
+
     @Nullable
     public String getBio() {
         return mBio;
     }
 
-    public abstract String getCover();
+    public abstract String getCoverImage();
 
     public abstract String getId();
 
@@ -151,5 +160,21 @@ public abstract class AbsUser implements Parcelable {
             }
         };
     }
+
+    public static final JsonDeserializer<AbsUser> JSON_DESERIALIZER = new JsonDeserializer<AbsUser>() {
+        @Override
+        public AbsUser deserialize(final JsonElement json, final Type typeOfT,
+                final JsonDeserializationContext context) throws JsonParseException {
+            final JsonObject jsonObject = json.getAsJsonObject();
+
+            if (jsonObject.has("name")) {
+                return context.deserialize(json, UserV1.class);
+            } else if (jsonObject.has("id")) {
+                return context.deserialize(json, UserV2.class);
+            } else {
+                throw new JsonParseException("unable to recognize AbsUser type");
+            }
+        }
+    };
 
 }

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AbsStory;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
+import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.AnimeV1;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.AnimeV3;
@@ -14,6 +15,8 @@ import com.charlesmadere.hummingbird.models.FollowedStory;
 import com.charlesmadere.hummingbird.models.FollowedSubstory;
 import com.charlesmadere.hummingbird.models.MediaStory;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
+import com.charlesmadere.hummingbird.models.UserV1;
+import com.charlesmadere.hummingbird.models.UserV2;
 import com.charlesmadere.hummingbird.models.WatchedEpisodeSubstory;
 import com.charlesmadere.hummingbird.models.WatchlistStatusUpdateSubstory;
 
@@ -23,7 +26,6 @@ import java.util.List;
 public final class ParcelableUtils {
 
     @Nullable
-    @SuppressWarnings("unchecked")
     public static <T extends AbsAnime> T readAbsAnimeFromParcel(final Parcel source) {
         final AbsAnime.Version version = source.readParcelable(
                 AbsAnime.Version.class.getClassLoader());
@@ -32,7 +34,7 @@ public final class ParcelableUtils {
             return null;
         }
 
-        final AbsAnime anime;
+        final T anime;
 
         switch (version) {
             case V1:
@@ -52,7 +54,7 @@ public final class ParcelableUtils {
                         AbsAnime.Version.class.getName() + ": \"" + version + '"');
         }
 
-        return (T) anime;
+        return anime;
     }
 
     @Nullable
@@ -97,7 +99,6 @@ public final class ParcelableUtils {
     }
 
     @Nullable
-    @SuppressWarnings("unchecked")
     public static <T extends AbsStory> T readAbsStoryFromParcel(final Parcel source) {
         final AbsStory.Type type = source.readParcelable(AbsStory.Type.class.getClassLoader());
 
@@ -105,7 +106,7 @@ public final class ParcelableUtils {
             return null;
         }
 
-        final AbsStory story;
+        final T story;
 
         switch (type) {
             case COMMENT:
@@ -125,7 +126,7 @@ public final class ParcelableUtils {
                         + ": \"" + type + '"');
         }
 
-        return (T) story;
+        return story;
     }
 
     @Nullable
@@ -170,7 +171,6 @@ public final class ParcelableUtils {
     }
 
     @Nullable
-    @SuppressWarnings("unchecked")
     public static <T extends AbsSubstory> T readAbsSubstoryFromParcel(final Parcel source) {
         final AbsSubstory.Type type = source.readParcelable(AbsSubstory.Type.class.getClassLoader());
 
@@ -178,7 +178,7 @@ public final class ParcelableUtils {
             return null;
         }
 
-        final AbsSubstory substory;
+        final T substory;
 
         switch (type) {
             case FOLLOWED:
@@ -194,7 +194,8 @@ public final class ParcelableUtils {
                 break;
 
             case WATCHLIST_STATUS_UPDATE:
-                substory = source.readParcelable(WatchlistStatusUpdateSubstory.class.getClassLoader());
+                substory = source.readParcelable(
+                        WatchlistStatusUpdateSubstory.class.getClassLoader());
                 break;
 
             default:
@@ -202,7 +203,7 @@ public final class ParcelableUtils {
                         AbsSubstory.Type.class.getName() + ": \"" + type + '"');
         }
 
-        return (T) substory;
+        return substory;
     }
 
     @Nullable
@@ -243,6 +244,75 @@ public final class ParcelableUtils {
 
         for (final AbsSubstory substory : list) {
             writeAbsSubstoryToParcel(substory, dest, flags);
+        }
+    }
+
+    @Nullable
+    public static <T extends AbsUser> T readAbsUserFromParcel(final Parcel source) {
+        final AbsUser.Version version = source.readParcelable(
+                AbsUser.Version.class.getClassLoader());
+
+        if (version == null) {
+            return null;
+        }
+
+        final T user;
+
+        switch (version) {
+            case V1:
+                user = source.readParcelable(UserV1.class.getClassLoader());
+                break;
+
+            case V2:
+                user = source.readParcelable(UserV2.class.getClassLoader());
+                break;
+
+            default:
+                throw new RuntimeException("encountered unknown " +
+                        AbsUser.Version.class.getName() + ": \"" + version + '"');
+        }
+
+        return user;
+    }
+
+    @Nullable
+    public static ArrayList<AbsUser> readAbsUserListFromParcel(final Parcel source) {
+        final int count = source.readInt();
+
+        if (count == 0) {
+            return null;
+        }
+
+        final ArrayList<AbsUser> list = new ArrayList<>(count);
+
+        for (int i = 0; i < count; ++i) {
+            list.add(readAbsUserFromParcel(source));
+        }
+
+        return list;
+    }
+
+    public static void writeAbsUserToParcel(@Nullable final AbsUser user, final Parcel dest,
+            final int flags) {
+        if (user == null) {
+            dest.writeParcelable(null, flags);
+        } else {
+            dest.writeParcelable(user.getVersion(), flags);
+            dest.writeParcelable(user, flags);
+        }
+    }
+
+    public static void writeAbsUserListToParcel(@Nullable final List<AbsUser> list,
+            final Parcel dest, final int flags) {
+        if (list == null || list.isEmpty()) {
+            dest.writeInt(0);
+            return;
+        }
+
+        dest.writeInt(list.size());
+
+        for (final AbsUser user : list) {
+            writeAbsUserToParcel(user, dest, flags);
         }
     }
 
@@ -291,7 +361,6 @@ public final class ParcelableUtils {
     }
 
     @Nullable
-    @SuppressWarnings("unchecked")
     public static <T extends MediaStory.AbsMedia> T readMediaStoryAbsMediaFromParcel(
             final Parcel source) {
         final MediaStory.AbsMedia.Type type = source.readParcelable(
@@ -301,7 +370,7 @@ public final class ParcelableUtils {
             return null;
         }
 
-        final MediaStory.AbsMedia media;
+        final T media;
 
         switch (type) {
             case ANIME:
@@ -317,7 +386,7 @@ public final class ParcelableUtils {
                         + ": \"" + type + '"');
         }
 
-        return (T) media;
+        return media;
     }
 
     @Nullable

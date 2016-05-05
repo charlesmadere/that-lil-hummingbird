@@ -11,9 +11,9 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsAnime;
+import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.Story;
 import com.charlesmadere.hummingbird.models.Substory;
-import com.charlesmadere.hummingbird.models.User;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -96,7 +96,7 @@ public class StoryItemMediaStoryView extends CardView implements AdapterView<Sto
 
         mPoster.setImageURI(Uri.parse(media.getThumbnail()));
         final ArrayList<Substory> substories = mStory.getSubstories();
-        final User user = mStory.getUser();
+        final AbsUser user = mStory.getUser();
 
         if (substories.size() >= 3) {
             mSubstoryTwo.setContent(user, substories.get(2));

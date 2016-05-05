@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.FollowedStory;
-import com.charlesmadere.hummingbird.models.User;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.text.NumberFormat;
@@ -75,7 +75,7 @@ public class FollowedStoryItemView extends CardView implements AdapterView<Follo
     public void setContent(final FollowedStory content) {
         mFollowedStory = content;
 
-        final User user = content.getUser();
+        final AbsUser user = content.getUser();
         mAvatar.setImageURI(Uri.parse(user.getAvatar()));
 
         final Resources res = getResources();

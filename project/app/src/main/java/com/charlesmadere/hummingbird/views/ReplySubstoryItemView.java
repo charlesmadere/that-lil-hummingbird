@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
-import com.charlesmadere.hummingbird.models.User;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
@@ -68,7 +68,8 @@ public class ReplySubstoryItemView extends FrameLayout implements AdapterView<Re
     @Override
     public void setContent(final ReplySubstory content) {
         mReplySubstory = content;
-        final User user = mReplySubstory.getUser();
+
+        final AbsUser user = mReplySubstory.getUser();
         mAvatar.setImageURI(Uri.parse(user.getAvatarSmall()));
         mReply.setText(user.getName(), mReplySubstory.getReply());
         mTimeAgo.setText(mReplySubstory.getCreatedAt().getRelativeTimeText(getContext()));

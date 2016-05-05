@@ -14,7 +14,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.LibraryEntriesAdapter;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
-import com.charlesmadere.hummingbird.models.User;
+import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
@@ -36,7 +36,7 @@ public class AnimeLibraryFragment extends BaseFragment implements
 
     private ArrayList<LibraryEntry> mLibraryEntries;
     private LibraryEntriesAdapter mAdapter;
-    private User mUser;
+    private UserV1 mUser;
     private WatchingStatus mWatchingStatus;
 
     @BindView(R.id.llEmpty)
@@ -58,7 +58,7 @@ public class AnimeLibraryFragment extends BaseFragment implements
     TextView mErrorText;
 
 
-    public static AnimeLibraryFragment create(final User user, final WatchingStatus watchingStatus) {
+    public static AnimeLibraryFragment create(final UserV1 user, final WatchingStatus watchingStatus) {
         final Bundle args = new Bundle(2);
         args.putParcelable(KEY_USER, user);
         args.putParcelable(KEY_WATCHING_STATUS, watchingStatus);

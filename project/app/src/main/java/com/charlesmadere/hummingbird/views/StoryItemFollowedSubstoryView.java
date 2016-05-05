@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.BaseUserActivity;
+import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.Substory;
-import com.charlesmadere.hummingbird.models.User;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
@@ -69,7 +69,8 @@ public class StoryItemFollowedSubstoryView extends FrameLayout implements View.O
 
     public void setContent(final Substory substory) {
         mSubstory = substory;
-        final User user = mSubstory.getFollowedUser();
+
+        final AbsUser user = mSubstory.getFollowedUser();
         mAvatar.setImageURI(Uri.parse(user.getAvatarSmall()));
         mUsername.setText(user.getName());
     }

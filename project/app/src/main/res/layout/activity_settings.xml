@@ -76,6 +76,10 @@
                             android:id="@+id/tvGitHub"
                             android:text="@string/open_source_on_github"
                             style="@style/SettingsItem" />
+                        <com.charlesmadere.hummingbird.views.TypefaceTextView
+                            android:id="@+id/tvPriscilla"
+                            android:text="@string/atsuka_drawn_by_priscilla_zhou"
+                            style="@style/SettingsItem" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView

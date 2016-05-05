@@ -15,6 +15,13 @@ public class Story implements Parcelable {
     @SerializedName("media")
     private AbsAnime mMedia;
 
+    @Nullable
+    @SerializedName("poster")
+    private AbsUser mPoster;
+
+    @SerializedName("user")
+    private AbsUser mUser;
+
     @SerializedName("substories")
     private ArrayList<Substory> mSubstories;
 
@@ -33,13 +40,6 @@ public class Story implements Parcelable {
 
     @SerializedName("story_type")
     private Type mType;
-
-    @Nullable
-    @SerializedName("poster")
-    private User mPoster;
-
-    @SerializedName("user")
-    private User mUser;
 
 
     public Substory getCommentSubstory() {
@@ -68,7 +68,7 @@ public class Story implements Parcelable {
     }
 
     @Nullable
-    public User getPoster() {
+    public AbsUser getPoster() {
         return mPoster;
     }
 
@@ -93,7 +93,7 @@ public class Story implements Parcelable {
         return mUpdatedAt;
     }
 
-    public User getUser() {
+    public AbsUser getUser() {
         return mUser;
     }
 
@@ -113,30 +113,30 @@ public class Story implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeParcelable(mMedia, flags);
+        ParcelableUtils.writeAbsAnimeToParcel(mMedia, dest, flags);
+        ParcelableUtils.writeAbsUserToParcel(mPoster, dest, flags);
+        ParcelableUtils.writeAbsUserToParcel(mUser, dest, flags);
         dest.writeTypedList(mSubstories);
         ParcelableUtils.writeBoolean(mSelfPost, dest);
         dest.writeInt(mSubstoriesCount);
         dest.writeParcelable(mUpdatedAt, flags);
         dest.writeString(mId);
         dest.writeParcelable(mType, flags);
-        dest.writeParcelable(mPoster, flags);
-        dest.writeParcelable(mUser, flags);
     }
 
     public static final Creator<Story> CREATOR = new Creator<Story>() {
         @Override
         public Story createFromParcel(final Parcel source) {
             final Story s = new Story();
-            s.mMedia = source.readParcelable(AnimeV1.class.getClassLoader());
+            s.mMedia = ParcelableUtils.readAbsAnimeFromParcel(source);
+            s.mPoster = ParcelableUtils.readAbsUserFromParcel(source);
+            s.mUser = ParcelableUtils.readAbsUserFromParcel(source);
             s.mSubstories = source.createTypedArrayList(Substory.CREATOR);
             s.mSelfPost = ParcelableUtils.readBoolean(source);
             s.mSubstoriesCount = source.readInt();
             s.mUpdatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
             s.mId = source.readString();
             s.mType = source.readParcelable(Type.class.getClassLoader());
-            s.mPoster = source.readParcelable(User.class.getClassLoader());
-            s.mUser = source.readParcelable(User.class.getClassLoader());
             return s;
         }
 

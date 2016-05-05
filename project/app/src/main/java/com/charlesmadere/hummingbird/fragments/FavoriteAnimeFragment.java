@@ -13,7 +13,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeAdapter;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
-import com.charlesmadere.hummingbird.models.User;
+import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
@@ -33,7 +33,7 @@ public class FavoriteAnimeFragment extends BaseFragment implements
 
     private AnimeAdapter mAdapter;
     private ArrayList<AbsAnime> mFavorites;
-    private User mUser;
+    private UserV1 mUser;
 
     @BindView(R.id.llEmpty)
     LinearLayout mEmpty;
@@ -48,7 +48,7 @@ public class FavoriteAnimeFragment extends BaseFragment implements
     RefreshLayout mRefreshLayout;
 
 
-    public static FavoriteAnimeFragment create(final User user) {
+    public static FavoriteAnimeFragment create(final UserV1 user) {
         final Bundle args = new Bundle(1);
         args.putParcelable(KEY_USER, user);
 

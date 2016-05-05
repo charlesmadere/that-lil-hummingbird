@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class ReplySubstory extends AbsSubstory implements Parcelable {
     private String mUserId;
 
     // hydrated fields
-    private User mUser;
+    private AbsUser mUser;
 
 
     public String getReply() {
@@ -28,7 +29,7 @@ public class ReplySubstory extends AbsSubstory implements Parcelable {
         return Type.REPLY;
     }
 
-    public User getUser() {
+    public AbsUser getUser() {
         return mUser;
     }
 
@@ -36,8 +37,8 @@ public class ReplySubstory extends AbsSubstory implements Parcelable {
         return mUserId;
     }
 
-    public void hydrate(final ArrayList<User> users) {
-        for (final User user : users) {
+    public void hydrate(final ArrayList<AbsUser> users) {
+        for (final AbsUser user : users) {
             // TODO we need the new AbsUser class
 //            if (mUserId.equalsIgnoreCase(user.getName())) {
 //                mUser = user;
@@ -51,7 +52,7 @@ public class ReplySubstory extends AbsSubstory implements Parcelable {
         super.readFromParcel(source);
         mReply = source.readString();
         mUserId = source.readString();
-        mUser = source.readParcelable(User.class.getClassLoader());
+        mUser = ParcelableUtils.readAbsUserFromParcel(source);
     }
 
     @Override
@@ -59,7 +60,7 @@ public class ReplySubstory extends AbsSubstory implements Parcelable {
         super.writeToParcel(dest, flags);
         dest.writeString(mReply);
         dest.writeString(mUserId);
-        dest.writeParcelable(mUser, flags);
+        ParcelableUtils.writeAbsUserToParcel(mUser, dest, flags);
     }
 
     public static final Creator<ReplySubstory> CREATOR = new Creator<ReplySubstory>() {

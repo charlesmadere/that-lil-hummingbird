@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
-import com.charlesmadere.hummingbird.models.User;
+import com.charlesmadere.hummingbird.models.AbsUser;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -89,7 +89,7 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout {
         ButterKnife.bind(this);
         findAllNavigationDrawerItemViewChildren();
 
-        final User user = CurrentUser.get();
+        final AbsUser user = CurrentUser.get();
         mAvatar.setImageURI(Uri.parse(user.getAvatar()));
         mCoverImage.setImageURI(Uri.parse(user.getCoverImage()));
         mUsername.setText(user.getName());

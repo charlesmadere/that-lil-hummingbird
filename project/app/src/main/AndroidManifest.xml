@@ -86,6 +86,10 @@
             android:name=".activities.UserActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="bd8750ba792168bfa4d0bc52e19ad83a6fad27c3" />
+
     </application>
 
 </manifest>

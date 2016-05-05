@@ -11,7 +11,7 @@ import com.charlesmadere.hummingbird.fragments.AnimeLibraryFragment;
 import com.charlesmadere.hummingbird.fragments.FavoriteAnimeFragment;
 import com.charlesmadere.hummingbird.fragments.FeedFragment;
 import com.charlesmadere.hummingbird.fragments.UserBioFragment;
-import com.charlesmadere.hummingbird.models.User;
+import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 
 public class UserFragmentAdapter extends FragmentStatePagerAdapter {
@@ -25,14 +25,14 @@ public class UserFragmentAdapter extends FragmentStatePagerAdapter {
             WatchingStatus.ON_HOLD, WatchingStatus.DROPPED };
 
     private final Context mContext;
-    private final User mUser;
+    private final UserV1 mUser;
 
 
-    public UserFragmentAdapter(final FragmentActivity activity, final User user) {
+    public UserFragmentAdapter(final FragmentActivity activity, final UserV1 user) {
         this(activity, activity.getSupportFragmentManager(), user);
     }
 
-    public UserFragmentAdapter(final Context context, final FragmentManager fm, final User user) {
+    public UserFragmentAdapter(final Context context, final FragmentManager fm, final UserV1 user) {
         super(fm);
         mContext = context;
         mUser = user;

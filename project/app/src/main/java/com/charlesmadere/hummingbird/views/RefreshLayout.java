@@ -63,6 +63,10 @@ public class RefreshLayout extends SwipeRefreshLayout {
     }
 
     private void parseAttributes(final AttributeSet attrs) {
+        if (isInEditMode()) {
+            return;
+        }
+
         final TypedArray ta = getContext().obtainStyledAttributes(attrs,
                 R.styleable.RefreshLayout);
 

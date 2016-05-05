@@ -13,7 +13,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.FeedAdapter;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
-import com.charlesmadere.hummingbird.models.User;
+import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
@@ -43,10 +43,10 @@ public class FeedFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     private Feed mFeed;
     private FeedAdapter mAdapter;
-    private User mUser;
+    private UserV1 mUser;
 
 
-    public static FeedFragment create(final User user) {
+    public static FeedFragment create(final UserV1 user) {
         final Bundle args = new Bundle(1);
         args.putParcelable(KEY_USER, user);
 

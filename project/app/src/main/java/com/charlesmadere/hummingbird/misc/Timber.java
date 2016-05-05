@@ -6,6 +6,9 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import io.fabric.sdk.android.Fabric;
+import io.fabric.sdk.android.Logger;
+
 public final class Timber {
 
     private static final ArrayList<BaseEntry> ENTRIES;
@@ -36,22 +39,22 @@ public final class Timber {
 
     public static void d(final String tag, final String msg) {
         addEntry(new DebugEntry(tag, msg));
-        Log.d(tag, msg);
+        getLogger().d(tag, msg);
     }
 
     public static void d(final String tag, final String msg, final Throwable tr) {
         addEntry(new DebugEntry(tag, msg, tr));
-        Log.d(tag, msg, tr);
+        getLogger().d(tag, msg, tr);
     }
 
     public static void e(final String tag, final String msg) {
         addEntry(new ErrorEntry(tag, msg));
-        Log.e(tag, msg);
+        getLogger().e(tag, msg);
     }
 
     public static void e(final String tag, final String msg, final Throwable tr) {
         addEntry(new ErrorEntry(tag, msg, tr));
-        Log.e(tag, msg, tr);
+        getLogger().e(tag, msg, tr);
     }
 
     public static synchronized ArrayList<BaseEntry> getEntries() {
@@ -60,24 +63,28 @@ public final class Timber {
         return entries;
     }
 
+    private static Logger getLogger() {
+        return Fabric.getLogger();
+    }
+
     public static void v(final String tag, final String msg) {
         addEntry(new VerboseEntry(tag, msg));
-        Log.v(tag, msg);
+        getLogger().v(tag, msg);
     }
 
     public static void v(final String tag, final String msg, final Throwable tr) {
         addEntry(new VerboseEntry(tag, msg, tr));
-        Log.v(tag, msg, tr);
+        getLogger().v(tag, msg, tr);
     }
 
     public static void w(final String tag, final String msg) {
         addEntry(new WarnEntry(tag, msg));
-        Log.w(tag, msg);
+        getLogger().w(tag, msg);
     }
 
     public static void w(final String tag, final String msg, final Throwable tr) {
         addEntry(new WarnEntry(tag, msg, tr));
-        Log.w(tag, msg, tr);
+        getLogger().w(tag, msg, tr);
     }
 
 

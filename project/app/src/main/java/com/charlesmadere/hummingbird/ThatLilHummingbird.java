@@ -8,9 +8,12 @@ import com.charlesmadere.hummingbird.activities.CurrentUserActivity;
 import com.charlesmadere.hummingbird.misc.ActivityRegister;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.NightMode;
+import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
 import java.util.ArrayList;
+
+import io.fabric.sdk.android.Fabric;
 
 public class ThatLilHummingbird extends Application {
 
@@ -50,8 +53,9 @@ public class ThatLilHummingbird extends Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
-        Timber.d(TAG, "Application created (debug: " + BuildConfig.DEBUG + ')');
+        Fabric.with(this, new Crashlytics());
         Fresco.initialize(this);
+        Timber.d(TAG, "Application created (debug: " + BuildConfig.DEBUG + ')');
     }
 
     @Override

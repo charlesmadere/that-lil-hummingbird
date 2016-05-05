@@ -58,7 +58,12 @@ public class UserV2 extends AbsUser implements Parcelable {
     }
 
     @Override
-    public String getCover() {
+    public String getAvatarSmall() {
+        return mAvatarTemplate;
+    }
+
+    @Override
+    public String getCoverImage() {
         return mCoverImageUrl;
     }
 

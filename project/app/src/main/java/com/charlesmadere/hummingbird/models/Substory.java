@@ -9,6 +9,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class Substory implements Parcelable {
 
+    @Nullable
+    @SerializedName("followed_user")
+    private AbsUser mFollowedUser;
+
     @SerializedName("id")
     private int mId;
 
@@ -42,10 +46,6 @@ public class Substory implements Parcelable {
     @SerializedName("substory_type")
     private Type mType;
 
-    @Nullable
-    @SerializedName("followed_user")
-    private User mFollowedUser;
-
 
     @Nullable
     public String getComment() {
@@ -62,7 +62,7 @@ public class Substory implements Parcelable {
     }
 
     @Nullable
-    public User getFollowedUser() {
+    public AbsUser getFollowedUser() {
         return mFollowedUser;
     }
 
@@ -116,6 +116,7 @@ public class Substory implements Parcelable {
         dest.writeString(mUserId);
         dest.writeParcelable(mType, flags);
         dest.writeParcelable(mFollowedUser, flags);
+        ParcelableUtils.writeAbsUserToParcel(mFollowedUser, dest, flags);
     }
 
     public static final Creator<Substory> CREATOR = new Creator<Substory>() {
@@ -131,7 +132,7 @@ public class Substory implements Parcelable {
             s.mStoryId = source.readString();
             s.mUserId = source.readString();
             s.mType = source.readParcelable(Type.class.getClassLoader());
-            s.mFollowedUser = source.readParcelable(User.class.getClassLoader());
+            s.mFollowedUser = ParcelableUtils.readAbsUserFromParcel(source);
             return s;
         }
 

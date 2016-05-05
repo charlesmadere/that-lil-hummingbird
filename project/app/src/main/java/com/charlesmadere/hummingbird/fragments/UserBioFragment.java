@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
-import com.charlesmadere.hummingbird.models.User;
+import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.views.KeyValueTextView;
 
 import butterknife.BindView;
@@ -20,7 +20,7 @@ public class UserBioFragment extends BaseFragment {
     private static final String TAG = "UserBioFragment";
     private static final String KEY_USER = "User";
 
-    private User mUser;
+    private UserV1 mUser;
 
     @BindView(R.id.cvWebsite)
     CardView mWebsiteCard;
@@ -41,7 +41,7 @@ public class UserBioFragment extends BaseFragment {
     TextView mWebsiteText;
 
 
-    public static UserBioFragment create(final User user) {
+    public static UserBioFragment create(final UserV1 user) {
         final Bundle args = new Bundle(1);
         args.putParcelable(KEY_USER, user);
 

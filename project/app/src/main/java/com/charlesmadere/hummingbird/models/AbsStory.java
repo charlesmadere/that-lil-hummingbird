@@ -39,8 +39,8 @@ public abstract class AbsStory implements Parcelable {
     private String mUserId;
 
     // hydrated fields
+    private AbsUser mUser;
     private ArrayList<AbsSubstory> mSubstories;
-    private User mUser;
 
 
     public SimpleDate getCreatedAt() {
@@ -70,7 +70,7 @@ public abstract class AbsStory implements Parcelable {
 
     public abstract Type getType();
 
-    public User getUser() {
+    public AbsUser getUser() {
         return mUser;
     }
 
@@ -83,7 +83,7 @@ public abstract class AbsStory implements Parcelable {
     }
 
     public void hydrate(@Nullable final ArrayList<AbsSubstory> substories,
-            final ArrayList<User> users) {
+            final ArrayList<AbsUser> users) {
         if (hasSubstoryIds() && substories != null && !substories.isEmpty()) {
             mSubstories = new ArrayList<>();
 
@@ -98,8 +98,8 @@ public abstract class AbsStory implements Parcelable {
             mSubstories.trimToSize();
         }
 
-        for (final User user : users) {
-            if (mUserId.equalsIgnoreCase(user.getName())) {
+        for (final AbsUser user : users) {
+            if (mUserId.equalsIgnoreCase(user.getId())) {
                 mUser = user;
                 break;
             }
@@ -125,7 +125,7 @@ public abstract class AbsStory implements Parcelable {
         mId = source.readString();
         mUserId = source.readString();
         mSubstories = ParcelableUtils.readAbsSubstoryListFromParcel(source);
-        mUser = source.readParcelable(User.class.getClassLoader());
+        mUser = ParcelableUtils.readAbsUserFromParcel(source);
     }
 
     @Override
@@ -138,7 +138,7 @@ public abstract class AbsStory implements Parcelable {
         dest.writeString(mId);
         dest.writeString(mUserId);
         ParcelableUtils.writeAbsSubstoryListToParcel(mSubstories, dest, flags);
-        dest.writeParcelable(mUser, flags);
+        ParcelableUtils.writeAbsUserToParcel(mUser, dest, flags);
     }
 
 

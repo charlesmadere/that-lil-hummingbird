@@ -24,16 +24,16 @@ public class Feed implements Parcelable {
     private ArrayList<AbsSubstory> mSubstories;
 
     @Nullable
+    @SerializedName("users")
+    private ArrayList<AbsUser> mUsers;
+
+    @Nullable
     @SerializedName("groups")
     private ArrayList<Group> mGroups;
 
     @Nullable
     @SerializedName("group_members")
     private ArrayList<GroupMember> mGroupMembers;
-
-    @Nullable
-    @SerializedName("users")
-    private ArrayList<User> mUsers;
 
     @SerializedName("meta")
     private Metadata mMetadata;
@@ -69,7 +69,7 @@ public class Feed implements Parcelable {
     }
 
     @Nullable
-    public ArrayList<User> getUsers() {
+    public ArrayList<AbsUser> getUsers() {
         return mUsers;
     }
 
@@ -149,8 +149,8 @@ public class Feed implements Parcelable {
         if (hasUsers()) {
             final String posterId = story.getPosterId();
 
-            for (final User user : mUsers) {
-                if (posterId.equalsIgnoreCase(user.getName())) {
+            for (final AbsUser user : mUsers) {
+                if (posterId.equalsIgnoreCase(user.getId())) {
                     story.setPoster(user);
                     break;
                 }
@@ -252,9 +252,9 @@ public class Feed implements Parcelable {
         ParcelableUtils.writeAbsAnimeListToParcel(mAnime, dest, flags);
         ParcelableUtils.writeAbsStoryListToParcel(mStories, dest, flags);
         ParcelableUtils.writeAbsSubstoryListToParcel(mSubstories, dest, flags);
+        ParcelableUtils.writeAbsUserListToParcel(mUsers, dest, flags);
         dest.writeTypedList(mGroups);
         dest.writeTypedList(mGroupMembers);
-        dest.writeTypedList(mUsers);
         dest.writeParcelable(mMetadata, flags);
     }
 
@@ -265,9 +265,9 @@ public class Feed implements Parcelable {
             f.mAnime = ParcelableUtils.readAbsAnimeListFromParcel(source);
             f.mStories = ParcelableUtils.readAbsStoryListFromParcel(source);
             f.mSubstories = ParcelableUtils.readAbsSubstoryListFromParcel(source);
+            f.mUsers = ParcelableUtils.readAbsUserListFromParcel(source);
             f.mGroups = source.createTypedArrayList(Group.CREATOR);
             f.mGroupMembers = source.createTypedArrayList(GroupMember.CREATOR);
-            f.mUsers = source.createTypedArrayList(User.CREATOR);
             f.mMetadata = source.readParcelable(Metadata.class.getClassLoader());
             return f;
         }

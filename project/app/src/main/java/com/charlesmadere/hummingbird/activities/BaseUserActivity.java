@@ -17,8 +17,9 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.UserFragmentAdapter;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
+import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
-import com.charlesmadere.hummingbird.models.User;
+import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.SimpleProgressView;
@@ -37,7 +38,7 @@ public abstract class BaseUserActivity extends BaseDrawerActivity {
 
     private int mStartingPosition;
     private String mUsername;
-    private User mUser;
+    private UserV1 mUser;
 
     @BindView(R.id.appBarLayout)
     protected AppBarLayout mAppBarLayout;
@@ -61,7 +62,7 @@ public abstract class BaseUserActivity extends BaseDrawerActivity {
     protected ViewPager mViewPager;
 
 
-    public static Intent getLaunchIntent(final Context context, final User user) {
+    public static Intent getLaunchIntent(final Context context, final AbsUser user) {
         final String username = user.getName();
 
         if (CurrentUser.get().getName().equalsIgnoreCase(username)) {
@@ -149,7 +150,7 @@ public abstract class BaseUserActivity extends BaseDrawerActivity {
                 .show();
     }
 
-    private void showUser(final User user) {
+    private void showUser(final UserV1 user) {
         mUser = user;
         PaletteUtils.applyParallaxColors(mUser.getCoverImage(), this, mAppBarLayout,
                 mCollapsingToolbarLayout, mCoverImage, mTabLayout);
@@ -163,7 +164,7 @@ public abstract class BaseUserActivity extends BaseDrawerActivity {
     }
 
 
-    private static class GetUserListener implements ApiResponse<User> {
+    private static class GetUserListener implements ApiResponse<UserV1> {
         private final WeakReference<BaseUserActivity> mActivityReference;
 
         private GetUserListener(final BaseUserActivity activity) {
@@ -180,7 +181,7 @@ public abstract class BaseUserActivity extends BaseDrawerActivity {
         }
 
         @Override
-        public void success(final User user) {
+        public void success(final UserV1 user) {
             final BaseUserActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {

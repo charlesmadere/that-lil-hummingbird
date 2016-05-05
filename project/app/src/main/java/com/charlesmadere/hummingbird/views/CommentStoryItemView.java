@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.CommentStory;
-import com.charlesmadere.hummingbird.models.User;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
@@ -64,7 +64,7 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
     public void setContent(final CommentStory content) {
         mCommentStory = content;
 
-        final User user = mCommentStory.getPoster();
+        final AbsUser user = mCommentStory.getPoster();
         mAvatar.setImageURI(Uri.parse(user.getAvatar()));
         mTitle.setText(user.getName());
         mTimeAgo.setText(mCommentStory.getCreatedAt().getRelativeTimeText(getContext()));

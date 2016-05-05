@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
 public class FollowedSubstory extends AbsSubstory implements Parcelable {
@@ -11,7 +12,7 @@ public class FollowedSubstory extends AbsSubstory implements Parcelable {
     private String mUserId;
 
     // hydrated fields
-    private User mUser;
+    private AbsUser mUser;
 
 
     @Override
@@ -23,11 +24,11 @@ public class FollowedSubstory extends AbsSubstory implements Parcelable {
         return mUserId;
     }
 
-    public User getUser() {
+    public AbsUser getUser() {
         return mUser;
     }
 
-    public void setUser(final User user) {
+    public void setUser(final AbsUser user) {
         mUser = user;
     }
 
@@ -35,14 +36,14 @@ public class FollowedSubstory extends AbsSubstory implements Parcelable {
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);
         mUserId = source.readString();
-        mUser = source.readParcelable(User.class.getClassLoader());
+        mUser = ParcelableUtils.readAbsUserFromParcel(source);
     }
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(mUserId);
-        dest.writeParcelable(mUser, flags);
+        ParcelableUtils.writeAbsUserToParcel(mUser, dest, flags);
     }
 
     public static final Creator<FollowedSubstory> CREATOR = new Creator<FollowedSubstory>() {

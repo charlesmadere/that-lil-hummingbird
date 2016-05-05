@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
+import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -24,8 +25,8 @@ public class CommentStory extends AbsStory implements Parcelable {
     private String mPosterId;
 
     // hydrated fields
+    private AbsUser mPoster;
     private Group mGroup;
-    private User mPoster;
 
 
     public Group getGroup() {
@@ -36,7 +37,7 @@ public class CommentStory extends AbsStory implements Parcelable {
         return mGroupId;
     }
 
-    public User getPoster() {
+    public AbsUser getPoster() {
         return mPoster;
     }
 
@@ -66,7 +67,7 @@ public class CommentStory extends AbsStory implements Parcelable {
         mGroup = group;
     }
 
-    public void setPoster(final User poster) {
+    public void setPoster(final AbsUser poster) {
         mPoster = poster;
     }
 
@@ -77,8 +78,8 @@ public class CommentStory extends AbsStory implements Parcelable {
         mIsLiked = source.readInt() != 0;
         mGroupId = source.readString();
         mPosterId = source.readString();
+        mPoster = ParcelableUtils.readAbsUserFromParcel(source);
         mGroup = source.readParcelable(Group.class.getClassLoader());
-        mPoster = source.readParcelable(User.class.getClassLoader());
     }
 
     @Override
@@ -88,8 +89,8 @@ public class CommentStory extends AbsStory implements Parcelable {
         dest.writeInt(mIsLiked ? 1 : 0);
         dest.writeString(mGroupId);
         dest.writeString(mPosterId);
+        ParcelableUtils.writeAbsUserToParcel(mPoster, dest, flags);
         dest.writeParcelable(mGroup, flags);
-        dest.writeParcelable(mPoster, flags);
     }
 
     public static final Creator<CommentStory> CREATOR = new Creator<CommentStory>() {

@@ -7,7 +7,7 @@ import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.LibraryUpdate;
 import com.charlesmadere.hummingbird.models.Story;
-import com.charlesmadere.hummingbird.models.User;
+import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public interface HummingbirdApi {
             @Query("status") WatchingStatus watchingStatus);
 
     @GET("api/v1/users/{username}")
-    Call<User> getUser(@Path("username") String username);
+    Call<UserV1> getUser(@Path("username") String username);
 
     @POST("api/v1/libraries/{id}/remove")
     Call<Boolean> removeLibraryEntry(@Header("auth_token") String authToken,

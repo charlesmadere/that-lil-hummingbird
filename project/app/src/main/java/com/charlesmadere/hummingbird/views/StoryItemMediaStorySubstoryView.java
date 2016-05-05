@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.BaseUserActivity;
+import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.Substory;
-import com.charlesmadere.hummingbird.models.User;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.text.NumberFormat;
@@ -25,7 +25,7 @@ public class StoryItemMediaStorySubstoryView extends FrameLayout implements View
 
     private NumberFormat mNumberFormat;
     private Substory mSubstory;
-    private User mUser;
+    private AbsUser mUser;
 
     @BindView(R.id.kvtvAction)
     KeyValueTextView mAction;
@@ -56,7 +56,7 @@ public class StoryItemMediaStorySubstoryView extends FrameLayout implements View
         return mSubstory;
     }
 
-    public User getUser() {
+    public AbsUser getUser() {
         return mUser;
     }
 
@@ -79,7 +79,7 @@ public class StoryItemMediaStorySubstoryView extends FrameLayout implements View
         mNumberFormat = NumberFormat.getInstance();
     }
 
-    public void setContent(final User user, final Substory substory) {
+    public void setContent(final AbsUser user, final Substory substory) {
         mUser = user;
         mSubstory = substory;
         mAvatar.setImageURI(Uri.parse(mUser.getAvatarSmall()));

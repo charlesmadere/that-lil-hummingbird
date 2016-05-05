@@ -8,6 +8,7 @@ import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.RetrofitUtils;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.AbsAnime;
+import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.AnimeEpisode;
 import com.charlesmadere.hummingbird.models.AnimeV1;
 import com.charlesmadere.hummingbird.models.AnimeV2;
@@ -17,7 +18,7 @@ import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.LibraryUpdate;
 import com.charlesmadere.hummingbird.models.Story;
-import com.charlesmadere.hummingbird.models.User;
+import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 
@@ -112,7 +113,7 @@ public final class Api {
         });
     }
 
-    public static void getActivityFeed(final User user,
+    public static void getActivityFeed(final AbsUser user,
             final ApiResponse<ArrayList<Story>> listener) {
         getActivityFeed(user.getName(), listener);
     }
@@ -199,15 +200,15 @@ public final class Api {
         return "token=" + authToken + ';';
     }
 
-    public static void getCurrentUser(final ApiResponse<User> listener) {
-        getUser(Preferences.Account.Username.get(), new ApiResponse<User>() {
+    public static void getCurrentUser(final ApiResponse<UserV1> listener) {
+        getUser(Preferences.Account.Username.get(), new ApiResponse<UserV1>() {
             @Override
             public void failure(@Nullable final ErrorInfo error) {
                 listener.failure(error);
             }
 
             @Override
-            public void success(final User user) {
+            public void success(final UserV1 user) {
                 CurrentUser.set(user);
                 listener.success(user);
             }
@@ -322,11 +323,11 @@ public final class Api {
         });
     }
 
-    public static void getUser(final String username, final ApiResponse<User> listener) {
-        getApi().getUser(username).enqueue(new Callback<User>() {
+    public static void getUser(final String username, final ApiResponse<UserV1> listener) {
+        getApi().getUser(username).enqueue(new Callback<UserV1>() {
             @Override
-            public void onResponse(final Call<User> call, final Response<User> response) {
-                User body = null;
+            public void onResponse(final Call<UserV1> call, final Response<UserV1> response) {
+                UserV1 body = null;
 
                 if (response.isSuccessful()) {
                     body = response.body();
@@ -340,7 +341,7 @@ public final class Api {
             }
 
             @Override
-            public void onFailure(final Call<User> call, final Throwable t) {
+            public void onFailure(final Call<UserV1> call, final Throwable t) {
                 Timber.e(TAG, "get user (" + username + ") call failed", t);
                 listener.failure(null);
             }

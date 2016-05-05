@@ -90,6 +90,11 @@ public class SettingsActivity extends BaseDrawerActivity {
         startActivity(LogViewerActivity.getLaunchIntent(this));
     }
 
+    @OnClick(R.id.tvPriscilla)
+    void onPriscillaClick() {
+        openUrl(Constants.PRISCILLA_URL);
+    }
+
     @OnClick(R.id.tvRateThisApp)
     void onRateThisAppClick() {
         openUrl(Constants.PLAY_STORE_BASE_URL + getPackageName());
