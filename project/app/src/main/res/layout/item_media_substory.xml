@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/sdvAvatar"
             android:layout_width="match_parent"
+            android:textSize="@dimen/text_small"
             app:keyTextColor="?attr/colorAccent"
             tools:text="ThatLilChestnut is currently watching." />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
