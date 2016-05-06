@@ -36,6 +36,7 @@
             android:maxLines="6"
             tools:text="Hello, World!" />
         <LinearLayout
+            android:divider="?android:attr/listDivider"
             android:id="@+id/llReplies"
             android:layout_below="@id/tvComment"
             android:layout_height="wrap_content"

@@ -227,7 +227,7 @@
     </style>
 
     <style name="NavigationDrawerDividerView">
-        <item name="android:background">@color/divider</item>
+        <item name="android:background">?android:attr/listDivider</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:layout_marginBottom">@dimen/root_padding_half</item>
         <item name="android:layout_marginTop">@dimen/root_padding_half</item>
