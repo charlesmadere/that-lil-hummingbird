@@ -59,6 +59,7 @@
     <string name="favorites">Favorites</string>
     <string name="feed">Feed</string>
     <string name="feed_is_empty">Feed is empty</string>
+    <string name="filter">Filter</string>
     <string name="finished_airing">Finished airing</string>
     <string name="finished_airing_x">Finished airing %1$s</string>
     <string name="followers">Followers</string>

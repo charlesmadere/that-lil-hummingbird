@@ -7,4 +7,9 @@
         android:title="@string/search"
         compat:actionViewClass="android.support.v7.widget.SearchView"
         compat:showAsAction="collapseActionView|ifRoom" />
+    <item
+        android:icon="@drawable/ic_filter_list_white_24dp"
+        android:id="@+id/miFilter"
+        android:title="@string/filter"
+        compat:showAsAction="ifRoom|withText" />
 </menu>
