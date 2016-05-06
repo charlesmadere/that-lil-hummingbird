@@ -82,6 +82,7 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
     protected void onDestroy() {
         if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
+            mHandler = null;
         }
 
         super.onDestroy();
