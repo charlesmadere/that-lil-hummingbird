@@ -6,6 +6,11 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -274,6 +279,42 @@ public class SearchBundle implements Parcelable {
                 }
             };
         }
+
+        public static final JsonDeserializer<AbsResult> JSON_DESERIALIZER = new JsonDeserializer<AbsResult>() {
+            @Override
+            public AbsResult deserialize(final JsonElement json,
+                    final java.lang.reflect.Type typeOfT, final JsonDeserializationContext context)
+                    throws JsonParseException {
+                final JsonObject jsonObject = json.getAsJsonObject();
+                final Type type = Type.from(jsonObject.get("type").getAsString());
+
+                final AbsResult result;
+
+                switch (type) {
+                    case ANIME:
+                        result = context.deserialize(json, AnimeResult.class);
+                        break;
+
+                    case GROUP:
+                        result = context.deserialize(json, GroupResult.class);
+                        break;
+
+                    case MANGA:
+                        result = context.deserialize(json, MangaResult.class);
+                        break;
+
+                    case USER:
+                        result = context.deserialize(json, UserResult.class);
+                        break;
+
+                    default:
+                        throw new RuntimeException("encountered unknown " + Type.class.getName()
+                                + ": \"" + type + '"');
+                }
+
+                return result;
+            }
+        };
     }
 
 

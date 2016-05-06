@@ -8,6 +8,7 @@ import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.MediaStory;
+import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.charlesmadere.hummingbird.models.SimpleDate;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -34,6 +35,7 @@ public final class GsonUtils {
                     .registerTypeAdapter(AbsUser.class, AbsUser.JSON_DESERIALIZER)
                     .registerTypeAdapter(AnimeV2.class, AnimeV2.JSON_DESERIALIZER)
                     .registerTypeAdapter(MediaStory.AbsMedia.class, MediaStory.AbsMedia.JSON_DESERIALIZER)
+                    .registerTypeAdapter(SearchBundle.AbsResult.class, SearchBundle.AbsResult.JSON_DESERIALIZER)
                     .registerTypeAdapter(SimpleDate.class, SimpleDate.JSON_DESERIALIZER)
                     .create();
         }
