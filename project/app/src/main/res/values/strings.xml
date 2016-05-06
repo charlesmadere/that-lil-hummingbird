@@ -50,6 +50,7 @@
     <string name="error_loading_image">Error loading image</string>
     <string name="error_loading_on_hold_library">Error loading on hold library</string>
     <string name="error_loading_plan_to_watch_library">Error loading plan to watch library</string>
+    <string name="error_loading_search_results">Error loading search results</string>
     <string name="error_loading_timeline">Error loading timeline</string>
     <string name="error_loading_user">Error loading user! Please check your network connection and try again.</string>
     <string name="error_logging_in">Error logging in! Please check your credentials and network connection and then try again.</string>
@@ -97,6 +98,7 @@
     <string name="no_feed_content">No feed content</string>
     <string name="no_gallery_images">No gallery images</string>
     <string name="no_results_for_x">No results for %1$s</string>
+    <string name="no_search_results">No search results</string>
     <string name="no_season">No Season</string>
     <string name="no_synopsis_available">No synopsis available</string>
     <string name="no_timeline_content">No timeline content</string>

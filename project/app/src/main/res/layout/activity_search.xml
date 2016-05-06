@@ -20,9 +20,17 @@
             app:layoutManager="LinearLayoutManager"
             tools:visibility="visible" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
-            android:id="@+id/tvInitialSearchMessage"
+            android:id="@+id/tvInitialMessage"
             android:text="@string/initial_search_message"
             android:visibility="visible"
+            style="@style/ListMessageTitle.Standalone" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:id="@+id/tvEmpty"
+            android:text="@string/no_search_results"
+            style="@style/ListMessageTitle.Standalone" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:id="@+id/tvError"
+            android:text="@string/error_loading_search_results"
             style="@style/ListMessageTitle.Standalone" />
     </FrameLayout>
 </LinearLayout>

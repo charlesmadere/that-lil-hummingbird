@@ -231,13 +231,16 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:textSize">@dimen/text_large</item>
         <item name="typeface">open_sans_bold</item>
     </style>
 
     <style name="ListMessageTitle.Standalone">
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">center_horizontal</item>
         <item name="android:layout_gravity">center_horizontal|top</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:paddingBottom">@dimen/root_padding_quadruple</item>
         <item name="android:paddingEnd">@dimen/root_padding_double</item>
         <item name="android:paddingStart">@dimen/root_padding_double</item>
