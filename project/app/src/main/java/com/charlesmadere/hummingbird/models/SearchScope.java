@@ -2,26 +2,39 @@ package com.charlesmadere.hummingbird.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.StringRes;
 
+import com.charlesmadere.hummingbird.R;
 import com.google.gson.annotations.SerializedName;
 
 public enum SearchScope implements Parcelable {
 
     @SerializedName("all")
-    ALL,
+    ALL(R.string.all),
 
     @SerializedName("anime")
-    ANIME,
+    ANIME(R.string.anime),
 
     @SerializedName("groups")
-    GROUPS,
+    GROUPS(R.string.groups),
 
     @SerializedName("manga")
-    MANGA,
+    MANGA(R.string.manga),
 
     @SerializedName("users")
-    USERS;
+    USERS(R.string.users);
 
+    private final int mTextResId;
+
+
+    SearchScope(@StringRes final int textResId) {
+        mTextResId = textResId;
+    }
+
+    @StringRes
+    public int getTextResId() {
+        return mTextResId;
+    }
 
     @Override
     public int describeContents() {
