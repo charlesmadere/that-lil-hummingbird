@@ -18,6 +18,7 @@ import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.LibraryUpdate;
 import com.charlesmadere.hummingbird.models.Story;
+import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.charlesmadere.hummingbird.preferences.Preferences;
@@ -342,6 +343,33 @@ public final class Api {
 
             @Override
             public void onFailure(final Call<UserV1> call, final Throwable t) {
+                Timber.e(TAG, "get user (" + username + ") call failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
+    public static void getUserDigest(final String username, final ApiResponse<UserDigest> listener) {
+        getApi().getUserDigest(getAuthTokenCookieString(), username)
+                .enqueue(new Callback<UserDigest>() {
+            @Override
+            public void onResponse(final Call<UserDigest> call,
+                    final Response<UserDigest> response) {
+                UserDigest body = null;
+
+                if (response.isSuccessful()) {
+                    body = response.body();
+                }
+
+                if (body == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    listener.success(body);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<UserDigest> call, final Throwable t) {
                 Timber.e(TAG, "get user (" + username + ") call failed", t);
                 listener.failure(null);
             }

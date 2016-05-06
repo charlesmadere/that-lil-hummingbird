@@ -24,6 +24,7 @@ public final class MiscUtils {
     private static final long HOUR_IN_SECONDS = MINUTE_IN_SECONDS * 60L;
     private static final long DAY_IN_SECONDS = HOUR_IN_SECONDS * 24L;
     private static final long WEEK_IN_SECONDS = DAY_IN_SECONDS * 7L;
+    private static final long MONTH_IN_SECONDS = WEEK_IN_SECONDS * 4L + DAY_IN_SECONDS * 2L;
     private static final long YEAR_IN_SECONDS = DAY_IN_SECONDS * 365L;
 
 
@@ -56,9 +57,20 @@ public final class MiscUtils {
         final int years = (int) (seconds / YEAR_IN_SECONDS);
         if (years >= 1) {
             seconds = seconds - (years * YEAR_IN_SECONDS);
-
             string.append(res.getQuantityString(R.plurals.x_years, years,
                     numberFormat.format(years)));
+        }
+
+        final int months = (int) (seconds / MONTH_IN_SECONDS);
+        if (months >= 1) {
+            seconds = seconds - (months * MONTH_IN_SECONDS);
+
+            if (!TextUtils.isEmpty(string)) {
+                string.append(res.getText(R.string.delimiter));
+            }
+
+            string.append(res.getQuantityString(R.plurals.x_months, months,
+                    numberFormat.format(months)));
         }
 
         final int weeks = (int) (seconds / WEEK_IN_SECONDS);

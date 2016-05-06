@@ -6,7 +6,11 @@ import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.LibraryUpdate;
+import com.charlesmadere.hummingbird.models.SearchBundle;
+import com.charlesmadere.hummingbird.models.SearchDepth;
+import com.charlesmadere.hummingbird.models.SearchScope;
 import com.charlesmadere.hummingbird.models.Story;
+import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 
@@ -76,7 +80,16 @@ public interface HummingbirdApi {
     Call<Feed> getNewsFeed(@Header("Cookie") String authToken,
             @Query("news_feed") Boolean newsFeed, @Query("page") Integer page);
 
+    @GET("user_infos/{username}")
+    Call<UserDigest> getUserDigest(@Header("Cookie") String authToken,
+            @Path("username") String username);
+
     @GET("stories")
-    Call<Feed> getUserStories(@Header("cookie") String authToken, @Query("user_id") String username);
+    Call<Feed> getUserStories(@Header("Cookie") String authToken,
+            @Query("user_id") String username);
+
+    @GET("search.json")
+    Call<SearchBundle> search(@Query("scope") SearchScope searchScope,
+            @Query("depth") SearchDepth depth, @Query("query") String query);
 
 }

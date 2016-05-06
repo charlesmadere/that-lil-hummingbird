@@ -259,7 +259,6 @@ public class LibraryUpdate implements Parcelable {
         @SerializedName("5")
         FIVE("5");
 
-
         private final String mValue;
 
 

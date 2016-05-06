@@ -9,6 +9,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class UserV2 extends AbsUser implements Parcelable {
 
+    private static final String AVATAR_TEMPLATE_STUB = "\\{size\\}";
+    private static final String AVATAR_TEMPLATE_SMALL = "small";
+    private static final String AVATAR_TEMPLATE_THUMB_SMALL = "thumb_small";
+
     @SerializedName("is_admin")
     private boolean mIsAdmin;
 
@@ -23,6 +27,9 @@ public class UserV2 extends AbsUser implements Parcelable {
 
     @SerializedName("following_count")
     private int mFollowingCount;
+
+    @SerializedName("rating_type")
+    private RatingType mRatingType;
 
     @Nullable
     @SerializedName("about")
@@ -54,12 +61,12 @@ public class UserV2 extends AbsUser implements Parcelable {
 
     @Override
     public String getAvatar() {
-        return mAvatarTemplate;
+        return mAvatarTemplate.replaceFirst(AVATAR_TEMPLATE_STUB, AVATAR_TEMPLATE_THUMB_SMALL);
     }
 
     @Override
     public String getAvatarSmall() {
-        return mAvatarTemplate;
+        return mAvatarTemplate.replaceFirst(AVATAR_TEMPLATE_STUB, AVATAR_TEMPLATE_SMALL);
     }
 
     @Override
@@ -83,6 +90,10 @@ public class UserV2 extends AbsUser implements Parcelable {
     @Override
     public String getName() {
         return mId;
+    }
+
+    public RatingType getRatingType() {
+        return mRatingType;
     }
 
     @Override
@@ -110,6 +121,14 @@ public class UserV2 extends AbsUser implements Parcelable {
         return mIsPro;
     }
 
+    public boolean isRatingTypeAdvanced() {
+        return mRatingType == RatingType.ADVANCED;
+    }
+
+    public boolean isRatingTypeSimple() {
+        return mRatingType == RatingType.SIMPLE;
+    }
+
     @Override
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);
@@ -118,6 +137,7 @@ public class UserV2 extends AbsUser implements Parcelable {
         mIsPro = source.readInt() != 0;
         mFollowerCount = source.readInt();
         mFollowingCount = source.readInt();
+        mRatingType = source.readParcelable(RatingType.class.getClassLoader());
         mAbout = source.readString();
         mAboutFormatted = source.readString();
         mAvatarTemplate = source.readString();
@@ -133,6 +153,7 @@ public class UserV2 extends AbsUser implements Parcelable {
         dest.writeInt(mIsPro ? 1 : 0);
         dest.writeInt(mFollowerCount);
         dest.writeInt(mFollowingCount);
+        dest.writeParcelable(mRatingType, flags);
         dest.writeString(mAbout);
         dest.writeString(mAboutFormatted);
         dest.writeString(mAvatarTemplate);
@@ -153,5 +174,37 @@ public class UserV2 extends AbsUser implements Parcelable {
             return new UserV2[size];
         }
     };
+
+
+    public enum RatingType implements Parcelable {
+        @SerializedName("advanced")
+        ADVANCED,
+
+        @SerializedName("simple")
+        SIMPLE;
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(final Parcel dest, final int flags) {
+            dest.writeInt(ordinal());
+        }
+
+        public static final Creator<RatingType> CREATOR = new Creator<RatingType>() {
+            @Override
+            public RatingType createFromParcel(final Parcel source) {
+                final int ordinal = source.readInt();
+                return values()[ordinal];
+            }
+
+            @Override
+            public RatingType[] newArray(final int size) {
+                return new RatingType[size];
+            }
+        };
+    }
 
 }

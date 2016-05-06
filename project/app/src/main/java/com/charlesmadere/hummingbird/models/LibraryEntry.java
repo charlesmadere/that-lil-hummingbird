@@ -161,6 +161,14 @@ public class LibraryEntry implements Parcelable {
             return mValue;
         }
 
+        public boolean isRatingTypeAdvanced() {
+            return mType == Type.ADVANCED;
+        }
+
+        public boolean isRatingTypeSimple() {
+            return mType == Type.SIMPLE;
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -193,7 +201,6 @@ public class LibraryEntry implements Parcelable {
 
             @SerializedName("simple")
             SIMPLE;
-
 
             @Override
             public int describeContents() {

@@ -15,6 +15,7 @@ import com.charlesmadere.hummingbird.models.FollowedStory;
 import com.charlesmadere.hummingbird.models.FollowedSubstory;
 import com.charlesmadere.hummingbird.models.MediaStory;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
+import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.models.UserV2;
 import com.charlesmadere.hummingbird.models.WatchedEpisodeSubstory;
@@ -428,6 +429,85 @@ public final class ParcelableUtils {
 
         for (final MediaStory.AbsMedia media : list) {
             writeMediaStoryAbsMediaToParcel(media, dest, flags);
+        }
+    }
+
+    @Nullable
+    public static <T extends SearchBundle.AbsResult> T readSearchBundleAbsResultFromParcel(
+            final Parcel source) {
+        final SearchBundle.AbsResult.Type type = source.readParcelable(
+                SearchBundle.AbsResult.Type.class.getClassLoader());
+
+        if (type == null) {
+            return null;
+        }
+
+        final T result;
+
+        switch (type) {
+            case ANIME:
+                result = source.readParcelable(SearchBundle.AnimeResult.class.getClassLoader());
+                break;
+
+            case GROUP:
+                result = source.readParcelable(SearchBundle.GroupResult.class.getClassLoader());
+                break;
+
+            case MANGA:
+                result = source.readParcelable(SearchBundle.MangaResult.class.getClassLoader());
+                break;
+
+            case USER:
+                result = source.readParcelable(SearchBundle.UserResult.class.getClassLoader());
+                break;
+
+            default:
+                throw new RuntimeException("encountered unknown " +
+                        SearchBundle.AbsResult.Type.class.getName() + ": \"" + type + '"');
+        }
+
+        return result;
+    }
+
+    @Nullable
+    public static ArrayList<SearchBundle.AbsResult> readSearchBundleAbsResultListFromParcel(
+            final Parcel source) {
+        final int count = source.readInt();
+
+        if (count == 0) {
+            return null;
+        }
+
+        final ArrayList<SearchBundle.AbsResult> list = new ArrayList<>(count);
+
+        for (int i = 0; i < count; ++i) {
+            list.add(readSearchBundleAbsResultFromParcel(source));
+        }
+
+        return list;
+    }
+
+    public static void writeSearchBundleAbsResultToParcel(
+            @Nullable final SearchBundle.AbsResult result, final Parcel dest, final int flags) {
+        if (result == null) {
+            dest.writeParcelable(null, flags);
+        } else {
+            dest.writeParcelable(result.getType(), flags);
+            dest.writeParcelable(result, flags);
+        }
+    }
+
+    public static void writeSearchBundleAbsResultListToParcel(
+            @Nullable final List<SearchBundle.AbsResult> list, final Parcel dest, final int flags) {
+        if (list == null || list.isEmpty()) {
+            dest.writeInt(0);
+            return;
+        }
+
+        dest.writeInt(list.size());
+
+        for (final SearchBundle.AbsResult result : list) {
+            writeSearchBundleAbsResultToParcel(result, dest, flags);
         }
     }
 
