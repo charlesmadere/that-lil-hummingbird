@@ -363,4 +363,12 @@
         <item name="layout_collapseMode">pin</item>
     </style>
 
+    <style name="UserTitle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textSize">@dimen/text_xlarge</item>
+        <item name="typeface">teko_semibold</item>
+    </style>
+
 </resources>
