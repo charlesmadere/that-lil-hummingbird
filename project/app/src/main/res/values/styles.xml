@@ -38,6 +38,10 @@
         <item name="viewAspectRatio">0.69</item>
     </style>
 
+    <style name="AnimePoster.Small">
+        <item name="android:layout_width">72dp</item>
+    </style>
+
     <style name="AnimeShowType">
         <item name="android:ellipsize">end</item>
         <item name="android:layout_height">wrap_content</item>
@@ -62,6 +66,10 @@
         <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:textSize">@dimen/text_xxlarge</item>
         <item name="typeface">teko_semibold</item>
+    </style>
+
+    <style name="AnimeTitle.Small">
+        <item name="android:textSize">@dimen/text_xlarge</item>
     </style>
 
     <style name="AppBarLayout">
@@ -178,6 +186,26 @@
         <item name="spanCount">3</item>
     </style>
 
+    <style name="GroupLogo">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">88dp</item>
+        <item name="actualImageScaleType">centerCrop</item>
+        <item name="placeholderImage">@drawable/image_placeholder</item>
+        <item name="viewAspectRatio">0.75</item>
+    </style>
+
+    <style name="GroupLogo.Small">
+        <item name="android:layout_width">64dp</item>
+    </style>
+
+    <style name="GroupTitle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textSize">@dimen/text_xlarge</item>
+        <item name="typeface">teko_semibold</item>
+    </style>
+
     <style name="ListMessageContainer">
         <item name="android:clickable">true</item>
         <item name="android:layout_height">match_parent</item>
@@ -224,6 +252,30 @@
     <style name="ListOrGrid.WithPadding">
         <item name="android:paddingEnd">@dimen/root_padding_half</item>
         <item name="android:paddingStart">@dimen/root_padding_half</item>
+    </style>
+
+    <style name="MangaCover">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">96dp</item>
+        <item name="actualImageScaleType">centerCrop</item>
+        <item name="placeholderImage">@drawable/image_placeholder</item>
+        <item name="viewAspectRatio">0.75</item>
+    </style>
+
+    <style name="MangaCover.Small">
+        <item name="android:layout_width">72dp</item>
+    </style>
+
+    <style name="MangaTitle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textSize">@dimen/text_xxlarge</item>
+        <item name="typeface">teko_semibold</item>
+    </style>
+
+    <style name="MangaTitle.Small">
+        <item name="android:textSize">@dimen/text_xlarge</item>
     </style>
 
     <style name="NavigationDrawerDividerView">

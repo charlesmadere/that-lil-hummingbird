@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.charlesmadere.hummingbird.views.MangaResultItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/CardItem">
-
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdvCover"
+            android:layout_marginEnd="@dimen/root_padding"
+            style="@style/MangaCover.Small" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:id="@+id/tvTitle"
+            android:layout_toEndOf="@id/sdvCover"
+            tools:text="Scott Pilgrim vs the World"
+            style="@style/MangaTitle.Small" />
+    </RelativeLayout>
 </com.charlesmadere.hummingbird.views.MangaResultItemView>

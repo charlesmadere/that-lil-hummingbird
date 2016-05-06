@@ -1,17 +1,29 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.TextView;
 
+import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.SearchBundle;
+import com.facebook.drawee.view.SimpleDraweeView;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AnimeResultItemView extends CardView implements AdapterView<SearchBundle.AnimeResult>,
         View.OnClickListener {
+
+    @BindView(R.id.sdvAvatar)
+    SimpleDraweeView mAvatar;
+
+    @BindView(R.id.tvTitle)
+    TextView mTitle;
+
 
     public AnimeResultItemView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
@@ -41,7 +53,8 @@ public class AnimeResultItemView extends CardView implements AdapterView<SearchB
 
     @Override
     public void setContent(final SearchBundle.AnimeResult content) {
-        // TODO
+        mAvatar.setImageURI(Uri.parse(content.getImage()));
+        mTitle.setText(content.getTitle());
     }
 
 }
