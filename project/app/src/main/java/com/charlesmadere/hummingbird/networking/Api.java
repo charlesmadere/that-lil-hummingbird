@@ -8,7 +8,6 @@ import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.RetrofitUtils;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.AbsAnime;
-import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.AnimeEpisode;
 import com.charlesmadere.hummingbird.models.AnimeV1;
 import com.charlesmadere.hummingbird.models.AnimeV2;
@@ -17,7 +16,6 @@ import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.LibraryUpdate;
-import com.charlesmadere.hummingbird.models.Story;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
@@ -91,32 +89,6 @@ public final class Api {
                 listener.failure(null);
             }
         });
-    }
-
-    public static void getActivityFeed(final String username,
-            final ApiResponse<ArrayList<Story>> listener) {
-        getApi().getActivityFeed(username).enqueue(new Callback<ArrayList<Story>>() {
-            @Override
-            public void onResponse(final Call<ArrayList<Story>> call,
-                    final Response<ArrayList<Story>> response) {
-                if (response.isSuccessful()) {
-                    listener.success(response.body());
-                } else {
-                    listener.failure(retrieveErrorInfo(response));
-                }
-            }
-
-            @Override
-            public void onFailure(final Call<ArrayList<Story>> call, final Throwable t) {
-                Timber.e(TAG, "get user (" + username + ") activity feed call failed", t);
-                listener.failure(null);
-            }
-        });
-    }
-
-    public static void getActivityFeed(final AbsUser user,
-            final ApiResponse<ArrayList<Story>> listener) {
-        getActivityFeed(user.getName(), listener);
     }
 
     public static void getAnimeById(final AbsAnime anime, final ApiResponse<AnimeV2> listener) {
@@ -214,10 +186,6 @@ public final class Api {
                 listener.success(user);
             }
         });
-    }
-
-    public static void getCurrentUserActivityFeed(final ApiResponse<ArrayList<Story>> listener) {
-        getActivityFeed(Preferences.Account.Username.get(), listener);
     }
 
     public static void getCurrentUserLibraryEntries(@Nullable final WatchingStatus watchingStatus,

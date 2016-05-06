@@ -9,7 +9,6 @@ import com.charlesmadere.hummingbird.models.LibraryUpdate;
 import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.charlesmadere.hummingbird.models.SearchDepth;
 import com.charlesmadere.hummingbird.models.SearchScope;
-import com.charlesmadere.hummingbird.models.Story;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
@@ -37,9 +36,6 @@ public interface HummingbirdApi {
 
     @POST("api/v1/users/authenticate")
     Call<String> authenticate(@Body AuthInfo authInfo);
-
-    @GET("api/v1/users/{username}/feed")
-    Call<ArrayList<Story>> getActivityFeed(@Path("username") String username);
 
     @GET("api/v1/users/{username}/favorite_anime")
     Call<ArrayList<AbsAnime>> getFavoriteAnime(@Path("username") String username);
