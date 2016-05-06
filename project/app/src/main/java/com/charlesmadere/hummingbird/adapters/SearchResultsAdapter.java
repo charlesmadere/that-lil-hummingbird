@@ -5,6 +5,7 @@ import android.content.Context;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.SearchBundle;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SearchResultsAdapter extends BaseMultiAdapter {
@@ -21,6 +22,13 @@ public class SearchResultsAdapter extends BaseMultiAdapter {
         map.put(SearchBundle.MangaResult.class, R.layout.item_manga_result);
         map.put(SearchBundle.UserResult.class, R.layout.item_user_result);
         return map;
+    }
+
+    public void set(final SearchBundle searchBundle) {
+        final ArrayList<SearchBundle.AbsResult> results = searchBundle.getResults();
+        final ArrayList<Object> list = new ArrayList<>(results.size());
+        list.addAll(results);
+        set(list);
     }
 
 }
