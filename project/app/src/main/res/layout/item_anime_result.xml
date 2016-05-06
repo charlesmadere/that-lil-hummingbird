@@ -14,5 +14,11 @@
             android:layout_toEndOf="@id/sdvPoster"
             tools:text="Kyousougiga"
             style="@style/AnimeTitle.Small" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:id="@+id/tvDescription"
+            android:layout_below="@id/tvTitle"
+            android:layout_toEndOf="@id/sdvPoster"
+            tools:text="Kyousougiga"
+            style="@style/AnimeSynopsis" />
     </RelativeLayout>
 </com.charlesmadere.hummingbird.views.AnimeResultItemView>
