@@ -104,7 +104,7 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
     public boolean onPrepareOptionsMenu(final Menu menu) {
         final MenuItem searchMenuItem = menu.findItem(R.id.miSearch);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchMenuItem);
-        searchView.setQueryHint(getString(R.string.search_for_anime_));
+        searchView.setQueryHint(getString(R.string.search_));
         MenuItemCompat.expandActionView(searchMenuItem);
 
         if (!TextUtils.isEmpty(mQuery)) {
