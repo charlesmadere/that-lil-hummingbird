@@ -18,8 +18,8 @@ import butterknife.ButterKnife;
 public class AnimeResultItemView extends CardView implements AdapterView<SearchBundle.AnimeResult>,
         View.OnClickListener {
 
-    @BindView(R.id.sdvAvatar)
-    SimpleDraweeView mAvatar;
+    @BindView(R.id.sdvPoster)
+    SimpleDraweeView mPoster;
 
     @BindView(R.id.tvTitle)
     TextView mTitle;
@@ -53,7 +53,7 @@ public class AnimeResultItemView extends CardView implements AdapterView<SearchB
 
     @Override
     public void setContent(final SearchBundle.AnimeResult content) {
-        mAvatar.setImageURI(Uri.parse(content.getImage()));
+        mPoster.setImageURI(Uri.parse(content.getImage()));
         mTitle.setText(content.getTitle());
     }
 
