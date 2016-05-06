@@ -16,6 +16,9 @@ import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.LibraryUpdate;
+import com.charlesmadere.hummingbird.models.SearchBundle;
+import com.charlesmadere.hummingbird.models.SearchDepth;
+import com.charlesmadere.hummingbird.models.SearchScope;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
@@ -390,6 +393,27 @@ public final class Api {
         }
 
         return errorInfo;
+    }
+
+    public static void search(final SearchScope scope, final String query,
+            final ApiResponse<SearchBundle> listener) {
+        getApi().search(scope, SearchDepth.INSTANT, query).enqueue(new Callback<SearchBundle>() {
+            @Override
+            public void onResponse(final Call<SearchBundle> call,
+                    final Response<SearchBundle> response) {
+                if (response.isSuccessful()) {
+                    listener.success(response.body());
+                } else {
+                    listener.failure(retrieveErrorInfo(response));
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<SearchBundle> call, final Throwable t) {
+                Timber.e(TAG, "search (scope=\"" + scope + "\") (query=\"" + query + "\") failed", t);
+                listener.failure(null);
+            }
+        });
     }
 
     public static void searchAnimeByTitle(final String query,

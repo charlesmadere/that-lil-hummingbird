@@ -16,15 +16,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.adapters.AnimeSearchAdapter;
-import com.charlesmadere.hummingbird.models.AbsAnime;
+import com.charlesmadere.hummingbird.adapters.SearchResultsAdapter;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
+import com.charlesmadere.hummingbird.models.SearchBundle;
+import com.charlesmadere.hummingbird.models.SearchScope;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 
 import butterknife.BindView;
 
@@ -32,13 +32,13 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
         SearchView.OnQueryTextListener {
 
     private static final String TAG = "SearchActivity";
-    private static final String KEY_ANIME = "Anime";
     private static final String KEY_QUERY = "Query";
+    private static final String KEY_SEARCH_BUNDLE = "SearchBundle";
     private static final long SEARCH_DELAY_MS = 400L;
 
-    private AnimeSearchAdapter mAdapter;
-    private ArrayList<AbsAnime> mAnime;
     private Handler mHandler;
+    private SearchBundle mSearchBundle;
+    private SearchResultsAdapter mAdapter;
     private String mQuery;
 
     @BindView(R.id.recyclerView)
@@ -63,11 +63,11 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
         setContentView(R.layout.activity_search);
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mAnime = savedInstanceState.getParcelableArrayList(KEY_ANIME);
             mQuery = savedInstanceState.getString(KEY_QUERY);
+            mSearchBundle = savedInstanceState.getParcelable(KEY_SEARCH_BUNDLE);
 
-            if (mAnime != null && !mAnime.isEmpty()) {
-                showAnime(mAnime);
+            if (mSearchBundle != null && mSearchBundle.hasResults()) {
+                showSearchResults(mSearchBundle);
             }
         }
     }
@@ -143,24 +143,16 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
     @Override
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(KEY_ANIME, mAnime);
         outState.putString(KEY_QUERY, mQuery);
+        outState.putParcelable(KEY_SEARCH_BUNDLE, mSearchBundle);
     }
 
     @Override
     protected void onViewsBound() {
         super.onViewsBound();
-
         SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
-        mAdapter = new AnimeSearchAdapter(this);
+        mAdapter = new SearchResultsAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
-    }
-
-    private void showAnime(final ArrayList<AbsAnime> anime) {
-        mAnime = anime;
-        mAdapter.set(anime);
-        mInitialSearchMessage.setVisibility(View.GONE);
-        mRecyclerView.setVisibility(View.VISIBLE);
     }
 
     private void showErrorMessage() {
@@ -171,8 +163,15 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
         Toast.makeText(this, getString(R.string.no_results_for_x, mQuery), Toast.LENGTH_LONG).show();
     }
 
+    private void showSearchResults(final SearchBundle searchBundle) {
+        mSearchBundle = searchBundle;
+        mAdapter.set(searchBundle);
+        mInitialSearchMessage.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.VISIBLE);
+    }
 
-    private static class Search implements ApiResponse<ArrayList<AbsAnime>>, Runnable {
+
+    private static class Search implements ApiResponse<SearchBundle>, Runnable {
         private final String mQuery;
         private final WeakReference<SearchActivity> mActivity;
 
@@ -191,28 +190,20 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
             }
         }
 
-        private boolean isAlive() {
-            final SearchActivity activity = mActivity.get();
-            return activity != null && !activity.isDestroyed();
-        }
-
         @Override
         public void run() {
-            if (isAlive()) {
-                Api.searchAnimeByTitle(mQuery, this);
-            }
+            Api.search(SearchScope.ALL, mQuery, this);
         }
 
         @Override
-        public void success(@Nullable final ArrayList<AbsAnime> anime) {
+        public void success(@Nullable final SearchBundle searchBundle) {
             final SearchActivity activity = mActivity.get();
 
-            if (activity != null && !activity.isDestroyed() &&
-                    mQuery.equalsIgnoreCase(activity.mQuery)) {
-                if (anime == null || anime.isEmpty()) {
+            if (activity != null && !activity.isDestroyed() && mQuery.equals(activity.mQuery)) {
+                if (searchBundle == null || !searchBundle.hasResults()) {
                     activity.showEmptyMessage();
                 } else {
-                    activity.showAnime(anime);
+                    activity.showSearchResults(searchBundle);
                 }
             }
         }
