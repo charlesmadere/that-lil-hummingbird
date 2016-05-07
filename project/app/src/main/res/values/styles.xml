@@ -215,6 +215,17 @@
         <item name="typeface">teko_semibold</item>
     </style>
 
+    <style name="LikeTextView">
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:drawablePadding">@dimen/root_padding_half</item>
+        <item name="android:drawableStart">@drawable/ic_favorite</item>
+        <item name="android:id">@id/likeTextView</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:padding">@dimen/root_padding_half</item>
+        <item name="typeface">open_sans_light</item>
+    </style>
+
     <style name="ListMessageContainer">
         <item name="android:clickable">true</item>
         <item name="android:layout_height">match_parent</item>

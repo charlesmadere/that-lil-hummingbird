@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.charlesmadere.hummingbird.views.FavoriteImageButton xmlns:android="http://schemas.android.com/apk/res/android"
+<com.charlesmadere.hummingbird.views.LikeTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="?attr/selectableItemBackgroundBorderless"
     android:id="@+id/favoriteImageButton"
     android:layout_height="wrap_content"

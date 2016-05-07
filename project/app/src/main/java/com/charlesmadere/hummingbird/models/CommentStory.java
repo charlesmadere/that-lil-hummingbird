@@ -99,6 +99,10 @@ public class CommentStory extends AbsStory implements Parcelable {
         return mIsLiked;
     }
 
+    public void setLiked(final boolean liked) {
+        mIsLiked = liked;
+    }
+
     @Override
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);

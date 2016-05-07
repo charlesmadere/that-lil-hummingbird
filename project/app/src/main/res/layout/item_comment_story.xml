@@ -30,10 +30,16 @@
             android:layout_width="match_parent"
             android:maxLines="6"
             tools:text="Hello, World!" />
+        <com.charlesmadere.hummingbird.views.LikeTextView
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/tvComment"
+            android:layout_marginTop="@dimen/root_padding_half"
+            tools:text="25"
+            style="@style/LikeTextView" />
         <LinearLayout
             android:divider="?android:attr/listDivider"
             android:id="@+id/llReplies"
-            android:layout_below="@id/tvComment"
+            android:layout_below="@id/likeTextView"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/root_padding"
             android:layout_width="match_parent"

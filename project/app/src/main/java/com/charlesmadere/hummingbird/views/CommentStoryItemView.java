@@ -27,6 +27,9 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
 
     private CommentStory mCommentStory;
 
+    @BindView(R.id.likeTextView)
+    LikeTextView mLikeTextView;
+
     @BindView(R.id.llReplies)
     LinearLayout mReplies;
 
@@ -90,8 +93,9 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
         final AbsUser user = mCommentStory.getPoster();
         mAvatar.setImageURI(Uri.parse(user.getAvatar()));
         mTitle.setText(user.getName());
-        mComment.setText(mCommentStory.getComment());
         mTimeAgo.setText(mCommentStory.getCreatedAt().getRelativeTimeText(getContext()));
+        mComment.setText(mCommentStory.getComment());
+        mLikeTextView.setStory(mCommentStory);
 
         if (content.hasSubstoryIds()) {
             final ArrayList<AbsSubstory> substories = mCommentStory.getSubstories();

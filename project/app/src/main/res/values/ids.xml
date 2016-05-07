@@ -5,6 +5,7 @@
     <item name="collapsingToolbarLayout" type="id" />
     <item name="coordinatorLayout" type="id" />
     <item name="drawerLayout" type="id" />
+    <item name="likeTextView" type="id" />
     <item name="navigationDrawerView" type="id" />
     <item name="parallaxCoverImage" type="id" />
     <item name="tabLayout" type="id" />
