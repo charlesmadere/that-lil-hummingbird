@@ -32,9 +32,10 @@
                 android:inputType="textNoSuggestions"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:lines="1"
+                android:maxLines="1"
                 android:paddingEnd="@dimen/root_padding_half"
-                android:paddingStart="@dimen/root_padding_half"
-                android:singleLine="true" />
+                android:paddingStart="@dimen/root_padding_half" />
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:id="@+id/tilPassword"
@@ -49,9 +50,10 @@
                 android:inputType="textPassword"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:lines="1"
+                android:maxLines="1"
                 android:paddingEnd="@dimen/root_padding_half"
-                android:paddingStart="@dimen/root_padding_half"
-                android:singleLine="true" />
+                android:paddingStart="@dimen/root_padding_half" />
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
     <include

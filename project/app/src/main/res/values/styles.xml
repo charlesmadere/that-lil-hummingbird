@@ -7,7 +7,6 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:lines">1</item>
         <item name="android:maxLines">1</item>
-        <item name="android:singleLine">true</item>
         <item name="android:textSize">@dimen/text_small</item>
         <item name="android:visibility">gone</item>
     </style>
@@ -46,7 +45,6 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:lines">1</item>
         <item name="android:maxLines">1</item>
-        <item name="android:singleLine">true</item>
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
@@ -311,7 +309,6 @@
         <item name="android:minHeight">@dimen/list_item_height</item>
         <item name="android:paddingEnd">@dimen/root_padding</item>
         <item name="android:paddingStart">@dimen/root_padding</item>
-        <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
