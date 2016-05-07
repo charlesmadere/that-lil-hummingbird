@@ -5,11 +5,15 @@ import android.support.v7.widget.AppCompatImageButton;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.charlesmadere.hummingbird.models.CommentStory;
+import com.charlesmadere.hummingbird.networking.Api;
+
+import java.text.NumberFormat;
+
 public class FavoriteImageButton extends AppCompatImageButton implements View.OnClickListener {
 
-    // TODO
-    // Analyze the like / unlike API to find what endpoint this view should be hitting
-    // and what data we need to hit it.
+    private CommentStory mStory;
+    private NumberFormat mNumberFormat;
 
 
     public FavoriteImageButton(final Context context, final AttributeSet attrs) {
@@ -30,11 +34,25 @@ public class FavoriteImageButton extends AppCompatImageButton implements View.On
         }
 
         setOnClickListener(this);
+        mNumberFormat = NumberFormat.getInstance();
     }
 
     @Override
     public void onClick(final View v) {
-        // TODO
+        Api.likeStory(mStory);
+
+        if (isActivated()) {
+            setActivated(false);
+
+        } else {
+            setActivated(true);
+
+        }
+    }
+
+    public void setStory(final CommentStory story) {
+        mStory = story;
+        setActivated(story.isLiked());
     }
 
 }

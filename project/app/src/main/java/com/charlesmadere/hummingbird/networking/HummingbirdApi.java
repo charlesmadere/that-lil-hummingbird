@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.networking;
 
 import com.charlesmadere.hummingbird.models.AbsAnime;
+import com.charlesmadere.hummingbird.models.AbsStory;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.Feed;
@@ -20,6 +21,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -83,6 +85,10 @@ public interface HummingbirdApi {
     @GET("stories")
     Call<Feed> getUserStories(@Header("Cookie") String authToken,
             @Query("user_id") String username);
+
+    @PUT("stories/{storyId}")
+    Call<Void> likeStory(@Header("Cookie") String authToken, @Path("storyId") String storyId,
+            @Body AbsStory story);
 
     @GET("search.json")
     Call<SearchBundle> search(@Query("scope") SearchScope searchScope,

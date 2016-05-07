@@ -8,6 +8,7 @@ import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.RetrofitUtils;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.AbsAnime;
+import com.charlesmadere.hummingbird.models.AbsStory;
 import com.charlesmadere.hummingbird.models.AnimeEpisode;
 import com.charlesmadere.hummingbird.models.AnimeV1;
 import com.charlesmadere.hummingbird.models.AnimeV2;
@@ -369,6 +370,21 @@ public final class Api {
             public void onFailure(final Call<Feed> call, final Throwable t) {
                 Timber.e(TAG, "get user (" + username + ") stories call failed", t);
                 listener.failure(null);
+            }
+        });
+    }
+
+    public static void likeStory(final AbsStory story) {
+        getApi().likeStory(getAuthTokenCookieString(), story.getId(), story).enqueue(
+                new Callback<Void>() {
+            @Override
+            public void onResponse(final Call<Void> call, final Response<Void> response) {
+                // do nothing
+            }
+
+            @Override
+            public void onFailure(final Call<Void> call, final Throwable t) {
+                Timber.e(TAG, "like story (" + story.getId() + ") call failed", t);
             }
         });
     }
