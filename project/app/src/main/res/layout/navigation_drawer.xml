@@ -17,7 +17,7 @@
                 android:layout_marginBottom="@dimen/root_padding_half"
                 android:layout_width="match_parent"
                 app:fixed_side="width"
-                app:height_ratio="8"
+                app:height_ratio="9"
                 app:width_ratio="16">
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/sdvCoverImage"
