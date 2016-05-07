@@ -27,8 +27,8 @@ public class LikeTextView extends TypefaceTextView implements View.OnClickListen
 
     @Override
     public void onClick(final View v) {
-        Api.likeStory(mStory);
         mStory.setLiked(!mStory.isLiked());
+        Api.likeStory(mStory);
         update();
     }
 
@@ -60,7 +60,11 @@ public class LikeTextView extends TypefaceTextView implements View.OnClickListen
                 setText(mNumberFormat.format(mStory.getTotalVotes() + 1));
             }
         } else {
-            setText(mNumberFormat.format(mStory.getTotalVotes()));
+            if (mInitiallyLiked) {
+                setText(mNumberFormat.format(mStory.getTotalVotes() - 1));
+            } else {
+                setText(mNumberFormat.format(mStory.getTotalVotes()));
+            }
         }
     }
 
