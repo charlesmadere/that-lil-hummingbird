@@ -19,6 +19,6 @@
             android:layout_below="@id/tvTitle"
             android:layout_toEndOf="@id/sdvPoster"
             tools:text="Kyousougiga"
-            style="@style/AnimeSynopsis" />
+            style="@style/AnimeSynopsis.Limited" />
     </RelativeLayout>
 </com.charlesmadere.hummingbird.views.AnimeResultItemView>

@@ -3,8 +3,10 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.text.TextUtils;
 
+import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -23,8 +25,46 @@ public class SearchBundle implements Parcelable {
 
 
     @Nullable
+    public ArrayList<AnimeResult> getAnimeResults() {
+        return getResults(AbsResult.Type.ANIME);
+    }
+
+    @Nullable
+    public ArrayList<GroupResult> getGroupResults() {
+        return getResults(AbsResult.Type.GROUP);
+    }
+
+    @Nullable
+    public ArrayList<MangaResult> getMangaResults() {
+        return getResults(AbsResult.Type.MANGA);
+    }
+
+    @Nullable
     public ArrayList<AbsResult> getResults() {
         return mResults;
+    }
+
+    @Nullable
+    @SuppressWarnings("unchecked")
+    private <T extends AbsResult> ArrayList<T> getResults(final AbsResult.Type type) {
+        if (!hasResults()) {
+            return null;
+        }
+
+        final ArrayList<T> list = new ArrayList<>();
+
+        for (final AbsResult result : mResults) {
+            if (result.getType() == type) {
+                list.add((T) result);
+            }
+        }
+
+        return list;
+    }
+
+    @Nullable
+    public ArrayList<UserResult> getUserResults() {
+        return getResults(AbsResult.Type.USER);
     }
 
     public boolean hasResults() {
@@ -225,16 +265,18 @@ public class SearchBundle implements Parcelable {
 
         public enum Type implements Parcelable {
             @SerializedName("anime")
-            ANIME,
+            ANIME(R.string.anime),
 
             @SerializedName("group")
-            GROUP,
+            GROUP(R.string.groups),
 
             @SerializedName("manga")
-            MANGA,
+            MANGA(R.string.manga),
 
             @SerializedName("user")
-            USER;
+            USER(R.string.users);
+
+            private final int mTextResId;
 
             public static Type from(final String type) {
                 switch (type) {
@@ -254,6 +296,15 @@ public class SearchBundle implements Parcelable {
                         throw new IllegalArgumentException("encountered unknown " +
                                 Type.class.getName() + ": \"" + type + '"');
                 }
+            }
+
+            Type(@StringRes final int textResId) {
+                mTextResId = textResId;
+            }
+
+            @StringRes
+            public int getTextResId() {
+                return mTextResId;
             }
 
             @Override

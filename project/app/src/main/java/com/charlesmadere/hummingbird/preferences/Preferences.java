@@ -53,7 +53,7 @@ public final class Preferences {
         static {
             TitleLanguage = new GsonPreference<>(TAG, "TitleLanguage", TitleType.class,
                     TitleType.ENGLISH);
-            Theme = new GsonPreference<>(TAG, "NightMode", NightMode.class, NightMode.SYSTEM);
+            Theme = new GsonPreference<>(TAG, "NightMode", NightMode.class, NightMode.getDefault());
         }
     }
 

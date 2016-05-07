@@ -54,9 +54,12 @@
     </style>
 
     <style name="AnimeSynopsis">
-        <item name="android:ellipsize">end</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="AnimeSynopsis.Limited">
+        <item name="android:ellipsize">end</item>
         <item name="android:maxLines">5</item>
     </style>
 
@@ -186,6 +189,16 @@
         <item name="spanCount">3</item>
     </style>
 
+    <style name="GroupDescription">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+    <style name="GroupDescription.Limited">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">5</item>
+    </style>
+
     <style name="GroupLogo">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">88dp</item>
@@ -195,7 +208,7 @@
     </style>
 
     <style name="GroupLogo.Small">
-        <item name="android:layout_width">64dp</item>
+        <item name="android:layout_width">72dp</item>
     </style>
 
     <style name="GroupTitle">
@@ -259,7 +272,7 @@
 
     <style name="MangaCover">
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">96dp</item>
+        <item name="android:layout_width">100dp</item>
         <item name="actualImageScaleType">centerCrop</item>
         <item name="placeholderImage">@drawable/image_placeholder</item>
         <item name="viewAspectRatio">0.75</item>
@@ -323,6 +336,16 @@
         <item name="layout_collapseMode">parallax</item>
         <item name="overlayImage">@drawable/image_overlay</item>
         <item name="placeholderImageScaleType">centerCrop</item>
+    </style>
+
+    <style name="SectionHeader">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingEnd">@dimen/root_padding_double</item>
+        <item name="android:paddingStart">@dimen/root_padding_double</item>
+        <item name="android:paddingTop">@dimen/root_padding</item>
+        <item name="android:textSize">@dimen/text_xlarge</item>
+        <item name="typeface">open_sans_extra_bold</item>
     </style>
 
     <style name="SettingsCardHeader" parent="CardHeader">

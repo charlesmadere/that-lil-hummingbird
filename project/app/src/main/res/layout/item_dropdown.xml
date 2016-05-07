@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.TypefaceTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:minHeight="@dimen/list_item_height"
+    android:paddingBottom="@dimen/root_padding_half"
+    android:paddingEnd="@dimen/root_padding"
+    android:paddingStart="@dimen/root_padding"
+    android:paddingTop="@dimen/root_padding_half"
+    android:textSize="@dimen/text_large"
+    tools:text="@string/groups" />

@@ -21,6 +21,9 @@ public class GroupResultItemView extends CardView implements AdapterView<SearchB
     @BindView(R.id.sdvLogo)
     SimpleDraweeView mLogo;
 
+    @BindView(R.id.tvDescription)
+    TextView mDescription;
+
     @BindView(R.id.tvTitle)
     TextView mTitle;
 
@@ -55,6 +58,13 @@ public class GroupResultItemView extends CardView implements AdapterView<SearchB
     public void setContent(final SearchBundle.GroupResult content) {
         mLogo.setImageURI(Uri.parse(content.getImage()));
         mTitle.setText(content.getTitle());
+
+        if (content.hasDescription()) {
+            mDescription.setText(content.getDescription());
+            mDescription.setVisibility(VISIBLE);
+        } else {
+            mDescription.setVisibility(GONE);
+        }
     }
 
 }

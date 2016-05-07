@@ -1,5 +1,6 @@
 package com.charlesmadere.hummingbird.misc;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -12,6 +13,8 @@ import android.support.v4.app.ActivityManagerCompat;
 import android.text.TextUtils;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.ThatLilHummingbird;
@@ -24,9 +27,22 @@ public final class MiscUtils {
     private static final long HOUR_IN_SECONDS = MINUTE_IN_SECONDS * 60L;
     private static final long DAY_IN_SECONDS = HOUR_IN_SECONDS * 24L;
     private static final long WEEK_IN_SECONDS = DAY_IN_SECONDS * 7L;
-    private static final long MONTH_IN_SECONDS = WEEK_IN_SECONDS * 4L + DAY_IN_SECONDS * 2L;
+    private static final long MONTH_IN_SECONDS = DAY_IN_SECONDS * 30L;
     private static final long YEAR_IN_SECONDS = DAY_IN_SECONDS * 365L;
 
+
+    public static void closeKeyboard(final Activity activity) {
+        View view = activity.getCurrentFocus();
+
+        if (view == null) {
+            view = new View(activity);
+        }
+
+        view.clearFocus();
+        final InputMethodManager imm = (InputMethodManager) activity.getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 
     @ColorInt
     public static int getAttrColor(final Context context, @AttrRes final int colorResId) {
@@ -176,6 +192,13 @@ public final class MiscUtils {
         } else {
             return true;
         }
+    }
+
+    public static void openKeyboard(final Context context, final View view) {
+        view.requestFocus();
+        final InputMethodManager imm = (InputMethodManager) context.getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(view, 0);
     }
 
 }
