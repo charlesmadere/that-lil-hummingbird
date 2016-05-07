@@ -13,13 +13,9 @@
             style="@style/Avatar.Medium" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvTitle"
-            android:layout_height="wrap_content"
             android:layout_toEndOf="@id/sdvAvatar"
-            android:layout_width="match_parent"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="@dimen/text_large"
-            app:typeface="teko_semibold"
-            tools:text="ThatLilChestnut followed 1 user" />
+            tools:text="ThatLilChestnut followed 1 user"
+            style="@style/UserTitle" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvTimeAgo"
             android:layout_below="@id/tvTitle"
