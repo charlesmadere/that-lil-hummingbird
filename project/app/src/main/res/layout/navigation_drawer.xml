@@ -71,12 +71,21 @@
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
                 app:entry="hummingbird_on_the_web"
                 style="@style/NavigationDrawerItemView" />
-            <ImageView
+            <FrameLayout
+                android:background="@drawable/atsuka_gradient"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:scaleType="centerInside"
-                android:src="@drawable/atsuka_drawer"
-                tools:ignore="ContentDescription" />
+                android:layout_width="match_parent"
+                android:paddingEnd="@dimen/root_padding"
+                android:paddingStart="@dimen/root_padding"
+                android:paddingTop="@dimen/root_padding_double">
+                <ImageView
+                    android:adjustViewBounds="true"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/atsuka0"
+                    tools:ignore="ContentDescription" />
+            </FrameLayout>
         </LinearLayout>
     </ScrollView>
 </com.charlesmadere.hummingbird.views.NavigationDrawerView>
