@@ -11,6 +11,19 @@
         <item name="android:visibility">gone</item>
     </style>
 
+    <style name="AnimeBreakdownGenre">
+        <item name="android:gravity">end</item>
+        <item name="android:layout_gravity">end</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingBottom">@dimen/root_padding_half</item>
+        <item name="android:paddingEnd">@dimen/root_padding</item>
+        <item name="android:paddingStart">@dimen/root_padding</item>
+        <item name="android:paddingTop">@dimen/root_padding_half</item>
+        <item name="keyTextColor">?attr/colorAccent</item>
+        <item name="valueTextColor">?android:attr/textColorPrimary</item>
+    </style>
+
     <style name="AnimeEpisodeCount">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>

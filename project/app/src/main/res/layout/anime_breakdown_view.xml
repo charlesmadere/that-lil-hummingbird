@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.AnimeBreakdownView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/animeBreakdownView"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:orientation="vertical">
+        <com.charlesmadere.hummingbird.views.AnimeBreakdownPieView
+            android:id="@+id/animeBreakdownPieView"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:gravity="center"
+            android:id="@+id/tvPrimaryGenre"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="@dimen/text_large"
+            app:typeface="open_sans_bold"
+            tools:text="Comedy" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:gravity="center"
+            android:id="@+id/tvGenreCount"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            tools:text="out of 26 titles" />
+    </LinearLayout>
+    <LinearLayout
+        android:divider="?android:attr/listDivider"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:orientation="vertical"
+        android:showDividers="middle">
+        <com.charlesmadere.hummingbird.views.KeyValueTextView
+            android:id="@+id/kvtvGenre0"
+            tools:text="Comedy 15"
+            style="@style/AnimeBreakdownGenre" />
+        <com.charlesmadere.hummingbird.views.KeyValueTextView
+            android:id="@+id/kvtvGenre1"
+            tools:text="Action 12"
+            style="@style/AnimeBreakdownGenre" />
+        <com.charlesmadere.hummingbird.views.KeyValueTextView
+            android:id="@+id/kvtvGenre2"
+            tools:text="Fantasy 9"
+            style="@style/AnimeBreakdownGenre" />
+        <com.charlesmadere.hummingbird.views.KeyValueTextView
+            android:id="@+id/kvtvGenre3"
+            tools:text="School 8"
+            style="@style/AnimeBreakdownGenre" />
+        <com.charlesmadere.hummingbird.views.KeyValueTextView
+            android:id="@+id/kvtvGenre4"
+            tools:text="Sci-Fi 7"
+            style="@style/AnimeBreakdownGenre" />
+        <com.charlesmadere.hummingbird.views.KeyValueTextView
+            android:id="@+id/kvtvGenre5"
+            tools:text="Romance 3"
+            style="@style/AnimeBreakdownGenre" />
+    </LinearLayout>
+</com.charlesmadere.hummingbird.views.AnimeBreakdownView>
