@@ -6,10 +6,12 @@ import android.support.v7.widget.AppCompatTextView;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.CustomTypefaceSpan;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.TypefaceStore;
 import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.Group;
@@ -19,6 +21,7 @@ public class GroupTitleTextView extends AppCompatTextView {
 
     private CustomTypefaceSpan mGroupNameSpan;
     private CustomTypefaceSpan mUserNameSpan;
+    private ForegroundColorSpan mCenterSpan;
 
 
     public GroupTitleTextView(final Context context, final AttributeSet attrs) {
@@ -44,6 +47,8 @@ public class GroupTitleTextView extends AppCompatTextView {
 
         mGroupNameSpan = new CustomTypefaceSpan(TypefaceStore.get(typefaceEntryOrdinal));
         mUserNameSpan = new CustomTypefaceSpan(TypefaceStore.get(typefaceEntryOrdinal));
+        mCenterSpan = new ForegroundColorSpan(MiscUtils.getAttrColor(getContext(),
+                android.R.attr.textColorSecondary));
     }
 
     public void setText(final AbsUser user) {
@@ -63,12 +68,14 @@ public class GroupTitleTextView extends AppCompatTextView {
 
         spannable.append(user.getName());
         spannable.setSpan(mUserNameSpan, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
         spannable.append(' ');
+
+        int length = spannable.length();
         spannable.append(getResources().getText(R.string.posted_to));
+        spannable.setSpan(mCenterSpan, length, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannable.append(' ');
 
-        final int length = spannable.length();
+        length = spannable.length();
         spannable.append(group.getName());
         spannable.setSpan(mGroupNameSpan, length, spannable.length(),
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
