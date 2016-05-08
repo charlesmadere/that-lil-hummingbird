@@ -139,7 +139,7 @@ public class UserActivity extends BaseDrawerActivity {
         mSimpleProgressView.fadeOut();
 
         new AlertDialog.Builder(this)
-                .setMessage(R.string.error_loading_user)
+                .setMessage(R.string.error_loading_user_check_network_connection)
                 .setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(final DialogInterface dialog) {
