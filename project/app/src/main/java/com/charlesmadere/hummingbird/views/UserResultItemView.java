@@ -18,6 +18,8 @@ import butterknife.ButterKnife;
 public class UserResultItemView extends CardView implements AdapterView<SearchBundle.UserResult>,
         View.OnClickListener {
 
+    private SearchBundle.UserResult mUserResult;
+
     @BindView(R.id.sdvAvatar)
     SimpleDraweeView mAvatar;
 
@@ -56,6 +58,8 @@ public class UserResultItemView extends CardView implements AdapterView<SearchBu
 
     @Override
     public void setContent(final SearchBundle.UserResult content) {
+        mUserResult = content;
+
         mAvatar.setImageURI(Uri.parse(content.getImage()));
         mTitle.setText(content.getTitle());
 

@@ -18,6 +18,8 @@ import butterknife.ButterKnife;
 public class MangaResultItemView extends CardView implements AdapterView<SearchBundle.MangaResult>,
         View.OnClickListener {
 
+    private SearchBundle.MangaResult mMangaResult;
+
     @BindView(R.id.sdvCover)
     SimpleDraweeView mCover;
 
@@ -56,6 +58,8 @@ public class MangaResultItemView extends CardView implements AdapterView<SearchB
 
     @Override
     public void setContent(final SearchBundle.MangaResult content) {
+        mMangaResult = content;
+
         mCover.setImageURI(Uri.parse(content.getImage()));
         mTitle.setText(content.getTitle());
 

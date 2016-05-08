@@ -18,6 +18,8 @@ import butterknife.ButterKnife;
 public class GroupResultItemView extends CardView implements AdapterView<SearchBundle.GroupResult>,
         View.OnClickListener {
 
+    private SearchBundle.GroupResult mGroupResult;
+
     @BindView(R.id.sdvLogo)
     SimpleDraweeView mLogo;
 
@@ -56,6 +58,8 @@ public class GroupResultItemView extends CardView implements AdapterView<SearchB
 
     @Override
     public void setContent(final SearchBundle.GroupResult content) {
+        mGroupResult = content;
+
         mLogo.setImageURI(Uri.parse(content.getImage()));
         mTitle.setText(content.getTitle());
 
