@@ -11,11 +11,14 @@ import android.view.View;
 
 import com.charlesmadere.hummingbird.R;
 
+import java.text.NumberFormat;
+
 public class AnimeBreakdownPieView extends View {
 
     private float mBarThickness;
     private int mPrimaryColor;
     private int mSecondaryColor;
+    private NumberFormat mNumberFormat;
 
 
     public AnimeBreakdownPieView(final Context context, final AttributeSet attrs) {
@@ -44,6 +47,17 @@ public class AnimeBreakdownPieView extends View {
     }
 
     @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+
+        if (isInEditMode()) {
+            return;
+        }
+
+        mNumberFormat = NumberFormat.getInstance();
+    }
+
+    @Override
     @SuppressWarnings("SuspiciousNameCombination")
     protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, widthMeasureSpec);
@@ -64,6 +78,10 @@ public class AnimeBreakdownPieView extends View {
         mSecondaryColor = ta.getColor(R.styleable.AnimeBreakdownPieView_secondaryColor,
                 ContextCompat.getColor(context, R.color.orangeTranslucent));
         ta.recycle();
+    }
+
+    public void setValues(final int total, final int biggest) {
+
     }
 
 }
