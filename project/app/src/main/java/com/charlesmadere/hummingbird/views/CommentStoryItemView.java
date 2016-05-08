@@ -27,6 +27,9 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
 
     private CommentStory mCommentStory;
 
+    @BindView(R.id.gttvTitle)
+    GroupTitleTextView mTitle;
+
     @BindView(R.id.likeTextView)
     LikeTextView mLikeTextView;
 
@@ -50,9 +53,6 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
 
     @BindView(R.id.tvTimeAgo)
     TextView mTimeAgo;
-
-    @BindView(R.id.tvTitle)
-    TextView mTitle;
 
 
     public CommentStoryItemView(final Context context, final AttributeSet attrs) {
@@ -93,7 +93,14 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
         final AbsUser user = mCommentStory.getPoster();
         mAvatar.setImageURI(Uri.parse(user.getAvatar()));
         mLikeTextView.setContent(mCommentStory);
-        mTitle.setText(user.getName());
+
+        if (mCommentStory.hasGroupId()) {
+            mTitle.setText(user.getName(), getResources().getText(R.string.posted_to),
+                    mCommentStory.getGroup().getName());
+        } else {
+            mTitle.setText(user.getName());
+        }
+
         mTimeAgo.setText(mCommentStory.getCreatedAt().getRelativeTimeText(getContext()));
         mComment.setText(mCommentStory.getComment());
 
