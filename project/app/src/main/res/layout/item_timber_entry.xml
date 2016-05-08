@@ -14,7 +14,7 @@
         android:id="@+id/tvTagAndMessage"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        tools:text="HummingbirdMobile - Application created" />
+        tools:text="ThatLilHummingbird Application created" />
     <TextView
         android:gravity="center_vertical"
         android:id="@+id/tvStackTrace"

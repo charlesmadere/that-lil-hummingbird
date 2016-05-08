@@ -14,8 +14,8 @@ import com.charlesmadere.hummingbird.misc.MiscUtils;
 
 public class KeyValueTextView extends TypefaceTextView {
 
-    private ForegroundColorSpan mKeyTextSpan;
-    private ForegroundColorSpan mValueTextSpan;
+    private ForegroundColorSpan mKeySpan;
+    private ForegroundColorSpan mValueSpan;
 
 
     public KeyValueTextView(final Context context, final AttributeSet attrs) {
@@ -38,8 +38,8 @@ public class KeyValueTextView extends TypefaceTextView {
                 MiscUtils.getAttrColor(context, android.R.attr.textColorSecondary));
         ta.recycle();
 
-        mKeyTextSpan = new ForegroundColorSpan(keyTextColor);
-        mValueTextSpan = new ForegroundColorSpan(valueTextColor);
+        mKeySpan = new ForegroundColorSpan(keyTextColor);
+        mValueSpan = new ForegroundColorSpan(valueTextColor);
     }
 
     public void setText(@Nullable final CharSequence key, @Nullable final CharSequence value) {
@@ -52,7 +52,7 @@ public class KeyValueTextView extends TypefaceTextView {
 
         if (!TextUtils.isEmpty(key)) {
             spannable.append(key);
-            spannable.setSpan(mKeyTextSpan, 0, key.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(mKeySpan, 0, key.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
         if (!TextUtils.isEmpty(value)) {
@@ -62,7 +62,7 @@ public class KeyValueTextView extends TypefaceTextView {
 
             final int length = spannable.length();
             spannable.append(value);
-            spannable.setSpan(mValueTextSpan, length, spannable.length(),
+            spannable.setSpan(mValueSpan, length, spannable.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
