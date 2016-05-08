@@ -228,6 +228,10 @@
         <item name="typeface">open_sans_light</item>
     </style>
 
+    <style name="List" parent="BaseListOrGrid">
+        <item name="layoutManager">LinearLayoutManager</item>
+    </style>
+
     <style name="ListMessageContainer">
         <item name="android:clickable">true</item>
         <item name="android:layout_height">match_parent</item>

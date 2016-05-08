@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.RefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/refreshLayout"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    app:scrolling_child="@+id/recyclerView">
+    <FrameLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@id/recyclerView"
+            android:visibility="gone"
+            style="@style/List" />
+        <LinearLayout
+            android:id="@+id/llError"
+            tools:visibility="visible"
+            style="@style/ListMessageContainer">
+            <TextView
+                android:text="@string/error_loading_user"
+                style="@style/ListMessageTitle" />
+            <TextView
+                android:text="@string/pull_to_refresh_to_try_again"
+                style="@style/ListMessageSubtitle" />
+        </LinearLayout>
+    </FrameLayout>
+</com.charlesmadere.hummingbird.views.RefreshLayout>
