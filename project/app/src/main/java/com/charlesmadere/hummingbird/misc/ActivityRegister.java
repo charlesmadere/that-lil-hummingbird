@@ -69,6 +69,7 @@ public final class ActivityRegister {
         if (activities.isEmpty()) {
             return null;
         } else {
+            activities.trimToSize();
             return activities;
         }
     }
