@@ -16,6 +16,11 @@
     <color name="white">#FFFFFF</color>
     <color name="windowBackground">#E6E6E6</color>
 
+    <color name="debug">@color/black</color>
+    <color name="error">@android:color/holo_red_dark</color>
+    <color name="verbose">?android:attr/textColorSecondary</color>
+    <color name="warn">@color/grayDark</color>
+
     <integer-array name="spinner_colors">
         <item>@color/orange</item>
         <item>@color/bar</item>

@@ -3,6 +3,8 @@ package com.charlesmadere.hummingbird.misc;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.charlesmadere.hummingbird.R;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -141,7 +143,7 @@ public final class Timber {
 
         @Override
         public int getColor() {
-            return android.R.color.black;
+            return R.color.debug;
         }
 
         @Override
@@ -162,7 +164,7 @@ public final class Timber {
 
         @Override
         public int getColor() {
-            return android.R.color.holo_red_dark;
+            return R.color.error;
         }
 
         @Override
@@ -183,7 +185,7 @@ public final class Timber {
 
         @Override
         public int getColor() {
-            return android.R.color.darker_gray;
+            return R.color.verbose;
         }
 
         @Override
