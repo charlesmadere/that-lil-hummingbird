@@ -134,7 +134,8 @@ public class UserDigest implements Parcelable {
         }
 
         public void hydrate(final UserDigest userDigest) {
-
+            mUser = userDigest.getUser();
+            mItem.hydrate(userDigest);
         }
 
         @Override
@@ -172,6 +173,10 @@ public class UserDigest implements Parcelable {
         public static abstract class AbsItem implements Parcelable {
             @SerializedName("id")
             private String mId;
+
+            public String getId() {
+                return mId;
+            }
 
             public abstract Type getType();
 
@@ -270,7 +275,12 @@ public class UserDigest implements Parcelable {
 
             @Override
             public void hydrate(final UserDigest userDigest) {
-                // TODO
+                for (final AbsAnime anime : userDigest.getAnime()) {
+                    if (getId().equalsIgnoreCase(anime.getId())) {
+                        mAnime = anime;
+                        break;
+                    }
+                }
             }
 
             @Override
