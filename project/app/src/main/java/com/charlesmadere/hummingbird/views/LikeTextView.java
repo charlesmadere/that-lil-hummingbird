@@ -12,7 +12,7 @@ import java.text.NumberFormat;
 public class LikeTextView extends TypefaceTextView implements View.OnClickListener {
 
     private boolean mInitiallyLiked;
-    private CommentStory mCommentStory;
+    private CommentStory mStory;
     private NumberFormat mNumberFormat;
 
 
@@ -26,8 +26,8 @@ public class LikeTextView extends TypefaceTextView implements View.OnClickListen
 
     @Override
     public void onClick(final View v) {
-        mCommentStory.setLiked(!mCommentStory.isLiked());
-        Api.likeStory(mCommentStory);
+        mStory.setLiked(!mStory.isLiked());
+        Api.likeStory(mStory);
         update();
     }
 
@@ -43,28 +43,23 @@ public class LikeTextView extends TypefaceTextView implements View.OnClickListen
         mNumberFormat = NumberFormat.getInstance();
     }
 
-    public void setCommentStory(final CommentStory commentStory) {
-        mCommentStory = commentStory;
-        mInitiallyLiked = mCommentStory.isLiked();
+    public void setContent(final CommentStory story) {
+        mStory = story;
+        mInitiallyLiked = mStory.isLiked();
         update();
     }
 
     private void update() {
-        setActivated(mCommentStory.isLiked());
+        setActivated(mStory.isLiked());
+        int totalVotes = mStory.getTotalVotes();
 
-        if (isActivated()) {
-            if (mInitiallyLiked) {
-                setText(mNumberFormat.format(mCommentStory.getTotalVotes()));
-            } else {
-                setText(mNumberFormat.format(mCommentStory.getTotalVotes() + 1));
-            }
-        } else {
-            if (mInitiallyLiked) {
-                setText(mNumberFormat.format(mCommentStory.getTotalVotes() - 1));
-            } else {
-                setText(mNumberFormat.format(mCommentStory.getTotalVotes()));
-            }
+        if (isActivated() && !mInitiallyLiked) {
+            ++totalVotes;
+        } else if (mInitiallyLiked) {
+            --totalVotes;
         }
+
+        setText(mNumberFormat.format(totalVotes));
     }
 
 }
