@@ -17,19 +17,19 @@ import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.Group;
 import com.charlesmadere.hummingbird.models.TypefaceEntry;
 
-public class GroupTitleTextView extends AppCompatTextView {
+public class CommentTitleTextView extends AppCompatTextView {
 
     private CustomTypefaceSpan mGroupNameSpan;
     private CustomTypefaceSpan mUserNameSpan;
     private ForegroundColorSpan mCenterSpan;
 
 
-    public GroupTitleTextView(final Context context, final AttributeSet attrs) {
+    public CommentTitleTextView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         parseAttributes(attrs);
     }
 
-    public GroupTitleTextView(final Context context, final AttributeSet attrs,
+    public CommentTitleTextView(final Context context, final AttributeSet attrs,
             final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         parseAttributes(attrs);
