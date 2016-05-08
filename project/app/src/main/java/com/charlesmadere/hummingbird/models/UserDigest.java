@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
@@ -23,7 +24,7 @@ public class UserDigest implements Parcelable {
     private ArrayList<Favorite> mFavorites;
 
     @SerializedName("user_info")
-    private UserInfo mUserInfo;
+    private Info mInfo;
 
 
     @Nullable
@@ -36,12 +37,12 @@ public class UserDigest implements Parcelable {
         return mFavorites;
     }
 
-    public AbsUser getUser() {
-        return mUsers.get(0);
+    public Info getInfo() {
+        return mInfo;
     }
 
-    public UserInfo getUserInfo() {
-        return mUserInfo;
+    public AbsUser getUser() {
+        return mUsers.get(0);
     }
 
     public boolean hasAnime() {
@@ -62,7 +63,7 @@ public class UserDigest implements Parcelable {
         ParcelableUtils.writeAbsAnimeListToParcel(mAnime, dest, flags);
         ParcelableUtils.writeAbsUserListToParcel(mUsers, dest, flags);
         dest.writeTypedList(mFavorites);
-        dest.writeParcelable(mUserInfo, flags);
+        dest.writeParcelable(mInfo, flags);
     }
 
     public static final Creator<UserDigest> CREATOR = new Creator<UserDigest>() {
@@ -72,7 +73,7 @@ public class UserDigest implements Parcelable {
             ud.mAnime = ParcelableUtils.readAbsAnimeListFromParcel(source);
             ud.mUsers = ParcelableUtils.readAbsUserListFromParcel(source);
             ud.mFavorites = source.createTypedArrayList(Favorite.CREATOR);
-            ud.mUserInfo = source.readParcelable(UserInfo.class.getClassLoader());
+            ud.mInfo = source.readParcelable(Info.class.getClassLoader());
             return ud;
         }
 
@@ -220,6 +221,229 @@ public class UserDigest implements Parcelable {
                     @Override
                     public Type[] newArray(final int size) {
                         return new Type[size];
+                    }
+                };
+            }
+        }
+    }
+
+
+    public static class Info implements Parcelable {
+        @Nullable
+        @SerializedName("top_genres")
+        private ArrayList<Genre> mTopGenres;
+
+        @Nullable
+        @SerializedName("favorite_ids")
+        private ArrayList<String> mFavoriteIds;
+
+        @SerializedName("anime_watched")
+        private int mAnimeWatched;
+
+        @SerializedName("life_spent_on_anime")
+        private long mLifeSpentOnAnime;
+
+        @SerializedName("id")
+        private String mId;
+
+
+        public int getAnimeWatched() {
+            return mAnimeWatched;
+        }
+
+        @Nullable
+        public ArrayList<String> getFavoriteIds() {
+            return mFavoriteIds;
+        }
+
+        public String getId() {
+            return mId;
+        }
+
+        public long getLifeSpentOnAnime() {
+            return mLifeSpentOnAnime;
+        }
+
+        @Nullable
+        public ArrayList<Genre> getTopGenres() {
+            return mTopGenres;
+        }
+
+        public boolean hasFavoriteIds() {
+            return mFavoriteIds != null && !mFavoriteIds.isEmpty();
+        }
+
+        public boolean hasTopGenres() {
+            return mTopGenres != null && !mTopGenres.isEmpty();
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(final Parcel dest, final int flags) {
+            dest.writeTypedList(mTopGenres);
+            dest.writeStringList(mFavoriteIds);
+            dest.writeInt(mAnimeWatched);
+            dest.writeLong(mLifeSpentOnAnime);
+            dest.writeString(mId);
+        }
+
+        public static final Creator<Info> CREATOR = new Creator<Info>() {
+            @Override
+            public Info createFromParcel(final Parcel source) {
+                final Info ui = new Info();
+                ui.mTopGenres = source.createTypedArrayList(Genre.CREATOR);
+                ui.mFavoriteIds = source.createStringArrayList();
+                ui.mAnimeWatched = source.readInt();
+                ui.mLifeSpentOnAnime = source.readLong();
+                ui.mId = source.readString();
+                return ui;
+            }
+
+            @Override
+            public Info[] newArray(final int size) {
+                return new Info[size];
+            }
+        };
+
+        public static class Genre implements Parcelable {
+            @SerializedName("genre")
+            private Data mData;
+
+            @SerializedName("num")
+            private int mNum;
+
+            public Data getData() {
+                return mData;
+            }
+
+            public int getNum() {
+                return mNum;
+            }
+
+            @Override
+            public String toString() {
+                return mData.toString();
+            }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(final Parcel dest, final int flags) {
+                dest.writeParcelable(mData, flags);
+                dest.writeInt(mNum);
+            }
+
+            public static final Creator<Genre> CREATOR = new Creator<Genre>() {
+                @Override
+                public Genre createFromParcel(final Parcel source) {
+                    final Genre g = new Genre();
+                    g.mData = source.readParcelable(Data.class.getClassLoader());
+                    g.mNum = source.readInt();
+                    return g;
+                }
+
+                @Override
+                public Genre[] newArray(final int size) {
+                    return new Genre[size];
+                }
+            };
+
+            public static class Data implements Parcelable {
+                @Nullable
+                @SerializedName("created_at")
+                private SimpleDate mCreatedAt;
+
+                @Nullable
+                @SerializedName("updated_at")
+                private SimpleDate mUpdatedAt;
+
+                @Nullable
+                @SerializedName("description")
+                private String mDescription;
+
+                @SerializedName("id")
+                private String mId;
+
+                @SerializedName("name")
+                private String mName;
+
+                @SerializedName("slug")
+                private String mSlug;
+
+                @Nullable
+                public SimpleDate getCreatedAt() {
+                    return mCreatedAt;
+                }
+
+                @Nullable
+                public String getDescription() {
+                    return mDescription;
+                }
+
+                public String getId() {
+                    return mId;
+                }
+
+                public String getName() {
+                    return mName;
+                }
+
+                public String getSlug() {
+                    return mSlug;
+                }
+
+                @Nullable
+                public SimpleDate getUpdatedAt() {
+                    return mUpdatedAt;
+                }
+
+                public boolean hasDescription() {
+                    return !TextUtils.isEmpty(mDescription);
+                }
+
+                @Override
+                public String toString() {
+                    return getName();
+                }
+
+                @Override
+                public int describeContents() {
+                    return 0;
+                }
+
+                @Override
+                public void writeToParcel(final Parcel dest, final int flags) {
+                    dest.writeParcelable(mCreatedAt, flags);
+                    dest.writeParcelable(mUpdatedAt, flags);
+                    dest.writeString(mDescription);
+                    dest.writeString(mId);
+                    dest.writeString(mName);
+                    dest.writeString(mSlug);
+                }
+
+                public static final Creator<Data> CREATOR = new Creator<Data>() {
+                    @Override
+                    public Data createFromParcel(final Parcel source) {
+                        final Data d = new Data();
+                        d.mCreatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
+                        d.mUpdatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
+                        d.mDescription = source.readString();
+                        d.mId = source.readString();
+                        d.mName = source.readString();
+                        d.mSlug = source.readString();
+                        return d;
+                    }
+
+                    @Override
+                    public Data[] newArray(final int size) {
+                        return new Data[size];
                     }
                 };
             }
