@@ -65,7 +65,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void goToCurrentUserActivity() {
-        startActivity(CurrentUserActivity.getLaunchIntent(this));
+        startActivity(HomeActivity.getLaunchIntent(this));
         finish();
     }
 

@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.support.v7.app.AppCompatDelegate;
 
-import com.charlesmadere.hummingbird.activities.CurrentUserActivity;
+import com.charlesmadere.hummingbird.activities.HomeActivity;
 import com.charlesmadere.hummingbird.misc.ActivityRegister;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.NightMode;
@@ -32,7 +32,7 @@ public class ThatLilHummingbird extends Application {
     }
 
     public static void restart() {
-        Timber.d(TAG, "Application is now restarting");
+        Timber.d(TAG, "Application is restarting");
         final ArrayList<Activity> activities = ActivityRegister.get();
 
         if (activities == null || activities.isEmpty()) {
@@ -40,7 +40,7 @@ public class ThatLilHummingbird extends Application {
         }
 
         final Activity activity = activities.get(0);
-        activity.startActivity(CurrentUserActivity.getNewTaskLaunchIntent(activity));
+        activity.startActivity(HomeActivity.getNewTaskLaunchIntent(activity));
 
         for (final Activity a : activities) {
             a.finish();

@@ -18,14 +18,14 @@
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
         <activity
-            android:launchMode="singleTop"
-            android:name=".activities.CurrentUserActivity"
-            android:theme="@style/HummingbirdTheme.WithDrawer" />
-
-        <activity
             android:label=""
             android:name=".activities.GalleryActivity"
             android:theme="@style/HummingbirdTheme_Gallery" />
+
+        <activity
+            android:launchMode="singleTop"
+            android:name=".activities.HomeActivity"
+            android:theme="@style/HummingbirdTheme.WithDrawer" />
 
         <activity
             android:launchMode="singleTop"
@@ -53,23 +53,23 @@
             android:label=""
             android:launchMode="singleTop"
             android:name=".activities.SearchActivity"
-            android:parentActivityName=".activities.CurrentUserActivity"
+            android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer"
             android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.CurrentUserActivity" />
+                android:value=".activities.HomeActivity" />
         </activity>
 
         <activity
             android:label="@string/settings"
             android:launchMode="singleTop"
             android:name=".activities.SettingsActivity"
-            android:parentActivityName=".activities.CurrentUserActivity"
+            android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.CurrentUserActivity" />
+                android:value=".activities.HomeActivity" />
         </activity>
 
         <activity

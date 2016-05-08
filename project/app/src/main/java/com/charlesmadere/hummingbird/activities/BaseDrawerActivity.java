@@ -78,7 +78,7 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
 
         switch (v.getEntry()) {
             case HOME:
-                intent = CurrentUserActivity.getLaunchIntent(this);
+                intent = HomeActivity.getLaunchIntent(this);
                 break;
 
             case HUMMINGBIRD_ON_THE_WEB:
