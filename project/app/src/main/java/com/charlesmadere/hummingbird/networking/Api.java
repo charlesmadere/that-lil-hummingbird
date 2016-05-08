@@ -338,6 +338,7 @@ public final class Api {
                 if (body == null) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
+                    body.hydrate();
                     listener.success(body);
                 }
             }
