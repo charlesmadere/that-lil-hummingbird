@@ -52,7 +52,7 @@ public class KeyValueTextView extends TypefaceTextView {
 
         if (!TextUtils.isEmpty(key)) {
             spannable.append(key);
-            spannable.setSpan(mKeySpan, 0, key.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(mKeySpan, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
         if (!TextUtils.isEmpty(value)) {

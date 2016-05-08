@@ -95,10 +95,9 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
         mLikeTextView.setContent(mCommentStory);
 
         if (mCommentStory.hasGroupId()) {
-            mTitle.setText(user.getName(), getResources().getText(R.string.posted_to),
-                    mCommentStory.getGroup().getName());
+            mTitle.setText(user, mCommentStory.getGroup());
         } else {
-            mTitle.setText(user.getName());
+            mTitle.setText(user);
         }
 
         mTimeAgo.setText(mCommentStory.getCreatedAt().getRelativeTimeText(getContext()));
