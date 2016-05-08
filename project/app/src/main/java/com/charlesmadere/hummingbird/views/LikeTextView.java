@@ -26,7 +26,7 @@ public class LikeTextView extends TypefaceTextView implements View.OnClickListen
 
     @Override
     public void onClick(final View v) {
-        mCommentStory.setLiked(! mCommentStory.isLiked());
+        mCommentStory.setLiked(!mCommentStory.isLiked());
         Api.likeStory(mCommentStory);
         update();
     }
