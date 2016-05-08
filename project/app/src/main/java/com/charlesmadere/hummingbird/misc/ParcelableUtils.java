@@ -16,6 +16,7 @@ import com.charlesmadere.hummingbird.models.FollowedSubstory;
 import com.charlesmadere.hummingbird.models.MediaStory;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
 import com.charlesmadere.hummingbird.models.SearchBundle;
+import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.models.UserV2;
 import com.charlesmadere.hummingbird.models.WatchedEpisodeSubstory;
@@ -508,6 +509,74 @@ public final class ParcelableUtils {
 
         for (final SearchBundle.AbsResult result : list) {
             writeSearchBundleAbsResultToParcel(result, dest, flags);
+        }
+    }
+
+    @Nullable
+    public static <T extends UserDigest.Favorite.AbsItem> T readUserDigestFavoriteAbsItemFromParcel(
+            final Parcel source) {
+        final UserDigest.Favorite.AbsItem.Type type = source.readParcelable(
+                UserDigest.Favorite.AbsItem.Type.class.getClassLoader());
+
+        if (type == null) {
+            return null;
+        }
+
+        final T item;
+
+        switch (type) {
+            case ANIME:
+                item = source.readParcelable(UserDigest.Favorite.AnimeItem.class.getClassLoader());
+                break;
+
+            default:
+                throw new RuntimeException("encountered unknown " +
+                        UserDigest.Favorite.AbsItem.Type.class.getName() + ": \"" + type + '"');
+        }
+
+        return item;
+    }
+
+    @Nullable
+    public static ArrayList<UserDigest.Favorite.AbsItem> readUserDigestFavoriteAbsItemListFromParcel(
+            final Parcel source) {
+        final int count = source.readInt();
+
+        if (count == 0) {
+            return null;
+        }
+
+        final ArrayList<UserDigest.Favorite.AbsItem> list = new ArrayList<>(count);
+
+        for (int i = 0; i < count; ++i) {
+            list.add(readUserDigestFavoriteAbsItemFromParcel(source));
+        }
+
+        return list;
+    }
+
+    public static void writeUserDigestFavoriteAbsItemToParcel(
+            @Nullable final UserDigest.Favorite.AbsItem item, final Parcel dest, final int flags) {
+        if (item == null) {
+            dest.writeParcelable(null, flags);
+        } else {
+            dest.writeParcelable(item.getType(), flags);
+            dest.writeParcelable(item, flags);
+        }
+    }
+
+    public static void writeUserDigestFavoriteAbsItemListToParcel(
+            @Nullable final List<UserDigest.Favorite.AbsItem> list, final Parcel dest,
+            final int flags) {
+        if (list == null || list.isEmpty()) {
+            dest.writeInt(0);
+            return;
+        }
+
+        dest.writeInt(list.size());
+
+        for (final UserDigest.Favorite.AbsItem item : list) {
+            writeUserDigestFavoriteAbsItemToParcel(item, dest, flags);
         }
     }
 

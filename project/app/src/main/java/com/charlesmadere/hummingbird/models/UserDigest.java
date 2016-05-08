@@ -6,6 +6,11 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -53,6 +58,14 @@ public class UserDigest implements Parcelable {
         return mFavorites != null && !mFavorites.isEmpty();
     }
 
+    public void hydrate() {
+        if (hasFavorites()) {
+            for (final Favorite favorite : mFavorites) {
+                favorite.hydrate(this);
+            }
+        }
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -85,17 +98,20 @@ public class UserDigest implements Parcelable {
 
 
     public static class Favorite implements Parcelable {
+        @SerializedName("item")
+        private AbsItem mItem;
+
         @SerializedName("fav_rank")
         private int mFavoriteRank;
-
-        @SerializedName("item")
-        private Item mItem;
 
         @SerializedName("id")
         private String mId;
 
         @SerializedName("user_id")
         private String mUserId;
+
+        // hydrated fields
+        private AbsUser mUser;
 
         public int getFavoriteRank() {
             return mFavoriteRank;
@@ -105,12 +121,20 @@ public class UserDigest implements Parcelable {
             return mId;
         }
 
-        public Item getItem() {
+        public AbsItem getItem() {
             return mItem;
+        }
+
+        public AbsUser getUser() {
+            return mUser;
         }
 
         public String getUserId() {
             return mUserId;
+        }
+
+        public void hydrate(final UserDigest userDigest) {
+
         }
 
         @Override
@@ -121,9 +145,10 @@ public class UserDigest implements Parcelable {
         @Override
         public void writeToParcel(final Parcel dest, final int flags) {
             dest.writeInt(mFavoriteRank);
-            dest.writeParcelable(mItem, flags);
+            ParcelableUtils.writeUserDigestFavoriteAbsItemToParcel(mItem, dest, flags);
             dest.writeString(mId);
             dest.writeString(mUserId);
+            ParcelableUtils.writeAbsUserToParcel(mUser, dest, flags);
         }
 
         public static final Creator<Favorite> CREATOR = new Creator<Favorite>() {
@@ -131,9 +156,10 @@ public class UserDigest implements Parcelable {
             public Favorite createFromParcel(final Parcel source) {
                 final Favorite f = new Favorite();
                 f.mFavoriteRank = source.readInt();
-                f.mItem = source.readParcelable(Item.class.getClassLoader());
+                f.mItem = ParcelableUtils.readUserDigestFavoriteAbsItemFromParcel(source);
                 f.mId = source.readString();
                 f.mUserId = source.readString();
+                f.mUser = ParcelableUtils.readAbsUserFromParcel(source);
                 return f;
             }
 
@@ -143,63 +169,42 @@ public class UserDigest implements Parcelable {
             }
         };
 
-        public static class Item implements Parcelable {
+        public static abstract class AbsItem implements Parcelable {
             @SerializedName("id")
             private String mId;
 
-            @SerializedName("type")
-            private Type mType;
+            public abstract Type getType();
 
-            // hydrated fields
-            private AbsAnime mAnime;
-
-            public AbsAnime getAnime() {
-                return mAnime;
-            }
-
-            public String getId() {
-                return mId;
-            }
-
-            public Type getType() {
-                return mType;
-            }
-
-            public void setAnime(final AbsAnime anime) {
-                mAnime = anime;
-            }
+            public abstract void hydrate(final UserDigest userDigest);
 
             @Override
             public int describeContents() {
                 return 0;
             }
 
+            protected void readFromParcel(final Parcel source) {
+                mId = source.readString();
+            }
+
             @Override
             public void writeToParcel(final Parcel dest, final int flags) {
                 dest.writeString(mId);
-                dest.writeParcelable(mType, flags);
-                ParcelableUtils.writeAbsAnimeToParcel(mAnime, dest, flags);
             }
-
-            public static final Creator<Item> CREATOR = new Creator<Item>() {
-                @Override
-                public Item createFromParcel(final Parcel source) {
-                    final Item i = new Item();
-                    i.mId = source.readString();
-                    i.mType = source.readParcelable(Type.class.getClassLoader());
-                    i.mAnime = ParcelableUtils.readAbsAnimeFromParcel(source);
-                    return i;
-                }
-
-                @Override
-                public Item[] newArray(final int size) {
-                    return new Item[size];
-                }
-            };
 
             public enum Type implements Parcelable {
                 @SerializedName("anime")
                 ANIME;
+
+                public static Type from(final String type) {
+                    switch (type) {
+                        case "anime":
+                            return ANIME;
+
+                        default:
+                            throw new IllegalArgumentException("encountered unknown " +
+                                    Type.class.getName() + ": \"" + type + '"');
+                    }
+                }
 
                 @Override
                 public int describeContents() {
@@ -224,6 +229,75 @@ public class UserDigest implements Parcelable {
                     }
                 };
             }
+
+            public static final JsonDeserializer<AbsItem> JSON_DESERIALIZER = new JsonDeserializer<AbsItem>() {
+                @Override
+                public AbsItem deserialize(final JsonElement json,
+                        final java.lang.reflect.Type typeOfT,
+                        final JsonDeserializationContext context) throws JsonParseException {
+                    final JsonObject jsonObject = json.getAsJsonObject();
+                    final Type type = Type.from(jsonObject.get("type").getAsString());
+
+                    final AbsItem item;
+
+                    switch (type) {
+                        case ANIME:
+                            item = context.deserialize(json, AnimeItem.class);
+                            break;
+
+                        default:
+                            throw new RuntimeException("encountered unknown " +
+                                    Type.class.getName() + ": \"" + type + '"');
+                    }
+
+                    return item;
+                }
+            };
+        }
+
+        public static class AnimeItem extends AbsItem implements Parcelable {
+            // hydrated fields
+            private AbsAnime mAnime;
+
+            public AbsAnime getAnime() {
+                return mAnime;
+            }
+
+            @Override
+            public Type getType() {
+                return Type.ANIME;
+            }
+
+            @Override
+            public void hydrate(final UserDigest userDigest) {
+                // TODO
+            }
+
+            @Override
+            protected void readFromParcel(final Parcel source) {
+                super.readFromParcel(source);
+                mAnime = ParcelableUtils.readAbsAnimeFromParcel(source);
+            }
+
+            @Override
+            public void writeToParcel(final Parcel dest, final int flags) {
+                super.writeToParcel(dest, flags);
+                ParcelableUtils.writeAbsAnimeToParcel(mAnime, dest, flags);
+            }
+
+            public static final Creator<AnimeItem> CREATOR = new Creator<AnimeItem>() {
+                @Override
+                public AnimeItem createFromParcel(final Parcel source) {
+                    final AnimeItem ai = new AnimeItem();
+                    ai.readFromParcel(source);
+                    return ai;
+                }
+
+                @Override
+                public AnimeItem[] newArray(final int size) {
+                    return new AnimeItem[size];
+                }
+            };
         }
     }
 
