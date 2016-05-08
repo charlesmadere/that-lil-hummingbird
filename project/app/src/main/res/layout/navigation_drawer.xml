@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:scaleType="centerInside"
-                    android:src="@drawable/atsuka0"
+                    android:src="@drawable/atsuka_kneeling"
                     tools:ignore="ContentDescription" />
             </FrameLayout>
         </LinearLayout>
