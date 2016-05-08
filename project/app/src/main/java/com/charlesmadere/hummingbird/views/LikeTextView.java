@@ -4,14 +4,15 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.networking.Api;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 
 public class LikeTextView extends TypefaceTextView implements View.OnClickListener {
 
-    private boolean mInitiallyLiked;
     private CommentStory mStory;
     private NumberFormat mNumberFormat;
 
@@ -45,7 +46,6 @@ public class LikeTextView extends TypefaceTextView implements View.OnClickListen
 
     public void setContent(final CommentStory story) {
         mStory = story;
-        mInitiallyLiked = mStory.isLiked();
         update();
     }
 
@@ -53,10 +53,14 @@ public class LikeTextView extends TypefaceTextView implements View.OnClickListen
         setActivated(mStory.isLiked());
         int totalVotes = mStory.getTotalVotes();
 
-        if (isActivated() && !mInitiallyLiked) {
+        if (mStory.hasRecentLikerIds()) {
+            final ArrayList<String> likerIds = mStory.getRecentLikerIds();
+
+            if (likerIds.contains(CurrentUser.get().getId()) && !isActivated()) {
+                --totalVotes;
+            }
+        } else if (isActivated()) {
             ++totalVotes;
-        } else if (mInitiallyLiked) {
-            --totalVotes;
         }
 
         setText(mNumberFormat.format(totalVotes));
