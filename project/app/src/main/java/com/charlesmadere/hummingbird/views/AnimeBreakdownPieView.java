@@ -36,6 +36,7 @@ public class AnimeBreakdownPieView extends View {
     }
 
     @Override
+    @SuppressWarnings("SuspiciousNameCombination")
     protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, widthMeasureSpec);
     }
