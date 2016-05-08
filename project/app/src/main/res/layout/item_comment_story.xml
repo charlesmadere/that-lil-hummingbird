@@ -9,15 +9,21 @@
             android:id="@+id/sdvAvatar"
             android:layout_marginEnd="@dimen/root_padding"
             style="@style/Avatar.Medium" />
+        <com.charlesmadere.hummingbird.views.LikeTextView
+            android:layout_alignParentEnd="true"
+            tools:text="25"
+            style="@style/LikeTextView" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvTitle"
             android:layout_toEndOf="@id/sdvAvatar"
+            android:layout_toStartOf="@id/likeTextView"
             tools:text="LimitB"
             style="@style/UserTitle" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvTimeAgo"
             android:layout_below="@id/tvTitle"
             android:layout_toEndOf="@id/sdvAvatar"
+            android:layout_toStartOf="@id/likeTextView"
             tools:text="an hour ago"
             style="@style/TimeOrDate" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
@@ -30,16 +36,10 @@
             android:layout_width="match_parent"
             android:maxLines="6"
             tools:text="Hello, World!" />
-        <com.charlesmadere.hummingbird.views.LikeTextView
-            android:layout_alignParentEnd="true"
-            android:layout_below="@id/tvComment"
-            android:layout_marginTop="@dimen/root_padding_half"
-            tools:text="25"
-            style="@style/LikeTextView" />
         <LinearLayout
             android:divider="?android:attr/listDivider"
             android:id="@+id/llReplies"
-            android:layout_below="@id/likeTextView"
+            android:layout_below="@id/tvComment"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/root_padding"
             android:layout_width="match_parent"
