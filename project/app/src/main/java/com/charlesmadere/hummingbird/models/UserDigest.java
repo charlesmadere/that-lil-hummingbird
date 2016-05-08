@@ -36,12 +36,16 @@ public class UserDigest implements Parcelable {
         return mFavorites;
     }
 
+    public AbsUser getUser() {
+        return mUsers.get(0);
+    }
+
     public UserInfo getUserInfo() {
         return mUserInfo;
     }
 
-    public AbsUser getUser() {
-        return mUsers.get(0);
+    public boolean hasAnime() {
+        return mAnime != null && !mAnime.isEmpty();
     }
 
     public boolean hasFavorites() {
