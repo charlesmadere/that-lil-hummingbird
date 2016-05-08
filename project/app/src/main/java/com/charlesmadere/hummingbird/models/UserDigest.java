@@ -87,6 +87,9 @@ public class UserDigest implements Parcelable {
         @SerializedName("fav_rank")
         private int mFavoriteRank;
 
+        @SerializedName("item")
+        private Item mItem;
+
         @SerializedName("id")
         private String mId;
 
@@ -101,6 +104,10 @@ public class UserDigest implements Parcelable {
             return mId;
         }
 
+        public Item getItem() {
+            return mItem;
+        }
+
         public String getUserId() {
             return mUserId;
         }
@@ -113,6 +120,7 @@ public class UserDigest implements Parcelable {
         @Override
         public void writeToParcel(final Parcel dest, final int flags) {
             dest.writeInt(mFavoriteRank);
+            dest.writeParcelable(mItem, flags);
             dest.writeString(mId);
             dest.writeString(mUserId);
         }
@@ -122,6 +130,7 @@ public class UserDigest implements Parcelable {
             public Favorite createFromParcel(final Parcel source) {
                 final Favorite f = new Favorite();
                 f.mFavoriteRank = source.readInt();
+                f.mItem = source.readParcelable(Item.class.getClassLoader());
                 f.mId = source.readString();
                 f.mUserId = source.readString();
                 return f;
