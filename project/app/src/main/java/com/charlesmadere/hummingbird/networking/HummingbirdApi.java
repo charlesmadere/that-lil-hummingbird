@@ -1,7 +1,6 @@
 package com.charlesmadere.hummingbird.networking;
 
 import com.charlesmadere.hummingbird.models.AbsAnime;
-import com.charlesmadere.hummingbird.models.AbsStory;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.Feed;
@@ -13,6 +12,7 @@ import com.charlesmadere.hummingbird.models.SearchScope;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
+import com.google.gson.JsonElement;
 
 import java.util.ArrayList;
 
@@ -88,7 +88,7 @@ public interface HummingbirdApi {
 
     @PUT("stories/{storyId}")
     Call<Void> likeStory(@Header("Cookie") String authToken, @Path("storyId") String storyId,
-            @Body AbsStory story);
+            @Body JsonElement json);
 
     @GET("search.json")
     Call<SearchBundle> search(@Query("scope") SearchScope searchScope,

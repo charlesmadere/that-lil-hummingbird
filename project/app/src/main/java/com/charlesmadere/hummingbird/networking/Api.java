@@ -5,14 +5,15 @@ import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
+import com.charlesmadere.hummingbird.misc.GsonUtils;
 import com.charlesmadere.hummingbird.misc.RetrofitUtils;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.AbsAnime;
-import com.charlesmadere.hummingbird.models.AbsStory;
 import com.charlesmadere.hummingbird.models.AnimeEpisode;
 import com.charlesmadere.hummingbird.models.AnimeV1;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.AuthInfo;
+import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
@@ -24,6 +25,7 @@ import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.charlesmadere.hummingbird.preferences.Preferences;
+import com.google.gson.JsonObject;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -374,8 +376,11 @@ public final class Api {
         });
     }
 
-    public static void likeStory(final AbsStory story) {
-        getApi().likeStory(getAuthTokenCookieString(), story.getId(), story).enqueue(
+    public static void likeStory(final CommentStory story) {
+        JsonObject json = new JsonObject();
+        json.add("story", GsonUtils.getGson().toJsonTree(story));
+
+        getApi().likeStory(getAuthTokenCookieString(), story.getId(), json).enqueue(
                 new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
