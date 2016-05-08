@@ -17,7 +17,8 @@ import com.charlesmadere.hummingbird.models.TypefaceEntry;
 
 public class GroupTitleTextView extends AppCompatTextView {
 
-    private CustomTypefaceSpan mGroupTitleSpan;
+    private CustomTypefaceSpan mGroupNameSpan;
+    private CustomTypefaceSpan mUserNameSpan;
 
 
     public GroupTitleTextView(final Context context, final AttributeSet attrs) {
@@ -41,18 +42,19 @@ public class GroupTitleTextView extends AppCompatTextView {
                 TypefaceEntry.TEKO_SEMIBOLD.ordinal());
         ta.recycle();
 
-        mGroupTitleSpan = new CustomTypefaceSpan(TypefaceStore.get(typefaceEntryOrdinal));
+        mGroupNameSpan = new CustomTypefaceSpan(TypefaceStore.get(typefaceEntryOrdinal));
+        mUserNameSpan = new CustomTypefaceSpan(TypefaceStore.get(typefaceEntryOrdinal));
     }
 
     public void setText(final AbsUser user) {
         final SpannableString spannable = new SpannableString(user.getName());
-        spannable.setSpan(mGroupTitleSpan, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(mUserNameSpan, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         setText(spannable);
     }
 
     public void setText(final Group group) {
         final SpannableString spannable = new SpannableString(group.getName());
-        spannable.setSpan(mGroupTitleSpan, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(mGroupNameSpan, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         setText(spannable);
     }
 
@@ -60,7 +62,7 @@ public class GroupTitleTextView extends AppCompatTextView {
         final SpannableStringBuilder spannable = new SpannableStringBuilder();
 
         spannable.append(user.getName());
-        spannable.setSpan(mGroupTitleSpan, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(mUserNameSpan, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         spannable.append(' ');
         spannable.append(getResources().getText(R.string.posted_to));
@@ -68,7 +70,7 @@ public class GroupTitleTextView extends AppCompatTextView {
 
         final int length = spannable.length();
         spannable.append(group.getName());
-        spannable.setSpan(mGroupTitleSpan, length, spannable.length(),
+        spannable.setSpan(mGroupNameSpan, length, spannable.length(),
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         setText(spannable);
