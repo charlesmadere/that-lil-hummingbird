@@ -31,6 +31,8 @@ public class CommentStory extends AbsStory implements Parcelable {
 
     // hydrated fields
     private AbsUser mPoster;
+
+    @Nullable
     private Group mGroup;
 
 
