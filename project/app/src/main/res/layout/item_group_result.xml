@@ -2,23 +2,27 @@
 <com.charlesmadere.hummingbird.views.GroupResultItemView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/CardItem">
-    <RelativeLayout
+    <LinearLayout
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/sdvLogo"
             android:layout_marginEnd="@dimen/root_padding"
             style="@style/GroupLogo.Small" />
-        <com.charlesmadere.hummingbird.views.TypefaceTextView
-            android:id="@+id/tvTitle"
-            android:layout_toEndOf="@id/sdvLogo"
-            tools:text="SOS Brigade"
-            style="@style/GroupTitle" />
-        <com.charlesmadere.hummingbird.views.TypefaceTextView
-            android:id="@+id/tvDescription"
-            android:layout_below="@id/tvTitle"
-            android:layout_toEndOf="@id/sdvLogo"
-            tools:text="Kyousougiga"
-            style="@style/GroupDescription.Limited" />
-    </RelativeLayout>
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvTitle"
+                tools:text="SOS Brigade"
+                style="@style/GroupTitle" />
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvDescription"
+                tools:text="Kyousougiga"
+                style="@style/GroupDescription.Limited" />
+        </LinearLayout>
+    </LinearLayout>
 </com.charlesmadere.hummingbird.views.GroupResultItemView>

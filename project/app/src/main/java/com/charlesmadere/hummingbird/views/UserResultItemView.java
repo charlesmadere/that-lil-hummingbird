@@ -21,6 +21,9 @@ public class UserResultItemView extends CardView implements AdapterView<SearchBu
     @BindView(R.id.sdvAvatar)
     SimpleDraweeView mAvatar;
 
+    @BindView(R.id.tvBio)
+    TextView mBio;
+
     @BindView(R.id.tvTitle)
     TextView mTitle;
 
@@ -55,6 +58,13 @@ public class UserResultItemView extends CardView implements AdapterView<SearchBu
     public void setContent(final SearchBundle.UserResult content) {
         mAvatar.setImageURI(Uri.parse(content.getImage()));
         mTitle.setText(content.getTitle());
+
+        if (content.hasDescription()) {
+            mBio.setText(content.getDescription());
+            mBio.setVisibility(VISIBLE);
+        } else {
+            mBio.setVisibility(GONE);
+        }
     }
 
 }

@@ -21,8 +21,8 @@ public class AnimeResultItemView extends CardView implements AdapterView<SearchB
     @BindView(R.id.sdvPoster)
     SimpleDraweeView mPoster;
 
-    @BindView(R.id.tvDescription)
-    TextView mDescription;
+    @BindView(R.id.tvSynopsis)
+    TextView mSynopsis;
 
     @BindView(R.id.tvTitle)
     TextView mTitle;
@@ -60,10 +60,10 @@ public class AnimeResultItemView extends CardView implements AdapterView<SearchB
         mTitle.setText(content.getTitle());
 
         if (content.hasDescription()) {
-            mDescription.setText(content.getDescription());
-            mDescription.setVisibility(VISIBLE);
+            mSynopsis.setText(content.getDescription());
+            mSynopsis.setVisibility(VISIBLE);
         } else {
-            mDescription.setVisibility(GONE);
+            mSynopsis.setVisibility(GONE);
         }
     }
 

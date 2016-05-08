@@ -290,6 +290,16 @@
         <item name="android:layout_width">72dp</item>
     </style>
 
+    <style name="MangaSynopsis">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="MangaSynopsis.Limited">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">5</item>
+    </style>
+
     <style name="MangaTitle">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
@@ -445,6 +455,16 @@
         <item name="android:background">@null</item>
         <item name="android:elevation" tools:targetApi="lollipop">0dp</item>
         <item name="layout_collapseMode">pin</item>
+    </style>
+
+    <style name="UserBio">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="UserBio.Limited">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">5</item>
     </style>
 
     <style name="UserTitle">

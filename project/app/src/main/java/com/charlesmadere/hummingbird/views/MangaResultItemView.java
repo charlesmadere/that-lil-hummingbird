@@ -21,6 +21,9 @@ public class MangaResultItemView extends CardView implements AdapterView<SearchB
     @BindView(R.id.sdvCover)
     SimpleDraweeView mCover;
 
+    @BindView(R.id.tvSynopsis)
+    TextView mSynopsis;
+
     @BindView(R.id.tvTitle)
     TextView mTitle;
 
@@ -55,6 +58,13 @@ public class MangaResultItemView extends CardView implements AdapterView<SearchB
     public void setContent(final SearchBundle.MangaResult content) {
         mCover.setImageURI(Uri.parse(content.getImage()));
         mTitle.setText(content.getTitle());
+
+        if (content.hasDescription()) {
+            mSynopsis.setText(content.getDescription());
+            mSynopsis.setVisibility(VISIBLE);
+        } else {
+            mSynopsis.setVisibility(GONE);
+        }
     }
 
 }
