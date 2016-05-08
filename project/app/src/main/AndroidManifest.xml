@@ -23,6 +23,7 @@
             android:theme="@style/HummingbirdTheme_Gallery" />
 
         <activity
+            android:label="@string/home"
             android:launchMode="singleTop"
             android:name=".activities.HomeActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer" />

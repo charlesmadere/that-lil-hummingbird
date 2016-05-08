@@ -15,8 +15,11 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ReplySubstoryItemView extends FrameLayout {
+
+    private ReplySubstory mReplySubstory;
 
     @BindView(R.id.kvtvReply)
     KeyValueTextView mReply;
@@ -43,6 +46,11 @@ public class ReplySubstoryItemView extends FrameLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
+    @OnClick(R.id.sdvAvatar)
+    void onAvatarClick() {
+        // TODO
+    }
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -55,10 +63,11 @@ public class ReplySubstoryItemView extends FrameLayout {
     }
 
     public void setContent(final ReplySubstory content) {
-        final AbsUser user = content.getUser();
+        mReplySubstory = content;
+        final AbsUser user = mReplySubstory.getUser();
         mAvatar.setImageURI(Uri.parse(user.getAvatarSmall()));
-        mReply.setText(user.getName(), content.getReply());
-        mTimeAgo.setText(content.getCreatedAt().getRelativeTimeText(getContext()));
+        mReply.setText(user.getName(), mReplySubstory.getReply());
+        mTimeAgo.setText(mReplySubstory.getCreatedAt().getRelativeTimeText(getContext()));
     }
 
 }
