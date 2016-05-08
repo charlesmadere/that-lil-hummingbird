@@ -95,7 +95,7 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
         mTitle.setText(user.getName());
         mTimeAgo.setText(mCommentStory.getCreatedAt().getRelativeTimeText(getContext()));
         mComment.setText(mCommentStory.getComment());
-        mLikeTextView.setStory(mCommentStory);
+        mLikeTextView.setCommentStory(mCommentStory);
 
         if (content.hasSubstoryIds()) {
             final ArrayList<AbsSubstory> substories = mCommentStory.getSubstories();

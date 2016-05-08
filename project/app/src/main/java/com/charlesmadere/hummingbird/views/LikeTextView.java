@@ -12,7 +12,7 @@ import java.text.NumberFormat;
 public class LikeTextView extends TypefaceTextView implements View.OnClickListener {
 
     private boolean mInitiallyLiked;
-    private CommentStory mStory;
+    private CommentStory mCommentStory;
     private NumberFormat mNumberFormat;
 
 
@@ -20,15 +20,14 @@ public class LikeTextView extends TypefaceTextView implements View.OnClickListen
         super(context, attrs);
     }
 
-    public LikeTextView(final Context context, final AttributeSet attrs,
-            final int defStyleAttr) {
+    public LikeTextView(final Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @Override
     public void onClick(final View v) {
-        mStory.setLiked(!mStory.isLiked());
-        Api.likeStory(mStory);
+        mCommentStory.setLiked(! mCommentStory.isLiked());
+        Api.likeStory(mCommentStory);
         update();
     }
 
@@ -44,26 +43,26 @@ public class LikeTextView extends TypefaceTextView implements View.OnClickListen
         mNumberFormat = NumberFormat.getInstance();
     }
 
-    public void setStory(final CommentStory story) {
-        mStory = story;
-        mInitiallyLiked = mStory.isLiked();
+    public void setCommentStory(final CommentStory commentStory) {
+        mCommentStory = commentStory;
+        mInitiallyLiked = mCommentStory.isLiked();
         update();
     }
 
     private void update() {
-        setActivated(mStory.isLiked());
+        setActivated(mCommentStory.isLiked());
 
         if (isActivated()) {
             if (mInitiallyLiked) {
-                setText(mNumberFormat.format(mStory.getTotalVotes()));
+                setText(mNumberFormat.format(mCommentStory.getTotalVotes()));
             } else {
-                setText(mNumberFormat.format(mStory.getTotalVotes() + 1));
+                setText(mNumberFormat.format(mCommentStory.getTotalVotes() + 1));
             }
         } else {
             if (mInitiallyLiked) {
-                setText(mNumberFormat.format(mStory.getTotalVotes() - 1));
+                setText(mNumberFormat.format(mCommentStory.getTotalVotes() - 1));
             } else {
-                setText(mNumberFormat.format(mStory.getTotalVotes()));
+                setText(mNumberFormat.format(mCommentStory.getTotalVotes()));
             }
         }
     }
