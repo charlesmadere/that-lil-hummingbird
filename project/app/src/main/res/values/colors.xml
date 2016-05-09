@@ -7,7 +7,7 @@
     <color name="grayDark">#333333</color>
     <color name="grayMedium">#999999</color>
     <color name="orange">#EC8660</color>
-    <color name="orangeTranslucent">#88EC8660</color>
+    <color name="orangeFaded">#F7CAB9</color>
     <color name="overlay">#88000000</color>
     <color name="placeholderGradientEnd">#BBBBBB</color>
     <color name="placeholderGradientStart">#EEEEEE</color>

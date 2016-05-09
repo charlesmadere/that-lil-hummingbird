@@ -90,7 +90,7 @@ public class AnimeBreakdownPieView extends View {
         final int primaryColor = ta.getColor(R.styleable.AnimeBreakdownPieView_primaryColor,
                 ContextCompat.getColor(context, R.color.orange));
         final int secondaryColor = ta.getColor(R.styleable.AnimeBreakdownPieView_secondaryColor,
-                ContextCompat.getColor(context, R.color.orangeTranslucent));
+                ContextCompat.getColor(context, R.color.orangeFaded));
         final int textColor = ta.getColor(R.styleable.AnimeBreakdownPieView_textColor,
                 ContextCompat.getColor(context, R.color.orange));
         final float textSize = ta.getDimension(R.styleable.AnimeBreakdownPieView_textSize,
