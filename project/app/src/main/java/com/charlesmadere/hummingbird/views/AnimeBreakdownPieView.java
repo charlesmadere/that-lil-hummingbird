@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -19,6 +20,9 @@ public class AnimeBreakdownPieView extends View {
     private int mPrimaryColor;
     private int mSecondaryColor;
     private NumberFormat mNumberFormat;
+
+    private int mBiggest;
+    private int mTotal;
 
 
     public AnimeBreakdownPieView(final Context context, final AttributeSet attrs) {
@@ -43,6 +47,10 @@ public class AnimeBreakdownPieView extends View {
     protected void onDraw(final Canvas canvas) {
         super.onDraw(canvas);
 
+        if (mBiggest == 0 || mTotal == 0 || !ViewCompat.isLaidOut(this)) {
+            return;
+        }
+
         // TODO
     }
 
@@ -63,6 +71,12 @@ public class AnimeBreakdownPieView extends View {
         super.onMeasure(widthMeasureSpec, widthMeasureSpec);
     }
 
+    @Override
+    protected void onSizeChanged(final int w, final int h, final int oldw, final int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        invalidate();
+    }
+
     private void parseAttributes(final AttributeSet attrs) {
         if (isInEditMode()) {
             return;
@@ -78,10 +92,26 @@ public class AnimeBreakdownPieView extends View {
         mSecondaryColor = ta.getColor(R.styleable.AnimeBreakdownPieView_secondaryColor,
                 ContextCompat.getColor(context, R.color.orangeTranslucent));
         ta.recycle();
+
+
     }
 
     public void setValues(final int total, final int biggest) {
+        if (total <= 0) {
+            throw new IllegalArgumentException("total must be > 0");
+        } else if (biggest <= 0) {
+            throw new IllegalArgumentException("biggest must be > 0");
+        }
 
+        if (biggest > total) {
+            mTotal = total;
+            mBiggest = total;
+        } else {
+            mTotal = total;
+            mBiggest = biggest;
+        }
+
+        invalidate();
     }
 
 }
