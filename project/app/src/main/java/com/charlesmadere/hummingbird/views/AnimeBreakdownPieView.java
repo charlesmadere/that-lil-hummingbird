@@ -24,8 +24,7 @@ public class AnimeBreakdownPieView extends View {
     private Paint mPrimaryPaint;
     private Paint mSecondaryPaint;
     private Paint mTextPaint;
-    private RectF mPrimaryRect;
-    private RectF mSecondaryRect;
+    private RectF mRect;
 
     private int mBiggest;
     private int mTotal;
@@ -53,13 +52,11 @@ public class AnimeBreakdownPieView extends View {
     protected void onDraw(final Canvas canvas) {
         super.onDraw(canvas);
 
-        if (mBiggest == 0 || mTotal == 0 || !ViewCompat.isLaidOut(this) || mPrimaryRect.isEmpty()
-                || mSecondaryRect.isEmpty()) {
+        if (mBiggest == 0 || mTotal == 0 || !ViewCompat.isLaidOut(this) || mRect.isEmpty()) {
             return;
         }
 
-        canvas.drawArc(mPrimaryRect, 0f, 360f, true, mPrimaryPaint);
-        canvas.drawArc(mSecondaryRect, 0f, 360f, true, mSecondaryPaint);
+        canvas.drawArc(mRect, 0f, 360f, true, mPrimaryPaint);
         canvas.drawText(mNumberFormat.format(mBiggest), getWidth() / 2, getHeight() / 2,
                 mTextPaint);
     }
@@ -68,11 +65,13 @@ public class AnimeBreakdownPieView extends View {
     @SuppressWarnings("SuspiciousNameCombination")
     protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
         setMeasuredDimension(widthMeasureSpec, widthMeasureSpec);
+        updateRects();
     }
 
     @Override
     protected void onSizeChanged(final int w, final int h, final int oldw, final int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
+        updateRects();
         invalidate();
     }
 
@@ -102,13 +101,11 @@ public class AnimeBreakdownPieView extends View {
         mPrimaryPaint.setAntiAlias(true);
         mPrimaryPaint.setColor(primaryColor);
         mPrimaryPaint.setStyle(Paint.Style.FILL);
-        mPrimaryRect = new RectF();
 
         mSecondaryPaint = new Paint();
         mSecondaryPaint.setAntiAlias(true);
         mSecondaryPaint.setColor(secondaryColor);
         mSecondaryPaint.setStyle(Paint.Style.FILL);
-        mSecondaryRect = new RectF();
 
         mTextPaint = new Paint();
         mTextPaint.setAntiAlias(true);
@@ -116,6 +113,7 @@ public class AnimeBreakdownPieView extends View {
         mTextPaint.setTextSize(textSize);
 
         mNumberFormat = NumberFormat.getInstance();
+        mRect = new RectF();
     }
 
     public void setValues(final int total, final int biggest) {
@@ -131,6 +129,10 @@ public class AnimeBreakdownPieView extends View {
         mTotal = total;
         mBiggest = biggest;
         invalidate();
+    }
+
+    private void updateRects() {
+        mRect.set(0f, 0f, getWidth(), getHeight());
     }
 
 }
