@@ -19,15 +19,14 @@ import java.text.NumberFormat;
 
 public class AnimeBreakdownPieView extends View {
 
-    private float mBarThickness;
     private NumberFormat mNumberFormat;
     private Paint mPrimaryPaint;
     private Paint mSecondaryPaint;
     private Paint mTextPaint;
     private RectF mRect;
 
-    private int mBiggest;
-    private int mTotal;
+    private float mBiggest;
+    private float mTotal;
 
 
     public AnimeBreakdownPieView(final Context context, final AttributeSet attrs) {
@@ -52,13 +51,18 @@ public class AnimeBreakdownPieView extends View {
     protected void onDraw(final Canvas canvas) {
         super.onDraw(canvas);
 
-        if (!ViewCompat.isLaidOut(this) || mBiggest == 0 || mTotal == 0 || mRect.isEmpty()) {
+        if (!ViewCompat.isLaidOut(this) || mBiggest == 0f || mTotal == 0f || mRect.isEmpty()) {
             return;
         }
 
-        canvas.drawArc(mRect, 0f, 360f, true, mPrimaryPaint);
-        canvas.drawText(mNumberFormat.format(mBiggest), getWidth() / 2, getHeight() / 2,
-                mTextPaint);
+        final int height = (int) mRect.bottom;
+        final int width = (int) mRect.right;
+        final int centerX = width / 2;
+        final int centerY = height / 2;
+
+        canvas.drawCircle(centerX, centerY, (width - mSecondaryPaint.getStrokeWidth()) / 2, mSecondaryPaint);
+        canvas.drawArc(mRect, 270f, (mBiggest / mTotal) * 360f, false, mPrimaryPaint);
+        canvas.drawText(mNumberFormat.format(mBiggest), centerX, centerY, mTextPaint);
     }
 
     @Override
@@ -81,8 +85,8 @@ public class AnimeBreakdownPieView extends View {
 
         final TypedArray ta = context.obtainStyledAttributes(attrs,
                 R.styleable.AnimeBreakdownPieView);
-        mBarThickness = ta.getDimension(R.styleable.AnimeBreakdownPieView_barThickness,
-                resources.getDimension(R.dimen.root_padding));
+        final float mBarThickness = ta.getDimension(R.styleable.AnimeBreakdownPieView_barThickness,
+                resources.getDimension(R.dimen.pie_stroke_width));
         final int primaryColor = ta.getColor(R.styleable.AnimeBreakdownPieView_primaryColor,
                 ContextCompat.getColor(context, R.color.orange));
         final int secondaryColor = ta.getColor(R.styleable.AnimeBreakdownPieView_secondaryColor,
@@ -90,32 +94,35 @@ public class AnimeBreakdownPieView extends View {
         final int textColor = ta.getColor(R.styleable.AnimeBreakdownPieView_textColor,
                 ContextCompat.getColor(context, R.color.orange));
         final float textSize = ta.getDimension(R.styleable.AnimeBreakdownPieView_textSize,
-                resources.getDimension(R.dimen.text_large));
+                resources.getDimension(R.dimen.text_xxlarge));
         ta.recycle();
 
         mPrimaryPaint = new Paint();
         mPrimaryPaint.setAntiAlias(true);
         mPrimaryPaint.setColor(primaryColor);
-        mPrimaryPaint.setStyle(Paint.Style.FILL);
+        mPrimaryPaint.setStrokeWidth(mBarThickness);
+        mPrimaryPaint.setStyle(Paint.Style.STROKE);
 
         mSecondaryPaint = new Paint();
         mSecondaryPaint.setAntiAlias(true);
         mSecondaryPaint.setColor(secondaryColor);
-        mSecondaryPaint.setStyle(Paint.Style.FILL);
+        mSecondaryPaint.setStrokeWidth(mBarThickness);
+        mSecondaryPaint.setStyle(Paint.Style.STROKE);
 
         mTextPaint = new Paint();
         mTextPaint.setAntiAlias(true);
         mTextPaint.setColor(textColor);
+        mTextPaint.setFakeBoldText(true);
         mTextPaint.setTextSize(textSize);
 
         mNumberFormat = NumberFormat.getInstance();
         mRect = new RectF();
     }
 
-    public void setValues(final int total, final int biggest) {
-        if (total <= 0) {
+    public void setValues(final float total, final float biggest) {
+        if (total <= 0f) {
             throw new IllegalArgumentException("total (" + total + ") must be > 0");
-        } else if (biggest <= 0) {
+        } else if (biggest <= 0f) {
             throw new IllegalArgumentException("biggest (" + biggest + ") must be > 0");
         } else if (biggest > total) {
             throw new IllegalArgumentException("biggest (" + biggest + ") must not be bigger"
@@ -128,7 +135,8 @@ public class AnimeBreakdownPieView extends View {
     }
 
     private void updateRects() {
-        mRect.set(0f, 0f, getWidth(), getHeight());
+        mRect.set(0f, 0f, getWidth() - getPaddingLeft() - getPaddingRight(),
+                getHeight() - getPaddingTop() - getPaddingBottom());
     }
 
 }

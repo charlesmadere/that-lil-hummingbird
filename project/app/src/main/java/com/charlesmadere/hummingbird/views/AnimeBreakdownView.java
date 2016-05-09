@@ -63,7 +63,7 @@ public class AnimeBreakdownView extends LinearLayout {
         ButterKnife.bind(this);
 
         if (isInEditMode()) {
-            mAnimeBreakdownPieView.setValues(30, 16);
+            mAnimeBreakdownPieView.setValues(30, 21);
         }
     }
 
