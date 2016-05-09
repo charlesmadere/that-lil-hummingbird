@@ -52,7 +52,7 @@ public class AnimeBreakdownPieView extends View {
     protected void onDraw(final Canvas canvas) {
         super.onDraw(canvas);
 
-        if (mBiggest == 0 || mTotal == 0 || !ViewCompat.isLaidOut(this) || mRect.isEmpty()) {
+        if (!ViewCompat.isLaidOut(this) || mBiggest == 0 || mTotal == 0 || mRect.isEmpty()) {
             return;
         }
 
