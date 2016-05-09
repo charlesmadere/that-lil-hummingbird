@@ -135,8 +135,10 @@ public class AnimeBreakdownPieView extends View {
     }
 
     private void updateRect() {
-        mRect.set(0f, 0f, getWidth() - getPaddingLeft() - getPaddingRight(),
-                getHeight() - getPaddingTop() - getPaddingBottom());
+        final float strokeWidth = mPrimaryPaint.getStrokeWidth() / 2f;
+        mRect.set(getPaddingLeft() + strokeWidth, getPaddingTop() + strokeWidth,
+                getWidth() - getPaddingRight() - strokeWidth,
+                getHeight() - getPaddingBottom() - strokeWidth);
     }
 
 }

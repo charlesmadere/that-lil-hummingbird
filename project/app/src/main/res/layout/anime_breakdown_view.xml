@@ -14,7 +14,8 @@
         <com.charlesmadere.hummingbird.views.AnimeBreakdownPieView
             android:id="@+id/animeBreakdownPieView"
             android:layout_height="match_parent"
-            android:layout_width="wrap_content" />
+            android:layout_width="wrap_content"
+            android:padding="@dimen/root_padding" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:gravity="center"
             android:id="@+id/tvPrimaryGenre"
