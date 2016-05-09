@@ -76,10 +76,6 @@ public class AnimeBreakdownPieView extends View {
     }
 
     private void parseAttributes(final AttributeSet attrs) {
-        if (isInEditMode()) {
-            return;
-        }
-
         final Context context = getContext();
         final Resources resources = getResources();
 
