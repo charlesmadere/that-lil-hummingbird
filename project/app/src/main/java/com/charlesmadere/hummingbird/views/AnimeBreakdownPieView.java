@@ -2,9 +2,11 @@ package com.charlesmadere.hummingbird.views;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
@@ -21,6 +23,9 @@ public class AnimeBreakdownPieView extends View {
     private NumberFormat mNumberFormat;
     private Paint mPrimaryPaint;
     private Paint mSecondaryPaint;
+    private Paint mTextPaint;
+    private RectF mPrimaryRect;
+    private RectF mSecondaryRect;
 
     private int mBiggest;
     private int mTotal;
@@ -48,28 +53,21 @@ public class AnimeBreakdownPieView extends View {
     protected void onDraw(final Canvas canvas) {
         super.onDraw(canvas);
 
-        if (mBiggest == 0 || mTotal == 0 || !ViewCompat.isLaidOut(this)) {
+        if (mBiggest == 0 || mTotal == 0 || !ViewCompat.isLaidOut(this) || mPrimaryRect.isEmpty()
+                || mSecondaryRect.isEmpty()) {
             return;
         }
 
-        // TODO
-    }
-
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-
-        if (isInEditMode()) {
-            return;
-        }
-
-        mNumberFormat = NumberFormat.getInstance();
+        canvas.drawArc(mPrimaryRect, 0f, 360f, true, mPrimaryPaint);
+        canvas.drawArc(mSecondaryRect, 0f, 360f, true, mSecondaryPaint);
+        canvas.drawText(mNumberFormat.format(mBiggest), getWidth() / 2, getHeight() / 2,
+                mTextPaint);
     }
 
     @Override
     @SuppressWarnings("SuspiciousNameCombination")
     protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, widthMeasureSpec);
+        setMeasuredDimension(widthMeasureSpec, widthMeasureSpec);
     }
 
     @Override
@@ -84,25 +82,40 @@ public class AnimeBreakdownPieView extends View {
         }
 
         final Context context = getContext();
+        final Resources resources = getResources();
+
         final TypedArray ta = context.obtainStyledAttributes(attrs,
                 R.styleable.AnimeBreakdownPieView);
         mBarThickness = ta.getDimension(R.styleable.AnimeBreakdownPieView_barThickness,
-                getResources().getDimension(R.dimen.root_padding));
+                resources.getDimension(R.dimen.root_padding));
         final int primaryColor = ta.getColor(R.styleable.AnimeBreakdownPieView_primaryColor,
                 ContextCompat.getColor(context, R.color.orange));
         final int secondaryColor = ta.getColor(R.styleable.AnimeBreakdownPieView_secondaryColor,
                 ContextCompat.getColor(context, R.color.orangeTranslucent));
+        final int textColor = ta.getColor(R.styleable.AnimeBreakdownPieView_textColor,
+                ContextCompat.getColor(context, R.color.orange));
+        final float textSize = ta.getDimension(R.styleable.AnimeBreakdownPieView_textSize,
+                resources.getDimension(R.dimen.text_large));
         ta.recycle();
 
         mPrimaryPaint = new Paint();
         mPrimaryPaint.setAntiAlias(true);
         mPrimaryPaint.setColor(primaryColor);
         mPrimaryPaint.setStyle(Paint.Style.FILL);
+        mPrimaryRect = new RectF();
 
         mSecondaryPaint = new Paint();
         mSecondaryPaint.setAntiAlias(true);
         mSecondaryPaint.setColor(secondaryColor);
         mSecondaryPaint.setStyle(Paint.Style.FILL);
+        mSecondaryRect = new RectF();
+
+        mTextPaint = new Paint();
+        mTextPaint.setAntiAlias(true);
+        mTextPaint.setColor(textColor);
+        mTextPaint.setTextSize(textSize);
+
+        mNumberFormat = NumberFormat.getInstance();
     }
 
     public void setValues(final int total, final int biggest) {
