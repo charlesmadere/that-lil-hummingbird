@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
@@ -17,9 +18,9 @@ import java.text.NumberFormat;
 public class AnimeBreakdownPieView extends View {
 
     private float mBarThickness;
-    private int mPrimaryColor;
-    private int mSecondaryColor;
     private NumberFormat mNumberFormat;
+    private Paint mPrimaryPaint;
+    private Paint mSecondaryPaint;
 
     private int mBiggest;
     private int mTotal;
@@ -87,30 +88,35 @@ public class AnimeBreakdownPieView extends View {
                 R.styleable.AnimeBreakdownPieView);
         mBarThickness = ta.getDimension(R.styleable.AnimeBreakdownPieView_barThickness,
                 getResources().getDimension(R.dimen.root_padding));
-        mPrimaryColor = ta.getColor(R.styleable.AnimeBreakdownPieView_primaryColor,
+        final int primaryColor = ta.getColor(R.styleable.AnimeBreakdownPieView_primaryColor,
                 ContextCompat.getColor(context, R.color.orange));
-        mSecondaryColor = ta.getColor(R.styleable.AnimeBreakdownPieView_secondaryColor,
+        final int secondaryColor = ta.getColor(R.styleable.AnimeBreakdownPieView_secondaryColor,
                 ContextCompat.getColor(context, R.color.orangeTranslucent));
         ta.recycle();
 
+        mPrimaryPaint = new Paint();
+        mPrimaryPaint.setAntiAlias(true);
+        mPrimaryPaint.setColor(primaryColor);
+        mPrimaryPaint.setStyle(Paint.Style.FILL);
 
+        mSecondaryPaint = new Paint();
+        mSecondaryPaint.setAntiAlias(true);
+        mSecondaryPaint.setColor(secondaryColor);
+        mSecondaryPaint.setStyle(Paint.Style.FILL);
     }
 
     public void setValues(final int total, final int biggest) {
         if (total <= 0) {
-            throw new IllegalArgumentException("total must be > 0");
+            throw new IllegalArgumentException("total (" + total + ") must be > 0");
         } else if (biggest <= 0) {
-            throw new IllegalArgumentException("biggest must be > 0");
+            throw new IllegalArgumentException("biggest (" + biggest + ") must be > 0");
+        } else if (biggest > total) {
+            throw new IllegalArgumentException("biggest (" + biggest + ") must not be bigger"
+                    + " than total (" + total + ')');
         }
 
-        if (biggest > total) {
-            mTotal = total;
-            mBiggest = total;
-        } else {
-            mTotal = total;
-            mBiggest = biggest;
-        }
-
+        mTotal = total;
+        mBiggest = biggest;
         invalidate();
     }
 
