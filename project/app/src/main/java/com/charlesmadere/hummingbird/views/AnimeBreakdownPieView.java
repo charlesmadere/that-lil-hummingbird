@@ -55,8 +55,8 @@ public class AnimeBreakdownPieView extends View {
             return;
         }
 
-        final int height = (int) mRect.bottom;
-        final int width = (int) mRect.right;
+        final int height = getHeight() - getPaddingBottom() - getPaddingTop();
+        final int width = getWidth() - getPaddingLeft() - getPaddingRight();
         final int centerX = width / 2;
         final int centerY = height / 2;
 
@@ -69,13 +69,13 @@ public class AnimeBreakdownPieView extends View {
     @SuppressWarnings("SuspiciousNameCombination")
     protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
         setMeasuredDimension(widthMeasureSpec, widthMeasureSpec);
-        updateRects();
+        updateRect();
     }
 
     @Override
     protected void onSizeChanged(final int w, final int h, final int oldw, final int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        updateRects();
+        updateRect();
         invalidate();
     }
 
@@ -134,7 +134,7 @@ public class AnimeBreakdownPieView extends View {
         invalidate();
     }
 
-    private void updateRects() {
+    private void updateRect() {
         mRect.set(0f, 0f, getWidth() - getPaddingLeft() - getPaddingRight(),
                 getHeight() - getPaddingTop() - getPaddingBottom());
     }
