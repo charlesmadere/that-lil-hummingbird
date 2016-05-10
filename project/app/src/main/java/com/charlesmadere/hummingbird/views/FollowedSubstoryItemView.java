@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.FollowedSubstory;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -45,7 +46,8 @@ public class FollowedSubstoryItemView extends FrameLayout implements View.OnClic
 
     @Override
     public void onClick(final View v) {
-        // TODO
+        final Context context = getContext();
+        context.startActivity(UserActivity.getLaunchIntent(context, mFollowedSubstory.getUser()));
     }
 
     @Override
