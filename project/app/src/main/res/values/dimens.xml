@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="anime_breakdown_pie_view_bar_thickness">24dp</dimen>
     <dimen name="avatar_large">80dp</dimen>
     <dimen name="avatar_medium">64dp</dimen>
     <dimen name="avatar_small">40dp</dimen>

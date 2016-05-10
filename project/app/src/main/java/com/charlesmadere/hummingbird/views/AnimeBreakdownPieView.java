@@ -92,7 +92,7 @@ public class AnimeBreakdownPieView extends View {
         final TypedArray ta = context.obtainStyledAttributes(attrs,
                 R.styleable.AnimeBreakdownPieView);
         final float mBarThickness = ta.getDimension(R.styleable.AnimeBreakdownPieView_barThickness,
-                resources.getDimension(R.dimen.root_padding_double));
+                resources.getDimension(R.dimen.anime_breakdown_pie_view_bar_thickness));
         final int primaryColor = ta.getColor(R.styleable.AnimeBreakdownPieView_primaryColor,
                 ContextCompat.getColor(context, R.color.orange));
         final int secondaryColor = ta.getColor(R.styleable.AnimeBreakdownPieView_secondaryColor,
