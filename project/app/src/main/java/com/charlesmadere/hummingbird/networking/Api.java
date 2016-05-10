@@ -98,10 +98,10 @@ public final class Api {
     }
 
     public static void getAnimeById(final AbsAnime anime, final ApiResponse<AnimeV2> listener) {
-        if (anime.getVersion() == AbsAnime.Version.V1) {
-            getAnimeById(anime.getId(), listener);
-        } else {
+        if (anime.getVersion() == AbsAnime.Version.V2) {
             listener.success((AnimeV2) anime);
+        } else {
+            getAnimeById(anime.getId(), listener);
         }
     }
 

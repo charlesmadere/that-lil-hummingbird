@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
@@ -58,9 +59,15 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
     @Override
     public void onClick(final View v) {
         final MediaStory.AbsMedia media = mMediaStory.getMedia();
+        final Context context = getContext();
 
         switch (media.getType()) {
             case ANIME:
+                context.startActivity(AnimeActivity.getLaunchIntent(context,
+                        ((MediaStory.AnimeMedia) media).getAnime()));
+                break;
+
+            case MANGA:
                 // TODO
                 break;
 
