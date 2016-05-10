@@ -1,13 +1,12 @@
 package com.charlesmadere.hummingbird.views;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
+import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.UserDigest;
 
 import java.text.NumberFormat;
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AnimeBreakdownView extends LinearLayout {
+public class AnimeBreakdownView extends CardView implements AdapterView<UserDigest.Info> {
 
     private NumberFormat mNumberFormat;
 
@@ -57,12 +56,6 @@ public class AnimeBreakdownView extends LinearLayout {
         super(context, attrs, defStyleAttr);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public AnimeBreakdownView(final Context context, final AttributeSet attrs,
-            final int defStyleAttr, final int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -75,25 +68,16 @@ public class AnimeBreakdownView extends LinearLayout {
         }
     }
 
-    private void setGenreView(final AnimeBreakdownGenreView view,
-            final ArrayList<UserDigest.Info.Genre> topGenres, final int index) {
-        if (topGenres.size() >= index) {
-            view.setText(topGenres.get(index - 1));
-            view.setVisibility(VISIBLE);
-        } else {
-            view.setVisibility(GONE);
-        }
-    }
+    @Override
+    public void setContent(final UserDigest.Info content) {
+        final UserDigest.Info.Genre topGenre = content.getTopGenre();
+        mAnimeBreakdownPieView.setValues(content.getAnimeWatched(), topGenre.getNum());
 
-    public void setUserDigestInfo(final UserDigest.Info info) {
-        final UserDigest.Info.Genre topGenre = info.getTopGenre();
-        mAnimeBreakdownPieView.setValues(info.getAnimeWatched(), topGenre.getNum());
-
-        mPrimaryGenre.setText(info.getTopGenre().getData().getName());
+        mPrimaryGenre.setText(content.getTopGenre().getData().getName());
         mGenreCount.setText(getResources().getQuantityString(R.plurals.out_of_x_titles,
-                info.getAnimeWatched(), mNumberFormat.format(info.getAnimeWatched())));
+                content.getAnimeWatched(), mNumberFormat.format(content.getAnimeWatched())));
 
-        final ArrayList<UserDigest.Info.Genre> topGenres = info.getTopGenres();
+        final ArrayList<UserDigest.Info.Genre> topGenres = content.getTopGenres();
 
         if (topGenres == null || topGenres.isEmpty()) {
             throw new IllegalArgumentException("only use this method when top genres are available");
@@ -105,6 +89,16 @@ public class AnimeBreakdownView extends LinearLayout {
         setGenreView(mGenre3, topGenres, 4);
         setGenreView(mGenre4, topGenres, 5);
         setGenreView(mGenre5, topGenres, 6);
+    }
+
+    private void setGenreView(final AnimeBreakdownGenreView view,
+            final ArrayList<UserDigest.Info.Genre> topGenres, final int index) {
+        if (topGenres.size() >= index) {
+            view.setText(topGenres.get(index - 1));
+            view.setVisibility(VISIBLE);
+        } else {
+            view.setVisibility(GONE);
+        }
     }
 
 }
