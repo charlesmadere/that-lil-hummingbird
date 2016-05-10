@@ -1,7 +1,6 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
@@ -15,7 +14,6 @@ import com.charlesmadere.hummingbird.models.FollowedStory;
 import com.charlesmadere.hummingbird.models.FollowedSubstory;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -23,7 +21,8 @@ import butterknife.ButterKnife;
 
 public class FollowedStoryItemView extends CardView implements AdapterView<FollowedStory> {
 
-    private NumberFormat mNumberFormat;
+    @BindView(R.id.fsttvTitle)
+    FollowedStoryTitleTextView mTitle;
 
     @BindView(R.id.fsivZero)
     FollowedSubstoryItemView mFollowedZero;
@@ -39,9 +38,6 @@ public class FollowedStoryItemView extends CardView implements AdapterView<Follo
 
     @BindView(R.id.tvTimeAgo)
     TextView mTimeAgo;
-
-    @BindView(R.id.tvTitle)
-    TextView mTitle;
 
 
     public FollowedStoryItemView(final Context context, final AttributeSet attrs) {
@@ -62,7 +58,6 @@ public class FollowedStoryItemView extends CardView implements AdapterView<Follo
         }
 
         ButterKnife.bind(this);
-        mNumberFormat = NumberFormat.getInstance();
     }
 
     @Override
@@ -70,10 +65,7 @@ public class FollowedStoryItemView extends CardView implements AdapterView<Follo
         final AbsUser user = content.getUser();
         mAvatar.setImageURI(Uri.parse(user.getAvatar()));
 
-        final Resources res = getResources();
-        mTitle.setText(res.getString(R.string.x_y, user.getName(),
-                res.getQuantityString(R.plurals.followed_x_users, content.getSubstoryCount(),
-                        mNumberFormat.format(content.getSubstoryCount()))));
+        mTitle.setText(user.getName(), content.getSubstoryCount());
         mTimeAgo.setText(content.getCreatedAt().getRelativeTimeText(getContext()));
 
         final ArrayList<AbsSubstory> substories = content.getSubstories();
