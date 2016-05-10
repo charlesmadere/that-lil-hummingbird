@@ -3,9 +3,9 @@ package com.charlesmadere.hummingbird.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
-import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 
@@ -16,9 +16,9 @@ public class HomeFeedFragment extends BaseFeedFragment {
     private static final String TAG = "HomeFeedFragment";
 
 
-    public static HomeFeedFragment create(final UserV1 user) {
+    public static HomeFeedFragment create() {
         final Bundle args = new Bundle(1);
-        args.putParcelable(KEY_USER, user);
+        args.putParcelable(KEY_USER, CurrentUser.get());
 
         final HomeFeedFragment fragment = new HomeFeedFragment();
         fragment.setArguments(args);

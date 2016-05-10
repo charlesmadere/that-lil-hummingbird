@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.CurrentUser;
+import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -43,6 +45,11 @@ public class UserDigestFragment extends BaseFragment implements
     @BindView(R.id.animeBreakdownView)
     AnimeBreakdownView mAnimeBreakdownView;
 
+
+    public static UserDigestFragment create() {
+        final AbsUser currentUser = CurrentUser.get();
+        return create(currentUser.getName());
+    }
 
     public static UserDigestFragment create(final String username) {
         final Bundle args = new Bundle(1);

@@ -7,27 +7,26 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.fragments.HomeFeedFragment;
 import com.charlesmadere.hummingbird.fragments.UserDigestFragment;
 
-public class HomeAdapter extends FragmentStatePagerAdapter {
+public class HomeFragmentAdapter extends FragmentStatePagerAdapter {
 
     private final Context mContext;
-    private final String mUsername;
 
 
-    public HomeAdapter(final FragmentActivity activity, final String username) {
-        this(activity, activity.getSupportFragmentManager(), username);
+    public HomeFragmentAdapter(final FragmentActivity activity) {
+        this(activity, activity.getSupportFragmentManager());
     }
 
-    public HomeAdapter(final Context context, final FragmentManager fm, final String username) {
+    public HomeFragmentAdapter(final Context context, final FragmentManager fm) {
         super(fm);
         mContext = context;
-        mUsername = username;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return 2;
     }
 
     @Override
@@ -36,11 +35,11 @@ public class HomeAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                fragment = null;
+                fragment = HomeFeedFragment.create();
                 break;
 
             case 1:
-                fragment = UserDigestFragment.create(mUsername);
+                fragment = UserDigestFragment.create();
                 break;
 
             default:
@@ -60,7 +59,7 @@ public class HomeAdapter extends FragmentStatePagerAdapter {
                 break;
 
             case 1:
-                title = mContext.getString(R.string.bio);
+                title = mContext.getString(R.string.profile);
                 break;
 
             default:
