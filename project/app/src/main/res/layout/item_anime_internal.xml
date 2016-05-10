@@ -19,6 +19,7 @@
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvShowType"
             tools:text="@string/movie"
+            tools:visibility="visible"
             style="@style/AnimeShowType" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvGenres"

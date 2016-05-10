@@ -229,6 +229,11 @@
         <item quantity="other">followed %2$s users</item>
     </plurals>
 
+    <plurals name="out_of_x_titles">
+        <item quantity="one">out of %1$s title</item>
+        <item quantity="other">out of %1$s titles</item>
+    </plurals>
+
     <plurals name="producers">
         <item quantity="one">Producer</item>
         <item quantity="other">Producers</item>

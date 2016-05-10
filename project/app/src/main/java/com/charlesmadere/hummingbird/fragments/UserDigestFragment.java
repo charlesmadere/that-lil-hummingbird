@@ -14,6 +14,7 @@ import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.views.AnimeBreakdownView;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
 
 import java.lang.ref.WeakReference;
@@ -38,6 +39,9 @@ public class UserDigestFragment extends BaseFragment implements
 
     @BindView(R.id.refreshLayout)
     RefreshLayout mRefreshLayout;
+
+    @BindView(R.id.animeBreakdownView)
+    AnimeBreakdownView mAnimeBreakdownView;
 
 
     public static UserDigestFragment create(final String username) {
@@ -65,7 +69,7 @@ public class UserDigestFragment extends BaseFragment implements
         super.onCreate(savedInstanceState);
 
         final Bundle args = getArguments();
-        mUsername = args.getParcelable(KEY_USERNAME);
+        mUsername = args.getString(KEY_USERNAME);
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mUserDigest = savedInstanceState.getParcelable(KEY_USER_DIGEST);
@@ -107,6 +111,7 @@ public class UserDigestFragment extends BaseFragment implements
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
         mRefreshLayout.setRefreshing(false);
+        mAnimeBreakdownView.setUserDigestInfo(userDigest.getInfo());
     }
 
 

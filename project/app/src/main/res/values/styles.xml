@@ -20,8 +20,8 @@
         <item name="android:paddingEnd">@dimen/root_padding</item>
         <item name="android:paddingStart">@dimen/root_padding</item>
         <item name="android:paddingTop">@dimen/root_padding_half</item>
-        <item name="keyTextColor">?attr/colorAccent</item>
-        <item name="valueTextColor">?android:attr/textColorPrimary</item>
+        <item name="keyTextColor">?android:attr/textColorPrimary</item>
+        <item name="valueTextColor">?attr/colorAccent</item>
     </style>
 
     <style name="AnimeEpisodeCount">
@@ -59,6 +59,7 @@
         <item name="android:lines">1</item>
         <item name="android:maxLines">1</item>
         <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:visibility">gone</item>
     </style>
 
     <style name="AnimeSynopsis">

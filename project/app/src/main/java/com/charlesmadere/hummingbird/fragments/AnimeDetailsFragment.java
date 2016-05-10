@@ -113,7 +113,11 @@ public class AnimeDetailsFragment extends BaseFragment {
 
         mPoster.setImageURI(Uri.parse(mAnimeV2.getPosterImage()));
         mTitle.setText(mAnimeV2.getTitle());
-        mShowType.setText(mAnimeV2.getShowType().getTextResId());
+
+        if (mAnimeV2.hasShowType()) {
+            mShowType.setText(mAnimeV2.getShowType().getTextResId());
+            mShowType.setVisibility(View.VISIBLE);
+        }
 
         if (mAnimeV2.hasGenres()) {
             mGenres.setText(mAnimeV2.getGenresString(getResources()));

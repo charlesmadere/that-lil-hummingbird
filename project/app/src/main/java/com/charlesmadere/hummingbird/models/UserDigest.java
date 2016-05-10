@@ -198,12 +198,18 @@ public class UserDigest implements Parcelable {
 
             public enum Type implements Parcelable {
                 @SerializedName("anime")
-                ANIME;
+                ANIME,
+
+                @SerializedName("manga")
+                MANGA;
 
                 public static Type from(final String type) {
                     switch (type) {
                         case "anime":
                             return ANIME;
+
+                        case "manga":
+                            return MANGA;
 
                         default:
                             throw new IllegalArgumentException("encountered unknown " +
@@ -248,6 +254,10 @@ public class UserDigest implements Parcelable {
                     switch (type) {
                         case ANIME:
                             item = context.deserialize(json, AnimeItem.class);
+                            break;
+
+                        case MANGA:
+                            item = context.deserialize(json, MangaItem.class);
                             break;
 
                         default:
@@ -309,6 +319,44 @@ public class UserDigest implements Parcelable {
                 }
             };
         }
+
+        public static class MangaItem extends AbsItem implements Parcelable {
+            @Override
+            public Type getType() {
+                return Type.MANGA;
+            }
+
+            @Override
+            public void hydrate(final UserDigest userDigest) {
+                // TODO
+            }
+
+            @Override
+            protected void readFromParcel(final Parcel source) {
+                super.readFromParcel(source);
+                // TODO
+            }
+
+            @Override
+            public void writeToParcel(final Parcel dest, final int flags) {
+                super.writeToParcel(dest, flags);
+                // TODO
+            }
+
+            public static final Creator<MangaItem> CREATOR = new Creator<MangaItem>() {
+                @Override
+                public MangaItem createFromParcel(final Parcel source) {
+                    final MangaItem mi = new MangaItem();
+                    mi.readFromParcel(source);
+                    return mi;
+                }
+
+                @Override
+                public MangaItem[] newArray(final int size) {
+                    return new MangaItem[size];
+                }
+            };
+        }
     }
 
 
@@ -346,6 +394,22 @@ public class UserDigest implements Parcelable {
 
         public long getLifeSpentOnAnime() {
             return mLifeSpentOnAnime;
+        }
+
+        public Genre getTopGenre() {
+            if (!hasTopGenres()) {
+                throw new IllegalStateException("only use this method if there are top genres");
+            }
+
+            Genre topGenre = null;
+
+            for (final Genre genre : mTopGenres) {
+                if (topGenre == null || topGenre.getNum() < genre.getNum()) {
+                    topGenre = genre;
+                }
+            }
+
+            return topGenre;
         }
 
         @Nullable

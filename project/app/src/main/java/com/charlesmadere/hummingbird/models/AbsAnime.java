@@ -34,6 +34,7 @@ public abstract class AbsAnime implements Parcelable {
     @SerializedName("episode_length")
     protected int mEpisodeLength;
 
+    @Nullable
     @SerializedName("show_type")
     protected ShowType mShowType;
 
@@ -74,6 +75,7 @@ public abstract class AbsAnime implements Parcelable {
 
     public abstract String getImage();
 
+    @Nullable
     public ShowType getShowType() {
         return mShowType;
     }
@@ -104,6 +106,10 @@ public abstract class AbsAnime implements Parcelable {
 
     public boolean hasFinishedAiringDate() {
         return getFinishedAiringDate() != null;
+    }
+
+    public boolean hasShowType() {
+        return mShowType != null;
     }
 
     public boolean hasStartedAiringDate() {

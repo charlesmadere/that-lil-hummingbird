@@ -529,6 +529,10 @@ public final class ParcelableUtils {
                 item = source.readParcelable(UserDigest.Favorite.AnimeItem.class.getClassLoader());
                 break;
 
+            case MANGA:
+                item = source.readParcelable(UserDigest.Favorite.MangaItem.class.getClassLoader());
+                break;
+
             default:
                 throw new RuntimeException("encountered unknown " +
                         UserDigest.Favorite.AbsItem.Type.class.getName() + ": \"" + type + '"');
