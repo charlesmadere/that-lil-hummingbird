@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.fragments.AnimeLibraryFragment;
 import com.charlesmadere.hummingbird.fragments.FavoriteAnimeFragment;
-import com.charlesmadere.hummingbird.fragments.FeedFragment;
+import com.charlesmadere.hummingbird.fragments.UserFeedFragment;
 import com.charlesmadere.hummingbird.fragments.UserBioFragment;
 import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
@@ -57,7 +57,7 @@ public class UserFragmentAdapter extends FragmentStatePagerAdapter {
                 break;
 
             case POSITION_FEED:
-                fragment = FeedFragment.create(mUser);
+                fragment = UserFeedFragment.create(mUser);
                 break;
 
             default:
