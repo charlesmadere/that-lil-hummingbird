@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -79,6 +80,12 @@ public class CommentsActivity extends BaseDrawerActivity implements
         } else {
             showFeed(mFeed);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_comments, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
