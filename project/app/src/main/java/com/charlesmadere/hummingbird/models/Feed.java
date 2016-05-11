@@ -98,11 +98,6 @@ public class Feed implements Parcelable {
     }
 
     public void hydrate() {
-        if (!hasStories()) {
-            // nothing to do
-            return;
-        }
-
         if (hasGroupMembers()) {
             for (final GroupMember groupMember : mGroupMembers) {
                 groupMember.hydrate(this);
@@ -121,8 +116,10 @@ public class Feed implements Parcelable {
             }
         }
 
-        for (final AbsStory story : mStories) {
-            story.hydrate(this);
+        if (hasStories()) {
+            for (final AbsStory story : mStories) {
+                story.hydrate(this);
+            }
         }
     }
 
