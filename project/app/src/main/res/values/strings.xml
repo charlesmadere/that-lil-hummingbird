@@ -44,6 +44,7 @@
     <string name="episodes">Episodes</string>
     <string name="error_loading_anime">Error loading anime! Please check your network connection and try again.</string>
     <string name="error_loading_anime_library">Error loading anime library</string>
+    <string name="error_loading_comments">Error loading comments</string>
     <string name="error_loading_completed_library">Error loading completed library</string>
     <string name="error_loading_currently_watching_library">Error loading currently watching library</string>
     <string name="error_loading_dropped_library">Error loading dropped library</string>
