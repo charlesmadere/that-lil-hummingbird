@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -41,7 +42,8 @@ public class UserResultItemView extends CardView implements AdapterView<SearchBu
 
     @Override
     public void onClick(final View v) {
-        // TODO
+        final Context context = getContext();
+        context.startActivity(UserActivity.getLaunchIntent(context, mUserResult.getLink()));
     }
 
     @Override

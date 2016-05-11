@@ -14,6 +14,7 @@
     <dimen name="root_padding_double">32dp</dimen>
     <dimen name="root_padding_half">8dp</dimen>
     <dimen name="root_padding_quadruple">64dp</dimen>
+    <dimen name="root_padding_quarter">4dp</dimen>
     <dimen name="status_bar_height">25dp</dimen>
     <dimen name="text_large">16sp</dimen>
     <dimen name="text_normal">14sp</dimen>

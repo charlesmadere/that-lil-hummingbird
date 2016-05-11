@@ -183,6 +183,11 @@ public class UserDigest implements Parcelable {
             public abstract void hydrate(final UserDigest userDigest);
 
             @Override
+            public String toString() {
+                return getType().toString();
+            }
+
+            @Override
             public int describeContents() {
                 return 0;
             }

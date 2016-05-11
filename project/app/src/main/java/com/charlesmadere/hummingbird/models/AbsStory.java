@@ -105,6 +105,10 @@ public abstract class AbsStory implements Parcelable {
         }
     }
 
+    protected void setTotalVotes(final int totalVotes) {
+        mTotalVotes = totalVotes;
+    }
+
     @Override
     public String toString() {
         return getType().toString();

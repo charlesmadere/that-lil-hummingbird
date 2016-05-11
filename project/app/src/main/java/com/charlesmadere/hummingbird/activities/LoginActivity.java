@@ -7,12 +7,15 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.UserV1;
@@ -23,11 +26,16 @@ import com.charlesmadere.hummingbird.views.SimpleProgressView;
 import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import butterknife.OnEditorAction;
+import butterknife.OnTextChanged;
 
 public class LoginActivity extends BaseActivity {
 
     private static final String TAG = "LoginActivity";
+
+    @BindView(R.id.bLogin)
+    Button mLogin;
 
     @BindView(R.id.etPassword)
     EditText mPasswordField;
@@ -69,6 +77,26 @@ public class LoginActivity extends BaseActivity {
         finish();
     }
 
+    private boolean isLoginFormValid() {
+        final CharSequence username = mUsernameField.getText();
+
+        if (!TextUtils.isEmpty(username) && TextUtils.getTrimmedLength(username) >= 1) {
+            if (Patterns.EMAIL_ADDRESS.matcher(username).matches()) {
+                mUsernameContainer.setError(getText(R.string.enter_your_username_not_your_email));
+                return false;
+            } else {
+                mUsernameContainer.setError(null);
+                mUsernameContainer.setErrorEnabled(false);
+            }
+
+            return !TextUtils.isEmpty(mPasswordField.getText());
+        } else {
+            mUsernameContainer.setError(null);
+            mUsernameContainer.setErrorEnabled(false);
+            return false;
+        }
+    }
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +116,16 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
+    @OnClick(R.id.bLogin)
+    void onLoginClick() {
+        performLogin();
+    }
+
+    @OnTextChanged({R.id.etPassword, R.id.etUsername})
+    void onLoginFormTextChanged() {
+        updateLoginEnabledState();
+    }
+
     @OnEditorAction(R.id.etPassword)
     boolean onPasswordEditorAction(final int actionId) {
         if (actionId == EditorInfo.IME_ACTION_GO) {
@@ -98,14 +136,16 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void performLogin() {
-        final String username = mUsernameField.getText().toString();
-        final String password = mPasswordField.getText().toString();
-
-        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
+        if (!isLoginFormValid()) {
             return;
         }
 
+        MiscUtils.closeKeyboard(this);
         mSimpleProgressView.fadeIn();
+
+        final String username = mUsernameField.getText().toString().trim();
+        final String password = mPasswordField.getText().toString();
+
         Api.authenticate(new AuthInfo(username, password), new AuthenticateListener(this));
     }
 
@@ -116,6 +156,10 @@ public class LoginActivity extends BaseActivity {
                 .setMessage(TextUtils.isEmpty(error) ? getText(R.string.error_logging_in) : error)
                 .setNeutralButton(R.string.ok, null)
                 .show();
+    }
+
+    private void updateLoginEnabledState() {
+        mLogin.setEnabled(isLoginFormValid());
     }
 
 

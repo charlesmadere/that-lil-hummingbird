@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.MangaActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -41,7 +42,9 @@ public class MangaResultItemView extends CardView implements AdapterView<SearchB
 
     @Override
     public void onClick(final View v) {
-        // TODO
+        final Context context = getContext();
+        context.startActivity(MangaActivity.getLaunchIntent(context, mMangaResult.getLink(),
+                mMangaResult.getTitle()));
     }
 
     @Override

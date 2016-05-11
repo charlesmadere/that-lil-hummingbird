@@ -30,11 +30,14 @@ public class AnimeActivity extends BaseDrawerActivity {
 
     private static final String CNAME = AnimeActivity.class.getCanonicalName();
     private static final String TAG = "AnimeActivity";
-    private static final String EXTRA_ANIME = CNAME + ".Anime";
+    private static final String EXTRA_ABS_ANIME = CNAME + ".AbsAnime";
+    private static final String EXTRA_ANIME_ID = CNAME + ".AnimeId";
+    private static final String EXTRA_ANIME_NAME = CNAME + ".AnimeName";
     private static final String KEY_ANIME_V2 = "AnimeV2";
 
-    private AbsAnime mAnime;
+    private AbsAnime mAbsAnime;
     private AnimeV2 mAnimeV2;
+    private String mAnimeId;
 
     @BindView(R.id.appBarLayout)
     AppBarLayout mAppBarLayout;
@@ -57,12 +60,21 @@ public class AnimeActivity extends BaseDrawerActivity {
 
     public static Intent getLaunchIntent(final Context context, final AbsAnime anime) {
         return new Intent(context, AnimeActivity.class)
-                .putExtra(EXTRA_ANIME, anime);
+                .putExtra(EXTRA_ABS_ANIME, anime)
+                .putExtra(EXTRA_ANIME_NAME, anime.getTitle());
+    }
+
+    public static Intent getLaunchIntent(final Context context, final String animeId,
+            final String animeName) {
+        return new Intent(context, AnimeActivity.class)
+                .putExtra(EXTRA_ANIME_ID, animeId)
+                .putExtra(EXTRA_ANIME_NAME, animeName);
     }
 
     private void fetchAnimeV2() {
         mSimpleProgressView.fadeIn();
-        Api.getAnimeById(mAnime, new GetAnimeByIdListener(this));
+        final String animeId = mAbsAnime == null ? mAnimeId : mAbsAnime.getId();
+        Api.getAnimeById(animeId, new GetAnimeByIdListener(this));
     }
 
     @Override
@@ -81,26 +93,19 @@ public class AnimeActivity extends BaseDrawerActivity {
         setContentView(R.layout.activity_anime);
 
         final Intent intent = getIntent();
-        mAnime = intent.getParcelableExtra(EXTRA_ANIME);
+        setTitle(intent.getStringExtra(EXTRA_ANIME_NAME));
+        mAbsAnime = intent.getParcelableExtra(EXTRA_ABS_ANIME);
+        mAnimeId = intent.getStringExtra(EXTRA_ANIME_ID);
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mAnimeV2 = savedInstanceState.getParcelable(KEY_ANIME_V2);
         }
 
         if (mAnimeV2 == null) {
-            switch (mAnime.getVersion()) {
-                case V1:
-                case V3:
-                    fetchAnimeV2();
-                    break;
-
-                case V2:
-                    showAnimeV2((AnimeV2) mAnime);
-                    break;
-
-                default:
-                    throw new RuntimeException("encountered unknown " +
-                            AbsAnime.Version.class.getName() + ": \"" + mAnime.getVersion() + '"');
+            if (mAbsAnime != null && mAbsAnime.getVersion() == AbsAnime.Version.V2) {
+                showAnimeV2((AnimeV2) mAbsAnime);
+            } else {
+                fetchAnimeV2();
             }
         } else {
             showAnimeV2(mAnimeV2);
@@ -118,7 +123,6 @@ public class AnimeActivity extends BaseDrawerActivity {
 
     private void showAnimeV2(final AnimeV2 animeV2) {
         mAnimeV2 = animeV2;
-        setTitle(mAnimeV2.getTitle());
         PaletteUtils.applyParallaxColors(mAnimeV2.getCoverImage(), this, mAppBarLayout,
                 mCollapsingToolbarLayout, mCoverImage, mTabLayout);
         mViewPager.setAdapter(new AnimeFragmentAdapter(this, mAnimeV2));

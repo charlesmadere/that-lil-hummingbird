@@ -26,6 +26,7 @@ public class UserV1 extends AbsUser implements Parcelable {
     @SerializedName("life_spent_on_anime")
     private long mLifeSpentOnAnime;
 
+    @Nullable
     @SerializedName("last_library_update")
     private SimpleDate mLastLibraryUpdate;
 
@@ -74,6 +75,7 @@ public class UserV1 extends AbsUser implements Parcelable {
         return mName;
     }
 
+    @Nullable
     public SimpleDate getLastLibraryUpdate() {
         return mLastLibraryUpdate;
     }
@@ -111,6 +113,10 @@ public class UserV1 extends AbsUser implements Parcelable {
 
     public boolean hasFavorites() {
         return mFavorites != null && !mFavorites.isEmpty();
+    }
+
+    public boolean hasLastLibraryUpdate() {
+        return mLastLibraryUpdate != null;
     }
 
     public boolean isNsfwContentAllowed() {

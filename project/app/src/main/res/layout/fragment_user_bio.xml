@@ -19,6 +19,7 @@
                     android:id="@+id/kvtvLastUpdate"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:visibility="gone"
                     tools:text="Last update 2 days ago" />
                 <com.charlesmadere.hummingbird.views.KeyValueTextView
                     android:id="@+id/kvtvLifeSpentOnAnime"

@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -48,7 +49,8 @@ public class ReplySubstoryItemView extends FrameLayout {
 
     @OnClick(R.id.sdvAvatar)
     void onAvatarClick() {
-        // TODO
+        final Context context = getContext();
+        context.startActivity(UserActivity.getLaunchIntent(context, mReplySubstory.getUser()));
     }
 
     @Override

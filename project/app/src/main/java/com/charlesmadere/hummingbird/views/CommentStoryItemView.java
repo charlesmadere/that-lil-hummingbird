@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.CommentsActivity;
+import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.AbsUser;
@@ -66,12 +68,14 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
 
     @OnClick(R.id.sdvAvatar)
     void onAvatarClick() {
-        // TODO
+        final Context context = getContext();
+        context.startActivity(UserActivity.getLaunchIntent(context, mCommentStory.getPoster()));
     }
 
     @Override
     public void onClick(final View v) {
-        // TODO
+        final Context context = getContext();
+        context.startActivity(CommentsActivity.getLaunchIntent(context, mCommentStory.getId()));
     }
 
     @Override

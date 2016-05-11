@@ -55,6 +55,13 @@
                 android:paddingEnd="@dimen/root_padding_half"
                 android:paddingStart="@dimen/root_padding_half" />
         </android.support.design.widget.TextInputLayout>
+        <com.charlesmadere.hummingbird.views.TypefaceButton
+            android:enabled="false"
+            android:id="@+id/bLogin"
+            android:layout_gravity="end"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/login" />
     </LinearLayout>
     <include
         layout="@layout/simple_progress" />

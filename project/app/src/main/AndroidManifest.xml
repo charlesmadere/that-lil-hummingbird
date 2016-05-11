@@ -19,8 +19,29 @@
 
         <activity
             android:label=""
+            android:name=".activities.CommentsActivity"
+            android:parentActivityName=".activities.HomeActivity"
+            android:theme="@style/HummingbirdTheme.WithDrawer"
+            android:windowSoftInputMode="adjustResize|stateUnchanged">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.HomeActivity" />
+        </activity>
+
+        <activity
+            android:label=""
             android:name=".activities.GalleryActivity"
             android:theme="@style/HummingbirdTheme_Gallery" />
+
+        <activity
+            android:label=""
+            android:name=".activities.GroupActivity"
+            android:parentActivityName=".activities.HomeActivity"
+            android:theme="@style/HummingbirdTheme.WithDrawer">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.HomeActivity" />
+        </activity>
 
         <activity
             android:label="@string/home"
@@ -31,13 +52,8 @@
         <activity
             android:launchMode="singleTop"
             android:name=".activities.LoginActivity"
-            android:parentActivityName=".activities.SplashActivity"
             android:theme="@style/HummingbirdTheme_Login"
-            android:windowSoftInputMode="adjustResize|stateUnchanged">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.SplashActivity" />
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateUnchanged" />
 
         <activity
             android:label="@string/log_viewer"
@@ -48,6 +64,16 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.SettingsActivity" />
+        </activity>
+
+        <activity
+            android:label=""
+            android:name=".activities.MangaActivity"
+            android:parentActivityName=".activities.HomeActivity"
+            android:theme="@style/HummingbirdTheme.WithDrawer">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.HomeActivity" />
         </activity>
 
         <activity

@@ -102,7 +102,21 @@ public class CommentStory extends AbsStory implements Parcelable {
     }
 
     public void setLiked(final boolean liked) {
+        if (liked == mIsLiked) {
+            return;
+        }
+
         mIsLiked = liked;
+
+        if (mIsLiked) {
+            setTotalVotes(getTotalVotes() + 1);
+        } else {
+            setTotalVotes(getTotalVotes() - 1);
+        }
+    }
+
+    public void toggleLiked() {
+        setLiked(!mIsLiked);
     }
 
     @Override

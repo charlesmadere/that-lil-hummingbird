@@ -75,8 +75,11 @@ public class UserBioFragment extends BaseFragment {
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mLastUpdate.setText(getText(R.string.last_update), mUser.getLastLibraryUpdate()
-                .getRelativeTimeText(getContext()));
+        if (mUser.hasLastLibraryUpdate()) {
+            mLastUpdate.setText(getText(R.string.last_update), mUser.getLastLibraryUpdate()
+                    .getRelativeTimeText(getContext()));
+            mLastUpdate.setVisibility(View.VISIBLE);
+        }
 
         mLifeSpentOnAnime.setText(getText(R.string.life_spent_on_anime),
                 MiscUtils.getElapsedTime(getResources(), mUser.getLifeSpentOnAnimeSeconds()));

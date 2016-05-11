@@ -29,7 +29,7 @@ public class HomeFeedFragment extends BaseFeedFragment {
     @Override
     protected void fetchFeed() {
         super.fetchFeed();
-        Api.getUserStories(mUser.getName(), new GetNewsFeedListener(this));
+        Api.getNewsFeed(new GetNewsFeedListener(this));
     }
 
     @Override

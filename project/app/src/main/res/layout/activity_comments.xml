@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DrawerLayout">
+    <RelativeLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+        <include
+            layout="@layout/toolbar" />
+        <com.charlesmadere.hummingbird.views.TypefaceEditText
+            android:hint="@string/leave_a_comment_"
+            android:id="@+id/etComment"
+            android:imeOptions="actionSend"
+            android:inputType="textCapSentences"
+            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:maxLines="3"
+            android:paddingBottom="@dimen/root_padding_half"
+            android:paddingEnd="@dimen/root_padding"
+            android:paddingStart="@dimen/root_padding"
+            android:paddingTop="@dimen/root_padding_half" />
+    </RelativeLayout>
+    <include
+        layout="@layout/navigation_drawer" />
+</android.support.v4.widget.DrawerLayout>

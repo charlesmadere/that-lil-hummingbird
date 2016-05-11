@@ -11,7 +11,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.UserFragmentAdapter;
@@ -98,22 +97,12 @@ public class UserActivity extends BaseDrawerActivity {
 
         final Intent intent = getIntent();
         mUsername = intent.getStringExtra(EXTRA_USERNAME);
-
-        if (TextUtils.isEmpty(mUsername)) {
-            mUser = CurrentUser.get();
-            mUsername = mUser.getName();
-            setTitle(R.string.home);
-        } else {
-            setTitle(mUsername);
-
-            if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-                mUser = savedInstanceState.getParcelable(KEY_USER);
-            }
-        }
+        setTitle(mUsername);
 
         mStartingPosition = UserFragmentAdapter.POSITION_FEED;
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
+            mUser = savedInstanceState.getParcelable(KEY_USER);
             mStartingPosition = savedInstanceState.getInt(KEY_STARTING_POSITION,
                     mStartingPosition);
         }

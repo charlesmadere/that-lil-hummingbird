@@ -237,6 +237,18 @@ public class MediaStory extends AbsStory implements Parcelable {
             return getType().toString();
         }
 
+        @Override
+        protected void readFromParcel(final Parcel source) {
+            super.readFromParcel(source);
+            // TODO
+        }
+
+        @Override
+        public void writeToParcel(final Parcel dest, final int flags) {
+            super.writeToParcel(dest, flags);
+            // TODO
+        }
+
         public static final Creator<MangaMedia> CREATOR = new Creator<MangaMedia>() {
             @Override
             public MangaMedia createFromParcel(final Parcel source) {
