@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/DrawerLayout">
     <RelativeLayout
         android:layout_height="match_parent"
@@ -27,16 +28,17 @@
             android:layout_below="@id/toolbar"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:visibility="gone"
             app:scrolling_child="@+id/recyclerView">
             <FrameLayout
                 android:layout_height="match_parent"
                 android:layout_width="match_parent">
                 <android.support.v7.widget.RecyclerView
                     android:id="@id/recyclerView"
+                    android:visibility="gone"
                     style="@style/List" />
                 <LinearLayout
                     android:id="@+id/llError"
+                    tools:visibility="visible"
                     style="@style/ListMessageContainer">
                     <com.charlesmadere.hummingbird.views.TypefaceTextView
                         android:text="@string/error_loading_comments"
