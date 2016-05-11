@@ -298,6 +298,32 @@ public final class Api {
         });
     }
 
+    public static void getSubstories(final String storyId, final ApiResponse<Feed> listener) {
+        getApi().getSubstories(getAuthTokenCookieString(), storyId).enqueue(new Callback<Feed>() {
+            @Override
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
+                Feed body = null;
+
+                if (response.isSuccessful()) {
+                    body = response.body();
+                }
+
+                if (body == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    body.hydrate();
+                    listener.success(body);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get substories (" + storyId + ") failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
     public static void getUser(final String username, final ApiResponse<UserV1> listener) {
         getApi().getUser(username).enqueue(new Callback<UserV1>() {
             @Override
