@@ -403,7 +403,7 @@ public class UserDigest implements Parcelable {
 
         public Genre getTopGenre() {
             if (!hasTopGenres()) {
-                throw new IllegalStateException("only use this method if there are top genres");
+                throw new RuntimeException("only use this method if there are top genres");
             }
 
             Genre topGenre = null;
