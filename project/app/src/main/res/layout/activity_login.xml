@@ -61,7 +61,9 @@
             android:layout_gravity="end"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="@string/login" />
+            android:text="@string/login"
+            android:visibility="invisible"
+            tools:visibility="visible" />
     </LinearLayout>
     <include
         layout="@layout/simple_progress" />

@@ -50,6 +50,7 @@ public class LogViewerActivity extends BaseDrawerActivity implements
             mEmpty.setVisibility(View.VISIBLE);
         }
 
+        supportInvalidateOptionsMenu();
         mRefreshLayout.setRefreshing(false);
     }
 
@@ -99,7 +100,6 @@ public class LogViewerActivity extends BaseDrawerActivity implements
     @Override
     public void onRefresh() {
         fetchTimberEntries();
-        supportInvalidateOptionsMenu();
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.networking;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.AuthInfo;
+import com.charlesmadere.hummingbird.models.CommentPost;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.LibraryUpdate;
@@ -100,6 +101,9 @@ public interface HummingbirdApi {
     @PUT("stories/{storyId}")
     Call<Void> likeStory(@Header("Cookie") String authToken, @Path("storyId") String storyId,
             @Body JsonElement json);
+
+    @POST("substories")
+    Call<Void> postComment(@Header("Cookie") String authToken, @Body CommentPost commentPost);
 
     @GET("search.json")
     Call<SearchBundle> search(@Query("scope") SearchScope searchScope,

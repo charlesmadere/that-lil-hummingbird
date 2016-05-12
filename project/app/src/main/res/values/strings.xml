@@ -58,6 +58,7 @@
     <string name="error_loading_user">Error loading user</string>
     <string name="error_loading_user_check_network_connection">Error loading user! Please check your network connection and try again.</string>
     <string name="error_logging_in">Error logging in! Please check your credentials and network connection and then try again.</string>
+    <string name="error_posting_comment">Error posting comment! Please check your network connection and try again.</string>
     <string name="explore">Explore</string>
     <string name="explore_anime">Explore Anime</string>
     <string name="explore_manga">Explore Manga</string>
@@ -126,6 +127,7 @@
     <string name="plan_to_watch_library_is_empty">Plan to watch library is empty</string>
     <string name="plans_to_watch">plans to watch</string>
     <string name="posted_to">posted to</string>
+    <string name="post">Post</string>
     <string name="post_comment">Post Comment</string>
     <string name="preferred_anime_title_language">Preferred anime title language</string>
     <string name="privacy">Privacy</string>

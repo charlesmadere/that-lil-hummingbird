@@ -75,7 +75,7 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
     @Override
     public void onClick(final View v) {
         final Context context = getContext();
-        context.startActivity(CommentsActivity.getLaunchIntent(context, mCommentStory.getId()));
+        context.startActivity(CommentsActivity.getLaunchIntent(context, mCommentStory));
     }
 
     @Override

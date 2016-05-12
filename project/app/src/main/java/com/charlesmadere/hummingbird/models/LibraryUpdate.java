@@ -57,7 +57,7 @@ public class LibraryUpdate implements Parcelable {
 
     private LibraryUpdate(final String authToken) {
         if (TextUtils.isEmpty(authToken)) {
-            throw new IllegalStateException("authToken is null / empty!");
+            throw new IllegalArgumentException("authToken can't be null / empty");
         }
 
         mAuthToken = authToken;

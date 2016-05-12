@@ -13,6 +13,7 @@ import com.charlesmadere.hummingbird.models.AnimeEpisode;
 import com.charlesmadere.hummingbird.models.AnimeV1;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.AuthInfo;
+import com.charlesmadere.hummingbird.models.CommentPost;
 import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
@@ -528,6 +529,25 @@ public final class Api {
             @Override
             public void onFailure(final Call<Void> call, final Throwable t) {
                 Timber.e(TAG, "like story (" + story.getId() + ") call failed", t);
+            }
+        });
+    }
+
+    public static void postComment(final CommentPost commentPost, final ApiResponse<Void> listener) {
+        getApi().postComment(getAuthTokenCookieString(), commentPost).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(final Call<Void> call, final Response<Void> response) {
+                if (response.isSuccessful()) {
+                    listener.success(null);
+                } else {
+                    listener.failure(retrieveErrorInfo(response));
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Void> call, final Throwable t) {
+                Timber.e(TAG, "post comment (" + commentPost.getStoryId() + ") call failed", t);
+                listener.failure(null);
             }
         });
     }

@@ -10,7 +10,6 @@
         <include
             layout="@layout/toolbar" />
         <LinearLayout
-            android:background="@color/white"
             android:id="@+id/llComment"
             android:layout_alignParentBottom="true"
             android:layout_height="wrap_content"
@@ -21,7 +20,8 @@
                 android:layout_height="1dp"
                 android:layout_width="match_parent" />
             <com.charlesmadere.hummingbird.views.TypefaceEditText
-                android:background="@null"
+                android:background="@color/white"
+                android:enabled="false"
                 android:hint="@string/leave_a_comment_"
                 android:id="@+id/etComment"
                 android:imeOptions="actionSend"

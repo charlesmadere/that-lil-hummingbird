@@ -112,6 +112,7 @@ public class LoginActivity extends BaseActivity {
             } else {
                 mUsernameContainer.setVisibility(View.VISIBLE);
                 mPasswordContainer.setVisibility(View.VISIBLE);
+                mLogin.setVisibility(View.VISIBLE);
             }
         }
     }
