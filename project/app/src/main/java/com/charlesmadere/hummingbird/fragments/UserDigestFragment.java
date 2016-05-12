@@ -16,7 +16,10 @@ import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.views.AboutUserView;
 import com.charlesmadere.hummingbird.views.AnimeBreakdownView;
+import com.charlesmadere.hummingbird.views.FavoriteAnimeView;
+import com.charlesmadere.hummingbird.views.FavoriteMangaView;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
 
 import java.lang.ref.WeakReference;
@@ -33,8 +36,17 @@ public class UserDigestFragment extends BaseFragment implements
     private String mUsername;
     private UserDigest mUserDigest;
 
+    @BindView(R.id.aboutUserView)
+    AboutUserView mAboutUserView;
+
     @BindView(R.id.animeBreakdownView)
     AnimeBreakdownView mAnimeBreakdownView;
+
+    @BindView(R.id.favoriteAnimeView)
+    FavoriteAnimeView mFavoriteAnimeView;
+
+    @BindView(R.id.favoriteMangaView)
+    FavoriteMangaView mFavoriteMangaView;
 
     @BindView(R.id.llError)
     LinearLayout mError;

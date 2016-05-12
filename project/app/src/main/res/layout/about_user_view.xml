@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.charlesmadere.hummingbird.views.AboutUserView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/aboutUserView"
     style="@style/CardItem">
     <LinearLayout
         android:layout_height="wrap_content"
@@ -10,5 +11,6 @@
             android:id="@+id/tvAbout"
             tools:text="About thelithlord"
             style="@style/CardHeader" />
+
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.AboutUserView>
