@@ -117,8 +117,8 @@ public class UserDigestFragment extends BaseFragment implements
         mUserDigest = userDigest;
         mError.setVisibility(View.GONE);
         mScrollView.setVisibility(View.VISIBLE);
-        mRefreshLayout.setRefreshing(false);
         mAnimeBreakdownView.setContent(userDigest.getInfo());
+        mRefreshLayout.setRefreshing(false);
     }
 
 
