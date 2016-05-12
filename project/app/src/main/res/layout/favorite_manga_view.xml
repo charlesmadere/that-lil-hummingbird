@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.FavoriteMangaView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/CardItem">
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:text="@string/favorite_manga"
+            style="@style/CardHeader" />
+        <LinearLayout
+            android:id="@+id/llFavoriteMangaGrid0"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            tools:visibility="visible">
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdvCover0"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                style="@style/MangaCover" />
+            <android.support.v4.widget.Space
+                android:layout_height="1dp"
+                android:layout_width="@dimen/root_padding_half" />
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdvCover1"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                style="@style/MangaCover" />
+            <android.support.v4.widget.Space
+                android:layout_height="1dp"
+                android:layout_width="@dimen/root_padding_half" />
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdvCover2"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                style="@style/MangaCover" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llFavoriteMangaGrid1"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/root_padding_half"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            tools:visibility="visible">
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdvCover3"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                style="@style/MangaCover" />
+            <android.support.v4.widget.Space
+                android:layout_height="1dp"
+                android:layout_width="@dimen/root_padding_half" />
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdvCover4"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                style="@style/MangaCover" />
+            <android.support.v4.widget.Space
+                android:layout_height="1dp"
+                android:layout_width="@dimen/root_padding_half" />
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdvCover5"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                style="@style/MangaCover" />
+        </LinearLayout>
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:gravity="center"
+            android:id="@+id/tvNoFavorites"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:paddingBottom="@dimen/root_padding_double"
+            android:paddingEnd="@dimen/root_padding_double"
+            android:paddingStart="@dimen/root_padding_double"
+            android:paddingTop="@dimen/root_padding_double"
+            android:text="@string/no_favorites"
+            android:visibility="gone"
+            tools:visibility="visible" />
+    </LinearLayout>
+</com.charlesmadere.hummingbird.views.FavoriteMangaView>

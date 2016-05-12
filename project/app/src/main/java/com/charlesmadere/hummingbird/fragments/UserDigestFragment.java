@@ -3,13 +3,14 @@ package com.charlesmadere.hummingbird.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.UserDigestAdapter;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
@@ -32,18 +33,19 @@ public class UserDigestFragment extends BaseFragment implements
 
     private String mUsername;
     private UserDigest mUserDigest;
+    private UserDigestAdapter mAdapter;
+
+    @BindView(R.id.animeBreakdownView)
+    AnimeBreakdownView mAnimeBreakdownView;
 
     @BindView(R.id.llError)
     LinearLayout mError;
 
-    @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
-
     @BindView(R.id.refreshLayout)
     RefreshLayout mRefreshLayout;
 
-    @BindView(R.id.animeBreakdownView)
-    AnimeBreakdownView mAnimeBreakdownView;
+    @BindView(R.id.scrollView)
+    ScrollView mScrollView;
 
 
     public static UserDigestFragment create() {
@@ -108,7 +110,7 @@ public class UserDigestFragment extends BaseFragment implements
     }
 
     private void showError() {
-        mRecyclerView.setVisibility(View.GONE);
+        mScrollView.setVisibility(View.GONE);
         mError.setVisibility(View.VISIBLE);
         mRefreshLayout.setRefreshing(false);
     }
@@ -116,7 +118,7 @@ public class UserDigestFragment extends BaseFragment implements
     private void showUserDigest(final UserDigest userDigest) {
         mUserDigest = userDigest;
         mError.setVisibility(View.GONE);
-        mRecyclerView.setVisibility(View.VISIBLE);
+        mScrollView.setVisibility(View.VISIBLE);
         mRefreshLayout.setRefreshing(false);
         mAnimeBreakdownView.setContent(userDigest.getInfo());
     }

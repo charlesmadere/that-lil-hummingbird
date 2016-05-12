@@ -61,6 +61,8 @@
     <string name="explore">Explore</string>
     <string name="explore_anime">Explore Anime</string>
     <string name="explore_manga">Explore Manga</string>
+    <string name="favorite_anime">Favorite Anime</string>
+    <string name="favorite_manga">Favorite Manga</string>
     <string name="favorites">Favorites</string>
     <string name="feed">Feed</string>
     <string name="feed_is_empty">Feed is empty</string>

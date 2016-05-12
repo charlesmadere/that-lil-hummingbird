@@ -5,19 +5,42 @@
     android:id="@+id/refreshLayout"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    app:scrolling_child="@+id/recyclerView">
+    app:scrolling_child="@+id/scrollView">
     <FrameLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent">
-        <include
-            layout="@layout/anime_breakdown_view" />
-        <android.support.v7.widget.RecyclerView
-            android:id="@id/recyclerView"
+        <ScrollView
+            android:fillViewport="true"
+            android:id="@id/scrollView"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
             android:visibility="gone"
-            style="@style/List" />
+            tools:visibility="visible">
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
+                <include
+                    layout="@layout/about_user_view" />
+                <android.support.v4.widget.Space
+                    android:layout_height="@dimen/root_padding"
+                    android:layout_width="match_parent" />
+                <include
+                    layout="@layout/anime_breakdown_view" />
+                <android.support.v4.widget.Space
+                    android:layout_height="@dimen/root_padding"
+                    android:layout_width="match_parent" />
+                <include
+                    layout="@layout/favorite_anime_view" />
+                <android.support.v4.widget.Space
+                    android:layout_height="@dimen/root_padding"
+                    android:layout_width="match_parent" />
+                <include
+                    layout="@layout/favorite_manga_view" />
+            </LinearLayout>
+        </ScrollView>
         <LinearLayout
             android:id="@+id/llError"
-            tools:visibility="visible"
             style="@style/ListMessageContainer">
             <TextView
                 android:text="@string/error_loading_user"
