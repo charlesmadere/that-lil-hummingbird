@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:orientation="vertical">
                 <android.support.v7.widget.CardView
-                    style="@style/SettingsCardItem">
+                    style="@style/ResponsiveWidthCardItem">
                     <LinearLayout
                         style="@style/SettingsCardInternal">
                         <com.charlesmadere.hummingbird.views.TypefaceTextView
@@ -49,7 +49,7 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
-                    style="@style/SettingsCardItem">
+                    style="@style/ResponsiveWidthCardItem">
                     <LinearLayout
                         style="@style/SettingsCardInternal">
                         <com.charlesmadere.hummingbird.views.TypefaceTextView
@@ -62,7 +62,7 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
-                    style="@style/SettingsCardItem">
+                    style="@style/ResponsiveWidthCardItem">
                     <LinearLayout
                         style="@style/SettingsCardInternal">
                         <com.charlesmadere.hummingbird.views.TypefaceTextView
@@ -83,7 +83,7 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
-                    style="@style/SettingsCardItem">
+                    style="@style/ResponsiveWidthCardItem">
                     <LinearLayout
                         style="@style/SettingsCardInternal">
                         <com.charlesmadere.hummingbird.views.TypefaceTextView

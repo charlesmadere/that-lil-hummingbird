@@ -10,7 +10,7 @@
         <item name="spanCount">2</item>
     </style>
 
-    <style name="SettingsCardItem" parent="BaseSettingsCardItem">
+    <style name="ResponsiveWidthCardItem" parent="BaseResponsiveWidthCardItem">
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:layout_width">@dimen/central_content_width</item>
     </style>
