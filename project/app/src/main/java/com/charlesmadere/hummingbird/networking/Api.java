@@ -220,6 +220,117 @@ public final class Api {
         });
     }
 
+    public static void getGroup(final String groupId, final ApiResponse<Feed> listener) {
+        getApi().getGroup(getAuthTokenCookieString(), groupId, 1).enqueue(new Callback<Feed>() {
+            @Override
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
+                Feed body = null;
+
+                if (response.isSuccessful()) {
+                    body = response.body();
+                }
+
+                if (body == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    body.hydrate();
+                    listener.success(body);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get group (" + groupId + ") failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
+    public static void getGroup(final String groupId, final Feed feed,
+            final ApiResponse<Feed> listener) {
+        getApi().getGroup(getAuthTokenCookieString(), groupId, feed.getMetadata().getCursor())
+                .enqueue(new Callback<Feed>() {
+            @Override
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
+                Feed body = null;
+
+                if (response.isSuccessful()) {
+                    body = response.body();
+                }
+
+                if (body == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    body.hydrate();
+                    feed.merge(body);
+                    listener.success(feed);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get group (" + groupId + ") failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
+    public static void getGroupMembers(final String groupId, final ApiResponse<Feed> listener) {
+        getApi().getGroupMembers(getAuthTokenCookieString(), groupId, 1).enqueue(
+                new Callback<Feed>() {
+            @Override
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
+                Feed body = null;
+
+                if (response.isSuccessful()) {
+                    body = response.body();
+                }
+
+                if (body == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    body.hydrate();
+                    listener.success(body);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get group (" + groupId + ") members call failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
+    public static void getGroupMembers(final String groupId, final Feed feed,
+            final ApiResponse<Feed> listener) {
+        getApi().getGroupMembers(getAuthTokenCookieString(), groupId,
+                feed.getMetadata().getCursor()).enqueue(new Callback<Feed>() {
+            @Override
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
+                Feed body = null;
+
+                if (response.isSuccessful()) {
+                    body = response.body();
+                }
+
+                if (body == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    body.hydrate();
+                    feed.merge(body);
+                    listener.success(feed);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get group (" + groupId + ") members call failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
     public static void getLibraryEntries(final String username,
             @Nullable final WatchingStatus watchingStatus,
             final ApiResponse<ArrayList<LibraryEntry>> listener) {
@@ -284,7 +395,7 @@ public final class Api {
                 if (body == null) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
-                    feed.hydrate();
+                    body.hydrate();
                     feed.merge(body);
                     listener.success(feed);
                 }

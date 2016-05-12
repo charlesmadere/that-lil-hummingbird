@@ -75,6 +75,14 @@ public interface HummingbirdApi {
      */
 
     @GET("stories")
+    Call<Feed> getGroup(@Header("Cookie") String authToken, @Query("group_id") String groupId,
+            @Query("page") Integer page);
+
+    @GET("group_members")
+    Call<Feed> getGroupMembers(@Header("Cookie") String authToken,
+            @Query("group_id") String groupId, @Query("page") Integer page);
+
+    @GET("stories")
     Call<Feed> getNewsFeed(@Header("Cookie") String authToken,
             @Query("news_feed") Boolean newsFeed, @Query("page") Integer page);
 
