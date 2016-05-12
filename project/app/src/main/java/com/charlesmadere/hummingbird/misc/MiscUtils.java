@@ -10,6 +10,7 @@ import android.os.Build;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.v4.app.ActivityManagerCompat;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
@@ -68,7 +69,7 @@ public final class MiscUtils {
         }
 
         final NumberFormat numberFormat = NumberFormat.getInstance();
-        final StringBuilder string = new StringBuilder();
+        final SpannableStringBuilder string = new SpannableStringBuilder();
 
         final int years = (int) (seconds / YEAR_IN_SECONDS);
         if (years >= 1) {
@@ -138,7 +139,7 @@ public final class MiscUtils {
         }
 
         if (seconds >= 1L) {
-            if (TextUtils.isEmpty(string)) {
+            if (!TextUtils.isEmpty(string)) {
                 string.append(res.getText(R.string.delimiter));
             }
 

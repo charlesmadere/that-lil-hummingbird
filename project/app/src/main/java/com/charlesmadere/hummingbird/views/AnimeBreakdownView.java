@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.UserDigest;
 
 import java.text.NumberFormat;
@@ -42,6 +43,9 @@ public class AnimeBreakdownView extends CardView implements AdapterView<UserDige
 
     @BindView(R.id.tvGenreCount)
     TextView mGenreCount;
+
+    @BindView(R.id.tvLifeSpentOnAnime)
+    TextView mLifeSpentOnAnime;
 
     @BindView(R.id.tvPrimaryGenre)
     TextView mPrimaryGenre;
@@ -89,6 +93,9 @@ public class AnimeBreakdownView extends CardView implements AdapterView<UserDige
         setGenreView(mGenre3, topGenres, 4);
         setGenreView(mGenre4, topGenres, 5);
         setGenreView(mGenre5, topGenres, 6);
+
+        mLifeSpentOnAnime.setText(MiscUtils.getElapsedTime(getResources(),
+                content.getLifeSpentOnAnime()));
     }
 
     private void setGenreView(final AnimeBreakdownGenreView view,
