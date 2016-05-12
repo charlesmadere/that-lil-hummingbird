@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.adapters.UserDigestAdapter;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
@@ -33,7 +32,6 @@ public class UserDigestFragment extends BaseFragment implements
 
     private String mUsername;
     private UserDigest mUserDigest;
-    private UserDigestAdapter mAdapter;
 
     @BindView(R.id.animeBreakdownView)
     AnimeBreakdownView mAnimeBreakdownView;
