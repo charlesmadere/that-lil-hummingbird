@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.support.annotation.Nullable;
 
 import com.charlesmadere.hummingbird.models.AbsAnime;
+import com.charlesmadere.hummingbird.models.AbsNotification;
 import com.charlesmadere.hummingbird.models.AbsStory;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.AbsUser;
@@ -14,6 +15,7 @@ import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.models.FollowedStory;
 import com.charlesmadere.hummingbird.models.FollowedSubstory;
 import com.charlesmadere.hummingbird.models.MediaStory;
+import com.charlesmadere.hummingbird.models.ProfileCommentNotification;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
 import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.charlesmadere.hummingbird.models.UserDigest;
@@ -97,6 +99,72 @@ public final class ParcelableUtils {
 
         for (final AbsAnime anime : list) {
             writeAbsAnimeToParcel(anime, dest, flags);
+        }
+    }
+
+    @Nullable
+    public static <T extends AbsNotification> T readAbsNotificationFromParcel(final Parcel source) {
+        final AbsNotification.Type type = source.readParcelable(
+                AbsNotification.Type.class.getClassLoader());
+
+        if (type == null) {
+            return null;
+        }
+
+        final T notification;
+
+        switch (type) {
+            case PROFILE_COMMENT:
+                notification = source.readParcelable(
+                        ProfileCommentNotification.class.getClassLoader());
+                break;
+
+            default:
+                throw new RuntimeException("encountered unknown " +
+                        AbsNotification.Type.class.getName() + ": \"" + type + '"');
+        }
+
+        return notification;
+    }
+
+    @Nullable
+    public static ArrayList<AbsNotification> readAbsNotificationListFromParcel(final Parcel source) {
+        final int count = source.readInt();
+
+        if (count == 0) {
+            return null;
+        }
+
+        final ArrayList<AbsNotification> list = new ArrayList<>(count);
+
+        for (int i = 0; i < count; ++i) {
+            list.add(readAbsNotificationFromParcel(source));
+        }
+
+        return list;
+    }
+
+    public static void writeAbsNotificationToParcel(@Nullable final AbsNotification notification,
+            final Parcel dest, final int flags) {
+        if (notification == null) {
+            dest.writeParcelable(null, flags);
+        } else {
+            dest.writeParcelable(notification.getType(), flags);
+            dest.writeParcelable(notification, flags);
+        }
+    }
+
+    public static void writeAbsNotificationListToParcel(@Nullable final List<AbsNotification> list,
+            final Parcel dest, final int flags) {
+        if (list == null || list.isEmpty()) {
+            dest.writeInt(0);
+            return;
+        }
+
+        dest.writeInt(list.size());
+
+        for (final AbsNotification notification : list) {
+            writeAbsNotificationToParcel(notification, dest, flags);
         }
     }
 

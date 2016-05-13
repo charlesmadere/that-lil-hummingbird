@@ -3,6 +3,11 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
 public abstract class AbsNotification implements Parcelable {
@@ -25,7 +30,11 @@ public abstract class AbsNotification implements Parcelable {
         return mId;
     }
 
-    public abstract void hydrate(final Feed feed);
+    public abstract Type getType();
+
+    public void hydrate(final Feed feed) {
+        // method intentionally blank, children can override
+    }
 
     public boolean isSeen() {
         return mSeen;
@@ -74,6 +83,17 @@ public abstract class AbsNotification implements Parcelable {
             @SerializedName("story")
             STORY;
 
+            public static Type from(final String type) {
+                switch (type) {
+                    case "story":
+                        return STORY;
+
+                    default:
+                        throw new IllegalArgumentException("encountered unknown " +
+                                Type.class.getName() + ": \"" + type + '"');
+                }
+            }
+
             @Override
             public int describeContents() {
                 return 0;
@@ -97,6 +117,116 @@ public abstract class AbsNotification implements Parcelable {
                 }
             };
         }
+
+        public static final JsonDeserializer<AbsSource> JSON_DESERIALIZER = new JsonDeserializer<AbsSource>() {
+            @Override
+            public AbsSource deserialize(final JsonElement json,
+                    final java.lang.reflect.Type typeOfT, final JsonDeserializationContext context)
+                    throws JsonParseException {
+                final JsonObject jsonObject = json.getAsJsonObject();
+                final Type type = Type.from(jsonObject.get("type").getAsString());
+
+                final AbsSource source;
+
+                switch (type) {
+                    case STORY:
+                        source = context.deserialize(json, StorySource.class);
+                        break;
+
+                    default:
+                        throw new RuntimeException("encountered unknown " + Type.class.getName()
+                                + ": \"" + type + '"');
+                }
+
+                return source;
+            }
+        };
     }
+
+
+    public static class StorySource extends AbsSource implements Parcelable {
+        @Override
+        public Type getType() {
+            return Type.STORY;
+        }
+
+        public static final Creator<StorySource> CREATOR = new Creator<StorySource>() {
+            @Override
+            public StorySource createFromParcel(final Parcel source) {
+                final StorySource ss = new StorySource();
+                ss.readFromParcel(source);
+                return ss;
+            }
+
+            @Override
+            public StorySource[] newArray(final int size) {
+                return new StorySource[size];
+            }
+        };
+    }
+
+
+    public enum Type implements Parcelable {
+        @SerializedName("profile_comment")
+        PROFILE_COMMENT;
+
+        public static Type from(final String type) {
+            switch (type) {
+                case "profile_comment":
+                    return PROFILE_COMMENT;
+
+                default:
+                    throw new IllegalArgumentException("encountered unknown " +
+                            Type.class.getName() + ": \"" + type + '"');
+            }
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(final Parcel dest, final int flags) {
+            dest.writeInt(ordinal());
+        }
+
+        public static final Creator<Type> CREATOR = new Creator<Type>() {
+            @Override
+            public Type createFromParcel(final Parcel source) {
+                final int ordinal = source.readInt();
+                return values()[ordinal];
+            }
+
+            @Override
+            public Type[] newArray(final int size) {
+                return new Type[size];
+            }
+        };
+    }
+
+    public static final JsonDeserializer<AbsNotification> JSON_DESERIALIZER = new JsonDeserializer<AbsNotification>() {
+        @Override
+        public AbsNotification deserialize(final JsonElement json,
+                final java.lang.reflect.Type typeOfT, final JsonDeserializationContext context)
+                throws JsonParseException {
+            final JsonObject jsonObject = json.getAsJsonObject();
+            final Type type = Type.from(jsonObject.get("notification_type").getAsString());
+
+            final AbsNotification notification;
+
+            switch (type) {
+                case PROFILE_COMMENT:
+                    notification = context.deserialize(json, ProfileCommentNotification.class);
+                    break;
+
+                default:
+                    throw new RuntimeException("encountered unknown " + Type.class.getName()
+                            + ": \"" + type + '"');
+            }
+
+            return notification;
+        }
+    };
 
 }

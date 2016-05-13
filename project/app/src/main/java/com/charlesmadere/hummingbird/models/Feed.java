@@ -206,6 +206,7 @@ public class Feed implements Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         ParcelableUtils.writeAbsAnimeListToParcel(mAnime, dest, flags);
+        ParcelableUtils.writeAbsNotificationListToParcel(mNotifications, dest, flags);
         ParcelableUtils.writeAbsStoryListToParcel(mStories, dest, flags);
         ParcelableUtils.writeAbsSubstoryListToParcel(mSubstories, dest, flags);
         ParcelableUtils.writeAbsUserListToParcel(mUsers, dest, flags);
@@ -219,6 +220,7 @@ public class Feed implements Parcelable {
         public Feed createFromParcel(final Parcel source) {
             final Feed f = new Feed();
             f.mAnime = ParcelableUtils.readAbsAnimeListFromParcel(source);
+            f.mNotifications = ParcelableUtils.readAbsNotificationListFromParcel(source);
             f.mStories = ParcelableUtils.readAbsStoryListFromParcel(source);
             f.mSubstories = ParcelableUtils.readAbsSubstoryListFromParcel(source);
             f.mUsers = ParcelableUtils.readAbsUserListFromParcel(source);
