@@ -143,6 +143,7 @@ public class LoginActivity extends BaseActivity {
 
         MiscUtils.closeKeyboard(this);
         mSimpleProgressView.fadeIn();
+        mLogin.setEnabled(false);
 
         final String username = mUsernameField.getText().toString().trim();
         final String password = mPasswordField.getText().toString();
@@ -152,6 +153,7 @@ public class LoginActivity extends BaseActivity {
 
     private void showError(@Nullable final String error) {
         mSimpleProgressView.fadeOut();
+        updateLoginEnabledState();
 
         new AlertDialog.Builder(this)
                 .setMessage(TextUtils.isEmpty(error) ? getText(R.string.error_logging_in) : error)

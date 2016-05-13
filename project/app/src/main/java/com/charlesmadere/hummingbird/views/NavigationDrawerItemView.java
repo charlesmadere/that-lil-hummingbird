@@ -2,12 +2,10 @@ package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -59,7 +57,7 @@ public class NavigationDrawerItemView extends AppCompatTextView {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        updateTextAndIcon();
+        setTextAndIcon();
     }
 
     public void setOnNavigationDrawerItemViewClickListener(
@@ -79,35 +77,31 @@ public class NavigationDrawerItemView extends AppCompatTextView {
     @Override
     public void setSelected(final boolean selected) {
         super.setSelected(selected);
-        updateTextAndIcon();
+        setTextAndIcon();
     }
 
     @SuppressWarnings("ResourceAsColor")
-    private void updateTextAndIcon() {
-        final int color = isSelected() ? MiscUtils.getAttrColor(getContext(), R.attr.colorAccent)
-                : ContextCompat.getColor(getContext(), R.color.white);
-
-        setTextColor(color);
-        setText(mEntry.getTextResId());
-
+    private void setTextAndIcon() {
         if (!isInEditMode()) {
             setTypeface(isSelected() ? TypefaceStore.get(TypefaceEntry.OPEN_SANS_BOLD) :
                     TypefaceStore.get(TypefaceEntry.OPEN_SANS_SEMIBOLD));
         }
 
-        Drawable icon = ContextCompat.getDrawable(getContext(), mEntry.getIconResId());
-        icon = DrawableCompat.wrap(icon);
-        DrawableCompat.setTint(icon, color);
-        setCompoundDrawablesRelativeWithIntrinsicBounds(icon, null, null, null);
+        final int color = isSelected() ? MiscUtils.getAttrColor(getContext(), R.attr.colorAccent)
+                : ContextCompat.getColor(getContext(), R.color.white);
+
+        setTextColor(color);
+        setText(mEntry.getTextResId());
+        setCompoundDrawablesRelativeWithIntrinsicBounds(mEntry.getIconResId(), 0, 0, 0);
     }
 
 
     public enum Entry {
-        HOME(R.drawable.ic_home_white_24dp, R.string.home),
-        HUMMINGBIRD_ON_THE_WEB(R.drawable.ic_open_in_browser_white_24dp,
-                R.string.hummingbird_on_the_web),
-        SEARCH(R.drawable.ic_search_white_24dp, R.string.search),
-        SETTINGS(R.drawable.ic_settings_white_24dp, R.string.settings);
+        HOME(R.drawable.ic_home, R.string.home),
+        HUMMINGBIRD_ON_THE_WEB(R.drawable.ic_open_in_browser_white_24dp, R.string.hummingbird_on_the_web),
+        NOTIFICATIONS(R.drawable.ic_notifications, R.string.notifications),
+        SEARCH(R.drawable.ic_search, R.string.search),
+        SETTINGS(R.drawable.ic_settings, R.string.settings);
 
         private final int mIconResId;
         private final int mTextResId;

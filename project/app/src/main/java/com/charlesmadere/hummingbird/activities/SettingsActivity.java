@@ -12,6 +12,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.ThatLilHummingbird;
 import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
+import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.NightMode;
 import com.charlesmadere.hummingbird.models.TitleType;
 import com.charlesmadere.hummingbird.preferences.Preferences;
@@ -132,12 +133,26 @@ public class SettingsActivity extends BaseDrawerActivity {
                 .setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
-                        if (Preferences.General.Theme.get().equals(values[which])) {
+                        final NightMode nightMode = Preferences.General.Theme.get();
+
+                        if (nightMode != null && nightMode.equals(values[which])) {
                             return;
                         }
 
-                        Preferences.General.Theme.set(values[which]);
-                        mTheme.setText(values[which].getTextResId());
+                        final NightMode newNightMode = values[which];
+
+                        if (nightMode == null) {
+                            Timber.d(TAG, "Theme is now " + newNightMode.name() + " (" +
+                                    newNightMode.getThemeValue() + ')');
+                        } else {
+                            Timber.d(TAG, "Theme was " + nightMode.name() + " (" +
+                                    nightMode.getThemeValue() + ") and is now " +
+                                    newNightMode.name() + " (" + newNightMode.getThemeValue() +
+                                    ')');
+                        }
+
+                        Preferences.General.Theme.set(newNightMode);
+                        mTheme.setText(newNightMode.getTextResId());
 
                         showRestartDialog();
                     }

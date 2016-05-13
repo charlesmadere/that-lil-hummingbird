@@ -87,6 +87,10 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
                         .setData(Uri.parse("https://www.hummingbird.me/"));
                 break;
 
+            case NOTIFICATIONS:
+                intent = NotificationsActivity.getLaunchIntent(this);
+                break;
+
             case SEARCH:
                 intent = SearchActivity.getLaunchIntent(this);
                 break;

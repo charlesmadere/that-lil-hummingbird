@@ -5,10 +5,11 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.WatchedEpisodeSubstory;
@@ -19,9 +20,11 @@ import java.text.NumberFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class MediaSubstoryItemView extends FrameLayout {
+public class MediaSubstoryItemView extends RelativeLayout {
 
+    private AbsUser mUser;
     private NumberFormat mNumberFormat;
 
     @BindView(R.id.kvtvAction)
@@ -49,6 +52,12 @@ public class MediaSubstoryItemView extends FrameLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
+    @OnClick(R.id.sdvAvatar)
+    void onAvatarClick() {
+        final Context context = getContext();
+        context.startActivity(UserActivity.getLaunchIntent(context, mUser));
+    }
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -62,6 +71,7 @@ public class MediaSubstoryItemView extends FrameLayout {
     }
 
     public void setContent(final AbsSubstory content, final AbsUser user) {
+        mUser = user;
         mAvatar.setImageURI(Uri.parse(user.getAvatarSmall()));
         mTimeAgo.setText(content.getCreatedAt().getRelativeTimeText(getContext()));
 

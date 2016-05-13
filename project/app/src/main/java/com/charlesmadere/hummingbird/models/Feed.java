@@ -16,6 +16,10 @@ public class Feed implements Parcelable {
     private ArrayList<AbsAnime> mAnime;
 
     @Nullable
+    @SerializedName("notifications")
+    private ArrayList<AbsNotification> mNotifications;
+
+    @Nullable
     @SerializedName("stories")
     private ArrayList<AbsStory> mStories;
 
@@ -59,6 +63,11 @@ public class Feed implements Parcelable {
     }
 
     @Nullable
+    public ArrayList<AbsNotification> getNotifications() {
+        return mNotifications;
+    }
+
+    @Nullable
     public ArrayList<AbsStory> getStories() {
         return mStories;
     }
@@ -85,6 +94,10 @@ public class Feed implements Parcelable {
         return mGroups != null && !mGroups.isEmpty();
     }
 
+    public boolean hasNotifications() {
+        return mNotifications != null && !mNotifications.isEmpty();
+    }
+
     public boolean hasStories() {
         return mStories != null && !mStories.isEmpty();
     }
@@ -107,6 +120,12 @@ public class Feed implements Parcelable {
         if (hasGroups()) {
             for (final Group group : mGroups) {
                 group.hydrate(this);
+            }
+        }
+
+        if (hasNotifications()) {
+            for (final AbsNotification notification : mNotifications) {
+                notification.hydrate(this);
             }
         }
 

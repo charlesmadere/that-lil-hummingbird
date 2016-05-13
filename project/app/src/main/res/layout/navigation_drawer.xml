@@ -60,6 +60,9 @@
                 app:entry="home"
                 style="@style/NavigationDrawerItemView" />
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
+                app:entry="notifications"
+                style="@style/NavigationDrawerItemView" />
+            <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
                 app:entry="search"
                 style="@style/NavigationDrawerItemView" />
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView

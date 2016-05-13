@@ -77,6 +77,16 @@
         </activity>
 
         <activity
+            android:label="@string/notifications"
+            android:name=".activities.NotificationsActivity"
+            android:parentActivityName=".activities.HomeActivity"
+            android:theme="@style/HummingbirdTheme.WithDrawer">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.HomeActivity" />
+        </activity>
+
+        <activity
             android:label=""
             android:launchMode="singleTop"
             android:name=".activities.SearchActivity"
