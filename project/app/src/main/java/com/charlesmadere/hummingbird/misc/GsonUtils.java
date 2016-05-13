@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.misc;
 import android.support.annotation.Nullable;
 
 import com.charlesmadere.hummingbird.models.AbsAnime;
+import com.charlesmadere.hummingbird.models.AbsNotification;
 import com.charlesmadere.hummingbird.models.AbsStory;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.AbsUser;
@@ -31,6 +32,8 @@ public final class GsonUtils {
             Timber.d(TAG, "creating Gson instance");
             sGson = new GsonBuilder()
                     .registerTypeAdapter(AbsAnime.class, AbsAnime.JSON_DESERIALIZER)
+                    .registerTypeAdapter(AbsNotification.class, AbsNotification.JSON_DESERIALIZER)
+                    .registerTypeAdapter(AbsNotification.AbsSource.class, AbsNotification.AbsSource.JSON_DESERIALIZER)
                     .registerTypeAdapter(AbsStory.class, AbsStory.JSON_DESERIALIZER)
                     .registerTypeAdapter(AbsSubstory.class, AbsSubstory.JSON_DESERIALIZER)
                     .registerTypeAdapter(AbsUser.class, AbsUser.JSON_DESERIALIZER)
