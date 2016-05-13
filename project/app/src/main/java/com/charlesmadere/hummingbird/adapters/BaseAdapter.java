@@ -16,7 +16,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<AdapterView.Vi
     private final Context mContext;
 
 
-    protected BaseAdapter(final Context context) {
+    public BaseAdapter(final Context context) {
         mItems = new ArrayList<>();
         mContext = context;
     }

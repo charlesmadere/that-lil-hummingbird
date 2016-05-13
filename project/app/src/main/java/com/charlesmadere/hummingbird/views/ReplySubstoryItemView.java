@@ -5,7 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
@@ -18,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ReplySubstoryItemView extends FrameLayout {
+public class ReplySubstoryItemView extends RelativeLayout {
 
     private ReplySubstory mReplySubstory;
 

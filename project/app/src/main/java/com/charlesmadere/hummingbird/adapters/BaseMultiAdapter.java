@@ -9,7 +9,7 @@ public abstract class BaseMultiAdapter extends BaseAdapter<Object> {
     private final HashMap<Class, Integer> mViewKey = getViewKeyMap();
 
 
-    protected BaseMultiAdapter(final Context context) {
+    public BaseMultiAdapter(final Context context) {
         super(context);
     }
 

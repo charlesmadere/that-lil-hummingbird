@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.CommentsAdapter;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.CommentPost;
 import com.charlesmadere.hummingbird.models.CommentStory;
@@ -24,7 +25,6 @@ import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
-import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import java.lang.ref.WeakReference;
 
@@ -40,6 +40,7 @@ public class CommentsActivity extends BaseDrawerActivity implements
     private static final String EXTRA_COMMENT_STORY = CNAME + ".CommentStory";
     private static final String KEY_FEED = "Feed";
 
+    private CommentsAdapter mAdapter;
     private CommentStory mCommentStory;
     private Feed mFeed;
 
@@ -160,7 +161,7 @@ public class CommentsActivity extends BaseDrawerActivity implements
     @Override
     protected void onViewsBound() {
         super.onViewsBound();
-        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
+        mAdapter = new CommentsAdapter(this);
     }
 
     private void postComment() {
@@ -192,6 +193,7 @@ public class CommentsActivity extends BaseDrawerActivity implements
 
     private void showFeed(final Feed feed) {
         mFeed = feed;
+        mAdapter.set(mCommentStory, feed);
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
         mCommentField.setEnabled(true);
