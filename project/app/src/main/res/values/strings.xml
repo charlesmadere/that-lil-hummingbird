@@ -51,6 +51,7 @@
     <string name="error_loading_favorites">Error loading favorites</string>
     <string name="error_loading_feed">Error loading feed</string>
     <string name="error_loading_image">Error loading image</string>
+    <string name="error_loading_notifications">Error loading notifications</string>
     <string name="error_loading_on_hold_library">Error loading on hold library</string>
     <string name="error_loading_plan_to_watch_library">Error loading plan to watch library</string>
     <string name="error_loading_search_results">Error loading search results</string>
@@ -106,6 +107,7 @@
     <string name="no_favorites">No favorites</string>
     <string name="no_feed_content">No feed content</string>
     <string name="no_gallery_images">No gallery images</string>
+    <string name="no_notifications">No notifications</string>
     <string name="no_results_for_x">No results for %1$s</string>
     <string name="no_search_results">No search results</string>
     <string name="no_season">No Season</string>
