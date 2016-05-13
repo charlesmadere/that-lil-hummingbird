@@ -31,8 +31,9 @@ public abstract class AbsAnime implements Parcelable {
     @SerializedName("episode_count")
     protected Integer mEpisodeCount;
 
+    @Nullable
     @SerializedName("episode_length")
-    protected int mEpisodeLength;
+    protected Integer mEpisodeLength;
 
     @Nullable
     @SerializedName("show_type")
@@ -60,7 +61,8 @@ public abstract class AbsAnime implements Parcelable {
         return mEpisodeCount;
     }
 
-    public int getEpisodeLength() {
+    @Nullable
+    public Integer getEpisodeLength() {
         return mEpisodeLength;
     }
 
@@ -134,7 +136,7 @@ public abstract class AbsAnime implements Parcelable {
         mAgeRating = source.readParcelable(AgeRating.class.getClassLoader());
         mCommunityRating = source.readFloat();
         mEpisodeCount = ParcelableUtils.readInteger(source);
-        mEpisodeLength = source.readInt();
+        mEpisodeLength = ParcelableUtils.readInteger(source);
         mShowType = source.readParcelable(ShowType.class.getClassLoader());
         mId = source.readString();
         mSynopsis = source.readString();
@@ -145,7 +147,7 @@ public abstract class AbsAnime implements Parcelable {
         dest.writeParcelable(mAgeRating, flags);
         dest.writeFloat(mCommunityRating);
         ParcelableUtils.writeInteger(mEpisodeCount, dest);
-        dest.writeInt(mEpisodeLength);
+        ParcelableUtils.writeInteger(mEpisodeLength, dest);
         dest.writeParcelable(mShowType, flags);
         dest.writeString(mId);
         dest.writeString(mSynopsis);

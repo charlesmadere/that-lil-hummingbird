@@ -381,7 +381,7 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
             anime.mAgeRating = context.deserialize(animeJson.get("age_rating"), AgeRating.class);
             anime.mCommunityRating = animeJson.get("community_rating").getAsFloat();
             anime.mEpisodeCount = GsonUtils.getInteger(animeJson, "episode_count");
-            anime.mEpisodeLength = animeJson.get("episode_length").getAsInt();
+            anime.mEpisodeLength = GsonUtils.getInteger(animeJson, "episode_length");
             anime.mShowType = context.deserialize(animeJson.get("show_type"), ShowType.class);
             anime.mId = animeJson.get("id").getAsString();
             anime.mSynopsis = animeJson.get("synopsis").getAsString();
