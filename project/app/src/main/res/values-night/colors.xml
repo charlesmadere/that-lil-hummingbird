@@ -2,6 +2,7 @@
 <resources>
 
     <color name="commentFieldBg">#424242</color>
+    <color name="orangeFaded">#A35C42</color>
     <color name="placeholderGradientEnd">#666666</color>
     <color name="placeholderGradientStart">#444444</color>
     <color name="windowBackground">#232323</color>
