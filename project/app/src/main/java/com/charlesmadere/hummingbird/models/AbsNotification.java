@@ -17,11 +17,19 @@ public abstract class AbsNotification implements Parcelable {
     private String mId;
 
 
+    public SimpleDate getCreatedAt() {
+        return mCreatedAt;
+    }
+
     public String getId() {
         return mId;
     }
 
     public abstract void hydrate(final Feed feed);
+
+    public boolean isSeen() {
+        return mSeen;
+    }
 
     @Override
     public int describeContents() {
@@ -29,12 +37,16 @@ public abstract class AbsNotification implements Parcelable {
     }
 
     protected void readFromParcel(final Parcel source) {
-        // TODO
+        mSeen = source.readInt() != 0;
+        mCreatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
+        mId = source.readString();
     }
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        // TODO
+        dest.writeInt(mSeen ? 1 : 0);
+        dest.writeParcelable(mCreatedAt, flags);
+        dest.writeString(mId);
     }
 
 
