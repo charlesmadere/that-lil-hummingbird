@@ -20,7 +20,7 @@
                 android:layout_height="1dp"
                 android:layout_width="match_parent" />
             <com.charlesmadere.hummingbird.views.TypefaceEditText
-                android:background="@color/white"
+                android:background="@color/commentFieldBg"
                 android:enabled="false"
                 android:hint="@string/leave_a_comment_"
                 android:id="@+id/etComment"
