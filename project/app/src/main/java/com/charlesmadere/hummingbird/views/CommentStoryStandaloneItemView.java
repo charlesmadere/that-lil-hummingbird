@@ -28,6 +28,9 @@ public class CommentStoryStandaloneItemView extends CardView implements AdapterV
     @BindView(R.id.tvComment)
     TextView mComment;
 
+    @BindView(R.id.tvTimeAgo)
+    TextView mTimeAgo;
+
 
     public CommentStoryStandaloneItemView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
@@ -60,6 +63,7 @@ public class CommentStoryStandaloneItemView extends CardView implements AdapterV
             mCommentTitleTextView.setText(content.getUser());
         }
 
+        mTimeAgo.setText(content.getCreatedAt().getRelativeTimeText(getContext()));
         mComment.setText(content.getComment());
     }
 
