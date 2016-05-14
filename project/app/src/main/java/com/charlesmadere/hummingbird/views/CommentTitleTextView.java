@@ -20,10 +20,11 @@ import com.charlesmadere.hummingbird.models.TypefaceEntry;
 
 public class CommentTitleTextView extends AppCompatTextView {
 
+    private CustomTypefaceSpan mSecondaryTypefaceSpan;
     private CustomTypefaceSpan mGroupNameSpan;
     private CustomTypefaceSpan mUserNameSpan;
-    private ForegroundColorSpan mCenterColorSpan;
-    private RelativeSizeSpan mCenterSizeSpan;
+    private ForegroundColorSpan mSecondaryColorSpan;
+    private RelativeSizeSpan mSecondarySizeSpan;
 
 
     public CommentTitleTextView(final Context context, final AttributeSet attrs) {
@@ -45,13 +46,16 @@ public class CommentTitleTextView extends AppCompatTextView {
         final TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.View);
         final int typefaceEntryOrdinal = ta.getInt(R.styleable.View_typeface,
                 TypefaceEntry.TEKO_SEMIBOLD.ordinal());
+        final int secondaryTypefaceEntryOrdinal = ta.getInt(R.styleable.View_secondary_typeface,
+                TypefaceEntry.OPEN_SANS_REGULAR.ordinal());
         ta.recycle();
 
         mGroupNameSpan = new CustomTypefaceSpan(TypefaceStore.get(typefaceEntryOrdinal));
         mUserNameSpan = new CustomTypefaceSpan(TypefaceStore.get(typefaceEntryOrdinal));
-        mCenterColorSpan = new ForegroundColorSpan(MiscUtils.getAttrColor(getContext(),
+        mSecondaryColorSpan = new ForegroundColorSpan(MiscUtils.getAttrColor(getContext(),
                 android.R.attr.textColorSecondary));
-        mCenterSizeSpan = new RelativeSizeSpan(0.75f);
+        mSecondarySizeSpan = new RelativeSizeSpan(0.75f);
+        mSecondaryTypefaceSpan = new CustomTypefaceSpan(TypefaceStore.get(secondaryTypefaceEntryOrdinal));
     }
 
     public void setText(final AbsUser user) {
@@ -75,8 +79,9 @@ public class CommentTitleTextView extends AppCompatTextView {
 
         int length = spannable.length();
         spannable.append(getResources().getText(R.string.posted_to));
-        spannable.setSpan(mCenterColorSpan, length, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannable.setSpan(mCenterSizeSpan, length, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(mSecondaryColorSpan, length, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(mSecondarySizeSpan, length, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(mSecondaryTypefaceSpan, length, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannable.append(' ');
 
         length = spannable.length();

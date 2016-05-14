@@ -19,6 +19,7 @@ import java.text.NumberFormat;
 
 public class FollowedStoryTitleTextView extends AppCompatTextView {
 
+    private CustomTypefaceSpan mSuffixTypefaceSpan;
     private CustomTypefaceSpan mUserNameSpan;
     private ForegroundColorSpan mSuffixColorSpan;
     private NumberFormat mNumberFormat;
@@ -44,11 +45,14 @@ public class FollowedStoryTitleTextView extends AppCompatTextView {
         final TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.View);
         final int typefaceEntryOrdinal = ta.getInt(R.styleable.View_typeface,
                 TypefaceEntry.TEKO_SEMIBOLD.ordinal());
+        final int secondaryTypefaceEntryOrdinal = ta.getInt(R.styleable.View_secondary_typeface,
+                TypefaceEntry.OPEN_SANS_REGULAR.ordinal());
         ta.recycle();
 
         mUserNameSpan = new CustomTypefaceSpan(TypefaceStore.get(typefaceEntryOrdinal));
         mSuffixColorSpan = new ForegroundColorSpan(MiscUtils.getAttrColor(getContext(),
                 android.R.attr.textColorSecondary));
+        mSuffixTypefaceSpan = new CustomTypefaceSpan(TypefaceStore.get(secondaryTypefaceEntryOrdinal));
         mSuffixSizeSpan = new RelativeSizeSpan(0.75f);
         mNumberFormat = NumberFormat.getInstance();
     }
@@ -65,6 +69,7 @@ public class FollowedStoryTitleTextView extends AppCompatTextView {
                 mNumberFormat.format(followedCount)));
         spannable.setSpan(mSuffixColorSpan, length, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannable.setSpan(mSuffixSizeSpan, length, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(mSuffixTypefaceSpan, length, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         setText(spannable);
     }

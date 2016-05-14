@@ -39,6 +39,19 @@
 
         <attr name="always_show" format="boolean" />
 
+        <attr name="secondary_typeface" format="enum">
+            <enum name="open_sans_bold" value="0" />
+            <enum name="open_sans_extra_bold" value="1" />
+            <enum name="open_sans_italic" value="2" />
+            <enum name="open_sans_light" value="3" />
+            <enum name="open_sans_light_italic" value="4" />
+            <enum name="open_sans_regular" value="5" />
+            <enum name="open_sans_semibold" value="6" />
+            <enum name="teko_bold" value="7" />
+            <enum name="teko_regular" value="8" />
+            <enum name="teko_semibold" value="9" />
+        </attr>
+
         <attr name="typeface" format="enum">
             <enum name="open_sans_bold" value="0" />
             <enum name="open_sans_extra_bold" value="1" />
