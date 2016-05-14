@@ -7,14 +7,18 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.CommentStory;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class CommentStoryStandaloneItemView extends CardView implements AdapterView<CommentStory> {
+
+    private CommentStory mCommentStory;
 
     @BindView(R.id.commentTitleTextView)
     CommentTitleTextView mCommentTitleTextView;
@@ -41,6 +45,12 @@ public class CommentStoryStandaloneItemView extends CardView implements AdapterV
         super(context, attrs, defStyleAttr);
     }
 
+    @OnClick(R.id.sdvAvatar)
+    void onAvatarClick() {
+        final Context context = getContext();
+        context.startActivity(UserActivity.getLaunchIntent(context, mCommentStory.getUser()));
+    }
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -54,17 +64,18 @@ public class CommentStoryStandaloneItemView extends CardView implements AdapterV
 
     @Override
     public void setContent(final CommentStory content) {
-        mAvatar.setImageURI(Uri.parse(content.getUser().getAvatar()));
-        mLikeTextView.setContent(content);
+        mCommentStory = content;
+        mAvatar.setImageURI(Uri.parse(mCommentStory.getUser().getAvatar()));
+        mLikeTextView.setContent(mCommentStory);
 
         if (content.hasGroupId()) {
-            mCommentTitleTextView.setText(content.getUser(), content.getGroup());
+            mCommentTitleTextView.setText(mCommentStory.getUser(), mCommentStory.getGroup());
         } else {
-            mCommentTitleTextView.setText(content.getUser());
+            mCommentTitleTextView.setText(mCommentStory.getUser());
         }
 
-        mTimeAgo.setText(content.getCreatedAt().getRelativeTimeText(getContext()));
-        mComment.setText(content.getComment());
+        mTimeAgo.setText(mCommentStory.getCreatedAt().getRelativeTimeText(getContext()));
+        mComment.setText(mCommentStory.getComment());
     }
 
 }
