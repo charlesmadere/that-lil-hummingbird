@@ -25,6 +25,7 @@ import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
+import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import java.lang.ref.WeakReference;
 
@@ -161,6 +162,8 @@ public class CommentsActivity extends BaseDrawerActivity implements
     @Override
     protected void onViewsBound() {
         super.onViewsBound();
+        mRefreshLayout.setOnRefreshListener(this);
+        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding_half);
         mAdapter = new CommentsAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -249,6 +252,7 @@ public class CommentsActivity extends BaseDrawerActivity implements
             final CommentsActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
+                activity.mCommentField.setText("");
                 activity.fetchSubstories();
             }
         }
