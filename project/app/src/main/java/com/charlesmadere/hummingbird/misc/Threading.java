@@ -13,7 +13,12 @@ public final class Threading {
 
 
     static {
-        EXECUTOR_SERVICE = Executors.newFixedThreadPool(2);
+        if (MiscUtils.isLowRamDevice()) {
+            EXECUTOR_SERVICE = Executors.newFixedThreadPool(2);
+        } else {
+            EXECUTOR_SERVICE = Executors.newFixedThreadPool(3);
+        }
+
         MAIN_HANDLER = new Handler(Looper.getMainLooper());
     }
 
