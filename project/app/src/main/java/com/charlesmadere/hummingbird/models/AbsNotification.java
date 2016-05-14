@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -11,6 +12,9 @@ import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
 public abstract class AbsNotification implements Parcelable {
+
+    @SerializedName("source")
+    private AbsSource mSource;
 
     @SerializedName("seen")
     private boolean mSeen;
@@ -30,10 +34,14 @@ public abstract class AbsNotification implements Parcelable {
         return mId;
     }
 
+    public AbsSource getSource() {
+        return mSource;
+    }
+
     public abstract Type getType();
 
     public void hydrate(final Feed feed) {
-        // method intentionally blank, children can override
+        mSource.hydrate(feed);
     }
 
     public boolean isSeen() {
@@ -46,6 +54,7 @@ public abstract class AbsNotification implements Parcelable {
     }
 
     protected void readFromParcel(final Parcel source) {
+        mSource = ParcelableUtils.readAbsNotificationAbsSourceFromParcel(source);
         mSeen = source.readInt() != 0;
         mCreatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
         mId = source.readString();
@@ -53,6 +62,7 @@ public abstract class AbsNotification implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
+        ParcelableUtils.writeAbsNotificationAbsSourceToParcel(mSource, dest, flags);
         dest.writeInt(mSeen ? 1 : 0);
         dest.writeParcelable(mCreatedAt, flags);
         dest.writeString(mId);
@@ -63,7 +73,15 @@ public abstract class AbsNotification implements Parcelable {
         @SerializedName("id")
         private String mId;
 
+        public String getId() {
+            return mId;
+        }
+
         public abstract Type getType();
+
+        public void hydrate(final Feed feed) {
+            // method intentionally blank, children can override
+        }
 
         @Override
         public int describeContents() {
@@ -145,9 +163,40 @@ public abstract class AbsNotification implements Parcelable {
 
 
     public static class StorySource extends AbsSource implements Parcelable {
+        // hydrated fields
+        private AbsStory mStory;
+
+        public AbsStory getStory() {
+            return mStory;
+        }
+
         @Override
         public Type getType() {
             return Type.STORY;
+        }
+
+        @Override
+        public void hydrate(final Feed feed) {
+            super.hydrate(feed);
+
+            for (final AbsStory story : feed.getStories()) {
+                if (getId().equalsIgnoreCase(story.getId())) {
+                    mStory = story;
+                    break;
+                }
+            }
+        }
+
+        @Override
+        protected void readFromParcel(final Parcel source) {
+            super.readFromParcel(source);
+            mStory = ParcelableUtils.readAbsStoryFromParcel(source);
+        }
+
+        @Override
+        public void writeToParcel(final Parcel dest, final int flags) {
+            super.writeToParcel(dest, flags);
+            ParcelableUtils.writeAbsStoryToParcel(mStory, dest, flags);
         }
 
         public static final Creator<StorySource> CREATOR = new Creator<StorySource>() {

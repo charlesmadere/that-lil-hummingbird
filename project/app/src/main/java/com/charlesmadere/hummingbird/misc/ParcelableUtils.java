@@ -169,6 +169,73 @@ public final class ParcelableUtils {
     }
 
     @Nullable
+    public static <T extends AbsNotification.AbsSource> T readAbsNotificationAbsSourceFromParcel(
+            final Parcel source) {
+        final AbsNotification.AbsSource.Type type = source.readParcelable(
+                AbsNotification.AbsSource.Type.class.getClassLoader());
+
+        if (type == null) {
+            return null;
+        }
+
+        final T absSource;
+
+        switch (type) {
+            case STORY:
+                absSource = source.readParcelable(AbsNotification.StorySource.class.getClassLoader());
+                break;
+
+            default:
+                throw new RuntimeException("encountered unknown " +
+                        AbsNotification.AbsSource.Type.class.getName() + ": \"" + type + '"');
+        }
+
+        return absSource;
+    }
+
+    public static ArrayList<AbsNotification.AbsSource> readAbsNotificationAbsSourceListFromParcel(
+            final Parcel source) {
+        final int count = source.readInt();
+
+        if (count == 0) {
+            return null;
+        }
+
+        final ArrayList<AbsNotification.AbsSource> list = new ArrayList<>(count);
+
+        for (int i = 0; i < count; ++i) {
+            list.add(readAbsNotificationAbsSourceFromParcel(source));
+        }
+
+        return list;
+    }
+
+    public static void writeAbsNotificationAbsSourceToParcel(
+            @Nullable final AbsNotification.AbsSource source, final Parcel dest, final int flags) {
+        if (source == null) {
+            dest.writeParcelable(null, flags);
+        } else {
+            dest.writeParcelable(source.getType(), flags);
+            dest.writeParcelable(source, flags);
+        }
+    }
+
+    public static void writeAbsNotificationAbsSourceListToParcel(
+            @Nullable final List<AbsNotification.AbsSource> list, final Parcel dest,
+            final int flags) {
+        if (list == null || list.isEmpty()) {
+            dest.writeInt(0);
+            return;
+        }
+
+        dest.writeInt(list.size());
+
+        for (final AbsNotification.AbsSource source : list) {
+            writeAbsNotificationAbsSourceToParcel(source, dest, flags);
+        }
+    }
+
+    @Nullable
     public static <T extends AbsStory> T readAbsStoryFromParcel(final Parcel source) {
         final AbsStory.Type type = source.readParcelable(AbsStory.Type.class.getClassLoader());
 
