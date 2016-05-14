@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.charlesmadere.hummingbird.views.ProfileCommentNotificationItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/CardItem">
     <RelativeLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/sdvAvatar"
+            android:layout_marginEnd="@dimen/root_padding"
             style="@style/Avatar.Medium" />
+        <com.charlesmadere.hummingbird.views.NotificationTitleTextView
+            android:id="@+id/notificationTitleTextView"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/sdvAvatar"
+            android:layout_width="wrap_content"
+            tools:text="LimitB wrote a comment on your profile" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:id="@+id/tvTimeAgo"
+            android:layout_below="@id/notificationTitleTextView"
+            android:layout_toEndOf="@id/sdvAvatar"
+            tools:text="a month ago"
+            style="@style/TimeOrDate" />
     </RelativeLayout>
 </com.charlesmadere.hummingbird.views.ProfileCommentNotificationItemView>
