@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.GalleryActivity;
 import com.charlesmadere.hummingbird.misc.Constants;
-import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeV2;
+import com.charlesmadere.hummingbird.models.ShowType;
 import com.charlesmadere.hummingbird.models.SimpleDate;
 import com.charlesmadere.hummingbird.views.KeyValueTextView;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -129,7 +129,7 @@ public class AnimeDetailsFragment extends BaseFragment {
             mAgeRating.setVisibility(View.VISIBLE);
         }
 
-        if (mAnimeV2.getShowType() != AbsAnime.ShowType.MOVIE && mAnimeV2.hasEpisodeCount()) {
+        if (mAnimeV2.getShowType() != ShowType.MOVIE && mAnimeV2.hasEpisodeCount()) {
             mEpisodeCount.setText(getResources().getQuantityString(R.plurals.x_episodes,
                     mAnimeV2.getEpisodeCount(), NumberFormat.getInstance()
                             .format(mAnimeV2.getEpisodeCount())));
@@ -137,7 +137,7 @@ public class AnimeDetailsFragment extends BaseFragment {
         }
 
         if (mAnimeV2.hasStartedAiringDate()) {
-            if (mAnimeV2.getShowType() == AbsAnime.ShowType.MOVIE) {
+            if (mAnimeV2.getShowType() == ShowType.MOVIE) {
                 setAiringDateView(mAired, R.string.aired, mAnimeV2.getStartedAiringDate());
             } else {
                 setAiringDateView(mStartedAiring, R.string.started_airing,
