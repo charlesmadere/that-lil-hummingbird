@@ -185,6 +185,7 @@
     <string name="website">Website</string>
     <string name="whats_trending">What\'s Trending</string>
     <string name="write_something_">Write something…</string>
+    <string name="wrote_a_comment_on_your_profile">wrote a comment on your profile</string>
     <string name="x_complete">%1$s Complete</string>
     <string name="x_is_currently_watching">%1$s is currently watching</string>
     <string name="x_has_completed">%1$s has completed</string>

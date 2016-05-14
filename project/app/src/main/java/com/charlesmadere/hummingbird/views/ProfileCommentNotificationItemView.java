@@ -69,7 +69,8 @@ public class ProfileCommentNotificationItemView extends CardView implements
 
             default:
                 throw new RuntimeException("encountered unknown " +
-                        AbsNotification.AbsSource.Type.class.getName() + ": \"" + source + '"');
+                        AbsNotification.AbsSource.Type.class.getName() + ": \"" +
+                        source.getType() + '"');
         }
     }
 
@@ -87,6 +88,7 @@ public class ProfileCommentNotificationItemView extends CardView implements
     @Override
     public void setContent(final ProfileCommentNotification content) {
         mProfileCommentNotification = content;
+        mNotificationTitleTextView.setText(content);
     }
 
 }
