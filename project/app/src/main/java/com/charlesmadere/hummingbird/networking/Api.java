@@ -7,6 +7,7 @@ import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.GsonUtils;
 import com.charlesmadere.hummingbird.misc.RetrofitUtils;
+import com.charlesmadere.hummingbird.misc.Threading;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
@@ -251,19 +252,30 @@ public final class Api {
 
     public static void getGroup(final String groupId, final ApiResponse<Feed> listener) {
         getApi().getGroup(getAuthTokenCookieString(), groupId, 1).enqueue(new Callback<Feed>() {
+            private Feed mBody;
+
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
-                Feed body = null;
-
                 if (response.isSuccessful()) {
-                    body = response.body();
+                    mBody = response.body();
                 }
 
-                if (body == null) {
+                if (mBody == null) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
-                    body.hydrate();
-                    listener.success(body);
+                    Threading.runOnBackground(new Runnable() {
+                        @Override
+                        public void run() {
+                            mBody.hydrate();
+
+                            Threading.runOnUi(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listener.success(mBody);
+                                }
+                            });
+                        }
+                    });
                 }
             }
 
@@ -279,20 +291,31 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         getApi().getGroup(getAuthTokenCookieString(), groupId, feed.getMetadata().getCursor())
                 .enqueue(new Callback<Feed>() {
+            private Feed mBody;
+
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
-                Feed body = null;
-
                 if (response.isSuccessful()) {
-                    body = response.body();
+                    mBody = response.body();
                 }
 
-                if (body == null) {
+                if (mBody == null) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
-                    body.hydrate();
-                    feed.merge(body);
-                    listener.success(feed);
+                    Threading.runOnBackground(new Runnable() {
+                        @Override
+                        public void run() {
+                            mBody.hydrate();
+                            feed.merge(mBody);
+
+                            Threading.runOnUi(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listener.success(feed);
+                                }
+                            });
+                        }
+                    });
                 }
             }
 
@@ -307,19 +330,30 @@ public final class Api {
     public static void getGroupMembers(final String groupId, final ApiResponse<Feed> listener) {
         getApi().getGroupMembers(getAuthTokenCookieString(), groupId, 1).enqueue(
                 new Callback<Feed>() {
+            private Feed mBody;
+
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
-                Feed body = null;
-
                 if (response.isSuccessful()) {
-                    body = response.body();
+                    mBody = response.body();
                 }
 
-                if (body == null) {
+                if (mBody == null) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
-                    body.hydrate();
-                    listener.success(body);
+                    Threading.runOnBackground(new Runnable() {
+                        @Override
+                        public void run() {
+                            mBody.hydrate();
+
+                            Threading.runOnUi(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listener.success(mBody);
+                                }
+                            });
+                        }
+                    });
                 }
             }
 
@@ -335,20 +369,31 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         getApi().getGroupMembers(getAuthTokenCookieString(), groupId,
                 feed.getMetadata().getCursor()).enqueue(new Callback<Feed>() {
+            private Feed mBody;
+
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
-                Feed body = null;
-
                 if (response.isSuccessful()) {
-                    body = response.body();
+                    mBody = response.body();
                 }
 
-                if (body == null) {
+                if (mBody == null) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
-                    body.hydrate();
-                    feed.merge(body);
-                    listener.success(feed);
+                    Threading.runOnBackground(new Runnable() {
+                        @Override
+                        public void run() {
+                            mBody.hydrate();
+                            feed.merge(mBody);
+
+                            Threading.runOnUi(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listener.success(feed);
+                                }
+                            });
+                        }
+                    });
                 }
             }
 
@@ -386,19 +431,30 @@ public final class Api {
     public static void getNewsFeed(final ApiResponse<Feed> listener) {
         getApi().getNewsFeed(getAuthTokenCookieString(), Boolean.TRUE, 1).enqueue(
                 new Callback<Feed>() {
+            private Feed mBody;
+
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
-                Feed body = null;
-
                 if (response.isSuccessful()) {
-                    body = response.body();
+                    mBody = response.body();
                 }
 
-                if (body == null) {
+                if (mBody == null) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
-                    body.hydrate();
-                    listener.success(body);
+                    Threading.runOnBackground(new Runnable() {
+                        @Override
+                        public void run() {
+                            mBody.hydrate();
+
+                            Threading.runOnUi(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listener.success(mBody);
+                                }
+                            });
+                        }
+                    });
                 }
             }
 
@@ -413,20 +469,31 @@ public final class Api {
     public static void getNewsFeed(final Feed feed, final ApiResponse<Feed> listener) {
         getApi().getNewsFeed(getAuthTokenCookieString(), Boolean.TRUE,
                 feed.getMetadata().getCursor()).enqueue(new Callback<Feed>() {
+            private Feed mBody;
+
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
-                Feed body = null;
-
                 if (response.isSuccessful()) {
-                    body = response.body();
+                    mBody = response.body();
                 }
 
-                if (body == null) {
+                if (mBody == null) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
-                    body.hydrate();
-                    feed.merge(body);
-                    listener.success(feed);
+                    Threading.runOnBackground(new Runnable() {
+                        @Override
+                        public void run() {
+                            mBody.hydrate();
+                            feed.merge(mBody);
+
+                            Threading.runOnUi(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listener.success(feed);
+                                }
+                            });
+                        }
+                    });
                 }
             }
 
@@ -440,10 +507,10 @@ public final class Api {
 
     public static void getSubstories(final String storyId, final ApiResponse<Feed> listener) {
         getApi().getSubstories(getAuthTokenCookieString(), storyId).enqueue(new Callback<Feed>() {
+            private Feed body;
+
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
-                Feed body = null;
-
                 if (response.isSuccessful()) {
                     body = response.body();
                 }
@@ -451,8 +518,19 @@ public final class Api {
                 if (body == null) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
-                    body.hydrate();
-                    listener.success(body);
+                    Threading.runOnBackground(new Runnable() {
+                        @Override
+                        public void run() {
+                            body.hydrate();
+
+                            Threading.runOnUi(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listener.success(body);
+                                }
+                            });
+                        }
+                    });
                 }
             }
 
@@ -490,28 +568,39 @@ public final class Api {
     }
 
     public static void getUserDigest(final String username, final ApiResponse<UserDigest> listener) {
-        getApi().getUserDigest(getAuthTokenCookieString(), username)
-                .enqueue(new Callback<UserDigest>() {
+        getApi().getUserDigest(getAuthTokenCookieString(), username).enqueue(
+                new Callback<UserDigest>() {
+            private UserDigest mBody;
+
             @Override
             public void onResponse(final Call<UserDigest> call,
                     final Response<UserDigest> response) {
-                UserDigest body = null;
-
                 if (response.isSuccessful()) {
-                    body = response.body();
+                    mBody = response.body();
                 }
 
-                if (body == null) {
+                if (mBody == null) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
-                    body.hydrate();
-                    listener.success(body);
+                    Threading.runOnBackground(new Runnable() {
+                        @Override
+                        public void run() {
+                            mBody.hydrate();
+
+                            Threading.runOnUi(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listener.success(mBody);
+                                }
+                            });
+                        }
+                    });
                 }
             }
 
             @Override
             public void onFailure(final Call<UserDigest> call, final Throwable t) {
-                Timber.e(TAG, "get user (" + username + ") failed", t);
+                Timber.e(TAG, "get user (" + username + ") digest failed", t);
                 listener.failure(null);
             }
         });
@@ -519,19 +608,30 @@ public final class Api {
 
     public static void getUserStories(final String username, final ApiResponse<Feed> listener) {
         getApi().getUserStories(getAuthTokenCookieString(), username).enqueue(new Callback<Feed>() {
+            private Feed mBody;
+
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
-                Feed body = null;
-
                 if (response.isSuccessful()) {
-                    body = response.body();
+                    mBody = response.body();
                 }
 
-                if (body == null) {
+                if (mBody == null) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
-                    body.hydrate();
-                    listener.success(body);
+                    Threading.runOnBackground(new Runnable() {
+                        @Override
+                        public void run() {
+                            mBody.hydrate();
+
+                            Threading.runOnUi(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listener.success(mBody);
+                                }
+                            });
+                        }
+                    });
                 }
             }
 
