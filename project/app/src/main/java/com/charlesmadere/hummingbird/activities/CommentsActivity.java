@@ -162,6 +162,7 @@ public class CommentsActivity extends BaseDrawerActivity implements
     protected void onViewsBound() {
         super.onViewsBound();
         mAdapter = new CommentsAdapter(this);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void postComment() {
