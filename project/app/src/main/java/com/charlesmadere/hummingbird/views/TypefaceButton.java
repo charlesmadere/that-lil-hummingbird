@@ -28,7 +28,7 @@ public class TypefaceButton extends AppCompatButton {
 
         final TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.View);
         final int typefaceEntryOrdinal = ta.getInt(R.styleable.View_typeface,
-                TypefaceEntry.OPEN_SANS_REGULAR.ordinal());
+                TypefaceEntry.OPEN_SANS_BOLD.ordinal());
         ta.recycle();
 
         setTypeface(typefaceEntryOrdinal);
