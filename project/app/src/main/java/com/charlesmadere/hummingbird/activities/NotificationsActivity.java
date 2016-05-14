@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.NotificationsAdapter;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -28,6 +29,7 @@ public class NotificationsActivity extends BaseDrawerActivity implements
     private static final String KEY_FEED = "Feed";
 
     private Feed mFeed;
+    private NotificationsAdapter mAdapter;
 
     @BindView(R.id.llEmpty)
     LinearLayout mEmpty;
@@ -95,6 +97,8 @@ public class NotificationsActivity extends BaseDrawerActivity implements
     protected void onViewsBound() {
         super.onViewsBound();
         mRefreshLayout.setOnRefreshListener(this);
+        mAdapter = new NotificationsAdapter(this);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void showEmpty() {
@@ -113,6 +117,7 @@ public class NotificationsActivity extends BaseDrawerActivity implements
 
     private void showFeed(final Feed feed) {
         mFeed = feed;
+        mAdapter.set(mFeed);
         mEmpty.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
