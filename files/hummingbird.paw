@@ -5,7 +5,7 @@
     <databaseInfo>
         <version>134481920</version>
         <UUID>BA29C6E9-1993-46BE-AE6B-B11B33BB09CF</UUID>
-        <nextObjectID>158</nextObjectID>
+        <nextObjectID>160</nextObjectID>
         <metadata>
             <plist version="1.0">
                 <dict>
@@ -219,7 +219,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">GET</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="order" type="int64">5</attribute>
+        <attribute name="order" type="int64">6</attribute>
         <attribute name="name" type="string">Get Library Entries (All)</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
@@ -234,7 +234,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">GET</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="order" type="int64">6</attribute>
+        <attribute name="order" type="int64">7</attribute>
         <attribute name="name" type="string">Get Library Entries (Currently Watching)</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
@@ -259,7 +259,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">GET</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="order" type="int64">7</attribute>
+        <attribute name="order" type="int64">8</attribute>
         <attribute name="name" type="string">Get Library Entries (Dropped)</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
@@ -284,7 +284,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">GET</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="order" type="int64">8</attribute>
+        <attribute name="order" type="int64">9</attribute>
         <attribute name="name" type="string">Get Library Entries (On Hold)</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
@@ -309,7 +309,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">GET</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="order" type="int64">9</attribute>
+        <attribute name="order" type="int64">10</attribute>
         <attribute name="name" type="string">Get Library Entries (Plan to Watch)</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
@@ -334,7 +334,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">GET</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="order" type="int64">12</attribute>
+        <attribute name="order" type="int64">13</attribute>
         <attribute name="name" type="string">Get User</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
@@ -369,7 +369,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">GET</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="order" type="int64">16</attribute>
+        <attribute name="order" type="int64">17</attribute>
         <attribute name="name" type="string">Search Anime By Title</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
@@ -479,7 +479,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">GET</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="order" type="int64">14</attribute>
+        <attribute name="order" type="int64">15</attribute>
         <attribute name="name" type="string">Get User Stories</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
@@ -494,11 +494,11 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">GET</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="order" type="int64">10</attribute>
+        <attribute name="order" type="int64">11</attribute>
         <attribute name="name" type="string">Get News Feed</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
-        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z149 z148"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z148 z149"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z148">
         <attribute name="value" type="string"></attribute>
@@ -529,11 +529,11 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">GET</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="order" type="int64">13</attribute>
+        <attribute name="order" type="int64">14</attribute>
         <attribute name="name" type="string">Get User Digest</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
-        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z151 z156"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z156 z151"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z151">
         <attribute name="value" type="string">[{"data":{"environmentVariable":"C860E5C8-BDD8-4329-8AE1-5772369FF6B0"},"identifier":"com.luckymarmot.EnvironmentVariableDynamicValue"}]</attribute>
@@ -554,7 +554,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">GET</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="order" type="int64">15</attribute>
+        <attribute name="order" type="int64">16</attribute>
         <attribute name="name" type="string">Search</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
@@ -579,11 +579,11 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">GET</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="order" type="int64">11</attribute>
+        <attribute name="order" type="int64">12</attribute>
         <attribute name="name" type="string">Get Notifications</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
-        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z157 z158 z155"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z155 z157 z158"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z155">
         <attribute name="value" type="string">[{"data":{"environmentVariable":"C860E5C8-BDD8-4329-8AE1-5772369FF6B0"},"identifier":"com.luckymarmot.EnvironmentVariableDynamicValue"}]</attribute>
@@ -624,5 +624,30 @@
         <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
         <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z154"></relationship>
+    </object>
+    <object type="LMREQUEST" id="z159">
+        <attribute name="uuid" type="string">8F722F12-D643-4E81-BDA1-2148A7EE8FF5</attribute>
+        <attribute name="url" type="string">[{"data":{"environmentVariable":"56CA0B1D-3AA8-4B97-B6E0-DF8B5C609D1E"},"identifier":"com.luckymarmot.EnvironmentVariableDynamicValue"},"full_anime\\/kill-la-kill"]</attribute>
+        <attribute name="storecookies" type="bool">1</attribute>
+        <attribute name="sendcookies" type="bool">1</attribute>
+        <attribute name="redirectmethod" type="bool">0</attribute>
+        <attribute name="redirectauthorization" type="bool">0</attribute>
+        <attribute name="method" type="string">GET</attribute>
+        <attribute name="followredirects" type="bool">0</attribute>
+        <attribute name="order" type="int64">5</attribute>
+        <attribute name="name" type="string">Get Full Anime</attribute>
+        <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z160"></relationship>
+    </object>
+    <object type="LMKEYVALUE" id="z160">
+        <attribute name="value" type="string"></attribute>
+        <attribute name="order" type="int64">1</attribute>
+        <attribute name="name" type="string"></attribute>
+        <attribute name="enabled" type="bool">1</attribute>
+        <relationship name="groupforbodyparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z159"></relationship>
     </object>
 </database>

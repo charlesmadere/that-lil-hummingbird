@@ -9,6 +9,7 @@ import com.charlesmadere.hummingbird.misc.GsonUtils;
 import com.charlesmadere.hummingbird.misc.RetrofitUtils;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.AbsAnime;
+import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeEpisode;
 import com.charlesmadere.hummingbird.models.AnimeV1;
 import com.charlesmadere.hummingbird.models.AnimeV2;
@@ -65,7 +66,7 @@ public final class Api {
 
             @Override
             public void onFailure(final Call<LibraryEntry> call, final Throwable t) {
-                Timber.e(TAG, "add or update library entry (" + id + ") call failed", t);
+                Timber.e(TAG, "add or update library entry (" + id + ") failed", t);
                 listener.failure(null);
             }
         });
@@ -92,7 +93,7 @@ public final class Api {
 
             @Override
             public void onFailure(final Call<String> call, final Throwable t) {
-                Timber.e(TAG, "authenticate call failed", t);
+                Timber.e(TAG, "authenticate failed", t);
                 listener.failure(null);
             }
         });
@@ -129,7 +130,7 @@ public final class Api {
 
             @Override
             public void onFailure(final Call<AnimeV2> call, final Throwable t) {
-                Timber.e(TAG, "get anime (" + id + ") by id call failed ", t);
+                Timber.e(TAG, "get anime (" + id + ") by id failed ", t);
                 listener.failure(null);
             }
         });
@@ -165,7 +166,34 @@ public final class Api {
 
             @Override
             public void onFailure(final Call<AnimeV2> call, final Throwable t) {
-                Timber.e(TAG, "get anime (" + id + ") by My Anime List id call failed", t);
+                Timber.e(TAG, "get anime (" + id + ") by My Anime List id failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
+    public static void getAnimeDigest(final String animeId, final ApiResponse<AnimeDigest> listener) {
+        getApi().getAnimeDigest(getAuthTokenCookieString(), animeId).enqueue(
+                new Callback<AnimeDigest>() {
+            @Override
+            public void onResponse(final Call<AnimeDigest> call,
+                    final Response<AnimeDigest> response) {
+                AnimeDigest body = null;
+
+                if (response.isSuccessful()) {
+                    body = response.body();
+                }
+
+                if (body == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    listener.success(body);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<AnimeDigest> call, final Throwable t) {
+                Timber.e(TAG, "get anime (" + animeId + ") digest failed", t);
                 listener.failure(null);
             }
         });
@@ -297,7 +325,7 @@ public final class Api {
 
             @Override
             public void onFailure(final Call<Feed> call, final Throwable t) {
-                Timber.e(TAG, "get group (" + groupId + ") members call failed", t);
+                Timber.e(TAG, "get group (" + groupId + ") members failed", t);
                 listener.failure(null);
             }
         });
@@ -326,7 +354,7 @@ public final class Api {
 
             @Override
             public void onFailure(final Call<Feed> call, final Throwable t) {
-                Timber.e(TAG, "get group (" + groupId + ") members call failed", t);
+                Timber.e(TAG, "get group (" + groupId + ") members failed", t);
                 listener.failure(null);
             }
         });
@@ -455,7 +483,7 @@ public final class Api {
 
             @Override
             public void onFailure(final Call<UserV1> call, final Throwable t) {
-                Timber.e(TAG, "get user (" + username + ") call failed", t);
+                Timber.e(TAG, "get user (" + username + ") failed", t);
                 listener.failure(null);
             }
         });
@@ -483,7 +511,7 @@ public final class Api {
 
             @Override
             public void onFailure(final Call<UserDigest> call, final Throwable t) {
-                Timber.e(TAG, "get user (" + username + ") call failed", t);
+                Timber.e(TAG, "get user (" + username + ") failed", t);
                 listener.failure(null);
             }
         });
@@ -509,7 +537,7 @@ public final class Api {
 
             @Override
             public void onFailure(final Call<Feed> call, final Throwable t) {
-                Timber.e(TAG, "get user (" + username + ") stories call failed", t);
+                Timber.e(TAG, "get user (" + username + ") stories failed", t);
                 listener.failure(null);
             }
         });
@@ -528,7 +556,7 @@ public final class Api {
 
             @Override
             public void onFailure(final Call<Void> call, final Throwable t) {
-                Timber.e(TAG, "like story (" + story.getId() + ") call failed", t);
+                Timber.e(TAG, "like story (" + story.getId() + ") failed", t);
             }
         });
     }
@@ -546,7 +574,7 @@ public final class Api {
 
             @Override
             public void onFailure(final Call<Void> call, final Throwable t) {
-                Timber.e(TAG, "post comment (" + commentPost.getStoryId() + ") call failed", t);
+                Timber.e(TAG, "post comment (" + commentPost.getStoryId() + ") failed", t);
                 listener.failure(null);
             }
         });
@@ -589,7 +617,7 @@ public final class Api {
 
             @Override
             public void onFailure(final Call<SearchBundle> call, final Throwable t) {
-                Timber.e(TAG, "search (scope=\"" + scope + "\") (query=\"" + query + "\") failed", t);
+                Timber.e(TAG, "search (scope=" + scope + ") (query=" + query + ") failed", t);
                 listener.failure(null);
             }
         });
