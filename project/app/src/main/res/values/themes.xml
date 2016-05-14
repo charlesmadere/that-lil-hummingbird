@@ -12,8 +12,10 @@
     <style name="BaseHummingbirdTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="colorAccent">@color/orange</item>
+        <item name="colorButtonNormal">@color/bar</item>
         <item name="colorPrimary">@color/bar</item>
         <item name="colorPrimaryDark">@color/barDark</item>
+        <item name="android:buttonStyle">@style/ButtonTheme</item>
         <item name="android:windowBackground">@color/windowBackground</item>
     </style>
 
@@ -33,6 +35,11 @@
         <item name="colorPrimary">@color/bar</item>
         <item name="colorPrimaryDark">@color/barDark</item>
         <item name="android:windowBackground">@color/barDark</item>
+    </style>
+
+    <style name="ButtonTheme" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:paddingEnd">@dimen/root_padding_double</item>
+        <item name="android:paddingStart">@dimen/root_padding_double</item>
     </style>
 
     <style name="HummingbirdTheme" parent="BaseHummingbirdTheme">
