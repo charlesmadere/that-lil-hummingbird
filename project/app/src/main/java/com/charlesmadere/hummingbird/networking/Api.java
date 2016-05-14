@@ -505,28 +505,66 @@ public final class Api {
         });
     }
 
-    public static void getSubstories(final String storyId, final ApiResponse<Feed> listener) {
-        getApi().getSubstories(getAuthTokenCookieString(), storyId).enqueue(new Callback<Feed>() {
-            private Feed body;
+    public static void getNotifications(final ApiResponse<Feed> listener) {
+        getApi().getNotifications(getAuthTokenCookieString(), "application/json").enqueue(
+                new Callback<Feed>() {
+            private Feed mBody;
 
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 if (response.isSuccessful()) {
-                    body = response.body();
+                    mBody = response.body();
                 }
 
-                if (body == null) {
+                if (mBody == null) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
                     Threading.runOnBackground(new Runnable() {
                         @Override
                         public void run() {
-                            body.hydrate();
+                            mBody.hydrate();
 
                             Threading.runOnUi(new Runnable() {
                                 @Override
                                 public void run() {
-                                    listener.success(body);
+                                    listener.success(mBody);
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get notifications failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
+    public static void getSubstories(final String storyId, final ApiResponse<Feed> listener) {
+        getApi().getSubstories(getAuthTokenCookieString(), storyId).enqueue(new Callback<Feed>() {
+            private Feed mBody;
+
+            @Override
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
+                if (response.isSuccessful()) {
+                    mBody = response.body();
+                }
+
+                if (mBody == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    Threading.runOnBackground(new Runnable() {
+                        @Override
+                        public void run() {
+                            mBody.hydrate();
+
+                            Threading.runOnUi(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listener.success(mBody);
                                 }
                             });
                         }
