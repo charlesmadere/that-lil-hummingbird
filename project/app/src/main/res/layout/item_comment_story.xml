@@ -14,14 +14,14 @@
             tools:text="25"
             style="@style/LikeTextView" />
         <com.charlesmadere.hummingbird.views.CommentTitleTextView
-            android:id="@+id/cttvTitle"
+            android:id="@+id/commentTitleTextView"
             android:layout_toEndOf="@id/sdvAvatar"
             android:layout_toStartOf="@id/likeTextView"
             tools:text="LimitB"
             style="@style/UserTitle" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvTimeAgo"
-            android:layout_below="@id/cttvTitle"
+            android:layout_below="@id/commentTitleTextView"
             android:layout_toEndOf="@id/sdvAvatar"
             android:layout_toStartOf="@id/likeTextView"
             tools:text="an hour ago"

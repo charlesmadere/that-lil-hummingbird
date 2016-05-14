@@ -29,7 +29,7 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
 
     private CommentStory mCommentStory;
 
-    @BindView(R.id.cttvTitle)
+    @BindView(R.id.commentTitleTextView)
     CommentTitleTextView mTitle;
 
     @BindView(R.id.likeTextView)
