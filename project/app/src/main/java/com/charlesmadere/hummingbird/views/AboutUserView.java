@@ -13,13 +13,22 @@ import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.models.UserV2;
 
+import java.text.NumberFormat;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class AboutUserView extends CardView implements AdapterView<UserDigest> {
 
+    private NumberFormat mNumberFormat;
     private UserDigest mUserDigest;
+
+    @BindView(R.id.kvtvFollowers)
+    KeyValueTextView mFollowers;
+
+    @BindView(R.id.kvtvFollowing)
+    KeyValueTextView mFollowing;
 
     @BindView(R.id.kvtvLivesIn)
     KeyValueTextView mLivesIn;
@@ -29,9 +38,6 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
 
     @BindView(R.id.tvAbout)
     TextView mAbout;
-
-    @BindView(R.id.tvNoDetails)
-    TextView mNoDetails;
 
     @BindView(R.id.tvTitle)
     TextView mTitle;
@@ -57,6 +63,17 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
         }
 
         ButterKnife.bind(this);
+        mNumberFormat = NumberFormat.getInstance();
+    }
+
+    @OnClick(R.id.kvtvFollowers)
+    void onFollowersClick() {
+        // TODO
+    }
+
+    @OnClick(R.id.kvtvFollowing)
+    void onFollowingClick() {
+        // TODO
     }
 
     @OnClick(R.id.kvtvWaifuOrHusbando)
@@ -108,12 +125,10 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
             mWebsite.setVisibility(GONE);
         }
 
-        if (mAbout.getVisibility() == VISIBLE || mWaifuOrHusbando.getVisibility() == VISIBLE ||
-                mLivesIn.getVisibility() == VISIBLE || mWebsite.getVisibility() == VISIBLE) {
-            mNoDetails.setVisibility(GONE);
-        } else {
-            mNoDetails.setVisibility(VISIBLE);
-        }
+        mFollowers.setText(res.getQuantityText(R.plurals.followers, user.getFollowerCount()),
+                mNumberFormat.format(user.getFollowerCount()));
+        mFollowing.setText(res.getText(R.string.following),
+                mNumberFormat.format(user.getFollowingCount()));
     }
 
 }

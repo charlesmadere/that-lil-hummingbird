@@ -205,6 +205,16 @@
     <string name="yes">Yes</string>
     <string name="youtube_link">YouTube Link</string>
 
+    <plurals name="followers">
+        <item quantity="one">Follower</item>
+        <item quantity="other">Followers</item>
+    </plurals>
+
+    <plurals name="followers_x">
+        <item quantity="one">Follower %1$s</item>
+        <item quantity="other">Followers %1$s</item>
+    </plurals>
+
     <plurals name="x_episodes">
         <item quantity="one">%1$s episode</item>
         <item quantity="other">%1$s episodes</item>

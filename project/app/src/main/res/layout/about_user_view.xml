@@ -46,10 +46,13 @@
             tools:text="https://duckduckgo.com/"
             tools:visibility="visible"
             style="@style/ResponsiveWidthCardItem" />
-        <com.charlesmadere.hummingbird.views.TypefaceTextView
-            android:id="@+id/tvNoDetails"
-            android:text="@string/no_details"
-            tools:visibility="visible"
-            style="@style/EmptyCardText" />
+        <com.charlesmadere.hummingbird.views.KeyValueTextView
+            android:id="@+id/kvtvFollowers"
+            tools:text="Followers 20"
+            style="@style/ResponsiveWidthCardItem" />
+        <com.charlesmadere.hummingbird.views.KeyValueTextView
+            android:id="@+id/kvtvFollowing"
+            tools:text="Following 12"
+            style="@style/ResponsiveWidthCardItem" />
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.AboutUserView>
