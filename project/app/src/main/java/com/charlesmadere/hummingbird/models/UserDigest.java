@@ -28,6 +28,10 @@ public class UserDigest implements Parcelable {
     @SerializedName("favorites")
     private ArrayList<Favorite> mFavorites;
 
+    @Nullable
+    @SerializedName("manga")
+    private ArrayList<Manga> mManga;
+
     @SerializedName("user_info")
     private Info mInfo;
 
@@ -46,6 +50,11 @@ public class UserDigest implements Parcelable {
         return mInfo;
     }
 
+    @Nullable
+    public ArrayList<Manga> getManga() {
+        return mManga;
+    }
+
     public AbsUser getUser() {
         return mUsers.get(0);
     }
@@ -56,6 +65,10 @@ public class UserDigest implements Parcelable {
 
     public boolean hasFavorites() {
         return mFavorites != null && !mFavorites.isEmpty();
+    }
+
+    public boolean hasManga() {
+        return mManga != null && !mManga.isEmpty();
     }
 
     public void hydrate() {
@@ -76,6 +89,7 @@ public class UserDigest implements Parcelable {
         ParcelableUtils.writeAbsAnimeListToParcel(mAnime, dest, flags);
         ParcelableUtils.writeAbsUserListToParcel(mUsers, dest, flags);
         dest.writeTypedList(mFavorites);
+        dest.writeTypedList(mManga);
         dest.writeParcelable(mInfo, flags);
     }
 
@@ -86,6 +100,7 @@ public class UserDigest implements Parcelable {
             ud.mAnime = ParcelableUtils.readAbsAnimeListFromParcel(source);
             ud.mUsers = ParcelableUtils.readAbsUserListFromParcel(source);
             ud.mFavorites = source.createTypedArrayList(Favorite.CREATOR);
+            ud.mManga = source.createTypedArrayList(Manga.CREATOR);
             ud.mInfo = source.readParcelable(Info.class.getClassLoader());
             return ud;
         }
@@ -326,6 +341,13 @@ public class UserDigest implements Parcelable {
         }
 
         public static class MangaItem extends AbsItem implements Parcelable {
+            // hydrated fields
+            private Manga mManga;
+
+            public Manga getManga() {
+                return mManga;
+            }
+
             @Override
             public Type getType() {
                 return Type.MANGA;
@@ -333,19 +355,24 @@ public class UserDigest implements Parcelable {
 
             @Override
             public void hydrate(final UserDigest userDigest) {
-                // TODO
+                for (final Manga manga : userDigest.getManga()) {
+                    if (getId().equalsIgnoreCase(manga.getId())) {
+                        mManga = manga;
+                        break;
+                    }
+                }
             }
 
             @Override
             protected void readFromParcel(final Parcel source) {
                 super.readFromParcel(source);
-                // TODO
+                mManga = source.readParcelable(Manga.class.getClassLoader());
             }
 
             @Override
             public void writeToParcel(final Parcel dest, final int flags) {
                 super.writeToParcel(dest, flags);
-                // TODO
+                dest.writeParcelable(mManga, flags);
             }
 
             public static final Creator<MangaItem> CREATOR = new Creator<MangaItem>() {
