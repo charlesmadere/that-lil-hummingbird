@@ -93,6 +93,10 @@ public class Manga implements Parcelable {
         return mRomajiTitle;
     }
 
+    public String getTitle() {
+        return getRomajiTitle();
+    }
+
     @Nullable
     public String getSynopsis() {
         return mSynopsis;
@@ -125,6 +129,11 @@ public class Manga implements Parcelable {
 
     public boolean hasVolumeCount() {
         return mVolumeCount != null;
+    }
+
+    @Override
+    public String toString() {
+        return getTitle();
     }
 
     @Override
