@@ -22,6 +22,7 @@ import com.charlesmadere.hummingbird.models.CommentPost;
 import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
+import com.charlesmadere.hummingbird.models.Group;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
@@ -119,6 +120,11 @@ public class CommentsActivity extends BaseDrawerActivity implements
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.activity_comments, menu);
+
+        if (mCommentStory.hasGroupId()) {
+            menu.findItem(R.id.miViewGroup).setVisible(true);
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -133,6 +139,11 @@ public class CommentsActivity extends BaseDrawerActivity implements
         switch (item.getItemId()) {
             case R.id.miPostComment:
                 postComment();
+                return true;
+
+            case R.id.miViewGroup:
+                final Group group = mCommentStory.getGroup();
+                startActivity(GroupActivity.getLaunchIntent(this, group.getId(), group.getName()));
                 return true;
         }
 

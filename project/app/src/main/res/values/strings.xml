@@ -180,6 +180,7 @@
     <string name="users">Users</string>
     <string name="user_activity">User Activity</string>
     <string name="version_format">v%1$s (%2$d)</string>
+    <string name="view_group">View Group</string>
     <string name="waifu">Waifu</string>
     <string name="watched_episode_x">watched episode %1$s</string>
     <string name="website">Website</string>
