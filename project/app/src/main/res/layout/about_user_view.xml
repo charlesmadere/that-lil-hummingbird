@@ -18,8 +18,21 @@
             style="@style/UserBio" />
         <com.charlesmadere.hummingbird.views.KeyValueTextView
             android:drawableEnd="@drawable/ic_favorite_24dp"
+            android:drawablePadding="@dimen/root_padding_half"
             android:id="@+id/kvtvWaifuOrHusbando"
             tools:text="Waifu is Ryuuko Matoi"
+            style="@style/ResponsiveWidthCardItem" />
+        <com.charlesmadere.hummingbird.views.KeyValueTextView
+            android:drawableEnd="@drawable/ic_location_on_24dp"
+            android:drawablePadding="@dimen/root_padding_half"
+            android:id="@+id/kvtvLivesIn"
+            tools:text="Lives in Honnouji Academy"
+            style="@style/ResponsiveWidthCardItem" />
+        <com.charlesmadere.hummingbird.views.KeyValueTextView
+            android:drawableEnd="@drawable/ic_link_24dp"
+            android:drawablePadding="@dimen/root_padding_half"
+            android:id="@+id/tvWebsite"
+            tools:text="https://duckduckgo.com/"
             style="@style/ResponsiveWidthCardItem" />
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.AboutUserView>
