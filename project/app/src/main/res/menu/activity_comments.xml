@@ -5,7 +5,6 @@
         android:enabled="false"
         android:id="@+id/miPostComment"
         android:title="@string/post_comment"
-        android:titleCondensed="@string/post"
         compat:showAsAction="ifRoom|withText" />
     <item
         android:id="@+id/miViewGroup"
