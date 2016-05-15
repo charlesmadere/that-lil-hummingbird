@@ -6,11 +6,13 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.models.UserDigest;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AboutUserView extends CardView {
+public class AboutUserView extends CardView implements AdapterView<UserDigest> {
 
     @BindView(R.id.tvAbout)
     TextView mAbout;
@@ -36,6 +38,11 @@ public class AboutUserView extends CardView {
         }
 
         ButterKnife.bind(this);
+    }
+
+    @Override
+    public void setContent(final UserDigest content) {
+
     }
 
 }

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AnimeBreakdownView extends CardView implements AdapterView<UserDigest.Info> {
+public class AnimeBreakdownView extends CardView implements AdapterView<UserDigest> {
 
     private NumberFormat mNumberFormat;
 
@@ -73,21 +73,22 @@ public class AnimeBreakdownView extends CardView implements AdapterView<UserDige
     }
 
     @Override
-    public void setContent(final UserDigest.Info content) {
-        final UserDigest.Info.Genre topGenre = content.getTopGenre();
-        mAnimeBreakdownPieView.setValues(content.getAnimeWatched(), topGenre.getNum());
+    public void setContent(final UserDigest content) {
+        final UserDigest.Info info = content.getInfo();
+        final UserDigest.Info.Genre topGenre = info.getTopGenre();
+        mAnimeBreakdownPieView.setValues(info.getAnimeWatched(), topGenre.getNum());
 
-        mPrimaryGenre.setText(content.getTopGenre().getData().getName());
+        mPrimaryGenre.setText(info.getTopGenre().getData().getName());
         mGenreCount.setText(getResources().getQuantityString(R.plurals.out_of_x_titles,
-                content.getAnimeWatched(), mNumberFormat.format(content.getAnimeWatched())));
+                info.getAnimeWatched(), mNumberFormat.format(info.getAnimeWatched())));
 
-        final ArrayList<UserDigest.Info.Genre> topGenres = content.getTopGenres();
+        final ArrayList<UserDigest.Info.Genre> topGenres = info.getTopGenres();
 
         if (topGenres == null || topGenres.isEmpty()) {
             throw new IllegalArgumentException("only use this method when top genres are available");
         }
 
-        mGenre0.setText(topGenres.get(0));
+        setGenreView(mGenre0, topGenres, 1);
         setGenreView(mGenre1, topGenres, 2);
         setGenreView(mGenre2, topGenres, 3);
         setGenreView(mGenre3, topGenres, 4);
@@ -95,7 +96,7 @@ public class AnimeBreakdownView extends CardView implements AdapterView<UserDige
         setGenreView(mGenre5, topGenres, 6);
 
         mLifeSpentOnAnime.setText(MiscUtils.getElapsedTime(getResources(),
-                content.getLifeSpentOnAnime()));
+                info.getLifeSpentOnAnime()));
     }
 
     private void setGenreView(final AnimeBreakdownGenreView view,
