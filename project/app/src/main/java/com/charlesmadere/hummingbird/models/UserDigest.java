@@ -14,6 +14,8 @@ import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class UserDigest implements Parcelable {
 
@@ -76,6 +78,8 @@ public class UserDigest implements Parcelable {
             for (final Favorite favorite : mFavorites) {
                 favorite.hydrate(this);
             }
+
+            Collections.sort(mFavorites, Favorite.COMPARATOR);
         }
     }
 
@@ -173,6 +177,13 @@ public class UserDigest implements Parcelable {
             @Override
             public Favorite[] newArray(final int size) {
                 return new Favorite[size];
+            }
+        };
+
+        public static final Comparator<Favorite> COMPARATOR = new Comparator<Favorite>() {
+            @Override
+            public int compare(final Favorite lhs, final Favorite rhs) {
+                return lhs.getFavoriteRank() - rhs.getFavoriteRank();
             }
         };
 
