@@ -700,7 +700,10 @@ public final class Api {
     }
 
     public static void postComment(final CommentPost commentPost, final ApiResponse<Void> listener) {
-        getApi().postComment(getAuthTokenCookieString(), commentPost).enqueue(new Callback<Void>() {
+        JsonObject json = new JsonObject();
+        json.add("substory", GsonUtils.getGson().toJsonTree(commentPost));
+
+        getApi().postComment(getAuthTokenCookieString(), json).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
                 if (response.isSuccessful()) {

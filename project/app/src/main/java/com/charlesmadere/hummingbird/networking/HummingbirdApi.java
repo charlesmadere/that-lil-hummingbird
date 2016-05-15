@@ -4,7 +4,6 @@ import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.AuthInfo;
-import com.charlesmadere.hummingbird.models.CommentPost;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.LibraryUpdate;
@@ -112,7 +111,7 @@ public interface HummingbirdApi {
             @Body JsonElement json);
 
     @POST("substories")
-    Call<Void> postComment(@Header("Cookie") String authToken, @Body CommentPost commentPost);
+    Call<Void> postComment(@Header("Cookie") String authToken, @Body JsonElement json);
 
     @GET("search.json")
     Call<SearchBundle> search(@Query("scope") SearchScope searchScope,
