@@ -10,9 +10,11 @@
         android:layout_width="match_parent"
         app:actualImageScaleType="centerInside" />
     <com.charlesmadere.hummingbird.views.TypefaceTextView
+        android:gravity="center"
         android:id="@+id/tvError"
         android:layout_gravity="center"
         android:text="@string/error_loading_image"
+        app:typeface="open_sans_semibold"
         tools:visibility="visible"
         style="@style/ListMessageTitle.Standalone" />
     <ProgressBar
