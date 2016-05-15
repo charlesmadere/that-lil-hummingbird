@@ -2,19 +2,24 @@
 <com.charlesmadere.hummingbird.views.AboutUserView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/aboutUserView"
-    style="@style/CardItem">
+    style="@style/ResponsiveWidthCard">
     <LinearLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:orientation="vertical">
+        style="@style/ResponsiveWidthCardInternal">
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvTitle"
             tools:text="About thelithlord"
-            style="@style/CardHeader" />
+            style="@style/ResponsiveWidthCardHeader" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvAbout"
+            android:layout_marginBottom="@dimen/root_padding"
+            android:layout_marginEnd="@dimen/root_padding"
+            android:layout_marginStart="@dimen/root_padding"
             tools:text="Bacon ipsum dolor amet boudin short ribs sausage ground round cow."
             style="@style/UserBio" />
-        
+        <com.charlesmadere.hummingbird.views.KeyValueTextView
+            android:drawableEnd="@drawable/ic_favorite_24dp"
+            android:id="@+id/kvtvWaifuOrHusbando"
+            tools:text="Waifu is Ryuuko Matoi"
+            style="@style/ResponsiveWidthCardItem" />
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.AboutUserView>
