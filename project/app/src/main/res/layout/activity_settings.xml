@@ -18,89 +18,89 @@
                 android:layout_width="match_parent"
                 android:orientation="vertical">
                 <android.support.v7.widget.CardView
-                    style="@style/ResponsiveWidthCardItem">
+                    style="@style/ResponsiveWidthCard">
                     <LinearLayout
-                        style="@style/SettingsCardInternal">
+                        style="@style/ResponsiveWidthCardInternal">
                         <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:text="@string/general"
-                            style="@style/SettingsCardHeader" />
+                            style="@style/ResponsiveWidthCardHeader" />
                         <LinearLayout
                             android:id="@+id/llAnimeTitleLanguage"
-                            style="@style/SettingsItem">
+                            style="@style/ResponsiveWidthCardItem">
                             <com.charlesmadere.hummingbird.views.TypefaceTextView
                                 android:text="@string/preferred_anime_title_language"
-                                style="@style/SettingsItemHeader" />
+                                style="@style/ResponsiveWidthCardItemHeader" />
                             <com.charlesmadere.hummingbird.views.TypefaceTextView
                                 android:id="@+id/tvAnimeTitleLanguage"
                                 tools:text="@string/english"
-                                style="@style/SettingsItemBody" />
+                                style="@style/ResponsiveWidthCardItemBody" />
                         </LinearLayout>
                         <LinearLayout
                             android:id="@+id/llTheme"
-                            style="@style/SettingsItem">
+                            style="@style/ResponsiveWidthCardItem">
                             <com.charlesmadere.hummingbird.views.TypefaceTextView
                                 android:text="@string/theme"
-                                style="@style/SettingsItemHeader" />
+                                style="@style/ResponsiveWidthCardItemHeader" />
                             <com.charlesmadere.hummingbird.views.TypefaceTextView
                                 android:id="@+id/tvTheme"
                                 tools:text="@string/system"
-                                style="@style/SettingsItemBody" />
+                                style="@style/ResponsiveWidthCardItemBody" />
                         </LinearLayout>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
-                    style="@style/ResponsiveWidthCardItem">
+                    style="@style/ResponsiveWidthCard">
                     <LinearLayout
-                        style="@style/SettingsCardInternal">
+                        style="@style/ResponsiveWidthCardInternal">
                         <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:text="@string/account"
-                            style="@style/SettingsCardHeader" />
+                            style="@style/ResponsiveWidthCardHeader" />
                         <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:id="@+id/tvSignOut"
                             android:text="@string/sign_out"
-                            style="@style/SettingsItem" />
+                            style="@style/ResponsiveWidthCardItem" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
-                    style="@style/ResponsiveWidthCardItem">
+                    style="@style/ResponsiveWidthCard">
                     <LinearLayout
-                        style="@style/SettingsCardInternal">
+                        style="@style/ResponsiveWidthCardInternal">
                         <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:text="@string/credits"
-                            style="@style/SettingsCardHeader" />
+                            style="@style/ResponsiveWidthCardHeader" />
                         <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:id="@+id/tvAuthor"
                             android:text="@string/app_written_by_charles_madere"
-                            style="@style/SettingsItem" />
+                            style="@style/ResponsiveWidthCardItem" />
                         <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:id="@+id/tvGitHub"
                             android:text="@string/open_source_on_github"
-                            style="@style/SettingsItem" />
+                            style="@style/ResponsiveWidthCardItem" />
                         <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:id="@+id/tvPriscilla"
                             android:text="@string/atsuka_drawn_by_priscilla_zhou"
-                            style="@style/SettingsItem" />
+                            style="@style/ResponsiveWidthCardItem" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
-                    style="@style/ResponsiveWidthCardItem">
+                    style="@style/ResponsiveWidthCard">
                     <LinearLayout
-                        style="@style/SettingsCardInternal">
+                        style="@style/ResponsiveWidthCardInternal">
                         <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:text="@string/miscellaneous"
-                            style="@style/SettingsCardHeader" />
+                            style="@style/ResponsiveWidthCardHeader" />
                         <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:id="@+id/tvRateThisApp"
                             android:text="@string/rate_this_app"
-                            style="@style/SettingsItem" />
+                            style="@style/ResponsiveWidthCardItem" />
                         <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:id="@+id/tvRewatchIntroAnimation"
                             android:text="@string/rewatch_intro_animation"
-                            style="@style/SettingsItem" />
+                            style="@style/ResponsiveWidthCardItem" />
                         <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:id="@+id/tvLogViewer"
                             android:text="@string/log_viewer"
-                            style="@style/SettingsItem" />
+                            style="@style/ResponsiveWidthCardItem" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <TextView

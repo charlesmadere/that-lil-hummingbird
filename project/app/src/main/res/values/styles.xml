@@ -127,7 +127,7 @@
         <item name="android:scrollbars">vertical</item>
     </style>
 
-    <style name="BaseResponsiveWidthCardItem" parent="BaseCardItem">
+    <style name="BaseResponsiveWidthCard" parent="BaseCardItem">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginBottom">@dimen/root_padding</item>
         <item name="android:layout_marginEnd">0dp</item>
@@ -375,35 +375,25 @@
         <item name="placeholderImageScaleType">centerCrop</item>
     </style>
 
-    <style name="ResponsiveWidthCardItem" parent="BaseResponsiveWidthCardItem">
+    <style name="ResponsiveWidthCard" parent="BaseResponsiveWidthCard">
         <item name="android:layout_marginEnd">@dimen/root_padding_half</item>
         <item name="android:layout_marginStart">@dimen/root_padding_half</item>
     </style>
 
-    <style name="SectionHeader">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:paddingEnd">@dimen/root_padding_double</item>
-        <item name="android:paddingStart">@dimen/root_padding_double</item>
-        <item name="android:paddingTop">@dimen/root_padding</item>
-        <item name="android:textSize">@dimen/text_xlarge</item>
-        <item name="typeface">open_sans_extra_bold</item>
-    </style>
-
-    <style name="SettingsCardHeader" parent="CardHeader">
+    <style name="ResponsiveWidthCardHeader" parent="CardHeader">
         <item name="android:layout_marginBottom">@dimen/root_padding_half</item>
         <item name="android:layout_marginEnd">@dimen/root_padding</item>
         <item name="android:layout_marginStart">@dimen/root_padding</item>
         <item name="android:layout_marginTop">@dimen/root_padding_half</item>
     </style>
 
-    <style name="SettingsCardInternal">
+    <style name="ResponsiveWidthCardInternal">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:orientation">vertical</item>
     </style>
 
-    <style name="SettingsItem">
+    <style name="ResponsiveWidthCardItem">
         <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_height">wrap_content</item>
@@ -418,17 +408,27 @@
         <item name="android:textSize">@dimen/text_large</item>
     </style>
 
-    <style name="SettingsItemBody">
+    <style name="ResponsiveWidthCardItemBody">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
-    <style name="SettingsItemHeader">
+    <style name="ResponsiveWidthCardItemHeader">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:textSize">@dimen/text_large</item>
+    </style>
+
+    <style name="SectionHeader">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingEnd">@dimen/root_padding_double</item>
+        <item name="android:paddingStart">@dimen/root_padding_double</item>
+        <item name="android:paddingTop">@dimen/root_padding</item>
+        <item name="android:textSize">@dimen/text_xlarge</item>
+        <item name="typeface">open_sans_extra_bold</item>
     </style>
 
     <style name="SplashStatusBarSpace">
