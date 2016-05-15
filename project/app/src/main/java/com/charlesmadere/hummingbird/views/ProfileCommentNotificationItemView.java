@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.widget.TextView;
@@ -88,7 +89,11 @@ public class ProfileCommentNotificationItemView extends CardView implements
     @Override
     public void setContent(final ProfileCommentNotification content) {
         mProfileCommentNotification = content;
-        mNotificationTitleTextView.setText(content);
+
+        mAvatar.setImageURI(Uri.parse(mProfileCommentNotification.getPoster().getAvatar()));
+        mNotificationTitleTextView.setText(mProfileCommentNotification);
+        mTimeAgo.setText(mProfileCommentNotification.getCreatedAt().getRelativeTimeText(
+                getContext()));
     }
 
 }

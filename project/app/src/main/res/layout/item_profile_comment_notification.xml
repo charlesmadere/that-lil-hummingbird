@@ -12,6 +12,7 @@
         <com.charlesmadere.hummingbird.views.NotificationTitleTextView
             android:id="@+id/notificationTitleTextView"
             android:layout_toEndOf="@id/sdvAvatar"
+            android:textSize="@dimen/text_xxlarge"
             tools:text="LimitB wrote a comment on your profile"
             style="@style/UserTitle" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
