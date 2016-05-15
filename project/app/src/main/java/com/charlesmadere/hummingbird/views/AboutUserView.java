@@ -1,7 +1,9 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.widget.TextView;
@@ -16,6 +18,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class AboutUserView extends CardView implements AdapterView<UserDigest> {
+
+    private UserDigest mUserDigest;
 
     @BindView(R.id.kvtvLivesIn)
     KeyValueTextView mLivesIn;
@@ -57,18 +61,23 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
 
     @OnClick(R.id.kvtvWaifuOrHusbando)
     void onWaifuOrHusbandoClick() {
-
+        // TODO
     }
 
     @OnClick(R.id.tvWebsite)
     void onWebsiteClick() {
-
+        final Context context = getContext();
+        context.startActivity(new Intent(Intent.ACTION_VIEW,
+                Uri.parse(mUserDigest.getUser().getWebsite())));
     }
 
     @Override
     public void setContent(final UserDigest content) {
-        final UserV2 user = content.getUser();
-        mTitle.setText(getResources().getString(R.string.about_x, user.getName()));
+        mUserDigest = content;
+
+        final UserV2 user = mUserDigest.getUser();
+        final Resources res = getResources();
+        mTitle.setText(res.getString(R.string.about_x, user.getName()));
 
         if (user.hasAbout()) {
             mAbout.setText(user.getAbout());
@@ -77,10 +86,8 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
             mAbout.setVisibility(GONE);
         }
 
-        final Resources res = getResources();
-
         if (user.hasWaifuOrHusbando()) {
-            mWaifuOrHusbando.setText(res.getText(user.getWaifuOrHusbando().getTextResId()),
+            mWaifuOrHusbando.setText(res.getText(user.getWaifuOrHusbando().getExtendedTextResId()),
                     user.getWaifu());
             mWaifuOrHusbando.setVisibility(VISIBLE);
         } else {

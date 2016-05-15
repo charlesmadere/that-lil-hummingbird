@@ -39,7 +39,9 @@
         <com.charlesmadere.hummingbird.views.KeyValueTextView
             android:drawableEnd="@drawable/ic_link_24dp"
             android:drawablePadding="@dimen/root_padding_half"
+            android:ellipsize="end"
             android:id="@+id/tvWebsite"
+            android:maxLines="1"
             android:visibility="gone"
             tools:text="https://duckduckgo.com/"
             tools:visibility="visible"
