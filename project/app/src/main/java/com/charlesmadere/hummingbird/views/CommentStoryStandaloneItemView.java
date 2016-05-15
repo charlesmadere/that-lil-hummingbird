@@ -65,13 +65,13 @@ public class CommentStoryStandaloneItemView extends CardView implements AdapterV
     @Override
     public void setContent(final CommentStory content) {
         mCommentStory = content;
-        mAvatar.setImageURI(Uri.parse(mCommentStory.getUser().getAvatar()));
+        mAvatar.setImageURI(Uri.parse(mCommentStory.getPoster().getAvatar()));
         mLikeTextView.setContent(mCommentStory);
 
         if (content.hasGroupId()) {
-            mCommentTitleTextView.setText(mCommentStory.getUser(), mCommentStory.getGroup());
+            mCommentTitleTextView.setText(mCommentStory.getPoster(), mCommentStory.getGroup());
         } else {
-            mCommentTitleTextView.setText(mCommentStory.getUser());
+            mCommentTitleTextView.setText(mCommentStory.getPoster());
         }
 
         mTimeAgo.setText(mCommentStory.getCreatedAt().getRelativeTimeText(getContext()));
