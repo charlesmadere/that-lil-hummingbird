@@ -7,6 +7,7 @@ import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.LibraryUpdate;
+import com.charlesmadere.hummingbird.models.MangaDigest;
 import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.charlesmadere.hummingbird.models.SearchDepth;
 import com.charlesmadere.hummingbird.models.SearchScope;
@@ -87,6 +88,10 @@ public interface HummingbirdApi {
     @GET("group_members")
     Call<Feed> getGroupMembers(@Header("Cookie") String authToken,
             @Query("group_id") String groupId, @Query("page") Integer page);
+
+    @GET("full_manga/{mangaId}")
+    Call<MangaDigest> getMangaDigest(@Header("Cookie") String authToken,
+            @Path("mangaId") String mangaId);
 
     @GET("stories")
     Call<Feed> getNewsFeed(@Header("Cookie") String authToken,
