@@ -7,8 +7,8 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
-import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.UserDigest;
+import com.charlesmadere.hummingbird.models.UserV2;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,8 +18,8 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
     @BindView(R.id.tvAbout)
     TextView mAbout;
 
-    @BindView(R.id.tvBio)
-    TextView mBio;
+    @BindView(R.id.tvTitle)
+    TextView mTitle;
 
 
     public AboutUserView(final Context context, final AttributeSet attrs) {
@@ -43,14 +43,17 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
 
     @Override
     public void setContent(final UserDigest content) {
-        final AbsUser user = content.getUser();
-        mAbout.setText(getResources().getString(R.string.about_x, user.getName()));
+        final UserV2 user = content.getUser();
+        mTitle.setText(getResources().getString(R.string.about_x, user.getName()));
 
-        if (user.hasBio()) {
-            mBio.setText(user.getBio());
+        if (user.hasAbout()) {
+            mAbout.setText(user.getAbout());
+            mAbout.setVisibility(VISIBLE);
         } else {
-            mBio.setText(R.string.no_bio_available);
+            mAbout.setVisibility(GONE);
         }
+
+
     }
 
 }

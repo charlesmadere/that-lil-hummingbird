@@ -22,7 +22,7 @@ public class UserDigest implements Parcelable {
     private ArrayList<AbsAnime> mAnime;
 
     @SerializedName("users")
-    private ArrayList<AbsUser> mUsers;
+    private ArrayList<UserV2> mUsers;
 
     @Nullable
     @SerializedName("favorites")
@@ -55,7 +55,7 @@ public class UserDigest implements Parcelable {
         return mManga;
     }
 
-    public AbsUser getUser() {
+    public UserV2 getUser() {
         return mUsers.get(0);
     }
 
@@ -87,7 +87,7 @@ public class UserDigest implements Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         ParcelableUtils.writeAbsAnimeListToParcel(mAnime, dest, flags);
-        ParcelableUtils.writeAbsUserListToParcel(mUsers, dest, flags);
+        dest.writeTypedList(mUsers);
         dest.writeTypedList(mFavorites);
         dest.writeTypedList(mManga);
         dest.writeParcelable(mInfo, flags);
@@ -98,7 +98,7 @@ public class UserDigest implements Parcelable {
         public UserDigest createFromParcel(final Parcel source) {
             final UserDigest ud = new UserDigest();
             ud.mAnime = ParcelableUtils.readAbsAnimeListFromParcel(source);
-            ud.mUsers = ParcelableUtils.readAbsUserListFromParcel(source);
+            ud.mUsers = source.createTypedArrayList(UserV2.CREATOR);
             ud.mFavorites = source.createTypedArrayList(Favorite.CREATOR);
             ud.mManga = source.createTypedArrayList(Manga.CREATOR);
             ud.mInfo = source.readParcelable(Info.class.getClassLoader());
@@ -125,8 +125,6 @@ public class UserDigest implements Parcelable {
         @SerializedName("user_id")
         private String mUserId;
 
-        // hydrated fields
-        private AbsUser mUser;
 
         public int getFavoriteRank() {
             return mFavoriteRank;
@@ -140,16 +138,11 @@ public class UserDigest implements Parcelable {
             return mItem;
         }
 
-        public AbsUser getUser() {
-            return mUser;
-        }
-
         public String getUserId() {
             return mUserId;
         }
 
         public void hydrate(final UserDigest userDigest) {
-            mUser = userDigest.getUser();
             mItem.hydrate(userDigest);
         }
 
@@ -164,7 +157,6 @@ public class UserDigest implements Parcelable {
             ParcelableUtils.writeUserDigestFavoriteAbsItemToParcel(mItem, dest, flags);
             dest.writeString(mId);
             dest.writeString(mUserId);
-            ParcelableUtils.writeAbsUserToParcel(mUser, dest, flags);
         }
 
         public static final Creator<Favorite> CREATOR = new Creator<Favorite>() {
@@ -175,7 +167,6 @@ public class UserDigest implements Parcelable {
                 f.mItem = ParcelableUtils.readUserDigestFavoriteAbsItemFromParcel(source);
                 f.mId = source.readString();
                 f.mUserId = source.readString();
-                f.mUser = ParcelableUtils.readAbsUserFromParcel(source);
                 return f;
             }
 

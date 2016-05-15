@@ -8,12 +8,12 @@
         android:layout_width="match_parent"
         android:orientation="vertical">
         <com.charlesmadere.hummingbird.views.TypefaceTextView
-            android:id="@+id/tvAbout"
+            android:id="@+id/tvTitle"
             tools:text="About thelithlord"
             style="@style/CardHeader" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
-            android:id="@+id/tvBio"
-            tools:text="Bacon ipsum dolor amet boudin short ribs sausage ground round cow picanha bresaola ball tip turducken. Chicken tenderloin pancetta, strip steak pork chop shankle pastrami shoulder boudin tail alcatra. Sirloin pork loin biltong tri-tip picanha pastrami andouille ball tip bacon hamburger beef jerky. Cow boudin meatloaf, swine capicola kevin beef t-bone kielbasa pancetta strip steak. Short ribs andouille venison picanha doner cupim tri-tip.\n\nJerky ball tip picanha shoulder ham venison meatball pancetta pork chop jowl tail brisket pork. Cow t-bone kielbasa rump kevin. Tail biltong meatloaf venison tongue, bacon prosciutto pork belly chicken porchetta swine. Beef ribs doner bacon pork belly spare ribs capicola, corned beef tail bresaola swine chicken ball tip brisket frankfurter. Capicola salami andouille picanha doner."
+            android:id="@+id/tvAbout"
+            tools:text="Bacon ipsum dolor amet boudin short ribs sausage ground round cow."
             style="@style/UserBio" />
         
     </LinearLayout>
