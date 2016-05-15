@@ -45,15 +45,9 @@
             tools:visibility="visible"
             style="@style/ResponsiveWidthCardItem" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
-            android:gravity="center"
             android:id="@+id/tvNoDetails"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/root_padding"
-            android:layout_marginTop="@dimen/root_padding"
-            android:layout_width="wrap_content"
             android:text="@string/no_details"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            tools:visibility="visible"
+            style="@style/EmptyCardText" />
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.AboutUserView>

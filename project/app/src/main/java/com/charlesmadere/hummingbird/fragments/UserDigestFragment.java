@@ -21,6 +21,7 @@ import com.charlesmadere.hummingbird.views.AnimeBreakdownView;
 import com.charlesmadere.hummingbird.views.FavoriteAnimeView;
 import com.charlesmadere.hummingbird.views.FavoriteMangaView;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
+import com.charlesmadere.hummingbird.views.UserBioView;
 
 import java.lang.ref.WeakReference;
 
@@ -56,6 +57,9 @@ public class UserDigestFragment extends BaseFragment implements
 
     @BindView(R.id.scrollView)
     ScrollView mScrollView;
+
+    @BindView(R.id.userBioView)
+    UserBioView mUserBioView;
 
 
     public static UserDigestFragment create() {
@@ -131,6 +135,7 @@ public class UserDigestFragment extends BaseFragment implements
         mScrollView.setVisibility(View.VISIBLE);
         mAboutUserView.setContent(userDigest);
         mAnimeBreakdownView.setContent(userDigest);
+        mUserBioView.setContent(userDigest);
         mFavoriteAnimeView.setContent(userDigest);
         mFavoriteMangaView.setContent(userDigest);
         mRefreshLayout.setRefreshing(false);

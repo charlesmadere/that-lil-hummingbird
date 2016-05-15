@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.UserBioView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/userBioView"
+    style="@style/CardItem">
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:id="@+id/tvTitle"
+            tools:text="Bio for ThatLilChestnut"
+            style="@style/CardHeader" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:id="@+id/tvBio"
+            android:visibility="gone"
+            tools:text="Bacon ipsum dolor amet boudin short ribs sausage ground round cow."
+            tools:visibility="visible"
+            style="@style/UserBio" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:id="@+id/tvNoDetails"
+            android:text="@string/no_bio_available"
+            tools:visibility="visible"
+            style="@style/EmptyCardText" />
+    </LinearLayout>
+</com.charlesmadere.hummingbird.views.UserBioView>

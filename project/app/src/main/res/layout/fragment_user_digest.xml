@@ -27,6 +27,11 @@
                     android:layout_height="@dimen/root_padding"
                     android:layout_width="match_parent" />
                 <include
+                    layout="@layout/user_bio_view" />
+                <android.support.v4.widget.Space
+                    android:layout_height="@dimen/root_padding"
+                    android:layout_width="match_parent" />
+                <include
                     layout="@layout/anime_breakdown_view" />
                 <android.support.v4.widget.Space
                     android:layout_height="@dimen/root_padding"
