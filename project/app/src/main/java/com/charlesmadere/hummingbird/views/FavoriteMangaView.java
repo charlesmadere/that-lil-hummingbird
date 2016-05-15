@@ -93,6 +93,8 @@ public class FavoriteMangaView extends CardView implements AdapterView<UserDiges
             return;
         }
 
+        mNoFavorites.setVisibility(GONE);
+
         setPosterView(mCover0, manga, 1);
         setPosterView(mCover1, manga, 2);
         setPosterView(mCover2, manga, 3);

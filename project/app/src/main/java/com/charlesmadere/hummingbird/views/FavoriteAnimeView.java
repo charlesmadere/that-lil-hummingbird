@@ -94,6 +94,8 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
             return;
         }
 
+        mNoFavorites.setVisibility(GONE);
+
         setPosterView(mPoster0, anime, 1);
         setPosterView(mPoster1, anime, 2);
         setPosterView(mPoster2, anime, 3);

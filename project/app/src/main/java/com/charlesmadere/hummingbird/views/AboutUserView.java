@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.UserDigest;
 
 import butterknife.BindView;
@@ -42,7 +43,14 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
 
     @Override
     public void setContent(final UserDigest content) {
+        final AbsUser user = content.getUser();
+        mAbout.setText(getResources().getString(R.string.about_x, user.getName()));
 
+        if (user.hasBio()) {
+            mBio.setText(user.getBio());
+        } else {
+            mBio.setText(R.string.no_bio_available);
+        }
     }
 
 }

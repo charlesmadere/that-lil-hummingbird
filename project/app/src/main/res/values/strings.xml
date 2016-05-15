@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="about_x">About %1$s</string>
     <string name="account">Account</string>
     <string name="age_rating_g">G</string>
     <string name="age_rating_pg">PG</string>
