@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class FavoriteMangaView extends CardView implements AdapterView<UserDigest> {
 
@@ -54,6 +55,36 @@ public class FavoriteMangaView extends CardView implements AdapterView<UserDiges
     public FavoriteMangaView(final Context context, final AttributeSet attrs,
             final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    @OnClick(R.id.sdvCover0)
+    void onCover0Click() {
+
+    }
+
+    @OnClick(R.id.sdvCover1)
+    void onCover1Click() {
+
+    }
+
+    @OnClick(R.id.sdvCover2)
+    void onCover2Click() {
+
+    }
+
+    @OnClick(R.id.sdvCover3)
+    void onCover3Click() {
+
+    }
+
+    @OnClick(R.id.sdvCover4)
+    void onCover4Click() {
+
+    }
+
+    @OnClick(R.id.sdvCover5)
+    void onCover5Click() {
+
     }
 
     @Override
