@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.widget.TextView;
@@ -24,6 +25,9 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
 
     @BindView(R.id.tvAbout)
     TextView mAbout;
+
+    @BindView(R.id.tvNoDetails)
+    TextView mNoDetails;
 
     @BindView(R.id.tvTitle)
     TextView mTitle;
@@ -73,12 +77,21 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
             mAbout.setVisibility(GONE);
         }
 
+        final Resources res = getResources();
+
         if (user.hasWaifuOrHusbando()) {
-            mWaifuOrHusbando.setText(getResources().getText(
-                    user.getWaifuOrHusbando().getTextResId()), user.getWaifu());
+            mWaifuOrHusbando.setText(res.getText(user.getWaifuOrHusbando().getTextResId()),
+                    user.getWaifu());
             mWaifuOrHusbando.setVisibility(VISIBLE);
         } else {
             mWaifuOrHusbando.setVisibility(GONE);
+        }
+
+        if (user.hasLocation()) {
+            mLivesIn.setText(res.getText(R.string.lives_in), user.getLocation());
+            mLivesIn.setVisibility(VISIBLE);
+        } else {
+            mLivesIn.setVisibility(GONE);
         }
 
         if (user.hasWebsite()) {
@@ -86,6 +99,13 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
             mWebsite.setVisibility(VISIBLE);
         } else {
             mWebsite.setVisibility(GONE);
+        }
+
+        if (mAbout.getVisibility() == VISIBLE || mWaifuOrHusbando.getVisibility() == VISIBLE ||
+                mLivesIn.getVisibility() == VISIBLE || mWebsite.getVisibility() == VISIBLE) {
+            mNoDetails.setVisibility(GONE);
+        } else {
+            mNoDetails.setVisibility(VISIBLE);
         }
     }
 

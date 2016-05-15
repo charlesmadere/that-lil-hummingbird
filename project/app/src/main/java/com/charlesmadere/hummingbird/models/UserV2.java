@@ -48,6 +48,10 @@ public class UserV2 extends AbsUser implements Parcelable {
     @SerializedName("id")
     private String mId;
 
+    @Nullable
+    @SerializedName("location")
+    private String mLocation;
+
 
     @Nullable
     public String getAbout() {
@@ -87,6 +91,11 @@ public class UserV2 extends AbsUser implements Parcelable {
         return mId;
     }
 
+    @Nullable
+    public String getLocation() {
+        return mLocation;
+    }
+
     @Override
     public String getName() {
         return mId;
@@ -107,6 +116,10 @@ public class UserV2 extends AbsUser implements Parcelable {
 
     public boolean hasAboutFormatted() {
         return !TextUtils.isEmpty(mAboutFormatted);
+    }
+
+    public boolean hasLocation() {
+        return !TextUtils.isEmpty(mLocation);
     }
 
     public boolean isAdmin() {

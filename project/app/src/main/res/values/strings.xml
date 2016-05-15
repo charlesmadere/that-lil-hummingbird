@@ -94,6 +94,7 @@
     <string name="library">Library</string>
     <string name="library_updates">Library Updates</string>
     <string name="life_spent_on_anime">Life spent on anime</string>
+    <string name="lives_in">Lives in</string>
     <string name="login">Login</string>
     <string name="log_viewer">Log Viewer</string>
     <string name="log_viewer_is_empty">Log Viewer is empty</string>
@@ -104,6 +105,7 @@
     <string name="music">Music</string>
     <string name="night">Night</string>
     <string name="no_bio_available">No bio available</string>
+    <string name="no_details">No details</string>
     <string name="no_episodes">No episodes</string>
     <string name="no_favorites">No favorites</string>
     <string name="no_feed_content">No feed content</string>

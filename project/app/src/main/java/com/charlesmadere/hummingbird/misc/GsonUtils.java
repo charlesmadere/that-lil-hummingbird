@@ -12,6 +12,7 @@ import com.charlesmadere.hummingbird.models.MediaStory;
 import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.charlesmadere.hummingbird.models.SimpleDate;
 import com.charlesmadere.hummingbird.models.UserDigest;
+import com.charlesmadere.hummingbird.models.UserV2;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
