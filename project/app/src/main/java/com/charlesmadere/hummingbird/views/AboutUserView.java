@@ -12,14 +12,24 @@ import com.charlesmadere.hummingbird.models.UserV2;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class AboutUserView extends CardView implements AdapterView<UserDigest> {
+
+    @BindView(R.id.kvtvLivesIn)
+    KeyValueTextView mLivesIn;
+
+    @BindView(R.id.kvtvWaifuOrHusbando)
+    KeyValueTextView mWaifuOrHusbando;
 
     @BindView(R.id.tvAbout)
     TextView mAbout;
 
     @BindView(R.id.tvTitle)
     TextView mTitle;
+
+    @BindView(R.id.tvWebsite)
+    TextView mWebsite;
 
 
     public AboutUserView(final Context context, final AttributeSet attrs) {
@@ -41,6 +51,16 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
         ButterKnife.bind(this);
     }
 
+    @OnClick(R.id.kvtvWaifuOrHusbando)
+    void onWaifuOrHusbandoClick() {
+
+    }
+
+    @OnClick(R.id.tvWebsite)
+    void onWebsiteClick() {
+
+    }
+
     @Override
     public void setContent(final UserDigest content) {
         final UserV2 user = content.getUser();
@@ -53,7 +73,20 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
             mAbout.setVisibility(GONE);
         }
 
+        if (user.hasWaifuOrHusbando()) {
+            mWaifuOrHusbando.setText(getResources().getText(
+                    user.getWaifuOrHusbando().getTextResId()), user.getWaifu());
+            mWaifuOrHusbando.setVisibility(VISIBLE);
+        } else {
+            mWaifuOrHusbando.setVisibility(GONE);
+        }
 
+        if (user.hasWebsite()) {
+            mWebsite.setText(user.getWebsite());
+            mWebsite.setVisibility(VISIBLE);
+        } else {
+            mWebsite.setVisibility(GONE);
+        }
     }
 
 }
