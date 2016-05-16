@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.FollowersActivity;
+import com.charlesmadere.hummingbird.activities.FollowingActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.models.UserV2;
@@ -68,12 +70,16 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
 
     @OnClick(R.id.kvtvFollowers)
     void onFollowersClick() {
-        // TODO
+        final Context context = getContext();
+        context.startActivity(FollowersActivity.getLaunchIntent(context,
+                mUserDigest.getUser().getName()));
     }
 
     @OnClick(R.id.kvtvFollowing)
     void onFollowingClick() {
-        // TODO
+        final Context context = getContext();
+        context.startActivity(FollowingActivity.getLaunchIntent(context,
+                mUserDigest.getUser().getName()));
     }
 
     @OnClick(R.id.kvtvWaifuOrHusbando)

@@ -30,6 +30,16 @@
 
         <activity
             android:label=""
+            android:name=".activities.FollowersActivity"
+            android:theme="@style/HummingbirdTheme.WithDrawer" />
+
+        <activity
+            android:label=""
+            android:name=".activities.FollowingActivity"
+            android:theme="@style/HummingbirdTheme.WithDrawer" />
+
+        <activity
+            android:label=""
             android:name=".activities.GalleryActivity"
             android:theme="@style/HummingbirdTheme_Gallery" />
 
