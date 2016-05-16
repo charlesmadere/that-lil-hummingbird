@@ -8,7 +8,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.MangaActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.models.Manga;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -19,6 +21,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class FavoriteMangaView extends CardView implements AdapterView<UserDigest> {
+
+    private ArrayList<UserDigest.Favorite.MangaItem> mManga;
 
     @BindView(R.id.llFavoriteMangaGrid0)
     LinearLayout mMangaGrid0;
@@ -59,32 +63,32 @@ public class FavoriteMangaView extends CardView implements AdapterView<UserDiges
 
     @OnClick(R.id.sdvCover0)
     void onCover0Click() {
-
+        startMangaActivity(0);
     }
 
     @OnClick(R.id.sdvCover1)
     void onCover1Click() {
-
+        startMangaActivity(1);
     }
 
     @OnClick(R.id.sdvCover2)
     void onCover2Click() {
-
+        startMangaActivity(2);
     }
 
     @OnClick(R.id.sdvCover3)
     void onCover3Click() {
-
+        startMangaActivity(3);
     }
 
     @OnClick(R.id.sdvCover4)
     void onCover4Click() {
-
+        startMangaActivity(4);
     }
 
     @OnClick(R.id.sdvCover5)
     void onCover5Click() {
-
+        startMangaActivity(5);
     }
 
     @Override
@@ -108,17 +112,22 @@ public class FavoriteMangaView extends CardView implements AdapterView<UserDiges
         }
 
         final ArrayList<UserDigest.Favorite> favorites = content.getFavorites();
-        final ArrayList<UserDigest.Favorite.MangaItem> manga = new ArrayList<>();
+
+        if (mManga == null) {
+            mManga = new ArrayList<>();
+        } else {
+            mManga.clear();
+        }
 
         for (final UserDigest.Favorite favorite : favorites) {
             final UserDigest.Favorite.AbsItem item = favorite.getItem();
 
             if (item.getType() == UserDigest.Favorite.AbsItem.Type.MANGA) {
-                manga.add((UserDigest.Favorite.MangaItem) item);
+                mManga.add((UserDigest.Favorite.MangaItem) item);
             }
         }
 
-        if (manga.isEmpty()) {
+        if (mManga.isEmpty()) {
             mMangaGrid0.setVisibility(GONE);
             mMangaGrid1.setVisibility(GONE);
             mNoFavorites.setVisibility(VISIBLE);
@@ -127,15 +136,15 @@ public class FavoriteMangaView extends CardView implements AdapterView<UserDiges
 
         mNoFavorites.setVisibility(GONE);
 
-        setPosterView(mCover0, manga, 1);
-        setPosterView(mCover1, manga, 2);
-        setPosterView(mCover2, manga, 3);
+        setPosterView(mCover0, mManga, 1);
+        setPosterView(mCover1, mManga, 2);
+        setPosterView(mCover2, mManga, 3);
         mMangaGrid0.setVisibility(VISIBLE);
 
-        if (manga.size() >= 4) {
-            setPosterView(mCover3, manga, 4);
-            setPosterView(mCover4, manga, 5);
-            setPosterView(mCover5, manga, 6);
+        if (mManga.size() >= 4) {
+            setPosterView(mCover3, mManga, 4);
+            setPosterView(mCover4, mManga, 5);
+            setPosterView(mCover5, mManga, 6);
             mMangaGrid1.setVisibility(VISIBLE);
         } else {
             mMangaGrid1.setVisibility(GONE);
@@ -150,6 +159,13 @@ public class FavoriteMangaView extends CardView implements AdapterView<UserDiges
         } else {
             view.setVisibility(INVISIBLE);
         }
+    }
+
+    private void startMangaActivity(final int index) {
+        final Context context = getContext();
+        final Manga manga = mManga.get(index).getManga();
+        context.startActivity(MangaActivity.getLaunchIntent(context, manga.getId(),
+                manga.getTitle()));
     }
 
 }

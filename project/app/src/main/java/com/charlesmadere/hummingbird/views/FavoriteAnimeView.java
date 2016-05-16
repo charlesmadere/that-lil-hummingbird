@@ -8,7 +8,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -19,6 +21,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class FavoriteAnimeView extends CardView implements AdapterView<UserDigest> {
+
+    private ArrayList<UserDigest.Favorite.AnimeItem> mAnime;
 
     @BindView(R.id.llFavoriteAnimeGrid0)
     LinearLayout mAnimeGrid0;
@@ -70,32 +74,32 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
 
     @OnClick(R.id.sdvPoster0)
     void onPoster0Click() {
-
+        startAnimeActivity(0);
     }
 
     @OnClick(R.id.sdvPoster1)
     void onPoster1Click() {
-
+        startAnimeActivity(1);
     }
 
     @OnClick(R.id.sdvPoster2)
     void onPoster2Click() {
-
+        startAnimeActivity(2);
     }
 
     @OnClick(R.id.sdvPoster3)
     void onPoster3Click() {
-
+        startAnimeActivity(3);
     }
 
     @OnClick(R.id.sdvPoster4)
     void onPoster4Click() {
-
+        startAnimeActivity(4);
     }
 
     @OnClick(R.id.sdvPoster5)
     void onPoster5Click() {
-
+        startAnimeActivity(5);
     }
 
     @Override
@@ -108,17 +112,22 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
         }
 
         final ArrayList<UserDigest.Favorite> favorites = content.getFavorites();
-        final ArrayList<UserDigest.Favorite.AnimeItem> anime = new ArrayList<>();
+
+        if (mAnime == null) {
+            mAnime = new ArrayList<>();
+        } else {
+            mAnime.clear();
+        }
 
         for (final UserDigest.Favorite favorite : favorites) {
             final UserDigest.Favorite.AbsItem item = favorite.getItem();
 
             if (item.getType() == UserDigest.Favorite.AbsItem.Type.ANIME) {
-                anime.add((UserDigest.Favorite.AnimeItem) item);
+                mAnime.add((UserDigest.Favorite.AnimeItem) item);
             }
         }
 
-        if (anime.isEmpty()) {
+        if (mAnime.isEmpty()) {
             mAnimeGrid0.setVisibility(GONE);
             mAnimeGrid1.setVisibility(GONE);
             mNoFavorites.setVisibility(VISIBLE);
@@ -127,15 +136,15 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
 
         mNoFavorites.setVisibility(GONE);
 
-        setPosterView(mPoster0, anime, 1);
-        setPosterView(mPoster1, anime, 2);
-        setPosterView(mPoster2, anime, 3);
+        setPosterView(mPoster0, mAnime, 1);
+        setPosterView(mPoster1, mAnime, 2);
+        setPosterView(mPoster2, mAnime, 3);
         mAnimeGrid0.setVisibility(VISIBLE);
 
-        if (anime.size() >= 4) {
-            setPosterView(mPoster3, anime, 4);
-            setPosterView(mPoster4, anime, 5);
-            setPosterView(mPoster5, anime, 6);
+        if (mAnime.size() >= 4) {
+            setPosterView(mPoster3, mAnime, 4);
+            setPosterView(mPoster4, mAnime, 5);
+            setPosterView(mPoster5, mAnime, 6);
             mAnimeGrid1.setVisibility(VISIBLE);
         } else {
             mAnimeGrid1.setVisibility(GONE);
@@ -150,6 +159,12 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
         } else {
             view.setVisibility(INVISIBLE);
         }
+    }
+
+    private void startAnimeActivity(final int index) {
+        final Context context = getContext();
+        final AbsAnime anime = mAnime.get(index).getAnime();
+        context.startActivity(AnimeActivity.getLaunchIntent(context, anime));
     }
 
 }
