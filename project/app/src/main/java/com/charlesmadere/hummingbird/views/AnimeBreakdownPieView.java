@@ -9,12 +9,14 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
+import com.charlesmadere.hummingbird.misc.TypefaceStore;
+import com.charlesmadere.hummingbird.models.TypefaceEntry;
 
 import java.text.NumberFormat;
 
@@ -94,11 +96,11 @@ public class AnimeBreakdownPieView extends View {
         final float mBarThickness = ta.getDimension(R.styleable.AnimeBreakdownPieView_barThickness,
                 resources.getDimension(R.dimen.anime_breakdown_pie_view_bar_thickness));
         final int primaryColor = ta.getColor(R.styleable.AnimeBreakdownPieView_primaryColor,
-                ContextCompat.getColor(context, R.color.orange));
+                MiscUtils.getAttrColor(context, R.attr.colorAccent));
         final int secondaryColor = ta.getColor(R.styleable.AnimeBreakdownPieView_secondaryColor,
-                ContextCompat.getColor(context, R.color.orangeFaded));
+                MiscUtils.getAttrColor(context, R.attr.colorAccentSecondary));
         final int textColor = ta.getColor(R.styleable.AnimeBreakdownPieView_textColor,
-                ContextCompat.getColor(context, R.color.orange));
+                MiscUtils.getAttrColor(context, R.attr.colorAccent));
         final float textSize = ta.getDimension(R.styleable.AnimeBreakdownPieView_textSize,
                 resources.getDimension(R.dimen.text_xxlarge));
         ta.recycle();
@@ -121,6 +123,7 @@ public class AnimeBreakdownPieView extends View {
         mTextPaint.setFakeBoldText(true);
         mTextPaint.setTextAlign(Paint.Align.LEFT);
         mTextPaint.setTextSize(textSize);
+        mTextPaint.setTypeface(TypefaceStore.get(TypefaceEntry.OPEN_SANS_BOLD));
 
         mNumberFormat = NumberFormat.getInstance();
         mPaintRect = new RectF();

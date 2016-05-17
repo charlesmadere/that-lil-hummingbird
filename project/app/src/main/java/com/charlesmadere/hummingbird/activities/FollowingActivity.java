@@ -3,14 +3,22 @@ package com.charlesmadere.hummingbird.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.UsersAdapter;
+import com.charlesmadere.hummingbird.models.ErrorInfo;
+import com.charlesmadere.hummingbird.models.Feed;
+import com.charlesmadere.hummingbird.networking.Api;
+import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
+
+import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
@@ -20,8 +28,11 @@ public class FollowingActivity extends BaseDrawerActivity implements
     private static final String TAG = "FollowingActivity";
     private static final String CNAME = FollowingActivity.class.getCanonicalName();
     private static final String EXTRA_USERNAME = CNAME + ".Username";
+    private static final String KEY_FEED = "Feed";
 
+    private Feed mFeed;
     private String mUsername;
+    private UsersAdapter mAdapter;
 
     @BindView(R.id.llEmpty)
     LinearLayout mEmpty;
@@ -43,7 +54,7 @@ public class FollowingActivity extends BaseDrawerActivity implements
 
     private void fetchFollowing() {
         mRefreshLayout.setRefreshing(true);
-        // TODO
+        Api.getFollowedUsers(mUsername, new GetFollowingListener(this));
     }
 
     @Override
@@ -64,7 +75,15 @@ public class FollowingActivity extends BaseDrawerActivity implements
         final Intent intent = getIntent();
         mUsername = intent.getStringExtra(EXTRA_USERNAME);
 
-        // TODO
+        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
+            mFeed = savedInstanceState.getParcelable(KEY_FEED);
+        }
+
+        if (mFeed == null) {
+            fetchFollowing();
+        } else {
+            showFollowing(mFeed);
+        }
     }
 
     @Override
@@ -76,14 +95,18 @@ public class FollowingActivity extends BaseDrawerActivity implements
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        // TODO
+        if (mFeed != null) {
+            outState.putParcelable(KEY_FEED, mFeed);
+        }
     }
 
     @Override
     protected void onViewsBound() {
         super.onViewsBound();
-        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding_half);
         mRefreshLayout.setOnRefreshListener(this);
+        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding_half);
+        mAdapter = new UsersAdapter(this);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void showEmpty() {
@@ -98,6 +121,46 @@ public class FollowingActivity extends BaseDrawerActivity implements
         mEmpty.setVisibility(View.GONE);
         mError.setVisibility(View.VISIBLE);
         mRefreshLayout.setRefreshing(false);
+    }
+
+    private void showFollowing(final Feed feed) {
+        mFeed = feed;
+        mAdapter.set(mFeed);
+        mEmpty.setVisibility(View.GONE);
+        mError.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mRefreshLayout.setRefreshing(false);
+    }
+
+
+    private static class GetFollowingListener implements ApiResponse<Feed> {
+        private final WeakReference<FollowingActivity> mActivityReference;
+
+        private GetFollowingListener(final FollowingActivity activity) {
+            mActivityReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final FollowingActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.showError();
+            }
+        }
+
+        @Override
+        public void success(final Feed feed) {
+            final FollowingActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                if (feed.hasUsers()) {
+                    activity.showFollowing(feed);
+                } else {
+                    activity.showEmpty();
+                }
+            }
+        }
     }
 
 }

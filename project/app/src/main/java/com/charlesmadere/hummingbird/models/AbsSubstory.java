@@ -10,6 +10,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Comparator;
+
 public abstract class AbsSubstory implements Parcelable {
 
     @SerializedName("created_at")
@@ -121,6 +123,13 @@ public abstract class AbsSubstory implements Parcelable {
             }
         };
     }
+
+    public static final Comparator<AbsSubstory> COMPARATOR = new Comparator<AbsSubstory>() {
+        @Override
+        public int compare(final AbsSubstory lhs, final AbsSubstory rhs) {
+            return SimpleDate.CHRONOLOGICAL_ORDER.compare(lhs.getCreatedAt(), rhs.getCreatedAt());
+        }
+    };
 
     public static final JsonDeserializer<AbsSubstory> JSON_DESERIALIZER = new JsonDeserializer<AbsSubstory>() {
         @Override

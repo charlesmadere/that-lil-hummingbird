@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <attr name="colorAccentSecondary" format="color" />
+
     <declare-styleable name="AnimeBreakdownPieView">
         <attr name="barThickness" format="dimension" />
         <attr name="primaryColor" format="color" />

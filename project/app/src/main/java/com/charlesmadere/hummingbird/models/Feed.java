@@ -8,6 +8,7 @@ import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Feed implements Parcelable {
 
@@ -146,6 +147,8 @@ public class Feed implements Parcelable {
             for (final AbsSubstory substory : mSubstories) {
                 substory.hydrate(this);
             }
+
+            Collections.sort(mSubstories, AbsSubstory.COMPARATOR);
         }
 
         if (hasStories()) {

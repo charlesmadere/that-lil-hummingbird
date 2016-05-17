@@ -12,7 +12,6 @@ import android.util.AttributeSet;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.CustomTypefaceSpan;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
-import com.charlesmadere.hummingbird.misc.TypefaceStore;
 import com.charlesmadere.hummingbird.models.TypefaceEntry;
 
 import java.text.NumberFormat;
@@ -49,10 +48,10 @@ public class FollowedStoryTitleTextView extends AppCompatTextView {
                 TypefaceEntry.OPEN_SANS_REGULAR.ordinal());
         ta.recycle();
 
-        mUserNameSpan = new CustomTypefaceSpan(TypefaceStore.get(typefaceEntryOrdinal));
+        mUserNameSpan = new CustomTypefaceSpan(typefaceEntryOrdinal);
         mSuffixColorSpan = new ForegroundColorSpan(MiscUtils.getAttrColor(getContext(),
                 android.R.attr.textColorSecondary));
-        mSuffixTypefaceSpan = new CustomTypefaceSpan(TypefaceStore.get(secondaryTypefaceEntryOrdinal));
+        mSuffixTypefaceSpan = new CustomTypefaceSpan(secondaryTypefaceEntryOrdinal);
         mSuffixSizeSpan = new RelativeSizeSpan(0.75f);
         mNumberFormat = NumberFormat.getInstance();
     }

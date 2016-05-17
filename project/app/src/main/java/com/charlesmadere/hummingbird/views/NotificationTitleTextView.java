@@ -12,7 +12,6 @@ import android.util.AttributeSet;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.CustomTypefaceSpan;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
-import com.charlesmadere.hummingbird.misc.TypefaceStore;
 import com.charlesmadere.hummingbird.models.AbsNotification;
 import com.charlesmadere.hummingbird.models.AbsStory;
 import com.charlesmadere.hummingbird.models.CommentStory;
@@ -49,11 +48,11 @@ public class NotificationTitleTextView extends AppCompatTextView {
                 TypefaceEntry.OPEN_SANS_REGULAR.ordinal());
         ta.recycle();
 
-        mUserNameSpan = new CustomTypefaceSpan(TypefaceStore.get(typefaceEntryOrdinal));
+        mUserNameSpan = new CustomTypefaceSpan(typefaceEntryOrdinal);
         mSecondaryColorSpan = new ForegroundColorSpan(MiscUtils.getAttrColor(getContext(),
                 android.R.attr.textColorSecondary));
         mSecondarySizeSpan = new RelativeSizeSpan(0.75f);
-        mSecondaryTypefaceSpan = new CustomTypefaceSpan(TypefaceStore.get(secondaryTypefaceEntryOrdinal));
+        mSecondaryTypefaceSpan = new CustomTypefaceSpan(secondaryTypefaceEntryOrdinal);
     }
 
     public void setText(final AbsNotification notification) {

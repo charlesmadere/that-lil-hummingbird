@@ -55,9 +55,6 @@ public interface HummingbirdApi {
     Call<Boolean> removeLibraryEntry(@Header("auth_token") String authToken,
             @Path("id") String id);
 
-    @GET("api/v1/search/anime")
-    Call<ArrayList<AbsAnime>> searchAnimeByTitle(@Query("query") String query);
-
 
     /*
      * v2
@@ -80,6 +77,13 @@ public interface HummingbirdApi {
     Call<AnimeDigest> getAnimeDigest(@Header("Cookie") String authToken,
             @Path("animeId") String animeId);
 
+    @GET("users")
+    Call<Feed> getFollowedUsers(@Header("Cookie") String authToken,
+            @Query("followed_by") String username, @Query("page") Integer page);
+
+    @GET("users")
+    Call<Feed> getFollowingUsers(@Header("Cookie") String authToken,
+            @Query("followers_of") String username, @Query("page") Integer page);
 
     @GET("stories")
     Call<Feed> getGroup(@Header("Cookie") String authToken, @Query("group_id") String groupId,

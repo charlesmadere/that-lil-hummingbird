@@ -19,6 +19,7 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
+// ButterKnife
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {

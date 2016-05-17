@@ -5,13 +5,19 @@ import android.graphics.Typeface;
 import android.text.TextPaint;
 import android.text.style.MetricAffectingSpan;
 
+import com.charlesmadere.hummingbird.models.TypefaceEntry;
+
 public class CustomTypefaceSpan extends MetricAffectingSpan {
 
     private final Typeface mTypeface;
 
 
-    public CustomTypefaceSpan(final Typeface typeface) {
-        mTypeface = typeface;
+    public CustomTypefaceSpan(final int typefaceEntryOrdinal) {
+        mTypeface = TypefaceStore.get(typefaceEntryOrdinal);
+    }
+
+    public CustomTypefaceSpan(final TypefaceEntry typefaceEntry) {
+        mTypeface = TypefaceStore.get(typefaceEntry);
     }
 
     private void apply(final Paint paint) {

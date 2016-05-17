@@ -13,6 +13,7 @@
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="buttonStyle">@style/ButtonTheme</item>
         <item name="colorAccent">@color/orange</item>
+        <item name="colorAccentSecondary">@color/orangeSecondary</item>
         <item name="colorButtonNormal">@color/bar</item>
         <item name="colorPrimary">@color/bar</item>
         <item name="colorPrimaryDark">@color/barDark</item>
