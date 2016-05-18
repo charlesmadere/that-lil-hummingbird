@@ -91,8 +91,7 @@ public class AnimeBreakdownPieView extends View {
         final Context context = getContext();
         final Resources resources = getResources();
 
-        final TypedArray ta = context.obtainStyledAttributes(attrs,
-                R.styleable.AnimeBreakdownPieView);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.AnimeBreakdownPieView);
         final float mBarThickness = ta.getDimension(R.styleable.AnimeBreakdownPieView_barThickness,
                 resources.getDimension(R.dimen.anime_breakdown_pie_view_bar_thickness));
         final int primaryColor = ta.getColor(R.styleable.AnimeBreakdownPieView_primaryColor,
@@ -103,6 +102,11 @@ public class AnimeBreakdownPieView extends View {
                 MiscUtils.getAttrColor(context, R.attr.colorAccent));
         final float textSize = ta.getDimension(R.styleable.AnimeBreakdownPieView_textSize,
                 resources.getDimension(R.dimen.text_xxlarge));
+        ta.recycle();
+
+        ta = context.obtainStyledAttributes(attrs, R.styleable.View);
+        final int typefaceEntryOrdinal = ta.getInt(R.styleable.View_typeface,
+                TypefaceEntry.OPEN_SANS_EXTRA_BOLD.ordinal());
         ta.recycle();
 
         mPrimaryPaint = new Paint();
@@ -123,7 +127,7 @@ public class AnimeBreakdownPieView extends View {
         mTextPaint.setFakeBoldText(true);
         mTextPaint.setTextAlign(Paint.Align.LEFT);
         mTextPaint.setTextSize(textSize);
-        mTextPaint.setTypeface(TypefaceStore.get(TypefaceEntry.OPEN_SANS_BOLD));
+        mTextPaint.setTypeface(TypefaceStore.get(typefaceEntryOrdinal));
 
         mNumberFormat = NumberFormat.getInstance();
         mPaintRect = new RectF();
