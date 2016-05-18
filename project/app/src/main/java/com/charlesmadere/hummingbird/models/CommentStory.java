@@ -101,6 +101,10 @@ public class CommentStory extends AbsStory implements Parcelable {
         return mIsLiked;
     }
 
+    public boolean isPosterAndUserIdentical() {
+        return mPosterId.equalsIgnoreCase(getUserId());
+    }
+
     public void setLiked(final boolean liked) {
         if (liked == mIsLiked) {
             return;

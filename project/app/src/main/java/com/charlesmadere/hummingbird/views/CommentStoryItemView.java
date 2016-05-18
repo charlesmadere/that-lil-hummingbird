@@ -13,7 +13,6 @@ import com.charlesmadere.hummingbird.activities.CommentsActivity;
 import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
-import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -94,40 +93,31 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
     public void setContent(final CommentStory content) {
         mCommentStory = content;
 
-        final AbsUser user = mCommentStory.getPoster();
-        mAvatar.setImageURI(Uri.parse(user.getAvatar()));
+        mAvatar.setImageURI(Uri.parse(mCommentStory.getPoster().getAvatar()));
         mLikeTextView.setContent(mCommentStory);
-
-        if (mCommentStory.hasGroupId()) {
-            mTitle.setText(user, mCommentStory.getGroup());
-        } else {
-            mTitle.setText(user);
-        }
-
+        mTitle.setContent(mCommentStory);
         mTimeAgo.setText(mCommentStory.getCreatedAt().getRelativeTimeText(getContext()));
         mComment.setText(mCommentStory.getComment());
 
         if (content.hasSubstoryIds()) {
             final ArrayList<AbsSubstory> substories = mCommentStory.getSubstories();
-            mReplyZero.setContent((ReplySubstory) substories.get(0));
-
-            if (substories.size() >= 2) {
-                mReplyOne.setContent((ReplySubstory) substories.get(1));
-                mReplyOne.setVisibility(VISIBLE);
-            } else {
-                mReplyOne.setVisibility(GONE);
-            }
-
-            if (substories.size() >= 3) {
-                mReplyTwo.setContent((ReplySubstory) substories.get(2));
-                mReplyTwo.setVisibility(VISIBLE);
-            } else {
-                mReplyTwo.setVisibility(GONE);
-            }
+            setReplyView(mReplyZero, substories, 1);
+            setReplyView(mReplyOne, substories, 2);
+            setReplyView(mReplyTwo, substories, 3);
 
             mReplies.setVisibility(VISIBLE);
         } else {
             mReplies.setVisibility(GONE);
+        }
+    }
+
+    private void setReplyView(final ReplySubstoryItemView view,
+            final ArrayList<AbsSubstory> substories, final int index) {
+        if (substories.size() >= index) {
+            view.setContent((ReplySubstory) substories.get(index - 1));
+            view.setVisibility(VISIBLE);
+        } else {
+            view.setVisibility(GONE);
         }
     }
 

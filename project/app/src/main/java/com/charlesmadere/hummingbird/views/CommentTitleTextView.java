@@ -2,27 +2,33 @@ package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.ImageSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.AttributeSet;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.misc.CustomTypefaceSpan;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.AbsUser;
+import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.models.Group;
 import com.charlesmadere.hummingbird.models.TypefaceEntry;
 
-public class CommentTitleTextView extends AppCompatTextView {
+public class CommentTitleTextView extends AppCompatTextView implements AdapterView<CommentStory> {
 
+    private CustomTypefaceSpan mPrimaryNameSpan;
+    private CustomTypefaceSpan mSecondaryNameSpan;
     private CustomTypefaceSpan mSecondaryTypefaceSpan;
-    private CustomTypefaceSpan mGroupNameSpan;
-    private CustomTypefaceSpan mUserNameSpan;
     private ForegroundColorSpan mSecondaryColorSpan;
+    private ImageSpan mIconSpan;
     private RelativeSizeSpan mSecondarySizeSpan;
 
 
@@ -42,38 +48,65 @@ public class CommentTitleTextView extends AppCompatTextView {
             return;
         }
 
-        final TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.View);
+        final Context context = getContext();
+        final TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.View);
         final int typefaceEntryOrdinal = ta.getInt(R.styleable.View_typeface,
                 TypefaceEntry.TEKO_SEMIBOLD.ordinal());
         final int secondaryTypefaceEntryOrdinal = ta.getInt(R.styleable.View_secondary_typeface,
                 TypefaceEntry.OPEN_SANS_REGULAR.ordinal());
         ta.recycle();
 
-        mGroupNameSpan = new CustomTypefaceSpan(typefaceEntryOrdinal);
-        mUserNameSpan = new CustomTypefaceSpan(typefaceEntryOrdinal);
-        mSecondaryColorSpan = new ForegroundColorSpan(MiscUtils.getAttrColor(getContext(),
+        mPrimaryNameSpan = new CustomTypefaceSpan(typefaceEntryOrdinal);
+        mSecondaryNameSpan = new CustomTypefaceSpan(typefaceEntryOrdinal);
+        mSecondaryColorSpan = new ForegroundColorSpan(MiscUtils.getAttrColor(context,
                 android.R.attr.textColorSecondary));
         mSecondarySizeSpan = new RelativeSizeSpan(0.75f);
         mSecondaryTypefaceSpan = new CustomTypefaceSpan(secondaryTypefaceEntryOrdinal);
+
+        final Drawable iconDrawable = ContextCompat.getDrawable(context, R.drawable.ic_arrow_end_18dp);
+        iconDrawable.setBounds(0, 0, iconDrawable.getIntrinsicWidth(), iconDrawable.getIntrinsicHeight());
+        mIconSpan = new ImageSpan(iconDrawable, ImageSpan.ALIGN_BASELINE);
     }
 
-    public void setText(final AbsUser user) {
+    @Override
+    public void setContent(final CommentStory content) {
+        if (content.hasGroupId()) {
+            setText(content.getPoster(), content.getGroup());
+        } else if (content.isPosterAndUserIdentical()) {
+            setText(content.getPoster());
+        } else {
+            setText(content.getPoster(), content.getUser());
+        }
+    }
+
+    private void setText(final AbsUser user) {
         final SpannableString spannable = new SpannableString(user.getName());
-        spannable.setSpan(mUserNameSpan, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(mPrimaryNameSpan, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         setText(spannable);
     }
 
-    public void setText(final Group group) {
-        final SpannableString spannable = new SpannableString(group.getName());
-        spannable.setSpan(mGroupNameSpan, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    private void setText(final AbsUser poster, final AbsUser receiver) {
+        final SpannableStringBuilder spannable = new SpannableStringBuilder(poster.getName());
+        spannable.setSpan(mPrimaryNameSpan, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.append(' ');
+
+        int length = spannable.length();
+        spannable.append(' ');
+        spannable.setSpan(mIconSpan, length, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.append(' ');
+
+        length = spannable.length();
+        spannable.append(receiver.getName());
+        spannable.setSpan(mSecondaryNameSpan, length, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
         setText(spannable);
     }
 
-    public void setText(final AbsUser user, final Group group) {
+    private void setText(final AbsUser user, final Group group) {
         final SpannableStringBuilder spannable = new SpannableStringBuilder();
 
         spannable.append(user.getName());
-        spannable.setSpan(mUserNameSpan, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(mPrimaryNameSpan, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannable.append(' ');
 
         int length = spannable.length();
@@ -85,9 +118,14 @@ public class CommentTitleTextView extends AppCompatTextView {
 
         length = spannable.length();
         spannable.append(group.getName());
-        spannable.setSpan(mGroupNameSpan, length, spannable.length(),
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(mSecondaryNameSpan, length, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+        setText(spannable);
+    }
+
+    private void setText(final Group group) {
+        final SpannableString spannable = new SpannableString(group.getName());
+        spannable.setSpan(mPrimaryNameSpan, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         setText(spannable);
     }
 
