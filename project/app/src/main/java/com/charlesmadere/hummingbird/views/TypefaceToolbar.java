@@ -15,7 +15,8 @@ import com.charlesmadere.hummingbird.models.TypefaceEntry;
 
 public class TypefaceToolbar extends Toolbar {
 
-    private CustomTypefaceSpan mCustomTypefaceSpan;
+    private CustomTypefaceSpan mSubtitleTypefaceSpan;
+    private CustomTypefaceSpan mTitleTypefaceSpan;
 
 
     public TypefaceToolbar(final Context context, @Nullable final AttributeSet attrs) {
@@ -29,33 +30,48 @@ public class TypefaceToolbar extends Toolbar {
         parseAttributes(attrs);
     }
 
+    @Nullable
+    private CharSequence applyTypeface(@Nullable CharSequence text,
+            final CustomTypefaceSpan typefaceSpan) {
+        if (!TextUtils.isEmpty(text)) {
+            final SpannableString spannable = new SpannableString(text);
+            spannable.setSpan(typefaceSpan, 0, spannable.length(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            text = spannable;
+        }
+
+        return text;
+    }
+
     private void parseAttributes(@Nullable final AttributeSet attrs) {
         if (isInEditMode()) {
             return;
         }
 
-        int typefaceEntryOrdinal = TypefaceEntry.OPEN_SANS_EXTRA_BOLD.ordinal();
+        int titleTypefaceEntry = TypefaceEntry.OPEN_SANS_BOLD.ordinal();
+        int subtitleTypefaceEntry = TypefaceEntry.OPEN_SANS_SEMIBOLD.ordinal();
 
         if (attrs != null) {
             final Context context = getContext();
             final TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.View);
-            typefaceEntryOrdinal = ta.getInt(R.styleable.View_typeface, typefaceEntryOrdinal);
+            titleTypefaceEntry = ta.getInt(R.styleable.View_typeface, titleTypefaceEntry);
+            subtitleTypefaceEntry = ta.getInt(R.styleable.View_secondary_typeface,
+                    subtitleTypefaceEntry);
             ta.recycle();
         }
 
-        mCustomTypefaceSpan = new CustomTypefaceSpan(typefaceEntryOrdinal);
+        mTitleTypefaceSpan = new CustomTypefaceSpan(titleTypefaceEntry);
+        mSubtitleTypefaceSpan = new CustomTypefaceSpan(subtitleTypefaceEntry);
     }
 
     @Override
-    public void setTitle(CharSequence title) {
-        if (!TextUtils.isEmpty(title)) {
-            final SpannableString spannable = new SpannableString(title);
-            spannable.setSpan(mCustomTypefaceSpan, 0, spannable.length(),
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            title = spannable;
-        }
+    public void setSubtitle(@Nullable final CharSequence subtitle) {
+        super.setSubtitle(applyTypeface(subtitle, mSubtitleTypefaceSpan));
+    }
 
-        super.setTitle(title);
+    @Override
+    public void setTitle(@Nullable final CharSequence title) {
+        super.setTitle(applyTypeface(title, mTitleTypefaceSpan));
     }
 
 }

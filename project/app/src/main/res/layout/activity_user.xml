@@ -6,7 +6,7 @@
         style="@style/CoordinatorLayout">
         <android.support.design.widget.AppBarLayout
             style="@style/AppBarLayout">
-            <android.support.design.widget.CollapsingToolbarLayout
+            <com.charlesmadere.hummingbird.views.CollapsingTypefaceToolbarLayout
                 style="@style/CollapsingToolbarLayout">
                 <com.facebook.drawee.view.SimpleDraweeView
                     style="@style/ParallaxCoverImage" />
@@ -18,10 +18,10 @@
                     app:placeholderImage="@null"
                     app:roundAsCircle="true"
                     style="@style/Avatar.Medium" />
-                <android.support.v7.widget.Toolbar
+                <com.charlesmadere.hummingbird.views.TypefaceToolbar
                     style="@style/Toolbar.Parallax" />
-            </android.support.design.widget.CollapsingToolbarLayout>
-            <android.support.design.widget.TabLayout
+            </com.charlesmadere.hummingbird.views.CollapsingTypefaceToolbarLayout>
+            <com.charlesmadere.hummingbird.views.TypefaceTabLayout
                 style="@style/TabLayout.Parallax" />
         </android.support.design.widget.AppBarLayout>
         <android.support.v4.view.ViewPager

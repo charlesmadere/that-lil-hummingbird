@@ -40,6 +40,10 @@ android {
         }
     }
 
+    aaptOptions {
+        cruncherEnabled = false
+    }
+
     dexOptions {
         incremental true
     }
