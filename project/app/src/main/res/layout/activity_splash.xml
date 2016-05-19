@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:adjustViewBounds="true"
     android:contentDescription="@string/that_lil_hummingbird"
     android:id="@+id/ivSplash"
-    android:layout_height="0dp"
-    android:layout_weight="1"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:scaleType="center"
     android:src="@drawable/one" />
