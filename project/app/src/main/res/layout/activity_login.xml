@@ -5,9 +5,9 @@
     <ImageView
         android:adjustViewBounds="true"
         android:layout_gravity="bottom|end"
-        android:layout_height="240dp"
+        android:layout_height="320dp"
         android:layout_width="wrap_content"
-        android:src="@drawable/atsuka_kneeling"
+        android:src="@drawable/atsuka_cropped"
         tools:ignore="ContentDescription" />
     <ScrollView
         android:layout_gravity="center_horizontal"
@@ -65,7 +65,6 @@
             <com.charlesmadere.hummingbird.views.TypefaceButton
                 android:enabled="false"
                 android:id="@+id/bLogin"
-                android:layout_gravity="end"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="@string/login"
