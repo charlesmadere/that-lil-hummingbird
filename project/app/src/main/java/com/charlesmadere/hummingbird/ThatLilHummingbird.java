@@ -27,6 +27,10 @@ public class ThatLilHummingbird extends Application {
         AppCompatDelegate.setDefaultNightMode(NightMode.getDefault().getThemeValue());
     }
 
+    public static void clearCaches() {
+        Fresco.getImagePipeline().clearCaches();
+    }
+
     public static ThatLilHummingbird get() {
         return sInstance;
     }

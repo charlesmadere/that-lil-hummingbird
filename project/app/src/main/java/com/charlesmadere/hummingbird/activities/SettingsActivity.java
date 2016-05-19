@@ -114,6 +114,7 @@ public class SettingsActivity extends BaseDrawerActivity {
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
+                        ThatLilHummingbird.clearCaches();
                         CurrentUser.signOut();
                     }
                 })

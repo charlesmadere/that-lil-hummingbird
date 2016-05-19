@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:contentDescription="@string/that_lil_hummingbird"
+    android:id="@+id/ivSplash"
+    android:layout_height="0dp"
+    android:layout_weight="1"
     android:layout_width="match_parent"
-    android:orientation="vertical">
-    <com.charlesmadere.hummingbird.views.StatusBarSpaceView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        style="@style/SplashStatusBarSpace" />
-    <ImageView
-        android:contentDescription="@string/that_lil_hummingbird"
-        android:id="@+id/ivSplash"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:scaleType="center"
-        android:src="@drawable/one" />
-    <com.charlesmadere.hummingbird.views.NavigationBarSpaceView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent" />
-</LinearLayout>
+    android:scaleType="center"
+    android:src="@drawable/one" />
