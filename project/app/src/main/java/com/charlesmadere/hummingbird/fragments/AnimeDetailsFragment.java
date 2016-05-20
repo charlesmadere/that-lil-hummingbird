@@ -173,8 +173,11 @@ public class AnimeDetailsFragment extends BaseFragment {
 //            mProducers.setVisibility(View.VISIBLE);
 //        }
 
-        mCommunityRating.setText(getText(R.string.community_rating),
-                String.format(Locale.getDefault(), "%.4f", info.getBayesianRating()));
+        if (info.hasBayesianRating()) {
+            mCommunityRating.setText(getText(R.string.community_rating),
+                    String.format(Locale.getDefault(), "%.4f", info.getBayesianRating()));
+            mCommunityRating.setVisibility(View.VISIBLE);
+        }
 
         if (info.hasYouTubeVideoId()) {
             mYouTubeLink.setVisibility(View.VISIBLE);

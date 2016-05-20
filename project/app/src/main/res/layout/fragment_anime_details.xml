@@ -81,7 +81,9 @@
                     android:id="@+id/kvtvCommunityRating"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    tools:text="Community rating 4.125" />
+                    android:visibility="gone"
+                    tools:text="Community rating 4.125"
+                    tools:visibility="visible" />
                 <com.charlesmadere.hummingbird.views.KeyValueTextView
                     android:id="@+id/kvtvProducers"
                     android:layout_height="wrap_content"
