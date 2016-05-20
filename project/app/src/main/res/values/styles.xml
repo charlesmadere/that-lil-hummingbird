@@ -84,6 +84,13 @@
         <item name="android:textSize">@dimen/text_xlarge</item>
     </style>
 
+    <style name="AnimeTitle.WithPadding">
+        <item name="android:paddingBottom">@dimen/root_padding_half</item>
+        <item name="android:paddingEnd">@dimen/root_padding</item>
+        <item name="android:paddingStart">@dimen/root_padding</item>
+        <item name="android:paddingTop">@dimen/root_padding_half</item>
+    </style>
+
     <style name="AppBarLayout">
         <item name="android:background">?attr/colorPrimary</item>
         <item name="android:fitsSystemWindows">true</item>

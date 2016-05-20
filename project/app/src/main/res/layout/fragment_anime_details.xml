@@ -25,7 +25,7 @@
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
             android:layout_marginBottom="@dimen/root_padding"
-            style="@style/CardItem">
+            style="@style/ResponsiveWidthCard">
             <LinearLayout
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
@@ -33,21 +33,25 @@
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:id="@+id/tvTitle"
                     tools:text="KonoSuba: God's Blessing on This Wonderful World!"
-                    style="@style/AnimeTitle" />
+                    style="@style/AnimeTitle.WithPadding" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:id="@+id/tvShowType"
+                    android:visibility="gone"
                     tools:text="@string/movie"
-                    style="@style/AnimeShowType" />
+                    tools:visibility="visible"
+                    style="@style/ResponsiveWidthCardItem" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:id="@+id/tvGenres"
+                    android:visibility="gone"
                     tools:text="Comedy, Mystery, Romance"
                     tools:visibility="visible"
-                    style="@style/AnimeGenres" />
+                    style="@style/ResponsiveWidthCardItem" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:id="@+id/tvAgeRating"
+                    android:visibility="gone"
                     tools:text="@string/pg13"
                     tools:visibility="visible"
-                    style="@style/AgeRating" />
+                    style="@style/ResponsiveWidthCardItem" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:id="@+id/tvEpisodeCount"
                     tools:text="20 episodes"
