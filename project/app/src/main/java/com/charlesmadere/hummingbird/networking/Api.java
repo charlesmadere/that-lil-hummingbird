@@ -178,19 +178,31 @@ public final class Api {
     public static void getAnimeDigest(final String animeId, final ApiResponse<AnimeDigest> listener) {
         getApi().getAnimeDigest(getAuthTokenCookieString(), animeId).enqueue(
                 new Callback<AnimeDigest>() {
+            private AnimeDigest mBody;
+
             @Override
             public void onResponse(final Call<AnimeDigest> call,
                     final Response<AnimeDigest> response) {
-                AnimeDigest body = null;
-
                 if (response.isSuccessful()) {
-                    body = response.body();
+                    mBody = response.body();
                 }
 
-                if (body == null) {
+                if (mBody == null) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
-                    listener.success(body);
+                    Threading.runOnBackground(new Runnable() {
+                        @Override
+                        public void run() {
+                            mBody.hydrate();
+
+                            Threading.runOnUi(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listener.success(mBody);
+                                }
+                            });
+                        }
+                    });
                 }
             }
 
