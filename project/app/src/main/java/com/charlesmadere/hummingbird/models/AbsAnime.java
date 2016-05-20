@@ -73,6 +73,7 @@ public abstract class AbsAnime implements Parcelable {
         return mId;
     }
 
+    @Nullable
     public abstract String getImage();
 
     @Nullable
@@ -88,6 +89,7 @@ public abstract class AbsAnime implements Parcelable {
         return mSynopsis;
     }
 
+    @Nullable
     public abstract String getThumbnail();
 
     public abstract String getTitle();
@@ -102,10 +104,14 @@ public abstract class AbsAnime implements Parcelable {
         return mEpisodeCount != null;
     }
 
-    public abstract boolean hasGenres();
-
     public boolean hasFinishedAiringDate() {
         return getFinishedAiringDate() != null;
+    }
+
+    public abstract boolean hasGenres();
+
+    public boolean hasImage() {
+        return !TextUtils.isEmpty(getImage());
     }
 
     public boolean hasShowType() {
@@ -118,6 +124,10 @@ public abstract class AbsAnime implements Parcelable {
 
     public boolean hasSynopsis() {
         return !TextUtils.isEmpty(mSynopsis);
+    }
+
+    public boolean hasThumbnail() {
+        return !TextUtils.isEmpty(getThumbnail());
     }
 
     @Override
@@ -193,7 +203,7 @@ public abstract class AbsAnime implements Parcelable {
             } else if (jsonObject.has("canonical_title")) {
                 return context.deserialize(json, AnimeV3.class);
             } else {
-                throw new JsonParseException("unable to recognize AbsAnime type");
+                throw new JsonParseException("unable to recognize AbsAnime version");
             }
         }
     };

@@ -71,15 +71,13 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
     @OnClick(R.id.kvtvFollowers)
     void onFollowersClick() {
         final Context context = getContext();
-        context.startActivity(FollowersActivity.getLaunchIntent(context,
-                mUserDigest.getUser().getName()));
+        context.startActivity(FollowersActivity.getLaunchIntent(context, mUserDigest.getUsername()));
     }
 
     @OnClick(R.id.kvtvFollowing)
     void onFollowingClick() {
         final Context context = getContext();
-        context.startActivity(FollowingActivity.getLaunchIntent(context,
-                mUserDigest.getUser().getName()));
+        context.startActivity(FollowingActivity.getLaunchIntent(context, mUserDigest.getUsername()));
     }
 
     @OnClick(R.id.kvtvWaifuOrHusbando)

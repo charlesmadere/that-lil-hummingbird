@@ -5,10 +5,9 @@ import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.models.GalleryImage;
 import com.charlesmadere.hummingbird.views.GalleryItemView;
 
-public class GalleryAdapter extends BaseAdapter<GalleryImage> {
+public class GalleryAdapter extends BaseAdapter<String> {
 
     private final GalleryItemView.OnClickListener mOnCLickListener;
 

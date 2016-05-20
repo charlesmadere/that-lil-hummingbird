@@ -61,6 +61,10 @@ public class UserDigest implements Parcelable {
         return mUsers.get(0);
     }
 
+    public String getUsername() {
+        return getUser().getName();
+    }
+
     public boolean hasAnime() {
         return mAnime != null && !mAnime.isEmpty();
     }

@@ -13,7 +13,6 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeAdapter;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
-import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
@@ -29,11 +28,11 @@ public class FavoriteAnimeFragment extends BaseFragment implements
 
     private static final String TAG = "FavoriteAnimeFragment";
     private static final String KEY_FAVORITES = "Favorites";
-    private static final String KEY_USER = "User";
+    private static final String KEY_USERNAME = "Username";
 
     private AnimeAdapter mAdapter;
     private ArrayList<AbsAnime> mFavorites;
-    private UserV1 mUser;
+    private String mUsername;
 
     @BindView(R.id.llEmpty)
     LinearLayout mEmpty;
@@ -48,9 +47,9 @@ public class FavoriteAnimeFragment extends BaseFragment implements
     RefreshLayout mRefreshLayout;
 
 
-    public static FavoriteAnimeFragment create(final UserV1 user) {
+    public static FavoriteAnimeFragment create(final String username) {
         final Bundle args = new Bundle(1);
-        args.putParcelable(KEY_USER, user);
+        args.putString(KEY_USERNAME, username);
 
         final FavoriteAnimeFragment fragment = new FavoriteAnimeFragment();
         fragment.setArguments(args);
@@ -60,7 +59,7 @@ public class FavoriteAnimeFragment extends BaseFragment implements
 
     private void fetchFavorites() {
         mRefreshLayout.setRefreshing(true);
-        Api.getFavoriteAnime(mUser.getName(), new GetFavoritesListener(this));
+        Api.getFavoriteAnime(mUsername, new GetFavoritesListener(this));
     }
 
     @Override
@@ -73,7 +72,7 @@ public class FavoriteAnimeFragment extends BaseFragment implements
         super.onCreate(savedInstanceState);
 
         final Bundle args = getArguments();
-        mUser = args.getParcelable(KEY_USER);
+        mUsername = args.getString(KEY_USERNAME);
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mFavorites = savedInstanceState.getParcelableArrayList(KEY_FAVORITES);
@@ -106,9 +105,9 @@ public class FavoriteAnimeFragment extends BaseFragment implements
         super.onViewCreated(view, savedInstanceState);
 
         mRefreshLayout.setOnRefreshListener(this);
+        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
         mAdapter = new AnimeAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
-        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
 
         if (mFavorites == null || mFavorites.isEmpty()) {
             fetchFavorites();

@@ -32,6 +32,7 @@ public class AnimeV1 extends AbsAnime implements Parcelable {
     @SerializedName("alternate_title")
     private String mAlternateTitle;
 
+    @Nullable
     @SerializedName("cover_image")
     private String mCoverImage;
 
@@ -50,6 +51,7 @@ public class AnimeV1 extends AbsAnime implements Parcelable {
         return mAlternateTitle;
     }
 
+    @Nullable
     public String getCoverImage() {
         return mCoverImage;
     }
@@ -74,6 +76,7 @@ public class AnimeV1 extends AbsAnime implements Parcelable {
         return TextUtils.join(res.getText(R.string.delimiter), mGenres);
     }
 
+    @Nullable
     @Override
     public String getImage() {
         return mCoverImage;
@@ -98,6 +101,7 @@ public class AnimeV1 extends AbsAnime implements Parcelable {
         return mTitle;
     }
 
+    @Nullable
     @Override
     public String getThumbnail() {
         return mCoverImage;

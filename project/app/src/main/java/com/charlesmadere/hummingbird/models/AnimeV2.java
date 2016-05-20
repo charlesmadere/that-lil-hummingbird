@@ -43,9 +43,11 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
     @SerializedName("started_airing_Date")
     private SimpleDate mStartedAiringDate;
 
+    @Nullable
     @SerializedName("cover_image")
     private String mCoverImage;
 
+    @Nullable
     @SerializedName("poster_image")
     private String mPosterImage;
 
@@ -54,7 +56,7 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
 
     @Nullable
     @SerializedName("youtube_video_id")
-    private String mYoutubeVideoId;
+    private String mYouTubeVideoId;
 
     @SerializedName("titles")
     private Titles mTitles;
@@ -69,6 +71,7 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         return mBayesianRating;
     }
 
+    @Nullable
     public String getCoverImage() {
         return mCoverImage;
     }
@@ -103,6 +106,7 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         return mPosterImage;
     }
 
+    @Nullable
     public String getPosterImage() {
         return mPosterImage;
     }
@@ -130,6 +134,7 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         return mStartedAiringDate;
     }
 
+    @Nullable
     @Override
     public String getThumbnail() {
         return mPosterImage;
@@ -150,12 +155,16 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
     }
 
     @Nullable
-    public String getYoutubeVideoId() {
-        return mYoutubeVideoId;
+    public String getYouTubeVideoId() {
+        return mYouTubeVideoId;
     }
 
     public boolean hasAnimeEpisodes() {
         return mLinks.mAnimeEpisodes != null && !mLinks.mAnimeEpisodes.isEmpty();
+    }
+
+    public boolean hasCoverImage() {
+        return !TextUtils.isEmpty(mCoverImage);
     }
 
     public boolean hasGalleryImages() {
@@ -167,12 +176,16 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         return mGenres != null && !mGenres.isEmpty();
     }
 
+    public boolean hasPosterImage() {
+        return !TextUtils.isEmpty(mPosterImage);
+    }
+
     public boolean hasProducers() {
         return mProducers != null && !mProducers.isEmpty();
     }
 
-    public boolean hasYoutubeVideoId() {
-        return !TextUtils.isEmpty(mYoutubeVideoId);
+    public boolean hasYouTubeVideoId() {
+        return !TextUtils.isEmpty(mYouTubeVideoId);
     }
 
     @Override
@@ -187,7 +200,7 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         mCoverImage = source.readString();
         mPosterImage = source.readString();
         mSlug = source.readString();
-        mYoutubeVideoId = source.readString();
+        mYouTubeVideoId = source.readString();
         mTitles = source.readParcelable(Titles.class.getClassLoader());
     }
 
@@ -203,7 +216,7 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         dest.writeString(mCoverImage);
         dest.writeString(mPosterImage);
         dest.writeString(mSlug);
-        dest.writeString(mYoutubeVideoId);
+        dest.writeString(mYouTubeVideoId);
         dest.writeParcelable(mTitles, flags);
     }
 
@@ -398,7 +411,7 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
             anime.mCoverImage = animeJson.get("cover_image").getAsString();
             anime.mPosterImage = animeJson.get("poster_image").getAsString();
             anime.mSlug = animeJson.get("slug").getAsString();
-            anime.mYoutubeVideoId = GsonUtils.getString(animeJson, "youtube_video_id");
+            anime.mYouTubeVideoId = GsonUtils.getString(animeJson, "youtube_video_id");
             anime.mTitles = context.deserialize(animeJson.get("titles"), Titles.class);
 
             return anime;

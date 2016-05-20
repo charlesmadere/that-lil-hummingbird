@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.FeedAdapter;
 import com.charlesmadere.hummingbird.models.Feed;
-import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
@@ -21,7 +20,11 @@ public abstract class BaseFeedFragment extends BaseFragment implements
         SwipeRefreshLayout.OnRefreshListener {
 
     protected static final String KEY_FEED = "Feed";
-    protected static final String KEY_USER = "User";
+    protected static final String KEY_USERNAME = "Username";
+
+    protected Feed mFeed;
+    protected FeedAdapter mAdapter;
+    protected String mUsername;
 
     @BindView(R.id.llEmpty)
     protected LinearLayout mEmpty;
@@ -35,10 +38,6 @@ public abstract class BaseFeedFragment extends BaseFragment implements
     @BindView(R.id.refreshLayout)
     protected RefreshLayout mRefreshLayout;
 
-    protected Feed mFeed;
-    protected FeedAdapter mAdapter;
-    protected UserV1 mUser;
-
 
     protected void fetchFeed() {
         mRefreshLayout.setRefreshing(true);
@@ -49,7 +48,7 @@ public abstract class BaseFeedFragment extends BaseFragment implements
         super.onCreate(savedInstanceState);
 
         final Bundle args = getArguments();
-        mUser = args.getParcelable(KEY_USER);
+        mUsername = args.getString(KEY_USERNAME);
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mFeed = savedInstanceState.getParcelable(KEY_FEED);
@@ -82,9 +81,9 @@ public abstract class BaseFeedFragment extends BaseFragment implements
         super.onViewCreated(view, savedInstanceState);
 
         mRefreshLayout.setOnRefreshListener(this);
+        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
         mAdapter = new FeedAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
-        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
 
         if (mFeed == null) {
             fetchFeed();

@@ -71,6 +71,9 @@ dependencies {
     // Google's GSON
     compile 'com.google.code.gson:gson:2.6.2'
 
+    // jsoup
+    compile 'org.jsoup:jsoup:1.9.2'
+
     // Square's Retrofit
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'

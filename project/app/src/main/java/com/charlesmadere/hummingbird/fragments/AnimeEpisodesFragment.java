@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeEpisodesAdapter;
-import com.charlesmadere.hummingbird.models.AnimeEpisode;
+import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class AnimeEpisodesFragment extends BaseFragment {
     private static final String TAG = "AnimeEpisodesFragment";
     private static final String KEY_ANIME_EPISODES = "AnimeEpisodes";
 
-    private ArrayList<AnimeEpisode> mAnimeEpisodes;
+    private ArrayList<AnimeDigest.Episode> mAnimeEpisodes;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -30,9 +30,9 @@ public class AnimeEpisodesFragment extends BaseFragment {
     TextView mEmpty;
 
 
-    public static AnimeEpisodesFragment create(final ArrayList<AnimeEpisode> animeEpisodes) {
+    public static AnimeEpisodesFragment create(final ArrayList<AnimeDigest.Episode> episodes) {
         final Bundle args = new Bundle(1);
-        args.putParcelableArrayList(KEY_ANIME_EPISODES, animeEpisodes);
+        args.putParcelableArrayList(KEY_ANIME_EPISODES, episodes);
 
         final AnimeEpisodesFragment fragment = new AnimeEpisodesFragment();
         fragment.setArguments(args);
@@ -70,7 +70,7 @@ public class AnimeEpisodesFragment extends BaseFragment {
             mEmpty.setVisibility(View.VISIBLE);
         } else {
             final AnimeEpisodesAdapter adapter = new AnimeEpisodesAdapter(getContext());
-            adapter.setAnimeEpisodes(mAnimeEpisodes);
+            adapter.set(mAnimeEpisodes);
             mRecyclerView.setAdapter(adapter);
             mRecyclerView.setVisibility(View.VISIBLE);
         }

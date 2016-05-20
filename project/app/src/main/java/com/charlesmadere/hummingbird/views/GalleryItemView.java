@@ -8,14 +8,13 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.charlesmadere.hummingbird.adapters.AdapterView;
-import com.charlesmadere.hummingbird.models.GalleryImage;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.ButterKnife;
 
-public class GalleryItemView extends SimpleDraweeView implements AdapterView<GalleryImage> {
+public class GalleryItemView extends SimpleDraweeView implements AdapterView<String> {
 
-    private GalleryImage mGalleryImage;
+    private String mUrl;
 
 
     public GalleryItemView(final Context context, final AttributeSet attrs) {
@@ -33,8 +32,8 @@ public class GalleryItemView extends SimpleDraweeView implements AdapterView<Gal
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public GalleryImage getGalleryImage() {
-        return mGalleryImage;
+    public String getUrl() {
+        return mUrl;
     }
 
     @Override
@@ -49,9 +48,9 @@ public class GalleryItemView extends SimpleDraweeView implements AdapterView<Gal
     }
 
     @Override
-    public void setContent(final GalleryImage content) {
-        mGalleryImage = content;
-        setImageURI(Uri.parse(mGalleryImage.getThumbnail()));
+    public void setContent(final String content) {
+        mUrl = content;
+        setImageURI(Uri.parse(mUrl));
     }
 
     public void setOnClickListener(final OnClickListener l) {

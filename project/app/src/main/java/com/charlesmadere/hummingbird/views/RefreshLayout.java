@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.views;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -53,8 +54,8 @@ public class RefreshLayout extends SwipeRefreshLayout {
 
         if (scrollingChild == null) {
             throw new NullPointerException("unable to find scrolling child");
-        } else if (scrollingChild instanceof AbsListView || scrollingChild instanceof RecyclerView
-                || scrollingChild instanceof ScrollView) {
+        } else if (scrollingChild instanceof AbsListView || scrollingChild instanceof NestedScrollView
+                || scrollingChild instanceof RecyclerView || scrollingChild instanceof ScrollView) {
             this.scrollingChild = scrollingChild;
         } else {
             throw new IllegalStateException("scrollingChild (" + scrollingChild +

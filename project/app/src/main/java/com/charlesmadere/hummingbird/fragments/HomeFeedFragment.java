@@ -18,7 +18,7 @@ public class HomeFeedFragment extends BaseFeedFragment {
 
     public static HomeFeedFragment create() {
         final Bundle args = new Bundle(1);
-        args.putParcelable(KEY_USER, CurrentUser.get());
+        args.putString(KEY_USERNAME, CurrentUser.get().getName());
 
         final HomeFeedFragment fragment = new HomeFeedFragment();
         fragment.setArguments(args);

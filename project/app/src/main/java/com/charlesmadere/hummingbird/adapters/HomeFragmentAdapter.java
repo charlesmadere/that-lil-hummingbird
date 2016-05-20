@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.fragments.HomeFeedFragment;
-import com.charlesmadere.hummingbird.fragments.UserDigestFragment;
+import com.charlesmadere.hummingbird.fragments.UserProfileFragment;
 
 public class HomeFragmentAdapter extends FragmentStatePagerAdapter {
 
@@ -39,7 +39,7 @@ public class HomeFragmentAdapter extends FragmentStatePagerAdapter {
                 break;
 
             case 1:
-                fragment = UserDigestFragment.create();
+                fragment = UserProfileFragment.create();
                 break;
 
             default:

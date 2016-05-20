@@ -5,13 +5,13 @@
     android:id="@+id/refreshLayout"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    app:scrolling_child="@+id/scrollView">
+    app:scrolling_child="@+id/nestedScrollView">
     <FrameLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent">
-        <ScrollView
+        <android.support.v4.widget.NestedScrollView
             android:fillViewport="true"
-            android:id="@id/scrollView"
+            android:id="@id/nestedScrollView"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:overScrollMode="never"
@@ -44,7 +44,7 @@
                 <include
                     layout="@layout/favorite_manga_view" />
             </LinearLayout>
-        </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
         <LinearLayout
             android:id="@+id/llError"
             style="@style/ListMessageContainer">

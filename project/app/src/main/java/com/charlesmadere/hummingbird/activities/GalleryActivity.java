@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.GalleryFragmentAdapter;
+import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.GalleryImage;
 
@@ -41,6 +42,29 @@ public class GalleryActivity extends BaseActivity {
                 .putExtra(EXTRA_URLS, urls);
     }
 
+    public static Intent getLaunchIntent(final Context context, final AnimeDigest.Info info,
+            @Nullable final String url) {
+        final ArrayList<String> urls = new ArrayList<>();
+
+        if (info.hasCoverImage()) {
+            urls.add(info.getCoverImage());
+        }
+
+        if (info.hasPosterImage()) {
+            urls.add(info.getPosterImage());
+        }
+
+        if (info.hasScreencaps()) {
+            urls.addAll(info.getScreencaps());
+        }
+
+        final int startingPosition = TextUtils.isEmpty(url) ? 0 : urls.indexOf(url);
+
+        return new Intent(context, GalleryActivity.class)
+                .putExtra(EXTRA_STARTING_POSITION, startingPosition)
+                .putStringArrayListExtra(EXTRA_URLS, urls);
+    }
+
     public static Intent getLaunchIntent(final Context context, final AnimeV2 anime,
             final GalleryImage galleryImage) {
         return getLaunchIntent(context, anime, galleryImage.getOriginal());
@@ -48,20 +72,27 @@ public class GalleryActivity extends BaseActivity {
 
     public static Intent getLaunchIntent(final Context context, final AnimeV2 anime,
             @Nullable final String url) {
-        final ArrayList<GalleryImage> galleryImages = anime.getGalleryImages();
-        final ArrayList<String> urls = new ArrayList<>(galleryImages.size() + 2);
-        urls.add(anime.getCoverImage());
-        urls.add(anime.getPosterImage());
+        final ArrayList<String> urls = new ArrayList<>();
 
-        for (final GalleryImage galleryImage : galleryImages) {
-            urls.add(galleryImage.getOriginal());
+        if (anime.hasCoverImage()) {
+            urls.add(anime.getCoverImage());
+        }
+
+        if (anime.hasPosterImage()) {
+            urls.add(anime.getPosterImage());
+        }
+
+        if (anime.hasGalleryImages()) {
+            for (final GalleryImage galleryImage : anime.getGalleryImages()) {
+                urls.add(galleryImage.getOriginal());
+            }
         }
 
         final int startingPosition = TextUtils.isEmpty(url) ? 0 : urls.indexOf(url);
 
         return new Intent(context, GalleryActivity.class)
                 .putExtra(EXTRA_STARTING_POSITION, startingPosition)
-                .putExtra(EXTRA_URLS, urls);
+                .putStringArrayListExtra(EXTRA_URLS, urls);
     }
 
     @Override

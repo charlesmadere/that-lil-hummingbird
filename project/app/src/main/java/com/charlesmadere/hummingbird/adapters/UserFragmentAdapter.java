@@ -9,15 +9,15 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.fragments.AnimeLibraryFragment;
 import com.charlesmadere.hummingbird.fragments.FavoriteAnimeFragment;
-import com.charlesmadere.hummingbird.fragments.UserBioFragment;
 import com.charlesmadere.hummingbird.fragments.UserFeedFragment;
-import com.charlesmadere.hummingbird.models.UserV1;
+import com.charlesmadere.hummingbird.fragments.UserProfileFragment;
+import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 
 public class UserFragmentAdapter extends FragmentStatePagerAdapter {
 
     public static final int POSITION_FAVORITES = 0;
-    public static final int POSITION_BIO = 1;
+    public static final int POSITION_PROFILE = 1;
     public static final int POSITION_FEED = 2;
 
     private static final WatchingStatus[] ORDER = { WatchingStatus.CURRENTLY_WATCHING,
@@ -25,17 +25,18 @@ public class UserFragmentAdapter extends FragmentStatePagerAdapter {
             WatchingStatus.ON_HOLD, WatchingStatus.DROPPED };
 
     private final Context mContext;
-    private final UserV1 mUser;
+    private final UserDigest mUserDigest;
 
 
-    public UserFragmentAdapter(final FragmentActivity activity, final UserV1 user) {
-        this(activity, activity.getSupportFragmentManager(), user);
+    public UserFragmentAdapter(final FragmentActivity activity, final UserDigest digest) {
+        this(activity, activity.getSupportFragmentManager(), digest);
     }
 
-    public UserFragmentAdapter(final Context context, final FragmentManager fm, final UserV1 user) {
+    public UserFragmentAdapter(final Context context, final FragmentManager fm,
+            final UserDigest digest) {
         super(fm);
         mContext = context;
-        mUser = user;
+        mUserDigest = digest;
     }
 
     @Override
@@ -49,20 +50,20 @@ public class UserFragmentAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case POSITION_FAVORITES:
-                fragment = FavoriteAnimeFragment.create(mUser);
+                fragment = FavoriteAnimeFragment.create(mUserDigest.getUsername());
                 break;
 
-            case POSITION_BIO:
-                fragment = UserBioFragment.create(mUser);
+            case POSITION_PROFILE:
+                fragment = UserProfileFragment.create(mUserDigest);
                 break;
 
             case POSITION_FEED:
-                fragment = UserFeedFragment.create(mUser);
+                fragment = UserFeedFragment.create(mUserDigest.getUsername());
                 break;
 
             default:
                 final WatchingStatus watchingStatus = ORDER[position - 3];
-                fragment = AnimeLibraryFragment.create(mUser, watchingStatus);
+                fragment = AnimeLibraryFragment.create(mUserDigest.getUsername(), watchingStatus);
                 break;
         }
 
@@ -78,8 +79,8 @@ public class UserFragmentAdapter extends FragmentStatePagerAdapter {
                 pageTitleResId = R.string.favorites;
                 break;
 
-            case POSITION_BIO:
-                pageTitleResId = R.string.bio;
+            case POSITION_PROFILE:
+                pageTitleResId = R.string.profile;
                 break;
 
             case POSITION_FEED:

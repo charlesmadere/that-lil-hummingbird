@@ -1,31 +1,33 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
-import com.charlesmadere.hummingbird.models.AnimeEpisode;
+import com.charlesmadere.hummingbird.models.AnimeDigest;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.text.NumberFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AnimeEpisodeItemView extends CardView implements AdapterView<AnimeEpisode> {
+public class AnimeEpisodeItemView extends CardView implements AdapterView<AnimeDigest.Episode> {
 
     private NumberFormat mNumberFormat;
 
-    @BindView(R.id.tvEpisodeNumber)
-    TextView mEpisodeNumber;
+    @BindView(R.id.sdvThumbnail)
+    SimpleDraweeView mThumbnail;
+
+    @BindView(R.id.tvNumber)
+    TextView mNumber;
 
     @BindView(R.id.tvSynopsis)
     TextView mSynopsis;
-
-    @BindView(R.id.tvAirDate)
-    TextView mAirDate;
 
     @BindView(R.id.tvTitle)
     TextView mTitle;
@@ -53,16 +55,15 @@ public class AnimeEpisodeItemView extends CardView implements AdapterView<AnimeE
     }
 
     @Override
-    public void setContent(final AnimeEpisode content) {
-        mEpisodeNumber.setText(mNumberFormat.format(content.getNumber()));
-        mTitle.setText(content.getTitle());
-
-        if (content.hasAirDate()) {
-            mAirDate.setText(content.getAirDate().getRelativeTimeText(getContext()));
-            mAirDate.setVisibility(VISIBLE);
+    public void setContent(final AnimeDigest.Episode content) {
+        if (content.hasThumbnail()) {
+            mThumbnail.setImageURI(Uri.parse(content.getThumbnail()));
         } else {
-            mAirDate.setVisibility(GONE);
+            // TODO
         }
+
+        mNumber.setText(mNumberFormat.format(content.getNumber()));
+        mTitle.setText(content.getTitle());
 
         if (content.hasSynopsis()) {
             mSynopsis.setText(content.getSynopsis());

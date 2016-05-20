@@ -2,12 +2,12 @@ package com.charlesmadere.hummingbird.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
@@ -27,7 +27,7 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class UserDigestFragment extends BaseFragment implements
+public class UserProfileFragment extends BaseFragment implements
         SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "UserDigestFragment";
@@ -52,26 +52,42 @@ public class UserDigestFragment extends BaseFragment implements
     @BindView(R.id.llError)
     LinearLayout mError;
 
+    @BindView(R.id.nestedScrollView)
+    NestedScrollView mNestedScrollView;
+
     @BindView(R.id.refreshLayout)
     RefreshLayout mRefreshLayout;
-
-    @BindView(R.id.scrollView)
-    ScrollView mScrollView;
 
     @BindView(R.id.userBioView)
     UserBioView mUserBioView;
 
 
-    public static UserDigestFragment create() {
+    public static UserProfileFragment create() {
         final AbsUser currentUser = CurrentUser.get();
         return create(currentUser.getName());
     }
 
-    public static UserDigestFragment create(final String username) {
-        final Bundle args = new Bundle(1);
+    public static UserProfileFragment create(final String username) {
+        return create(username, null);
+    }
+
+    public static UserProfileFragment create(final UserDigest userDigest) {
+        return create(userDigest.getUsername(), userDigest);
+    }
+
+    private static UserProfileFragment create(final String username, final UserDigest digest) {
+        final Bundle args;
+
+        if (digest == null) {
+            args = new Bundle(1);
+        } else {
+            args = new Bundle(2);
+            args.putParcelable(KEY_USER_DIGEST, digest);
+        }
+
         args.putString(KEY_USERNAME, username);
 
-        final UserDigestFragment fragment = new UserDigestFragment();
+        final UserProfileFragment fragment = new UserProfileFragment();
         fragment.setArguments(args);
 
         return fragment;
@@ -94,7 +110,9 @@ public class UserDigestFragment extends BaseFragment implements
         final Bundle args = getArguments();
         mUsername = args.getString(KEY_USERNAME);
 
-        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
+        if (args.containsKey(KEY_USER_DIGEST)) {
+            mUserDigest = args.getParcelable(KEY_USER_DIGEST);
+        } else if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mUserDigest = savedInstanceState.getParcelable(KEY_USER_DIGEST);
         }
     }
@@ -112,6 +130,15 @@ public class UserDigestFragment extends BaseFragment implements
     }
 
     @Override
+    public void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (mUserDigest != null) {
+            outState.putParcelable(KEY_USER_DIGEST, mUserDigest);
+        }
+    }
+
+    @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRefreshLayout.setOnRefreshListener(this);
@@ -124,7 +151,7 @@ public class UserDigestFragment extends BaseFragment implements
     }
 
     private void showError() {
-        mScrollView.setVisibility(View.GONE);
+        mNestedScrollView.setVisibility(View.GONE);
         mError.setVisibility(View.VISIBLE);
         mRefreshLayout.setRefreshing(false);
     }
@@ -132,7 +159,7 @@ public class UserDigestFragment extends BaseFragment implements
     private void showUserDigest(final UserDigest userDigest) {
         mUserDigest = userDigest;
         mError.setVisibility(View.GONE);
-        mScrollView.setVisibility(View.VISIBLE);
+        mNestedScrollView.setVisibility(View.VISIBLE);
         mAboutUserView.setContent(userDigest);
         mAnimeBreakdownView.setContent(userDigest);
         mUserBioView.setContent(userDigest);
@@ -143,15 +170,15 @@ public class UserDigestFragment extends BaseFragment implements
 
 
     private static class GetUserDigestListener implements ApiResponse<UserDigest> {
-        private final WeakReference<UserDigestFragment> mFragmentReference;
+        private final WeakReference<UserProfileFragment> mFragmentReference;
 
-        private GetUserDigestListener(final UserDigestFragment fragment) {
+        private GetUserDigestListener(final UserProfileFragment fragment) {
             mFragmentReference = new WeakReference<>(fragment);
         }
 
         @Override
         public void failure(@Nullable final ErrorInfo error) {
-            final UserDigestFragment fragment = mFragmentReference.get();
+            final UserProfileFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {
                 fragment.showError();
@@ -160,7 +187,7 @@ public class UserDigestFragment extends BaseFragment implements
 
         @Override
         public void success(final UserDigest userDigest) {
-            final UserDigestFragment fragment = mFragmentReference.get();
+            final UserProfileFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {
                 fragment.showUserDigest(userDigest);

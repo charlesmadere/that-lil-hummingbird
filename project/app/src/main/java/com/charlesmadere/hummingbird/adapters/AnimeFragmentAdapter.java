@@ -10,26 +10,27 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.fragments.AnimeDetailsFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeEpisodesFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeGalleryFragment;
-import com.charlesmadere.hummingbird.models.AnimeV2;
+import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.ShowType;
 
 public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
 
-    private final AnimeV2 mAnime;
+    private final AnimeDigest mAnimeDigest;
     private final Context mContext;
     private final Impl mImpl;
 
 
-    public AnimeFragmentAdapter(final FragmentActivity activity, final AnimeV2 anime) {
-        this(activity, activity.getSupportFragmentManager(), anime);
+    public AnimeFragmentAdapter(final FragmentActivity activity, final AnimeDigest animeDigest) {
+        this(activity, activity.getSupportFragmentManager(), animeDigest);
     }
 
-    public AnimeFragmentAdapter(final Context context, final FragmentManager fm, final AnimeV2 anime) {
+    public AnimeFragmentAdapter(final Context context, final FragmentManager fm,
+            final AnimeDigest animeDigest) {
         super(fm);
         mContext = context;
-        mAnime = anime;
+        mAnimeDigest = animeDigest;
 
-        if (mAnime.getShowType() == ShowType.MOVIE) {
+        if (mAnimeDigest.getInfo().getShowType() == ShowType.MOVIE) {
             mImpl = new MovieImpl();
         } else {
             mImpl = new ShowImpl();
@@ -37,7 +38,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
     private AnimeDetailsFragment getAnimeDetailsFragment() {
-        return AnimeDetailsFragment.create(mAnime);
+        return AnimeDetailsFragment.create(mAnimeDigest);
     }
 
     private CharSequence getAnimeDetailsTitle() {
@@ -45,7 +46,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
     private AnimeEpisodesFragment getAnimeEpisodesFragment() {
-        return AnimeEpisodesFragment.create(mAnime.getAnimeEpisodes());
+        return AnimeEpisodesFragment.create(mAnimeDigest.getEpisodes());
     }
 
     private CharSequence getAnimeEpisodesTitle() {
@@ -53,7 +54,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
     private AnimeGalleryFragment getAnimeGalleryFragment() {
-        return AnimeGalleryFragment.create(mAnime, mAnime.getGalleryImages());
+        return AnimeGalleryFragment.create(mAnimeDigest.getInfo());
     }
 
     private CharSequence getAnimeGalleryTitle() {

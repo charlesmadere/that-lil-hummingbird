@@ -18,7 +18,8 @@ import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
-import com.charlesmadere.hummingbird.models.UserV1;
+import com.charlesmadere.hummingbird.models.UserDigest;
+import com.charlesmadere.hummingbird.models.UserV2;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.SimpleProgressView;
@@ -34,11 +35,11 @@ public class UserActivity extends BaseDrawerActivity {
     private static final String CNAME = UserActivity.class.getCanonicalName();
     private static final String EXTRA_USERNAME = CNAME + ".Username";
     private static final String KEY_STARTING_POSITION = "StartingPosition";
-    private static final String KEY_USER = "User";
+    private static final String KEY_USER_DIGEST = "User";
 
     private int mStartingPosition;
     private String mUsername;
-    private UserV1 mUser;
+    private UserDigest mUserDigest;
 
     @BindView(R.id.appBarLayout)
     AppBarLayout mAppBarLayout;
@@ -75,9 +76,9 @@ public class UserActivity extends BaseDrawerActivity {
         }
     }
 
-    private void fetchUser() {
+    private void fetchUserDigest() {
         mSimpleProgressView.fadeIn();
-        Api.getUser(mUsername, new GetUserListener(this));
+        Api.getUserDigest(mUsername, new GetUserDigestListener(this));
     }
 
     @Override
@@ -102,15 +103,15 @@ public class UserActivity extends BaseDrawerActivity {
         mStartingPosition = UserFragmentAdapter.POSITION_FEED;
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mUser = savedInstanceState.getParcelable(KEY_USER);
+            mUserDigest = savedInstanceState.getParcelable(KEY_USER_DIGEST);
             mStartingPosition = savedInstanceState.getInt(KEY_STARTING_POSITION,
                     mStartingPosition);
         }
 
-        if (mUser == null) {
-            fetchUser();
+        if (mUserDigest == null) {
+            fetchUserDigest();
         } else {
-            showUser(mUser);
+            showUserDigest(mUserDigest);
         }
     }
 
@@ -119,8 +120,8 @@ public class UserActivity extends BaseDrawerActivity {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_STARTING_POSITION, mViewPager.getCurrentItem());
 
-        if (mUser != null) {
-            outState.putParcelable(KEY_USER, mUser);
+        if (mUserDigest != null) {
+            outState.putParcelable(KEY_USER_DIGEST, mUserDigest);
         }
     }
 
@@ -144,30 +145,34 @@ public class UserActivity extends BaseDrawerActivity {
                 .setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
-                        fetchUser();
+                        fetchUserDigest();
                     }
                 })
                 .show();
     }
 
-    private void showUser(final UserV1 user) {
-        mUser = user;
-        PaletteUtils.applyParallaxColors(mUser.getCoverImage(), this, mAppBarLayout,
+    private void showUserDigest(final UserDigest userDigest) {
+        mUserDigest = userDigest;
+
+        final UserV2 user = mUserDigest.getUser();
+        PaletteUtils.applyParallaxColors(user.getCoverImage(), this, mAppBarLayout,
                 mCollapsingToolbarLayout, mCoverImage, mTabLayout);
         mAvatar.setImageURI(Uri.parse(user.getAvatar()));
-        mViewPager.setAdapter(new UserFragmentAdapter(this, mUser));
+
+        mViewPager.setAdapter(new UserFragmentAdapter(this, mUserDigest));
         mViewPager.setCurrentItem(mStartingPosition, false);
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);
+
         mSimpleProgressView.fadeOut();
     }
 
 
-    private static class GetUserListener implements ApiResponse<UserV1> {
+    private static class GetUserDigestListener implements ApiResponse<UserDigest> {
         private final WeakReference<UserActivity> mActivityReference;
 
-        private GetUserListener(final UserActivity activity) {
+        private GetUserDigestListener(final UserActivity activity) {
             mActivityReference = new WeakReference<>(activity);
         }
 
@@ -181,14 +186,13 @@ public class UserActivity extends BaseDrawerActivity {
         }
 
         @Override
-        public void success(final UserV1 user) {
+        public void success(final UserDigest userDigest) {
             final UserActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                activity.showUser(user);
+                activity.showUserDigest(userDigest);
             }
         }
     }
-
 
 }

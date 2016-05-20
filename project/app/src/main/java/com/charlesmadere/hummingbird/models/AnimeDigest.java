@@ -1,14 +1,20 @@
 package com.charlesmadere.hummingbird.models;
 
+import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
+import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class AnimeDigest implements Parcelable {
 
@@ -36,6 +42,10 @@ public class AnimeDigest implements Parcelable {
     @SerializedName("quotes")
     private ArrayList<Quote> mQuotes;
 
+    @Nullable
+    @SerializedName("reviews")
+    private ArrayList<Review> mReviews;
+
     @SerializedName("full_anime")
     private Info mInfo;
 
@@ -55,6 +65,10 @@ public class AnimeDigest implements Parcelable {
         return mEpisodes;
     }
 
+    public String getId() {
+        return mInfo.getId();
+    }
+
     public Info getInfo() {
         return mInfo;
     }
@@ -72,6 +86,15 @@ public class AnimeDigest implements Parcelable {
     @Nullable
     public ArrayList<Quote> getQuotes() {
         return mQuotes;
+    }
+
+    @Nullable
+    public ArrayList<Review> getReviews() {
+        return mReviews;
+    }
+
+    public String getTitle() {
+        return mInfo.getTitle();
     }
 
     public boolean hasCastings() {
@@ -98,6 +121,27 @@ public class AnimeDigest implements Parcelable {
         return mQuotes != null && !mQuotes.isEmpty();
     }
 
+    public boolean hasReviews() {
+        return mReviews != null && !mReviews.isEmpty();
+    }
+
+    public void hydrate() {
+        if (hasEpisodes()) {
+            Collections.sort(mEpisodes, Episode.COMPARATOR);
+        }
+
+        if (hasReviews()) {
+            for (final Review review : mReviews) {
+                review.hydrate();
+            }
+        }
+    }
+
+    @Override
+    public String toString() {
+        return getTitle();
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -111,6 +155,7 @@ public class AnimeDigest implements Parcelable {
         dest.writeTypedList(mPeople);
         dest.writeTypedList(mProducers);
         dest.writeTypedList(mQuotes);
+        dest.writeTypedList(mReviews);
         dest.writeParcelable(mInfo, flags);
     }
 
@@ -124,6 +169,7 @@ public class AnimeDigest implements Parcelable {
             ad.mPeople = source.createTypedArrayList(Person.CREATOR);
             ad.mProducers = source.createTypedArrayList(Producer.CREATOR);
             ad.mQuotes = source.createTypedArrayList(Quote.CREATOR);
+            ad.mReviews = source.createTypedArrayList(Review.CREATOR);
             ad.mInfo = source.readParcelable(Info.class.getClassLoader());
             return ad;
         }
@@ -172,6 +218,10 @@ public class AnimeDigest implements Parcelable {
 
         public String getRole() {
             return mRole;
+        }
+
+        public boolean hasLanguage() {
+            return !TextUtils.isEmpty(mLanguage);
         }
 
         @Override
@@ -267,9 +317,6 @@ public class AnimeDigest implements Parcelable {
         @SerializedName("number")
         private int mNumber;
 
-        @SerializedName("anime_id")
-        private String mAnimeId;
-
         @SerializedName("id")
         private String mId;
 
@@ -285,6 +332,36 @@ public class AnimeDigest implements Parcelable {
         private String mTitle;
 
 
+        public String getId() {
+            return mId;
+        }
+
+        public int getNumber() {
+            return mNumber;
+        }
+
+        @Nullable
+        public String getSynopsis() {
+            return mSynopsis;
+        }
+
+        @Nullable
+        public String getThumbnail() {
+            return mThumbnail;
+        }
+
+        public String getTitle() {
+            return mTitle;
+        }
+
+        public boolean hasSynopsis() {
+            return !TextUtils.isEmpty(mSynopsis);
+        }
+
+        public boolean hasThumbnail() {
+            return !TextUtils.isEmpty(mThumbnail);
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -293,7 +370,6 @@ public class AnimeDigest implements Parcelable {
         @Override
         public void writeToParcel(final Parcel dest, final int flags) {
             dest.writeInt(mNumber);
-            dest.writeString(mAnimeId);
             dest.writeString(mId);
             dest.writeString(mSynopsis);
             dest.writeString(mThumbnail);
@@ -305,7 +381,6 @@ public class AnimeDigest implements Parcelable {
             public Episode createFromParcel(final Parcel source) {
                 final Episode e = new Episode();
                 e.mNumber = source.readInt();
-                e.mAnimeId = source.readString();
                 e.mId = source.readString();
                 e.mSynopsis = source.readString();
                 e.mThumbnail = source.readString();
@@ -316,6 +391,13 @@ public class AnimeDigest implements Parcelable {
             @Override
             public Episode[] newArray(final int size) {
                 return new Episode[size];
+            }
+        };
+
+        public static final Comparator<Episode> COMPARATOR = new Comparator<Episode>() {
+            @Override
+            public int compare(final Episode lhs, final Episode rhs) {
+                return MiscUtils.integerCompare(lhs.getNumber(), rhs.getNumber());
             }
         };
     }
@@ -340,9 +422,6 @@ public class AnimeDigest implements Parcelable {
 
         @SerializedName("has_reviewed")
         private boolean mHasReviewed;
-
-        @SerializedName("pending_edits")
-        private boolean mHasPendingEdits;
 
         @SerializedName("started_airing_date_known")
         private boolean mStartedAiringDateKnown;
@@ -411,6 +490,7 @@ public class AnimeDigest implements Parcelable {
         @SerializedName("poster_image_thumb")
         private String mPosterImageThumb;
 
+        @Nullable
         @SerializedName("romaji_title")
         private String mRomajiTitle;
 
@@ -480,6 +560,14 @@ public class AnimeDigest implements Parcelable {
             return mGenres;
         }
 
+        public String getGenresString(final Resources res) {
+            if (!hasGenres()) {
+                return "";
+            }
+
+            return TextUtils.join(res.getString(R.string.delimiter), mGenres);
+        }
+
         public String getId() {
             return mId;
         }
@@ -504,6 +592,7 @@ public class AnimeDigest implements Parcelable {
             return mPosterImageThumb;
         }
 
+        @Nullable
         public String getRomajiTitle() {
             return mRomajiTitle;
         }
@@ -526,6 +615,40 @@ public class AnimeDigest implements Parcelable {
         @Nullable
         public String getSynopsis() {
             return mSynopsis;
+        }
+
+        public String getTitle() {
+            final TitleType titleType = Preferences.General.TitleLanguage.get();
+
+            if (titleType == null) {
+                return getCanonicalTitle();
+            }
+
+            String title;
+
+            switch (titleType) {
+                case CANONICAL:
+                    return getCanonicalTitle();
+
+                case ENGLISH:
+                    title = getEnglishTitle();
+                    break;
+
+                case JAPANESE:
+                case ROMAJI:
+                    title = getRomajiTitle();
+                    break;
+
+                default:
+                    throw new RuntimeException("encountered unknown " +
+                            TitleType.class.getSimpleName() + ": \"" + titleType + '"');
+            }
+
+            if (TextUtils.isEmpty(title)) {
+                title = getCanonicalTitle();
+            }
+
+            return title;
         }
 
         @Nullable
@@ -582,10 +705,6 @@ public class AnimeDigest implements Parcelable {
             return !TextUtils.isEmpty(mLibraryEntryId);
         }
 
-        public boolean hasPendingEdits() {
-            return mHasPendingEdits;
-        }
-
         public boolean hasPosterImage() {
             return !TextUtils.isEmpty(mPosterImage);
         }
@@ -596,6 +715,10 @@ public class AnimeDigest implements Parcelable {
 
         public boolean hasReviewed() {
             return mHasReviewed;
+        }
+
+        public boolean hasRomajiTitle() {
+            return !TextUtils.isEmpty(mRomajiTitle);
         }
 
         public boolean hasScreencaps() {
@@ -627,6 +750,11 @@ public class AnimeDigest implements Parcelable {
         }
 
         @Override
+        public String toString() {
+            return getTitle();
+        }
+
+        @Override
         public int describeContents() {
             return 0;
         }
@@ -638,7 +766,6 @@ public class AnimeDigest implements Parcelable {
             dest.writeStringList(mLanguages);
             dest.writeStringList(mScreencaps);
             dest.writeInt(mHasReviewed ? 1 : 0);
-            dest.writeInt(mHasPendingEdits ? 1 : 0);
             dest.writeInt(mStartedAiringDateKnown ? 1 : 0);
             dest.writeFloat(mBayesianRating);
             dest.writeInt(mCoverImageTopOffset);
@@ -671,7 +798,6 @@ public class AnimeDigest implements Parcelable {
                 i.mLanguages = source.createStringArrayList();
                 i.mScreencaps = source.createStringArrayList();
                 i.mHasReviewed = source.readInt() != 0;
-                i.mHasPendingEdits = source.readInt() != 0;
                 i.mStartedAiringDateKnown = source.readInt() != 0;
                 i.mBayesianRating = source.readFloat();
                 i.mCoverImageTopOffset = source.readInt();
@@ -746,7 +872,7 @@ public class AnimeDigest implements Parcelable {
             public Person createFromParcel(final Parcel source) {
                 final Person p = new Person();
                 p.mId = source.readString();
-                p.mId = source.readString();
+                p.mImage = source.readString();
                 p.mName = source.readString();
                 return p;
             }
@@ -810,9 +936,6 @@ public class AnimeDigest implements Parcelable {
         @SerializedName("favorite_count")
         private int mFavoriteCount;
 
-        @SerializedName("anime_id")
-        private String mAnimeId;
-
         @SerializedName("character_name")
         private String mCharacterName;
 
@@ -825,10 +948,6 @@ public class AnimeDigest implements Parcelable {
         @SerializedName("username")
         private String mUsername;
 
-
-        public String getAnimeId() {
-            return mAnimeId;
-        }
 
         public String getCharacterName() {
             return mCharacterName;
@@ -863,7 +982,6 @@ public class AnimeDigest implements Parcelable {
         public void writeToParcel(final Parcel dest, final int flags) {
             dest.writeInt(mIsFavorite ? 1 : 0);
             dest.writeInt(mFavoriteCount);
-            dest.writeString(mAnimeId);
             dest.writeString(mCharacterName);
             dest.writeString(mContent);
             dest.writeString(mId);
@@ -876,7 +994,6 @@ public class AnimeDigest implements Parcelable {
                 final Quote q = new Quote();
                 q.mIsFavorite = source.readInt() != 0;
                 q.mFavoriteCount = source.readInt();
-                q.mAnimeId = source.readString();
                 q.mCharacterName = source.readString();
                 q.mContent = source.readString();
                 q.mId = source.readString();
@@ -887,6 +1004,153 @@ public class AnimeDigest implements Parcelable {
             @Override
             public Quote[] newArray(final int size) {
                 return new Quote[size];
+            }
+        };
+    }
+
+
+    public static class Review implements Parcelable {
+        @SerializedName("liked")
+        private boolean mLiked;
+
+        @SerializedName("rating")
+        private float mRating;
+
+        @SerializedName("rating_animation")
+        private float mRatingAnimation;
+
+        @SerializedName("rating_characters")
+        private float mRatingCharacters;
+
+        @SerializedName("rating_enjoyment")
+        private float mRatingEnjoyment;
+
+        @SerializedName("rating_sound")
+        private float mRatingSound;
+
+        @SerializedName("rating_story")
+        private float mRatingStory;
+
+        @SerializedName("positive_votes")
+        private int mPositiveVotes;
+
+        @SerializedName("total_votes")
+        private int mTotalVotes;
+
+        @SerializedName("content")
+        private String mContent;
+
+        @SerializedName("id")
+        private String mId;
+
+        @SerializedName("summary")
+        private String mSummary;
+
+        @SerializedName("user_id")
+        private String mUserId;
+
+
+        public String getContent() {
+            return mContent;
+        }
+
+        public String getId() {
+            return mId;
+        }
+
+        public int getPositiveVotes() {
+            return mPositiveVotes;
+        }
+
+        public float getRating() {
+            return mRating;
+        }
+
+        public float getRatingAnimation() {
+            return mRatingAnimation;
+        }
+
+        public float getRatingCharacters() {
+            return mRatingCharacters;
+        }
+
+        public float getRatingEnjoyment() {
+            return mRatingEnjoyment;
+        }
+
+        public float getRatingSound() {
+            return mRatingSound;
+        }
+
+        public float getRatingStory() {
+            return mRatingStory;
+        }
+
+        public String getSummary() {
+            return mSummary;
+        }
+
+        public int getTotalVotes() {
+            return mTotalVotes;
+        }
+
+        public String getUserId() {
+            return mUserId;
+        }
+
+        public void hydrate() {
+            // TODO
+        }
+
+        public boolean isLiked() {
+            return mLiked;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(final Parcel dest, final int flags) {
+            dest.writeInt(mLiked ? 1 : 0);
+            dest.writeFloat(mRating);
+            dest.writeFloat(mRatingAnimation);
+            dest.writeFloat(mRatingCharacters);
+            dest.writeFloat(mRatingEnjoyment);
+            dest.writeFloat(mRatingSound);
+            dest.writeFloat(mRatingStory);
+            dest.writeInt(mPositiveVotes);
+            dest.writeInt(mTotalVotes);
+            dest.writeString(mContent);
+            dest.writeString(mId);
+            dest.writeString(mSummary);
+            dest.writeString(mUserId);
+        }
+
+        public static final Creator<Review> CREATOR = new Creator<Review>() {
+            @Override
+            public Review createFromParcel(final Parcel source) {
+                final Review r = new Review();
+                r.mLiked = source.readInt() != 0;
+                r.mRating = source.readFloat();
+                r.mRatingAnimation = source.readFloat();
+                r.mRatingCharacters = source.readFloat();
+                r.mRatingEnjoyment = source.readFloat();
+                r.mRatingSound = source.readFloat();
+                r.mRatingStory = source.readFloat();
+                r.mPositiveVotes = source.readInt();
+                r.mTotalVotes = source.readInt();
+                r.mContent = source.readString();
+                r.mId = source.readString();
+                r.mSummary = source.readString();
+                r.mUserId = source.readString();
+                return r;
+            }
+
+            @Override
+            public Review[] newArray(final int size) {
+                return new Review[size];
             }
         };
     }

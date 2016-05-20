@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
-import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 
@@ -16,9 +15,9 @@ public class UserFeedFragment extends BaseFeedFragment {
     private static final String TAG = "UserFeedFragment";
 
 
-    public static UserFeedFragment create(final UserV1 user) {
+    public static UserFeedFragment create(final String username) {
         final Bundle args = new Bundle(1);
-        args.putParcelable(KEY_USER, user);
+        args.putString(KEY_USERNAME, username);
 
         final UserFeedFragment fragment = new UserFeedFragment();
         fragment.setArguments(args);
@@ -29,7 +28,7 @@ public class UserFeedFragment extends BaseFeedFragment {
     @Override
     protected void fetchFeed() {
         super.fetchFeed();
-        Api.getUserStories(mUser.getName(), new GetUserStoriesListener(this));
+        Api.getUserStories(mUsername, new GetUserStoriesListener(this));
     }
 
     @Override

@@ -40,9 +40,11 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
     @SerializedName("english_title")
     private String mEnglishTitle;
 
+    @Nullable
     @SerializedName("poster_image")
     private String mPosterImage;
 
+    @Nullable
     @SerializedName("poster_image_thumb")
     private String mPosterImageThumb;
 
@@ -80,15 +82,18 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
         return TextUtils.join(res.getText(R.string.delimiter), mGenres);
     }
 
+    @Nullable
     @Override
     public String getImage() {
         return mPosterImage;
     }
 
+    @Nullable
     public String getPosterImage() {
         return mPosterImage;
     }
 
+    @Nullable
     public String getPosterImageThumb() {
         return mPosterImageThumb;
     }
@@ -152,6 +157,14 @@ public class AnimeV3 extends AbsAnime implements Parcelable {
     @Override
     public boolean hasGenres() {
         return mGenres != null && !mGenres.isEmpty();
+    }
+
+    public boolean hasPosterImage() {
+        return !TextUtils.isEmpty(mPosterImage);
+    }
+
+    public boolean hasPosterImageThumb() {
+        return !TextUtils.isEmpty(mPosterImageThumb);
     }
 
     public boolean isStartedAiringDateKnown() {

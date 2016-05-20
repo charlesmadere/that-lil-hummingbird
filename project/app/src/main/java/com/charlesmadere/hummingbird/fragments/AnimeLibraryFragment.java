@@ -14,7 +14,6 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.LibraryEntriesAdapter;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
-import com.charlesmadere.hummingbird.models.UserV1;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
@@ -31,12 +30,12 @@ public class AnimeLibraryFragment extends BaseFragment implements
 
     private static final String TAG = "AnimeLibraryFragment";
     private static final String KEY_LIBRARY_ENTRIES = "LibraryEntries";
-    private static final String KEY_USER = "User";
+    private static final String KEY_USERNAME = "Username";
     private static final String KEY_WATCHING_STATUS = "WatchingStatus";
 
     private ArrayList<LibraryEntry> mLibraryEntries;
     private LibraryEntriesAdapter mAdapter;
-    private UserV1 mUser;
+    private String mUsername;
     private WatchingStatus mWatchingStatus;
 
     @BindView(R.id.llEmpty)
@@ -58,9 +57,10 @@ public class AnimeLibraryFragment extends BaseFragment implements
     TextView mErrorText;
 
 
-    public static AnimeLibraryFragment create(final UserV1 user, final WatchingStatus watchingStatus) {
+    public static AnimeLibraryFragment create(final String username,
+            final WatchingStatus watchingStatus) {
         final Bundle args = new Bundle(2);
-        args.putParcelable(KEY_USER, user);
+        args.putString(KEY_USERNAME, username);
         args.putParcelable(KEY_WATCHING_STATUS, watchingStatus);
 
         final AnimeLibraryFragment fragment = new AnimeLibraryFragment();
@@ -71,7 +71,7 @@ public class AnimeLibraryFragment extends BaseFragment implements
 
     private void fetchLibraryEntries() {
         mRefreshLayout.setRefreshing(true);
-        Api.getLibraryEntries(mUser.getName(), mWatchingStatus, new GetLibraryEntriesListener(this));
+        Api.getLibraryEntries(mUsername, mWatchingStatus, new GetLibraryEntriesListener(this));
     }
 
     @Override
@@ -84,7 +84,7 @@ public class AnimeLibraryFragment extends BaseFragment implements
         super.onCreate(savedInstanceState);
 
         final Bundle args = getArguments();
-        mUser = args.getParcelable(KEY_USER);
+        mUsername = args.getString(KEY_USERNAME);
         mWatchingStatus = args.getParcelable(KEY_WATCHING_STATUS);
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
