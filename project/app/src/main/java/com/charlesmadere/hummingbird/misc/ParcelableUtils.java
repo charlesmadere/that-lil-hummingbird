@@ -477,6 +477,21 @@ public final class ParcelableUtils {
     }
 
     @Nullable
+    public static Float readFloat(final Parcel source) {
+        final String value = source.readString();
+
+        if (value == null) {
+            return null;
+        } else {
+            return Float.parseFloat(value);
+        }
+    }
+
+    public static void writeFloat(@Nullable final Float f, final Parcel dest) {
+        dest.writeString(f == null ? null : f.toString());
+    }
+
+    @Nullable
     public static Integer readInteger(final Parcel source) {
         final String value = source.readString();
 
@@ -488,13 +503,7 @@ public final class ParcelableUtils {
     }
 
     public static void writeInteger(@Nullable final Integer i, final Parcel dest) {
-        String value = null;
-
-        if (i != null) {
-            value = i.toString();
-        }
-
-        dest.writeString(value);
+        dest.writeString(i == null ? null : i.toString());
     }
 
     @Nullable

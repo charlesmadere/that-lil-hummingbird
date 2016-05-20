@@ -426,8 +426,9 @@ public class AnimeDigest implements Parcelable {
         @SerializedName("started_airing_date_known")
         private boolean mStartedAiringDateKnown;
 
+        @Nullable
         @SerializedName("bayesian_rating")
-        private float mBayesianRating;
+        private Float mBayesianRating;
 
         @SerializedName("cover_image_top_offset")
         private int mCoverImageTopOffset;
@@ -518,7 +519,8 @@ public class AnimeDigest implements Parcelable {
             return mAlternateTitle;
         }
 
-        public float getBayesianRating() {
+        @Nullable
+        public Float getBayesianRating() {
             return mBayesianRating;
         }
 
@@ -673,6 +675,10 @@ public class AnimeDigest implements Parcelable {
             return !TextUtils.isEmpty(mAlternateTitle);
         }
 
+        public boolean hasBayesianRating() {
+            return mBayesianRating != null && mBayesianRating != 0f;
+        }
+
         public boolean hasCoverImage() {
             return !TextUtils.isEmpty(mCoverImage);
         }
@@ -767,7 +773,7 @@ public class AnimeDigest implements Parcelable {
             dest.writeStringList(mScreencaps);
             dest.writeInt(mHasReviewed ? 1 : 0);
             dest.writeInt(mStartedAiringDateKnown ? 1 : 0);
-            dest.writeFloat(mBayesianRating);
+            ParcelableUtils.writeFloat(mBayesianRating, dest);
             dest.writeInt(mCoverImageTopOffset);
             ParcelableUtils.writeInteger(mEpisodeCount, dest);
             ParcelableUtils.writeInteger(mEpisodeLength, dest);
@@ -799,7 +805,7 @@ public class AnimeDigest implements Parcelable {
                 i.mScreencaps = source.createStringArrayList();
                 i.mHasReviewed = source.readInt() != 0;
                 i.mStartedAiringDateKnown = source.readInt() != 0;
-                i.mBayesianRating = source.readFloat();
+                i.mBayesianRating = ParcelableUtils.readFloat(source);
                 i.mCoverImageTopOffset = source.readInt();
                 i.mEpisodeCount = ParcelableUtils.readInteger(source);
                 i.mEpisodeLength = ParcelableUtils.readInteger(source);
