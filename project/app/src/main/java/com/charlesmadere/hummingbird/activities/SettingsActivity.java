@@ -70,7 +70,7 @@ public class SettingsActivity extends BaseDrawerActivity {
                 .show();
     }
 
-    @OnClick(R.id.tvAuthor)
+    @OnClick(R.id.kvtvAuthor)
     void onAuthorClick() {
         openUrl(Constants.CHARLES_TWITTER_URL);
     }
@@ -91,7 +91,7 @@ public class SettingsActivity extends BaseDrawerActivity {
         startActivity(LogViewerActivity.getLaunchIntent(this));
     }
 
-    @OnClick(R.id.tvPriscilla)
+    @OnClick(R.id.kvtvPriscilla)
     void onPriscillaClick() {
         openUrl(Constants.PRISCILLA_URL);
     }

@@ -12,7 +12,9 @@
     </declare-styleable>
 
     <declare-styleable name="KeyValueTextView">
+        <attr name="keyText" format="string" />
         <attr name="keyTextColor" format="color" />
+        <attr name="valueText" format="string" />
         <attr name="valueTextColor" format="color" />
     </declare-styleable>
 
