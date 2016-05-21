@@ -157,6 +157,7 @@ public class UserV2 extends AbsUser implements Parcelable {
         mAvatarTemplate = source.readString();
         mCoverImageUrl = source.readString();
         mId = source.readString();
+        mLocation = source.readString();
     }
 
     @Override
@@ -173,6 +174,7 @@ public class UserV2 extends AbsUser implements Parcelable {
         dest.writeString(mAvatarTemplate);
         dest.writeString(mCoverImageUrl);
         dest.writeString(mId);
+        dest.writeString(mLocation);
     }
 
     public static final Creator<UserV2> CREATOR = new Creator<UserV2>() {
