@@ -216,14 +216,48 @@ public class User implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-
+        dest.writeInt(mIsAdmin ? 1 : 0);
+        dest.writeInt(mIsFollowed ? 1 : 0);
+        dest.writeInt(mIsPro ? 1 : 0);
+        dest.writeInt(mFollowerCount);
+        dest.writeInt(mFollowingCount);
+        dest.writeParcelable(mRatingType, flags);
+        dest.writeString(mAbout);
+        dest.writeString(mAboutFormatted);
+        dest.writeString(mAvatarTemplate);
+        dest.writeString(mBio);
+        dest.writeString(mCoverImageUrl);
+        dest.writeString(mId);
+        dest.writeString(mLocation);
+        dest.writeString(mWaifu);
+        dest.writeString(mWaifuCharId);
+        dest.writeString(mWaifuSlug);
+        dest.writeString(mWebsite);
+        dest.writeParcelable(mWaifuOrHusbando, flags);
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
         public User createFromParcel(final Parcel source) {
             final User u = new User();
-
+            u.mIsAdmin = source.readInt() != 0;
+            u.mIsFollowed = source.readInt() != 0;
+            u.mIsPro = source.readInt() != 0;
+            u.mFollowerCount = source.readInt();
+            u.mFollowingCount = source.readInt();
+            u.mRatingType = source.readParcelable(RatingType.class.getClassLoader());
+            u.mAbout = source.readString();
+            u.mAboutFormatted = source.readString();
+            u.mAvatarTemplate = source.readString();
+            u.mBio = source.readString();
+            u.mCoverImageUrl = source.readString();
+            u.mId = source.readString();
+            u.mLocation = source.readString();
+            u.mWaifu = source.readString();
+            u.mWaifuCharId = source.readString();
+            u.mWaifuSlug = source.readString();
+            u.mWebsite = source.readString();
+            u.mWaifuOrHusbando = source.readParcelable(WaifuOrHusbando.class.getClassLoader());
             return u;
         }
 

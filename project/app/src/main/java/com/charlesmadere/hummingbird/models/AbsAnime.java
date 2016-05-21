@@ -73,7 +73,6 @@ public abstract class AbsAnime implements Parcelable {
         return mId;
     }
 
-    @Nullable
     public abstract String getImage();
 
     @Nullable
@@ -89,8 +88,7 @@ public abstract class AbsAnime implements Parcelable {
         return mSynopsis;
     }
 
-    @Nullable
-    public abstract String getThumbnail();
+    public abstract String getThumb();
 
     public abstract String getTitle();
 
@@ -110,10 +108,6 @@ public abstract class AbsAnime implements Parcelable {
 
     public abstract boolean hasGenres();
 
-    public boolean hasImage() {
-        return !TextUtils.isEmpty(getImage());
-    }
-
     public boolean hasShowType() {
         return mShowType != null;
     }
@@ -124,10 +118,6 @@ public abstract class AbsAnime implements Parcelable {
 
     public boolean hasSynopsis() {
         return !TextUtils.isEmpty(mSynopsis);
-    }
-
-    public boolean hasThumbnail() {
-        return !TextUtils.isEmpty(getThumbnail());
     }
 
     @Override

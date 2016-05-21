@@ -154,7 +154,7 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
     private void setPosterView(final SimpleDraweeView view,
             final ArrayList<UserDigest.Favorite.AnimeItem> anime, final int index) {
         if (anime.size() >= index) {
-            view.setImageURI(Uri.parse(anime.get(index - 1).getAnime().getThumbnail()));
+            view.setImageURI(Uri.parse(anime.get(index - 1).getAnime().getThumb()));
             view.setVisibility(VISIBLE);
         } else {
             view.setVisibility(INVISIBLE);

@@ -73,7 +73,7 @@ public class InternalAnimeItemView extends LinearLayout {
     }
 
     public void setContent(final AbsAnime content) {
-        mPoster.setImageURI(Uri.parse(content.getThumbnail()));
+        mPoster.setImageURI(Uri.parse(content.getThumb()));
         mTitle.setText(content.getTitle());
 
         if (content.hasShowType()) {
