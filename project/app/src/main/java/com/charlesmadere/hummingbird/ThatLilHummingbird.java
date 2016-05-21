@@ -6,10 +6,13 @@ import android.support.v7.app.AppCompatDelegate;
 
 import com.charlesmadere.hummingbird.activities.HomeActivity;
 import com.charlesmadere.hummingbird.misc.ActivityRegister;
+import com.charlesmadere.hummingbird.misc.OkHttpUtils;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.NightMode;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
 
 import java.util.ArrayList;
 
@@ -57,9 +60,15 @@ public class ThatLilHummingbird extends Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
-        Fabric.with(this, new Crashlytics());
-        Fresco.initialize(this);
         Timber.d(TAG, "Application created (debug: " + BuildConfig.DEBUG + ')');
+
+        Fabric.with(this, new Crashlytics());
+
+        final ImagePipelineConfig config = OkHttpImagePipelineConfigFactory
+                .newBuilder(this, OkHttpUtils.getOkHttpClient())
+                .build();
+
+        Fresco.initialize(this, config);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.charlesmadere.hummingbird.misc;
 
 import com.charlesmadere.hummingbird.networking.HummingbirdApi;
-import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.IOException;
@@ -33,9 +32,9 @@ public final class RetrofitUtils {
     public static synchronized Retrofit getRetrofit() {
         if (sRetrofit == null) {
             Timber.d(TAG, "creating Retrofit instance");
-            final Gson gson = GsonUtils.getGson();
             sRetrofit = new Retrofit.Builder()
-                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .client(OkHttpUtils.getOkHttpClient())
+                    .addConverterFactory(GsonConverterFactory.create(GsonUtils.getGson()))
                     .addConverterFactory(new EnumConverterFactory())
                     .baseUrl(Constants.BASE_API_URL)
                     .build();
