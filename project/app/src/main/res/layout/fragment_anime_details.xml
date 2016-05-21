@@ -97,30 +97,58 @@
                     tools:text="Episodes 20"
                     tools:visibility="visible"
                     style="@style/ResponsiveWidthCardItem" />
-                <com.charlesmadere.hummingbird.views.KeyValueTextView
-                    android:id="@+id/kvtvAired"
+                <LinearLayout
+                    android:id="@+id/llAired"
                     android:visibility="gone"
-                    tools:text="Aired March 31st, 2014"
                     tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem" />
-                <com.charlesmadere.hummingbird.views.KeyValueTextView
-                    android:id="@+id/kvtvStartedAiring"
+                    style="@style/ResponsiveWidthCardItem">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvAired"
+                        tools:text="1/1/1970"
+                        style="@style/ResponsiveWidthCardItemHeader" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:text="@string/aired"
+                        style="@style/ResponsiveWidthCardItemBody" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llStartedAiring"
                     android:visibility="gone"
-                    tools:text="Started airing March 31st, 2014"
                     tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem" />
-                <com.charlesmadere.hummingbird.views.KeyValueTextView
-                    android:id="@+id/kvtvFinishedAiring"
+                    style="@style/ResponsiveWidthCardItem">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvStartedAiring"
+                        tools:text="1/1/1970"
+                        style="@style/ResponsiveWidthCardItemHeader" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:text="@string/started_airing"
+                        style="@style/ResponsiveWidthCardItemBody" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llFinishedAiring"
                     android:visibility="gone"
-                    tools:text="Finished airing August 31st, 2014"
                     tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem" />
-                <com.charlesmadere.hummingbird.views.KeyValueTextView
-                    android:id="@+id/kvtvCommunityRating"
+                    style="@style/ResponsiveWidthCardItem">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvFinishedAiring"
+                        tools:text="1/1/1970"
+                        style="@style/ResponsiveWidthCardItemHeader" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:text="@string/started_airing"
+                        style="@style/ResponsiveWidthCardItemBody" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llCommunityRating"
                     android:visibility="gone"
-                    tools:text="Community rating 4.125"
                     tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem" />
+                    style="@style/ResponsiveWidthCardItem">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvCommunityRating"
+                        tools:text="1.2345"
+                        style="@style/ResponsiveWidthCardItemHeader" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:text="@string/community_rating"
+                        style="@style/ResponsiveWidthCardItemBody" />
+                </LinearLayout>
                 <LinearLayout
                     android:id="@+id/llYouTubeLink"
                     android:visibility="gone"

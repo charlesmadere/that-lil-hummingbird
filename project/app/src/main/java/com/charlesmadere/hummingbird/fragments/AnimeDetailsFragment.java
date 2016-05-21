@@ -1,9 +1,9 @@
 package com.charlesmadere.hummingbird.fragments;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +14,6 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.GalleryActivity;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.ShowType;
-import com.charlesmadere.hummingbird.models.SimpleDate;
 import com.charlesmadere.hummingbird.views.KeyValueTextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -31,23 +30,20 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     private AnimeDigest mAnimeDigest;
 
-    @BindView(R.id.kvtvCommunityRating)
-    KeyValueTextView mCommunityRating;
-
-    @BindView(R.id.kvtvAired)
-    KeyValueTextView mAired;
-
     @BindView(R.id.kvtvEpisodeCount)
     KeyValueTextView mEpisodeCount;
 
-    @BindView(R.id.kvtvFinishedAiring)
-    KeyValueTextView mFinishedAiring;
-
-    @BindView(R.id.kvtvStartedAiring)
-    KeyValueTextView mStartedAiring;
-
     @BindView(R.id.llAgeRating)
     LinearLayout mAgeRatingContainer;
+
+    @BindView(R.id.llAired)
+    LinearLayout mAiredContainer;
+
+    @BindView(R.id.llCommunityRating)
+    LinearLayout mCommunityRatingContainer;
+
+    @BindView(R.id.llFinishedAiring)
+    LinearLayout mFinishedAiringContainer;
 
     @BindView(R.id.llGenres)
     LinearLayout mGenresContainer;
@@ -57,6 +53,9 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     @BindView(R.id.llShowType)
     LinearLayout mShowTypeContainer;
+
+    @BindView(R.id.llStartedAiring)
+    LinearLayout mStartedAiringContainer;
 
     @BindView(R.id.llYouTubeLink)
     LinearLayout mYouTubeLinkContainer;
@@ -69,6 +68,15 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     @BindView(R.id.tvAgeRatingGuide)
     TextView mAgeRatingGuide;
+
+    @BindView(R.id.tvAired)
+    TextView mAired;
+
+    @BindView(R.id.tvCommunityRating)
+    TextView mCommunityRating;
+
+    @BindView(R.id.tvFinishedAiring)
+    TextView mFinishedAiring;
 
     @BindView(R.id.tvGenresBody)
     TextView mGenresBody;
@@ -84,6 +92,9 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     @BindView(R.id.tvShowType)
     TextView mShowType;
+
+    @BindView(R.id.tvStartedAiring)
+    TextView mStartedAiring;
 
     @BindView(R.id.tvSynopsis)
     TextView mSynopsis;
@@ -138,6 +149,7 @@ public class AnimeDetailsFragment extends BaseFragment {
         mTitle.setText(mAnimeDigest.getTitle());
 
         final AnimeDigest.Info info = mAnimeDigest.getInfo();
+        final Context context = getContext();
         final Resources resources = getResources();
         final NumberFormat numberFormat = NumberFormat.getInstance();
 
@@ -184,28 +196,23 @@ public class AnimeDetailsFragment extends BaseFragment {
 
         if (info.hasStartedAiringDate()) {
             if (info.getShowType() == ShowType.MOVIE) {
-                setAiringDateView(mAired, R.string.aired, info.getStartedAiringDate());
+                mAired.setText(info.getStartedAiringDate().getRelativeTimeText(context));
+                mAiredContainer.setVisibility(View.VISIBLE);
             } else {
-                setAiringDateView(mStartedAiring, R.string.started_airing,
-                        info.getStartedAiringDate());
+                mStartedAiring.setText(info.getStartedAiringDate().getRelativeTimeText(context));
+                mStartedAiringContainer.setVisibility(View.VISIBLE);
 
                 if (info.hasFinishedAiringDate()) {
-                    setAiringDateView(mFinishedAiring, R.string.finished_airing,
-                            info.getFinishedAiringDate());
+                    mFinishedAiring.setText(info.getFinishedAiringDate().getRelativeTimeText(context));
+                    mFinishedAiringContainer.setVisibility(View.VISIBLE);
                 }
             }
         }
 
-        if (info.hasFinishedAiringDate()) {
-            mFinishedAiring.setText(getText(R.string.finished_airing),
-                    info.getFinishedAiringDate().getRelativeTimeText(getContext()));
-            mFinishedAiring.setVisibility(View.VISIBLE);
-        }
-
         if (info.hasBayesianRating()) {
-            mCommunityRating.setText(getText(R.string.community_rating),
-                    String.format(Locale.getDefault(), "%.4f", info.getBayesianRating()));
-            mCommunityRating.setVisibility(View.VISIBLE);
+            mCommunityRating.setText(String.format(Locale.getDefault(), "%.4f",
+                    info.getBayesianRating()));
+            mCommunityRatingContainer.setVisibility(View.VISIBLE);
         }
 
         if (info.hasYouTubeVideoId()) {
@@ -223,12 +230,6 @@ public class AnimeDetailsFragment extends BaseFragment {
     @OnClick(R.id.llYouTubeLink)
     void onYouTubeLinkClick() {
         openUrl(mAnimeDigest.getInfo().getYouTubeVideoUrl());
-    }
-
-    private void setAiringDateView(final KeyValueTextView view, @StringRes final int keyTextResId,
-            final SimpleDate date) {
-        view.setText(getText(keyTextResId), date.getRelativeTimeText(getContext()));
-        view.setVisibility(View.VISIBLE);
     }
 
 }
