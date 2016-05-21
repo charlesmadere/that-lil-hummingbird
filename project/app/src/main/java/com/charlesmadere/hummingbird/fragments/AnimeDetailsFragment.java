@@ -49,6 +49,15 @@ public class AnimeDetailsFragment extends BaseFragment {
     @BindView(R.id.kvtvStartedAiring)
     KeyValueTextView mStartedAiring;
 
+    @BindView(R.id.llAgeRating)
+    LinearLayout mAgeRatingContainer;
+
+    @BindView(R.id.llGenres)
+    LinearLayout mGenresContainer;
+
+    @BindView(R.id.llShowType)
+    LinearLayout mShowTypeContainer;
+
     @BindView(R.id.llYouTubeLink)
     LinearLayout mYouTubeLinkContainer;
 
@@ -58,8 +67,14 @@ public class AnimeDetailsFragment extends BaseFragment {
     @BindView(R.id.tvAgeRating)
     TextView mAgeRating;
 
-    @BindView(R.id.tvGenres)
-    TextView mGenres;
+    @BindView(R.id.tvAgeRatingGuide)
+    TextView mAgeRatingGuide;
+
+    @BindView(R.id.tvGenresBody)
+    TextView mGenresBody;
+
+    @BindView(R.id.tvGenresHeader)
+    TextView mGenresHeader;
 
     @BindView(R.id.tvShowType)
     TextView mShowType;
@@ -127,20 +142,24 @@ public class AnimeDetailsFragment extends BaseFragment {
 
         if (info.hasShowType()) {
             mShowType.setText(info.getShowType().getTextResId());
-            mShowType.setVisibility(View.VISIBLE);
+            mShowTypeContainer.setVisibility(View.VISIBLE);
         }
 
         if (info.hasGenres()) {
-            mGenres.setText(info.getGenresString(resources));
-            mGenres.setVisibility(View.VISIBLE);
+            mGenresHeader.setText(info.getGenresString(resources));
+            mGenresBody.setText(resources.getQuantityText(R.plurals.genres,
+                    info.getGenres().size()));
+            mGenresContainer.setVisibility(View.VISIBLE);
         }
 
         if (info.hasAgeRating()) {
             mAgeRating.setText(info.getAgeRating().getTextResId());
-            mAgeRating.setVisibility(View.VISIBLE);
+            mAgeRatingContainer.setVisibility(View.VISIBLE);
 
             if (info.hasAgeRatingGuide()) {
-                // TODO
+                mAgeRatingGuide.setText(info.getAgeRatingGuide());
+            } else {
+                mAgeRatingGuide.setText(R.string.age_rating);
             }
         }
 

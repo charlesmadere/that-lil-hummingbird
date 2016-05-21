@@ -36,24 +36,47 @@
                     android:id="@+id/tvTitle"
                     tools:text="KonoSuba: God's Blessing on This Wonderful World!"
                     style="@style/AnimeTitle.WithPadding" />
-                <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:id="@+id/tvShowType"
+                <LinearLayout
+                    android:id="@+id/llShowType"
                     android:visibility="gone"
-                    tools:text="@string/movie"
                     tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem" />
-                <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:id="@+id/tvGenres"
+                    style="@style/ResponsiveWidthCardItem">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvShowType"
+                        tools:text="@string/movie"
+                        style="@style/ResponsiveWidthCardItemHeader" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:text="@string/type"
+                        style="@style/ResponsiveWidthCardItemBody" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llGenres"
                     android:visibility="gone"
-                    tools:text="Comedy, Mystery, Romance"
                     tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem" />
-                <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:id="@+id/tvAgeRating"
+                    style="@style/ResponsiveWidthCardItem">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvGenresHeader"
+                        tools:text="Comedy, Mystery, Romance"
+                        style="@style/ResponsiveWidthCardItemHeader" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvGenresBody"
+                        tools:text="@string/genre"
+                        style="@style/ResponsiveWidthCardItemBody" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llAgeRating"
                     android:visibility="gone"
-                    tools:text="@string/pg13"
                     tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem" />
+                    style="@style/ResponsiveWidthCardItem">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvAgeRating"
+                        tools:text="@string/pg13"
+                        style="@style/ResponsiveWidthCardItemHeader" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvAgeRatingGuide"
+                        tools:text="@string/age_rating"
+                        style="@style/ResponsiveWidthCardItemBody" />
+                </LinearLayout>
                 <com.charlesmadere.hummingbird.views.KeyValueTextView
                     android:id="@+id/kvtvEpisodeCount"
                     android:visibility="gone"

@@ -430,6 +430,14 @@
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
+    <style name="ResponsiveWidthCardItemBody.Standalone">
+        <item name="android:layout_marginBottom">@dimen/root_padding_half</item>
+        <item name="android:layout_marginTop">@dimen/root_padding_half</item>
+        <item name="android:paddingEnd">@dimen/root_padding</item>
+        <item name="android:paddingStart">@dimen/root_padding</item>
+        <item name="android:textSize">@dimen/text_normal</item>
+    </style>
+
     <style name="ResponsiveWidthCardItemHeader">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>

@@ -3,6 +3,7 @@
 
     <string name="about_x">About %1$s</string>
     <string name="account">Account</string>
+    <string name="age_rating">Age Rating</string>
     <string name="age_rating_g">G</string>
     <string name="age_rating_pg">PG</string>
     <string name="age_rating_pg13">PG-13</string>
@@ -82,6 +83,8 @@
     <string name="forums">Forums</string>
     <string name="gallery">Gallery</string>
     <string name="general">General</string>
+    <string name="genre">Genre</string>
+    <string name="genres">Genres</string>
     <string name="github">GitHub</string>
     <string name="group_activity">Group Activity</string>
     <string name="groups">Groups</string>
@@ -231,6 +234,11 @@
     <plurals name="followed_x_users">
         <item quantity="one">followed %1$s user</item>
         <item quantity="other">followed %2$s users</item>
+    </plurals>
+
+    <plurals name="genres">
+        <item quantity="one">Genre</item>
+        <item quantity="other">Genres</item>
     </plurals>
 
     <plurals name="out_of_x_titles">
