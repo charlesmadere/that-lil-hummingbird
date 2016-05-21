@@ -20,29 +20,29 @@ public abstract class AbsAnime implements Parcelable {
 
     @Nullable
     @SerializedName("age_rating")
-    protected AgeRating mAgeRating;
+    private AgeRating mAgeRating;
 
     @SerializedName("community_rating")
-    protected float mCommunityRating;
+    private float mCommunityRating;
 
     @Nullable
     @SerializedName("episode_count")
-    protected Integer mEpisodeCount;
+    private Integer mEpisodeCount;
 
     @Nullable
     @SerializedName("episode_length")
-    protected Integer mEpisodeLength;
+    private Integer mEpisodeLength;
 
     @Nullable
     @SerializedName("show_type")
-    protected ShowType mShowType;
+    private ShowType mShowType;
 
     @SerializedName("id")
-    protected String mId;
+    private String mId;
 
     @Nullable
     @SerializedName("synopsis")
-    protected String mSynopsis;
+    private String mSynopsis;
 
 
     @Nullable
@@ -163,7 +163,7 @@ public abstract class AbsAnime implements Parcelable {
 
 
     public enum Version implements Parcelable {
-        V1, V2, V3;
+        V1, V2;
 
         @Override
         public int describeContents() {
@@ -198,10 +198,8 @@ public abstract class AbsAnime implements Parcelable {
 
             if (jsonObject.has("title")) {
                 return context.deserialize(jsonObject, AnimeV1.class);
-            } else if (jsonObject.has("anime")) {
-                return context.deserialize(json, AnimeV2.class);
             } else if (jsonObject.has("canonical_title")) {
-                return context.deserialize(json, AnimeV3.class);
+                return context.deserialize(json, AnimeV2.class);
             } else {
                 throw new JsonParseException("unable to recognize AbsAnime version");
             }

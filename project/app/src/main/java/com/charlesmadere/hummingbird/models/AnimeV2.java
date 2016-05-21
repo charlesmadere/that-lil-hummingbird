@@ -7,16 +7,9 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.misc.GsonUtils;
 import com.charlesmadere.hummingbird.preferences.Preferences;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class AnimeV2 extends AbsAnime implements Parcelable {
@@ -25,71 +18,59 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
     @SerializedName("genres")
     private ArrayList<String> mGenres;
 
-    @Nullable
-    @SerializedName("producers")
-    private ArrayList<String> mProducers;
-
-    @SerializedName("bayesian_rating")
-    private float mBayesianRating;
-
-    @SerializedName("links")
-    private Links mLinks;
+    @SerializedName("started_airing_date_known")
+    private boolean mStartedAiringDateKnown;
 
     @Nullable
-    @SerializedName("finished_airing_date")
-    private SimpleDate mFinishedAiringDate;
+    @SerializedName("finished_airing")
+    private SimpleDate mFinishedAiring;
 
     @Nullable
-    @SerializedName("started_airing_Date")
-    private SimpleDate mStartedAiringDate;
+    @SerializedName("started_airing")
+    private SimpleDate mStartedAiring;
 
     @Nullable
-    @SerializedName("cover_image")
-    private String mCoverImage;
+    @SerializedName("age_rating_guide")
+    private String mAgeRatingGuide;
+
+    @SerializedName("canonical_title")
+    private String mCanonicalTitle;
+
+    @Nullable
+    @SerializedName("english_title")
+    private String mEnglishTitle;
 
     @Nullable
     @SerializedName("poster_image")
     private String mPosterImage;
 
-    @SerializedName("slug")
-    private String mSlug;
+    @Nullable
+    @SerializedName("poster_image_thumb")
+    private String mPosterImageThumb;
 
     @Nullable
-    @SerializedName("youtube_video_id")
-    private String mYouTubeVideoId;
-
-    @SerializedName("titles")
-    private Titles mTitles;
+    @SerializedName("romaji_title")
+    private String mRomajiTitle;
 
 
     @Nullable
-    public ArrayList<AnimeEpisode> getAnimeEpisodes() {
-        return mLinks.mAnimeEpisodes;
+    public String getAgeRatingGuide() {
+        return mAgeRatingGuide;
     }
 
-    public float getBayesianRating() {
-        return mBayesianRating;
+    public String getCanonicalTitle() {
+        return mCanonicalTitle;
     }
 
     @Nullable
-    public String getCoverImage() {
-        return mCoverImage;
+    public String getEnglishTitle() {
+        return mEnglishTitle;
     }
 
     @Nullable
     @Override
     public SimpleDate getFinishedAiringDate() {
-        return mFinishedAiringDate;
-    }
-
-    @Nullable
-    public ArrayList<GalleryImage> getGalleryImages() {
-        return mLinks.mGalleryImages;
-    }
-
-    @Nullable
-    public ArrayList<String> getGenres() {
-        return mGenres;
+        return mFinishedAiring;
     }
 
     @Override
@@ -101,6 +82,7 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         return TextUtils.join(res.getText(R.string.delimiter), mGenres);
     }
 
+    @Nullable
     @Override
     public String getImage() {
         return mPosterImage;
@@ -112,63 +94,64 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
     }
 
     @Nullable
-    public ArrayList<String> getProducers() {
-        return mProducers;
+    public String getPosterImageThumb() {
+        return mPosterImageThumb;
     }
 
-    public String getProducersString(final Resources res) {
-        if (!hasProducers()) {
-            return "";
-        }
-
-        return TextUtils.join(res.getText(R.string.delimiter), mProducers);
-    }
-
-    public String getSlug() {
-        return mSlug;
+    @Nullable
+    public String getRomajiTitle() {
+        return mRomajiTitle;
     }
 
     @Nullable
     @Override
     public SimpleDate getStartedAiringDate() {
-        return mStartedAiringDate;
+        return mStartedAiring;
     }
 
-    @Nullable
     @Override
     public String getThumbnail() {
-        return mPosterImage;
+        return mPosterImageThumb;
     }
 
     @Override
     public String getTitle() {
-        return mTitles.get(Preferences.General.TitleLanguage.get());
-    }
+        final TitleType titleType = Preferences.General.TitleLanguage.get();
 
-    public Titles getTitles() {
-        return mTitles;
+        if (titleType == null) {
+            return getCanonicalTitle();
+        }
+
+        String title;
+
+        switch (titleType) {
+            case CANONICAL:
+                return getCanonicalTitle();
+
+            case ENGLISH:
+                title = getEnglishTitle();
+                break;
+
+            case JAPANESE:
+            case ROMAJI:
+                title = getRomajiTitle();
+                break;
+
+            default:
+                throw new RuntimeException("encountered unknown " +
+                        TitleType.class.getSimpleName() + ": \"" + titleType + '"');
+        }
+
+        if (TextUtils.isEmpty(title)) {
+            title = getCanonicalTitle();
+        }
+
+        return title;
     }
 
     @Override
     public Version getVersion() {
         return Version.V2;
-    }
-
-    @Nullable
-    public String getYouTubeVideoId() {
-        return mYouTubeVideoId;
-    }
-
-    public boolean hasAnimeEpisodes() {
-        return mLinks.mAnimeEpisodes != null && !mLinks.mAnimeEpisodes.isEmpty();
-    }
-
-    public boolean hasCoverImage() {
-        return !TextUtils.isEmpty(mCoverImage);
-    }
-
-    public boolean hasGalleryImages() {
-        return mLinks.mGalleryImages != null && !mLinks.mGalleryImages.isEmpty();
     }
 
     @Override
@@ -180,44 +163,42 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         return !TextUtils.isEmpty(mPosterImage);
     }
 
-    public boolean hasProducers() {
-        return mProducers != null && !mProducers.isEmpty();
+    public boolean hasPosterImageThumb() {
+        return !TextUtils.isEmpty(mPosterImageThumb);
     }
 
-    public boolean hasYouTubeVideoId() {
-        return !TextUtils.isEmpty(mYouTubeVideoId);
+    public boolean isStartedAiringDateKnown() {
+        return mStartedAiringDateKnown;
     }
 
     @Override
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);
         mGenres = source.createStringArrayList();
-        mProducers = source.createStringArrayList();
-        mBayesianRating = source.readFloat();
-        mLinks = source.readParcelable(Links.class.getClassLoader());
-        mFinishedAiringDate = source.readParcelable(SimpleDate.class.getClassLoader());
-        mStartedAiringDate = source.readParcelable(SimpleDate.class.getClassLoader());
-        mCoverImage = source.readString();
+        mStartedAiringDateKnown = source.readInt() != 0;
+        mFinishedAiring = source.readParcelable(SimpleDate.class.getClassLoader());
+        mStartedAiring = source.readParcelable(SimpleDate.class.getClassLoader());
+        mAgeRatingGuide = source.readString();
+        mCanonicalTitle = source.readString();
+        mEnglishTitle = source.readString();
         mPosterImage = source.readString();
-        mSlug = source.readString();
-        mYouTubeVideoId = source.readString();
-        mTitles = source.readParcelable(Titles.class.getClassLoader());
+        mPosterImageThumb = source.readString();
+        mRomajiTitle = source.readString();
     }
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         super.writeToParcel(dest, flags);
         dest.writeStringList(mGenres);
-        dest.writeStringList(mProducers);
-        dest.writeFloat(mBayesianRating);
-        dest.writeParcelable(mLinks, flags);
-        dest.writeParcelable(mFinishedAiringDate, flags);
-        dest.writeParcelable(mStartedAiringDate, flags);
-        dest.writeString(mCoverImage);
+        dest.writeInt(mStartedAiringDateKnown ? 1 : 0);
+        dest.writeParcelable(mFinishedAiring, flags);
+        dest.writeParcelable(mStartedAiring, flags);
+        dest.writeString(mAgeRatingGuide);
+        dest.writeString(mCanonicalTitle);
+        dest.writeString(mEnglishTitle);
         dest.writeString(mPosterImage);
-        dest.writeString(mSlug);
-        dest.writeString(mYouTubeVideoId);
-        dest.writeParcelable(mTitles, flags);
+        dest.writeString(mPosterImageThumb);
+        dest.writeString(mRomajiTitle);
     }
 
     public static final Creator<AnimeV2> CREATOR = new Creator<AnimeV2>() {
@@ -231,190 +212,6 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         @Override
         public AnimeV2[] newArray(final int size) {
             return new AnimeV2[size];
-        }
-    };
-
-
-    public static class Links implements Parcelable {
-        @Nullable
-        @SerializedName("episodes")
-        private ArrayList<AnimeEpisode> mAnimeEpisodes;
-
-        @Nullable
-        @SerializedName("gallery_images")
-        private ArrayList<GalleryImage> mGalleryImages;
-
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(final Parcel dest, final int flags) {
-            dest.writeTypedList(mAnimeEpisodes);
-            dest.writeTypedList(mGalleryImages);
-        }
-
-        public static final Creator<Links> CREATOR = new Creator<Links>() {
-            @Override
-            public Links createFromParcel(final Parcel source) {
-                final Links l = new Links();
-                l.mAnimeEpisodes = source.createTypedArrayList(AnimeEpisode.CREATOR);
-                l.mGalleryImages = source.createTypedArrayList(GalleryImage.CREATOR);
-                return l;
-            }
-
-            @Override
-            public Links[] newArray(final int size) {
-                return new Links[size];
-            }
-        };
-    }
-
-
-    public static class Titles implements Parcelable {
-        @SerializedName("canonical")
-        private String mCanonical;
-
-        @Nullable
-        @SerializedName("english")
-        private String mEnglish;
-
-        @Nullable
-        @SerializedName("japanese")
-        private String mJapanese;
-
-        @Nullable
-        @SerializedName("romaji")
-        private String mRomaji;
-
-
-        public String get(@Nullable final TitleType titleType) {
-            if (titleType == null) {
-                return getCanonical();
-            }
-
-            String title;
-
-            switch (titleType) {
-                case CANONICAL:
-                    return getCanonical();
-
-                case ENGLISH:
-                    title = getEnglish();
-                    break;
-
-                case JAPANESE:
-                    title = getJapanese();
-                    break;
-
-                case ROMAJI:
-                    title = getRomaji();
-                    break;
-
-                default:
-                    throw new RuntimeException("encountered unknown " +
-                            TitleType.class.getSimpleName() + ": \"" + titleType + '"');
-            }
-
-            if (TextUtils.isEmpty(title)) {
-                title = getCanonical();
-            }
-
-            return title;
-        }
-
-        public String getCanonical() {
-            return mCanonical;
-        }
-
-        @Nullable
-        public String getEnglish() {
-            return mEnglish;
-        }
-
-        @Nullable
-        public String getJapanese() {
-            return mJapanese;
-        }
-
-        @Nullable
-        public String getRomaji() {
-            return mRomaji;
-        }
-
-        @Override
-        public String toString() {
-            return getCanonical();
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(final Parcel dest, final int flags) {
-            dest.writeString(mCanonical);
-            dest.writeString(mEnglish);
-            dest.writeString(mJapanese);
-            dest.writeString(mRomaji);
-        }
-
-        public static final Creator<Titles> CREATOR = new Creator<Titles>() {
-            @Override
-            public Titles createFromParcel(final Parcel source) {
-                final Titles t = new Titles();
-                t.mCanonical = source.readString();
-                t.mEnglish = source.readString();
-                t.mJapanese = source.readString();
-                t.mRomaji = source.readString();
-                return t;
-            }
-
-            @Override
-            public Titles[] newArray(final int size) {
-                return new Titles[size];
-            }
-        };
-    }
-
-
-    public static final JsonDeserializer<AnimeV2> JSON_DESERIALIZER = new JsonDeserializer<AnimeV2>() {
-        @Override
-        public AnimeV2 deserialize(final JsonElement json, final Type typeOfT,
-                final JsonDeserializationContext context) throws JsonParseException {
-            final JsonObject jsonObject = json.getAsJsonObject();
-            final AnimeV2 anime = new AnimeV2();
-
-            final JsonObject animeJson = jsonObject.get("anime").getAsJsonObject();
-
-            // AbsAnime fields
-            anime.mAgeRating = context.deserialize(animeJson.get("age_rating"), AgeRating.class);
-            anime.mCommunityRating = animeJson.get("community_rating").getAsFloat();
-            anime.mEpisodeCount = GsonUtils.getInteger(animeJson, "episode_count");
-            anime.mEpisodeLength = GsonUtils.getInteger(animeJson, "episode_length");
-            anime.mShowType = context.deserialize(animeJson.get("show_type"), ShowType.class);
-            anime.mId = animeJson.get("id").getAsString();
-            anime.mSynopsis = animeJson.get("synopsis").getAsString();
-
-            // AnimeV2 fields
-            anime.mGenres = GsonUtils.getStringArrayList(animeJson, "genres");
-            anime.mProducers = GsonUtils.getStringArrayList(animeJson, "producers");
-            anime.mBayesianRating = animeJson.get("bayesian_rating").getAsFloat();
-            anime.mLinks = context.deserialize(jsonObject.get("linked"), Links.class);
-            anime.mFinishedAiringDate = context.deserialize(animeJson.get("finished_airing_date"),
-                    SimpleDate.class);
-            anime.mStartedAiringDate = context.deserialize(animeJson.get("started_airing_date"),
-                    SimpleDate.class);
-            anime.mCoverImage = animeJson.get("cover_image").getAsString();
-            anime.mPosterImage = animeJson.get("poster_image").getAsString();
-            anime.mSlug = animeJson.get("slug").getAsString();
-            anime.mYouTubeVideoId = GsonUtils.getString(animeJson, "youtube_video_id");
-            anime.mTitles = context.deserialize(animeJson.get("titles"), Titles.class);
-
-            return anime;
         }
     };
 

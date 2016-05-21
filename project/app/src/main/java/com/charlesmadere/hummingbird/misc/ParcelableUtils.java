@@ -9,7 +9,6 @@ import com.charlesmadere.hummingbird.models.AbsStory;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.AnimeV1;
 import com.charlesmadere.hummingbird.models.AnimeV2;
-import com.charlesmadere.hummingbird.models.AnimeV3;
 import com.charlesmadere.hummingbird.models.CommentReplyNotification;
 import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.models.FollowedStory;
@@ -45,10 +44,6 @@ public final class ParcelableUtils {
 
             case V2:
                 anime = source.readParcelable(AnimeV2.class.getClassLoader());
-                break;
-
-            case V3:
-                anime = source.readParcelable(AnimeV3.class.getClassLoader());
                 break;
 
             default:

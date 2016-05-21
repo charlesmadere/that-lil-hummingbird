@@ -12,8 +12,6 @@ import android.view.View;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.GalleryFragmentAdapter;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
-import com.charlesmadere.hummingbird.models.AnimeV2;
-import com.charlesmadere.hummingbird.models.GalleryImage;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -56,36 +54,6 @@ public class GalleryActivity extends BaseActivity {
 
         if (info.hasScreencaps()) {
             urls.addAll(info.getScreencaps());
-        }
-
-        final int startingPosition = TextUtils.isEmpty(url) ? 0 : urls.indexOf(url);
-
-        return new Intent(context, GalleryActivity.class)
-                .putExtra(EXTRA_STARTING_POSITION, startingPosition)
-                .putStringArrayListExtra(EXTRA_URLS, urls);
-    }
-
-    public static Intent getLaunchIntent(final Context context, final AnimeV2 anime,
-            final GalleryImage galleryImage) {
-        return getLaunchIntent(context, anime, galleryImage.getOriginal());
-    }
-
-    public static Intent getLaunchIntent(final Context context, final AnimeV2 anime,
-            @Nullable final String url) {
-        final ArrayList<String> urls = new ArrayList<>();
-
-        if (anime.hasCoverImage()) {
-            urls.add(anime.getCoverImage());
-        }
-
-        if (anime.hasPosterImage()) {
-            urls.add(anime.getPosterImage());
-        }
-
-        if (anime.hasGalleryImages()) {
-            for (final GalleryImage galleryImage : anime.getGalleryImages()) {
-                urls.add(galleryImage.getOriginal());
-            }
         }
 
         final int startingPosition = TextUtils.isEmpty(url) ? 0 : urls.indexOf(url);
