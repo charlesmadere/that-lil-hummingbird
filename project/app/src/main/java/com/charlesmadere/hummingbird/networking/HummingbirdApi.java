@@ -11,8 +11,8 @@ import com.charlesmadere.hummingbird.models.MangaDigest;
 import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.charlesmadere.hummingbird.models.SearchDepth;
 import com.charlesmadere.hummingbird.models.SearchScope;
+import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.UserDigest;
-import com.charlesmadere.hummingbird.models.UserV2;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.google.gson.JsonElement;
 
@@ -105,7 +105,7 @@ public interface HummingbirdApi {
     Call<Feed> getSubstories(@Header("Cookie") String authToken, @Query("story_id") String storyId);
 
     @GET("users/{username}")
-    Call<UserV2> getUser(@Header("Cookie") String authToken, @Header("Accept") String json,
+    Call<User> getUser(@Header("Cookie") String authToken, @Header("Accept") String json,
             @Path("username") String username);
 
     @GET("user_infos/{username}")

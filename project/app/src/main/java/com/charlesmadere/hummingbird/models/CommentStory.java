@@ -5,7 +5,6 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class CommentStory extends AbsStory implements Parcelable {
     private String mPosterId;
 
     // hydrated fields
-    private AbsUser mPoster;
+    private User mPoster;
 
     @Nullable
     private Group mGroup;
@@ -50,7 +49,7 @@ public class CommentStory extends AbsStory implements Parcelable {
         return mGroupId;
     }
 
-    public AbsUser getPoster() {
+    public User getPoster() {
         return mPoster;
     }
 
@@ -80,7 +79,7 @@ public class CommentStory extends AbsStory implements Parcelable {
     public void hydrate(final Feed feed) {
         super.hydrate(feed);
 
-        for (final AbsUser user : feed.getUsers()) {
+        for (final User user : feed.getUsers()) {
             if (mPosterId.equalsIgnoreCase(user.getId())) {
                 mPoster = user;
                 break;
@@ -131,7 +130,7 @@ public class CommentStory extends AbsStory implements Parcelable {
         mComment = source.readString();
         mGroupId = source.readString();
         mPosterId = source.readString();
-        mPoster = ParcelableUtils.readAbsUserFromParcel(source);
+        mPoster = source.readParcelable(User.class.getClassLoader());
         mGroup = source.readParcelable(Group.class.getClassLoader());
     }
 
@@ -143,7 +142,7 @@ public class CommentStory extends AbsStory implements Parcelable {
         dest.writeString(mComment);
         dest.writeString(mGroupId);
         dest.writeString(mPosterId);
-        ParcelableUtils.writeAbsUserToParcel(mPoster, dest, flags);
+        dest.writeParcelable(mPoster, flags);
         dest.writeParcelable(mGroup, flags);
     }
 

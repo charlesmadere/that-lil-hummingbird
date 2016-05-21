@@ -7,7 +7,7 @@ import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
-public class UserV2 extends AbsUser implements Parcelable {
+public class User implements Parcelable {
 
     private static final String AVATAR_TEMPLATE_STUB = "\\{size\\}";
     private static final String AVATAR_TEMPLATE_SMALL = "small";
@@ -43,6 +43,10 @@ public class UserV2 extends AbsUser implements Parcelable {
     @SerializedName("avatar_template")
     private String mAvatarTemplate;
 
+    @Nullable
+    @SerializedName("bio")
+    private String mBio;
+
     @SerializedName("cover_image_url")
     private String mCoverImageUrl;
 
@@ -52,6 +56,26 @@ public class UserV2 extends AbsUser implements Parcelable {
     @Nullable
     @SerializedName("location")
     private String mLocation;
+
+    @Nullable
+    @SerializedName("waifu")
+    private String mWaifu;
+
+    @Nullable
+    @SerializedName("waifu_char_id")
+    private String mWaifuCharId;
+
+    @Nullable
+    @SerializedName("waifu_slug")
+    private String mWaifuSlug;
+
+    @Nullable
+    @SerializedName("website")
+    private String mWebsite;
+
+    @Nullable
+    @SerializedName("waifu_or_husbando")
+    private WaifuOrHusbando mWaifuOrHusbando;
 
 
     @Nullable
@@ -64,19 +88,25 @@ public class UserV2 extends AbsUser implements Parcelable {
         return mAboutFormatted;
     }
 
-    @Override
-    public String getAvatar() {
+    public String getAvatarSmallest() {
         return mAvatarTemplate.replaceFirst(AVATAR_TEMPLATE_STUB, AVATAR_TEMPLATE_THUMB_SMALL);
     }
 
-    @Override
-    public String getAvatarSmall() {
-        return mAvatarTemplate.replaceFirst(AVATAR_TEMPLATE_STUB, AVATAR_TEMPLATE_SMALL);
+    public String getAvatarLargest() {
+        return mAvatarTemplate.replaceFirst(AVATAR_TEMPLATE_STUB, AVATAR_TEMPLATE_THUMB);
     }
 
-    @Override
-    public String getCoverImage() {
+    @Nullable
+    public String getBio() {
+        return mBio;
+    }
+
+    public String getCoverImageUrl() {
         return mCoverImageUrl;
+    }
+
+    public String getId() {
+        return mId;
     }
 
     public int getFollowerCount() {
@@ -87,28 +117,38 @@ public class UserV2 extends AbsUser implements Parcelable {
         return mFollowingCount;
     }
 
-    @Override
-    public String getId() {
-        return mId;
-    }
-
     @Nullable
     public String getLocation() {
         return mLocation;
-    }
-
-    @Override
-    public String getName() {
-        return mId;
     }
 
     public RatingType getRatingType() {
         return mRatingType;
     }
 
-    @Override
-    public Version getVersion() {
-        return Version.V2;
+    @Nullable
+    public String getWaifu() {
+        return mWaifu;
+    }
+
+    @Nullable
+    public String getWaifuCharId() {
+        return mWaifuCharId;
+    }
+
+    @Nullable
+    public WaifuOrHusbando getWaifuOrHusbando() {
+        return mWaifuOrHusbando;
+    }
+
+    @Nullable
+    public String getWaifuSlug() {
+        return mWaifuSlug;
+    }
+
+    @Nullable
+    public String getWebsite() {
+        return mWebsite;
     }
 
     public boolean hasAbout() {
@@ -119,8 +159,29 @@ public class UserV2 extends AbsUser implements Parcelable {
         return !TextUtils.isEmpty(mAboutFormatted);
     }
 
+    public boolean hasBio() {
+        return !TextUtils.isEmpty(mBio);
+    }
+
+    public boolean hasHusbando() {
+        return hasWaifuOrHusbando() && mWaifuOrHusbando == WaifuOrHusbando.HUSBANDO;
+    }
+
     public boolean hasLocation() {
         return !TextUtils.isEmpty(mLocation);
+    }
+
+    public boolean hasWaifu() {
+        return hasWaifuOrHusbando() && mWaifuOrHusbando == WaifuOrHusbando.WAIFU;
+    }
+
+    public boolean hasWaifuOrHusbando() {
+        return !TextUtils.isEmpty(mWaifu) && !TextUtils.isEmpty(mWaifuCharId) &&
+                !TextUtils.isEmpty(mWaifuSlug) && mWaifuOrHusbando != null;
+    }
+
+    public boolean hasWebsite() {
+        return !TextUtils.isEmpty(mWebsite);
     }
 
     public boolean isAdmin() {
@@ -144,50 +205,31 @@ public class UserV2 extends AbsUser implements Parcelable {
     }
 
     @Override
-    protected void readFromParcel(final Parcel source) {
-        super.readFromParcel(source);
-        mIsAdmin = source.readInt() != 0;
-        mIsFollowed = source.readInt() != 0;
-        mIsPro = source.readInt() != 0;
-        mFollowerCount = source.readInt();
-        mFollowingCount = source.readInt();
-        mRatingType = source.readParcelable(RatingType.class.getClassLoader());
-        mAbout = source.readString();
-        mAboutFormatted = source.readString();
-        mAvatarTemplate = source.readString();
-        mCoverImageUrl = source.readString();
-        mId = source.readString();
-        mLocation = source.readString();
+    public String toString() {
+        return getId();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeInt(mIsAdmin ? 1 : 0);
-        dest.writeInt(mIsFollowed ? 1 : 0);
-        dest.writeInt(mIsPro ? 1 : 0);
-        dest.writeInt(mFollowerCount);
-        dest.writeInt(mFollowingCount);
-        dest.writeParcelable(mRatingType, flags);
-        dest.writeString(mAbout);
-        dest.writeString(mAboutFormatted);
-        dest.writeString(mAvatarTemplate);
-        dest.writeString(mCoverImageUrl);
-        dest.writeString(mId);
-        dest.writeString(mLocation);
+
     }
 
-    public static final Creator<UserV2> CREATOR = new Creator<UserV2>() {
+    public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
-        public UserV2 createFromParcel(final Parcel source) {
-            final UserV2 u = new UserV2();
-            u.readFromParcel(source);
+        public User createFromParcel(final Parcel source) {
+            final User u = new User();
+
             return u;
         }
 
         @Override
-        public UserV2[] newArray(final int size) {
-            return new UserV2[size];
+        public User[] newArray(final int size) {
+            return new User[size];
         }
     };
 

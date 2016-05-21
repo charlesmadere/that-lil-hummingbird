@@ -26,8 +26,8 @@ import com.charlesmadere.hummingbird.models.MangaDigest;
 import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.charlesmadere.hummingbird.models.SearchDepth;
 import com.charlesmadere.hummingbird.models.SearchScope;
+import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.UserDigest;
-import com.charlesmadere.hummingbird.models.UserV2;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.google.gson.JsonObject;
@@ -223,15 +223,15 @@ public final class Api {
         return "token=" + authToken + ';';
     }
 
-    public static void getCurrentUser(final ApiResponse<UserV2> listener) {
-        getUser(Preferences.Account.Username.get(), new ApiResponse<UserV2>() {
+    public static void getCurrentUser(final ApiResponse<User> listener) {
+        getUser(Preferences.Account.Username.get(), new ApiResponse<User>() {
             @Override
             public void failure(@Nullable final ErrorInfo error) {
                 listener.failure(error);
             }
 
             @Override
-            public void success(final UserV2 user) {
+            public void success(final User user) {
                 CurrentUser.set(user);
                 listener.success(user);
             }
@@ -529,12 +529,12 @@ public final class Api {
         });
     }
 
-    public static void getUser(final String username, final ApiResponse<UserV2> listener) {
+    public static void getUser(final String username, final ApiResponse<User> listener) {
         getApi().getUser(getAuthTokenCookieString(), "application/json", username).enqueue(
-                new Callback<UserV2>() {
+                new Callback<User>() {
             @Override
-            public void onResponse(final Call<UserV2> call, final Response<UserV2> response) {
-                UserV2 body = null;
+            public void onResponse(final Call<User> call, final Response<User> response) {
+                User body = null;
 
                 if (response.isSuccessful()) {
                     body = response.body();
@@ -548,7 +548,7 @@ public final class Api {
             }
 
             @Override
-            public void onFailure(final Call<UserV2> call, final Throwable t) {
+            public void onFailure(final Call<User> call, final Throwable t) {
                 Timber.e(TAG, "get user (" + username + ") failed", t);
                 listener.failure(null);
             }

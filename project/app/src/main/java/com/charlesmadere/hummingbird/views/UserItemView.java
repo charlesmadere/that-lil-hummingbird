@@ -10,15 +10,15 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
-import com.charlesmadere.hummingbird.models.AbsUser;
+import com.charlesmadere.hummingbird.models.User;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class UserItemView extends CardView implements AdapterView<AbsUser>, View.OnClickListener {
+public class UserItemView extends CardView implements AdapterView<User>, View.OnClickListener {
 
-    private AbsUser mUser;
+    private User mUser;
 
     @BindView(R.id.sdvAvatar)
     SimpleDraweeView mAvatar;
@@ -54,10 +54,10 @@ public class UserItemView extends CardView implements AdapterView<AbsUser>, View
     }
 
     @Override
-    public void setContent(final AbsUser content) {
+    public void setContent(final User content) {
         mUser = content;
-        mAvatar.setImageURI(Uri.parse(mUser.getAvatar()));
-        mTitle.setText(mUser.getName());
+        mAvatar.setImageURI(Uri.parse(mUser.getAvatarLargest()));
+        mTitle.setText(mUser.getId());
     }
 
 }

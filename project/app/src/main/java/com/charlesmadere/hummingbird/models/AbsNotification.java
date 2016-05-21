@@ -40,7 +40,7 @@ public abstract class AbsNotification implements Parcelable {
 
     public abstract Type getType();
 
-    public AbsUser getUser() {
+    public User getUser() {
         return mSource.getUser();
     }
 
@@ -83,7 +83,7 @@ public abstract class AbsNotification implements Parcelable {
 
         public abstract Type getType();
 
-        public abstract AbsUser getUser();
+        public abstract User getUser();
 
         public abstract void hydrate(final Feed feed);
 
@@ -190,7 +190,7 @@ public abstract class AbsNotification implements Parcelable {
         }
 
         @Override
-        public AbsUser getUser() {
+        public User getUser() {
             switch (mStory.getType()) {
                 case COMMENT:
                     return ((CommentStory) mStory).getPoster();
@@ -252,7 +252,7 @@ public abstract class AbsNotification implements Parcelable {
         }
 
         @Override
-        public AbsUser getUser() {
+        public User getUser() {
             switch (mSubstory.getType()) {
                 case FOLLOWED:
                     return ((FollowedSubstory) mSubstory).getUser();

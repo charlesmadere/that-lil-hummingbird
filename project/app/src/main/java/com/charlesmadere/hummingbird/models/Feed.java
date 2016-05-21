@@ -29,10 +29,6 @@ public class Feed implements Parcelable {
     private ArrayList<AbsSubstory> mSubstories;
 
     @Nullable
-    @SerializedName("users")
-    private ArrayList<AbsUser> mUsers;
-
-    @Nullable
     @SerializedName("groups")
     private ArrayList<Group> mGroups;
 
@@ -43,6 +39,10 @@ public class Feed implements Parcelable {
     @Nullable
     @SerializedName("manga")
     private ArrayList<Manga> mManga;
+
+    @Nullable
+    @SerializedName("users")
+    private ArrayList<User> mUsers;
 
     @SerializedName("meta")
     private Metadata mMetadata;
@@ -88,7 +88,7 @@ public class Feed implements Parcelable {
     }
 
     @Nullable
-    public ArrayList<AbsUser> getUsers() {
+    public ArrayList<User> getUsers() {
         return mUsers;
     }
 
@@ -225,10 +225,10 @@ public class Feed implements Parcelable {
         ParcelableUtils.writeAbsNotificationListToParcel(mNotifications, dest, flags);
         ParcelableUtils.writeAbsStoryListToParcel(mStories, dest, flags);
         ParcelableUtils.writeAbsSubstoryListToParcel(mSubstories, dest, flags);
-        ParcelableUtils.writeAbsUserListToParcel(mUsers, dest, flags);
         dest.writeTypedList(mGroups);
         dest.writeTypedList(mGroupMembers);
         dest.writeTypedList(mManga);
+        dest.writeTypedList(mUsers);
         dest.writeParcelable(mMetadata, flags);
     }
 
@@ -240,10 +240,10 @@ public class Feed implements Parcelable {
             f.mNotifications = ParcelableUtils.readAbsNotificationListFromParcel(source);
             f.mStories = ParcelableUtils.readAbsStoryListFromParcel(source);
             f.mSubstories = ParcelableUtils.readAbsSubstoryListFromParcel(source);
-            f.mUsers = ParcelableUtils.readAbsUserListFromParcel(source);
             f.mGroups = source.createTypedArrayList(Group.CREATOR);
             f.mGroupMembers = source.createTypedArrayList(GroupMember.CREATOR);
             f.mManga = source.createTypedArrayList(Manga.CREATOR);
+            f.mUsers = source.createTypedArrayList(User.CREATOR);
             f.mMetadata = source.readParcelable(Metadata.class.getClassLoader());
             return f;
         }

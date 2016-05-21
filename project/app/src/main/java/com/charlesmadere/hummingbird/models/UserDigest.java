@@ -23,9 +23,6 @@ public class UserDigest implements Parcelable {
     @SerializedName("anime")
     private ArrayList<AbsAnime> mAnime;
 
-    @SerializedName("users")
-    private ArrayList<UserV2> mUsers;
-
     @Nullable
     @SerializedName("favorites")
     private ArrayList<Favorite> mFavorites;
@@ -33,6 +30,9 @@ public class UserDigest implements Parcelable {
     @Nullable
     @SerializedName("manga")
     private ArrayList<Manga> mManga;
+
+    @SerializedName("users")
+    private ArrayList<User> mUsers;
 
     @SerializedName("user_info")
     private Info mInfo;
@@ -57,12 +57,12 @@ public class UserDigest implements Parcelable {
         return mManga;
     }
 
-    public UserV2 getUser() {
+    public User getUser() {
         return mUsers.get(0);
     }
 
-    public String getUsername() {
-        return getUser().getName();
+    public String getUserId() {
+        return getUser().getId();
     }
 
     public boolean hasAnime() {
@@ -106,7 +106,7 @@ public class UserDigest implements Parcelable {
         public UserDigest createFromParcel(final Parcel source) {
             final UserDigest ud = new UserDigest();
             ud.mAnime = ParcelableUtils.readAbsAnimeListFromParcel(source);
-            ud.mUsers = source.createTypedArrayList(UserV2.CREATOR);
+            ud.mUsers = source.createTypedArrayList(User.CREATOR);
             ud.mFavorites = source.createTypedArrayList(Favorite.CREATOR);
             ud.mManga = source.createTypedArrayList(Manga.CREATOR);
             ud.mInfo = source.readParcelable(Info.class.getClassLoader());

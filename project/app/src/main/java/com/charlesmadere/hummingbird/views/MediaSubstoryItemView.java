@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
-import com.charlesmadere.hummingbird.models.AbsUser;
+import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.WatchedEpisodeSubstory;
 import com.charlesmadere.hummingbird.models.WatchlistStatusUpdateSubstory;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -24,8 +24,8 @@ import butterknife.OnClick;
 
 public class MediaSubstoryItemView extends RelativeLayout {
 
-    private AbsUser mUser;
     private NumberFormat mNumberFormat;
+    private User mUser;
 
     @BindView(R.id.kvtvAction)
     KeyValueTextView mAction;
@@ -70,9 +70,9 @@ public class MediaSubstoryItemView extends RelativeLayout {
         mNumberFormat = NumberFormat.getInstance();
     }
 
-    public void setContent(final AbsSubstory content, final AbsUser user) {
+    public void setContent(final AbsSubstory content, final User user) {
         mUser = user;
-        mAvatar.setImageURI(Uri.parse(user.getAvatarSmall()));
+        mAvatar.setImageURI(Uri.parse(user.getAvatarSmallest()));
         mTimeAgo.setText(content.getCreatedAt().getRelativeTimeText(getContext()));
 
         switch (content.getType()) {
@@ -90,13 +90,13 @@ public class MediaSubstoryItemView extends RelativeLayout {
         }
     }
 
-    private void setContent(final WatchedEpisodeSubstory content, final AbsUser user) {
-        mAction.setText(user.getName(), getResources().getString(R.string.watched_episode_x,
+    private void setContent(final WatchedEpisodeSubstory content, final User user) {
+        mAction.setText(user.getId(), getResources().getString(R.string.watched_episode_x,
                 mNumberFormat.format(content.getEpisodeNumber())));
     }
 
-    private void setContent(final WatchlistStatusUpdateSubstory content, final AbsUser user) {
-        mAction.setText(user.getName(), getResources().getString(
+    private void setContent(final WatchlistStatusUpdateSubstory content, final User user) {
+        mAction.setText(user.getId(), getResources().getString(
                 content.getNewStatus().getTextResId()));
     }
 

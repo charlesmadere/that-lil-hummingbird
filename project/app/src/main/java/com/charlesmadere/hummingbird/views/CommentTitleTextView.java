@@ -17,10 +17,10 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.misc.CustomTypefaceSpan;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
-import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.models.Group;
 import com.charlesmadere.hummingbird.models.TypefaceEntry;
+import com.charlesmadere.hummingbird.models.User;
 
 public class CommentTitleTextView extends AppCompatTextView implements AdapterView<CommentStory> {
 
@@ -79,14 +79,14 @@ public class CommentTitleTextView extends AppCompatTextView implements AdapterVi
         }
     }
 
-    private void setText(final AbsUser user) {
-        final SpannableString spannable = new SpannableString(user.getName());
+    private void setText(final User user) {
+        final SpannableString spannable = new SpannableString(user.getId());
         spannable.setSpan(mPrimaryNameSpan, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         setText(spannable);
     }
 
-    private void setText(final AbsUser poster, final AbsUser receiver) {
-        final SpannableStringBuilder spannable = new SpannableStringBuilder(poster.getName());
+    private void setText(final User poster, final User receiver) {
+        final SpannableStringBuilder spannable = new SpannableStringBuilder(poster.getId());
         spannable.setSpan(mPrimaryNameSpan, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannable.append(' ');
 
@@ -96,16 +96,16 @@ public class CommentTitleTextView extends AppCompatTextView implements AdapterVi
         spannable.append(' ');
 
         length = spannable.length();
-        spannable.append(receiver.getName());
+        spannable.append(receiver.getId());
         spannable.setSpan(mSecondaryNameSpan, length, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         setText(spannable);
     }
 
-    private void setText(final AbsUser user, final Group group) {
+    private void setText(final User user, final Group group) {
         final SpannableStringBuilder spannable = new SpannableStringBuilder();
 
-        spannable.append(user.getName());
+        spannable.append(user.getId());
         spannable.setSpan(mPrimaryNameSpan, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannable.append(' ');
 

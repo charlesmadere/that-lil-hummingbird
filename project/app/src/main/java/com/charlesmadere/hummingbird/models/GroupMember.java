@@ -23,7 +23,7 @@ public class GroupMember implements Parcelable {
     private String mUserId;
 
     // hydrated fields
-    private AbsUser mUser;
+    private User mUser;
 
 
     public String getGroupId() {
@@ -38,12 +38,16 @@ public class GroupMember implements Parcelable {
         return mRank;
     }
 
+    public User getUser() {
+        return mUser;
+    }
+
     public String getUserId() {
         return mUserId;
     }
 
     public void hydrate(final Feed feed) {
-        for (final AbsUser user : feed.getUsers()) {
+        for (final User user : feed.getUsers()) {
             if (mUserId.equalsIgnoreCase(user.getId())) {
                 mUser = user;
                 break;
@@ -67,6 +71,7 @@ public class GroupMember implements Parcelable {
         dest.writeString(mId);
         dest.writeString(mRank);
         dest.writeString(mUserId);
+        dest.writeParcelable(mUser, flags);
     }
 
     public static final Creator<GroupMember> CREATOR = new Creator<GroupMember>() {
@@ -78,6 +83,7 @@ public class GroupMember implements Parcelable {
             gm.mId = source.readString();
             gm.mRank = source.readString();
             gm.mUserId = source.readString();
+            gm.mUser = source.readParcelable(User.class.getClassLoader());
             return gm;
         }
 

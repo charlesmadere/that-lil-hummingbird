@@ -12,8 +12,8 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.FollowersActivity;
 import com.charlesmadere.hummingbird.activities.FollowingActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.UserDigest;
-import com.charlesmadere.hummingbird.models.UserV2;
 
 import java.text.NumberFormat;
 
@@ -71,13 +71,13 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
     @OnClick(R.id.kvtvFollowers)
     void onFollowersClick() {
         final Context context = getContext();
-        context.startActivity(FollowersActivity.getLaunchIntent(context, mUserDigest.getUsername()));
+        context.startActivity(FollowersActivity.getLaunchIntent(context, mUserDigest.getUserId()));
     }
 
     @OnClick(R.id.kvtvFollowing)
     void onFollowingClick() {
         final Context context = getContext();
-        context.startActivity(FollowingActivity.getLaunchIntent(context, mUserDigest.getUsername()));
+        context.startActivity(FollowingActivity.getLaunchIntent(context, mUserDigest.getUserId()));
     }
 
     @OnClick(R.id.kvtvWaifuOrHusbando)
@@ -96,9 +96,9 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
     public void setContent(final UserDigest content) {
         mUserDigest = content;
 
-        final UserV2 user = mUserDigest.getUser();
+        final User user = mUserDigest.getUser();
         final Resources res = getResources();
-        mTitle.setText(res.getString(R.string.about_x, user.getName()));
+        mTitle.setText(res.getString(R.string.about_x, user.getId()));
 
         if (user.hasAbout()) {
             mAbout.setText(user.getAbout());

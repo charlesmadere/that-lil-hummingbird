@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
-import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -63,8 +62,7 @@ public class UserProfileFragment extends BaseFragment implements
 
 
     public static UserProfileFragment create() {
-        final AbsUser currentUser = CurrentUser.get();
-        return create(currentUser.getName());
+        return create(CurrentUser.get().getId());
     }
 
     public static UserProfileFragment create(final String username) {
@@ -72,7 +70,7 @@ public class UserProfileFragment extends BaseFragment implements
     }
 
     public static UserProfileFragment create(final UserDigest userDigest) {
-        return create(userDigest.getUsername(), userDigest);
+        return create(userDigest.getUserId(), userDigest);
     }
 
     private static UserProfileFragment create(final String username, final UserDigest digest) {

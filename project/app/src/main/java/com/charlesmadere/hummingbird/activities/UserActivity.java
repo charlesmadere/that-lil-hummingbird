@@ -16,10 +16,9 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.UserFragmentAdapter;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
-import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
+import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.UserDigest;
-import com.charlesmadere.hummingbird.models.UserV2;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.SimpleProgressView;
@@ -63,12 +62,12 @@ public class UserActivity extends BaseDrawerActivity {
     ViewPager mViewPager;
 
 
-    public static Intent getLaunchIntent(final Context context, final AbsUser user) {
-        return getLaunchIntent(context, user.getName());
+    public static Intent getLaunchIntent(final Context context, final User user) {
+        return getLaunchIntent(context, user.getId());
     }
 
     public static Intent getLaunchIntent(final Context context, final String username) {
-        if (username.equalsIgnoreCase(CurrentUser.get().getName())) {
+        if (username.equalsIgnoreCase(CurrentUser.get().getId())) {
             return HomeActivity.getLaunchIntent(context);
         } else {
             return new Intent(context, UserActivity.class)
@@ -154,10 +153,10 @@ public class UserActivity extends BaseDrawerActivity {
     private void showUserDigest(final UserDigest userDigest) {
         mUserDigest = userDigest;
 
-        final UserV2 user = mUserDigest.getUser();
-        PaletteUtils.applyParallaxColors(user.getCoverImage(), this, mAppBarLayout,
+        final User user = mUserDigest.getUser();
+        PaletteUtils.applyParallaxColors(user.getCoverImageUrl(), this, mAppBarLayout,
                 mCollapsingToolbarLayout, mCoverImage, mTabLayout);
-        mAvatar.setImageURI(Uri.parse(user.getAvatar()));
+        mAvatar.setImageURI(Uri.parse(user.getAvatarLargest()));
 
         mViewPager.setAdapter(new UserFragmentAdapter(this, mUserDigest));
         mViewPager.setCurrentItem(mStartingPosition, false);

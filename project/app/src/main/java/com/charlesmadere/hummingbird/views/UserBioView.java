@@ -7,9 +7,8 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
-import com.charlesmadere.hummingbird.models.AbsUser;
+import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.UserDigest;
-import com.charlesmadere.hummingbird.models.UserV2;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,8 +46,8 @@ public class UserBioView extends CardView implements AdapterView<UserDigest> {
 
     @Override
     public void setContent(final UserDigest content) {
-        final AbsUser user = content.getUser();
-        mTitle.setText(getResources().getString(R.string.bio_for_x, user.getName()));
+        final User user = content.getUser();
+        mTitle.setText(getResources().getString(R.string.bio_for_x, user.getId()));
 
         if (user.hasBio()) {
             mNoDetails.setVisibility(GONE);

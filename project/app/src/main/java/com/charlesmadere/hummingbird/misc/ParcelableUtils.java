@@ -7,7 +7,6 @@ import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AbsNotification;
 import com.charlesmadere.hummingbird.models.AbsStory;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
-import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.AnimeV1;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.AnimeV3;
@@ -20,8 +19,6 @@ import com.charlesmadere.hummingbird.models.ProfileCommentNotification;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
 import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.charlesmadere.hummingbird.models.UserDigest;
-import com.charlesmadere.hummingbird.models.UserV1;
-import com.charlesmadere.hummingbird.models.UserV2;
 import com.charlesmadere.hummingbird.models.WatchedEpisodeSubstory;
 import com.charlesmadere.hummingbird.models.WatchlistStatusUpdateSubstory;
 
@@ -388,75 +385,6 @@ public final class ParcelableUtils {
 
         for (final AbsSubstory substory : list) {
             writeAbsSubstoryToParcel(substory, dest, flags);
-        }
-    }
-
-    @Nullable
-    public static <T extends AbsUser> T readAbsUserFromParcel(final Parcel source) {
-        final AbsUser.Version version = source.readParcelable(
-                AbsUser.Version.class.getClassLoader());
-
-        if (version == null) {
-            return null;
-        }
-
-        final T user;
-
-        switch (version) {
-            case V1:
-                user = source.readParcelable(UserV1.class.getClassLoader());
-                break;
-
-            case V2:
-                user = source.readParcelable(UserV2.class.getClassLoader());
-                break;
-
-            default:
-                throw new RuntimeException("encountered unknown " +
-                        AbsUser.Version.class.getName() + ": \"" + version + '"');
-        }
-
-        return user;
-    }
-
-    @Nullable
-    public static ArrayList<AbsUser> readAbsUserListFromParcel(final Parcel source) {
-        final int count = source.readInt();
-
-        if (count == 0) {
-            return null;
-        }
-
-        final ArrayList<AbsUser> list = new ArrayList<>(count);
-
-        for (int i = 0; i < count; ++i) {
-            list.add(readAbsUserFromParcel(source));
-        }
-
-        return list;
-    }
-
-    public static void writeAbsUserToParcel(@Nullable final AbsUser user, final Parcel dest,
-            final int flags) {
-        if (user == null) {
-            dest.writeParcelable(null, flags);
-        } else {
-            dest.writeParcelable(user.getVersion(), flags);
-            dest.writeParcelable(user, flags);
-        }
-    }
-
-    public static void writeAbsUserListToParcel(@Nullable final List<AbsUser> list,
-            final Parcel dest, final int flags) {
-        if (list == null || list.isEmpty()) {
-            dest.writeInt(0);
-            return;
-        }
-
-        dest.writeInt(list.size());
-
-        for (final AbsUser user : list) {
-            writeAbsUserToParcel(user, dest, flags);
         }
     }
 

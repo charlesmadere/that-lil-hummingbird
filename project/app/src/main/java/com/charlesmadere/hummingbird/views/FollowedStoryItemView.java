@@ -9,9 +9,9 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
-import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.FollowedStory;
 import com.charlesmadere.hummingbird.models.FollowedSubstory;
+import com.charlesmadere.hummingbird.models.User;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -62,10 +62,10 @@ public class FollowedStoryItemView extends CardView implements AdapterView<Follo
 
     @Override
     public void setContent(final FollowedStory content) {
-        final AbsUser user = content.getUser();
-        mAvatar.setImageURI(Uri.parse(user.getAvatar()));
+        final User user = content.getUser();
+        mAvatar.setImageURI(Uri.parse(user.getAvatarLargest()));
 
-        mTitle.setText(user.getName(), content.getSubstoryCount());
+        mTitle.setText(user.getId(), content.getSubstoryCount());
         mTimeAgo.setText(content.getCreatedAt().getRelativeTimeText(getContext()));
 
         final ArrayList<AbsSubstory> substories = content.getSubstories();
