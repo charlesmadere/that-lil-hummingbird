@@ -98,7 +98,6 @@ public class NavigationDrawerItemView extends AppCompatTextView {
 
     public enum Entry {
         HOME(R.drawable.ic_home, R.string.home),
-        HUMMINGBIRD_ON_THE_WEB(R.drawable.ic_open_in_browser_white_24dp, R.string.hummingbird_on_the_web),
         NOTIFICATIONS(R.drawable.ic_notifications, R.string.notifications),
         SEARCH(R.drawable.ic_search, R.string.search),
         SETTINGS(R.drawable.ic_settings, R.string.settings);

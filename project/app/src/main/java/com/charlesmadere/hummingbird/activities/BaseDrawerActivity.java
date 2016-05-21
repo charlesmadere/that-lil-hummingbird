@@ -2,7 +2,6 @@ package com.charlesmadere.hummingbird.activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -79,12 +78,6 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
         switch (v.getEntry()) {
             case HOME:
                 intent = HomeActivity.getLaunchIntent(this);
-                break;
-
-            case HUMMINGBIRD_ON_THE_WEB:
-                intent = new Intent()
-                        .setAction(Intent.ACTION_VIEW)
-                        .setData(Uri.parse("https://www.hummingbird.me/"));
                 break;
 
             case NOTIFICATIONS:
