@@ -90,6 +90,8 @@
                     style="@style/ResponsiveWidthCardItem" />
                 <LinearLayout
                     android:id="@+id/llYouTubeLink"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     style="@style/ResponsiveWidthCardItem">
                     <com.charlesmadere.hummingbird.views.TypefaceTextView
                         android:text="@string/youtube_link"
