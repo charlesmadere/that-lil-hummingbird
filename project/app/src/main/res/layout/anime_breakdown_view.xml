@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/animeBreakdownView"
+    android:paddingBottom="@dimen/root_padding"
     style="@style/ResponsiveWidthCard">
     <LinearLayout
         style="@style/ResponsiveWidthCardInternal">
@@ -85,7 +86,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/root_padding_double"
             android:layout_width="wrap_content"
-            android:paddingBottom="@dimen/root_padding"
             android:paddingEnd="@dimen/root_padding_double"
             android:paddingStart="@dimen/root_padding_double"
             tools:text="6 days, 2 hours, and 29 minutes" />
