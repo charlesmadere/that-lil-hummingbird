@@ -91,6 +91,26 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
+                    android:layout_marginBottom="@dimen/root_padding"
+                    style="@style/ResponsiveWidthCard">
+                    <LinearLayout
+                        style="@style/ResponsiveWidthCardInternal">
+                        <com.charlesmadere.hummingbird.views.TypefaceTextView
+                            android:text="@string/hummingbird"
+                            style="@style/ResponsiveWidthCardHeader" />
+                        <com.charlesmadere.hummingbird.views.TypefaceTextView
+                            android:id="@+id/tvHummingbirdOnTheWeb"
+                            android:text="@string/hummingbird_on_the_web"
+                            style="@style/ResponsiveWidthCardItem" />
+                        <com.charlesmadere.hummingbird.views.KeyValueTextView
+                            android:id="@+id/kvtvGetHummingbirdPro"
+                            app:keyText="@string/get_hummingbird"
+                            app:valueText="@string/pro"
+                            app:valueTextColor="?attr/colorAccent"
+                            style="@style/ResponsiveWidthCardItem" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
                     style="@style/ResponsiveWidthCard">
                     <LinearLayout
                         style="@style/ResponsiveWidthCardInternal">

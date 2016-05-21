@@ -81,9 +81,19 @@ public class SettingsActivity extends BaseDrawerActivity {
         setContentView(R.layout.activity_settings);
     }
 
+    @OnClick(R.id.kvtvGetHummingbirdPro)
+    void onGetHummingbirdProClick() {
+        openUrl(Constants.HUMMINGBIRD_PRO_URL);
+    }
+
     @OnClick(R.id.tvGitHub)
     void onGitHubClick() {
         openUrl(Constants.GITHUB_URL);
+    }
+
+    @OnClick(R.id.tvHummingbirdOnTheWeb)
+    void onHummingbirdWebClick() {
+        openUrl(Constants.HUMMINGBIRD_URL);
     }
 
     @OnClick(R.id.tvLogViewer)

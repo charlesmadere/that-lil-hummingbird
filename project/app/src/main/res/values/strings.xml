@@ -88,6 +88,8 @@
     <string name="general">General</string>
     <string name="genre">Genre</string>
     <string name="genres">Genres</string>
+    <string name="get_hummingbird">Get Hummingbird</string>
+    <string name="get_hummingbird_pro">Get Hummingbird Pro</string>
     <string name="github">GitHub</string>
     <string name="group_activity">Group Activity</string>
     <string name="groups">Groups</string>
@@ -95,6 +97,7 @@
     <string name="has_dropped">has dropped</string>
     <string name="has_placed_on_hold">has placed on hold</string>
     <string name="home">Home</string>
+    <string name="hummingbird">Hummingbird</string>
     <string name="hummingbird_on_the_web">Hummingbird on the Web</string>
     <string name="husbando">Husbando</string>
     <string name="husbando_is">Husbando is</string>
