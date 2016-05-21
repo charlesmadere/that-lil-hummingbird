@@ -158,6 +158,13 @@ public class AnimeDetailsFragment extends BaseFragment {
             mGenresContainer.setVisibility(View.VISIBLE);
         }
 
+        if (info.hasLanguages()) {
+            mLanguagesHeader.setText(info.getLanguagesString(resources));
+            mLanguagesBody.setText(resources.getQuantityText(R.plurals.languages,
+                    info.getLanguages().size()));
+            mLanguagesContainer.setVisibility(View.VISIBLE);
+        }
+
         if (info.hasAgeRating()) {
             mAgeRating.setText(info.getAgeRating().getTextResId());
             mAgeRatingContainer.setVisibility(View.VISIBLE);
@@ -167,13 +174,6 @@ public class AnimeDetailsFragment extends BaseFragment {
             } else {
                 mAgeRatingGuide.setText(R.string.age_rating);
             }
-        }
-
-        if (info.hasLanguages()) {
-            mLanguagesHeader.setText(info.getLanguagesString(resources));
-            mLanguagesBody.setText(resources.getQuantityText(R.plurals.languages,
-                    info.getLanguages().size()));
-            mLanguagesContainer.setVisibility(View.VISIBLE);
         }
 
         if (info.hasEpisodeCount() && info.getShowType() != ShowType.MOVIE) {
