@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.BuildConfig;
@@ -16,6 +17,7 @@ import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.NightMode;
 import com.charlesmadere.hummingbird.models.TitleType;
 import com.charlesmadere.hummingbird.preferences.Preferences;
+import com.charlesmadere.hummingbird.views.KeyValueTextView;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 
 import butterknife.BindView;
@@ -24,6 +26,9 @@ import butterknife.OnClick;
 public class SettingsActivity extends BaseDrawerActivity {
 
     private static final String TAG = "SettingsActivity";
+
+    @BindView(R.id.kvtvGetHummingbirdPro)
+    KeyValueTextView mGetHummingbirdPro;
 
     @BindView(R.id.tvAnimeTitleLanguage)
     TextView mAnimeTitleLanguage;
@@ -177,6 +182,11 @@ public class SettingsActivity extends BaseDrawerActivity {
         super.onViewsBound();
         mAnimeTitleLanguage.setText(Preferences.General.TitleLanguage.get().getTextResId());
         mTheme.setText(Preferences.General.Theme.get().getTextResId());
+
+        if (!CurrentUser.get().isPro()) {
+            mGetHummingbirdPro.setVisibility(View.VISIBLE);
+        }
+
         mVersion.setText(getString(R.string.version_format, BuildConfig.VERSION_NAME,
                 BuildConfig.VERSION_CODE));
     }
