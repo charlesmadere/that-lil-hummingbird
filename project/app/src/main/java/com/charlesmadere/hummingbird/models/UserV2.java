@@ -11,6 +11,7 @@ public class UserV2 extends AbsUser implements Parcelable {
 
     private static final String AVATAR_TEMPLATE_STUB = "\\{size\\}";
     private static final String AVATAR_TEMPLATE_SMALL = "small";
+    private static final String AVATAR_TEMPLATE_THUMB = "thumb";
     private static final String AVATAR_TEMPLATE_THUMB_SMALL = "thumb_small";
 
     @SerializedName("is_admin")
