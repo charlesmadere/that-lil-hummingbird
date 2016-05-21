@@ -96,7 +96,7 @@ public class AnimeBreakdownView extends CardView implements AdapterView<UserDige
         setGenreView(mGenre5, topGenres, 6);
 
         mLifeSpentOnAnime.setText(MiscUtils.getElapsedTime(getResources(),
-                info.getLifeSpentOnAnime()));
+                info.getLifeSpentOnAnimeSeconds()));
     }
 
     private void setGenreView(final AnimeBreakdownGenreView view,

@@ -430,8 +430,12 @@ public class UserDigest implements Parcelable {
             return mId;
         }
 
-        public long getLifeSpentOnAnime() {
+        public long getLifeSpentOnAnimeMinutes() {
             return mLifeSpentOnAnime;
+        }
+
+        public long getLifeSpentOnAnimeSeconds() {
+            return mLifeSpentOnAnime * 60L;
         }
 
         public Genre getTopGenre() {
