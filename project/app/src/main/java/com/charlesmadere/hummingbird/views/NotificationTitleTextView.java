@@ -14,7 +14,9 @@ import com.charlesmadere.hummingbird.misc.CustomTypefaceSpan;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.AbsNotification;
 import com.charlesmadere.hummingbird.models.AbsStory;
+import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.CommentStory;
+import com.charlesmadere.hummingbird.models.ReplySubstory;
 import com.charlesmadere.hummingbird.models.TypefaceEntry;
 
 public class NotificationTitleTextView extends AppCompatTextView {
@@ -63,6 +65,10 @@ public class NotificationTitleTextView extends AppCompatTextView {
                 setText((AbsNotification.StorySource) source);
                 break;
 
+            case SUBSTORY:
+                setText((AbsNotification.SubstorySource) source);
+                break;
+
             default:
                 throw new RuntimeException("encountered unknown " +
                         AbsNotification.AbsSource.Type.class.getName() + ": \"" +
@@ -84,6 +90,20 @@ public class NotificationTitleTextView extends AppCompatTextView {
         }
     }
 
+    private void setText(final AbsNotification.SubstorySource source) {
+        final AbsSubstory substory = source.getSubstory();
+
+        switch (substory.getType()) {
+            case REPLY:
+                setText((ReplySubstory) substory);
+                break;
+
+            default:
+                throw new RuntimeException("encountered unknown " +
+                        AbsSubstory.Type.class.getName() + ": \"" + substory.getType() + '"');
+        }
+    }
+
     private void setText(final CommentStory story) {
         final SpannableStringBuilder spannable = new SpannableStringBuilder();
 
@@ -98,6 +118,10 @@ public class NotificationTitleTextView extends AppCompatTextView {
         spannable.setSpan(mSecondaryTypefaceSpan, length, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         setText(spannable);
+    }
+
+    private void setText(final ReplySubstory substory) {
+        // TODO
     }
 
 }

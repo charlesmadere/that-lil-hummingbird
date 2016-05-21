@@ -5,30 +5,6 @@ import android.os.Parcelable;
 
 public class ProfileCommentNotification extends AbsNotification implements Parcelable {
 
-    public AbsUser getPoster() {
-        final AbsSource source = getSource();
-
-        switch (source.getType()) {
-            case STORY:
-                return getPoster(((StorySource) source).getStory());
-
-            default:
-                throw new RuntimeException("encountered unknown " +
-                        AbsNotification.AbsSource.Type.class.getName() + ": \"" +
-                        source.getType() + '"');
-        }
-    }
-
-    private AbsUser getPoster(final AbsStory story) {
-        switch (story.getType()) {
-            case COMMENT:
-                return ((CommentStory) story).getPoster();
-
-            default:
-                return story.getUser();
-        }
-    }
-
     @Override
     public Type getType() {
         return Type.PROFILE_COMMENT;

@@ -11,18 +11,19 @@ import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsNotification;
 import com.charlesmadere.hummingbird.models.AbsStory;
-import com.charlesmadere.hummingbird.models.CommentStory;
-import com.charlesmadere.hummingbird.models.ProfileCommentNotification;
+import com.charlesmadere.hummingbird.models.AbsSubstory;
+import com.charlesmadere.hummingbird.models.CommentReplyNotification;
+import com.charlesmadere.hummingbird.models.ReplySubstory;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ProfileCommentNotificationItemView extends CardView implements
-        AdapterView<ProfileCommentNotification> {
+public class CommentReplyNotificationItemView extends CardView implements
+        AdapterView<CommentReplyNotification> {
 
-    private ProfileCommentNotification mProfileCommentNotification;
+    private CommentReplyNotification mCommentReplyNotification;
 
     @BindView(R.id.notificationTitleTextView)
     NotificationTitleTextView mNotificationTitleTextView;
@@ -34,23 +35,23 @@ public class ProfileCommentNotificationItemView extends CardView implements
     TextView mTimeAgo;
 
 
-    public ProfileCommentNotificationItemView(final Context context, final AttributeSet attrs) {
+    public CommentReplyNotificationItemView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ProfileCommentNotificationItemView(final Context context, final AttributeSet attrs,
+    public CommentReplyNotificationItemView(final Context context, final AttributeSet attrs,
             final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    private void handleStoryAvatarClick(final AbsNotification.StorySource source) {
-        final AbsStory story = source.getStory();
+    private void handleStoryAvatarClick(final AbsNotification.SubstorySource source) {
+        final AbsSubstory story = source.getSubstory();
         final Context context = getContext();
 
         switch (story.getType()) {
-            case COMMENT:
+            case REPLY:
                 context.startActivity(UserActivity.getLaunchIntent(context,
-                        ((CommentStory) story).getPoster()));
+                        ((ReplySubstory) story).getUser()));
                 break;
 
             default:
@@ -61,11 +62,11 @@ public class ProfileCommentNotificationItemView extends CardView implements
 
     @OnClick(R.id.sdvAvatar)
     void onAvatarClick() {
-        final AbsNotification.AbsSource source = mProfileCommentNotification.getSource();
+        final AbsNotification.AbsSource source = mCommentReplyNotification.getSource();
 
         switch (source.getType()) {
-            case STORY:
-                handleStoryAvatarClick((AbsNotification.StorySource) source);
+            case SUBSTORY:
+                handleStoryAvatarClick((AbsNotification.SubstorySource) source);
                 break;
 
             default:
@@ -87,12 +88,12 @@ public class ProfileCommentNotificationItemView extends CardView implements
     }
 
     @Override
-    public void setContent(final ProfileCommentNotification content) {
-        mProfileCommentNotification = content;
+    public void setContent(final CommentReplyNotification content) {
+        mCommentReplyNotification = content;
 
-        mAvatar.setImageURI(Uri.parse(mProfileCommentNotification.getUser().getAvatar()));
-        mNotificationTitleTextView.setText(mProfileCommentNotification);
-        mTimeAgo.setText(mProfileCommentNotification.getCreatedAt().getRelativeTimeText(
+        mAvatar.setImageURI(Uri.parse(mCommentReplyNotification.getUser().getAvatar()));
+        mNotificationTitleTextView.setText(mCommentReplyNotification);
+        mTimeAgo.setText(mCommentReplyNotification.getCreatedAt().getRelativeTimeText(
                 getContext()));
     }
 

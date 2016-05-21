@@ -40,6 +40,10 @@ public abstract class AbsNotification implements Parcelable {
 
     public abstract Type getType();
 
+    public AbsUser getUser() {
+        return mSource.getUser();
+    }
+
     public void hydrate(final Feed feed) {
         mSource.hydrate(feed);
     }
@@ -79,9 +83,9 @@ public abstract class AbsNotification implements Parcelable {
 
         public abstract Type getType();
 
-        public void hydrate(final Feed feed) {
-            // method intentionally blank, children can override
-        }
+        public abstract AbsUser getUser();
+
+        public abstract void hydrate(final Feed feed);
 
         @Override
         public int describeContents() {
@@ -99,12 +103,18 @@ public abstract class AbsNotification implements Parcelable {
 
         public enum Type implements Parcelable {
             @SerializedName("story")
-            STORY;
+            STORY,
+
+            @SerializedName("substory")
+            SUBSTORY;
 
             public static Type from(final String type) {
                 switch (type) {
                     case "story":
                         return STORY;
+
+                    case "substory":
+                        return SUBSTORY;
 
                     default:
                         throw new IllegalArgumentException("encountered unknown " +
@@ -151,6 +161,10 @@ public abstract class AbsNotification implements Parcelable {
                         source = context.deserialize(json, StorySource.class);
                         break;
 
+                    case SUBSTORY:
+                        source = context.deserialize(json, SubstorySource.class);
+                        break;
+
                     default:
                         throw new RuntimeException("encountered unknown " + Type.class.getName()
                                 + ": \"" + type + '"');
@@ -176,9 +190,18 @@ public abstract class AbsNotification implements Parcelable {
         }
 
         @Override
-        public void hydrate(final Feed feed) {
-            super.hydrate(feed);
+        public AbsUser getUser() {
+            switch (mStory.getType()) {
+                case COMMENT:
+                    return ((CommentStory) mStory).getPoster();
 
+                default:
+                    return mStory.getUser();
+            }
+        }
+
+        @Override
+        public void hydrate(final Feed feed) {
             for (final AbsStory story : feed.getStories()) {
                 if (getId().equalsIgnoreCase(story.getId())) {
                     mStory = story;
@@ -215,12 +238,84 @@ public abstract class AbsNotification implements Parcelable {
     }
 
 
+    public static class SubstorySource extends AbsSource implements Parcelable {
+        // hydrated fields
+        private AbsSubstory mSubstory;
+
+        public AbsSubstory getSubstory() {
+            return mSubstory;
+        }
+
+        @Override
+        public Type getType() {
+            return Type.SUBSTORY;
+        }
+
+        @Override
+        public AbsUser getUser() {
+            switch (mSubstory.getType()) {
+                case FOLLOWED:
+                    return ((FollowedSubstory) mSubstory).getUser();
+
+                case REPLY:
+                    return ((ReplySubstory) mSubstory).getUser();
+
+                default:
+                    throw new RuntimeException("encountered illegal " +
+                            AbsSubstory.Type.class.getName() + ": \"" + mSubstory.getType() + '"');
+            }
+        }
+
+        @Override
+        public void hydrate(final Feed feed) {
+            for (final AbsSubstory substory : feed.getSubstories()) {
+                if (getId().equalsIgnoreCase(substory.getId())) {
+                    mSubstory = substory;
+                    break;
+                }
+            }
+        }
+
+        @Override
+        protected void readFromParcel(final Parcel source) {
+            super.readFromParcel(source);
+            mSubstory = ParcelableUtils.readAbsSubstoryFromParcel(source);
+        }
+
+        @Override
+        public void writeToParcel(final Parcel dest, final int flags) {
+            super.writeToParcel(dest, flags);
+            ParcelableUtils.writeAbsSubstoryToParcel(mSubstory, dest, flags);
+        }
+
+        public static final Creator<SubstorySource> CREATOR = new Creator<SubstorySource>() {
+            @Override
+            public SubstorySource createFromParcel(final Parcel source) {
+                final SubstorySource ss = new SubstorySource();
+                ss.readFromParcel(source);
+                return ss;
+            }
+
+            @Override
+            public SubstorySource[] newArray(final int size) {
+                return new SubstorySource[size];
+            }
+        };
+    }
+
+
     public enum Type implements Parcelable {
+        @SerializedName("comment_reply")
+        COMMENT_REPLY,
+
         @SerializedName("profile_comment")
         PROFILE_COMMENT;
 
         public static Type from(final String type) {
             switch (type) {
+                case "comment_reply":
+                    return COMMENT_REPLY;
+
                 case "profile_comment":
                     return PROFILE_COMMENT;
 
@@ -265,6 +360,10 @@ public abstract class AbsNotification implements Parcelable {
             final AbsNotification notification;
 
             switch (type) {
+                case COMMENT_REPLY:
+                    notification = context.deserialize(json, CommentReplyNotification.class);
+                    break;
+
                 case PROFILE_COMMENT:
                     notification = context.deserialize(json, ProfileCommentNotification.class);
                     break;

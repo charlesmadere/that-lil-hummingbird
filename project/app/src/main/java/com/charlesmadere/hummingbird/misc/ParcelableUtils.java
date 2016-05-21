@@ -11,6 +11,7 @@ import com.charlesmadere.hummingbird.models.AbsUser;
 import com.charlesmadere.hummingbird.models.AnimeV1;
 import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.AnimeV3;
+import com.charlesmadere.hummingbird.models.CommentReplyNotification;
 import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.models.FollowedStory;
 import com.charlesmadere.hummingbird.models.FollowedSubstory;
@@ -114,9 +115,12 @@ public final class ParcelableUtils {
         final T notification;
 
         switch (type) {
+            case COMMENT_REPLY:
+                notification = source.readParcelable(CommentReplyNotification.class.getClassLoader());
+                break;
+
             case PROFILE_COMMENT:
-                notification = source.readParcelable(
-                        ProfileCommentNotification.class.getClassLoader());
+                notification = source.readParcelable(ProfileCommentNotification.class.getClassLoader());
                 break;
 
             default:
@@ -183,6 +187,10 @@ public final class ParcelableUtils {
         switch (type) {
             case STORY:
                 absSource = source.readParcelable(AbsNotification.StorySource.class.getClassLoader());
+                break;
+
+            case SUBSTORY:
+                absSource = source.readParcelable(AbsNotification.SubstorySource.class.getClassLoader());
                 break;
 
             default:
@@ -331,8 +339,7 @@ public final class ParcelableUtils {
                 break;
 
             case WATCHLIST_STATUS_UPDATE:
-                substory = source.readParcelable(
-                        WatchlistStatusUpdateSubstory.class.getClassLoader());
+                substory = source.readParcelable(WatchlistStatusUpdateSubstory.class.getClassLoader());
                 break;
 
             default:

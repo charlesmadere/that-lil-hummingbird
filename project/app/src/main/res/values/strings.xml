@@ -197,6 +197,7 @@
     <string name="whats_trending">What\'s Trending</string>
     <string name="write_something_">Write something…</string>
     <string name="wrote_a_comment_on_your_profile">wrote a comment on your profile</string>
+    <string name="wrote_a_reply_to_your_comment">wrote a reply to your comment</string>
     <string name="x_complete">%1$s Complete</string>
     <string name="x_is_currently_watching">%1$s is currently watching</string>
     <string name="x_has_completed">%1$s has completed</string>
@@ -209,6 +210,11 @@
     <string name="yes">Yes</string>
     <string name="youtube_link">YouTube Link</string>
 
+    <plurals name="episodes">
+        <item quantity="one">Episode</item>
+        <item quantity="other">Episodes</item>
+    </plurals>
+
     <plurals name="followers">
         <item quantity="one">Follower</item>
         <item quantity="other">Followers</item>
@@ -217,6 +223,21 @@
     <plurals name="followers_x">
         <item quantity="one">Follower %1$s</item>
         <item quantity="other">Followers %1$s</item>
+    </plurals>
+
+    <plurals name="followed_x_users">
+        <item quantity="one">followed %1$s user</item>
+        <item quantity="other">followed %2$s users</item>
+    </plurals>
+
+    <plurals name="out_of_x_titles">
+        <item quantity="one">out of %1$s title</item>
+        <item quantity="other">out of %1$s titles</item>
+    </plurals>
+
+    <plurals name="producers">
+        <item quantity="one">Producer</item>
+        <item quantity="other">Producers</item>
     </plurals>
 
     <plurals name="x_episodes">
@@ -257,21 +278,6 @@
     <plurals name="x_years">
         <item quantity="one">%1$s year</item>
         <item quantity="other">%1$s years</item>
-    </plurals>
-
-    <plurals name="followed_x_users">
-        <item quantity="one">followed %1$s user</item>
-        <item quantity="other">followed %2$s users</item>
-    </plurals>
-
-    <plurals name="out_of_x_titles">
-        <item quantity="one">out of %1$s title</item>
-        <item quantity="other">out of %1$s titles</item>
-    </plurals>
-
-    <plurals name="producers">
-        <item quantity="one">Producer</item>
-        <item quantity="other">Producers</item>
     </plurals>
 
 </resources>

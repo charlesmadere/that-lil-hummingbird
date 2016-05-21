@@ -63,7 +63,7 @@
             android:launchMode="singleTop"
             android:name=".activities.LoginActivity"
             android:theme="@style/HummingbirdTheme_Login"
-            android:windowSoftInputMode="adjustResize|stateUnchanged" />
+            android:windowSoftInputMode="adjustPan|stateUnchanged" />
 
         <activity
             android:label="@string/log_viewer"

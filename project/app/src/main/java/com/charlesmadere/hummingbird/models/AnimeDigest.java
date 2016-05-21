@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.charlesmadere.hummingbird.preferences.Preferences;
@@ -283,6 +284,15 @@ public class AnimeDigest implements Parcelable {
             return mName;
         }
 
+        public boolean hasImage() {
+            return !TextUtils.isEmpty(mImage);
+        }
+
+        @Override
+        public String toString() {
+            return getName();
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -360,6 +370,11 @@ public class AnimeDigest implements Parcelable {
 
         public boolean hasThumbnail() {
             return !TextUtils.isEmpty(mThumbnail);
+        }
+
+        @Override
+        public String toString() {
+            return getTitle();
         }
 
         @Override
@@ -663,6 +678,15 @@ public class AnimeDigest implements Parcelable {
             return mYouTubeVideoId;
         }
 
+        @Nullable
+        public String getYouTubeVideoUrl() {
+            if (!hasYouTubeVideoId()) {
+                return null;
+            }
+
+            return Constants.YOUTUBE_BASE_URL + mYouTubeVideoId;
+        }
+
         public boolean hasAgeRating() {
             return mAgeRating != null;
         }
@@ -862,6 +886,11 @@ public class AnimeDigest implements Parcelable {
         }
 
         @Override
+        public String toString() {
+            return getName();
+        }
+
+        @Override
         public int describeContents() {
             return 0;
         }
@@ -905,6 +934,11 @@ public class AnimeDigest implements Parcelable {
 
         public String getName() {
             return mName;
+        }
+
+        @Override
+        public String toString() {
+            return getName();
         }
 
         @Override

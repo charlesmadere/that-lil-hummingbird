@@ -52,60 +52,53 @@
                     tools:text="@string/pg13"
                     tools:visibility="visible"
                     style="@style/ResponsiveWidthCardItem" />
-                <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:id="@+id/tvEpisodeCount"
-                    tools:text="20 episodes"
+                <com.charlesmadere.hummingbird.views.KeyValueTextView
+                    android:id="@+id/kvtvEpisodeCount"
+                    android:visibility="gone"
+                    tools:text="Episodes 20"
                     tools:visibility="visible"
-                    style="@style/AnimeEpisodeCount" />
-                <android.support.v4.widget.Space
-                    android:layout_height="@dimen/root_padding_half"
-                    android:layout_width="match_parent" />
+                    style="@style/ResponsiveWidthCardItem" />
                 <com.charlesmadere.hummingbird.views.KeyValueTextView
                     android:id="@+id/kvtvAired"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
                     android:visibility="gone"
                     tools:text="Aired March 31st, 2014"
-                    tools:visibility="visible" />
+                    tools:visibility="visible"
+                    style="@style/ResponsiveWidthCardItem" />
                 <com.charlesmadere.hummingbird.views.KeyValueTextView
                     android:id="@+id/kvtvStartedAiring"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
                     android:visibility="gone"
                     tools:text="Started airing March 31st, 2014"
-                    tools:visibility="visible" />
+                    tools:visibility="visible"
+                    style="@style/ResponsiveWidthCardItem" />
                 <com.charlesmadere.hummingbird.views.KeyValueTextView
                     android:id="@+id/kvtvFinishedAiring"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
                     android:visibility="gone"
                     tools:text="Finished airing August 31st, 2014"
-                    tools:visibility="visible" />
+                    tools:visibility="visible"
+                    style="@style/ResponsiveWidthCardItem" />
                 <com.charlesmadere.hummingbird.views.KeyValueTextView
                     android:id="@+id/kvtvCommunityRating"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
                     android:visibility="gone"
                     tools:text="Community rating 4.125"
-                    tools:visibility="visible" />
+                    tools:visibility="visible"
+                    style="@style/ResponsiveWidthCardItem" />
                 <com.charlesmadere.hummingbird.views.KeyValueTextView
                     android:id="@+id/kvtvProducers"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
                     android:visibility="gone"
                     tools:text="Producers Nintendo, Microsoft, Google"
-                    tools:visibility="visible" />
-                <ImageButton
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/youtube_link"
-                    android:id="@+id/ibYouTubeLink"
-                    android:layout_gravity="end"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:padding="@dimen/root_padding_half"
-                    android:src="@drawable/ic_video_library_24dp"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    tools:visibility="visible"
+                    style="@style/ResponsiveWidthCardItem" />
+                <LinearLayout
+                    android:id="@+id/llYouTubeLink"
+                    style="@style/ResponsiveWidthCardItem">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:text="@string/youtube_link"
+                        style="@style/ResponsiveWidthCardItemHeader" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvYouTubeLink"
+                        tools:text="https://www.youtube.com/blah"
+                        style="@style/ResponsiveWidthCardItemBody" />
+                </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView

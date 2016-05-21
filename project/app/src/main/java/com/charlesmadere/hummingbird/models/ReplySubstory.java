@@ -37,8 +37,6 @@ public class ReplySubstory extends AbsSubstory implements Parcelable {
 
     @Override
     public void hydrate(final Feed feed) {
-        super.hydrate(feed);
-
         for (final AbsUser user : feed.getUsers()) {
             if (mUserId.equalsIgnoreCase(user.getId())) {
                 mUser = user;

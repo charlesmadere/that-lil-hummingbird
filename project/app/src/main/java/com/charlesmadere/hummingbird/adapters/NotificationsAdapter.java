@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.AbsNotification;
+import com.charlesmadere.hummingbird.models.CommentReplyNotification;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.ProfileCommentNotification;
 
@@ -18,7 +19,8 @@ public class NotificationsAdapter extends BaseMultiAdapter {
 
     @Override
     protected HashMap<Class, Integer> getViewKeyMap() {
-        final HashMap<Class, Integer> map = new HashMap<>(1);
+        final HashMap<Class, Integer> map = new HashMap<>(2);
+        map.put(CommentReplyNotification.class, R.layout.item_comment_reply_notification);
         map.put(ProfileCommentNotification.class, R.layout.item_profile_comment_notification);
         return map;
     }

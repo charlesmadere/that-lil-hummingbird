@@ -1,17 +1,17 @@
 package com.charlesmadere.hummingbird.fragments;
 
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.GalleryActivity;
-import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.ShowType;
 import com.charlesmadere.hummingbird.models.SimpleDate;
@@ -31,14 +31,17 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     private AnimeDigest mAnimeDigest;
 
-    @BindView(R.id.ibYouTubeLink)
-    ImageButton mYouTubeLink;
+    @BindView(R.id.llYouTubeLink)
+    LinearLayout mYouTubeLinkContainer;
 
     @BindView(R.id.kvtvCommunityRating)
     KeyValueTextView mCommunityRating;
 
     @BindView(R.id.kvtvAired)
     KeyValueTextView mAired;
+
+    @BindView(R.id.kvtvEpisodeCount)
+    KeyValueTextView mEpisodeCount;
 
     @BindView(R.id.kvtvFinishedAiring)
     KeyValueTextView mFinishedAiring;
@@ -55,9 +58,6 @@ public class AnimeDetailsFragment extends BaseFragment {
     @BindView(R.id.tvAgeRating)
     TextView mAgeRating;
 
-    @BindView(R.id.tvEpisodeCount)
-    TextView mEpisodeCount;
-
     @BindView(R.id.tvGenres)
     TextView mGenres;
 
@@ -69,6 +69,9 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     @BindView(R.id.tvTitle)
     TextView mTitle;
+
+    @BindView(R.id.tvYouTubeLink)
+    TextView mYouTubeLinkText;
 
 
     public static AnimeDetailsFragment create(final AnimeDigest digest) {
@@ -114,6 +117,8 @@ public class AnimeDetailsFragment extends BaseFragment {
         mTitle.setText(mAnimeDigest.getTitle());
 
         final AnimeDigest.Info info = mAnimeDigest.getInfo();
+        final Resources resources = getResources();
+        final NumberFormat numberFormat = NumberFormat.getInstance();
 
         if (info.hasPosterImage()) {
             mPoster.setImageURI(Uri.parse(info.getPosterImage()));
@@ -126,7 +131,7 @@ public class AnimeDetailsFragment extends BaseFragment {
         }
 
         if (info.hasGenres()) {
-            mGenres.setText(info.getGenresString(getResources()));
+            mGenres.setText(info.getGenresString(resources));
             mGenres.setVisibility(View.VISIBLE);
         }
 
@@ -140,9 +145,8 @@ public class AnimeDetailsFragment extends BaseFragment {
         }
 
         if (info.hasEpisodeCount() && info.getShowType() != ShowType.MOVIE) {
-            mEpisodeCount.setText(getResources().getQuantityString(R.plurals.x_episodes,
-                    info.getEpisodeCount(), NumberFormat.getInstance()
-                            .format(info.getEpisodeCount())));
+            mEpisodeCount.setText(resources.getQuantityString(R.plurals.episodes,
+                    info.getEpisodeCount()), numberFormat.format(info.getEpisodeCount()));
             mEpisodeCount.setVisibility(View.VISIBLE);
         }
 
@@ -168,8 +172,8 @@ public class AnimeDetailsFragment extends BaseFragment {
 
 //        TODO
 //        if (mAnimeV2.hasProducers()) {
-//            mProducers.setText(getResources().getQuantityText(R.plurals.producers,
-//                    mAnimeV2.getProducers().size()), mAnimeV2.getProducersString(getResources()));
+//            mProducers.setText(resources.getQuantityText(R.plurals.producers,
+//                    mAnimeV2.getProducers().size()), mAnimeV2.getProducersString(resources));
 //            mProducers.setVisibility(View.VISIBLE);
 //        }
 
@@ -180,7 +184,8 @@ public class AnimeDetailsFragment extends BaseFragment {
         }
 
         if (info.hasYouTubeVideoId()) {
-            mYouTubeLink.setVisibility(View.VISIBLE);
+            mYouTubeLinkText.setText(info.getYouTubeVideoUrl());
+            mYouTubeLinkContainer.setVisibility(View.VISIBLE);
         }
 
         if (info.hasSynopsis()) {
@@ -190,9 +195,9 @@ public class AnimeDetailsFragment extends BaseFragment {
         }
     }
 
-    @OnClick(R.id.ibYouTubeLink)
+    @OnClick(R.id.llYouTubeLink)
     void onYouTubeLinkClick() {
-        openUrl(Constants.YOUTUBE_BASE_URL + mAnimeDigest.getInfo().getYouTubeVideoId());
+        openUrl(mAnimeDigest.getInfo().getYouTubeVideoUrl());
     }
 
     private void setAiringDateView(final KeyValueTextView view, @StringRes final int keyTextResId,
