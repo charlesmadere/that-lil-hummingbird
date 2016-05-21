@@ -91,7 +91,7 @@ public class CommentReplyNotificationItemView extends CardView implements
     public void setContent(final CommentReplyNotification content) {
         mCommentReplyNotification = content;
 
-        mAvatar.setImageURI(Uri.parse(mCommentReplyNotification.getUser().getAvatar()));
+        mAvatar.setImageURI(Uri.parse(mCommentReplyNotification.getUser().getAvatarLargest()));
         mNotificationTitleTextView.setText(mCommentReplyNotification);
         mTimeAgo.setText(mCommentReplyNotification.getCreatedAt().getRelativeTimeText(
                 getContext()));

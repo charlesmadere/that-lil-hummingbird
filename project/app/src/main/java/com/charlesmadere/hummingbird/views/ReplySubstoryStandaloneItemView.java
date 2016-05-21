@@ -59,8 +59,9 @@ public class ReplySubstoryStandaloneItemView extends CardView implements Adapter
     @Override
     public void setContent(final ReplySubstory content) {
         mReplySubstory = content;
-        mAvatar.setImageURI(Uri.parse(content.getUser().getAvatarSmall()));
-        mReply.setText(mReplySubstory.getUser().getName(), mReplySubstory.getReply());
+
+        mAvatar.setImageURI(Uri.parse(content.getUser().getAvatarSmallest()));
+        mReply.setText(mReplySubstory.getUser().getId(), mReplySubstory.getReply());
         mTimeAgo.setText(mReplySubstory.getCreatedAt().getRelativeTimeText(getContext()));
     }
 

@@ -107,7 +107,7 @@ public class NotificationTitleTextView extends AppCompatTextView {
     private void setText(final CommentStory story) {
         final SpannableStringBuilder spannable = new SpannableStringBuilder();
 
-        spannable.append(story.getPoster().getName());
+        spannable.append(story.getPoster().getId());
         spannable.setSpan(mUserNameSpan, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannable.append(' ');
 

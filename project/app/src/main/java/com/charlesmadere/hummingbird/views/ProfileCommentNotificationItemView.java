@@ -90,7 +90,7 @@ public class ProfileCommentNotificationItemView extends CardView implements
     public void setContent(final ProfileCommentNotification content) {
         mProfileCommentNotification = content;
 
-        mAvatar.setImageURI(Uri.parse(mProfileCommentNotification.getUser().getAvatar()));
+        mAvatar.setImageURI(Uri.parse(mProfileCommentNotification.getUser().getAvatarLargest()));
         mNotificationTitleTextView.setText(mProfileCommentNotification);
         mTimeAgo.setText(mProfileCommentNotification.getCreatedAt().getRelativeTimeText(
                 getContext()));

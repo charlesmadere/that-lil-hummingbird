@@ -93,7 +93,7 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
     public void setContent(final CommentStory content) {
         mCommentStory = content;
 
-        mAvatar.setImageURI(Uri.parse(mCommentStory.getPoster().getAvatar()));
+        mAvatar.setImageURI(Uri.parse(mCommentStory.getPoster().getAvatarLargest()));
         mLikeTextView.setContent(mCommentStory);
         mTitle.setContent(mCommentStory);
         mTimeAgo.setText(mCommentStory.getCreatedAt().getRelativeTimeText(getContext()));

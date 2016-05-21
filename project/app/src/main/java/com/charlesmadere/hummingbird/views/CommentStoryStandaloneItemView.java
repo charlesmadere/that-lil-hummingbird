@@ -66,7 +66,7 @@ public class CommentStoryStandaloneItemView extends CardView implements AdapterV
     public void setContent(final CommentStory content) {
         mCommentStory = content;
 
-        mAvatar.setImageURI(Uri.parse(mCommentStory.getPoster().getAvatar()));
+        mAvatar.setImageURI(Uri.parse(mCommentStory.getPoster().getAvatarLargest()));
         mLikeTextView.setContent(mCommentStory);
         mCommentTitleTextView.setContent(mCommentStory);
         mTimeAgo.setText(mCommentStory.getCreatedAt().getRelativeTimeText(getContext()));

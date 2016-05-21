@@ -50,7 +50,7 @@ public class UserFragmentAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case POSITION_FAVORITES:
-                fragment = FavoriteAnimeFragment.create(mUserDigest.getUsername());
+                fragment = FavoriteAnimeFragment.create(mUserDigest.getUserId());
                 break;
 
             case POSITION_PROFILE:
@@ -58,12 +58,12 @@ public class UserFragmentAdapter extends FragmentStatePagerAdapter {
                 break;
 
             case POSITION_FEED:
-                fragment = UserFeedFragment.create(mUserDigest.getUsername());
+                fragment = UserFeedFragment.create(mUserDigest.getUserId());
                 break;
 
             default:
                 final WatchingStatus watchingStatus = ORDER[position - 3];
-                fragment = AnimeLibraryFragment.create(mUserDigest.getUsername(), watchingStatus);
+                fragment = AnimeLibraryFragment.create(mUserDigest.getUserId(), watchingStatus);
                 break;
         }
 
