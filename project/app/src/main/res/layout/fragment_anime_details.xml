@@ -107,12 +107,20 @@
                     tools:text="Community rating 4.125"
                     tools:visibility="visible"
                     style="@style/ResponsiveWidthCardItem" />
-                <com.charlesmadere.hummingbird.views.KeyValueTextView
-                    android:id="@+id/kvtvProducers"
+                <LinearLayout
+                    android:id="@+id/llLanguages"
                     android:visibility="gone"
-                    tools:text="Producers Nintendo, Microsoft, Google"
                     tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem" />
+                    style="@style/ResponsiveWidthCardItem">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvLanguagesHeader"
+                        tools:text="English, Japanese, Spanish"
+                        style="@style/ResponsiveWidthCardItemHeader" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvLanguagesBody"
+                        tools:text="@string/languages"
+                        style="@style/ResponsiveWidthCardItemBody" />
+                </LinearLayout>
                 <LinearLayout
                     android:id="@+id/llYouTubeLink"
                     android:visibility="gone"

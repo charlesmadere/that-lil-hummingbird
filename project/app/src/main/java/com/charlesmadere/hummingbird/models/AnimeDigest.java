@@ -594,6 +594,14 @@ public class AnimeDigest implements Parcelable {
             return mLanguages;
         }
 
+        public String getLanguagesString(final Resources res) {
+            if (!hasLanguages()) {
+                return "";
+            }
+
+            return TextUtils.join(res.getText(R.string.delimiter), mLanguages);
+        }
+
         @Nullable
         public String getLibraryEntryId() {
             return mLibraryEntryId;

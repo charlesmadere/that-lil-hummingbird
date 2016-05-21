@@ -43,9 +43,6 @@ public class AnimeDetailsFragment extends BaseFragment {
     @BindView(R.id.kvtvFinishedAiring)
     KeyValueTextView mFinishedAiring;
 
-    @BindView(R.id.kvtvProducers)
-    KeyValueTextView mProducers;
-
     @BindView(R.id.kvtvStartedAiring)
     KeyValueTextView mStartedAiring;
 
@@ -54,6 +51,9 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     @BindView(R.id.llGenres)
     LinearLayout mGenresContainer;
+
+    @BindView(R.id.llLanguages)
+    LinearLayout mLanguagesContainer;
 
     @BindView(R.id.llShowType)
     LinearLayout mShowTypeContainer;
@@ -75,6 +75,12 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     @BindView(R.id.tvGenresHeader)
     TextView mGenresHeader;
+
+    @BindView(R.id.tvLanguagesBody)
+    TextView mLanguagesBody;
+
+    @BindView(R.id.tvLanguagesHeader)
+    TextView mLanguagesHeader;
 
     @BindView(R.id.tvShowType)
     TextView mShowType;
@@ -163,6 +169,13 @@ public class AnimeDetailsFragment extends BaseFragment {
             }
         }
 
+        if (info.hasLanguages()) {
+            mLanguagesHeader.setText(info.getLanguagesString(resources));
+            mLanguagesBody.setText(resources.getQuantityText(R.plurals.languages,
+                    info.getLanguages().size()));
+            mLanguagesContainer.setVisibility(View.VISIBLE);
+        }
+
         if (info.hasEpisodeCount() && info.getShowType() != ShowType.MOVIE) {
             mEpisodeCount.setText(resources.getQuantityString(R.plurals.episodes,
                     info.getEpisodeCount()), numberFormat.format(info.getEpisodeCount()));
@@ -188,13 +201,6 @@ public class AnimeDetailsFragment extends BaseFragment {
                     info.getFinishedAiringDate().getRelativeTimeText(getContext()));
             mFinishedAiring.setVisibility(View.VISIBLE);
         }
-
-//        TODO
-//        if (mAnimeV2.hasProducers()) {
-//            mProducers.setText(resources.getQuantityText(R.plurals.producers,
-//                    mAnimeV2.getProducers().size()), mAnimeV2.getProducersString(resources));
-//            mProducers.setVisibility(View.VISIBLE);
-//        }
 
         if (info.hasBayesianRating()) {
             mCommunityRating.setText(getText(R.string.community_rating),
