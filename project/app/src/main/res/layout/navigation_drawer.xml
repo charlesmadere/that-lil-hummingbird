@@ -8,11 +8,12 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:overScrollMode="never">
-        <LinearLayout
-            android:layout_height="wrap_content"
+        <RelativeLayout
+            android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:orientation="vertical">
             <com.charlesmadere.hummingbird.views.RatioRelativeLayout
+                android:id="@+id/rrlHeader"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/root_padding_half"
                 android:layout_width="match_parent"
@@ -64,32 +65,45 @@
                 </FrameLayout>
             </com.charlesmadere.hummingbird.views.RatioRelativeLayout>
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
+                android:id="@+id/ndivHome"
+                android:layout_below="@id/rrlHeader"
                 app:entry="home"
                 style="@style/NavigationDrawerItemView" />
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
+                android:id="@+id/ndivNotifications"
+                android:layout_below="@id/ndivHome"
                 app:entry="notifications"
                 style="@style/NavigationDrawerItemView" />
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
+                android:id="@+id/ndivSearch"
+                android:layout_below="@id/ndivNotifications"
                 app:entry="search"
                 style="@style/NavigationDrawerItemView" />
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
+                android:id="@+id/ndivSettings"
+                android:layout_below="@id/ndivSearch"
+                android:layout_marginBottom="@dimen/root_padding"
                 app:entry="settings"
                 style="@style/NavigationDrawerItemView" />
             <FrameLayout
-                android:background="@drawable/atsuka_gradient"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@id/ndivSettings"
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:paddingEnd="@dimen/root_padding"
-                android:paddingStart="@dimen/root_padding"
-                android:paddingTop="@dimen/root_padding_double">
+                android:layout_width="match_parent">
+                <View
+                    android:background="?attr/colorPrimary"
+                    android:layout_gravity="bottom"
+                    android:layout_height="@dimen/root_padding_quadruple"
+                    android:layout_width="match_parent" />
                 <ImageView
                     android:adjustViewBounds="true"
+                    android:layout_gravity="bottom|end"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/root_padding_double"
                     android:layout_width="wrap_content"
-                    android:scaleType="centerInside"
                     android:src="@drawable/atsuka_kneeling"
                     tools:ignore="ContentDescription" />
             </FrameLayout>
-        </LinearLayout>
+        </RelativeLayout>
     </ScrollView>
 </com.charlesmadere.hummingbird.views.NavigationDrawerView>
