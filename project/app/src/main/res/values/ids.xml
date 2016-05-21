@@ -8,6 +8,7 @@
     <item name="likeTextView" type="id" />
     <item name="navigationDrawerView" type="id" />
     <item name="parallaxCoverImage" type="id" />
+    <item name="proBadge" type="id" />
     <item name="tabLayout" type="id" />
     <item name="toolbar" type="id" />
 

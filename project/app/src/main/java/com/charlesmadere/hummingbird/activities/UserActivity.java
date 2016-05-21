@@ -11,6 +11,8 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
+import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.UserFragmentAdapter;
@@ -57,6 +59,9 @@ public class UserActivity extends BaseDrawerActivity {
 
     @BindView(R.id.tabLayout)
     TabLayout mTabLayout;
+
+    @BindView(R.id.proBadge)
+    TextView mProBadge;
 
     @BindView(R.id.viewPager)
     ViewPager mViewPager;
@@ -157,6 +162,10 @@ public class UserActivity extends BaseDrawerActivity {
         PaletteUtils.applyParallaxColors(user.getCoverImageUrl(), this, mAppBarLayout,
                 mCollapsingToolbarLayout, mCoverImage, mTabLayout);
         mAvatar.setImageURI(Uri.parse(user.getAvatarLargest()));
+
+        if (user.isPro()) {
+            mProBadge.setVisibility(View.VISIBLE);
+        }
 
         mViewPager.setAdapter(new UserFragmentAdapter(this, mUserDigest));
         mViewPager.setCurrentItem(mStartingPosition, false);

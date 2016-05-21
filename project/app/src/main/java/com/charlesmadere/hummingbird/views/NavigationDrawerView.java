@@ -32,6 +32,9 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout {
     @BindView(R.id.sdvCoverImage)
     SimpleDraweeView mCoverImage;
 
+    @BindView(R.id.proBadge)
+    TextView mProBadge;
+
     @BindView(R.id.tvUsername)
     TextView mUsername;
 
@@ -93,6 +96,10 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout {
         mAvatar.setImageURI(Uri.parse(user.getAvatarLargest()));
         mCoverImage.setImageURI(Uri.parse(user.getCoverImageUrl()));
         mUsername.setText(user.getId());
+
+        if (user.isPro()) {
+            mProBadge.setVisibility(VISIBLE);
+        }
     }
 
     @Override

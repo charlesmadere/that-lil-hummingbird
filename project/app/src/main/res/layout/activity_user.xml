@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/DrawerLayout">
     <android.support.design.widget.CoordinatorLayout
         style="@style/CoordinatorLayout">
@@ -10,14 +11,22 @@
                 style="@style/CollapsingToolbarLayout">
                 <com.facebook.drawee.view.SimpleDraweeView
                     style="@style/ParallaxCoverImage" />
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/sdvAvatar"
-                    android:layout_gravity="end|center_vertical"
+                <FrameLayout
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/root_padding_double"
-                    app:layout_collapseMode="parallax"
-                    app:placeholderImage="@null"
-                    app:roundAsCircle="true"
-                    style="@style/Avatar.Medium" />
+                    android:layout_width="wrap_content"
+                    app:layout_collapseMode="parallax">
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/sdvAvatar"
+                        app:placeholderImage="@null"
+                        app:roundAsCircle="true"
+                        style="@style/Avatar.Medium" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:layout_gravity="bottom|center_horizontal"
+                        tools:visibility="visible"
+                        style="@style/ProBadge" />
+                </FrameLayout>
                 <com.charlesmadere.hummingbird.views.TypefaceToolbar
                     style="@style/Toolbar.Parallax" />
             </com.charlesmadere.hummingbird.views.CollapsingTypefaceToolbarLayout>

@@ -46,15 +46,22 @@
                     android:textColor="@color/white"
                     app:typeface="open_sans_bold"
                     tools:text="Ryuko Matoi" />
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/sdvAvatar"
+                <FrameLayout
                     android:layout_above="@id/tvUsername"
-                    android:layout_height="@dimen/avatar_medium"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/root_padding"
                     android:layout_marginStart="@dimen/root_padding"
-                    android:layout_width="@dimen/avatar_medium"
-                    app:placeholderImage="@null"
-                    app:roundAsCircle="true" />
+                    android:layout_width="wrap_content">
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/sdvAvatar"
+                        app:placeholderImage="@null"
+                        app:roundAsCircle="true"
+                        style="@style/Avatar.Medium" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:layout_gravity="bottom|center_horizontal"
+                        tools:visibility="visible"
+                        style="@style/ProBadge" />
+                </FrameLayout>
             </com.charlesmadere.hummingbird.views.RatioRelativeLayout>
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
                 app:entry="home"

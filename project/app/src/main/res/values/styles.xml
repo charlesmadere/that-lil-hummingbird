@@ -391,6 +391,21 @@
         <item name="placeholderImageScaleType">centerCrop</item>
     </style>
 
+    <style name="ProBadge">
+        <item name="android:background">@drawable/bg_pro_badge</item>
+        <item name="android:elevation" tools:ignore="NewApi">@dimen/root_padding_quarter</item>
+        <item name="android:gravity">center</item>
+        <item name="android:id">@id/proBadge</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:text">@string/pro</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:visibility">gone</item>
+        <item name="typeface">open_sans_bold</item>
+    </style>
+
     <style name="ResponsiveWidthCard" parent="BaseResponsiveWidthCard">
         <item name="android:layout_marginEnd">@dimen/root_padding_half</item>
         <item name="android:layout_marginStart">@dimen/root_padding_half</item>
