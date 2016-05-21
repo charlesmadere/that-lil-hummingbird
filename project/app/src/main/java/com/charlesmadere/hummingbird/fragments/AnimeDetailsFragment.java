@@ -31,9 +31,6 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     private AnimeDigest mAnimeDigest;
 
-    @BindView(R.id.llYouTubeLink)
-    LinearLayout mYouTubeLinkContainer;
-
     @BindView(R.id.kvtvCommunityRating)
     KeyValueTextView mCommunityRating;
 
@@ -51,6 +48,9 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     @BindView(R.id.kvtvStartedAiring)
     KeyValueTextView mStartedAiring;
+
+    @BindView(R.id.llYouTubeLink)
+    LinearLayout mYouTubeLinkContainer;
 
     @BindView(R.id.sdvPoster)
     SimpleDraweeView mPoster;
