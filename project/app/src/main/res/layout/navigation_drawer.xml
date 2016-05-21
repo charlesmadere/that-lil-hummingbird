@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent">
                 <View
-                    android:background="?attr/colorPrimary"
+                    android:background="@color/overlay"
                     android:layout_gravity="bottom"
                     android:layout_height="@dimen/root_padding_quadruple"
                     android:layout_width="match_parent" />
