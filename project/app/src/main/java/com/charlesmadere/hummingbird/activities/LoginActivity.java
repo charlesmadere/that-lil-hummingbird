@@ -18,7 +18,7 @@ import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
-import com.charlesmadere.hummingbird.models.UserV1;
+import com.charlesmadere.hummingbird.models.UserV2;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.SimpleProgressView;
@@ -197,7 +197,7 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-    private static class GetCurrentUserListener implements ApiResponse<UserV1> {
+    private static class GetCurrentUserListener implements ApiResponse<UserV2> {
         private final WeakReference<LoginActivity> mActivityReference;
 
         private GetCurrentUserListener(final LoginActivity activity) {
@@ -214,7 +214,7 @@ public class LoginActivity extends BaseActivity {
         }
 
         @Override
-        public void success(final UserV1 user) {
+        public void success(final UserV2 user) {
             final LoginActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {

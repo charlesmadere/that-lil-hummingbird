@@ -12,7 +12,7 @@ import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.charlesmadere.hummingbird.models.SearchDepth;
 import com.charlesmadere.hummingbird.models.SearchScope;
 import com.charlesmadere.hummingbird.models.UserDigest;
-import com.charlesmadere.hummingbird.models.UserV1;
+import com.charlesmadere.hummingbird.models.UserV2;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.google.gson.JsonElement;
 
@@ -47,9 +47,6 @@ public interface HummingbirdApi {
     @GET("api/v1/users/{username}/library")
     Call<ArrayList<LibraryEntry>> getLibraryEntries(@Path("username") String username,
             @Query("status") WatchingStatus watchingStatus);
-
-    @GET("api/v1/users/{username}")
-    Call<UserV1> getUser(@Path("username") String username);
 
     @POST("api/v1/libraries/{id}/remove")
     Call<Boolean> removeLibraryEntry(@Header("auth_token") String authToken,
@@ -106,6 +103,10 @@ public interface HummingbirdApi {
 
     @GET("substories")
     Call<Feed> getSubstories(@Header("Cookie") String authToken, @Query("story_id") String storyId);
+
+    @GET("users/{username}")
+    Call<UserV2> getUser(@Header("Cookie") String authToken, @Header("Accept") String json,
+            @Path("username") String username);
 
     @GET("user_infos/{username}")
     Call<UserDigest> getUserDigest(@Header("Cookie") String authToken,

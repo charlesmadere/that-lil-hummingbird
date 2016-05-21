@@ -3,7 +3,7 @@ package com.charlesmadere.hummingbird.misc;
 import android.app.Activity;
 
 import com.charlesmadere.hummingbird.activities.LoginActivity;
-import com.charlesmadere.hummingbird.models.UserV1;
+import com.charlesmadere.hummingbird.models.UserV2;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public final class CurrentUser {
 
     private static final String TAG = "CurrentUser";
 
-    private static UserV1 sCurrentUser;
+    private static UserV2 sCurrentUser;
 
 
     public static boolean exists() {
@@ -20,11 +20,11 @@ public final class CurrentUser {
                 && get() != null;
     }
 
-    public static synchronized UserV1 get() {
+    public static synchronized UserV2 get() {
         return sCurrentUser;
     }
 
-    public static synchronized void set(final UserV1 user) {
+    public static synchronized void set(final UserV2 user) {
         Timber.d(TAG, "current user set to \"" + user.getName() + '"');
         sCurrentUser = user;
     }
