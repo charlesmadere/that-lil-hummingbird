@@ -2,19 +2,19 @@
 <com.charlesmadere.hummingbird.views.FavoriteAnimeView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/favoriteAnimeView"
-    style="@style/CardItem">
+    style="@style/ResponsiveWidthCard">
     <LinearLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:orientation="vertical">
+        style="@style/ResponsiveWidthCardInternal">
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:text="@string/favorite_anime"
-            style="@style/CardHeader" />
+            style="@style/ResponsiveWidthCardHeader" />
         <LinearLayout
             android:id="@+id/llFavoriteAnimeGrid0"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:orientation="horizontal"
+            android:paddingEnd="@dimen/root_padding"
+            android:paddingStart="@dimen/root_padding"
             android:visibility="gone"
             tools:visibility="visible">
             <com.facebook.drawee.view.SimpleDraweeView
@@ -45,6 +45,8 @@
             android:layout_marginTop="@dimen/root_padding_half"
             android:layout_width="match_parent"
             android:orientation="horizontal"
+            android:paddingEnd="@dimen/root_padding"
+            android:paddingStart="@dimen/root_padding"
             android:visibility="gone"
             tools:visibility="visible">
             <com.facebook.drawee.view.SimpleDraweeView
