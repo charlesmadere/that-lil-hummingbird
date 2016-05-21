@@ -483,6 +483,37 @@ public final class Api {
                 new Callback<UserDigest>() {
             private UserDigest mBody;
 
+            private void fetchUser() {
+                getUser(mBody.getInfo().getId(), new ApiResponse<User>() {
+                    @Override
+                    public void failure(@Nullable final ErrorInfo error) {
+                        listener.failure(error);
+                    }
+
+                    @Override
+                    public void success(final User user) {
+                        mBody.setUser(user);
+                        hydrate();
+                    }
+                });
+            }
+
+            private void hydrate() {
+                Threading.runOnBackground(new Runnable() {
+                    @Override
+                    public void run() {
+                        mBody.hydrate();
+
+                        Threading.runOnUi(new Runnable() {
+                            @Override
+                            public void run() {
+                                listener.success(mBody);
+                            }
+                        });
+                    }
+                });
+            }
+
             @Override
             public void onResponse(final Call<UserDigest> call,
                     final Response<UserDigest> response) {
@@ -492,20 +523,10 @@ public final class Api {
 
                 if (mBody == null) {
                     listener.failure(retrieveErrorInfo(response));
+                } else if (mBody.isMissingUser()) {
+                    fetchUser();
                 } else {
-                    Threading.runOnBackground(new Runnable() {
-                        @Override
-                        public void run() {
-                            mBody.hydrate();
-
-                            Threading.runOnUi(new Runnable() {
-                                @Override
-                                public void run() {
-                                    listener.success(mBody);
-                                }
-                            });
-                        }
-                    });
+                    hydrate();
                 }
             }
 

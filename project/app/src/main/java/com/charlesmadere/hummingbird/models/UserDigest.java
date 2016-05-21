@@ -87,6 +87,24 @@ public class UserDigest implements Parcelable {
         }
     }
 
+    public boolean isMissingUser() {
+        return mUsers == null || mUsers.isEmpty();
+    }
+
+    public void setUser(final User user) {
+        if (!isMissingUser()) {
+            throw new RuntimeException("User already exists: (" + getUser().getId() + ')');
+        } else if (user == null) {
+            throw new IllegalArgumentException("user parameter can't be null");
+        }
+
+        if (mUsers == null) {
+            mUsers = new ArrayList<>(1);
+        }
+
+        mUsers.add(user);
+    }
+
     @Override
     public int describeContents() {
         return 0;
