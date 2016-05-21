@@ -130,7 +130,7 @@
                         tools:text="1/1/1970"
                         style="@style/ResponsiveWidthCardItemHeader" />
                     <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:text="@string/started_airing"
+                        android:text="@string/finished_airing"
                         style="@style/ResponsiveWidthCardItemBody" />
                 </LinearLayout>
                 <LinearLayout
