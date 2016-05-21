@@ -2,7 +2,6 @@ package com.charlesmadere.hummingbird.networking;
 
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
-import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
@@ -51,19 +50,6 @@ public interface HummingbirdApi {
     @POST("api/v1/libraries/{id}/remove")
     Call<Boolean> removeLibraryEntry(@Header("auth_token") String authToken,
             @Path("id") String id);
-
-
-    /*
-     * v2
-     * https://github.com/hummingbird-me/hummingbird/wiki/API-v2-Methods
-     */
-
-    @GET("api/v2/anime/{id}")
-    Call<AnimeV2> getAnimeById(@Header("X-Client-Id") String apiKey, @Path("id") String id);
-
-    @GET("api/v2/anime/myanimelist:{malid}")
-    Call<AnimeV2> getAnimeByMyAnimeListId(@Header("X-Client-Id") String apiKey,
-            @Path("malid") String malid);
 
 
     /*

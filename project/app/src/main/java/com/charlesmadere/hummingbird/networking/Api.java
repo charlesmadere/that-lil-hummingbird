@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.GsonUtils;
 import com.charlesmadere.hummingbird.misc.RetrofitUtils;
@@ -12,9 +11,6 @@ import com.charlesmadere.hummingbird.misc.Threading;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
-import com.charlesmadere.hummingbird.models.AnimeEpisode;
-import com.charlesmadere.hummingbird.models.AnimeV1;
-import com.charlesmadere.hummingbird.models.AnimeV2;
 import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.CommentPost;
 import com.charlesmadere.hummingbird.models.CommentStory;
@@ -97,79 +93,6 @@ public final class Api {
             @Override
             public void onFailure(final Call<String> call, final Throwable t) {
                 Timber.e(TAG, "authenticate failed", t);
-                listener.failure(null);
-            }
-        });
-    }
-
-    public static void getAnimeById(final AbsAnime anime, final ApiResponse<AnimeV2> listener) {
-        if (anime.getVersion() == AbsAnime.Version.V2) {
-            listener.success((AnimeV2) anime);
-        } else {
-            getAnimeById(anime.getId(), listener);
-        }
-    }
-
-    public static void getAnimeById(final String id, final ApiResponse<AnimeV2> listener) {
-        getApi().getAnimeById(Constants.API_KEY, id).enqueue(new Callback<AnimeV2>() {
-            @Override
-            public void onResponse(final Call<AnimeV2> call, final Response<AnimeV2> response) {
-                AnimeV2 body = null;
-
-                if (response.isSuccessful()) {
-                    body = response.body();
-
-                    if (body.hasAnimeEpisodes()) {
-                        AnimeEpisode.sort(body.getAnimeEpisodes());
-                    }
-                }
-
-                if (body == null) {
-                    listener.failure(retrieveErrorInfo(response));
-                } else {
-                    listener.success(body);
-                }
-            }
-
-            @Override
-            public void onFailure(final Call<AnimeV2> call, final Throwable t) {
-                Timber.e(TAG, "get anime (" + id + ") by id failed ", t);
-                listener.failure(null);
-            }
-        });
-    }
-
-    public static void getAnimeByMyAnimeListId(final AbsAnime anime,
-            final ApiResponse<AnimeV2> listener) {
-        if (anime.getVersion() == AbsAnime.Version.V1) {
-            final AnimeV1 animeV1 = (AnimeV1) anime;
-            getAnimeByMyAnimeListId(animeV1.getMyAnimeListId(), listener);
-        } else {
-            listener.success((AnimeV2) anime);
-        }
-    }
-
-    public static void getAnimeByMyAnimeListId(final String id,
-            final ApiResponse<AnimeV2> listener) {
-        getApi().getAnimeByMyAnimeListId(Constants.API_KEY, id).enqueue(new Callback<AnimeV2>() {
-            @Override
-            public void onResponse(final Call<AnimeV2> call, final Response<AnimeV2> response) {
-                AnimeV2 body = null;
-
-                if (response.isSuccessful()) {
-                    body = response.body();
-                }
-
-                if (body == null) {
-                    listener.failure(retrieveErrorInfo(response));
-                } else {
-                    listener.success(body);
-                }
-            }
-
-            @Override
-            public void onFailure(final Call<AnimeV2> call, final Throwable t) {
-                Timber.e(TAG, "get anime (" + id + ") by My Anime List id failed", t);
                 listener.failure(null);
             }
         });
