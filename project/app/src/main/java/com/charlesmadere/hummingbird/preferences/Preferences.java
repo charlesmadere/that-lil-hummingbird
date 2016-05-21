@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.preferences;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 
 import com.charlesmadere.hummingbird.ThatLilHummingbird;
 import com.charlesmadere.hummingbird.models.NightMode;
@@ -27,6 +28,11 @@ public final class Preferences {
     }
 
     public static void eraseAll() {
+        PreferenceManager.getDefaultSharedPreferences(ThatLilHummingbird.get())
+                .edit()
+                .clear()
+                .apply();
+
         erase(Account.TAG, General.TAG);
     }
 
