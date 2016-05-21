@@ -39,8 +39,14 @@ public class AnimeDetailsFragment extends BaseFragment {
     @BindView(R.id.llAired)
     LinearLayout mAiredContainer;
 
+    @BindView(R.id.llAlternateTitle)
+    LinearLayout mAlternateTitleContainer;
+
     @BindView(R.id.llCommunityRating)
     LinearLayout mCommunityRatingContainer;
+
+    @BindView(R.id.llEnglishTitle)
+    LinearLayout mEnglishTitleContainer;
 
     @BindView(R.id.llFinishedAiring)
     LinearLayout mFinishedAiringContainer;
@@ -50,6 +56,9 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     @BindView(R.id.llLanguages)
     LinearLayout mLanguagesContainer;
+
+    @BindView(R.id.llRomajiTitle)
+    LinearLayout mRomajiTitleContainer;
 
     @BindView(R.id.llShowType)
     LinearLayout mShowTypeContainer;
@@ -72,8 +81,17 @@ public class AnimeDetailsFragment extends BaseFragment {
     @BindView(R.id.tvAired)
     TextView mAired;
 
+    @BindView(R.id.tvAlternateTitle)
+    TextView mAlternateTitle;
+
+    @BindView(R.id.tvCanonicalTitle)
+    TextView mCanonicalTitle;
+
     @BindView(R.id.tvCommunityRating)
     TextView mCommunityRating;
+
+    @BindView(R.id.tvEnglishTitle)
+    TextView mEnglishTitle;
 
     @BindView(R.id.tvFinishedAiring)
     TextView mFinishedAiring;
@@ -90,6 +108,9 @@ public class AnimeDetailsFragment extends BaseFragment {
     @BindView(R.id.tvLanguagesHeader)
     TextView mLanguagesHeader;
 
+    @BindView(R.id.tvRomajiTitle)
+    TextView mRomajiTitle;
+
     @BindView(R.id.tvShowType)
     TextView mShowType;
 
@@ -98,9 +119,6 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     @BindView(R.id.tvSynopsis)
     TextView mSynopsis;
-
-    @BindView(R.id.tvTitle)
-    TextView mTitle;
 
     @BindView(R.id.tvYouTubeLink)
     TextView mYouTubeLinkText;
@@ -146,8 +164,6 @@ public class AnimeDetailsFragment extends BaseFragment {
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mTitle.setText(mAnimeDigest.getTitle());
-
         final AnimeDigest.Info info = mAnimeDigest.getInfo();
         final Context context = getContext();
         final Resources resources = getResources();
@@ -163,6 +179,17 @@ public class AnimeDetailsFragment extends BaseFragment {
             mShowTypeContainer.setVisibility(View.VISIBLE);
         }
 
+        if (info.hasAgeRating()) {
+            mAgeRating.setText(info.getAgeRating().getTextResId());
+            mAgeRatingContainer.setVisibility(View.VISIBLE);
+
+            if (info.hasAgeRatingGuide()) {
+                mAgeRatingGuide.setText(info.getAgeRatingGuide());
+            } else {
+                mAgeRatingGuide.setText(R.string.age_rating);
+            }
+        }
+
         if (info.hasGenres()) {
             mGenresHeader.setText(info.getGenresString(resources));
             mGenresBody.setText(resources.getQuantityText(R.plurals.genres,
@@ -175,17 +202,6 @@ public class AnimeDetailsFragment extends BaseFragment {
             mLanguagesBody.setText(resources.getQuantityText(R.plurals.languages,
                     info.getLanguages().size()));
             mLanguagesContainer.setVisibility(View.VISIBLE);
-        }
-
-        if (info.hasAgeRating()) {
-            mAgeRating.setText(info.getAgeRating().getTextResId());
-            mAgeRatingContainer.setVisibility(View.VISIBLE);
-
-            if (info.hasAgeRatingGuide()) {
-                mAgeRatingGuide.setText(info.getAgeRatingGuide());
-            } else {
-                mAgeRatingGuide.setText(R.string.age_rating);
-            }
         }
 
         if (info.hasEpisodeCount() && info.getShowType() != ShowType.MOVIE) {
@@ -224,6 +240,23 @@ public class AnimeDetailsFragment extends BaseFragment {
             mSynopsis.setText(info.getSynopsis());
         } else {
             mSynopsis.setText(R.string.no_synopsis_available);
+        }
+
+        mCanonicalTitle.setText(info.getCanonicalTitle());
+
+        if (info.hasAlternateTitle()) {
+            mAlternateTitle.setText(info.getAlternateTitle());
+            mAlternateTitleContainer.setVisibility(View.VISIBLE);
+        }
+
+        if (info.hasEnglishTitle()) {
+            mEnglishTitle.setText(info.getEnglishTitle());
+            mEnglishTitleContainer.setVisibility(View.VISIBLE);
+        }
+
+        if (info.hasRomajiTitle()) {
+            mRomajiTitle.setText(info.getRomajiTitle());
+            mRomajiTitleContainer.setVisibility(View.VISIBLE);
         }
     }
 

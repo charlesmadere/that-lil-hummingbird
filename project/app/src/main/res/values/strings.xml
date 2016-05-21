@@ -11,6 +11,7 @@
     <string name="age_rating_r18">R18+</string>
     <string name="aired">Aired</string>
     <string name="all">All</string>
+    <string name="alternate_title">Alternate title</string>
     <string name="anime">Anime</string>
     <string name="anime_breakdown">Anime Breakdown</string>
     <string name="anime_library">Anime Library</string>
@@ -24,6 +25,7 @@
     <string name="bio_for_x">Bio for %1$s</string>
     <string name="cancel">Cancel</string>
     <string name="canonical">Canonical</string>
+    <string name="canonical_title">Canonical title</string>
     <string name="charles_madere">Charles Madere</string>
     <string name="clear">Clear</string>
     <string name="close_drawer">Close drawer</string>
@@ -44,6 +46,7 @@
     <string name="dropped_library_is_empty">Dropped library is empty</string>
     <string name="email">Email</string>
     <string name="english">English</string>
+    <string name="english_title">English title</string>
     <string name="enter_your_username_not_your_email">Enter your username, not your email.</string>
     <string name="episodes">Episodes</string>
     <string name="error_loading_anime">Error loading anime! Please check your network connection and try again.</string>
@@ -166,6 +169,7 @@
     <string name="reviews">Reviews</string>
     <string name="rewatch_intro_animation">Rewatch intro animation</string>
     <string name="romaji">Romaji</string>
+    <string name="romaji_title">Romaji title</string>
     <string name="search">Search</string>
     <string name="search_">Search…</string>
     <string name="search_for_">Search for…</string>
@@ -189,6 +193,7 @@
     <string name="the_app_will_now_restart">That Li\'l Hummingbird will now restart.</string>
     <string name="timeline">Timeline</string>
     <string name="title">Title</string>
+    <string name="titles">Titles</string>
     <string name="trending_groups">Trending Groups</string>
     <string name="tv">TV</string>
     <string name="type">Type</string>
