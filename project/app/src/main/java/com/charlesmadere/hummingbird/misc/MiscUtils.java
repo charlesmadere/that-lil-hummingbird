@@ -230,6 +230,7 @@ public final class MiscUtils {
         }
 
         final CustomTabsIntent intent = new CustomTabsIntent.Builder()
+                .setToolbarColor(MiscUtils.getAttrColor(activity, R.attr.colorPrimary))
                 .build();
 
         intent.launchUrl(activity, Uri.parse(url));
