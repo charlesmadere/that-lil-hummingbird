@@ -48,6 +48,19 @@
                                 tools:text="@string/system"
                                 style="@style/ResponsiveWidthCardItemBody" />
                         </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/llUseChromeCustomTabs"
+                            android:orientation="horizontal"
+                            style="@style/ResponsiveWidthCardItem">
+                            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:text="@string/use_chrome_custom_tabs"
+                                style="@style/ResponsiveWidthCardItemHeader" />
+                            <android.support.v7.widget.SwitchCompat
+                                android:id="@+id/scUseChromeCustomTabs"
+                                style="@style/Switch" />
+                        </LinearLayout>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
