@@ -53,10 +53,12 @@ public final class Preferences {
 
     public static final class General {
         private static final String TAG = Preferences.TAG + ".General";
+        public static final BooleanPreference UseChromeCustomTabs;
         public static final GsonPreference<TitleType> TitleLanguage;
         public static final GsonPreference<NightMode> Theme;
 
         static {
+            UseChromeCustomTabs = new BooleanPreference(TAG, "UseChromeCustomTabs", Boolean.TRUE);
             TitleLanguage = new GsonPreference<>(TAG, "TitleLanguage", TitleType.class,
                     TitleType.ENGLISH);
             Theme = new GsonPreference<>(TAG, "NightMode", NightMode.class, NightMode.getDefault());

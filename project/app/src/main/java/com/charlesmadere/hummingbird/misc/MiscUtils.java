@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -22,6 +23,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.ThatLilHummingbird;
+import com.charlesmadere.hummingbird.preferences.Preferences;
 
 import java.text.NumberFormat;
 
@@ -229,11 +231,17 @@ public final class MiscUtils {
             return;
         }
 
-        final CustomTabsIntent intent = new CustomTabsIntent.Builder()
-                .setToolbarColor(MiscUtils.getAttrColor(activity, R.attr.colorPrimary))
-                .build();
+        final Uri uri = Uri.parse(url);
 
-        intent.launchUrl(activity, Uri.parse(url));
+        if (Boolean.FALSE.equals(Preferences.General.UseChromeCustomTabs.get())) {
+            activity.startActivity(new Intent(Intent.ACTION_VIEW, uri));
+        } else {
+            final CustomTabsIntent intent = new CustomTabsIntent.Builder()
+                    .setToolbarColor(MiscUtils.getAttrColor(activity, R.attr.colorPrimary))
+                    .build();
+
+            intent.launchUrl(activity, uri);
+        }
     }
 
     public static void openUrl(final Context context, final String url) {
