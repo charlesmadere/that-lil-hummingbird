@@ -14,7 +14,8 @@ public final class JsoupUtils {
 
     static {
         WHITELIST = Whitelist.simpleText()
-                .addTags("a");
+                .addTags("a")
+                .addTags("img");
     }
 
     @Nullable
