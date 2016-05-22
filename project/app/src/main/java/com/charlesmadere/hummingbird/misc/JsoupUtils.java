@@ -8,6 +8,7 @@ import org.jsoup.nodes.Document;
 
 public final class JsoupUtils {
 
+    @Nullable
     public static String parse(@Nullable final String text) {
         if (TextUtils.isEmpty(text) || TextUtils.getTrimmedLength(text) == 0) {
             return text;
