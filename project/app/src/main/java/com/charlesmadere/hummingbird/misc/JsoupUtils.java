@@ -43,11 +43,15 @@ public final class JsoupUtils {
         if (as != null && !as.isEmpty()) {
             for (final Element a : as) {
                 a.children().remove();
-
-                final String href = a.attr("href");
+                String href = a.attr("href");
 
                 if (!TextUtils.isEmpty(href) && href.startsWith(RELATIVE_URL)) {
-                    a.attr("href", "https:" + href);
+                    href = "https:" + href;
+                    a.attr("href", href);
+                }
+
+                if (TextUtils.isEmpty(a.html())) {
+                    a.html(href);
                 }
             }
         }
