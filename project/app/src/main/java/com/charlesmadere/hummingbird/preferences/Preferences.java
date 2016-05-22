@@ -5,7 +5,7 @@ import android.preference.PreferenceManager;
 
 import com.charlesmadere.hummingbird.ThatLilHummingbird;
 import com.charlesmadere.hummingbird.models.NightMode;
-import com.charlesmadere.hummingbird.models.SyncFrequency;
+import com.charlesmadere.hummingbird.models.PollFrequency;
 import com.charlesmadere.hummingbird.models.TitleType;
 
 public final class Preferences {
@@ -65,19 +65,21 @@ public final class Preferences {
         }
     }
 
-    public static final class Sync {
+    public static final class NotificationPolling {
         private static final String TAG = Preferences.TAG + ".Sync";
+        public static final BooleanPreference IsEnabled;
         public static final BooleanPreference IsPowerRequired;
         public static final BooleanPreference IsWifiRequired;
-        public static final GsonPreference<SyncFrequency> Frequency;
-        public static final LongPreference LastSync;
+        public static final GsonPreference<PollFrequency> Frequency;
+        public static final LongPreference LastCheck;
         public static final LongPreference MostRecentNotificationTime;
 
         static {
+            IsEnabled = new BooleanPreference(TAG, "IsEnabled", Boolean.TRUE);
             IsPowerRequired = new BooleanPreference(TAG, "IsPowerRequired", Boolean.FALSE);
             IsWifiRequired = new BooleanPreference(TAG, "IsWifiRequired", Boolean.TRUE);
-            Frequency = new GsonPreference<>(TAG, "Frequency", SyncFrequency.class, SyncFrequency.DAILY);
-            LastSync = new LongPreference(TAG, "LastSync", null);
+            Frequency = new GsonPreference<>(TAG, "Frequency", PollFrequency.class, PollFrequency.DAILY);
+            LastCheck = new LongPreference(TAG, "LastSync", null);
             MostRecentNotificationTime = new LongPreference(TAG, "MostRecentNotificationTime", null);
         }
     }

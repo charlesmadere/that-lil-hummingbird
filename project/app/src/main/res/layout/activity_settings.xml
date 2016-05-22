@@ -68,6 +68,78 @@
                     <LinearLayout
                         style="@style/ResponsiveWidthCardInternal">
                         <com.charlesmadere.hummingbird.views.TypefaceTextView
+                            android:text="@string/notifications"
+                            style="@style/ResponsiveWidthCardHeader" />
+                        <com.charlesmadere.hummingbird.views.TypefaceTextView
+                            android:text="@string/notification_polling_description"
+                            style="@style/ResponsiveWidthCardItemBody.Standalone" />
+                        <LinearLayout
+                            android:id="@+id/llUseNotificationPolling"
+                            style="@style/ResponsiveWidthCardItem.Switch">
+                            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:text="@string/use_notification_polling"
+                                style="@style/ResponsiveWidthCardItemHeader" />
+                            <android.support.v7.widget.SwitchCompat
+                                android:id="@+id/scUseNotificationPolling"
+                                style="@style/Switch" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/llPollFrequency"
+                            style="@style/ResponsiveWidthCardItem">
+                            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                                android:text="@string/poll_frequency"
+                                style="@style/ResponsiveWidthCardItemHeader" />
+                            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                                android:id="@+id/tvPollFrequency"
+                                tools:text="@string/daily"
+                                style="@style/ResponsiveWidthCardItemBody" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/llPowerRequired"
+                            style="@style/ResponsiveWidthCardItem.Switch">
+                            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:text="@string/must_be_charging"
+                                style="@style/ResponsiveWidthCardItemHeader" />
+                            <CheckBox
+                                android:id="@+id/cbPowerRequired"
+                                style="@style/Check" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/llWifiRequired"
+                            style="@style/ResponsiveWidthCardItem.Switch">
+                            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:text="@string/must_be_on_wifi"
+                                style="@style/ResponsiveWidthCardItemHeader" />
+                            <CheckBox
+                                android:id="@+id/cbWifiRequired"
+                                style="@style/Check" />
+                        </LinearLayout>
+                        <LinearLayout
+                            style="@style/ResponsiveWidthCardItem">
+                            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                                android:enabled="false"
+                                android:text="@string/last_check"
+                                style="@style/ResponsiveWidthCardItemHeader" />
+                            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                                android:enabled="false"
+                                android:id="@+id/tvLastCheck"
+                                tools:text="8 hours ago"
+                                style="@style/ResponsiveWidthCardItemBody" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_marginBottom="@dimen/root_padding"
+                    style="@style/ResponsiveWidthCard">
+                    <LinearLayout
+                        style="@style/ResponsiveWidthCardInternal">
+                        <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:text="@string/account"
                             style="@style/ResponsiveWidthCardHeader" />
                         <com.charlesmadere.hummingbird.views.TypefaceTextView

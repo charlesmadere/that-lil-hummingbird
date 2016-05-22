@@ -6,7 +6,7 @@ import android.support.annotation.StringRes;
 
 import com.charlesmadere.hummingbird.R;
 
-public enum SyncFrequency implements Parcelable {
+public enum PollFrequency implements Parcelable {
 
     HOURLY(R.string.hourly),
     EVERY_FOUR_HOURS(R.string.every_four_hours),
@@ -19,7 +19,7 @@ public enum SyncFrequency implements Parcelable {
     private final int mTextResId;
 
 
-    SyncFrequency(@StringRes final int textResId) {
+    PollFrequency(@StringRes final int textResId) {
         mTextResId = textResId;
     }
 
@@ -38,15 +38,15 @@ public enum SyncFrequency implements Parcelable {
         dest.writeInt(ordinal());
     }
 
-    public static final Creator<SyncFrequency> CREATOR = new Creator<SyncFrequency>() {
+    public static final Creator<PollFrequency> CREATOR = new Creator<PollFrequency>() {
         @Override
-        public SyncFrequency createFromParcel(final Parcel source) {
+        public PollFrequency createFromParcel(final Parcel source) {
             return values()[source.readInt()];
         }
 
         @Override
-        public SyncFrequency[] newArray(final int size) {
-            return new SyncFrequency[size];
+        public PollFrequency[] newArray(final int size) {
+            return new PollFrequency[size];
         }
     };
 

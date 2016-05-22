@@ -111,6 +111,7 @@
     <string name="japanese">Japanese</string>
     <string name="language">Language</string>
     <string name="languages">Languages</string>
+    <string name="last_check">Last check</string>
     <string name="last_update">Last update</string>
     <string name="leave_a_comment_">Leave a comment…</string>
     <string name="library">Library</string>
@@ -125,6 +126,8 @@
     <string name="miscellaneous">Miscellaneous</string>
     <string name="movie">Movie</string>
     <string name="music">Music</string>
+    <string name="must_be_charging">Must be charging</string>
+    <string name="must_be_on_wifi">Must be on wifi</string>
     <string name="night">Night</string>
     <string name="no_bio_available">No bio available</string>
     <string name="no_details">No details</string>
@@ -140,6 +143,7 @@
     <string name="no_synopsis_available">No synopsis available</string>
     <string name="no_timeline_content">No timeline content</string>
     <string name="none">none</string>
+    <string name="notification_polling_description">This feature will periodically refresh your Hummingbird notifications and then let you know if there\'s anything new.</string>
     <string name="notifications">Notifications</string>
     <string name="not_yet_aired">Not Yet Aired</string>
     <string name="nsfw">NSFW</string>
@@ -155,6 +159,7 @@
     <string name="plan_to_watch">Plan to Watch</string>
     <string name="plan_to_watch_library_is_empty">Plan to watch library is empty</string>
     <string name="plans_to_watch">plans to watch</string>
+    <string name="poll_frequency">Poll frequency</string>
     <string name="posted_to">posted to</string>
     <string name="post">Post</string>
     <string name="post_comment">Post Comment</string>
@@ -195,6 +200,7 @@
     <string name="special">Special</string>
     <string name="started_airing">Started airing</string>
     <string name="started_airing_x">Started airing %1$s</string>
+    <string name="sync">Sync</string>
     <string name="synopsis">Synopsis</string>
     <string name="system">System</string>
     <string name="that_lil_hummingbird">That Li\'l Hummingbird</string>
@@ -208,6 +214,7 @@
     <string name="type">Type</string>
     <string name="upcoming">Upcoming</string>
     <string name="use_chrome_custom_tabs">Use Chrome Custom Tabs</string>
+    <string name="use_notification_polling">Use notification polling</string>
     <string name="username">Username</string>
     <string name="users">Users</string>
     <string name="user_activity">User Activity</string>
