@@ -1,9 +1,7 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.widget.TextView;
@@ -12,6 +10,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.FollowersActivity;
 import com.charlesmadere.hummingbird.activities.FollowingActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.misc.CustomTabsUtils;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.UserDigest;
 
@@ -87,9 +86,7 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
 
     @OnClick(R.id.tvWebsite)
     void onWebsiteClick() {
-        final Context context = getContext();
-        context.startActivity(new Intent(Intent.ACTION_VIEW,
-                Uri.parse(mUserDigest.getUser().getWebsite())));
+        CustomTabsUtils.openUrl(getContext(), mUserDigest.getUser().getWebsite());
     }
 
     @Override
