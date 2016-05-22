@@ -10,5 +10,6 @@
     android:paddingEnd="@dimen/root_padding"
     android:paddingStart="@dimen/root_padding"
     android:paddingTop="@dimen/root_padding_half"
+    android:textColor="?android:attr/textColorPrimary"
     android:textSize="@dimen/text_large"
     tools:text="@string/groups" />
