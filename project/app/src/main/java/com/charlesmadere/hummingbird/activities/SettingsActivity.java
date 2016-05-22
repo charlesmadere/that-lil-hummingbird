@@ -17,6 +17,7 @@ import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.NightMode;
+import com.charlesmadere.hummingbird.models.PollFrequency;
 import com.charlesmadere.hummingbird.models.TitleType;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.KeyValueTextView;
@@ -37,6 +38,9 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @BindView(R.id.tvAnimeTitleLanguage)
     TextView mAnimeTitleLanguage;
+
+    @BindView(R.id.tvPollFrequency)
+    TextView mPollFrequency;
 
     @BindView(R.id.tvTheme)
     TextView mTheme;
@@ -73,7 +77,7 @@ public class SettingsActivity extends BaseDrawerActivity {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
                         Preferences.General.TitleLanguage.set(values[which]);
-                        mAnimeTitleLanguage.setText(values[which].getTextResId());
+                        refreshViews();
                     }
                 })
                 .setTitle(R.string.preferred_anime_title_language)
@@ -111,6 +115,41 @@ public class SettingsActivity extends BaseDrawerActivity {
         startActivity(LogViewerActivity.getLaunchIntent(this));
     }
 
+    @OnClick(R.id.llPollFrequency)
+    void onPollFrequencyClick() {
+        final PollFrequency[] values = PollFrequency.values();
+        CharSequence items[] = new CharSequence[values.length];
+
+        for (int i = 0; i < items.length; ++i) {
+            items[i] = getText(values[i].getTextResId());
+        }
+
+        new AlertDialog.Builder(this)
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        final PollFrequency pollFrequency = Preferences.NotificationPolling.Frequency.get();
+                        final PollFrequency newPollFrequency = values[which];
+
+                        if (pollFrequency != null && pollFrequency.equals(newPollFrequency)) {
+                            return;
+                        }
+
+                        if (pollFrequency == null) {
+                            Timber.d(TAG, "Poll Frequency is now " + newPollFrequency.name());
+                        } else {
+                            Timber.d(TAG, "Poll Frequency was " + pollFrequency.name() +
+                                    " and is now " + newPollFrequency.name());
+                        }
+
+                        Preferences.NotificationPolling.Frequency.set(newPollFrequency);
+                        refreshViews();
+                    }
+                })
+                .setTitle(R.string.poll_frequency)
+                .show();
+    }
+
     @OnClick(R.id.kvtvPriscilla)
     void onPriscillaClick() {
         MiscUtils.openUrl(this, Constants.PRISCILLA_URL);
@@ -119,6 +158,12 @@ public class SettingsActivity extends BaseDrawerActivity {
     @OnClick(R.id.tvRateThisApp)
     void onRateThisAppClick() {
         MiscUtils.openUrl(this, Constants.PLAY_STORE_BASE_URL + getPackageName());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshViews();
     }
 
     @OnClick(R.id.tvRewatchIntroAnimation)
@@ -155,12 +200,11 @@ public class SettingsActivity extends BaseDrawerActivity {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
                         final NightMode nightMode = Preferences.General.Theme.get();
+                        final NightMode newNightMode = values[which];
 
-                        if (nightMode != null && nightMode.equals(values[which])) {
+                        if (nightMode != null && nightMode.equals(newNightMode)) {
                             return;
                         }
-
-                        final NightMode newNightMode = values[which];
 
                         if (nightMode == null) {
                             Timber.d(TAG, "Theme is now " + newNightMode.name() + " (" +
@@ -173,8 +217,7 @@ public class SettingsActivity extends BaseDrawerActivity {
                         }
 
                         Preferences.General.Theme.set(newNightMode);
-                        mTheme.setText(newNightMode.getTextResId());
-
+                        refreshViews();
                         showRestartDialog();
                     }
                 })
@@ -185,17 +228,18 @@ public class SettingsActivity extends BaseDrawerActivity {
     @OnClick(R.id.llUseChromeCustomTabs)
     void onUseChromeCustomTabsClick() {
         Preferences.General.UseChromeCustomTabs.set(!Preferences.General.UseChromeCustomTabs.get());
-        mUseChromeCustomTabsSwitch.setChecked(Preferences.General.UseChromeCustomTabs.get());
     }
 
-    @Override
-    protected void onViewsBound() {
-        super.onViewsBound();
+    private void refreshViews() {
         mAnimeTitleLanguage.setText(Preferences.General.TitleLanguage.get().getTextResId());
         mTheme.setText(Preferences.General.Theme.get().getTextResId());
         mUseChromeCustomTabsSwitch.setChecked(Preferences.General.UseChromeCustomTabs.get());
 
-        if (!CurrentUser.get().isPro()) {
+        mPollFrequency.setText(Preferences.NotificationPolling.Frequency.get().getTextResId());
+
+        if (CurrentUser.get().isPro()) {
+            mGetHummingbirdPro.setVisibility(View.GONE);
+        } else {
             mGetHummingbirdPro.setVisibility(View.VISIBLE);
         }
 
