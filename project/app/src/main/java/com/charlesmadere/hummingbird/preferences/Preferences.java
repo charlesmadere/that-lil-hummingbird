@@ -5,6 +5,7 @@ import android.preference.PreferenceManager;
 
 import com.charlesmadere.hummingbird.ThatLilHummingbird;
 import com.charlesmadere.hummingbird.models.NightMode;
+import com.charlesmadere.hummingbird.models.SyncFrequency;
 import com.charlesmadere.hummingbird.models.TitleType;
 
 public final class Preferences {
@@ -59,9 +60,25 @@ public final class Preferences {
 
         static {
             UseChromeCustomTabs = new BooleanPreference(TAG, "UseChromeCustomTabs", Boolean.TRUE);
-            TitleLanguage = new GsonPreference<>(TAG, "TitleLanguage", TitleType.class,
-                    TitleType.ENGLISH);
+            TitleLanguage = new GsonPreference<>(TAG, "TitleLanguage", TitleType.class, TitleType.ENGLISH);
             Theme = new GsonPreference<>(TAG, "NightMode", NightMode.class, NightMode.getDefault());
+        }
+    }
+
+    public static final class Sync {
+        private static final String TAG = Preferences.TAG + ".Sync";
+        public static final BooleanPreference IsPowerRequired;
+        public static final BooleanPreference IsWifiRequired;
+        public static final GsonPreference<SyncFrequency> Frequency;
+        public static final LongPreference LastSync;
+        public static final LongPreference MostRecentNotificationTime;
+
+        static {
+            IsPowerRequired = new BooleanPreference(TAG, "IsPowerRequired", Boolean.FALSE);
+            IsWifiRequired = new BooleanPreference(TAG, "IsWifiRequired", Boolean.TRUE);
+            Frequency = new GsonPreference<>(TAG, "Frequency", SyncFrequency.class, SyncFrequency.DAILY);
+            LastSync = new LongPreference(TAG, "LastSync", null);
+            MostRecentNotificationTime = new LongPreference(TAG, "MostRecentNotificationTime", null);
         }
     }
 
