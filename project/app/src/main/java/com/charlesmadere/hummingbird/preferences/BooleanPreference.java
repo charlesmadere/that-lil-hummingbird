@@ -31,10 +31,12 @@ public class BooleanPreference extends Preference<Boolean> {
     }
 
     public void toggle() {
-        if (exists()) {
-            set(!get());
-        } else if (getDefaultValue() != null) {
-            set(!getDefaultValue());
+        final Boolean value = get();
+
+        if (Boolean.TRUE.equals(value)) {
+            set(Boolean.FALSE);
+        } else if (Boolean.FALSE.equals(value)) {
+            set(Boolean.TRUE);
         }
     }
 
