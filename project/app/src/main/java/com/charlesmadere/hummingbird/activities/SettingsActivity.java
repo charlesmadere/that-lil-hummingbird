@@ -9,6 +9,7 @@ import android.support.v7.widget.SwitchCompat;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.BuildConfig;
@@ -40,6 +41,9 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @BindView(R.id.kvtvGetHummingbirdPro)
     KeyValueTextView mGetHummingbirdPro;
+
+    @BindView(R.id.llLastPoll)
+    LinearLayout mLastPollContainer;
 
     @BindView(R.id.scUseChromeCustomTabs)
     SwitchCompat mUseChromeCustomTabs;
@@ -254,6 +258,7 @@ public class SettingsActivity extends BaseDrawerActivity {
     @Override
     protected void onViewsBound() {
         super.onViewsBound();
+        mLastPollContainer.setEnabled(false);
         mVersion.setText(getString(R.string.version_format, BuildConfig.VERSION_NAME,
                 BuildConfig.VERSION_CODE));
     }
