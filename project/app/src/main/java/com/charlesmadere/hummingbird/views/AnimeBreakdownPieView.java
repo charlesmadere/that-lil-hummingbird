@@ -127,7 +127,10 @@ public class AnimeBreakdownPieView extends View {
         mTextPaint.setFakeBoldText(true);
         mTextPaint.setTextAlign(Paint.Align.LEFT);
         mTextPaint.setTextSize(textSize);
-        mTextPaint.setTypeface(TypefaceStore.get(typefaceEntryOrdinal));
+
+        if (!isInEditMode()) {
+            mTextPaint.setTypeface(TypefaceStore.get(typefaceEntryOrdinal));
+        }
 
         mNumberFormat = NumberFormat.getInstance();
         mPaintRect = new RectF();
