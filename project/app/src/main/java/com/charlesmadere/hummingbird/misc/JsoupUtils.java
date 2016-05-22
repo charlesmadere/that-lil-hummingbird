@@ -7,20 +7,12 @@ import android.text.TextUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.safety.Whitelist;
 import org.jsoup.select.Elements;
 
 public final class JsoupUtils {
 
     private static final String RELATIVE_URL = "//hummingbird.me/";
-    private static final Whitelist WHITELIST;
 
-
-    static {
-        WHITELIST = Whitelist.simpleText()
-                .addTags("a")
-                .addTags("img");
-    }
 
     @Nullable
     public static CharSequence parse(@Nullable final CharSequence text) {
