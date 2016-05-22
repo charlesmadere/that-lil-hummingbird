@@ -54,9 +54,6 @@ public class SettingsActivity extends BaseDrawerActivity {
     @BindView(R.id.llWifiRequired)
     LinearLayout mWifiRequiredContainer;
 
-    @BindView(R.id.scUseChromeCustomTabs)
-    SwitchCompat mUseChromeCustomTabs;
-
     @BindView(R.id.scUseNotificationPolling)
     SwitchCompat mUseNotificationPolling;
 
@@ -258,12 +255,6 @@ public class SettingsActivity extends BaseDrawerActivity {
                 .show();
     }
 
-    @OnClick(R.id.llUseChromeCustomTabs)
-    void onUseChromeCustomTabsClick() {
-        Preferences.General.UseChromeCustomTabs.toggle();
-        refreshViews();
-    }
-
     @OnClick(R.id.llUseNotificationPolling)
     void onUseNotificationPollingClick() {
         Preferences.NotificationPolling.IsEnabled.toggle();
@@ -287,7 +278,6 @@ public class SettingsActivity extends BaseDrawerActivity {
     private void refreshViews() {
         mAnimeTitleLanguage.setText(Preferences.General.TitleLanguage.get().getTextResId());
         mTheme.setText(Preferences.General.Theme.get().getTextResId());
-        mUseChromeCustomTabs.setChecked(Preferences.General.UseChromeCustomTabs.get());
 
         mUseNotificationPolling.setChecked(Preferences.NotificationPolling.IsEnabled.get());
         mPollFrequency.setText(Preferences.NotificationPolling.Frequency.get().getTextResId());
