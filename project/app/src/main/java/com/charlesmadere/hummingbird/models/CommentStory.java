@@ -8,19 +8,13 @@ import android.text.TextUtils;
 import com.charlesmadere.hummingbird.misc.JsoupUtils;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-
 public class CommentStory extends AbsStory implements Parcelable {
-
-    @Nullable
-    @SerializedName("recent_liker_ids")
-    private ArrayList<String> mRecentLikerIds;
 
     @SerializedName("is_liked")
     private boolean mIsLiked;
 
     @SerializedName("comment")
-    private CharSequence mComment;
+    private String mComment;
 
     @Nullable
     @SerializedName("group_id")
@@ -30,17 +24,15 @@ public class CommentStory extends AbsStory implements Parcelable {
     private String mPosterId;
 
     // hydrated fields
-    private User mPoster;
-
-    @Nullable
+    private CharSequence mCompiledComment;
     private Group mGroup;
+    private User mPoster;
 
 
     public CharSequence getComment() {
-        return mComment;
+        return mCompiledComment;
     }
 
-    @Nullable
     public Group getGroup() {
         return mGroup;
     }
@@ -58,11 +50,6 @@ public class CommentStory extends AbsStory implements Parcelable {
         return mPosterId;
     }
 
-    @Nullable
-    public ArrayList<String> getRecentLikerIds() {
-        return mRecentLikerIds;
-    }
-
     @Override
     public Type getType() {
         return Type.COMMENT;
@@ -70,10 +57,6 @@ public class CommentStory extends AbsStory implements Parcelable {
 
     public boolean hasGroupId() {
         return !TextUtils.isEmpty(mGroupId);
-    }
-
-    public boolean hasRecentLikerIds() {
-        return mRecentLikerIds != null && !mRecentLikerIds.isEmpty();
     }
 
     @Override
@@ -96,7 +79,7 @@ public class CommentStory extends AbsStory implements Parcelable {
             }
         }
 
-        mComment = JsoupUtils.parse(mComment);
+        mCompiledComment = JsoupUtils.parse(mComment);
     }
 
     public boolean isLiked() {
@@ -128,11 +111,11 @@ public class CommentStory extends AbsStory implements Parcelable {
     @Override
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);
-        mRecentLikerIds = source.createStringArrayList();
         mIsLiked = source.readInt() != 0;
-        mComment = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
+        mComment = source.readString();
         mGroupId = source.readString();
         mPosterId = source.readString();
+        mCompiledComment = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
         mPoster = source.readParcelable(User.class.getClassLoader());
         mGroup = source.readParcelable(Group.class.getClassLoader());
     }
@@ -140,11 +123,11 @@ public class CommentStory extends AbsStory implements Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeStringList(mRecentLikerIds);
         dest.writeInt(mIsLiked ? 1 : 0);
-        TextUtils.writeToParcel(mComment, dest, flags);
+        dest.writeString(mComment);
         dest.writeString(mGroupId);
         dest.writeString(mPosterId);
+        TextUtils.writeToParcel(mCompiledComment, dest, flags);
         dest.writeParcelable(mPoster, flags);
         dest.writeParcelable(mGroup, flags);
     }

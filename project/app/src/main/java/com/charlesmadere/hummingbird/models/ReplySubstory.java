@@ -10,17 +10,18 @@ import com.google.gson.annotations.SerializedName;
 public class ReplySubstory extends AbsSubstory implements Parcelable {
 
     @SerializedName("reply")
-    private CharSequence mReply;
+    private String mReply;
 
     @SerializedName("user_id")
     private String mUserId;
 
     // hydrated fields
+    private CharSequence mCompiledReply;
     private User mUser;
 
 
     public CharSequence getReply() {
-        return mReply;
+        return mCompiledReply;
     }
 
     @Override
@@ -45,22 +46,24 @@ public class ReplySubstory extends AbsSubstory implements Parcelable {
             }
         }
 
-        mReply = JsoupUtils.parse(mReply);
+        mCompiledReply = JsoupUtils.parse(mReply);
     }
 
     @Override
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);
-        mReply = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
+        mReply = source.readString();
         mUserId = source.readString();
+        mCompiledReply = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
         mUser = source.readParcelable(User.class.getClassLoader());
     }
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         super.writeToParcel(dest, flags);
-        TextUtils.writeToParcel(mReply, dest, flags);
+        dest.writeString(mReply);
         dest.writeString(mUserId);
+        TextUtils.writeToParcel(mReply, dest, flags);
         dest.writeParcelable(mUser, flags);
     }
 
