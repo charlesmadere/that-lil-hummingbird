@@ -189,6 +189,12 @@
         <item name="layout_scrollFlags">exitUntilCollapsed|scroll|snap</item>
     </style>
 
+    <style name="CommentTextView">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColorLink">?android:attr/textColorPrimary</item>
+    </style>
+
     <style name="CoordinatorLayout">
         <item name="android:fitsSystemWindows">true</item>
         <item name="android:id">@id/coordinatorLayout</item>

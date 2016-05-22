@@ -27,13 +27,12 @@
             android:layout_toStartOf="@id/likeTextView"
             tools:text="an hour ago"
             style="@style/TimeOrDate" />
-        <com.charlesmadere.hummingbird.views.TypefaceTextView
+        <com.charlesmadere.hummingbird.views.CommentTextView
             android:id="@+id/tvComment"
             android:layout_below="@id/tvTimeAgo"
-            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/root_padding_half"
             android:layout_toEndOf="@id/sdvAvatar"
-            android:layout_width="match_parent"
-            tools:text="Hello, World!" />
+            tools:text="Hello, World!"
+            style="@style/CommentTextView" />
     </RelativeLayout>
 </com.charlesmadere.hummingbird.views.CommentStoryStandaloneItemView>
