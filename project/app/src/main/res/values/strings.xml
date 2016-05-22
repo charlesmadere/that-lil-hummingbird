@@ -244,7 +244,7 @@
 
     <plurals name="followed_x_users">
         <item quantity="one">followed %1$s user</item>
-        <item quantity="other">followed %2$s users</item>
+        <item quantity="other">followed %1$s users</item>
     </plurals>
 
     <plurals name="genres">
