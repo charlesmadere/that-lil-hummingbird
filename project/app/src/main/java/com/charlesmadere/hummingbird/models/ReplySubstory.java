@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.charlesmadere.hummingbird.misc.JsoupUtils;
 import com.google.gson.annotations.SerializedName;
 
 public class ReplySubstory extends AbsSubstory implements Parcelable {
@@ -42,6 +43,8 @@ public class ReplySubstory extends AbsSubstory implements Parcelable {
                 break;
             }
         }
+
+        mReply = JsoupUtils.parse(mReply);
     }
 
     @Override

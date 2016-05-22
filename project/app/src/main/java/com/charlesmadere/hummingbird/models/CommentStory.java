@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.charlesmadere.hummingbird.misc.JsoupUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -94,6 +95,8 @@ public class CommentStory extends AbsStory implements Parcelable {
                 }
             }
         }
+
+        mComment = JsoupUtils.parse(mComment);
     }
 
     public boolean isLiked() {
