@@ -14,7 +14,6 @@ import android.view.MenuItem;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.ActivityRegister;
-import com.charlesmadere.hummingbird.misc.CustomTabsUtils;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 
@@ -87,10 +86,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (mToolbar != null) {
             prepareToolbar();
         }
-    }
-
-    protected void openUrl(final String url) {
-        CustomTabsUtils.openUrl(this, url);
     }
 
     private void prepareToolbar() {

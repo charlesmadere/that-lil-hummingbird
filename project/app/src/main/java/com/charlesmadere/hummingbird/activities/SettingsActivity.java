@@ -13,6 +13,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.ThatLilHummingbird;
 import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.NightMode;
 import com.charlesmadere.hummingbird.models.TitleType;
@@ -77,7 +78,7 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @OnClick(R.id.kvtvAuthor)
     void onAuthorClick() {
-        openUrl(Constants.CHARLES_TWITTER_URL);
+        MiscUtils.openUrl(this, Constants.CHARLES_TWITTER_URL);
     }
 
     @Override
@@ -88,17 +89,17 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @OnClick(R.id.kvtvGetHummingbirdPro)
     void onGetHummingbirdProClick() {
-        openUrl(Constants.HUMMINGBIRD_PRO_URL);
+        MiscUtils.openUrl(this, Constants.HUMMINGBIRD_PRO_URL);
     }
 
     @OnClick(R.id.tvGitHub)
     void onGitHubClick() {
-        openUrl(Constants.GITHUB_URL);
+        MiscUtils.openUrl(this, Constants.GITHUB_URL);
     }
 
     @OnClick(R.id.tvHummingbirdOnTheWeb)
     void onHummingbirdWebClick() {
-        openUrl(Constants.HUMMINGBIRD_URL);
+        MiscUtils.openUrl(this, Constants.HUMMINGBIRD_URL);
     }
 
     @OnClick(R.id.tvLogViewer)
@@ -108,12 +109,12 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @OnClick(R.id.kvtvPriscilla)
     void onPriscillaClick() {
-        openUrl(Constants.PRISCILLA_URL);
+        MiscUtils.openUrl(this, Constants.PRISCILLA_URL);
     }
 
     @OnClick(R.id.tvRateThisApp)
     void onRateThisAppClick() {
-        openUrl(Constants.PLAY_STORE_BASE_URL + getPackageName());
+        MiscUtils.openUrl(this, Constants.PLAY_STORE_BASE_URL + getPackageName());
     }
 
     @OnClick(R.id.tvRewatchIntroAnimation)

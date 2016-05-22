@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.GalleryActivity;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.ShowType;
 import com.charlesmadere.hummingbird.views.KeyValueTextView;
@@ -262,7 +263,7 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     @OnClick(R.id.llYouTubeLink)
     void onYouTubeLinkClick() {
-        openUrl(mAnimeDigest.getInfo().getYouTubeVideoUrl());
+        MiscUtils.openUrl(getActivity(), mAnimeDigest.getInfo().getYouTubeVideoUrl());
     }
 
 }

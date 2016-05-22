@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-import com.charlesmadere.hummingbird.misc.CustomTabsUtils;
 import com.charlesmadere.hummingbird.misc.Timber;
 
 import butterknife.ButterKnife;
@@ -51,10 +50,6 @@ public abstract class BaseFragment extends Fragment {
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mUnbinder = ButterKnife.bind(this, view);
-    }
-
-    protected void openUrl(final String url) {
-        CustomTabsUtils.openUrl(getActivity(), url);
     }
 
 }

@@ -3,12 +3,15 @@ package com.charlesmadere.hummingbird.misc;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.ActivityManagerCompat;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -43,6 +46,21 @@ public final class MiscUtils {
         final InputMethodManager imm = (InputMethodManager) activity.getSystemService(
                 Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public static Activity getActivity(final Context context) {
+        if (context == null) {
+            throw new IllegalArgumentException("context can't be null");
+        }
+
+        if (context instanceof Activity) {
+            return (Activity) context;
+        } else if (context instanceof ContextWrapper) {
+            final ContextWrapper contextWrapper = (ContextWrapper) context;
+            return getActivity(contextWrapper.getBaseContext());
+        } else {
+            throw new RuntimeException("context isn't connected to an Activity");
+        }
     }
 
     @ColorInt
@@ -200,6 +218,29 @@ public final class MiscUtils {
         final InputMethodManager imm = (InputMethodManager) context.getSystemService(
                 Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(view, 0);
+    }
+
+    public static void openUrl(final Activity activity, final String url) {
+        if (activity == null) {
+            throw new IllegalArgumentException("activity can't be null");
+        }
+
+        if (TextUtils.isEmpty(url) || TextUtils.getTrimmedLength(url) == 0) {
+            return;
+        }
+
+        final CustomTabsIntent intent = new CustomTabsIntent.Builder()
+                .build();
+
+        intent.launchUrl(activity, Uri.parse(url));
+    }
+
+    public static void openUrl(final Context context, final String url) {
+        if (context == null) {
+            throw new IllegalArgumentException("context can't be null");
+        }
+
+        openUrl(MiscUtils.getActivity(context), url);
     }
 
 }
