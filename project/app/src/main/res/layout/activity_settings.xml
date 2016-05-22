@@ -128,7 +128,7 @@
                                 style="@style/ResponsiveWidthCardItemHeader" />
                             <com.charlesmadere.hummingbird.views.TypefaceTextView
                                 android:enabled="false"
-                                android:id="@+id/tvLastCheck"
+                                android:id="@+id/tvLastPoll"
                                 tools:text="8 hours ago"
                                 style="@style/ResponsiveWidthCardItemBody" />
                         </LinearLayout>

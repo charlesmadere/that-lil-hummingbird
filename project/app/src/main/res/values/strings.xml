@@ -100,6 +100,7 @@
     <string name="has_completed">has completed</string>
     <string name="has_dropped">has dropped</string>
     <string name="has_placed_on_hold">has placed on hold</string>
+    <string name="havent_yet_polled">Haven\'t yet polled</string>
     <string name="home">Home</string>
     <string name="hourly">Hourly</string>
     <string name="hummingbird">Hummingbird</string>

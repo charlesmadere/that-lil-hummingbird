@@ -71,7 +71,7 @@ public final class Preferences {
         public static final BooleanPreference IsPowerRequired;
         public static final BooleanPreference IsWifiRequired;
         public static final GsonPreference<PollFrequency> Frequency;
-        public static final LongPreference LastCheck;
+        public static final LongPreference LastPoll;
         public static final LongPreference MostRecentNotificationTime;
 
         static {
@@ -79,7 +79,7 @@ public final class Preferences {
             IsPowerRequired = new BooleanPreference(TAG, "IsPowerRequired", Boolean.FALSE);
             IsWifiRequired = new BooleanPreference(TAG, "IsWifiRequired", Boolean.TRUE);
             Frequency = new GsonPreference<>(TAG, "Frequency", PollFrequency.class, PollFrequency.DAILY);
-            LastCheck = new LongPreference(TAG, "LastSync", null);
+            LastPoll = new LongPreference(TAG, "LastPoll", null);
             MostRecentNotificationTime = new LongPreference(TAG, "MostRecentNotificationTime", null);
         }
     }

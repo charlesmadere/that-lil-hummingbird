@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SwitchCompat;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -48,6 +49,9 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @BindView(R.id.tvAnimeTitleLanguage)
     TextView mAnimeTitleLanguage;
+
+    @BindView(R.id.tvLastPoll)
+    TextView mLastPoll;
 
     @BindView(R.id.tvPollFrequency)
     TextView mPollFrequency;
@@ -269,6 +273,14 @@ public class SettingsActivity extends BaseDrawerActivity {
         mPollFrequency.setText(Preferences.NotificationPolling.Frequency.get().getTextResId());
         mPowerRequired.setChecked(Preferences.NotificationPolling.IsPowerRequired.get());
         mWifiRequired.setChecked(Preferences.NotificationPolling.IsWifiRequired.get());
+
+        if (Preferences.NotificationPolling.LastPoll.exists()) {
+            mLastPoll.setText(DateUtils.getRelativeDateTimeString(this,
+                    Preferences.NotificationPolling.LastPoll.get(), DateUtils.DAY_IN_MILLIS,
+                    DateUtils.WEEK_IN_MILLIS, 0));
+        } else {
+            mLastPoll.setText(R.string.havent_yet_polled);
+        }
 
         if (CurrentUser.get().isPro()) {
             mGetHummingbirdPro.setVisibility(View.GONE);
