@@ -34,7 +34,10 @@ public class SettingsActivity extends BaseDrawerActivity {
     KeyValueTextView mGetHummingbirdPro;
 
     @BindView(R.id.scUseChromeCustomTabs)
-    SwitchCompat mUseChromeCustomTabsSwitch;
+    SwitchCompat mUseChromeCustomTabs;
+
+    @BindView(R.id.scUseNotificationPolling)
+    SwitchCompat mUseNotificationPolling;
 
     @BindView(R.id.tvAnimeTitleLanguage)
     TextView mAnimeTitleLanguage;
@@ -233,8 +236,9 @@ public class SettingsActivity extends BaseDrawerActivity {
     private void refreshViews() {
         mAnimeTitleLanguage.setText(Preferences.General.TitleLanguage.get().getTextResId());
         mTheme.setText(Preferences.General.Theme.get().getTextResId());
-        mUseChromeCustomTabsSwitch.setChecked(Preferences.General.UseChromeCustomTabs.get());
+        mUseChromeCustomTabs.setChecked(Preferences.General.UseChromeCustomTabs.get());
 
+        mUseNotificationPolling.setChecked(Preferences.NotificationPolling.IsEnabled.get());
         mPollFrequency.setText(Preferences.NotificationPolling.Frequency.get().getTextResId());
 
         if (CurrentUser.get().isPro()) {
