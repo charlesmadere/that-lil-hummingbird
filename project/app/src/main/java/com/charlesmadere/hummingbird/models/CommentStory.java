@@ -20,7 +20,7 @@ public class CommentStory extends AbsStory implements Parcelable {
     private boolean mIsLiked;
 
     @SerializedName("comment")
-    private String mComment;
+    private CharSequence mComment;
 
     @Nullable
     @SerializedName("group_id")
@@ -36,7 +36,7 @@ public class CommentStory extends AbsStory implements Parcelable {
     private Group mGroup;
 
 
-    public String getComment() {
+    public CharSequence getComment() {
         return mComment;
     }
 
@@ -130,7 +130,7 @@ public class CommentStory extends AbsStory implements Parcelable {
         super.readFromParcel(source);
         mRecentLikerIds = source.createStringArrayList();
         mIsLiked = source.readInt() != 0;
-        mComment = source.readString();
+        mComment = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
         mGroupId = source.readString();
         mPosterId = source.readString();
         mPoster = source.readParcelable(User.class.getClassLoader());
@@ -142,7 +142,7 @@ public class CommentStory extends AbsStory implements Parcelable {
         super.writeToParcel(dest, flags);
         dest.writeStringList(mRecentLikerIds);
         dest.writeInt(mIsLiked ? 1 : 0);
-        dest.writeString(mComment);
+        TextUtils.writeToParcel(mComment, dest, flags);
         dest.writeString(mGroupId);
         dest.writeString(mPosterId);
         dest.writeParcelable(mPoster, flags);

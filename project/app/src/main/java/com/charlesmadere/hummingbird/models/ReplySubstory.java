@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.JsoupUtils;
 import com.google.gson.annotations.SerializedName;
@@ -9,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
 public class ReplySubstory extends AbsSubstory implements Parcelable {
 
     @SerializedName("reply")
-    private String mReply;
+    private CharSequence mReply;
 
     @SerializedName("user_id")
     private String mUserId;
@@ -18,7 +19,7 @@ public class ReplySubstory extends AbsSubstory implements Parcelable {
     private User mUser;
 
 
-    public String getReply() {
+    public CharSequence getReply() {
         return mReply;
     }
 
@@ -50,7 +51,7 @@ public class ReplySubstory extends AbsSubstory implements Parcelable {
     @Override
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);
-        mReply = source.readString();
+        mReply = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
         mUserId = source.readString();
         mUser = source.readParcelable(User.class.getClassLoader());
     }
@@ -58,7 +59,7 @@ public class ReplySubstory extends AbsSubstory implements Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(mReply);
+        TextUtils.writeToParcel(mReply, dest, flags);
         dest.writeString(mUserId);
         dest.writeParcelable(mUser, flags);
     }
