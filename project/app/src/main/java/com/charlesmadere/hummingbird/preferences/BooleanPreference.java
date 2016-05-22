@@ -33,6 +33,8 @@ public class BooleanPreference extends Preference<Boolean> {
     public void toggle() {
         if (exists()) {
             set(!get());
+        } else if (getDefaultValue() != null) {
+            set(!getDefaultValue());
         }
     }
 
