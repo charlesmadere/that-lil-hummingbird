@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v4.widget.Space;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +57,9 @@ public class UserProfileFragment extends BaseFragment implements
 
     @BindView(R.id.refreshLayout)
     RefreshLayout mRefreshLayout;
+
+    @BindView(R.id.animeBreakdownSpace)
+    Space mAnimeBreakdownSpace;
 
     @BindView(R.id.userBioView)
     UserBioView mUserBioView;
@@ -156,13 +160,23 @@ public class UserProfileFragment extends BaseFragment implements
 
     private void showUserDigest(final UserDigest userDigest) {
         mUserDigest = userDigest;
-        mError.setVisibility(View.GONE);
-        mNestedScrollView.setVisibility(View.VISIBLE);
         mAboutUserView.setContent(userDigest);
-        mAnimeBreakdownView.setContent(userDigest);
+
+        if (userDigest.getInfo().hasTopGenres()) {
+            mAnimeBreakdownView.setContent(userDigest);
+            mAnimeBreakdownView.setVisibility(View.VISIBLE);
+            mAnimeBreakdownSpace.setVisibility(View.VISIBLE);
+        } else {
+            mAnimeBreakdownView.setVisibility(View.GONE);
+            mAnimeBreakdownSpace.setVisibility(View.GONE);
+        }
+
         mUserBioView.setContent(userDigest);
         mFavoriteAnimeView.setContent(userDigest);
         mFavoriteMangaView.setContent(userDigest);
+
+        mError.setVisibility(View.GONE);
+        mNestedScrollView.setVisibility(View.VISIBLE);
         mRefreshLayout.setRefreshing(false);
     }
 
