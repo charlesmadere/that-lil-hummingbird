@@ -45,6 +45,15 @@ public class SettingsActivity extends BaseDrawerActivity {
     @BindView(R.id.llLastPoll)
     LinearLayout mLastPollContainer;
 
+    @BindView(R.id.llPollFrequency)
+    LinearLayout mPollFrequencyContainer;
+
+    @BindView(R.id.llPowerRequired)
+    LinearLayout mPowerRequiredContainer;
+
+    @BindView(R.id.llWifiRequired)
+    LinearLayout mWifiRequiredContainer;
+
     @BindView(R.id.scUseChromeCustomTabs)
     SwitchCompat mUseChromeCustomTabs;
 
@@ -255,6 +264,12 @@ public class SettingsActivity extends BaseDrawerActivity {
         refreshViews();
     }
 
+    @OnClick(R.id.llUseNotificationPolling)
+    void onUseNotificationPollingClick() {
+        Preferences.NotificationPolling.IsEnabled.toggle();
+        refreshViews();
+    }
+
     @Override
     protected void onViewsBound() {
         super.onViewsBound();
@@ -278,6 +293,16 @@ public class SettingsActivity extends BaseDrawerActivity {
         mPollFrequency.setText(Preferences.NotificationPolling.Frequency.get().getTextResId());
         mPowerRequired.setChecked(Preferences.NotificationPolling.IsPowerRequired.get());
         mWifiRequired.setChecked(Preferences.NotificationPolling.IsWifiRequired.get());
+
+        if (mUseNotificationPolling.isChecked()) {
+            mPollFrequencyContainer.setEnabled(true);
+            mPowerRequiredContainer.setEnabled(true);
+            mWifiRequiredContainer.setEnabled(true);
+        } else {
+            mPollFrequencyContainer.setEnabled(false);
+            mPowerRequiredContainer.setEnabled(false);
+            mWifiRequiredContainer.setEnabled(false);
+        }
 
         if (Preferences.NotificationPolling.LastPoll.exists()) {
             mLastPoll.setText(DateUtils.getRelativeDateTimeString(this,

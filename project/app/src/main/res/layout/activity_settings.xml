@@ -85,7 +85,7 @@
                                 android:id="@+id/scUseNotificationPolling"
                                 style="@style/Switch" />
                         </LinearLayout>
-                        <LinearLayout
+                        <com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout
                             android:id="@+id/llPollFrequency"
                             style="@style/ResponsiveWidthCardItem">
                             <com.charlesmadere.hummingbird.views.TypefaceTextView
@@ -95,8 +95,8 @@
                                 android:id="@+id/tvPollFrequency"
                                 tools:text="@string/daily"
                                 style="@style/ResponsiveWidthCardItemBody" />
-                        </LinearLayout>
-                        <LinearLayout
+                        </com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout>
+                        <com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout
                             android:id="@+id/llPowerRequired"
                             style="@style/ResponsiveWidthCardItem.Switch">
                             <com.charlesmadere.hummingbird.views.TypefaceTextView
@@ -107,8 +107,8 @@
                             <CheckBox
                                 android:id="@+id/cbPowerRequired"
                                 style="@style/Check" />
-                        </LinearLayout>
-                        <LinearLayout
+                        </com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout>
+                        <com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout
                             android:id="@+id/llWifiRequired"
                             style="@style/ResponsiveWidthCardItem.Switch">
                             <com.charlesmadere.hummingbird.views.TypefaceTextView
@@ -119,7 +119,7 @@
                             <CheckBox
                                 android:id="@+id/cbWifiRequired"
                                 style="@style/Check" />
-                        </LinearLayout>
+                        </com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout>
                         <com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout
                             android:id="@+id/llLastPoll"
                             style="@style/ResponsiveWidthCardItem">
