@@ -144,11 +144,11 @@ public class Feed implements Parcelable {
         }
 
         if (hasSubstories()) {
+            Collections.sort(mSubstories, AbsSubstory.COMPARATOR);
+
             for (final AbsSubstory substory : mSubstories) {
                 substory.hydrate(this);
             }
-
-            Collections.sort(mSubstories, AbsSubstory.COMPARATOR);
         }
 
         if (hasStories()) {
