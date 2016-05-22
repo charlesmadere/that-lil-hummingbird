@@ -50,8 +50,7 @@
                         </LinearLayout>
                         <LinearLayout
                             android:id="@+id/llUseChromeCustomTabs"
-                            android:orientation="horizontal"
-                            style="@style/ResponsiveWidthCardItem">
+                            style="@style/ResponsiveWidthCardItem.Switch">
                             <com.charlesmadere.hummingbird.views.TypefaceTextView
                                 android:layout_weight="1"
                                 android:layout_width="0dp"

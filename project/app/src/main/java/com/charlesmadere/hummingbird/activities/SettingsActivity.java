@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.TextView;
 
@@ -30,6 +31,9 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @BindView(R.id.kvtvGetHummingbirdPro)
     KeyValueTextView mGetHummingbirdPro;
+
+    @BindView(R.id.scUseChromeCustomTabs)
+    SwitchCompat mUseChromeCustomTabsSwitch;
 
     @BindView(R.id.tvAnimeTitleLanguage)
     TextView mAnimeTitleLanguage;
@@ -178,11 +182,18 @@ public class SettingsActivity extends BaseDrawerActivity {
                 .show();
     }
 
+    @OnClick(R.id.llUseChromeCustomTabs)
+    void onUseChromeCustomTabsClick() {
+        Preferences.General.UseChromeCustomTabs.set(!Preferences.General.UseChromeCustomTabs.get());
+        mUseChromeCustomTabsSwitch.setChecked(Preferences.General.UseChromeCustomTabs.get());
+    }
+
     @Override
     protected void onViewsBound() {
         super.onViewsBound();
         mAnimeTitleLanguage.setText(Preferences.General.TitleLanguage.get().getTextResId());
         mTheme.setText(Preferences.General.Theme.get().getTextResId());
+        mUseChromeCustomTabsSwitch.setChecked(Preferences.General.UseChromeCustomTabs.get());
 
         if (!CurrentUser.get().isPro()) {
             mGetHummingbirdPro.setVisibility(View.VISIBLE);
