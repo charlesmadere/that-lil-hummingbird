@@ -30,4 +30,10 @@ public class BooleanPreference extends Preference<Boolean> {
         writeSharedPreferences().putBoolean(getKey(), newValue).apply();
     }
 
+    public void toggle() {
+        if (exists()) {
+            set(!get());
+        }
+    }
+
 }

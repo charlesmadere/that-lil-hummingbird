@@ -153,6 +153,11 @@ public class SettingsActivity extends BaseDrawerActivity {
                 .show();
     }
 
+    @OnClick(R.id.llPowerRequired)
+    void onPowerRequiredClick() {
+        Preferences.NotificationPolling.IsPowerRequired.toggle();
+    }
+
     @OnClick(R.id.kvtvPriscilla)
     void onPriscillaClick() {
         MiscUtils.openUrl(this, Constants.PRISCILLA_URL);
@@ -230,7 +235,7 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @OnClick(R.id.llUseChromeCustomTabs)
     void onUseChromeCustomTabsClick() {
-        Preferences.General.UseChromeCustomTabs.set(!Preferences.General.UseChromeCustomTabs.get());
+        Preferences.General.UseChromeCustomTabs.toggle();
     }
 
     @Override
