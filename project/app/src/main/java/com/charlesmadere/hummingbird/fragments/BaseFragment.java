@@ -1,11 +1,10 @@
 package com.charlesmadere.hummingbird.fragments;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.charlesmadere.hummingbird.misc.CustomTabsUtils;
 import com.charlesmadere.hummingbird.misc.Timber;
 
 import butterknife.ButterKnife;
@@ -55,9 +54,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void openUrl(final String url) {
-        startActivity(new Intent()
-                .setAction(Intent.ACTION_VIEW)
-                .setData(Uri.parse(url)));
+        CustomTabsUtils.openUrl(getActivity(), url);
     }
 
 }

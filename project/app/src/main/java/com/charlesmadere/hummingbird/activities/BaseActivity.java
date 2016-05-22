@@ -2,7 +2,6 @@ package com.charlesmadere.hummingbird.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -15,6 +14,7 @@ import android.view.MenuItem;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.ActivityRegister;
+import com.charlesmadere.hummingbird.misc.CustomTabsUtils;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 
@@ -90,9 +90,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void openUrl(final String url) {
-        startActivity(new Intent()
-                .setAction(Intent.ACTION_VIEW)
-                .setData(Uri.parse(url)));
+        CustomTabsUtils.openUrl(this, url);
     }
 
     private void prepareToolbar() {
