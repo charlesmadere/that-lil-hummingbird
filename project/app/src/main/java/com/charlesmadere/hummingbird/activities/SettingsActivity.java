@@ -233,6 +233,13 @@ public class SettingsActivity extends BaseDrawerActivity {
         Preferences.General.UseChromeCustomTabs.set(!Preferences.General.UseChromeCustomTabs.get());
     }
 
+    @Override
+    protected void onViewsBound() {
+        super.onViewsBound();
+        mVersion.setText(getString(R.string.version_format, BuildConfig.VERSION_NAME,
+                BuildConfig.VERSION_CODE));
+    }
+
     private void refreshViews() {
         mAnimeTitleLanguage.setText(Preferences.General.TitleLanguage.get().getTextResId());
         mTheme.setText(Preferences.General.Theme.get().getTextResId());
@@ -246,9 +253,6 @@ public class SettingsActivity extends BaseDrawerActivity {
         } else {
             mGetHummingbirdPro.setVisibility(View.VISIBLE);
         }
-
-        mVersion.setText(getString(R.string.version_format, BuildConfig.VERSION_NAME,
-                BuildConfig.VERSION_CODE));
     }
 
     private void showRestartDialog() {
