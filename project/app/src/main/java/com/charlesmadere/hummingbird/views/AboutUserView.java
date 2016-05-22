@@ -10,6 +10,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.FollowersActivity;
 import com.charlesmadere.hummingbird.activities.FollowingActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.UserDigest;
 
@@ -85,7 +86,7 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
 
     @OnClick(R.id.tvWebsite)
     void onWebsiteClick() {
-        CustomTabsUtils.openUrl(getContext(), mUserDigest.getUser().getWebsite());
+        MiscUtils.openUrl(getContext(), mUserDigest.getUser().getWebsite());
     }
 
     @Override
