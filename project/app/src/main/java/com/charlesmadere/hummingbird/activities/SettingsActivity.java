@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.BuildConfig;
@@ -29,6 +30,12 @@ import butterknife.OnClick;
 public class SettingsActivity extends BaseDrawerActivity {
 
     private static final String TAG = "SettingsActivity";
+
+    @BindView(R.id.cbPowerRequired)
+    CheckBox mPowerRequired;
+
+    @BindView(R.id.cbWifiRequired)
+    CheckBox mWifiRequired;
 
     @BindView(R.id.kvtvGetHummingbirdPro)
     KeyValueTextView mGetHummingbirdPro;
@@ -156,6 +163,7 @@ public class SettingsActivity extends BaseDrawerActivity {
     @OnClick(R.id.llPowerRequired)
     void onPowerRequiredClick() {
         Preferences.NotificationPolling.IsPowerRequired.toggle();
+        refreshViews();
     }
 
     @OnClick(R.id.kvtvPriscilla)
@@ -236,6 +244,7 @@ public class SettingsActivity extends BaseDrawerActivity {
     @OnClick(R.id.llUseChromeCustomTabs)
     void onUseChromeCustomTabsClick() {
         Preferences.General.UseChromeCustomTabs.toggle();
+        refreshViews();
     }
 
     @Override
@@ -245,6 +254,12 @@ public class SettingsActivity extends BaseDrawerActivity {
                 BuildConfig.VERSION_CODE));
     }
 
+    @OnClick(R.id.llWifiRequired)
+    void onWifiRequired() {
+        Preferences.NotificationPolling.IsWifiRequired.toggle();
+        refreshViews();
+    }
+
     private void refreshViews() {
         mAnimeTitleLanguage.setText(Preferences.General.TitleLanguage.get().getTextResId());
         mTheme.setText(Preferences.General.Theme.get().getTextResId());
@@ -252,6 +267,8 @@ public class SettingsActivity extends BaseDrawerActivity {
 
         mUseNotificationPolling.setChecked(Preferences.NotificationPolling.IsEnabled.get());
         mPollFrequency.setText(Preferences.NotificationPolling.Frequency.get().getTextResId());
+        mPowerRequired.setChecked(Preferences.NotificationPolling.IsPowerRequired.get());
+        mWifiRequired.setChecked(Preferences.NotificationPolling.IsWifiRequired.get());
 
         if (CurrentUser.get().isPro()) {
             mGetHummingbirdPro.setVisibility(View.GONE);
