@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
@@ -21,7 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CommentReplyNotificationItemView extends CardView implements
-        AdapterView<CommentReplyNotification> {
+        AdapterView<CommentReplyNotification>, View.OnClickListener {
 
     private CommentReplyNotification mCommentReplyNotification;
 
@@ -77,6 +78,11 @@ public class CommentReplyNotificationItemView extends CardView implements
     }
 
     @Override
+    public void onClick(final View v) {
+        // TODO
+    }
+
+    @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
 
@@ -85,6 +91,7 @@ public class CommentReplyNotificationItemView extends CardView implements
         }
 
         ButterKnife.bind(this);
+        setOnClickListener(this);
     }
 
     @Override

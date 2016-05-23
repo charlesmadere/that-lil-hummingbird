@@ -29,6 +29,10 @@ public class SimpleDate implements Parcelable {
     private final Date mDate;
 
 
+    public SimpleDate(final long time) {
+        mDate = new Date(time);
+    }
+
     private SimpleDate(final Parcel source) {
         mDate = new Date(source.readLong());
     }
