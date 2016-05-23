@@ -120,17 +120,12 @@
                                 android:id="@+id/cbWifiRequired"
                                 style="@style/Check" />
                         </com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout>
-                        <com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout
-                            android:id="@+id/llLastPoll"
-                            style="@style/ResponsiveWidthCardItem">
-                            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                                android:text="@string/last_check"
-                                style="@style/ResponsiveWidthCardItemHeader" />
-                            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                                android:id="@+id/tvLastPoll"
-                                tools:text="8 hours ago"
-                                style="@style/ResponsiveWidthCardItemBody" />
-                        </com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout>
+                        <com.charlesmadere.hummingbird.views.KeyValueTextView
+                            android:id="@+id/kvtvLastPoll"
+                            android:textColor="?android:attr/textColorSecondary"
+                            app:keyTextColor="?android:attr/textColorSecondary"
+                            app:valueTextColor="?android:attr/textColorPrimary"
+                            style="@style/ResponsiveWidthCardItem" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView

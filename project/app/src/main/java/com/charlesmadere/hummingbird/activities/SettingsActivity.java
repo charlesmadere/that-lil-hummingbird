@@ -42,8 +42,8 @@ public class SettingsActivity extends BaseDrawerActivity {
     @BindView(R.id.kvtvGetHummingbirdPro)
     KeyValueTextView mGetHummingbirdPro;
 
-    @BindView(R.id.llLastPoll)
-    LinearLayout mLastPollContainer;
+    @BindView(R.id.kvtvLastPoll)
+    KeyValueTextView mLastPoll;
 
     @BindView(R.id.llPollFrequency)
     LinearLayout mPollFrequencyContainer;
@@ -59,9 +59,6 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @BindView(R.id.tvAnimeTitleLanguage)
     TextView mAnimeTitleLanguage;
-
-    @BindView(R.id.tvLastPoll)
-    TextView mLastPoll;
 
     @BindView(R.id.tvPollFrequency)
     TextView mPollFrequency;
@@ -264,7 +261,6 @@ public class SettingsActivity extends BaseDrawerActivity {
     @Override
     protected void onViewsBound() {
         super.onViewsBound();
-        mLastPollContainer.setEnabled(false);
         mVersion.setText(getString(R.string.version_format, BuildConfig.VERSION_NAME,
                 BuildConfig.VERSION_CODE));
     }
@@ -295,7 +291,7 @@ public class SettingsActivity extends BaseDrawerActivity {
         }
 
         if (Preferences.NotificationPolling.LastPoll.exists()) {
-            mLastPoll.setText(DateUtils.getRelativeDateTimeString(this,
+            mLastPoll.setText(getText(R.string.last_check), DateUtils.getRelativeDateTimeString(this,
                     Preferences.NotificationPolling.LastPoll.get(), DateUtils.DAY_IN_MILLIS,
                     DateUtils.WEEK_IN_MILLIS, 0));
         } else {
