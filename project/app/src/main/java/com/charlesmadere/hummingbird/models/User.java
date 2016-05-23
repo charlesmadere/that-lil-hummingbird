@@ -35,12 +35,20 @@ public class User implements Parcelable {
         return mData.mAboutFormatted;
     }
 
-    public String getAvatarSmallest() {
-        return mData.mAvatarTemplate.replaceFirst(AVATAR_TEMPLATE_STUB, AVATAR_TEMPLATE_THUMB_SMALL);
+    public String[] getAvatars() {
+        return new String[] { getAvatarSmall(), getAvatarThumb(), getAvatarThumbSmall() };
     }
 
-    public String getAvatarLargest() {
+    public String getAvatarSmall() {
+        return mData.mAvatarTemplate.replaceFirst(AVATAR_TEMPLATE_STUB, AVATAR_TEMPLATE_SMALL);
+    }
+
+    public String getAvatarThumb() {
         return mData.mAvatarTemplate.replaceFirst(AVATAR_TEMPLATE_STUB, AVATAR_TEMPLATE_THUMB);
+    }
+
+    public String getAvatarThumbSmall() {
+        return mData.mAvatarTemplate.replaceFirst(AVATAR_TEMPLATE_STUB, AVATAR_TEMPLATE_THUMB_SMALL);
     }
 
     @Nullable

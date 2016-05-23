@@ -3,7 +3,6 @@ package com.charlesmadere.hummingbird.activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -23,6 +22,7 @@ import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.views.AvatarView;
 import com.charlesmadere.hummingbird.views.SimpleProgressView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -45,11 +45,11 @@ public class UserActivity extends BaseDrawerActivity {
     @BindView(R.id.appBarLayout)
     AppBarLayout mAppBarLayout;
 
+    @BindView(R.id.avatarView)
+    AvatarView mAvatar;
+
     @BindView(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout mCollapsingToolbarLayout;
-
-    @BindView(R.id.sdvAvatar)
-    SimpleDraweeView mAvatar;
 
     @BindView(R.id.parallaxCoverImage)
     SimpleDraweeView mCoverImage;
@@ -161,7 +161,7 @@ public class UserActivity extends BaseDrawerActivity {
         final User user = mUserDigest.getUser();
         PaletteUtils.applyParallaxColors(user.getCoverImageUrl(), this, mAppBarLayout,
                 mCollapsingToolbarLayout, mCoverImage, mTabLayout);
-        mAvatar.setImageURI(Uri.parse(user.getAvatarLargest()));
+        mAvatar.setContent(user);
 
         if (user.isPro()) {
             mProBadge.setVisibility(View.VISIBLE);

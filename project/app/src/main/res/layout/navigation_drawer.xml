@@ -53,8 +53,8 @@
                     android:layout_marginBottom="@dimen/root_padding"
                     android:layout_marginStart="@dimen/root_padding"
                     android:layout_width="wrap_content">
-                    <com.facebook.drawee.view.SimpleDraweeView
-                        android:id="@+id/sdvAvatar"
+                    <com.charlesmadere.hummingbird.views.AvatarView
+                        android:id="@+id/avatarView"
                         app:placeholderImage="@null"
                         app:roundAsCircle="true"
                         style="@style/Avatar.Medium" />

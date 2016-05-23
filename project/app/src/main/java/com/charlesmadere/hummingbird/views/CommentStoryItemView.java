@@ -1,7 +1,6 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -15,7 +14,6 @@ import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 
@@ -27,6 +25,9 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
         View.OnClickListener {
 
     private CommentStory mCommentStory;
+
+    @BindView(R.id.avatarView)
+    AvatarView mAvatar;
 
     @BindView(R.id.commentTitleTextView)
     CommentTitleTextView mTitle;
@@ -45,9 +46,6 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
 
     @BindView(R.id.rsivTwo)
     ReplySubstoryItemView mReplyTwo;
-
-    @BindView(R.id.sdvAvatar)
-    SimpleDraweeView mAvatar;
 
     @BindView(R.id.tvComment)
     TextView mComment;
@@ -93,7 +91,7 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
     public void setContent(final CommentStory content) {
         mCommentStory = content;
 
-        mAvatar.setImageURI(Uri.parse(mCommentStory.getPoster().getAvatarLargest()));
+        mAvatar.setContent(mCommentStory.getPoster());
         mLikeTextView.setContent(mCommentStory);
         mTitle.setContent(mCommentStory);
         mTimeAgo.setText(mCommentStory.getCreatedAt().getRelativeTimeText(getContext()));

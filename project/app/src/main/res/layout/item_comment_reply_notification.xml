@@ -5,20 +5,20 @@
     <RelativeLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/sdvAvatar"
+        <com.charlesmadere.hummingbird.views.AvatarView
+            android:id="@+id/avatarView"
             android:layout_marginEnd="@dimen/root_padding"
             style="@style/Avatar.Medium" />
         <com.charlesmadere.hummingbird.views.NotificationTitleTextView
             android:id="@+id/notificationTitleTextView"
-            android:layout_toEndOf="@id/sdvAvatar"
+            android:layout_toEndOf="@id/avatarView"
             android:textSize="@dimen/text_xxlarge"
             tools:text="Igneek wrote a reply to your comment"
             style="@style/UserTitle" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvTimeAgo"
             android:layout_below="@id/notificationTitleTextView"
-            android:layout_toEndOf="@id/sdvAvatar"
+            android:layout_toEndOf="@id/avatarView"
             tools:text="a month ago"
             style="@style/TimeOrDate" />
     </RelativeLayout>

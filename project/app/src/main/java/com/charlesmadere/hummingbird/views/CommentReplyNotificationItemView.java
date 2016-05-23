@@ -1,7 +1,6 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -15,7 +14,6 @@ import com.charlesmadere.hummingbird.models.AbsStory;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.CommentReplyNotification;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,11 +24,11 @@ public class CommentReplyNotificationItemView extends CardView implements
 
     private CommentReplyNotification mCommentReplyNotification;
 
+    @BindView(R.id.avatarView)
+    AvatarView mAvatar;
+
     @BindView(R.id.notificationTitleTextView)
     NotificationTitleTextView mNotificationTitleTextView;
-
-    @BindView(R.id.sdvAvatar)
-    SimpleDraweeView mAvatar;
 
     @BindView(R.id.tvTimeAgo)
     TextView mTimeAgo;
@@ -98,7 +96,7 @@ public class CommentReplyNotificationItemView extends CardView implements
     public void setContent(final CommentReplyNotification content) {
         mCommentReplyNotification = content;
 
-        mAvatar.setImageURI(Uri.parse(mCommentReplyNotification.getUser().getAvatarLargest()));
+        mAvatar.setContent(mCommentReplyNotification.getUser());
         mNotificationTitleTextView.setText(mCommentReplyNotification);
         mTimeAgo.setText(mCommentReplyNotification.getCreatedAt().getRelativeTimeText(
                 getContext()));

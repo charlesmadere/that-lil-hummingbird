@@ -26,8 +26,8 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout {
 
     private NavigationDrawerItemView[] mNavigationDrawerItemViews;
 
-    @BindView(R.id.sdvAvatar)
-    SimpleDraweeView mAvatar;
+    @BindView(R.id.avatarView)
+    AvatarView mAvatar;
 
     @BindView(R.id.sdvCoverImage)
     SimpleDraweeView mCoverImage;
@@ -93,7 +93,7 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout {
         findAllNavigationDrawerItemViewChildren();
 
         final User user = CurrentUser.get();
-        mAvatar.setImageURI(Uri.parse(user.getAvatarLargest()));
+        mAvatar.setContent(user);
         mCoverImage.setImageURI(Uri.parse(user.getCoverImageUrl()));
         mUsername.setText(user.getId());
 
