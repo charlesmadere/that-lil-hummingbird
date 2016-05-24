@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
-import com.charlesmadere.hummingbird.models.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,9 +63,8 @@ public class ReplySubstoryItemView extends RelativeLayout {
 
     public void setContent(final ReplySubstory content) {
         mReplySubstory = content;
-        final User user = mReplySubstory.getUser();
-        mAvatar.setContent(user);
-        mReply.setText(user.getId(), mReplySubstory.getReply());
+        mAvatar.setContent(mReplySubstory.getUser());
+        mReply.setContent(mReplySubstory);
         mTimeAgo.setText(mReplySubstory.getCreatedAt().getRelativeTimeText(getContext()));
     }
 

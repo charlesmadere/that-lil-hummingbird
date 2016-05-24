@@ -15,6 +15,7 @@ import android.view.View;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.CommentStory;
+import com.charlesmadere.hummingbird.models.ReplySubstory;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 
 public class CommentTextView extends KeyValueTextView implements View.OnClickListener {
@@ -84,7 +85,12 @@ public class CommentTextView extends KeyValueTextView implements View.OnClickLis
         } else {
             setText(mCommentStory.getComment());
             setOnClickListener(null);
+            setClickable(false);
         }
+    }
+
+    public void setContent(final ReplySubstory content) {
+        setText(content.getUser().getId(), content.getReply());
     }
 
     @Override
