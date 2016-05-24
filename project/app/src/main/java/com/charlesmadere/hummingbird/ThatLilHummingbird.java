@@ -14,6 +14,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import io.fabric.sdk.android.Fabric;
@@ -32,6 +33,12 @@ public class ThatLilHummingbird extends Application {
 
     public static void clearCaches() {
         Fresco.getImagePipeline().clearCaches();
+
+        try {
+            OkHttpUtils.getOkHttpClient().cache().evictAll();
+        } catch (final IOException e) {
+            Timber.w(TAG, "Exception when clearing OkHttp cache", e);
+        }
     }
 
     public static ThatLilHummingbird get() {
