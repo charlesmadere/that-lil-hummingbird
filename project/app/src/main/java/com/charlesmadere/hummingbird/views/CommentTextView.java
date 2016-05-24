@@ -67,7 +67,7 @@ public class CommentTextView extends KeyValueTextView {
     public void setContent(final CommentStory content) {
         if (content.isAdult() && !Boolean.TRUE.equals(Preferences.General.ShowNsfwContent.get())) {
             final SpannableString spannable = new SpannableString(getResources().getText(
-                    R.string.show_nsfw_content));
+                    R.string.nsfw_content));
             spannable.setSpan(mShowNsfwCommentSpan, 0, spannable.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             setText(spannable);
