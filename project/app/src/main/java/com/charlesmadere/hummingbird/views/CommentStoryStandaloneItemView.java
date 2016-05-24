@@ -1,7 +1,6 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.widget.TextView;
@@ -10,7 +9,6 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.CommentStory;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,17 +18,17 @@ public class CommentStoryStandaloneItemView extends CardView implements AdapterV
 
     private CommentStory mCommentStory;
 
+    @BindView(R.id.avatarView)
+    AvatarView mAvatar;
+
+    @BindView(R.id.commentTextView)
+    CommentTextView mComment;
+
     @BindView(R.id.commentTitleTextView)
     CommentTitleTextView mCommentTitleTextView;
 
     @BindView(R.id.likeTextView)
     LikeTextView mLikeTextView;
-
-    @BindView(R.id.sdvAvatar)
-    SimpleDraweeView mAvatar;
-
-    @BindView(R.id.tvComment)
-    TextView mComment;
 
     @BindView(R.id.tvTimeAgo)
     TextView mTimeAgo;
@@ -45,7 +43,7 @@ public class CommentStoryStandaloneItemView extends CardView implements AdapterV
         super(context, attrs, defStyleAttr);
     }
 
-    @OnClick(R.id.sdvAvatar)
+    @OnClick(R.id.avatarView)
     void onAvatarClick() {
         final Context context = getContext();
         context.startActivity(UserActivity.getLaunchIntent(context, mCommentStory.getUser()));
@@ -66,7 +64,7 @@ public class CommentStoryStandaloneItemView extends CardView implements AdapterV
     public void setContent(final CommentStory content) {
         mCommentStory = content;
 
-        mAvatar.setImageURI(Uri.parse(mCommentStory.getPoster().getAvatarLargest()));
+        mAvatar.setContent(mCommentStory.getPoster());
         mLikeTextView.setContent(mCommentStory);
         mCommentTitleTextView.setContent(mCommentStory);
         mTimeAgo.setText(mCommentStory.getCreatedAt().getRelativeTimeText(getContext()));

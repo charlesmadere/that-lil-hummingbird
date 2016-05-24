@@ -54,10 +54,12 @@ public final class Preferences {
 
     public static final class General {
         private static final String TAG = Preferences.TAG + ".General";
+        public static final BooleanPreference ShowNsfwContent;
         public static final GsonPreference<TitleType> TitleLanguage;
         public static final GsonPreference<NightMode> Theme;
 
         static {
+            ShowNsfwContent = new BooleanPreference(TAG, "ShowNsfwContent", Boolean.FALSE);
             TitleLanguage = new GsonPreference<>(TAG, "TitleLanguage", TitleType.class, TitleType.ENGLISH);
             Theme = new GsonPreference<>(TAG, "NightMode", NightMode.class, NightMode.getDefault());
         }

@@ -1,7 +1,6 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -14,7 +13,6 @@ import com.charlesmadere.hummingbird.models.AbsNotification;
 import com.charlesmadere.hummingbird.models.AbsStory;
 import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.models.ProfileCommentNotification;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,11 +23,11 @@ public class ProfileCommentNotificationItemView extends CardView implements
 
     private ProfileCommentNotification mProfileCommentNotification;
 
+    @BindView(R.id.avatarView)
+    AvatarView mAvatar;
+
     @BindView(R.id.notificationTitleTextView)
     NotificationTitleTextView mNotificationTitleTextView;
-
-    @BindView(R.id.sdvAvatar)
-    SimpleDraweeView mAvatar;
 
     @BindView(R.id.tvTimeAgo)
     TextView mTimeAgo;
@@ -60,7 +58,7 @@ public class ProfileCommentNotificationItemView extends CardView implements
         }
     }
 
-    @OnClick(R.id.sdvAvatar)
+    @OnClick(R.id.avatarView)
     void onAvatarClick() {
         final AbsNotification.AbsSource source = mProfileCommentNotification.getSource();
 
@@ -97,7 +95,7 @@ public class ProfileCommentNotificationItemView extends CardView implements
     public void setContent(final ProfileCommentNotification content) {
         mProfileCommentNotification = content;
 
-        mAvatar.setImageURI(Uri.parse(mProfileCommentNotification.getUser().getAvatarLargest()));
+        mAvatar.setContent(mProfileCommentNotification.getUser());
         mNotificationTitleTextView.setText(mProfileCommentNotification);
         mTimeAgo.setText(mProfileCommentNotification.getCreatedAt().getRelativeTimeText(
                 getContext()));

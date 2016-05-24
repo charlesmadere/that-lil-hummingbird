@@ -36,7 +36,7 @@ public class User implements Parcelable {
     }
 
     public String[] getAvatars() {
-        return new String[] { getAvatarSmall(), getAvatarThumb(), getAvatarThumbSmall() };
+        return new String[] { getAvatarThumb(), getAvatarThumbSmall(), getAvatarSmall() };
     }
 
     public String getAvatarSmall() {

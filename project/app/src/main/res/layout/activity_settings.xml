@@ -48,18 +48,18 @@
                                 tools:text="@string/system"
                                 style="@style/ResponsiveWidthCardItemBody" />
                         </LinearLayout>
-                        <LinearLayout
-                            android:id="@+id/llUseChromeCustomTabs"
+                        <com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout
+                            android:id="@+id/llShowNsfwContent"
                             style="@style/ResponsiveWidthCardItem.Switch">
                             <com.charlesmadere.hummingbird.views.TypefaceTextView
                                 android:layout_weight="1"
                                 android:layout_width="0dp"
-                                android:text="@string/use_chrome_custom_tabs"
+                                android:text="@string/show_nsfw_content"
                                 style="@style/ResponsiveWidthCardItemHeader" />
-                            <android.support.v7.widget.SwitchCompat
-                                android:id="@+id/scUseChromeCustomTabs"
-                                style="@style/Switch" />
-                        </LinearLayout>
+                            <CheckBox
+                                android:id="@+id/cbShowNsfwContent"
+                                style="@style/Check" />
+                        </com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
@@ -122,6 +122,7 @@
                         </com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout>
                         <com.charlesmadere.hummingbird.views.KeyValueTextView
                             android:id="@+id/kvtvLastPoll"
+                            android:visibility="gone"
                             android:textColor="?android:attr/textColorSecondary"
                             app:keyTextColor="?android:attr/textColorSecondary"
                             app:valueTextColor="?android:attr/textColorPrimary"

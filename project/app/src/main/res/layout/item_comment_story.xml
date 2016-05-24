@@ -28,7 +28,7 @@
             style="@style/TimeOrDate" />
         <com.charlesmadere.hummingbird.views.CommentTextView
             android:ellipsize="end"
-            android:id="@+id/tvComment"
+            android:id="@+id/commentTextView"
             android:layout_below="@id/tvTimeAgo"
             android:layout_marginTop="@dimen/root_padding_half"
             android:layout_toEndOf="@id/avatarView"
@@ -39,7 +39,7 @@
         <LinearLayout
             android:divider="?android:attr/listDivider"
             android:id="@+id/llReplies"
-            android:layout_below="@id/tvComment"
+            android:layout_below="@id/commentTextView"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/root_padding"
             android:layout_width="match_parent"

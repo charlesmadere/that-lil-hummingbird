@@ -7,6 +7,11 @@
         android:title="@string/post_comment"
         compat:showAsAction="ifRoom|withText" />
     <item
+        android:id="@+id/miViewUser"
+        android:title="@string/view_user"
+        android:visible="true"
+        compat:showAsAction="never" />
+    <item
         android:id="@+id/miViewGroup"
         android:title="@string/view_group"
         android:visible="false"

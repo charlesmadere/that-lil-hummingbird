@@ -59,7 +59,7 @@ public class CommentReplyNotificationItemView extends CardView implements
         }
     }
 
-    @OnClick(R.id.sdvAvatar)
+    @OnClick(R.id.avatarView)
     void onAvatarClick() {
         final AbsNotification.AbsSource source = mCommentReplyNotification.getSource();
 

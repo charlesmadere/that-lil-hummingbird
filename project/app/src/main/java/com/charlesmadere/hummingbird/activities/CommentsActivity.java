@@ -121,8 +121,13 @@ public class CommentsActivity extends BaseDrawerActivity implements
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.activity_comments, menu);
 
+        final MenuItem user = menu.findItem(R.id.miViewUser);
+        user.setTitle(getResources().getString(R.string.view_x, mCommentStory.getPoster().getId()));
+
         if (mCommentStory.hasGroupId()) {
-            menu.findItem(R.id.miViewGroup).setVisible(true);
+            final MenuItem group = menu.findItem(R.id.miViewGroup);
+            group.setTitle(getResources().getString(R.string.view_x, mCommentStory.getGroup().getName()));
+            group.setVisible(true);
         }
 
         return super.onCreateOptionsMenu(menu);

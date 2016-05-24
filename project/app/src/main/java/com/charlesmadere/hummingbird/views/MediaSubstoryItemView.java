@@ -2,7 +2,6 @@ package com.charlesmadere.hummingbird.views;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
@@ -14,7 +13,6 @@ import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.WatchedEpisodeSubstory;
 import com.charlesmadere.hummingbird.models.WatchlistStatusUpdateSubstory;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.text.NumberFormat;
 
@@ -27,11 +25,11 @@ public class MediaSubstoryItemView extends RelativeLayout {
     private NumberFormat mNumberFormat;
     private User mUser;
 
+    @BindView(R.id.avatarView)
+    AvatarView mAvatar;
+
     @BindView(R.id.kvtvAction)
     KeyValueTextView mAction;
-
-    @BindView(R.id.sdvAvatar)
-    SimpleDraweeView mAvatar;
 
     @BindView(R.id.tvTimeAgo)
     TextView mTimeAgo;
@@ -52,7 +50,7 @@ public class MediaSubstoryItemView extends RelativeLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    @OnClick(R.id.sdvAvatar)
+    @OnClick(R.id.avatarView)
     void onAvatarClick() {
         final Context context = getContext();
         context.startActivity(UserActivity.getLaunchIntent(context, mUser));
@@ -72,7 +70,7 @@ public class MediaSubstoryItemView extends RelativeLayout {
 
     public void setContent(final AbsSubstory content, final User user) {
         mUser = user;
-        mAvatar.setImageURI(Uri.parse(user.getAvatarSmallest()));
+        mAvatar.setContent(user);
         mTimeAgo.setText(content.getCreatedAt().getRelativeTimeText(getContext()));
 
         switch (content.getType()) {

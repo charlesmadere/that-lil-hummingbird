@@ -40,7 +40,7 @@ public class AvatarView extends SimpleDraweeView implements AdapterView<User> {
     }
 
     private void fetchAvatars(final User user, final String[] avatars, final int index) {
-        if (user != mUser) {
+        if (mUser != user || index >= avatars.length) {
             return;
         }
 

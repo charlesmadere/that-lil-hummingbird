@@ -2,7 +2,6 @@ package com.charlesmadere.hummingbird.views;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
@@ -12,7 +11,6 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
 import com.charlesmadere.hummingbird.models.User;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,11 +20,11 @@ public class ReplySubstoryItemView extends RelativeLayout {
 
     private ReplySubstory mReplySubstory;
 
-    @BindView(R.id.kvtvReply)
-    KeyValueTextView mReply;
+    @BindView(R.id.avatarView)
+    AvatarView mAvatar;
 
-    @BindView(R.id.sdvAvatar)
-    SimpleDraweeView mAvatar;
+    @BindView(R.id.commentTextView)
+    KeyValueTextView mReply;
 
     @BindView(R.id.tvTimeAgo)
     TextView mTimeAgo;
@@ -47,7 +45,7 @@ public class ReplySubstoryItemView extends RelativeLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    @OnClick(R.id.sdvAvatar)
+    @OnClick(R.id.avatarView)
     void onAvatarClick() {
         final Context context = getContext();
         context.startActivity(UserActivity.getLaunchIntent(context, mReplySubstory.getUser()));
@@ -67,7 +65,7 @@ public class ReplySubstoryItemView extends RelativeLayout {
     public void setContent(final ReplySubstory content) {
         mReplySubstory = content;
         final User user = mReplySubstory.getUser();
-        mAvatar.setImageURI(Uri.parse(user.getAvatarSmallest()));
+        mAvatar.setContent(user);
         mReply.setText(user.getId(), mReplySubstory.getReply());
         mTimeAgo.setText(mReplySubstory.getCreatedAt().getRelativeTimeText(getContext()));
     }

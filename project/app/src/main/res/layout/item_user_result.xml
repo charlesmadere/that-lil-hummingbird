@@ -6,8 +6,8 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="horizontal">
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/sdvAvatar"
+        <com.charlesmadere.hummingbird.views.AvatarView
+            android:id="@+id/avatarView"
             android:layout_marginEnd="@dimen/root_padding"
             style="@style/Avatar.Medium" />
         <LinearLayout

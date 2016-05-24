@@ -20,9 +20,6 @@ public abstract class AbsStory implements Parcelable {
     @SerializedName("substory_ids")
     private ArrayList<String> mSubstoryIds;
 
-    @SerializedName("adult")
-    private boolean mAdult;
-
     @SerializedName("substory_count")
     private int mSubstoryCount;
 
@@ -121,7 +118,6 @@ public abstract class AbsStory implements Parcelable {
 
     protected void readFromParcel(final Parcel source) {
         mSubstoryIds = source.createStringArrayList();
-        mAdult = source.readInt() != 0;
         mSubstoryCount = source.readInt();
         mTotalVotes = source.readInt();
         mCreatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
@@ -134,7 +130,6 @@ public abstract class AbsStory implements Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeStringList(mSubstoryIds);
-        dest.writeInt(mAdult ? 1 : 0);
         dest.writeInt(mSubstoryCount);
         dest.writeInt(mTotalVotes);
         dest.writeParcelable(mCreatedAt, flags);

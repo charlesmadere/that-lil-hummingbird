@@ -197,6 +197,7 @@
     </style>
 
     <style name="CommentTextView">
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textColorLink">?android:attr/textColorPrimary</item>

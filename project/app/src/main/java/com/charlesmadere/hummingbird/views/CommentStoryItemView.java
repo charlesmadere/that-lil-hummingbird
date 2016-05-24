@@ -29,6 +29,9 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
     @BindView(R.id.avatarView)
     AvatarView mAvatar;
 
+    @BindView(R.id.commentTextView)
+    CommentTextView mComment;
+
     @BindView(R.id.commentTitleTextView)
     CommentTitleTextView mTitle;
 
@@ -47,9 +50,6 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
     @BindView(R.id.rsivTwo)
     ReplySubstoryItemView mReplyTwo;
 
-    @BindView(R.id.tvComment)
-    TextView mComment;
-
     @BindView(R.id.tvTimeAgo)
     TextView mTimeAgo;
 
@@ -63,7 +63,7 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
         super(context, attrs, defStyleAttr);
     }
 
-    @OnClick(R.id.sdvAvatar)
+    @OnClick(R.id.avatarView)
     void onAvatarClick() {
         final Context context = getContext();
         context.startActivity(UserActivity.getLaunchIntent(context, mCommentStory.getPoster()));

@@ -1,7 +1,6 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.widget.TextView;
@@ -10,7 +9,6 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,11 +18,11 @@ public class ReplySubstoryStandaloneItemView extends CardView implements Adapter
 
     private ReplySubstory mReplySubstory;
 
-    @BindView(R.id.kvtvReply)
-    KeyValueTextView mReply;
+    @BindView(R.id.avatarView)
+    AvatarView mAvatar;
 
-    @BindView(R.id.sdvAvatar)
-    SimpleDraweeView mAvatar;
+    @BindView(R.id.commentTextView)
+    CommentTextView mComment;
 
     @BindView(R.id.tvTimeAgo)
     TextView mTimeAgo;
@@ -39,7 +37,7 @@ public class ReplySubstoryStandaloneItemView extends CardView implements Adapter
         super(context, attrs, defStyleAttr);
     }
 
-    @OnClick(R.id.sdvAvatar)
+    @OnClick(R.id.avatarView)
     void onAvatarClick() {
         final Context context = getContext();
         context.startActivity(UserActivity.getLaunchIntent(context, mReplySubstory.getUser()));
@@ -60,8 +58,8 @@ public class ReplySubstoryStandaloneItemView extends CardView implements Adapter
     public void setContent(final ReplySubstory content) {
         mReplySubstory = content;
 
-        mAvatar.setImageURI(Uri.parse(content.getUser().getAvatarSmallest()));
-        mReply.setText(mReplySubstory.getUser().getId(), mReplySubstory.getReply());
+        mAvatar.setContent(mReplySubstory.getUser());
+        mComment.setText(mReplySubstory.getUser().getId(), mReplySubstory.getReply());
         mTimeAgo.setText(mReplySubstory.getCreatedAt().getRelativeTimeText(getContext()));
     }
 

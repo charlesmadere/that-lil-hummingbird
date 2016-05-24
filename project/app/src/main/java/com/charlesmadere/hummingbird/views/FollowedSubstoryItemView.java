@@ -2,28 +2,26 @@ package com.charlesmadere.hummingbird.views;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.models.FollowedSubstory;
 import com.charlesmadere.hummingbird.models.User;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FollowedSubstoryItemView extends FrameLayout implements View.OnClickListener {
+public class FollowedSubstoryItemView extends LinearLayout implements View.OnClickListener {
 
     private FollowedSubstory mFollowedSubstory;
 
-    @BindView(R.id.sdvAvatar)
-    SimpleDraweeView mAvatar;
+    @BindView(R.id.avatarView)
+    AvatarView mAvatar;
 
     @BindView(R.id.tvUsername)
     TextView mUsername;
@@ -66,7 +64,7 @@ public class FollowedSubstoryItemView extends FrameLayout implements View.OnClic
         mFollowedSubstory = content;
 
         final User user = mFollowedSubstory.getUser();
-        mAvatar.setImageURI(Uri.parse(user.getAvatarSmallest()));
+        mAvatar.setContent(user);
         mUsername.setText(user.getId());
     }
 

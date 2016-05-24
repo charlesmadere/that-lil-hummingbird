@@ -36,6 +36,9 @@ public class SettingsActivity extends BaseDrawerActivity {
     @BindView(R.id.cbPowerRequired)
     CheckBox mPowerRequired;
 
+    @BindView(R.id.cbShowNsfwContent)
+    CheckBox mShowNsfwContent;
+
     @BindView(R.id.cbWifiRequired)
     CheckBox mWifiRequired;
 
@@ -198,6 +201,12 @@ public class SettingsActivity extends BaseDrawerActivity {
         startActivity(SplashActivity.getLaunchIntent(this));
     }
 
+    @OnClick(R.id.llShowNsfwContent)
+    void onShowNsfwContentClick() {
+        Preferences.General.ShowNsfwContent.toggle();
+        refreshViews();
+    }
+
     @OnClick(R.id.tvSignOut)
     void onSignOutClick() {
         new AlertDialog.Builder(this)
@@ -274,6 +283,7 @@ public class SettingsActivity extends BaseDrawerActivity {
     private void refreshViews() {
         mAnimeTitleLanguage.setText(Preferences.General.TitleLanguage.get().getTextResId());
         mTheme.setText(Preferences.General.Theme.get().getTextResId());
+        mShowNsfwContent.setChecked(Preferences.General.ShowNsfwContent.get());
 
         mUseNotificationPolling.setChecked(Preferences.NotificationPolling.IsEnabled.get());
         mPollFrequency.setText(Preferences.NotificationPolling.Frequency.get().getTextResId());
@@ -294,8 +304,10 @@ public class SettingsActivity extends BaseDrawerActivity {
             mLastPoll.setText(getText(R.string.last_check), DateUtils.getRelativeDateTimeString(this,
                     Preferences.NotificationPolling.LastPoll.get(), DateUtils.DAY_IN_MILLIS,
                     DateUtils.WEEK_IN_MILLIS, 0));
+            mLastPoll.setVisibility(View.VISIBLE);
         } else {
-            mLastPoll.setText(R.string.havent_yet_polled);
+            mLastPoll.setText("");
+            mLastPoll.setVisibility(View.GONE);
         }
 
         if (CurrentUser.get().isPro()) {

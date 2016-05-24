@@ -10,6 +10,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class CommentStory extends AbsStory implements Parcelable {
 
+    @SerializedName("adult")
+    private boolean mAdult;
+
     @SerializedName("is_liked")
     private boolean mIsLiked;
 
@@ -24,6 +27,7 @@ public class CommentStory extends AbsStory implements Parcelable {
     private String mPosterId;
 
     // hydrated fields
+    private boolean mAdultButShown;
     private CharSequence mCompiledComment;
     private Group mGroup;
     private User mPoster;
@@ -82,12 +86,24 @@ public class CommentStory extends AbsStory implements Parcelable {
         mCompiledComment = JsoupUtils.parse(mComment);
     }
 
+    public boolean isAdult() {
+        return mAdult;
+    }
+
+    public boolean isAdultButShown() {
+        return mAdultButShown;
+    }
+
     public boolean isLiked() {
         return mIsLiked;
     }
 
     public boolean isPosterAndUserIdentical() {
         return mPosterId.equalsIgnoreCase(getUserId());
+    }
+
+    public void setAdultButShown(final boolean adultButShown) {
+        mAdultButShown = adultButShown;
     }
 
     public void setLiked(final boolean liked) {
@@ -111,10 +127,12 @@ public class CommentStory extends AbsStory implements Parcelable {
     @Override
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);
+        mAdult = source.readInt() != 0;
         mIsLiked = source.readInt() != 0;
         mComment = source.readString();
         mGroupId = source.readString();
         mPosterId = source.readString();
+        mAdultButShown = source.readInt() != 0;
         mCompiledComment = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
         mPoster = source.readParcelable(User.class.getClassLoader());
         mGroup = source.readParcelable(Group.class.getClassLoader());
@@ -123,10 +141,12 @@ public class CommentStory extends AbsStory implements Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         super.writeToParcel(dest, flags);
+        dest.writeInt(mAdult ? 1 : 0);
         dest.writeInt(mIsLiked ? 1 : 0);
         dest.writeString(mComment);
         dest.writeString(mGroupId);
         dest.writeString(mPosterId);
+        dest.writeInt(mAdultButShown ? 1 : 0);
         TextUtils.writeToParcel(mCompiledComment, dest, flags);
         dest.writeParcelable(mPoster, flags);
         dest.writeParcelable(mGroup, flags);

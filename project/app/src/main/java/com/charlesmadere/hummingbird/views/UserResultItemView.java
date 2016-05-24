@@ -11,7 +11,6 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.SearchBundle;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,8 +20,8 @@ public class UserResultItemView extends CardView implements AdapterView<SearchBu
 
     private SearchBundle.UserResult mUserResult;
 
-    @BindView(R.id.sdvAvatar)
-    SimpleDraweeView mAvatar;
+    @BindView(R.id.avatarView)
+    AvatarView mAvatar;
 
     @BindView(R.id.tvBio)
     TextView mBio;

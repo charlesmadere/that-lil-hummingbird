@@ -1,7 +1,6 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -11,7 +10,6 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.User;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,8 +18,8 @@ public class UserItemView extends CardView implements AdapterView<User>, View.On
 
     private User mUser;
 
-    @BindView(R.id.sdvAvatar)
-    SimpleDraweeView mAvatar;
+    @BindView(R.id.avatarView)
+    AvatarView mAvatar;
 
     @BindView(R.id.tvTitle)
     TextView mTitle;
@@ -56,7 +54,7 @@ public class UserItemView extends CardView implements AdapterView<User>, View.On
     @Override
     public void setContent(final User content) {
         mUser = content;
-        mAvatar.setImageURI(Uri.parse(mUser.getAvatarLargest()));
+        mAvatar.setContent(mUser);
         mTitle.setText(mUser.getId());
     }
 

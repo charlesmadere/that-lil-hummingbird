@@ -6,14 +6,14 @@
     android:layout_width="match_parent"
     android:paddingBottom="@dimen/root_padding_half"
     android:paddingTop="@dimen/root_padding_half">
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/sdvAvatar"
+    <com.charlesmadere.hummingbird.views.AvatarView
+        android:id="@+id/avatarView"
         android:layout_marginEnd="@dimen/root_padding_half"
         style="@style/Avatar.Small" />
     <com.charlesmadere.hummingbird.views.KeyValueTextView
         android:id="@+id/kvtvAction"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/sdvAvatar"
+        android:layout_toEndOf="@id/avatarView"
         android:layout_width="match_parent"
         android:textSize="@dimen/text_small"
         app:keyTextColor="?attr/colorAccent"
@@ -21,7 +21,7 @@
     <com.charlesmadere.hummingbird.views.TypefaceTextView
         android:id="@+id/tvTimeAgo"
         android:layout_below="@id/kvtvAction"
-        android:layout_toEndOf="@id/sdvAvatar"
+        android:layout_toEndOf="@id/avatarView"
         android:textSize="@dimen/text_small"
         tools:text="2 days ago"
         style="@style/TimeOrDate" />

@@ -1,7 +1,6 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.widget.TextView;
@@ -12,7 +11,6 @@ import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.FollowedStory;
 import com.charlesmadere.hummingbird.models.FollowedSubstory;
 import com.charlesmadere.hummingbird.models.User;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 
@@ -20,6 +18,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FollowedStoryItemView extends CardView implements AdapterView<FollowedStory> {
+
+    @BindView(R.id.avatarView)
+    AvatarView mAvatar;
 
     @BindView(R.id.fsttvTitle)
     FollowedStoryTitleTextView mTitle;
@@ -32,9 +33,6 @@ public class FollowedStoryItemView extends CardView implements AdapterView<Follo
 
     @BindView(R.id.fsivTwo)
     FollowedSubstoryItemView mFollowedTwo;
-
-    @BindView(R.id.sdvAvatar)
-    SimpleDraweeView mAvatar;
 
     @BindView(R.id.tvTimeAgo)
     TextView mTimeAgo;
@@ -63,8 +61,7 @@ public class FollowedStoryItemView extends CardView implements AdapterView<Follo
     @Override
     public void setContent(final FollowedStory content) {
         final User user = content.getUser();
-        mAvatar.setImageURI(Uri.parse(user.getAvatarLargest()));
-
+        mAvatar.setContent(user);
         mTitle.setText(user.getId(), content.getSubstoryCount());
         mTimeAgo.setText(content.getCreatedAt().getRelativeTimeText(getContext()));
 
