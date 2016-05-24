@@ -18,9 +18,8 @@ import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 
-public class CommentTextView extends KeyValueTextView implements View.OnClickListener {
+public class CommentTextView extends KeyValueTextView {
 
-    private CommentStory mCommentStory;
     private ForegroundColorSpan mShowNsfwCommentSpan;
 
 
@@ -59,12 +58,6 @@ public class CommentTextView extends KeyValueTextView implements View.OnClickLis
     }
 
     @Override
-    public void onClick(final View v) {
-        mCommentStory.setAdultButShown(true);
-        setContent(mCommentStory);
-    }
-
-    @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         mShowNsfwCommentSpan = new ForegroundColorSpan(MiscUtils.getAttrColor(getContext(),
@@ -72,20 +65,14 @@ public class CommentTextView extends KeyValueTextView implements View.OnClickLis
     }
 
     public void setContent(final CommentStory content) {
-        mCommentStory = content;
-
-        if (!Boolean.TRUE.equals(Preferences.General.ShowNsfwContent.get()) &&
-                content.isAdult() && !content.isAdultButShown()) {
+        if (content.isAdult() && !Boolean.TRUE.equals(Preferences.General.ShowNsfwContent.get())) {
             final SpannableString spannable = new SpannableString(getResources().getText(
                     R.string.show_nsfw_content));
             spannable.setSpan(mShowNsfwCommentSpan, 0, spannable.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             setText(spannable);
-            setOnClickListener(this);
         } else {
-            setText(mCommentStory.getComment());
-            setOnClickListener(null);
-            setClickable(false);
+            setText(content.getComment());
         }
     }
 
