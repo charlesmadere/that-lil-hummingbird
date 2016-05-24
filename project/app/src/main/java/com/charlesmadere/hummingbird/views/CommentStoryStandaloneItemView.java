@@ -68,7 +68,7 @@ public class CommentStoryStandaloneItemView extends CardView implements AdapterV
         mLikeTextView.setContent(mCommentStory);
         mCommentTitleTextView.setContent(mCommentStory);
         mTimeAgo.setText(mCommentStory.getCreatedAt().getRelativeTimeText(getContext()));
-        mComment.setText(mCommentStory.getComment());
+        mComment.setContent(mCommentStory);
     }
 
 }

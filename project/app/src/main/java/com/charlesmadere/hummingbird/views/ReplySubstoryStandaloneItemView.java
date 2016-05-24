@@ -59,7 +59,7 @@ public class ReplySubstoryStandaloneItemView extends CardView implements Adapter
         mReplySubstory = content;
 
         mAvatar.setContent(mReplySubstory.getUser());
-        mComment.setText(mReplySubstory.getUser().getId(), mReplySubstory.getReply());
+        mComment.setContent(mReplySubstory);
         mTimeAgo.setText(mReplySubstory.getCreatedAt().getRelativeTimeText(getContext()));
     }
 
