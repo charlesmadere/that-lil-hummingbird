@@ -1,7 +1,6 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -67,8 +66,8 @@ public class CommentTextView extends KeyValueTextView implements View.OnClickLis
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mShowNsfwCommentSpan = new ForegroundColorSpan(ContextCompat.getColor(getContext(),
-                R.color.r));
+        mShowNsfwCommentSpan = new ForegroundColorSpan(MiscUtils.getAttrColor(getContext(),
+                R.attr.colorAccent));
     }
 
     public void setContent(final CommentStory content) {
