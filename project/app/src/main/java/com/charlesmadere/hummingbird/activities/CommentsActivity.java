@@ -23,6 +23,7 @@ import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.Group;
+import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
@@ -149,6 +150,11 @@ public class CommentsActivity extends BaseDrawerActivity implements
             case R.id.miViewGroup:
                 final Group group = mCommentStory.getGroup();
                 startActivity(GroupActivity.getLaunchIntent(this, group.getId(), group.getName()));
+                return true;
+
+            case R.id.miViewUser:
+                final User poster = mCommentStory.getPoster();
+                startActivity(UserActivity.getLaunchIntent(this, poster));
                 return true;
         }
 
