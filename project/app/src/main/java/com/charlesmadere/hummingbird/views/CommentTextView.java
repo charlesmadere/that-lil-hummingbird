@@ -5,7 +5,6 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
@@ -37,8 +36,6 @@ public class CommentTextView extends KeyValueTextView {
         URLSpan[] urls = builder.getSpans(0, builder.length(), URLSpan.class);
 
         if (urls != null && urls.length >= 1) {
-            setMovementMethod(LinkMovementMethod.getInstance());
-
             for (final URLSpan url : urls) {
                 final ClickableSpan cs = new ClickableSpan() {
                     @Override
