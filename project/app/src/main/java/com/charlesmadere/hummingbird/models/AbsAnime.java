@@ -22,6 +22,10 @@ public abstract class AbsAnime implements Parcelable {
     @SerializedName("age_rating")
     private AgeRating mAgeRating;
 
+    @Nullable
+    @SerializedName("show_type")
+    private AnimeType mAnimeType;
+
     @SerializedName("community_rating")
     private float mCommunityRating;
 
@@ -32,10 +36,6 @@ public abstract class AbsAnime implements Parcelable {
     @Nullable
     @SerializedName("episode_length")
     private Integer mEpisodeLength;
-
-    @Nullable
-    @SerializedName("show_type")
-    private ShowType mShowType;
 
     @SerializedName("id")
     private String mId;
@@ -76,8 +76,8 @@ public abstract class AbsAnime implements Parcelable {
     public abstract String getImage();
 
     @Nullable
-    public ShowType getShowType() {
-        return mShowType;
+    public AnimeType getType() {
+        return mAnimeType;
     }
 
     @Nullable
@@ -99,7 +99,11 @@ public abstract class AbsAnime implements Parcelable {
     }
 
     public boolean hasEpisodeCount() {
-        return mEpisodeCount != null;
+        return mEpisodeCount != null && mEpisodeCount >= 1;
+    }
+
+    public boolean hasEpisodeLength() {
+        return mEpisodeLength != null && mEpisodeLength >= 1;
     }
 
     public boolean hasFinishedAiringDate() {
@@ -109,7 +113,7 @@ public abstract class AbsAnime implements Parcelable {
     public abstract boolean hasGenres();
 
     public boolean hasShowType() {
-        return mShowType != null;
+        return mAnimeType != null;
     }
 
     public boolean hasStartedAiringDate() {
@@ -132,10 +136,10 @@ public abstract class AbsAnime implements Parcelable {
 
     protected void readFromParcel(final Parcel source) {
         mAgeRating = source.readParcelable(AgeRating.class.getClassLoader());
+        mAnimeType = source.readParcelable(AnimeType.class.getClassLoader());
         mCommunityRating = source.readFloat();
         mEpisodeCount = ParcelableUtils.readInteger(source);
         mEpisodeLength = ParcelableUtils.readInteger(source);
-        mShowType = source.readParcelable(ShowType.class.getClassLoader());
         mId = source.readString();
         mSynopsis = source.readString();
     }
@@ -143,10 +147,10 @@ public abstract class AbsAnime implements Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeParcelable(mAgeRating, flags);
+        dest.writeParcelable(mAnimeType, flags);
         dest.writeFloat(mCommunityRating);
         ParcelableUtils.writeInteger(mEpisodeCount, dest);
         ParcelableUtils.writeInteger(mEpisodeLength, dest);
-        dest.writeParcelable(mShowType, flags);
         dest.writeString(mId);
         dest.writeString(mSynopsis);
     }
@@ -168,8 +172,7 @@ public abstract class AbsAnime implements Parcelable {
         public static final Creator<Version> CREATOR = new Creator<Version>() {
             @Override
             public Version createFromParcel(final Parcel source) {
-                final int ordinal = source.readInt();
-                return values()[ordinal];
+                return values()[source.readInt()];
             }
 
             @Override

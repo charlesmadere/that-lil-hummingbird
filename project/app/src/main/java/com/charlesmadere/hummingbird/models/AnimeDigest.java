@@ -424,6 +424,10 @@ public class AnimeDigest implements Parcelable {
         private AgeRating mAgeRating;
 
         @Nullable
+        @SerializedName("show_type")
+        private AnimeType mAnimeType;
+
+        @Nullable
         @SerializedName("genres")
         private ArrayList<String> mGenres;
 
@@ -455,10 +459,6 @@ public class AnimeDigest implements Parcelable {
         @Nullable
         @SerializedName("episode_length")
         private Integer mEpisodeLength;
-
-        @Nullable
-        @SerializedName("show_type")
-        private ShowType mShowType;
 
         @Nullable
         @SerializedName("finished_airing")
@@ -628,11 +628,6 @@ public class AnimeDigest implements Parcelable {
         }
 
         @Nullable
-        public ShowType getShowType() {
-            return mShowType;
-        }
-
-        @Nullable
         public SimpleDate getStartedAiringDate() {
             return mStartedAiringDate;
         }
@@ -674,6 +669,11 @@ public class AnimeDigest implements Parcelable {
             }
 
             return title;
+        }
+
+        @Nullable
+        public AnimeType getType() {
+            return mAnimeType;
         }
 
         @Nullable
@@ -763,16 +763,16 @@ public class AnimeDigest implements Parcelable {
             return mScreencaps != null && !mScreencaps.isEmpty();
         }
 
-        public boolean hasShowType() {
-            return mShowType != null;
-        }
-
         public boolean hasStartedAiringDate() {
             return mStartedAiringDateKnown && mStartedAiringDate != null;
         }
 
         public boolean hasSynopsis() {
             return !TextUtils.isEmpty(mSynopsis);
+        }
+
+        public boolean hasType() {
+            return mAnimeType != null;
         }
 
         public boolean hasUpdatedAt() {
@@ -800,6 +800,7 @@ public class AnimeDigest implements Parcelable {
         @Override
         public void writeToParcel(final Parcel dest, final int flags) {
             dest.writeParcelable(mAgeRating, flags);
+            dest.writeParcelable(mAnimeType, flags);
             dest.writeStringList(mGenres);
             dest.writeStringList(mLanguages);
             dest.writeStringList(mScreencaps);
@@ -809,7 +810,6 @@ public class AnimeDigest implements Parcelable {
             dest.writeInt(mCoverImageTopOffset);
             ParcelableUtils.writeInteger(mEpisodeCount, dest);
             ParcelableUtils.writeInteger(mEpisodeLength, dest);
-            dest.writeParcelable(mShowType, flags);
             dest.writeParcelable(mFinishedAiringDate, flags);
             dest.writeParcelable(mStartedAiringDate, flags);
             dest.writeParcelable(mUpdatedAt, flags);
@@ -832,6 +832,7 @@ public class AnimeDigest implements Parcelable {
             public Info createFromParcel(final Parcel source) {
                 final Info i = new Info();
                 i.mAgeRating = source.readParcelable(AgeRating.class.getClassLoader());
+                i.mAnimeType = source.readParcelable(AnimeType.class.getClassLoader());
                 i.mGenres = source.createStringArrayList();
                 i.mLanguages = source.createStringArrayList();
                 i.mScreencaps = source.createStringArrayList();
@@ -841,7 +842,6 @@ public class AnimeDigest implements Parcelable {
                 i.mCoverImageTopOffset = source.readInt();
                 i.mEpisodeCount = ParcelableUtils.readInteger(source);
                 i.mEpisodeLength = ParcelableUtils.readInteger(source);
-                i.mShowType = source.readParcelable(ShowType.class.getClassLoader());
                 i.mFinishedAiringDate = source.readParcelable(SimpleDate.class.getClassLoader());
                 i.mStartedAiringDate = source.readParcelable(SimpleDate.class.getClassLoader());
                 i.mUpdatedAt = source.readParcelable(SimpleDate.class.getClassLoader());

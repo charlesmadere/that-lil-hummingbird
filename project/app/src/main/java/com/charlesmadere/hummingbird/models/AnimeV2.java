@@ -149,6 +149,10 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
         return Version.V2;
     }
 
+    public boolean hasAgeRatingGuide() {
+        return !TextUtils.isEmpty(mAgeRatingGuide);
+    }
+
     @Override
     public boolean hasGenres() {
         return mGenres != null && !mGenres.isEmpty();

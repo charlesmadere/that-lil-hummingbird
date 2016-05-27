@@ -11,7 +11,7 @@ import com.charlesmadere.hummingbird.fragments.AnimeDetailsFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeEpisodesFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeGalleryFragment;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
-import com.charlesmadere.hummingbird.models.ShowType;
+import com.charlesmadere.hummingbird.models.AnimeType;
 
 public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
 
@@ -30,7 +30,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
         mContext = context;
         mAnimeDigest = animeDigest;
 
-        if (mAnimeDigest.getInfo().getShowType() == ShowType.MOVIE) {
+        if (mAnimeDigest.getInfo().getShowType() == AnimeType.MOVIE) {
             mImpl = new MovieImpl();
         } else {
             mImpl = new ShowImpl();

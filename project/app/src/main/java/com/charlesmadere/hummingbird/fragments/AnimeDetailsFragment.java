@@ -14,7 +14,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.GalleryActivity;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
-import com.charlesmadere.hummingbird.models.ShowType;
+import com.charlesmadere.hummingbird.models.AnimeType;
 import com.charlesmadere.hummingbird.views.KeyValueTextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -205,14 +205,14 @@ public class AnimeDetailsFragment extends BaseFragment {
             mLanguagesContainer.setVisibility(View.VISIBLE);
         }
 
-        if (info.hasEpisodeCount() && info.getShowType() != ShowType.MOVIE) {
+        if (info.hasEpisodeCount() && info.getShowType() != AnimeType.MOVIE) {
             mEpisodeCount.setText(resources.getQuantityString(R.plurals.episodes,
                     info.getEpisodeCount()), numberFormat.format(info.getEpisodeCount()));
             mEpisodeCount.setVisibility(View.VISIBLE);
         }
 
         if (info.hasStartedAiringDate()) {
-            if (info.getShowType() == ShowType.MOVIE) {
+            if (info.getShowType() == AnimeType.MOVIE) {
                 mAired.setText(info.getStartedAiringDate().getRelativeTimeText(context));
                 mAiredContainer.setVisibility(View.VISIBLE);
             } else {

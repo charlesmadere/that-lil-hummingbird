@@ -35,9 +35,6 @@ public class AnimeV1 extends AbsAnime implements Parcelable {
     @SerializedName("cover_image")
     private String mCoverImage;
 
-    @SerializedName("mal_id")
-    private String mMyAnimeListId;
-
     @SerializedName("title")
     private String mTitle;
 
@@ -80,10 +77,6 @@ public class AnimeV1 extends AbsAnime implements Parcelable {
         return mCoverImage;
     }
 
-    public String getMyAnimeListId() {
-        return mMyAnimeListId;
-    }
-
     @Nullable
     @Override
     public SimpleDate getStartedAiringDate() {
@@ -95,13 +88,13 @@ public class AnimeV1 extends AbsAnime implements Parcelable {
     }
 
     @Override
-    public String getTitle() {
-        return mTitle;
+    public String getThumb() {
+        return mCoverImage;
     }
 
     @Override
-    public String getThumb() {
-        return mCoverImage;
+    public String getTitle() {
+        return mTitle;
     }
 
     public String getUrl() {
@@ -127,7 +120,6 @@ public class AnimeV1 extends AbsAnime implements Parcelable {
         mStartedAiring = source.readParcelable(SimpleDate.class.getClassLoader());
         mAlternateTitle = source.readString();
         mCoverImage = source.readString();
-        mMyAnimeListId = source.readString();
         mTitle = source.readString();
         mUrl = source.readString();
     }
@@ -141,7 +133,6 @@ public class AnimeV1 extends AbsAnime implements Parcelable {
         dest.writeParcelable(mStartedAiring, flags);
         dest.writeString(mAlternateTitle);
         dest.writeString(mCoverImage);
-        dest.writeString(mMyAnimeListId);
         dest.writeString(mTitle);
         dest.writeString(mUrl);
     }
@@ -198,7 +189,6 @@ public class AnimeV1 extends AbsAnime implements Parcelable {
                 return new Genre[size];
             }
         };
-
     }
 
 }

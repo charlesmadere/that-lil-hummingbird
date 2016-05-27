@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -55,6 +56,12 @@ public interface HummingbirdApi {
     /*
      * internal API
      */
+
+    @DELETE("stories/{storyId}")
+    Call<Void> deleteStory(@Header("Cookie") String authToken, @Path("storyId") String storyId);
+
+    @DELETE("substories/{substoryId}")
+    Call<Void> deleteSubstory(@Header("Cookie") String authToken, @Path("substoryId") String substoryId);
 
     @GET("full_anime/{animeId}")
     Call<AnimeDigest> getAnimeDigest(@Header("Cookie") String authToken,
@@ -98,6 +105,14 @@ public interface HummingbirdApi {
     Call<UserDigest> getUserDigest(@Header("Cookie") String authToken,
             @Path("username") String username);
 
+    @GET("groups")
+    Call<Feed> getUserGroups(@Header("Cookie") String authToken, @Query("user_id") String userId,
+            @Query("page") Integer page);
+
+    @GET("reviews")
+    Call<Feed> getUserReviews(@Header("Cookie") String authToken, @Query("user_id") String userId,
+            @Query("page") Integer page);
+
     @GET("stories")
     Call<Feed> getUserStories(@Header("Cookie") String authToken,
             @Query("user_id") String username);
@@ -108,6 +123,9 @@ public interface HummingbirdApi {
 
     @POST("substories")
     Call<Void> postComment(@Header("Cookie") String authToken, @Body JsonElement json);
+
+    @POST("stories")
+    Call<Void> postToFeed(@Header("Cookie") String authToken, @Body JsonElement json);
 
     @GET("search.json")
     Call<SearchBundle> search(@Query("scope") SearchScope searchScope,

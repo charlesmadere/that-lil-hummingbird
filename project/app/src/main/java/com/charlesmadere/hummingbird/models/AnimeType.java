@@ -7,7 +7,7 @@ import android.support.annotation.StringRes;
 import com.charlesmadere.hummingbird.R;
 import com.google.gson.annotations.SerializedName;
 
-public enum ShowType implements Parcelable {
+public enum AnimeType implements Parcelable {
 
     @SerializedName("Movie")
     MOVIE(R.string.movie),
@@ -27,10 +27,11 @@ public enum ShowType implements Parcelable {
     @SerializedName("TV")
     TV(R.string.tv);
 
+    @StringRes
     private final int mTextResId;
 
 
-    ShowType(@StringRes final int textResId) {
+    AnimeType(@StringRes final int textResId) {
         mTextResId = textResId;
     }
 
@@ -49,16 +50,15 @@ public enum ShowType implements Parcelable {
         dest.writeInt(ordinal());
     }
 
-    public static final Creator<ShowType> CREATOR = new Creator<ShowType>() {
+    public static final Creator<AnimeType> CREATOR = new Creator<AnimeType>() {
         @Override
-        public ShowType createFromParcel(final Parcel source) {
-            final int ordinal = source.readInt();
-            return ShowType.values()[ordinal];
+        public AnimeType createFromParcel(final Parcel source) {
+            return values()[source.readInt()];
         }
 
         @Override
-        public ShowType[] newArray(final int size) {
-            return new ShowType[size];
+        public AnimeType[] newArray(final int size) {
+            return new AnimeType[size];
         }
     };
 

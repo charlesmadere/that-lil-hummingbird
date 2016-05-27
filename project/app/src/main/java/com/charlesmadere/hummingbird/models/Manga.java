@@ -16,12 +16,13 @@ public class Manga implements Parcelable {
     @SerializedName("genres")
     private ArrayList<String> mGenres;
 
-    @SerializedName("cover_image_top_offset")
-    private int mCoverImageTopOffset;
-
     @Nullable
     @SerializedName("chapter_count")
     private Integer mChapterCount;
+
+    @Nullable
+    @SerializedName("cover_image_top_offset")
+    private Integer mCoverImageTopOffset;
 
     @Nullable
     @SerializedName("volume_count")
@@ -59,7 +60,8 @@ public class Manga implements Parcelable {
         return mCoverImage;
     }
 
-    public int getCoverImageTopOffset() {
+    @Nullable
+    public Integer getCoverImageTopOffset() {
         return mCoverImageTopOffset;
     }
 
@@ -77,10 +79,6 @@ public class Manga implements Parcelable {
         return mId;
     }
 
-    public MangaType getMangaType() {
-        return mMangaType;
-    }
-
     public String getPosterImage() {
         return mPosterImage;
     }
@@ -93,13 +91,17 @@ public class Manga implements Parcelable {
         return mRomajiTitle;
     }
 
+    @Nullable
+    public String getSynopsis() {
+        return mSynopsis;
+    }
+
     public String getTitle() {
         return getRomajiTitle();
     }
 
-    @Nullable
-    public String getSynopsis() {
-        return mSynopsis;
+    public MangaType getType() {
+        return mMangaType;
     }
 
     public SimpleDate getUpdatedAt() {
@@ -112,11 +114,15 @@ public class Manga implements Parcelable {
     }
 
     public boolean hasChapterCount() {
-        return mChapterCount != null;
+        return mChapterCount != null && mChapterCount >= 1;
     }
 
     public boolean hasCoverImage() {
         return !TextUtils.isEmpty(mCoverImage);
+    }
+
+    public boolean hasCoverImageTopOffset() {
+        return mCoverImageTopOffset != null && mCoverImageTopOffset >= 1;
     }
 
     public boolean hasGenres() {
@@ -128,7 +134,7 @@ public class Manga implements Parcelable {
     }
 
     public boolean hasVolumeCount() {
-        return mVolumeCount != null;
+        return mVolumeCount != null && mVolumeCount >= 1;
     }
 
     @Override
@@ -141,26 +147,11 @@ public class Manga implements Parcelable {
         return 0;
     }
 
-    protected void readFromParcel(final Parcel source) {
-        mGenres = source.createStringArrayList();
-        mCoverImageTopOffset = source.readInt();
-        mChapterCount = ParcelableUtils.readInteger(source);
-        mVolumeCount = ParcelableUtils.readInteger(source);
-        mUpdatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
-        mCoverImage = source.readString();
-        mId = source.readString();
-        mPosterImage = source.readString();
-        mPosterImageThumb = source.readString();
-        mRomajiTitle = source.readString();
-        mSynopsis = source.readString();
-        mMangaType = source.readParcelable(MangaType.class.getClassLoader());
-    }
-
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeStringList(mGenres);
-        dest.writeInt(mCoverImageTopOffset);
         ParcelableUtils.writeInteger(mChapterCount, dest);
+        ParcelableUtils.writeInteger(mCoverImageTopOffset, dest);
         ParcelableUtils.writeInteger(mVolumeCount, dest);
         dest.writeParcelable(mUpdatedAt, flags);
         dest.writeString(mCoverImage);
@@ -176,7 +167,18 @@ public class Manga implements Parcelable {
         @Override
         public Manga createFromParcel(final Parcel source) {
             final Manga m = new Manga();
-            m.readFromParcel(source);
+            m.mGenres = source.createStringArrayList();
+            m.mChapterCount = ParcelableUtils.readInteger(source);
+            m.mCoverImageTopOffset = ParcelableUtils.readInteger(source);
+            m.mVolumeCount = ParcelableUtils.readInteger(source);
+            m.mUpdatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
+            m.mCoverImage = source.readString();
+            m.mId = source.readString();
+            m.mPosterImage = source.readString();
+            m.mPosterImageThumb = source.readString();
+            m.mRomajiTitle = source.readString();
+            m.mSynopsis = source.readString();
+            m.mMangaType = source.readParcelable(MangaType.class.getClassLoader());
             return m;
         }
 

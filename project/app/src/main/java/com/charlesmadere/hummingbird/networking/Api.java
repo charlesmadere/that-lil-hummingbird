@@ -16,6 +16,7 @@ import com.charlesmadere.hummingbird.models.CommentPost;
 import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
+import com.charlesmadere.hummingbird.models.FeedPost;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.LibraryUpdate;
 import com.charlesmadere.hummingbird.models.MangaDigest;
@@ -623,6 +624,28 @@ public final class Api {
             @Override
             public void onFailure(final Call<Void> call, final Throwable t) {
                 Timber.e(TAG, "post comment (" + commentPost.getStoryId() + ") failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
+    public static void postToFeed(final FeedPost feedPost, final ApiResponse<Void> listener) {
+        JsonObject json = new JsonObject();
+        json.add("story", GsonUtils.getGson().toJsonTree(feedPost));
+
+        getApi().postToFeed(getAuthTokenCookieString(), json).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(final Call<Void> call, final Response<Void> response) {
+                if (response.isSuccessful()) {
+                    listener.success(null);
+                } else {
+                    listener.failure(retrieveErrorInfo(response));
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Void> call, final Throwable t) {
+                Timber.e(TAG, "post to feed (" + feedPost.getUserId() + ") failed", t);
                 listener.failure(null);
             }
         });
