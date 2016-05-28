@@ -483,6 +483,10 @@ public class AnimeDigest implements Parcelable {
         private AnimeType mAnimeType;
 
         @Nullable
+        @SerializedName("franchise_ids")
+        private ArrayList<String> mFranchiseIds;
+
+        @Nullable
         @SerializedName("genres")
         private ArrayList<String> mGenres;
 
@@ -625,6 +629,11 @@ public class AnimeDigest implements Parcelable {
         @Nullable
         public SimpleDate getFinishedAiringDate() {
             return mFinishedAiringDate;
+        }
+
+        @Nullable
+        public ArrayList<String> getFranchiseIds() {
+            return mFranchiseIds;
         }
 
         @Nullable
@@ -786,6 +795,10 @@ public class AnimeDigest implements Parcelable {
             return mFinishedAiringDate != null;
         }
 
+        public boolean hasFranchiseIds() {
+            return mFranchiseIds != null && !mFranchiseIds.isEmpty();
+        }
+
         public boolean hasGenres() {
             return mGenres != null && !mGenres.isEmpty();
         }
@@ -852,6 +865,7 @@ public class AnimeDigest implements Parcelable {
         public void writeToParcel(final Parcel dest, final int flags) {
             dest.writeParcelable(mAgeRating, flags);
             dest.writeParcelable(mAnimeType, flags);
+            dest.writeStringList(mFranchiseIds);
             dest.writeStringList(mGenres);
             dest.writeStringList(mLanguages);
             dest.writeStringList(mScreencaps);
@@ -884,6 +898,7 @@ public class AnimeDigest implements Parcelable {
                 final Info i = new Info();
                 i.mAgeRating = source.readParcelable(AgeRating.class.getClassLoader());
                 i.mAnimeType = source.readParcelable(AnimeType.class.getClassLoader());
+                i.mFranchiseIds = source.createStringArrayList();
                 i.mGenres = source.createStringArrayList();
                 i.mLanguages = source.createStringArrayList();
                 i.mScreencaps = source.createStringArrayList();
