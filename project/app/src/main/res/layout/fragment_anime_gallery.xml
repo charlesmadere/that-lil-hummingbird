@@ -16,7 +16,7 @@
         style="@style/GalleryGrid" />
     <com.charlesmadere.hummingbird.views.TypefaceTextView
         android:id="@+id/tvEmpty"
-        android:text="@string/no_gallery_images"
+        android:text="@string/no_images"
         tools:visibility="visible"
         style="@style/ListMessageTitle.Standalone" />
 </FrameLayout>
