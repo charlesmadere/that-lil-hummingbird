@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.fragments.AnimeCastingsFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeDetailsFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeEpisodesFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeGalleryFragment;
@@ -35,6 +36,14 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
         } else {
             mImpl = new ShowImpl();
         }
+    }
+
+    private AnimeCastingsFragment getAnimeCastingsFragment() {
+        return AnimeCastingsFragment.create(mAnimeDigest.getCastings());
+    }
+
+    private CharSequence getAnimeCastingsTitle() {
+        return mContext.getString(R.string.castings);
     }
 
     private AnimeDetailsFragment getAnimeDetailsFragment() {
@@ -87,7 +96,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     private class MovieImpl implements Impl {
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Override
@@ -101,6 +110,10 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
 
                 case 1:
                     fragment = getAnimeGalleryFragment();
+                    break;
+
+                case 2:
+                    fragment = getAnimeCastingsFragment();
                     break;
 
                 default:
@@ -121,6 +134,10 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
 
                 case 1:
                     title = getAnimeGalleryTitle();
+                    break;
+
+                case 2:
+                    title = getAnimeCastingsTitle();
                     break;
 
                 default:
@@ -135,7 +152,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     private class ShowImpl implements Impl {
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
 
         @Override
@@ -148,11 +165,15 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
                     break;
 
                 case 1:
-                    fragment = getAnimeEpisodesFragment();
+                    fragment = getAnimeGalleryFragment();
                     break;
 
                 case 2:
-                    fragment = getAnimeGalleryFragment();
+                    fragment = getAnimeCastingsFragment();
+                    break;
+
+                case 3:
+                    fragment = getAnimeEpisodesFragment();
                     break;
 
                 default:
@@ -172,11 +193,15 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
                     break;
 
                 case 1:
-                    title = getAnimeEpisodesTitle();
+                    title = getAnimeGalleryTitle();
                     break;
 
                 case 2:
-                    title = getAnimeGalleryTitle();
+                    title = getAnimeCastingsTitle();
+                    break;
+
+                case 3:
+                    title = getAnimeEpisodesTitle();
                     break;
 
                 default:
