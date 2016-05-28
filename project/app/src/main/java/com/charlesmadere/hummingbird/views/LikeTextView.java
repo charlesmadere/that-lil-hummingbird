@@ -51,11 +51,13 @@ public class LikeTextView extends TypefaceTextView implements View.OnClickListen
     }
 
     public void setContent(final CommentStory story) {
+        mQuote = null;
         mStory = story;
         update();
     }
 
     public void setContent(final AnimeDigest.Quote quote) {
+        mStory = null;
         mQuote = quote;
         update();
     }
