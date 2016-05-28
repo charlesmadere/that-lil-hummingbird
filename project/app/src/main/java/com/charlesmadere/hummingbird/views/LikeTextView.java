@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -69,16 +70,23 @@ public class LikeTextView extends TypefaceTextView implements View.OnClickListen
     }
 
     private void update() {
+        final boolean liked;
+        final int count;
+
         if (mQuote != null) {
-            setActivated(mQuote.isFavorite());
-            setText(mNumberFormat.format(mQuote.getFavoriteCount()));
+            liked = mQuote.isFavorite();
+            count = mQuote.getFavoriteCount();
         } else if (mStory != null) {
-            setActivated(mStory.isLiked());
-            setText(mNumberFormat.format(mStory.getTotalVotes()));
+            liked = mStory.isLiked();
+            count = mStory.getTotalVotes();
         } else {
-            setActivated(false);
-            setText(mNumberFormat.format(0));
+            liked = false;
+            count = 0;
         }
+
+        setCompoundDrawablesRelativeWithIntrinsicBounds(liked ? R.drawable.ic_favorite_orange_18dp
+                : R.drawable.ic_favorite_border_18dp, 0, 0, 0);
+        setText(mNumberFormat.format(count));
     }
 
 }
