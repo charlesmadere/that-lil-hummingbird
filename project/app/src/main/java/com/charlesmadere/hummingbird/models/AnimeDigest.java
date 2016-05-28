@@ -720,11 +720,11 @@ public class AnimeDigest implements Parcelable {
         }
 
         public boolean hasEpisodeCount() {
-            return mEpisodeCount != null;
+            return mEpisodeCount != null && mEpisodeCount >= 1;
         }
 
         public boolean hasEpisodeLength() {
-            return mEpisodeLength != null;
+            return mEpisodeLength != null && mEpisodeLength >= 1;
         }
 
         public boolean hasFinishedAiringDate() {
@@ -781,10 +781,6 @@ public class AnimeDigest implements Parcelable {
 
         public boolean hasYouTubeVideoId() {
             return !TextUtils.isEmpty(mYouTubeVideoId);
-        }
-
-        public boolean isStartedAiringDateKnown() {
-            return mStartedAiringDateKnown;
         }
 
         @Override

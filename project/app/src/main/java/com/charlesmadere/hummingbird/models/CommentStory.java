@@ -116,6 +116,11 @@ public class CommentStory extends AbsStory implements Parcelable {
     }
 
     @Override
+    public String toString() {
+        return getType() + ":" + mPosterId;
+    }
+
+    @Override
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);
         mAdult = source.readInt() != 0;

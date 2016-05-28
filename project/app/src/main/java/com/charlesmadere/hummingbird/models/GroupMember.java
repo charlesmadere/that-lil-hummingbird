@@ -60,6 +60,11 @@ public class GroupMember implements Parcelable {
     }
 
     @Override
+    public String toString() {
+        return mUserId;
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }

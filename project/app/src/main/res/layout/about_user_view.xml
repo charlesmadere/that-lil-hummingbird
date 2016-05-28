@@ -12,12 +12,8 @@
             style="@style/ResponsiveWidthCardHeader" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvAbout"
-            android:layout_marginBottom="@dimen/root_padding"
-            android:layout_marginEnd="@dimen/root_padding"
-            android:layout_marginStart="@dimen/root_padding"
-            android:layout_marginTop="@dimen/root_padding_half"
             tools:text="Bacon ipsum dolor amet boudin short ribs sausage ground round cow."
-            style="@style/UserBio" />
+            style="@style/UserBio.WithMargins" />
         <com.charlesmadere.hummingbird.views.KeyValueTextView
             android:drawableEnd="@drawable/ic_favorite_24dp"
             android:drawablePadding="@dimen/root_padding_half"

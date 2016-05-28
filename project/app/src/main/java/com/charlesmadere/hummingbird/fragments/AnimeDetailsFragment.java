@@ -15,7 +15,6 @@ import com.charlesmadere.hummingbird.activities.GalleryActivity;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeType;
-import com.charlesmadere.hummingbird.views.KeyValueTextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.text.NumberFormat;
@@ -31,9 +30,6 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     private AnimeDigest mAnimeDigest;
 
-    @BindView(R.id.kvtvEpisodeCount)
-    KeyValueTextView mEpisodeCount;
-
     @BindView(R.id.llAgeRating)
     LinearLayout mAgeRatingContainer;
 
@@ -43,11 +39,20 @@ public class AnimeDetailsFragment extends BaseFragment {
     @BindView(R.id.llAlternateTitle)
     LinearLayout mAlternateTitleContainer;
 
+    @BindView(R.id.llAnimeType)
+    LinearLayout mAnimeTypeContainer;
+
     @BindView(R.id.llCommunityRating)
     LinearLayout mCommunityRatingContainer;
 
     @BindView(R.id.llEnglishTitle)
     LinearLayout mEnglishTitleContainer;
+
+    @BindView(R.id.llEpisodeCount)
+    LinearLayout mEpisodeCountContainer;
+
+    @BindView(R.id.llEpisodeLength)
+    LinearLayout mEpisodeLengthContainer;
 
     @BindView(R.id.llFinishedAiring)
     LinearLayout mFinishedAiringContainer;
@@ -60,9 +65,6 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     @BindView(R.id.llRomajiTitle)
     LinearLayout mRomajiTitleContainer;
-
-    @BindView(R.id.llShowType)
-    LinearLayout mShowTypeContainer;
 
     @BindView(R.id.llStartedAiring)
     LinearLayout mStartedAiringContainer;
@@ -85,6 +87,9 @@ public class AnimeDetailsFragment extends BaseFragment {
     @BindView(R.id.tvAlternateTitle)
     TextView mAlternateTitle;
 
+    @BindView(R.id.tvAnimeType)
+    TextView mAnimeType;
+
     @BindView(R.id.tvCanonicalTitle)
     TextView mCanonicalTitle;
 
@@ -93,6 +98,18 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     @BindView(R.id.tvEnglishTitle)
     TextView mEnglishTitle;
+
+    @BindView(R.id.tvEpisodeCountBody)
+    TextView mEpisodeCountBody;
+
+    @BindView(R.id.tvEpisodeCountHeader)
+    TextView mEpisodeCountHeader;
+
+    @BindView(R.id.tvEpisodeLengthBody)
+    TextView mEpisodeLengthBody;
+
+    @BindView(R.id.tvEpisodeLengthHeader)
+    TextView mEpisodeLengthHeader;
 
     @BindView(R.id.tvFinishedAiring)
     TextView mFinishedAiring;
@@ -111,9 +128,6 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     @BindView(R.id.tvRomajiTitle)
     TextView mRomajiTitle;
-
-    @BindView(R.id.tvShowType)
-    TextView mShowType;
 
     @BindView(R.id.tvStartedAiring)
     TextView mStartedAiring;
@@ -175,9 +189,9 @@ public class AnimeDetailsFragment extends BaseFragment {
             mPoster.setVisibility(View.VISIBLE);
         }
 
-        if (info.hasShowType()) {
-            mShowType.setText(info.getShowType().getTextResId());
-            mShowTypeContainer.setVisibility(View.VISIBLE);
+        if (info.hasType()) {
+            mAnimeType.setText(info.getType().getTextResId());
+            mAnimeTypeContainer.setVisibility(View.VISIBLE);
         }
 
         if (info.hasAgeRating()) {
@@ -205,14 +219,28 @@ public class AnimeDetailsFragment extends BaseFragment {
             mLanguagesContainer.setVisibility(View.VISIBLE);
         }
 
-        if (info.hasEpisodeCount() && info.getShowType() != AnimeType.MOVIE) {
-            mEpisodeCount.setText(resources.getQuantityString(R.plurals.episodes,
-                    info.getEpisodeCount()), numberFormat.format(info.getEpisodeCount()));
-            mEpisodeCount.setVisibility(View.VISIBLE);
+        if (info.hasEpisodeCount() && info.getType() != AnimeType.MOVIE) {
+            mEpisodeCountHeader.setText(numberFormat.format(info.getEpisodeCount()));
+            mEpisodeCountBody.setText(resources.getQuantityText(R.plurals.episodes,
+                    info.getEpisodeCount()));
+            mEpisodeCountContainer.setVisibility(View.VISIBLE);
+        }
+
+        if (info.hasEpisodeLength()) {
+            mEpisodeLengthHeader.setText(resources.getQuantityString(R.plurals.x_minutes,
+                    info.getEpisodeLength(), numberFormat.format(info.getEpisodeLength())));
+
+            if (info.getType() == AnimeType.MOVIE) {
+                mEpisodeLengthBody.setText(R.string.length);
+            } else {
+                mEpisodeLengthBody.setText(R.string.episode_length);
+            }
+
+            mEpisodeLengthContainer.setVisibility(View.VISIBLE);
         }
 
         if (info.hasStartedAiringDate()) {
-            if (info.getShowType() == AnimeType.MOVIE) {
+            if (info.getType() == AnimeType.MOVIE) {
                 mAired.setText(info.getStartedAiringDate().getRelativeTimeText(context));
                 mAiredContainer.setVisibility(View.VISIBLE);
             } else {
@@ -237,12 +265,6 @@ public class AnimeDetailsFragment extends BaseFragment {
             mYouTubeLinkContainer.setVisibility(View.VISIBLE);
         }
 
-        if (info.hasSynopsis()) {
-            mSynopsis.setText(info.getSynopsis());
-        } else {
-            mSynopsis.setText(R.string.no_synopsis_available);
-        }
-
         mCanonicalTitle.setText(info.getCanonicalTitle());
 
         if (info.hasAlternateTitle()) {
@@ -258,6 +280,12 @@ public class AnimeDetailsFragment extends BaseFragment {
         if (info.hasRomajiTitle()) {
             mRomajiTitle.setText(info.getRomajiTitle());
             mRomajiTitleContainer.setVisibility(View.VISIBLE);
+        }
+
+        if (info.hasSynopsis()) {
+            mSynopsis.setText(info.getSynopsis());
+        } else {
+            mSynopsis.setText(R.string.no_synopsis_available);
         }
     }
 

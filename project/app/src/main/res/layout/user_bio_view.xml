@@ -2,7 +2,7 @@
 <com.charlesmadere.hummingbird.views.UserBioView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/userBioView"
-    style="@style/CardItem">
+    style="@style/ResponsiveWidthCard">
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -10,13 +10,13 @@
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvTitle"
             tools:text="Bio for ThatLilChestnut"
-            style="@style/CardHeader" />
+            style="@style/ResponsiveWidthCardHeader" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvBio"
             android:visibility="gone"
             tools:text="Bacon ipsum dolor amet boudin short ribs sausage ground round cow."
             tools:visibility="visible"
-            style="@style/UserBio" />
+            style="@style/UserBio.WithMargins" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvNoDetails"
             android:text="@string/no_bio_available"

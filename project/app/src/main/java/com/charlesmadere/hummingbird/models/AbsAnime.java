@@ -112,16 +112,16 @@ public abstract class AbsAnime implements Parcelable {
 
     public abstract boolean hasGenres();
 
-    public boolean hasShowType() {
-        return mAnimeType != null;
-    }
-
     public boolean hasStartedAiringDate() {
         return getStartedAiringDate() != null;
     }
 
     public boolean hasSynopsis() {
         return !TextUtils.isEmpty(mSynopsis);
+    }
+
+    public boolean hasType() {
+        return mAnimeType != null;
     }
 
     @Override

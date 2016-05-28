@@ -32,11 +32,11 @@ public class InternalAnimeItemView extends LinearLayout {
     @BindView(R.id.sdvPoster)
     SimpleDraweeView mPoster;
 
+    @BindView(R.id.tvAnimeType)
+    TextView mAnimeType;
+
     @BindView(R.id.tvGenres)
     TextView mGenres;
-
-    @BindView(R.id.tvShowType)
-    TextView mShowType;
 
     @BindView(R.id.tvSynopsis)
     TextView mSynopsis;
@@ -76,11 +76,11 @@ public class InternalAnimeItemView extends LinearLayout {
         mPoster.setImageURI(Uri.parse(content.getThumb()));
         mTitle.setText(content.getTitle());
 
-        if (content.hasShowType()) {
-            mShowType.setText(content.getShowType().getTextResId());
-            mShowType.setVisibility(VISIBLE);
+        if (content.hasType()) {
+            mAnimeType.setText(content.getType().getTextResId());
+            mAnimeType.setVisibility(VISIBLE);
         } else {
-            mShowType.setVisibility(GONE);
+            mAnimeType.setVisibility(GONE);
         }
 
         if (content.hasGenres()) {

@@ -50,6 +50,7 @@
     <string name="english_title">English title</string>
     <string name="enter_your_username_not_your_email">Enter your username, not your email.</string>
     <string name="episodes">Episodes</string>
+    <string name="episode_length">Episode length</string>
     <string name="error_loading_anime">Error loading anime! Please check your network connection and try again.</string>
     <string name="error_loading_anime_library">Error loading anime library</string>
     <string name="error_loading_comments">Error loading comments</string>
@@ -115,6 +116,7 @@
     <string name="last_check">Last check</string>
     <string name="last_update">Last update</string>
     <string name="leave_a_comment_">Leave a comment…</string>
+    <string name="length">Length</string>
     <string name="library">Library</string>
     <string name="library_updates">Library Updates</string>
     <string name="life_spent_on_anime">Life spent on anime</string>
@@ -146,6 +148,7 @@
     <string name="none">none</string>
     <string name="notification_polling_description">This feature will periodically refresh your Hummingbird notifications and let you know if there\'s anything new.</string>
     <string name="notifications">Notifications</string>
+    <string name="novel">Novel</string>
     <string name="not_yet_aired">Not Yet Aired</string>
     <string name="nsfw">NSFW</string>
     <string name="nsfw_content">NSFW content</string>
@@ -216,6 +219,7 @@
     <string name="tv">TV</string>
     <string name="type">Type</string>
     <string name="upcoming">Upcoming</string>
+    <string name="updated_at_x">Updated at %1$s</string>
     <string name="use_notification_polling">Use notification polling</string>
     <string name="username">Username</string>
     <string name="users">Users</string>

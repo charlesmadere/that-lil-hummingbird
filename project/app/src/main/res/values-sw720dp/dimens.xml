@@ -2,7 +2,7 @@
 <resources>
 
     <dimen name="anime_breakdown_pie_view_bar_thickness">32dp</dimen>
-    <dimen name="central_content_width">440dp</dimen>
+    <dimen name="central_content_width">460dp</dimen>
     <dimen name="list_item_height">52dp</dimen>
     <dimen name="navigation_drawer_view_width">320dp</dimen>
     <dimen name="parallax_cover_image_height">256dp</dimen>

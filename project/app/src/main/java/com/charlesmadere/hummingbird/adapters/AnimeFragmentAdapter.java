@@ -30,7 +30,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
         mContext = context;
         mAnimeDigest = animeDigest;
 
-        if (mAnimeDigest.getInfo().getShowType() == AnimeType.MOVIE) {
+        if (mAnimeDigest.getInfo().getType() == AnimeType.MOVIE) {
             mImpl = new MovieImpl();
         } else {
             mImpl = new ShowImpl();

@@ -52,16 +52,6 @@
         <item name="android:layout_width">72dp</item>
     </style>
 
-    <style name="AnimeShowType">
-        <item name="android:ellipsize">end</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:lines">1</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:textSize">@dimen/text_small</item>
-        <item name="android:visibility">gone</item>
-    </style>
-
     <style name="AnimeSynopsis">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
@@ -89,6 +79,16 @@
         <item name="android:paddingEnd">@dimen/root_padding</item>
         <item name="android:paddingStart">@dimen/root_padding</item>
         <item name="android:paddingTop">@dimen/root_padding_half</item>
+    </style>
+
+    <style name="AnimeType">
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:lines">1</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:visibility">gone</item>
     </style>
 
     <style name="AppBarLayout">
@@ -222,7 +222,9 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginBottom">@dimen/root_padding</item>
-        <item name="android:layout_marginTop">@dimen/root_padding</item>
+        <item name="android:layout_marginEnd">@dimen/root_padding</item>
+        <item name="android:layout_marginStart">@dimen/root_padding</item>
+        <item name="android:layout_marginTop">@dimen/root_padding_half</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:visibility">gone</item>
     </style>
@@ -551,6 +553,13 @@
     <style name="UserBio.Limited">
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">5</item>
+    </style>
+
+    <style name="UserBio.WithMargins">
+        <item name="android:layout_marginBottom">@dimen/root_padding</item>
+        <item name="android:layout_marginEnd">@dimen/root_padding</item>
+        <item name="android:layout_marginStart">@dimen/root_padding</item>
+        <item name="android:layout_marginTop">@dimen/root_padding_half</item>
     </style>
 
     <style name="UserTitle">

@@ -75,9 +75,9 @@ public interface HummingbirdApi {
     Call<Feed> getFollowingUsers(@Header("Cookie") String authToken,
             @Query("followers_of") String username, @Query("page") Integer page);
 
-    @GET("stories")
-    Call<Feed> getGroup(@Header("Cookie") String authToken, @Query("group_id") String groupId,
-            @Query("page") Integer page);
+    @GET("groups")
+    Call<Feed> getGroup(@Header("Cookie") String authToken, @Header("Accept") String json,
+            @Query("group_id") String groupId, @Query("page") Integer page);
 
     @GET("group_members")
     Call<Feed> getGroupMembers(@Header("Cookie") String authToken,
@@ -106,12 +106,12 @@ public interface HummingbirdApi {
             @Path("username") String username);
 
     @GET("groups")
-    Call<Feed> getUserGroups(@Header("Cookie") String authToken, @Query("user_id") String userId,
-            @Query("page") Integer page);
+    Call<Feed> getUserGroups(@Header("Cookie") String authToken, @Header("Accept") String json,
+            @Query("user_id") String userId, @Query("page") Integer page);
 
     @GET("reviews")
-    Call<Feed> getUserReviews(@Header("Cookie") String authToken, @Query("user_id") String userId,
-            @Query("page") Integer page);
+    Call<Feed> getUserReviews(@Header("Cookie") String authToken, @Header("Accept") String json,
+            @Query("user_id") String userId, @Query("page") Integer page);
 
     @GET("stories")
     Call<Feed> getUserStories(@Header("Cookie") String authToken,

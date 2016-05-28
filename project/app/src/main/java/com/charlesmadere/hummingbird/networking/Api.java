@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.GsonUtils;
 import com.charlesmadere.hummingbird.misc.RetrofitUtils;
@@ -262,7 +263,7 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getMetadata().getCursor();
 
-        getApi().getGroup(getAuthTokenCookieString(), groupId, page).enqueue(new Callback<Feed>() {
+        getApi().getGroup(getAuthTokenCookieString(), "json", groupId, page).enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 Feed body = null;
@@ -403,7 +404,7 @@ public final class Api {
     }
 
     public static void getNotifications(final ApiResponse<Feed> listener) {
-        getApi().getNotifications(getAuthTokenCookieString(), "application/json").enqueue(
+        getApi().getNotifications(getAuthTokenCookieString(), Constants.MIMETYPE_JSON).enqueue(
                 new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
@@ -454,7 +455,7 @@ public final class Api {
     }
 
     public static void getUser(final String username, final ApiResponse<User> listener) {
-        getApi().getUser(getAuthTokenCookieString(), "application/json", username).enqueue(
+        getApi().getUser(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, username).enqueue(
                 new Callback<User>() {
             @Override
             public void onResponse(final Call<User> call, final Response<User> response) {

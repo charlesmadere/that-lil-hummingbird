@@ -37,11 +37,11 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
     @BindView(R.id.sdvPoster)
     SimpleDraweeView mPoster;
 
+    @BindView(R.id.tvAnimeType)
+    TextView mAnimeType;
+
     @BindView(R.id.tvGenres)
     TextView mGenres;
-
-    @BindView(R.id.tvShowType)
-    TextView mShowType;
 
     @BindView(R.id.tvTitle)
     TextView mTitle;
@@ -127,11 +127,11 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
         mPoster.setImageURI(Uri.parse(anime.getImage()));
         mTitle.setText(anime.getTitle());
 
-        if (anime.hasShowType()) {
-            mShowType.setText(anime.getShowType().getTextResId());
-            mShowType.setVisibility(VISIBLE);
+        if (anime.hasType()) {
+            mAnimeType.setText(anime.getType().getTextResId());
+            mAnimeType.setVisibility(VISIBLE);
         } else {
-            mShowType.setVisibility(GONE);
+            mAnimeType.setVisibility(GONE);
         }
 
         if (anime.hasGenres()) {

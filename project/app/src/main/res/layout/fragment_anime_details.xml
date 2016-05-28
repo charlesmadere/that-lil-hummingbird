@@ -34,12 +34,12 @@
                     android:text="@string/details"
                     style="@style/ResponsiveWidthCardHeader" />
                 <LinearLayout
-                    android:id="@+id/llShowType"
+                    android:id="@+id/llAnimeType"
                     android:visibility="gone"
                     tools:visibility="visible"
                     style="@style/ResponsiveWidthCardItem">
                     <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvShowType"
+                        android:id="@+id/tvAnimeType"
                         tools:text="@string/movie"
                         style="@style/ResponsiveWidthCardItemHeader" />
                     <com.charlesmadere.hummingbird.views.TypefaceTextView
@@ -88,12 +88,34 @@
                         tools:text="@string/languages"
                         style="@style/ResponsiveWidthCardItemBody" />
                 </LinearLayout>
-                <com.charlesmadere.hummingbird.views.KeyValueTextView
-                    android:id="@+id/kvtvEpisodeCount"
+                <LinearLayout
+                    android:id="@+id/llEpisodeCount"
                     android:visibility="gone"
-                    tools:text="Episodes 20"
                     tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem" />
+                    style="@style/ResponsiveWidthCardItem">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvEpisodeCountHeader"
+                        tools:text="12"
+                        style="@style/ResponsiveWidthCardItemHeader" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvEpisodeCountBody"
+                        tools:text="@string/episodes"
+                        style="@style/ResponsiveWidthCardItemBody" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llEpisodeLength"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    style="@style/ResponsiveWidthCardItem">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvEpisodeLengthHeader"
+                        tools:text="24 minutes"
+                        style="@style/ResponsiveWidthCardItemHeader" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvEpisodeLengthBody"
+                        tools:text="@string/episode_length"
+                        style="@style/ResponsiveWidthCardItemBody" />
+                </LinearLayout>
                 <LinearLayout
                     android:id="@+id/llAired"
                     android:visibility="gone"
@@ -167,19 +189,6 @@
             <LinearLayout
                 style="@style/ResponsiveWidthCardInternal">
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:text="@string/synopsis"
-                    style="@style/ResponsiveWidthCardHeader" />
-                <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:id="@+id/tvSynopsis"
-                    tools:text="Kazuma Satou is a shut-in die-hard fan of games, anime, and manga. A traffic accident brings his disappointingly brief life to an end, or it should have, but he wakes up and sees a beautiful girl who introduces herself as a goddess. She asks him if he'd like to go to another world but he can only bring one thing with him. Kazumi chooses to bring the goddess. With that, he is transported to another world and his great adventure subjugating the demon king begins, but first the hard work of finding food, clothing, and shelter begins. Kazuma wants to live in peace, but the goddess raises one problem after another, and then the demon king's army has its eyes set on him."
-                    style="@style/ResponsiveWidthCardItemBody.Standalone" />
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
-            style="@style/ResponsiveWidthCard">
-            <LinearLayout
-                style="@style/ResponsiveWidthCardInternal">
-                <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:text="@string/titles"
                     style="@style/ResponsiveWidthCardHeader" />
                 <LinearLayout
@@ -231,6 +240,19 @@
                         android:text="@string/romaji_title"
                         style="@style/ResponsiveWidthCardItemBody" />
                 </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            style="@style/ResponsiveWidthCard">
+            <LinearLayout
+                style="@style/ResponsiveWidthCardInternal">
+                <com.charlesmadere.hummingbird.views.TypefaceTextView
+                    android:text="@string/synopsis"
+                    style="@style/ResponsiveWidthCardHeader" />
+                <com.charlesmadere.hummingbird.views.TypefaceTextView
+                    android:id="@+id/tvSynopsis"
+                    tools:text="Kazuma Satou is a shut-in die-hard fan of games, anime, and manga. A traffic accident brings his disappointingly brief life to an end, or it should have, but he wakes up and sees a beautiful girl who introduces herself as a goddess. She asks him if he'd like to go to another world but he can only bring one thing with him. Kazumi chooses to bring the goddess. With that, he is transported to another world and his great adventure subjugating the demon king begins, but first the hard work of finding food, clothing, and shelter begins. Kazuma wants to live in peace, but the goddess raises one problem after another, and then the demon king's army has its eyes set on him."
+                    style="@style/ResponsiveWidthCardItemBody.Standalone" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
     </LinearLayout>
