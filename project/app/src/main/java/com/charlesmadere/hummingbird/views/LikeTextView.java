@@ -12,6 +12,7 @@ import java.text.NumberFormat;
 
 public class LikeTextView extends TypefaceTextView implements View.OnClickListener {
 
+    private AnimeDigest.Quote mQuote;
     private CommentStory mStory;
     private NumberFormat mNumberFormat;
 
@@ -26,9 +27,15 @@ public class LikeTextView extends TypefaceTextView implements View.OnClickListen
 
     @Override
     public void onClick(final View v) {
-        mStory.toggleLiked();
-        Api.likeStory(mStory);
-        update();
+        if (mQuote != null) {
+            mQuote.toggleFavorite();
+            Api.favoriteQuote(mQuote);
+            update();
+        } else if (mStory != null) {
+            mStory.toggleLiked();
+            Api.likeStory(mStory);
+            update();
+        }
     }
 
     @Override
@@ -49,12 +56,21 @@ public class LikeTextView extends TypefaceTextView implements View.OnClickListen
     }
 
     public void setContent(final AnimeDigest.Quote quote) {
-        // TODO
+        mQuote = quote;
+        update();
     }
 
     private void update() {
-        setActivated(mStory.isLiked());
-        setText(mNumberFormat.format(mStory.getTotalVotes()));
+        if (mQuote != null) {
+            setActivated(mQuote.isFavorite());
+            setText(mNumberFormat.format(mQuote.getFavoriteCount()));
+        } else if (mStory != null) {
+            setActivated(mStory.isLiked());
+            setText(mNumberFormat.format(mStory.getTotalVotes()));
+        } else {
+            setActivated(false);
+            setText(mNumberFormat.format(0));
+        }
     }
 
 }

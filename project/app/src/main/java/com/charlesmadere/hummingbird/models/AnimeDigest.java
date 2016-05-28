@@ -11,6 +11,7 @@ import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.charlesmadere.hummingbird.preferences.Preferences;
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -1050,6 +1051,9 @@ public class AnimeDigest implements Parcelable {
         @SerializedName("favorite_count")
         private int mFavoriteCount;
 
+        @SerializedName("anime_id")
+        private String mAnimeId;
+
         @SerializedName("character_name")
         private String mCharacterName;
 
@@ -1062,6 +1066,10 @@ public class AnimeDigest implements Parcelable {
         @SerializedName("username")
         private String mUsername;
 
+
+        public String getAnimeId() {
+            return mAnimeId;
+        }
 
         public String getCharacterName() {
             return mCharacterName;
@@ -1079,12 +1087,42 @@ public class AnimeDigest implements Parcelable {
             return mId;
         }
 
+        public JsonObject getFavoriteJson() {
+            final JsonObject quote = new JsonObject();
+            quote.addProperty("anime_id", mAnimeId);
+            quote.addProperty("id", mId);
+            quote.addProperty("is_favorite", mIsFavorite);
+
+            final JsonObject json = new JsonObject();
+            json.add("quote", quote);
+
+            return json;
+        }
+
         public String getUsername() {
             return mUsername;
         }
 
         public boolean isFavorite() {
             return mIsFavorite;
+        }
+
+        public void setFavorite(final boolean favorite) {
+            if (favorite == mIsFavorite) {
+                return;
+            }
+
+            mIsFavorite = favorite;
+
+            if (mIsFavorite) {
+                ++mFavoriteCount;
+            } else {
+                --mFavoriteCount;
+            }
+        }
+
+        public void toggleFavorite() {
+            setFavorite(!mIsFavorite);
         }
 
         @Override
@@ -1101,6 +1139,7 @@ public class AnimeDigest implements Parcelable {
         public void writeToParcel(final Parcel dest, final int flags) {
             dest.writeInt(mIsFavorite ? 1 : 0);
             dest.writeInt(mFavoriteCount);
+            dest.writeString(mAnimeId);
             dest.writeString(mCharacterName);
             dest.writeString(mContent);
             dest.writeString(mId);
@@ -1113,6 +1152,7 @@ public class AnimeDigest implements Parcelable {
                 final Quote q = new Quote();
                 q.mIsFavorite = source.readInt() != 0;
                 q.mFavoriteCount = source.readInt();
+                q.mAnimeId = source.readString();
                 q.mCharacterName = source.readString();
                 q.mContent = source.readString();
                 q.mId = source.readString();

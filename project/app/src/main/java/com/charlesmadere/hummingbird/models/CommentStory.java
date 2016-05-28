@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.JsoupUtils;
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
 public class CommentStory extends AbsStory implements Parcelable {
@@ -43,6 +44,17 @@ public class CommentStory extends AbsStory implements Parcelable {
     @Nullable
     public String getGroupId() {
         return mGroupId;
+    }
+
+    public JsonObject getLikeJson() {
+        final JsonObject story = new JsonObject();
+        story.addProperty("id", getId());
+        story.addProperty("is_liked", mIsLiked);
+
+        final JsonObject json = new JsonObject();
+        json.add("story", story);
+
+        return json;
     }
 
     public User getPoster() {

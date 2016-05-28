@@ -62,7 +62,12 @@ public interface HummingbirdApi {
     Call<Void> deleteStory(@Header("Cookie") String authToken, @Path("storyId") String storyId);
 
     @DELETE("substories/{substoryId}")
-    Call<Void> deleteSubstory(@Header("Cookie") String authToken, @Path("substoryId") String substoryId);
+    Call<Void> deleteSubstory(@Header("Cookie") String authToken,
+            @Path("substoryId") String substoryId);
+
+    @PUT("quotes/{quoteId}")
+    Call<Void> favoriteQuote(@Header("Cookie") String authToken, @Path("quoteId") String quoteId,
+            @Body JsonElement json);
 
     @GET("full_anime/{animeId}")
     Call<AnimeDigest> getAnimeDigest(@Header("Cookie") String authToken,
@@ -121,10 +126,6 @@ public interface HummingbirdApi {
     @GET("stories")
     Call<Feed> getUserStories(@Header("Cookie") String authToken,
             @Query("user_id") String username);
-
-    @PUT("quotes/{quoteId}")
-    Call<Void> likeQuote(@Header("Cookie") String authToken, @Path("quoteId") String quoteId,
-            @Body JsonElement json);
 
     @PUT("stories/{storyId}")
     Call<Void> likeStory(@Header("Cookie") String authToken, @Path("storyId") String storyId,

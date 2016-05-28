@@ -590,12 +590,9 @@ public final class Api {
         });
     }
 
-    public static void likeQuote(final AnimeDigest.Quote quote) {
-        JsonObject json = new JsonObject();
-        json.add("quote", GsonUtils.getGson().toJsonTree(quote));
-
-        getApi().likeQuote(getAuthTokenCookieString(), quote.getId(), json).enqueue(
-                new Callback<Void>() {
+    public static void favoriteQuote(final AnimeDigest.Quote quote) {
+        getApi().favoriteQuote(getAuthTokenCookieString(), quote.getId(), quote.getFavoriteJson())
+                .enqueue(new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
                 // do nothing
@@ -609,11 +606,8 @@ public final class Api {
     }
 
     public static void likeStory(final CommentStory story) {
-        JsonObject json = new JsonObject();
-        json.add("story", GsonUtils.getGson().toJsonTree(story));
-
-        getApi().likeStory(getAuthTokenCookieString(), story.getId(), json).enqueue(
-                new Callback<Void>() {
+        getApi().likeStory(getAuthTokenCookieString(), story.getId(), story.getLikeJson())
+                .enqueue(new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
                 // do nothing
