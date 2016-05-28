@@ -18,6 +18,7 @@
     <string name="anime_library_is_empty">Anime library is empty</string>
     <string name="apps">Apps</string>
     <string name="app_written_by">App written by</string>
+    <string name="as_x">as %1$s</string>
     <string name="atsuka_drawn_by">Atsuka drawn by</string>
     <string name="auto">Auto</string>
     <string name="back">Back</string>

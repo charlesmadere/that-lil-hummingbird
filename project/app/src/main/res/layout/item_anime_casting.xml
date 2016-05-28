@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.charlesmadere.hummingbird.views.AnimeCastingItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/CardItem">
-
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdvCastPhoto"
+            android:layout_marginEnd="@dimen/root_padding_half"
+            style="@style/Avatar.Medium" />
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdvCharacterPhoto"
+            android:layout_marginEnd="@dimen/root_padding"
+            style="@style/Avatar.Medium" />
+        <com.charlesmadere.hummingbird.views.KeyValueTextView
+            android:id="@+id/kvtvTitle"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            tools:text="Ami Koshimizu as Ryuuko Matoi" />
+    </LinearLayout>
 </com.charlesmadere.hummingbird.views.AnimeCastingItemView>
