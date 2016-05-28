@@ -139,8 +139,6 @@ public class AnimeDigest implements Parcelable {
             for (final Casting casting : mCastings) {
                 casting.hydrate(this);
             }
-
-            Collections.sort(mCastings, Casting.COMPARATOR);
         }
 
         if (hasEpisodes()) {
@@ -302,14 +300,6 @@ public class AnimeDigest implements Parcelable {
             @Override
             public Casting[] newArray(final int size) {
                 return new Casting[size];
-            }
-        };
-
-        public static final Comparator<Casting> COMPARATOR = new Comparator<Casting>() {
-            @Override
-            public int compare(final Casting lhs, final Casting rhs) {
-                // TODO
-                return 0;
             }
         };
     }
