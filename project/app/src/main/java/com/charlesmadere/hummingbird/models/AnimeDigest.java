@@ -1064,6 +1064,11 @@ public class AnimeDigest implements Parcelable {
         }
 
         @Override
+        public String toString() {
+            return getContent();
+        }
+
+        @Override
         public int describeContents() {
             return 0;
         }
