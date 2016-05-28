@@ -76,9 +76,9 @@ public interface HummingbirdApi {
     Call<Feed> getFollowingUsers(@Header("Cookie") String authToken,
             @Query("followers_of") String username, @Query("page") Integer page);
 
-    @GET("franchises/{animeId}")
+    @GET("franchises/{franchiseId}")
     Call<Franchise> getFranchise(@Header("Cookie") String authToken, @Header("Accept") String json,
-            @Path("animeId") String animeId);
+            @Path("franchiseId") String franchiseId);
 
     @GET("groups")
     Call<Feed> getGroup(@Header("Cookie") String authToken, @Header("Accept") String json,
