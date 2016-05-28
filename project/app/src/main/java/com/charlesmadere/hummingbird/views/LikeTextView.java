@@ -26,6 +26,12 @@ public class LikeTextView extends TypefaceTextView implements View.OnClickListen
     }
 
     @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        update();
+    }
+
+    @Override
     public void onClick(final View v) {
         if (mQuote != null) {
             mQuote.toggleFavorite();
