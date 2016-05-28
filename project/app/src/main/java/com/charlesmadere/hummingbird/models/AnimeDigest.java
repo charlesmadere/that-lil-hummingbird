@@ -84,6 +84,14 @@ public class AnimeDigest implements Parcelable {
         return mProducers;
     }
 
+    public String getProducersString(final Resources res) {
+        if (!hasProducers()) {
+            return "";
+        }
+
+        return TextUtils.join(res.getString(R.string.delimiter), mProducers);
+    }
+
     @Nullable
     public ArrayList<Quote> getQuotes() {
         return mQuotes;

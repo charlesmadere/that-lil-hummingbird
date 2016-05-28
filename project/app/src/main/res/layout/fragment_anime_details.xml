@@ -228,6 +228,20 @@
                         style="@style/ResponsiveWidthCardItemBody" />
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/llProducersContainer"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    style="@style/ResponsiveWidthCardItem">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvProducersHeader"
+                        tools:text="1.2345"
+                        style="@style/ResponsiveWidthCardItemHeader" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvProducersBody"
+                        tools:text="@string/producers"
+                        style="@style/ResponsiveWidthCardItemBody" />
+                </LinearLayout>
+                <LinearLayout
                     android:id="@+id/llYouTubeLink"
                     android:visibility="gone"
                     tools:visibility="visible"

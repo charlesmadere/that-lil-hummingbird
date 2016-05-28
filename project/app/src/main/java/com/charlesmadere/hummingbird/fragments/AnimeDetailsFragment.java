@@ -63,6 +63,9 @@ public class AnimeDetailsFragment extends BaseFragment {
     @BindView(R.id.llLanguages)
     LinearLayout mLanguagesContainer;
 
+    @BindView(R.id.llProducersContainer)
+    LinearLayout mProducersContainer;
+
     @BindView(R.id.llRomajiTitle)
     LinearLayout mRomajiTitleContainer;
 
@@ -125,6 +128,12 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     @BindView(R.id.tvLanguagesHeader)
     TextView mLanguagesHeader;
+
+    @BindView(R.id.tvProducersBody)
+    TextView mProducersBody;
+
+    @BindView(R.id.tvProducersHeader)
+    TextView mProducersHeader;
 
     @BindView(R.id.tvRomajiTitle)
     TextView mRomajiTitle;
@@ -275,6 +284,13 @@ public class AnimeDetailsFragment extends BaseFragment {
             mCommunityRating.setText(String.format(Locale.getDefault(), "%.4f",
                     info.getBayesianRating()));
             mCommunityRatingContainer.setVisibility(View.VISIBLE);
+        }
+
+        if (mAnimeDigest.hasProducers()) {
+            mProducersHeader.setText(mAnimeDigest.getProducersString(resources));
+            mProducersBody.setText(resources.getQuantityText(R.plurals.producers,
+                    mAnimeDigest.getProducers().size()));
+            mProducersContainer.setVisibility(View.VISIBLE);
         }
 
         if (info.hasYouTubeVideoId()) {
