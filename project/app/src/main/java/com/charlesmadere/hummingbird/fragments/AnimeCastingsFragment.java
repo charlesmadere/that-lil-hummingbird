@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.adapters.AnimeEpisodesAdapter;
+import com.charlesmadere.hummingbird.adapters.AnimeCastingsAdapter;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
@@ -16,12 +16,12 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 
-public class AnimeEpisodesFragment extends BaseFragment {
+public class AnimeCastingsFragment extends BaseFragment {
 
-    private static final String TAG = "AnimeEpisodesFragment";
-    private static final String KEY_EPISODES = "Episodes";
+    private static final String TAG = "AnimeCastingsFragment";
+    private static final String KEY_CASTINGS = "Castings";
 
-    private ArrayList<AnimeDigest.Episode> mEpisodes;
+    private ArrayList<AnimeDigest.Casting> mCastings;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -30,11 +30,11 @@ public class AnimeEpisodesFragment extends BaseFragment {
     TextView mEmpty;
 
 
-    public static AnimeEpisodesFragment create(final ArrayList<AnimeDigest.Episode> episodes) {
+    public static AnimeCastingsFragment create(final ArrayList<AnimeDigest.Casting> castings) {
         final Bundle args = new Bundle(1);
-        args.putParcelableArrayList(KEY_EPISODES, episodes);
+        args.putParcelableArrayList(KEY_CASTINGS, castings);
 
-        final AnimeEpisodesFragment fragment = new AnimeEpisodesFragment();
+        final AnimeCastingsFragment fragment = new AnimeCastingsFragment();
         fragment.setArguments(args);
 
         return fragment;
@@ -50,14 +50,14 @@ public class AnimeEpisodesFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
 
         final Bundle args = getArguments();
-        mEpisodes = args.getParcelableArrayList(KEY_EPISODES);
+        mCastings = args.getParcelableArrayList(KEY_CASTINGS);
     }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_anime_episodes, container, false);
+        return inflater.inflate(R.layout.fragment_anime_castings, container, false);
     }
 
     @Override
@@ -66,11 +66,11 @@ public class AnimeEpisodesFragment extends BaseFragment {
 
         SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
 
-        if (mEpisodes == null || mEpisodes.isEmpty()) {
+        if (mCastings == null || mCastings.isEmpty()) {
             mEmpty.setVisibility(View.VISIBLE);
         } else {
-            final AnimeEpisodesAdapter adapter = new AnimeEpisodesAdapter(getContext());
-            adapter.set(mEpisodes);
+            final AnimeCastingsAdapter adapter = new AnimeCastingsAdapter(getContext());
+            adapter.set(mCastings);
             mRecyclerView.setAdapter(adapter);
             mRecyclerView.setVisibility(View.VISIBLE);
         }

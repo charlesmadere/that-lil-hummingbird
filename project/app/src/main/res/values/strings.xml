@@ -133,6 +133,7 @@
     <string name="must_be_on_wifi">Must be on wifi</string>
     <string name="night">Night</string>
     <string name="no_bio_available">No bio available</string>
+    <string name="no_castings">No castings</string>
     <string name="no_details">No details</string>
     <string name="no_episodes">No episodes</string>
     <string name="no_favorites">No favorites</string>
@@ -140,7 +141,9 @@
     <string name="no_gallery_images">No gallery images</string>
     <string name="no_notifications">No notifications</string>
     <string name="no_one_is_following">No one is following</string>
+    <string name="no_quotes">No quotes</string>
     <string name="no_results_for_x">No results for %1$s</string>
+    <string name="no_reviews">No reviews</string>
     <string name="no_search_results">No search results</string>
     <string name="no_season">No Season</string>
     <string name="no_synopsis_available">No synopsis available</string>

@@ -83,6 +83,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
         CharSequence getPageTitle(final int position);
     }
 
+
     private class MovieImpl implements Impl {
         @Override
         public int getCount() {
@@ -129,6 +130,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
             return title;
         }
     }
+
 
     private class ShowImpl implements Impl {
         @Override
