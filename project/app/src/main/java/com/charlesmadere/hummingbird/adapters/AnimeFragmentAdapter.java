@@ -11,6 +11,7 @@ import com.charlesmadere.hummingbird.fragments.AnimeCastingsFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeDetailsFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeEpisodesFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeGalleryFragment;
+import com.charlesmadere.hummingbird.fragments.AnimeQuotesFragment;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeType;
 
@@ -43,7 +44,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
     private CharSequence getAnimeCastingsTitle() {
-        return mContext.getString(R.string.castings);
+        return mContext.getText(R.string.castings);
     }
 
     private AnimeDetailsFragment getAnimeDetailsFragment() {
@@ -51,7 +52,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
     private CharSequence getAnimeDetailsTitle() {
-        return mContext.getString(R.string.details);
+        return mContext.getText(R.string.details);
     }
 
     private AnimeEpisodesFragment getAnimeEpisodesFragment() {
@@ -59,7 +60,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
     private CharSequence getAnimeEpisodesTitle() {
-        return mContext.getString(R.string.episodes);
+        return mContext.getText(R.string.episodes);
     }
 
     private AnimeGalleryFragment getAnimeGalleryFragment() {
@@ -67,7 +68,15 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
     private CharSequence getAnimeGalleryTitle() {
-        return mContext.getString(R.string.gallery);
+        return mContext.getText(R.string.gallery);
+    }
+
+    private AnimeQuotesFragment getAnimeQuotesFragment() {
+        return AnimeQuotesFragment.create(mAnimeDigest.getQuotes());
+    }
+
+    private CharSequence getAnimeQuotesTitle() {
+        return mContext.getText(R.string.quotes);
     }
 
     @Override
@@ -96,7 +105,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     private class MovieImpl implements Impl {
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
 
         @Override
@@ -114,6 +123,10 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
 
                 case 2:
                     fragment = getAnimeCastingsFragment();
+                    break;
+
+                case 3:
+                    fragment = getAnimeQuotesFragment();
                     break;
 
                 default:
@@ -140,6 +153,10 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
                     title = getAnimeCastingsTitle();
                     break;
 
+                case 3:
+                    title = getAnimeQuotesTitle();
+                    break;
+
                 default:
                     throw new IllegalArgumentException("illegal position: " + position);
             }
@@ -152,7 +169,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     private class ShowImpl implements Impl {
         @Override
         public int getCount() {
-            return 4;
+            return 5;
         }
 
         @Override
@@ -173,6 +190,10 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
                     break;
 
                 case 3:
+                    fragment = getAnimeQuotesFragment();
+                    break;
+
+                case 4:
                     fragment = getAnimeEpisodesFragment();
                     break;
 
@@ -201,6 +222,10 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
                     break;
 
                 case 3:
+                    title = getAnimeQuotesTitle();
+                    break;
+
+                case 4:
                     title = getAnimeEpisodesTitle();
                     break;
 
