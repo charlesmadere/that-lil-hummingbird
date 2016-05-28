@@ -187,6 +187,8 @@
     <string name="pull_to_refresh">Pull to refresh</string>
     <string name="pull_to_refresh_to_check_again">Pull to refresh to check again</string>
     <string name="pull_to_refresh_to_try_again">Pull to refresh to try again</string>
+    <string name="quote">Quote</string>
+    <string name="quotes">Quotes</string>
     <string name="rate_this_app">Rate this app</string>
     <string name="rating">Rating</string>
     <string name="recommendations">Recommendations</string>
