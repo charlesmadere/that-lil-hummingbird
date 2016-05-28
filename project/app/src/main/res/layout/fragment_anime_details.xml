@@ -31,6 +31,65 @@
             <LinearLayout
                 style="@style/ResponsiveWidthCardInternal">
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
+                    android:text="@string/titles"
+                    style="@style/ResponsiveWidthCardHeader" />
+                <LinearLayout
+                    style="@style/ResponsiveWidthCardItem">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvCanonicalTitle"
+                        tools:text="Kill La Kill"
+                        style="@style/ResponsiveWidthCardItemHeader" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:text="@string/canonical_title"
+                        style="@style/ResponsiveWidthCardItemBody" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llAlternateTitle"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    style="@style/ResponsiveWidthCardItem">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvAlternateTitle"
+                        tools:text="Kill La Kill"
+                        style="@style/ResponsiveWidthCardItemHeader" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:text="@string/alternate_title"
+                        style="@style/ResponsiveWidthCardItemBody" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llEnglishTitle"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    style="@style/ResponsiveWidthCardItem">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvEnglishTitle"
+                        tools:text="Kill La Kill"
+                        style="@style/ResponsiveWidthCardItemHeader" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:text="@string/english_title"
+                        style="@style/ResponsiveWidthCardItemBody" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llRomajiTitle"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    style="@style/ResponsiveWidthCardItem">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvRomajiTitle"
+                        tools:text="Kill La Kill"
+                        style="@style/ResponsiveWidthCardItemHeader" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:text="@string/romaji_title"
+                        style="@style/ResponsiveWidthCardItemBody" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_marginBottom="@dimen/root_padding"
+            style="@style/ResponsiveWidthCard">
+            <LinearLayout
+                style="@style/ResponsiveWidthCardInternal">
+                <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:text="@string/details"
                     style="@style/ResponsiveWidthCardHeader" />
                 <LinearLayout
@@ -179,65 +238,6 @@
                     <com.charlesmadere.hummingbird.views.TypefaceTextView
                         android:id="@+id/tvYouTubeLink"
                         tools:text="https://www.youtube.com/blah"
-                        style="@style/ResponsiveWidthCardItemBody" />
-                </LinearLayout>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
-            android:layout_marginBottom="@dimen/root_padding"
-            style="@style/ResponsiveWidthCard">
-            <LinearLayout
-                style="@style/ResponsiveWidthCardInternal">
-                <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:text="@string/titles"
-                    style="@style/ResponsiveWidthCardHeader" />
-                <LinearLayout
-                    style="@style/ResponsiveWidthCardItem">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvCanonicalTitle"
-                        tools:text="Kill La Kill"
-                        style="@style/ResponsiveWidthCardItemHeader" />
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:text="@string/canonical_title"
-                        style="@style/ResponsiveWidthCardItemBody" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/llAlternateTitle"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvAlternateTitle"
-                        tools:text="Kill La Kill"
-                        style="@style/ResponsiveWidthCardItemHeader" />
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:text="@string/alternate_title"
-                        style="@style/ResponsiveWidthCardItemBody" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/llEnglishTitle"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvEnglishTitle"
-                        tools:text="Kill La Kill"
-                        style="@style/ResponsiveWidthCardItemHeader" />
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:text="@string/english_title"
-                        style="@style/ResponsiveWidthCardItemBody" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/llRomajiTitle"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvRomajiTitle"
-                        tools:text="Kill La Kill"
-                        style="@style/ResponsiveWidthCardItemHeader" />
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:text="@string/romaji_title"
                         style="@style/ResponsiveWidthCardItemBody" />
                 </LinearLayout>
             </LinearLayout>

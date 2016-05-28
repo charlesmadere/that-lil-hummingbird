@@ -189,6 +189,23 @@ public class AnimeDetailsFragment extends BaseFragment {
             mPoster.setVisibility(View.VISIBLE);
         }
 
+        mCanonicalTitle.setText(info.getCanonicalTitle());
+
+        if (info.hasAlternateTitle()) {
+            mAlternateTitle.setText(info.getAlternateTitle());
+            mAlternateTitleContainer.setVisibility(View.VISIBLE);
+        }
+
+        if (info.hasEnglishTitle()) {
+            mEnglishTitle.setText(info.getEnglishTitle());
+            mEnglishTitleContainer.setVisibility(View.VISIBLE);
+        }
+
+        if (info.hasRomajiTitle()) {
+            mRomajiTitle.setText(info.getRomajiTitle());
+            mRomajiTitleContainer.setVisibility(View.VISIBLE);
+        }
+
         if (info.hasType()) {
             mAnimeType.setText(info.getType().getTextResId());
             mAnimeTypeContainer.setVisibility(View.VISIBLE);
@@ -263,23 +280,6 @@ public class AnimeDetailsFragment extends BaseFragment {
         if (info.hasYouTubeVideoId()) {
             mYouTubeLinkText.setText(info.getYouTubeVideoUrl());
             mYouTubeLinkContainer.setVisibility(View.VISIBLE);
-        }
-
-        mCanonicalTitle.setText(info.getCanonicalTitle());
-
-        if (info.hasAlternateTitle()) {
-            mAlternateTitle.setText(info.getAlternateTitle());
-            mAlternateTitleContainer.setVisibility(View.VISIBLE);
-        }
-
-        if (info.hasEnglishTitle()) {
-            mEnglishTitle.setText(info.getEnglishTitle());
-            mEnglishTitleContainer.setVisibility(View.VISIBLE);
-        }
-
-        if (info.hasRomajiTitle()) {
-            mRomajiTitle.setText(info.getRomajiTitle());
-            mRomajiTitleContainer.setVisibility(View.VISIBLE);
         }
 
         if (info.hasSynopsis()) {
