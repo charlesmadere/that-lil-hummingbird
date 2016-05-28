@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.networking.Api;
 
@@ -45,6 +46,10 @@ public class LikeTextView extends TypefaceTextView implements View.OnClickListen
     public void setContent(final CommentStory story) {
         mStory = story;
         update();
+    }
+
+    public void setContent(final AnimeDigest.Quote quote) {
+        // TODO
     }
 
     private void update() {

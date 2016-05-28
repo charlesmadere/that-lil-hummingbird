@@ -590,6 +590,24 @@ public final class Api {
         });
     }
 
+    public static void likeQuote(final AnimeDigest.Quote quote) {
+        JsonObject json = new JsonObject();
+        json.add("quote", GsonUtils.getGson().toJsonTree(quote));
+
+        getApi().likeQuote(getAuthTokenCookieString(), quote.getId(), json).enqueue(
+                new Callback<Void>() {
+            @Override
+            public void onResponse(final Call<Void> call, final Response<Void> response) {
+                // do nothing
+            }
+
+            @Override
+            public void onFailure(final Call<Void> call, final Throwable t) {
+                Timber.e(TAG, "like quote (" + quote.getId() + ") failed", t);
+            }
+        });
+    }
+
     public static void likeStory(final CommentStory story) {
         JsonObject json = new JsonObject();
         json.add("story", GsonUtils.getGson().toJsonTree(story));

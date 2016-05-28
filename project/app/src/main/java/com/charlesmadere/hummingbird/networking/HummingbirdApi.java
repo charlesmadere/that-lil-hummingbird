@@ -122,6 +122,10 @@ public interface HummingbirdApi {
     Call<Feed> getUserStories(@Header("Cookie") String authToken,
             @Query("user_id") String username);
 
+    @PUT("quotes/{quoteId}")
+    Call<Void> likeQuote(@Header("Cookie") String authToken, @Path("quoteId") String quoteId,
+            @Body JsonElement json);
+
     @PUT("stories/{storyId}")
     Call<Void> likeStory(@Header("Cookie") String authToken, @Path("storyId") String storyId,
             @Body JsonElement json);
