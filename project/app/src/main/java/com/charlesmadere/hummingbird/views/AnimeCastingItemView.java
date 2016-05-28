@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 
@@ -41,7 +42,10 @@ public class AnimeCastingItemView extends CardView implements AdapterView<AnimeD
 
     @Override
     public void setContent(final AnimeDigest.Casting content) {
-
+        mCastPhoto.setImageURI(Uri.parse(content.getPerson().getImage()));
+        mCharacterPhoto.setImageURI(Uri.parse(content.getCharacter().getImage()));
+        mTitle.setText(content.getPerson().getName(), getResources().getString(R.string.as_x,
+                content.getCharacter().getName()));
     }
 
 }

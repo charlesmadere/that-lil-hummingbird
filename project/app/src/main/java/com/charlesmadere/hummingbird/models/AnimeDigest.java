@@ -127,6 +127,12 @@ public class AnimeDigest implements Parcelable {
     }
 
     public void hydrate() {
+        if (hasCastings()) {
+            for (final Casting casting : mCastings) {
+                casting.hydrate(this);
+            }
+        }
+
         if (hasEpisodes()) {
             Collections.sort(mEpisodes, Episode.COMPARATOR);
         }
@@ -199,6 +205,14 @@ public class AnimeDigest implements Parcelable {
         @SerializedName("role")
         private String mRole;
 
+        // hydrated fields
+        private Character mCharacter;
+        private Person mPerson;
+
+
+        public Character getCharacter() {
+            return mCharacter;
+        }
 
         public String getCharacterId() {
             return mCharacterId;
@@ -213,6 +227,10 @@ public class AnimeDigest implements Parcelable {
             return mLanguage;
         }
 
+        public Person getPerson() {
+            return mPerson;
+        }
+
         public String getPersonId() {
             return mPersonId;
         }
@@ -224,6 +242,24 @@ public class AnimeDigest implements Parcelable {
         public boolean hasLanguage() {
             return !TextUtils.isEmpty(mLanguage);
         }
+
+        public void hydrate(final AnimeDigest animeDigest) {
+            for (final Character character : animeDigest.getCharacters()) {
+                if (mCharacterId.equalsIgnoreCase(character.getId())) {
+                    mCharacter = character;
+                    break;
+                }
+            }
+
+            for (final Person person : animeDigest.getPeople()) {
+                if (mPersonId.equalsIgnoreCase(person.getId())) {
+                    mPerson = person;
+                    break;
+                }
+            }
+        }
+
+
 
         @Override
         public int describeContents() {
@@ -237,6 +273,8 @@ public class AnimeDigest implements Parcelable {
             dest.writeString(mLanguage);
             dest.writeString(mPersonId);
             dest.writeString(mRole);
+            dest.writeParcelable(mCharacter, flags);
+            dest.writeParcelable(mPerson, flags);
         }
 
         public static final Creator<Casting> CREATOR = new Creator<Casting>() {
@@ -248,6 +286,8 @@ public class AnimeDigest implements Parcelable {
                 c.mLanguage = source.readString();
                 c.mPersonId = source.readString();
                 c.mRole = source.readString();
+                c.mCharacter = source.readParcelable(Character.class.getClassLoader());
+                c.mPerson = source.readParcelable(Person.class.getClassLoader());
                 return c;
             }
 
