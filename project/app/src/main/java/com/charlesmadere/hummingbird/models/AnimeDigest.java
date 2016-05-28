@@ -16,6 +16,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 
 public class AnimeDigest implements Parcelable {
 
@@ -136,9 +137,15 @@ public class AnimeDigest implements Parcelable {
 
     public void hydrate() {
         if (hasCastings()) {
-            for (final Casting casting : mCastings) {
-                casting.hydrate(this);
-            }
+            final Iterator<Casting> iterator = mCastings.iterator();
+
+            do {
+                final Casting casting = iterator.next();
+
+                if (!casting.hydrate(this)) {
+                    iterator.remove();
+                }
+            } while (iterator.hasNext());
         }
 
         if (hasEpisodes()) {
@@ -251,7 +258,7 @@ public class AnimeDigest implements Parcelable {
             return !TextUtils.isEmpty(mLanguage);
         }
 
-        public void hydrate(final AnimeDigest animeDigest) {
+        public boolean hydrate(final AnimeDigest animeDigest) {
             for (final Character character : animeDigest.getCharacters()) {
                 if (mCharacterId.equalsIgnoreCase(character.getId())) {
                     mCharacter = character;
@@ -265,6 +272,8 @@ public class AnimeDigest implements Parcelable {
                     break;
                 }
             }
+
+            return mCharacter != null && mPerson != null;
         }
 
         @Override
