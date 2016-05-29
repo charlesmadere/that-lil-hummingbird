@@ -114,8 +114,11 @@ public class AnimeActivity extends BaseDrawerActivity {
     private void showAnimeDigest(final AnimeDigest animeDigest) {
         mAnimeDigest = animeDigest;
 
-        PaletteUtils.applyParallaxColors(animeDigest.getInfo().getCoverImage(), this, mAppBarLayout,
-                mCollapsingToolbarLayout, mCoverImage, mTabLayout);
+        if (animeDigest.getInfo().hasCoverImage()) {
+            PaletteUtils.applyParallaxColors(animeDigest.getInfo().getCoverImage(), this,
+                    mAppBarLayout, mCollapsingToolbarLayout, mCoverImage, mTabLayout);
+        }
+
         mViewPager.setAdapter(new AnimeFragmentAdapter(this, mAnimeDigest));
 
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
