@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
 
-import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.User;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.BaseControllerListener;
@@ -16,7 +15,7 @@ import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.image.ImageInfo;
 
-public class AvatarView extends SimpleDraweeView implements AdapterView<User> {
+public class AvatarView extends SimpleDraweeView {
 
     private User mUser;
 
@@ -60,7 +59,6 @@ public class AvatarView extends SimpleDraweeView implements AdapterView<User> {
         setController(controller);
     }
 
-    @Override
     public void setContent(final User content) {
         mUser = content;
         fetchAvatars(mUser, mUser.getAvatars(), 0);

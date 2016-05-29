@@ -21,8 +21,8 @@ public class ReplySubstoryStandaloneItemView extends CardView implements Adapter
     @BindView(R.id.avatarView)
     AvatarView mAvatar;
 
-    @BindView(R.id.commentTextView)
-    CommentTextView mComment;
+    @BindView(R.id.replyTextView)
+    ReplyTextView mReply;
 
     @BindView(R.id.tvTimeAgo)
     TextView mTimeAgo;
@@ -57,9 +57,8 @@ public class ReplySubstoryStandaloneItemView extends CardView implements Adapter
     @Override
     public void setContent(final ReplySubstory content) {
         mReplySubstory = content;
-
         mAvatar.setContent(mReplySubstory.getUser());
-        mComment.setContent(mReplySubstory);
+        mReply.setContent(mReplySubstory);
         mTimeAgo.setText(mReplySubstory.getCreatedAt().getRelativeTimeText(getContext()));
     }
 

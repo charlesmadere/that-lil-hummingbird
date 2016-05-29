@@ -22,8 +22,8 @@ public class ReplySubstoryItemView extends RelativeLayout {
     @BindView(R.id.avatarView)
     AvatarView mAvatar;
 
-    @BindView(R.id.commentTextView)
-    CommentTextView mReply;
+    @BindView(R.id.replyTextView)
+    ReplyTextView mReply;
 
     @BindView(R.id.tvTimeAgo)
     TextView mTimeAgo;
