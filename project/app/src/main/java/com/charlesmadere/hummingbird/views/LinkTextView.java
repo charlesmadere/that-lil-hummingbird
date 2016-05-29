@@ -3,8 +3,6 @@ package com.charlesmadere.hummingbird.views;
 import android.content.Context;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
-import android.text.method.MovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.URLSpan;
 import android.util.AttributeSet;
@@ -32,11 +30,6 @@ public class LinkTextView extends TypefaceTextView {
 
         if (urls == null || urls.length == 0) {
             return text;
-        }
-
-        MovementMethod movementMethod = getMovementMethod();
-        if (movementMethod == null || !(movementMethod instanceof LinkMovementMethod)) {
-            setMovementMethod(LinkMovementMethod.getInstance());
         }
 
         for (final URLSpan url : urls) {
