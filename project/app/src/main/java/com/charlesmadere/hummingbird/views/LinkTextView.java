@@ -5,6 +5,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.URLSpan;
+import android.text.util.Linkify;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -46,6 +47,13 @@ public class LinkTextView extends TypefaceTextView {
         }
 
         return builder;
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        setAutoLinkMask(Linkify.WEB_URLS);
+        setLinkTextColor(MiscUtils.getAttrColor(getContext(), android.R.attr.textColorPrimary));
     }
 
 }
