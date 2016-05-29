@@ -137,7 +137,7 @@ public class AnimeDigest implements Parcelable {
     }
 
     public void hydrate() {
-        if (hasCastings()) {
+        if (hasCastings() && hasCharacters() && hasPeople()) {
             final Iterator<Casting> iterator = mCastings.iterator();
 
             do {
