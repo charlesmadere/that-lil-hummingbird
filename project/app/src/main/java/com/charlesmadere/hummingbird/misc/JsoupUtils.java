@@ -97,7 +97,7 @@ public final class JsoupUtils {
         fixIframe(document);
         fixImg(document);
 
-        return Html.fromHtml(document.body().toString());
+        return Html.fromHtml(document.body().toString().trim());
     }
 
     private static void stripAttributes(final Element element) {
