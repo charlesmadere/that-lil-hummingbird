@@ -700,7 +700,7 @@ public final class Api {
                 Timber.e(TAG, "Received server error: \"" + errorInfo.getError() + '"');
             }
         } catch (final Exception e) {
-            Timber.w(TAG, "couldn't convert response's error body", e);
+            Timber.e(TAG, "couldn't convert response's error body", e);
         }
 
         return errorInfo;
