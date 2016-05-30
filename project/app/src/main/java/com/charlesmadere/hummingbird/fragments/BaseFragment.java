@@ -27,17 +27,12 @@ public abstract class BaseFragment extends Fragment {
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Timber.d(TAG, '"' + getFragmentName() + "\" created");
-        mIsDestroyed = false;
-    }
-
-    @Override
-    public void onDestroy() {
-        mIsDestroyed = true;
-        super.onDestroy();
     }
 
     @Override
     public void onDestroyView() {
+        mIsDestroyed = true;
+
         if (mUnbinder != null) {
             mUnbinder.unbind();
             mUnbinder = null;
@@ -50,6 +45,7 @@ public abstract class BaseFragment extends Fragment {
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mUnbinder = ButterKnife.bind(this, view);
+        mIsDestroyed = false;
     }
 
 }
