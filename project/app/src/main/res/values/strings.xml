@@ -64,6 +64,7 @@
     <string name="error_loading_feed">Error loading feed</string>
     <string name="error_loading_followers_list">Error loading followers list</string>
     <string name="error_loading_following_list">Error loading following list</string>
+    <string name="error_loading_franchise">Error loading franchise</string>
     <string name="error_loading_image">Error loading image</string>
     <string name="error_loading_notifications">Error loading notifications</string>
     <string name="error_loading_on_hold_library">Error loading on hold library</string>
@@ -141,6 +142,7 @@
     <string name="no_episodes">No episodes</string>
     <string name="no_favorites">No favorites</string>
     <string name="no_feed_content">No feed content</string>
+    <string name="no_franchise_entries">No franchise entries</string>
     <string name="no_images">No images</string>
     <string name="no_notifications">No notifications</string>
     <string name="no_one_is_following">No one is following</string>
