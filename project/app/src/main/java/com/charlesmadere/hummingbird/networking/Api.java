@@ -261,9 +261,9 @@ public final class Api {
             @Override
             public void onResponse(final Call<Franchise> call, final Response<Franchise> response) {
                 if (response.isSuccessful()) {
-                    listener.failure(retrieveErrorInfo(response));
-                } else {
                     listener.success(response.body());
+                } else {
+                    listener.failure(retrieveErrorInfo(response));
                 }
             }
 
