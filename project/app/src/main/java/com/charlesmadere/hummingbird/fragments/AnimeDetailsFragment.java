@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,9 @@ public class AnimeDetailsFragment extends BaseFragment {
     private static final String KEY_ANIME_DIGEST = "AnimeDigest";
 
     private AnimeDigest mAnimeDigest;
+
+    @BindView(R.id.cvPoster)
+    CardView mPosterContainer;
 
     @BindView(R.id.llAgeRating)
     LinearLayout mAgeRatingContainer;
@@ -195,7 +199,7 @@ public class AnimeDetailsFragment extends BaseFragment {
 
         if (info.hasPosterImage()) {
             mPoster.setImageURI(Uri.parse(info.getPosterImage()));
-            mPoster.setVisibility(View.VISIBLE);
+            mPosterContainer.setVisibility(View.VISIBLE);
         }
 
         mCanonicalTitle.setText(info.getCanonicalTitle());
