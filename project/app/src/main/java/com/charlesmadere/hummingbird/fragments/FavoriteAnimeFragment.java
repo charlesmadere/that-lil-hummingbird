@@ -87,17 +87,17 @@ public class FavoriteAnimeFragment extends BaseFragment implements
     }
 
     @Override
+    public void onRefresh() {
+        fetchFavorites();
+    }
+
+    @Override
     public void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
 
         if (mFavorites != null && !mFavorites.isEmpty()) {
             outState.putParcelableArrayList(KEY_FAVORITES, mFavorites);
         }
-    }
-
-    @Override
-    public void onRefresh() {
-        fetchFavorites();
     }
 
     @Override
