@@ -4,11 +4,15 @@ import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.AnimeReviewActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
+
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,9 +22,19 @@ public class AnimeReviewItemView extends CardView implements AdapterView<AnimeDi
         View.OnClickListener {
 
     private AnimeDigest.Review mReview;
+    private NumberFormat mNumberFormat;
 
     @BindView(R.id.avatarView)
     AvatarView mAvatarView;
+
+    @BindView(R.id.tvRating)
+    TextView mRating;
+
+    @BindView(R.id.tvReviewHelpfulness)
+    TextView mReviewHelpfulness;
+
+    @BindView(R.id.tvSummary)
+    TextView mSummary;
 
 
     public AnimeReviewItemView(final Context context, final AttributeSet attrs) {
@@ -47,11 +61,19 @@ public class AnimeReviewItemView extends CardView implements AdapterView<AnimeDi
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
+        setOnClickListener(this);
+        mNumberFormat = NumberFormat.getInstance();
     }
 
     @Override
     public void setContent(final AnimeDigest.Review content) {
         mReview = content;
+        mRating.setText(String.format(Locale.getDefault(), "%.1f", mReview.getRating()));
+        mSummary.setText(mReview.getSummary());
+        mReviewHelpfulness.setText(getResources().getString(
+                R.string.x_out_of_y_users_found_this_review_helpful,
+                mNumberFormat.format(mReview.getPositiveVotes()),
+                mNumberFormat.format(mReview.getTotalVotes())));
     }
 
 }
