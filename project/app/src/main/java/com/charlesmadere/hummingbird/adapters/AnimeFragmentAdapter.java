@@ -114,7 +114,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     private class MovieImpl implements Impl {
         @Override
         public int getCount() {
-            return 4;
+            return 5;
         }
 
         @Override
@@ -186,7 +186,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     private class ShowImpl implements Impl {
         @Override
         public int getCount() {
-            return 5;
+            return 6;
         }
 
         @Override
