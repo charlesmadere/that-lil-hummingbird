@@ -665,9 +665,8 @@ public class AnimeDigest implements Parcelable {
             return mFinishedAiringDate;
         }
 
-        @Nullable
-        public ArrayList<String> getFranchiseIds() {
-            return mFranchiseIds;
+        public String getFranchiseId() {
+            return mFranchiseIds.get(0);
         }
 
         @Nullable
@@ -829,7 +828,7 @@ public class AnimeDigest implements Parcelable {
             return mFinishedAiringDate != null;
         }
 
-        public boolean hasFranchiseIds() {
+        public boolean hasFranchiseId() {
             return mFranchiseIds != null && !mFranchiseIds.isEmpty();
         }
 
