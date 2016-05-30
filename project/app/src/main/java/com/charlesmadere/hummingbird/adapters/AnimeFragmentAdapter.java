@@ -119,66 +119,26 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
 
         @Override
         public Fragment getItem(final int position) {
-            final Fragment fragment;
-
             switch (position) {
-                case 0:
-                    fragment = getAnimeDetailsFragment();
-                    break;
-
-                case 1:
-                    fragment = getAnimeGalleryFragment();
-                    break;
-
-                case 2:
-                    fragment = getAnimeCastingsFragment();
-                    break;
-
-                case 3:
-                    fragment = getAnimeQuotesFragment();
-                    break;
-
-                case 4:
-                    fragment = getAnimeReviewsFragment();
-                    break;
-
-                default:
-                    throw new IllegalArgumentException("illegal position: " + position);
+                case 0: return getAnimeDetailsFragment();
+                case 1: return getAnimeGalleryFragment();
+                case 2: return getAnimeCastingsFragment();
+                case 3: return getAnimeQuotesFragment();
+                case 4: return getAnimeReviewsFragment();
+                default: throw new IllegalArgumentException("illegal position: " + position);
             }
-
-            return fragment;
         }
 
         @Override
         public CharSequence getPageTitle(final int position) {
-            final CharSequence title;
-
             switch (position) {
-                case 0:
-                    title = getAnimeDetailsTitle();
-                    break;
-
-                case 1:
-                    title = getAnimeGalleryTitle();
-                    break;
-
-                case 2:
-                    title = getAnimeCastingsTitle();
-                    break;
-
-                case 3:
-                    title = getAnimeQuotesTitle();
-                    break;
-
-                case 4:
-                    title = getAnimeReviewsTitle();
-                    break;
-
-                default:
-                    throw new IllegalArgumentException("illegal position: " + position);
+                case 0: return getAnimeDetailsTitle();
+                case 1: return getAnimeGalleryTitle();
+                case 2: return getAnimeCastingsTitle();
+                case 3: return getAnimeQuotesTitle();
+                case 4: return getAnimeReviewsTitle();
+                default: throw new IllegalArgumentException("illegal position: " + position);
             }
-
-            return title;
         }
     }
 
@@ -191,74 +151,28 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
 
         @Override
         public Fragment getItem(final int position) {
-            final Fragment fragment;
-
             switch (position) {
-                case 0:
-                    fragment = getAnimeDetailsFragment();
-                    break;
-
-                case 1:
-                    fragment = getAnimeGalleryFragment();
-                    break;
-
-                case 2:
-                    fragment = getAnimeCastingsFragment();
-                    break;
-
-                case 3:
-                    fragment = getAnimeQuotesFragment();
-                    break;
-
-                case 4:
-                    fragment = getAnimeReviewsFragment();
-                    break;
-
-                case 5:
-                    fragment = getAnimeEpisodesFragment();
-                    break;
-
-                default:
-                    throw new IllegalArgumentException("illegal position: " + position);
+                case 0: return getAnimeDetailsFragment();
+                case 1: return getAnimeGalleryFragment();
+                case 2: return getAnimeCastingsFragment();
+                case 3: return getAnimeQuotesFragment();
+                case 4: return getAnimeReviewsFragment();
+                case 5: return getAnimeEpisodesFragment();
+                default: throw new IllegalArgumentException("illegal position: " + position);
             }
-
-            return fragment;
         }
 
         @Override
         public CharSequence getPageTitle(final int position) {
-            final CharSequence title;
-
             switch (position) {
-                case 0:
-                    title = getAnimeDetailsTitle();
-                    break;
-
-                case 1:
-                    title = getAnimeGalleryTitle();
-                    break;
-
-                case 2:
-                    title = getAnimeCastingsTitle();
-                    break;
-
-                case 3:
-                    title = getAnimeQuotesTitle();
-                    break;
-
-                case 4:
-                    title = getAnimeReviewsTitle();
-                    break;
-
-                case 5:
-                    title = getAnimeEpisodesTitle();
-                    break;
-
-                default:
-                    throw new IllegalArgumentException("illegal position: " + position);
+                case 0: return getAnimeDetailsTitle();
+                case 1: return getAnimeGalleryTitle();
+                case 2: return getAnimeCastingsTitle();
+                case 3: return getAnimeQuotesTitle();
+                case 4: return getAnimeReviewsTitle();
+                case 5: return getAnimeEpisodesTitle();
+                default: throw new IllegalArgumentException("illegal position: " + position);
             }
-
-            return title;
         }
     }
 
