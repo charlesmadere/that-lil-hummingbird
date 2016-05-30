@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.AnimeReviewActivity;
+import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 
@@ -48,7 +49,8 @@ public class AnimeReviewItemView extends CardView implements AdapterView<AnimeDi
 
     @OnClick(R.id.avatarView)
     void onAvatarClick() {
-
+        final Context context = getContext();
+        context.startActivity(UserActivity.getLaunchIntent(context, mReview.getUser()));
     }
 
     @Override
@@ -68,6 +70,7 @@ public class AnimeReviewItemView extends CardView implements AdapterView<AnimeDi
     @Override
     public void setContent(final AnimeDigest.Review content) {
         mReview = content;
+        mAvatarView.setContent(mReview.getUser());
         mRating.setText(String.format(Locale.getDefault(), "%.1f", mReview.getRating()));
         mSummary.setText(mReview.getSummary());
         mReviewHelpfulness.setText(getResources().getString(
