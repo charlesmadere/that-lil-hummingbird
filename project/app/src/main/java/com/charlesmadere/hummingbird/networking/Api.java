@@ -18,6 +18,7 @@ import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.FeedPost;
+import com.charlesmadere.hummingbird.models.Franchise;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.LibraryUpdate;
 import com.charlesmadere.hummingbird.models.MangaDigest;
@@ -250,6 +251,32 @@ public final class Api {
             @Override
             public void onFailure(final Call<Feed> call, final Throwable t) {
                 Timber.e(TAG, "get following users (" + username + ") (page " + page + ") failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
+    public static void getFranchise(final String franchiseId, final ApiResponse<Franchise> listener) {
+        getApi().getFranchise(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, franchiseId)
+                .enqueue(new Callback<Franchise>() {
+            @Override
+            public void onResponse(final Call<Franchise> call, final Response<Franchise> response) {
+                Franchise body = null;
+
+                if (response.isSuccessful()) {
+                    body = response.body();
+                }
+
+                if (body == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    listener.success(body);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Franchise> call, final Throwable t) {
+                Timber.e(TAG, "get franchise (" + franchiseId + ") failed", t);
                 listener.failure(null);
             }
         });
