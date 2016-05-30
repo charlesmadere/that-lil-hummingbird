@@ -49,6 +49,10 @@ public class AnimeDigest implements Parcelable {
     @SerializedName("reviews")
     private ArrayList<Review> mReviews;
 
+    @Nullable
+    @SerializedName("users")
+    private ArrayList<User> mUsers;
+
     @SerializedName("full_anime")
     private Info mInfo;
 
@@ -108,6 +112,11 @@ public class AnimeDigest implements Parcelable {
         return mInfo.getTitle();
     }
 
+    @Nullable
+    public ArrayList<User> getUsers() {
+        return mUsers;
+    }
+
     public boolean hasCastings() {
         return mCastings != null && !mCastings.isEmpty();
     }
@@ -136,6 +145,10 @@ public class AnimeDigest implements Parcelable {
         return mReviews != null && !mReviews.isEmpty();
     }
 
+    public boolean hasUsers() {
+        return mUsers != null && !mUsers.isEmpty();
+    }
+
     public void hydrate() {
         if (hasCastings()) {
             if (hasCharacters() && hasPeople()) {
@@ -162,8 +175,18 @@ public class AnimeDigest implements Parcelable {
         }
 
         if (hasReviews()) {
-            for (final Review review : mReviews) {
-                review.hydrate();
+            if (hasUsers()) {
+                final Iterator<Review> iterator = mReviews.iterator();
+
+                do {
+                    final Review review = iterator.next();
+
+                    if (!review.hydrate(this)) {
+                        iterator.remove();
+                    }
+                } while (iterator.hasNext());
+            } else {
+                mReviews = null;
             }
         }
     }
@@ -187,6 +210,7 @@ public class AnimeDigest implements Parcelable {
         dest.writeTypedList(mProducers);
         dest.writeTypedList(mQuotes);
         dest.writeTypedList(mReviews);
+        dest.writeTypedList(mUsers);
         dest.writeParcelable(mInfo, flags);
     }
 
@@ -201,6 +225,7 @@ public class AnimeDigest implements Parcelable {
             ad.mProducers = source.createTypedArrayList(Producer.CREATOR);
             ad.mQuotes = source.createTypedArrayList(Quote.CREATOR);
             ad.mReviews = source.createTypedArrayList(Review.CREATOR);
+            ad.mUsers = source.createTypedArrayList(User.CREATOR);
             ad.mInfo = source.readParcelable(Info.class.getClassLoader());
             return ad;
         }
@@ -1216,6 +1241,9 @@ public class AnimeDigest implements Parcelable {
         @SerializedName("user_id")
         private String mUserId;
 
+        // hydrated fields
+        private User mUser;
+
 
         public String getContent() {
             return mContent;
@@ -1261,12 +1289,23 @@ public class AnimeDigest implements Parcelable {
             return mTotalVotes;
         }
 
+        public User getUser() {
+            return mUser;
+        }
+
         public String getUserId() {
             return mUserId;
         }
 
-        public void hydrate() {
-            // TODO
+        public boolean hydrate(final AnimeDigest animeDigest) {
+            for (final User user : animeDigest.getUsers()) {
+                if (mUserId.equalsIgnoreCase(user.getId())) {
+                    mUser = user;
+                    break;
+                }
+            }
+
+            return mUser != null;
         }
 
         public boolean isLiked() {
@@ -1293,6 +1332,7 @@ public class AnimeDigest implements Parcelable {
             dest.writeString(mId);
             dest.writeString(mSummary);
             dest.writeString(mUserId);
+            dest.writeParcelable(mUser, flags);
         }
 
         public static final Creator<Review> CREATOR = new Creator<Review>() {
@@ -1312,6 +1352,7 @@ public class AnimeDigest implements Parcelable {
                 r.mId = source.readString();
                 r.mSummary = source.readString();
                 r.mUserId = source.readString();
+                r.mUser = source.readParcelable(User.class.getClassLoader());
                 return r;
             }
 
