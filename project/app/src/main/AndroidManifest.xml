@@ -20,12 +20,7 @@
         <activity
             android:label=""
             android:name=".activities.AnimeReviewActivity"
-            android:parentActivityName=".activities.AnimeActivity"
-            android:theme="@style/HummingbirdTheme.WithDrawer">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.HomeActivity" />
-        </activity>
+            android:theme="@style/HummingbirdTheme.WithDrawer" />
 
         <activity
             android:label=""
