@@ -132,7 +132,7 @@ public class FavoriteAnimeFragment extends BaseFragment implements
 
     private void showList(final ArrayList<AbsAnime> favorites) {
         mFavorites = favorites;
-        mAdapter.set(favorites);
+        mAdapter.set(mFavorites);
         mEmpty.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
