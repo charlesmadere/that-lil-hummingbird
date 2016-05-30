@@ -261,16 +261,10 @@ public final class Api {
                 .enqueue(new Callback<Franchise>() {
             @Override
             public void onResponse(final Call<Franchise> call, final Response<Franchise> response) {
-                Franchise body = null;
-
                 if (response.isSuccessful()) {
-                    body = response.body();
-                }
-
-                if (body == null) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
-                    listener.success(body);
+                    listener.success(response.body());
                 }
             }
 
