@@ -12,6 +12,7 @@ import com.charlesmadere.hummingbird.fragments.AnimeDetailsFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeEpisodesFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeGalleryFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeQuotesFragment;
+import com.charlesmadere.hummingbird.fragments.AnimeReviewsFragment;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeType;
 
@@ -44,7 +45,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
     private CharSequence getAnimeCastingsTitle() {
-        return mContext.getText(R.string.castings);
+        return mContext.getText(R.string.casting);
     }
 
     private AnimeDetailsFragment getAnimeDetailsFragment() {
@@ -77,6 +78,14 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
 
     private CharSequence getAnimeQuotesTitle() {
         return mContext.getText(R.string.quotes);
+    }
+
+    private AnimeReviewsFragment getAnimeReviewsFragment() {
+        return AnimeReviewsFragment.create(mAnimeDigest.getReviews());
+    }
+
+    private CharSequence getAnimeReviewsTitle() {
+        return mContext.getText(R.string.reviews);
     }
 
     @Override
@@ -129,6 +138,10 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
                     fragment = getAnimeQuotesFragment();
                     break;
 
+                case 4:
+                    fragment = getAnimeReviewsFragment();
+                    break;
+
                 default:
                     throw new IllegalArgumentException("illegal position: " + position);
             }
@@ -155,6 +168,10 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
 
                 case 3:
                     title = getAnimeQuotesTitle();
+                    break;
+
+                case 4:
+                    title = getAnimeReviewsTitle();
                     break;
 
                 default:
@@ -194,6 +211,10 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
                     break;
 
                 case 4:
+                    fragment = getAnimeReviewsFragment();
+                    break;
+
+                case 5:
                     fragment = getAnimeEpisodesFragment();
                     break;
 
@@ -226,6 +247,10 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
                     break;
 
                 case 4:
+                    title = getAnimeReviewsTitle();
+                    break;
+
+                case 5:
                     title = getAnimeEpisodesTitle();
                     break;
 
