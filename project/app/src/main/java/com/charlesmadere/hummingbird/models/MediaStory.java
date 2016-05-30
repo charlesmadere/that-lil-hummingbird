@@ -68,6 +68,7 @@ public class MediaStory extends AbsStory implements Parcelable {
         @SerializedName("id")
         private String mId;
 
+
         public String getId() {
             return mId;
         }
@@ -167,6 +168,7 @@ public class MediaStory extends AbsStory implements Parcelable {
     public static class AnimeMedia extends AbsMedia implements Parcelable {
         private AbsAnime mAnime;
 
+
         public AbsAnime getAnime() {
             return mAnime;
         }
@@ -222,6 +224,13 @@ public class MediaStory extends AbsStory implements Parcelable {
 
 
     public static class MangaMedia extends AbsMedia implements Parcelable {
+        private Manga mManga;
+
+
+        public Manga getManga() {
+            return mManga;
+        }
+
         @Override
         public Type getType() {
             return Type.MANGA;
@@ -229,24 +238,31 @@ public class MediaStory extends AbsStory implements Parcelable {
 
         @Override
         public void hydrate(final Feed feed) {
-            // TODO
+            final String mediaId = getId();
+
+            for (final Manga manga : feed.getManga()) {
+                if (mediaId.equalsIgnoreCase(manga.getId())) {
+                    mManga = manga;
+                    return;
+                }
+            }
         }
 
         @Override
         public String toString() {
-            return getType().toString();
+            return getType().toString() + ':' + mManga.getTitle();
         }
 
         @Override
         protected void readFromParcel(final Parcel source) {
             super.readFromParcel(source);
-            // TODO
+            mManga = source.readParcelable(Manga.class.getClassLoader());
         }
 
         @Override
         public void writeToParcel(final Parcel dest, final int flags) {
             super.writeToParcel(dest, flags);
-            // TODO
+            dest.writeParcelable(mManga, flags);
         }
 
         public static final Creator<MangaMedia> CREATOR = new Creator<MangaMedia>() {
