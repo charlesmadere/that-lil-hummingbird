@@ -11,6 +11,7 @@
             android:layout_below="@id/avatarView"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="@dimen/text_large"
             app:typeface="open_sans_light"
             tools:text="4.5" />
