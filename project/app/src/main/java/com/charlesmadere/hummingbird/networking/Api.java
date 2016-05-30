@@ -31,7 +31,6 @@ import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.google.gson.JsonObject;
 
-import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 
@@ -700,7 +699,7 @@ public final class Api {
             if (errorInfo != null) {
                 Timber.e(TAG, "Received server error: \"" + errorInfo.getError() + '"');
             }
-        } catch (final IllegalStateException | IOException e) {
+        } catch (final Exception e) {
             Timber.w(TAG, "couldn't convert response's error body", e);
         }
 
