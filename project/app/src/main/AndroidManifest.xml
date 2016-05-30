@@ -19,14 +19,19 @@
 
         <activity
             android:label=""
-            android:name=".activities.CommentsActivity"
-            android:parentActivityName=".activities.HomeActivity"
-            android:theme="@style/HummingbirdTheme.WithDrawer"
-            android:windowSoftInputMode="adjustResize|stateUnchanged">
+            android:name=".activities.AnimeReviewActivity"
+            android:parentActivityName=".activities.AnimeActivity"
+            android:theme="@style/HummingbirdTheme.WithDrawer">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.HomeActivity" />
         </activity>
+
+        <activity
+            android:label=""
+            android:name=".activities.CommentsActivity"
+            android:theme="@style/HummingbirdTheme.WithDrawer"
+            android:windowSoftInputMode="adjustResize|stateUnchanged" />
 
         <activity
             android:label="@string/followers"
@@ -46,12 +51,7 @@
         <activity
             android:label=""
             android:name=".activities.GroupActivity"
-            android:parentActivityName=".activities.HomeActivity"
-            android:theme="@style/HummingbirdTheme.WithDrawer">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.HomeActivity" />
-        </activity>
+            android:theme="@style/HummingbirdTheme.WithDrawer" />
 
         <activity
             android:label="@string/home"
@@ -79,12 +79,7 @@
         <activity
             android:label=""
             android:name=".activities.MangaActivity"
-            android:parentActivityName=".activities.HomeActivity"
-            android:theme="@style/HummingbirdTheme.WithDrawer">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.HomeActivity" />
-        </activity>
+            android:theme="@style/HummingbirdTheme.WithDrawer" />
 
         <activity
             android:label="@string/notifications"

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.AnimeReviewItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/CardItem">
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <com.charlesmadere.hummingbird.views.AvatarView
+            android:id="@+id/avatarView"
+            style="@style/Avatar.Small" />
+    </RelativeLayout>
+</com.charlesmadere.hummingbird.views.AnimeReviewItemView>
