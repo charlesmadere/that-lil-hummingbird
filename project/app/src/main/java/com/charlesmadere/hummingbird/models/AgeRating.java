@@ -24,6 +24,7 @@ public enum AgeRating implements Parcelable {
     @SerializedName("R18+")
     R18(R.string.age_rating_r18);
 
+    @StringRes
     private final int mTextResId;
 
 
