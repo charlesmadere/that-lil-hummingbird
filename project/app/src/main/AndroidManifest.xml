@@ -78,6 +78,7 @@
 
         <activity
             android:label="@string/notifications"
+            android:launchMode="singleTop"
             android:name=".activities.NotificationsActivity"
             android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer">
