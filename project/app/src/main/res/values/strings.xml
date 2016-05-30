@@ -197,6 +197,7 @@
     <string name="remove">Remove</string>
     <string name="retry">Retry</string>
     <string name="reviews">Reviews</string>
+    <string name="review_format">\"%1$s\"</string>
     <string name="rewatch_intro_animation">Rewatch intro animation</string>
     <string name="romaji">Romaji</string>
     <string name="romaji_title">Romaji title</string>

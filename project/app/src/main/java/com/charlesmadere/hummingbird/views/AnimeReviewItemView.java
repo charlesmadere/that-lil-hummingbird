@@ -72,7 +72,7 @@ public class AnimeReviewItemView extends CardView implements AdapterView<AnimeDi
         mReview = content;
         mAvatarView.setContent(mReview.getUser());
         mRating.setText(String.format(Locale.getDefault(), "%.1f", mReview.getRating()));
-        mSummary.setText(mReview.getSummary());
+        mSummary.setText(getResources().getString(R.string.review_format, mReview.getSummary()));
         mReviewHelpfulness.setText(getResources().getString(
                 R.string.x_out_of_y_users_found_this_review_helpful,
                 mNumberFormat.format(mReview.getPositiveVotes()),
