@@ -13,7 +13,7 @@
             android:layout_width="wrap_content"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="@dimen/text_large"
-            app:typeface="open_sans_light"
+            app:typeface="open_sans_semibold"
             tools:text="4.5" />
         <com.charlesmadere.hummingbird.views.AvatarView
             android:id="@+id/avatarView"
