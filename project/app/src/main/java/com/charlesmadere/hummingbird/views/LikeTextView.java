@@ -29,6 +29,11 @@ public class LikeTextView extends TypefaceTextView implements View.OnClickListen
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
+
+        if (isInEditMode()) {
+            return;
+        }
+
         update();
     }
 
