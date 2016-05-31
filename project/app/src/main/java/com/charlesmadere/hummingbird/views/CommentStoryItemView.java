@@ -1,6 +1,8 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -14,6 +16,7 @@ import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
+import com.charlesmadere.hummingbird.preferences.Preferences;
 
 import java.util.ArrayList;
 
@@ -22,7 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CommentStoryItemView extends CardView implements AdapterView<CommentStory>,
-        View.OnClickListener {
+        View.OnClickListener, View.OnLongClickListener {
 
     private CommentStory mCommentStory;
 
@@ -49,6 +52,9 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
 
     @BindView(R.id.rsivTwo)
     ReplySubstoryItemView mReplyTwo;
+
+    @BindView(R.id.tvNsfwContent)
+    TextView mNsfwContent;
 
     @BindView(R.id.tvTimeAgo)
     TextView mTimeAgo;
@@ -78,13 +84,32 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        if (isInEditMode()) {
-            return;
-        }
-
         ButterKnife.bind(this);
-        setOnClickListener(this);
+    }
+
+    @Override
+    public boolean onLongClick(final View v) {
+        if (mNsfwContent.getVisibility() == VISIBLE) {
+            final CommentStory commentStory = mCommentStory;
+
+            new AlertDialog.Builder(getContext())
+                    .setMessage(R.string.this_comment_is_nsfw)
+                    .setNegativeButton(R.string.cancel, null)
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(final DialogInterface dialog, final int which) {
+                            commentStory.setAdultBypassed(true);
+
+                            if (commentStory == mCommentStory) {
+                                setContent(commentStory);
+                            }
+                        }
+                    })
+                    .show();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -95,17 +120,34 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
         mLikeTextView.setContent(mCommentStory);
         mTitle.setContent(mCommentStory);
         mTimeAgo.setText(mCommentStory.getCreatedAt().getRelativeTimeText(getContext()));
-        mComment.setContent(mCommentStory);
 
-        if (content.hasSubstoryIds()) {
-            final ArrayList<AbsSubstory> substories = mCommentStory.getSubstories();
-            setReplyView(mReplyZero, substories, 1);
-            setReplyView(mReplyOne, substories, 2);
-            setReplyView(mReplyTwo, substories, 3);
-
-            mReplies.setVisibility(VISIBLE);
-        } else {
+        if (mCommentStory.isAdult() && !mCommentStory.isAdultBypassed() &&
+                !Boolean.TRUE.equals(Preferences.General.ShowNsfwContent.get())) {
+            mComment.setVisibility(GONE);
             mReplies.setVisibility(GONE);
+            mNsfwContent.setVisibility(VISIBLE);
+            setOnClickListener(null);
+            setClickable(false);
+            setOnLongClickListener(this);
+        } else {
+            mNsfwContent.setVisibility(GONE);
+            setOnLongClickListener(null);
+            setLongClickable(false);
+            setOnClickListener(this);
+
+            mComment.setContent(mCommentStory);
+            mComment.setVisibility(VISIBLE);
+
+            if (content.hasSubstoryIds()) {
+                final ArrayList<AbsSubstory> substories = mCommentStory.getSubstories();
+                setReplyView(mReplyZero, substories, 1);
+                setReplyView(mReplyOne, substories, 2);
+                setReplyView(mReplyTwo, substories, 3);
+
+                mReplies.setVisibility(VISIBLE);
+            } else {
+                mReplies.setVisibility(GONE);
+            }
         }
     }
 

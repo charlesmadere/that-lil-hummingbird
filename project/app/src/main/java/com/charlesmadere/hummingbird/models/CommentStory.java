@@ -32,6 +32,8 @@ public class CommentStory extends AbsStory implements Parcelable {
     private Group mGroup;
     private User mPoster;
 
+    private boolean mAdultBypassed;
+
 
     public CharSequence getComment() {
         return mCompiledComment;
@@ -101,12 +103,20 @@ public class CommentStory extends AbsStory implements Parcelable {
         return mAdult;
     }
 
+    public boolean isAdultBypassed() {
+        return mAdultBypassed;
+    }
+
     public boolean isLiked() {
         return mIsLiked;
     }
 
     public boolean isPosterAndUserIdentical() {
         return mPosterId.equalsIgnoreCase(getUserId());
+    }
+
+    public void setAdultBypassed(final boolean adultBypassed) {
+        mAdultBypassed = adultBypassed;
     }
 
     public void setLiked(final boolean liked) {
@@ -143,6 +153,7 @@ public class CommentStory extends AbsStory implements Parcelable {
         mCompiledComment = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
         mPoster = source.readParcelable(User.class.getClassLoader());
         mGroup = source.readParcelable(Group.class.getClassLoader());
+        mAdultBypassed = source.readInt() != 0;
     }
 
     @Override
@@ -156,6 +167,7 @@ public class CommentStory extends AbsStory implements Parcelable {
         TextUtils.writeToParcel(mCompiledComment, dest, flags);
         dest.writeParcelable(mPoster, flags);
         dest.writeParcelable(mGroup, flags);
+        dest.writeInt(mAdultBypassed ? 1 : 0);
     }
 
     public static final Creator<CommentStory> CREATOR = new Creator<CommentStory>() {
