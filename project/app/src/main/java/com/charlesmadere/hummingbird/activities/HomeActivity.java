@@ -16,6 +16,7 @@ import butterknife.BindView;
 public class HomeActivity extends BaseDrawerActivity {
 
     private static final String TAG = "HomeActivity";
+    private static final String KEY_STARTING_POSITION = "StartingPosition";
 
     @BindView(R.id.tabLayout)
     TabLayout mTabLayout;
@@ -49,10 +50,23 @@ public class HomeActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        int startingPosition = UserFragmentAdapter.POSITION_FEED;
+
+        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
+            startingPosition = savedInstanceState.getInt(KEY_STARTING_POSITION, startingPosition);
+        }
+
         mViewPager.setAdapter(new UserFragmentAdapter(this, CurrentUser.get()));
+        mViewPager.setCurrentItem(startingPosition, false);
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    @Override
+    protected void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_STARTING_POSITION, mViewPager.getCurrentItem());
     }
 
 }
