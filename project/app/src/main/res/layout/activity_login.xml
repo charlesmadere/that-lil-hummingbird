@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:visibility="invisible"
                 tools:visibility="visible">
-                <com.charlesmadere.hummingbird.views.TypefaceEditText
+                <com.charlesmadere.hummingbird.views.TypefaceTextInputEditText
                     android:hint="@string/username"
                     android:id="@+id/etUsername"
                     android:imeOptions="actionNext"
@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:visibility="invisible"
                 tools:visibility="visible">
-                <com.charlesmadere.hummingbird.views.TypefaceEditText
+                <com.charlesmadere.hummingbird.views.TypefaceTextInputEditText
                     android:hint="@string/password"
                     android:id="@+id/etPassword"
                     android:imeOptions="actionGo"
