@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.fragments.AnimeLibraryFragment;
-import com.charlesmadere.hummingbird.fragments.FavoriteAnimeFragment;
 import com.charlesmadere.hummingbird.fragments.UserFeedFragment;
 import com.charlesmadere.hummingbird.fragments.UserProfileFragment;
 import com.charlesmadere.hummingbird.models.UserDigest;
@@ -16,9 +15,8 @@ import com.charlesmadere.hummingbird.models.WatchingStatus;
 
 public class UserFragmentAdapter extends FragmentStatePagerAdapter {
 
-    public static final int POSITION_FAVORITES = 0;
-    public static final int POSITION_PROFILE = 1;
-    public static final int POSITION_FEED = 2;
+    public static final int POSITION_PROFILE = 0;
+    public static final int POSITION_FEED = 1;
 
     private static final WatchingStatus[] ORDER = { WatchingStatus.CURRENTLY_WATCHING,
             WatchingStatus.COMPLETED, WatchingStatus.PLAN_TO_WATCH,
@@ -41,7 +39,7 @@ public class UserFragmentAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return WatchingStatus.values().length + 3;
+        return WatchingStatus.values().length + 2;
     }
 
     @Override
@@ -49,10 +47,6 @@ public class UserFragmentAdapter extends FragmentStatePagerAdapter {
         final Fragment fragment;
 
         switch (position) {
-            case POSITION_FAVORITES:
-                fragment = FavoriteAnimeFragment.create(mUserDigest.getUserId());
-                break;
-
             case POSITION_PROFILE:
                 fragment = UserProfileFragment.create(mUserDigest);
                 break;
@@ -62,7 +56,7 @@ public class UserFragmentAdapter extends FragmentStatePagerAdapter {
                 break;
 
             default:
-                final WatchingStatus watchingStatus = ORDER[position - 3];
+                final WatchingStatus watchingStatus = ORDER[position - 2];
                 fragment = AnimeLibraryFragment.create(mUserDigest.getUserId(), watchingStatus);
                 break;
         }
@@ -75,10 +69,6 @@ public class UserFragmentAdapter extends FragmentStatePagerAdapter {
         final int pageTitleResId;
 
         switch (position) {
-            case POSITION_FAVORITES:
-                pageTitleResId = R.string.favorites;
-                break;
-
             case POSITION_PROFILE:
                 pageTitleResId = R.string.profile;
                 break;
@@ -88,7 +78,7 @@ public class UserFragmentAdapter extends FragmentStatePagerAdapter {
                 break;
 
             default:
-                final WatchingStatus watchingStatus = ORDER[position - 3];
+                final WatchingStatus watchingStatus = ORDER[position - 2];
                 pageTitleResId = watchingStatus.getTextResId();
                 break;
         }
