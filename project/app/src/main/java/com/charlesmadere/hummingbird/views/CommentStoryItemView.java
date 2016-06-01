@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CommentStoryItemView extends CardView implements AdapterView<CommentStory>,
-        View.OnClickListener, View.OnLongClickListener {
+        View.OnClickListener {
 
     private CommentStory mCommentStory;
 
@@ -69,6 +69,30 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
         super(context, attrs, defStyleAttr);
     }
 
+    private void commentClick() {
+        final Context context = getContext();
+        context.startActivity(CommentsActivity.getLaunchIntent(context, mCommentStory));
+    }
+
+    private void nsfwClick() {
+        final CommentStory commentStory = mCommentStory;
+
+        new AlertDialog.Builder(getContext())
+                .setMessage(R.string.this_comment_is_nsfw)
+                .setNegativeButton(R.string.cancel, null)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        commentStory.setAdultBypassed(true);
+
+                        if (commentStory == mCommentStory) {
+                            setContent(commentStory);
+                        }
+                    }
+                })
+                .show();
+    }
+
     @OnClick(R.id.avatarView)
     void onAvatarClick() {
         final Context context = getContext();
@@ -77,39 +101,18 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
 
     @Override
     public void onClick(final View v) {
-        final Context context = getContext();
-        context.startActivity(CommentsActivity.getLaunchIntent(context, mCommentStory));
+        if (mNsfwContent.getVisibility() == VISIBLE) {
+            nsfwClick();
+        } else {
+            commentClick();
+        }
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
-    }
-
-    @Override
-    public boolean onLongClick(final View v) {
-        if (mNsfwContent.getVisibility() == VISIBLE) {
-            final CommentStory commentStory = mCommentStory;
-
-            new AlertDialog.Builder(getContext())
-                    .setMessage(R.string.this_comment_is_nsfw)
-                    .setNegativeButton(R.string.cancel, null)
-                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(final DialogInterface dialog, final int which) {
-                            commentStory.setAdultBypassed(true);
-
-                            if (commentStory == mCommentStory) {
-                                setContent(commentStory);
-                            }
-                        }
-                    })
-                    .show();
-            return true;
-        } else {
-            return false;
-        }
+        setOnClickListener(this);
     }
 
     @Override
@@ -126,15 +129,8 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
             mComment.setVisibility(GONE);
             mReplies.setVisibility(GONE);
             mNsfwContent.setVisibility(VISIBLE);
-            setOnClickListener(null);
-            setClickable(false);
-            setOnLongClickListener(this);
         } else {
             mNsfwContent.setVisibility(GONE);
-            setOnLongClickListener(null);
-            setLongClickable(false);
-            setOnClickListener(this);
-
             mComment.setContent(mCommentStory);
             mComment.setVisibility(VISIBLE);
 
