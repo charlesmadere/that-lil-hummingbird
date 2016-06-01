@@ -7,8 +7,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.HomeFragmentAdapter;
 import com.charlesmadere.hummingbird.adapters.UserFragmentAdapter;
-import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 
 import butterknife.BindView;
@@ -56,7 +56,7 @@ public class HomeActivity extends BaseDrawerActivity {
             startingPosition = savedInstanceState.getInt(KEY_STARTING_POSITION, startingPosition);
         }
 
-        mViewPager.setAdapter(new UserFragmentAdapter(this, CurrentUser.get()));
+        mViewPager.setAdapter(new HomeFragmentAdapter(this));
         mViewPager.setCurrentItem(startingPosition, false);
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);
