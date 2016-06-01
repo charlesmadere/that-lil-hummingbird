@@ -66,7 +66,7 @@ public class UserProfileFragment extends BaseFragment implements
 
 
     public static UserProfileFragment create() {
-        return create(CurrentUser.get().getId());
+        return create(CurrentUser.get().getUserId());
     }
 
     public static UserProfileFragment create(final String username) {

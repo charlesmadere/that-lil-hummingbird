@@ -148,15 +148,15 @@ public final class Api {
         return "token=" + authToken + ';';
     }
 
-    public static void getCurrentUser(final ApiResponse<User> listener) {
-        getUser(Preferences.Account.Username.get(), new ApiResponse<User>() {
+    public static void getCurrentUser(final ApiResponse<UserDigest> listener) {
+        getUserDigest(Preferences.Account.Username.get(), new ApiResponse<UserDigest>() {
             @Override
             public void failure(@Nullable final ErrorInfo error) {
                 listener.failure(error);
             }
 
             @Override
-            public void success(final User user) {
+            public void success(final UserDigest user) {
                 CurrentUser.set(user);
                 listener.success(user);
             }

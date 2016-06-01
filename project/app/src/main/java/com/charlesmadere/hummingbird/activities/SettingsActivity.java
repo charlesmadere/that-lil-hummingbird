@@ -310,7 +310,7 @@ public class SettingsActivity extends BaseDrawerActivity {
             mLastPoll.setVisibility(View.GONE);
         }
 
-        if (CurrentUser.get().isPro()) {
+        if (CurrentUser.get().getUser().isPro()) {
             mGetHummingbirdPro.setVisibility(View.GONE);
         } else {
             mGetHummingbirdPro.setVisibility(View.VISIBLE);

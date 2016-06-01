@@ -72,7 +72,7 @@ public class UserActivity extends BaseDrawerActivity {
     }
 
     public static Intent getLaunchIntent(final Context context, final String username) {
-        if (username.equalsIgnoreCase(CurrentUser.get().getId())) {
+        if (username.equalsIgnoreCase(CurrentUser.get().getUserId())) {
             return HomeActivity.getLaunchIntent(context);
         } else {
             return new Intent(context, UserActivity.class)

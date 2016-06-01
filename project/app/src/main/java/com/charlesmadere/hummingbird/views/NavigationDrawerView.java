@@ -92,7 +92,7 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout {
         ButterKnife.bind(this);
         findAllNavigationDrawerItemViewChildren();
 
-        final User user = CurrentUser.get();
+        final User user = CurrentUser.get().getUser();
         mAvatar.setContent(user);
         mCoverImage.setImageURI(Uri.parse(user.getCoverImageUrl()));
         mUsername.setText(user.getId());
