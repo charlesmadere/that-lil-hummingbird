@@ -26,7 +26,7 @@ public class AnimeReviewBreakdownView extends CardView implements AdapterView<An
     TextView mDecimalVerdict;
 
     @BindView(R.id.tvEnjoymentRating)
-    TextView mEjoymentRating;
+    TextView mEnjoymentRating;
 
     @BindView(R.id.tvSoundRating)
     TextView mSoundRating;
@@ -63,7 +63,7 @@ public class AnimeReviewBreakdownView extends CardView implements AdapterView<An
         setRating(mAnimationRating, content.getRatingAnimation());
         setRating(mSoundRating, content.getRatingSound());
         setRating(mCharactersRating, content.getRatingCharacters());
-        setRating(mEjoymentRating, content.getRatingEnjoyment());
+        setRating(mEnjoymentRating, content.getRatingEnjoyment());
     }
 
     private void setRating(final TextView view, final float rating) {
