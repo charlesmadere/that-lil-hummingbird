@@ -29,8 +29,8 @@
                     android:id="@+id/tvVerdictWhole"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:textSize="88sp"
                     android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="88sp"
                     app:typeface="open_sans_extra_bold"
                     tools:text="3" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
