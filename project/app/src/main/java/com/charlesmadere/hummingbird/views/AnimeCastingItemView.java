@@ -43,9 +43,16 @@ public class AnimeCastingItemView extends CardView implements AdapterView<AnimeD
     @Override
     public void setContent(final AnimeDigest.Casting content) {
         mCastPhoto.setImageURI(Uri.parse(content.getPerson().getImage()));
-        mCharacterPhoto.setImageURI(Uri.parse(content.getCharacter().getImage()));
-        mTitle.setText(content.getPerson().getName(), getResources().getString(R.string.as_x,
-                content.getCharacter().getName()));
+
+        if (content.hasCharacter()) {
+            mCharacterPhoto.setImageURI(Uri.parse(content.getCharacter().getImage()));
+            mCharacterPhoto.setVisibility(VISIBLE);
+            mTitle.setText(content.getPerson().getName(), getResources().getString(R.string.as_x,
+                    content.getCharacter().getName()));
+        } else {
+            mCharacterPhoto.setVisibility(GONE);
+            mTitle.setText(content.getPerson().getName(), (CharSequence) null);
+        }
     }
 
 }

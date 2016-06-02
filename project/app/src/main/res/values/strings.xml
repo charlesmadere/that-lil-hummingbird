@@ -12,6 +12,7 @@
     <string name="aired">Aired</string>
     <string name="all">All</string>
     <string name="alternate_title">Alternate title</string>
+    <string name="animation_">Animation…</string>
     <string name="anime">Anime</string>
     <string name="anime_breakdown">Anime Breakdown</string>
     <string name="anime_library">Anime Library</string>
@@ -24,11 +25,13 @@
     <string name="back">Back</string>
     <string name="bio">Bio</string>
     <string name="bio_for_x">Bio for %1$s</string>
+    <string name="breakdown">Breakdown</string>
     <string name="cancel">Cancel</string>
     <string name="canonical">Canonical</string>
     <string name="canonical_title">Canonical title</string>
     <string name="casting">Casting</string>
     <string name="castings">Castings</string>
+    <string name="characters_">Characters…</string>
     <string name="charles_madere">Charles Madere</string>
     <string name="clear">Clear</string>
     <string name="close_drawer">Close drawer</string>
@@ -51,6 +54,7 @@
     <string name="email">Email</string>
     <string name="english">English</string>
     <string name="english_title">English title</string>
+    <string name="enjoyment_">Enjoyment…</string>
     <string name="enter_your_username_not_your_email">Enter your username, not your email.</string>
     <string name="episodes">Episodes</string>
     <string name="episode_length">Episode length</string>
@@ -218,9 +222,11 @@
     <string name="show_nsfw_content">Show NSFW content</string>
     <string name="sign_out">Sign out</string>
     <string name="sign_out_confirm">Are you sure that you want to sign out?</string>
+    <string name="sound_">Sound…</string>
     <string name="special">Special</string>
     <string name="started_airing">Started airing</string>
     <string name="started_airing_x">Started airing %1$s</string>
+    <string name="story_">Story…</string>
     <string name="sync">Sync</string>
     <string name="synopsis">Synopsis</string>
     <string name="system">System</string>
@@ -240,6 +246,7 @@
     <string name="username">Username</string>
     <string name="users">Users</string>
     <string name="user_activity">User Activity</string>
+    <string name="verdict">Verdict</string>
     <string name="version_format">v%1$s (%2$d)</string>
     <string name="view_group">View Group</string>
     <string name="view_user">View User</string>

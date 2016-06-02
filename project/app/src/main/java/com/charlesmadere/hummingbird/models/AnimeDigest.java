@@ -151,13 +151,13 @@ public class AnimeDigest implements Parcelable {
 
     public void hydrate() {
         if (hasCastings()) {
-            if (hasCharacters() && hasPeople()) {
+            if (hasPeople()) {
                 final Iterator<Casting> iterator = mCastings.iterator();
 
                 do {
                     final Casting casting = iterator.next();
 
-                    if (!casting.hydrate(this)) {
+                    if (TextUtils.isEmpty(casting.mPersonId) || !casting.hydrate(this)) {
                         iterator.remove();
                     }
                 } while (iterator.hasNext());
@@ -255,10 +255,13 @@ public class AnimeDigest implements Parcelable {
         private String mRole;
 
         // hydrated fields
+        @Nullable
         private Character mCharacter;
+
         private Person mPerson;
 
 
+        @Nullable
         public Character getCharacter() {
             return mCharacter;
         }
@@ -288,15 +291,21 @@ public class AnimeDigest implements Parcelable {
             return mRole;
         }
 
+        public boolean hasCharacter() {
+            return mCharacter != null;
+        }
+
         public boolean hasLanguage() {
             return !TextUtils.isEmpty(mLanguage);
         }
 
         public boolean hydrate(final AnimeDigest animeDigest) {
-            for (final Character character : animeDigest.getCharacters()) {
-                if (mCharacterId.equalsIgnoreCase(character.getId())) {
-                    mCharacter = character;
-                    break;
+            if (!TextUtils.isEmpty(mCharacterId)) {
+                for (final Character character : animeDigest.getCharacters()) {
+                    if (mCharacterId.equalsIgnoreCase(character.getId())) {
+                        mCharacter = character;
+                        break;
+                    }
                 }
             }
 
@@ -307,7 +316,7 @@ public class AnimeDigest implements Parcelable {
                 }
             }
 
-            return mCharacter != null && mPerson != null;
+            return mPerson != null;
         }
 
         @Override
