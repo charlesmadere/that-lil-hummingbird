@@ -486,7 +486,6 @@
         <item name="android:paddingTop">@dimen/root_padding_quarter</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:textSize">@dimen/text_xlarge</item>
-        <item name="typeface">open_sans_bold</item>
     </style>
 
     <style name="ReviewBreakdownViewRating">

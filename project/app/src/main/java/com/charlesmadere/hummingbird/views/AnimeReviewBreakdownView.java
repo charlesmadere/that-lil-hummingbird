@@ -57,7 +57,7 @@ public class AnimeReviewBreakdownView extends CardView implements AdapterView<An
     public void setContent(final AnimeDigest.Review content) {
         final String rating = String.valueOf(content.getRating());
         mWholeVerdict.setText(rating.substring(0, 1));
-        mDecimalVerdict.setText(rating.substring(2));
+        mDecimalVerdict.setText(rating.substring(1));
 
         setRating(mStoryRating, content.getRatingStory());
         setRating(mAnimationRating, content.getRatingAnimation());
