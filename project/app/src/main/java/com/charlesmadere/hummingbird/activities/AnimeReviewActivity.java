@@ -6,6 +6,9 @@ import android.os.Bundle;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
+import com.charlesmadere.hummingbird.views.AnimeReviewBreakdownView;
+
+import butterknife.BindView;
 
 public class AnimeReviewActivity extends BaseDrawerActivity {
 
@@ -14,6 +17,9 @@ public class AnimeReviewActivity extends BaseDrawerActivity {
     private static final String EXTRA_REVIEW = CNAME + ".Review";
 
     private AnimeDigest.Review mReview;
+
+    @BindView(R.id.animeReviewBreakdownView)
+    AnimeReviewBreakdownView mAnimeReviewBreakdownView;
 
 
     public static Intent getLaunchIntent(final Context context, final AnimeDigest.Review review) {
@@ -38,6 +44,8 @@ public class AnimeReviewActivity extends BaseDrawerActivity {
 
         final Intent intent = getIntent();
         mReview = intent.getParcelableExtra(EXTRA_REVIEW);
+
+        mAnimeReviewBreakdownView.setContent(mReview);
     }
 
 }

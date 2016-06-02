@@ -7,7 +7,8 @@
         android:orientation="vertical">
         <include
             layout="@layout/toolbar" />
-        <!-- TODO -->
+        <include
+            layout="@layout/anime_review_breakdown_view" />
     </LinearLayout>
     <include
         layout="@layout/navigation_drawer" />
