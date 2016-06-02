@@ -14,7 +14,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ReviewBreakdownView extends CardView implements AdapterView<AnimeDigest.Review> {
+public class AnimeReviewBreakdownView extends CardView implements AdapterView<AnimeDigest.Review> {
 
     @BindView(R.id.tvAnimationRating)
     TextView mAnimationRating;
@@ -38,11 +38,11 @@ public class ReviewBreakdownView extends CardView implements AdapterView<AnimeDi
     TextView mWholeVerdict;
 
 
-    public ReviewBreakdownView(final Context context, final AttributeSet attrs) {
+    public AnimeReviewBreakdownView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ReviewBreakdownView(final Context context, final AttributeSet attrs,
+    public AnimeReviewBreakdownView(final Context context, final AttributeSet attrs,
             final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
