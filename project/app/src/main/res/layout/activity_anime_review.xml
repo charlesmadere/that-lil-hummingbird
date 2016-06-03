@@ -21,15 +21,6 @@
                     android:layout_marginBottom="@dimen/root_padding"
                     style="@style/ResponsiveWidthCard.WithPadding">
                     <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvSummary"
-                        android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
-                        tools:text="Hello, World!" />
-                </android.support.v7.widget.CardView>
-                <android.support.v7.widget.CardView
-                    android:layout_marginBottom="@dimen/root_padding"
-                    style="@style/ResponsiveWidthCard.WithPadding">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
                         android:id="@+id/tvReview"
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"

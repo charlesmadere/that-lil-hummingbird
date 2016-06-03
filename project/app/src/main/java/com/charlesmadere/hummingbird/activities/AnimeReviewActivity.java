@@ -23,9 +23,6 @@ public class AnimeReviewActivity extends BaseDrawerActivity {
     @BindView(R.id.tvReview)
     TextView mReview;
 
-    @BindView(R.id.tvSummary)
-    TextView mSummary;
-
 
     public static Intent getLaunchIntent(final Context context, final AnimeDigest.Review review) {
         return new Intent(context, AnimeReviewActivity.class)
@@ -49,7 +46,6 @@ public class AnimeReviewActivity extends BaseDrawerActivity {
 
         final Intent intent = getIntent();
         final AnimeDigest.Review review = intent.getParcelableExtra(EXTRA_REVIEW);
-        mSummary.setText(review.getSummary());
         mReview.setText(review.getContent());
         mAnimeReviewVerdictView.setContent(review);
     }

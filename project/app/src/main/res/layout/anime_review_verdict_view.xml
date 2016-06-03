@@ -97,5 +97,14 @@
                     style="@style/ReviewBreakdownViewLabel" />
             </RelativeLayout>
         </LinearLayout>
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:id="@+id/tvSummary"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:paddingBottom="@dimen/root_padding_half"
+            android:paddingEnd="@dimen/root_padding"
+            android:paddingStart="@dimen/root_padding"
+            android:paddingTop="@dimen/root_padding_half"
+            tools:text="Hello, World!" />
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.AnimeReviewVerdictView>
