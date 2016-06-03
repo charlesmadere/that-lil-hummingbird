@@ -8,6 +8,7 @@ import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.Constants;
+import com.charlesmadere.hummingbird.misc.JsoupUtils;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.charlesmadere.hummingbird.preferences.Preferences;
@@ -1251,11 +1252,12 @@ public class AnimeDigest implements Parcelable {
         private String mUserId;
 
         // hydrated fields
+        private CharSequence mCompiledContent;
         private User mUser;
 
 
-        public String getContent() {
-            return mContent;
+        public CharSequence getContent() {
+            return mCompiledContent;
         }
 
         public String getId() {
@@ -1307,6 +1309,8 @@ public class AnimeDigest implements Parcelable {
         }
 
         public boolean hydrate(final AnimeDigest animeDigest) {
+            mCompiledContent = JsoupUtils.parse(mContent);
+
             for (final User user : animeDigest.getUsers()) {
                 if (mUserId.equalsIgnoreCase(user.getId())) {
                     mUser = user;
@@ -1341,6 +1345,7 @@ public class AnimeDigest implements Parcelable {
             dest.writeString(mId);
             dest.writeString(mSummary);
             dest.writeString(mUserId);
+            TextUtils.writeToParcel(mCompiledContent, dest, flags);
             dest.writeParcelable(mUser, flags);
         }
 
@@ -1361,6 +1366,7 @@ public class AnimeDigest implements Parcelable {
                 r.mId = source.readString();
                 r.mSummary = source.readString();
                 r.mUserId = source.readString();
+                r.mCompiledContent = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
                 r.mUser = source.readParcelable(User.class.getClassLoader());
                 return r;
             }

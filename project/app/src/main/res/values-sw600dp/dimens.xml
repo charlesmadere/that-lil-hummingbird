@@ -8,6 +8,7 @@
     <dimen name="parallax_cover_image_height">224dp</dimen>
     <dimen name="root_padding">18dp</dimen>
     <dimen name="root_padding_double">36dp</dimen>
+    <dimen name="root_padding_eighth">2.25dp</dimen>
     <dimen name="root_padding_half">9dp</dimen>
     <dimen name="root_padding_quadruple">72dp</dimen>
     <dimen name="root_padding_quarter">4.5dp</dimen>

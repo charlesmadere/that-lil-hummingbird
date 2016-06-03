@@ -32,6 +32,7 @@ public class CommentStory extends AbsStory implements Parcelable {
     private Group mGroup;
     private User mPoster;
 
+    // other
     private boolean mAdultBypassed;
 
 

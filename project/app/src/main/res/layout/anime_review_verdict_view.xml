@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.charlesmadere.hummingbird.views.AnimeReviewBreakdownView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.charlesmadere.hummingbird.views.AnimeReviewVerdictView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/animeReviewBreakdownView"
+    android:id="@+id/animeReviewVerdictView"
     style="@style/ResponsiveWidthCard">
     <LinearLayout
         android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
                     android:id="@+id/tvVerdictWhole"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:textColor="?android:attr/textColorPrimary"
+                    android:textColor="?attr/colorAccent"
                     android:textSize="88sp"
                     app:typeface="open_sans_extra_bold"
                     tools:text="3" />
@@ -38,7 +38,7 @@
                     android:id="@+id/tvVerdictDecimal"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:textColor="?android:attr/textColorPrimary"
+                    android:textColor="?attr/colorAccent"
                     android:textSize="32sp"
                     app:typeface="open_sans_extra_bold"
                     tools:text=".5" />
@@ -48,54 +48,54 @@
                 android:layout_weight="1"
                 android:layout_width="0dp">
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:id="@+id/tvStoryRating"
+                    android:id="@+id/tvRatingStory"
                     tools:text="4.0"
                     style="@style/ReviewBreakdownViewRating" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:layout_toStartOf="@id/tvStoryRating"
+                    android:layout_toStartOf="@id/tvRatingStory"
                     android:text="@string/story_"
                     style="@style/ReviewBreakdownViewLabel" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:id="@+id/tvAnimationRating"
-                    android:layout_below="@id/tvStoryRating"
+                    android:id="@+id/tvRatingAnimation"
+                    android:layout_below="@id/tvRatingStory"
                     tools:text="3.0"
                     style="@style/ReviewBreakdownViewRating" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:layout_below="@id/tvStoryRating"
-                    android:layout_toStartOf="@id/tvAnimationRating"
+                    android:layout_below="@id/tvRatingStory"
+                    android:layout_toStartOf="@id/tvRatingAnimation"
                     android:text="@string/animation_"
                     style="@style/ReviewBreakdownViewLabel" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:id="@+id/tvSoundRating"
-                    android:layout_below="@id/tvAnimationRating"
+                    android:id="@+id/tvRatingSound"
+                    android:layout_below="@id/tvRatingAnimation"
                     tools:text="4.5"
                     style="@style/ReviewBreakdownViewRating" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:layout_below="@id/tvAnimationRating"
-                    android:layout_toStartOf="@id/tvSoundRating"
+                    android:layout_below="@id/tvRatingAnimation"
+                    android:layout_toStartOf="@id/tvRatingSound"
                     android:text="@string/sound_"
                     style="@style/ReviewBreakdownViewLabel" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:id="@+id/tvCharactersRating"
-                    android:layout_below="@id/tvSoundRating"
+                    android:id="@+id/tvRatingCharacters"
+                    android:layout_below="@id/tvRatingSound"
                     tools:text="4.0"
                     style="@style/ReviewBreakdownViewRating" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:layout_below="@id/tvSoundRating"
-                    android:layout_toStartOf="@id/tvCharactersRating"
+                    android:layout_below="@id/tvRatingSound"
+                    android:layout_toStartOf="@id/tvRatingCharacters"
                     android:text="@string/characters_"
                     style="@style/ReviewBreakdownViewLabel" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:id="@+id/tvEnjoymentRating"
-                    android:layout_below="@id/tvCharactersRating"
+                    android:id="@+id/tvRatingEnjoyment"
+                    android:layout_below="@id/tvRatingCharacters"
                     tools:text="5.0"
                     style="@style/ReviewBreakdownViewRating" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:layout_below="@id/tvCharactersRating"
-                    android:layout_toStartOf="@id/tvEnjoymentRating"
+                    android:layout_below="@id/tvRatingCharacters"
+                    android:layout_toStartOf="@id/tvRatingEnjoyment"
                     android:text="@string/enjoyment_"
                     style="@style/ReviewBreakdownViewLabel" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
-</com.charlesmadere.hummingbird.views.AnimeReviewBreakdownView>
+</com.charlesmadere.hummingbird.views.AnimeReviewVerdictView>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/DrawerLayout">
     <LinearLayout
         android:layout_height="match_parent"
@@ -7,8 +8,37 @@
         android:orientation="vertical">
         <include
             layout="@layout/toolbar" />
-        <include
-            layout="@layout/anime_review_breakdown_view" />
+        <ScrollView
+            android:fillViewport="true"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:overScrollMode="never">
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
+                <android.support.v7.widget.CardView
+                    android:layout_marginBottom="@dimen/root_padding"
+                    style="@style/ResponsiveWidthCard.WithPadding">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvSummary"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        tools:text="Hello, World!" />
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_marginBottom="@dimen/root_padding"
+                    style="@style/ResponsiveWidthCard.WithPadding">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvReview"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        tools:text="Hello, World!" />
+                </android.support.v7.widget.CardView>
+                <include
+                    layout="@layout/anime_review_verdict_view" />
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
     <include
         layout="@layout/navigation_drawer" />
