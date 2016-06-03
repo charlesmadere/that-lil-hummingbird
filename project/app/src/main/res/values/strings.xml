@@ -204,6 +204,7 @@
     <string name="remove">Remove</string>
     <string name="retry">Retry</string>
     <string name="reviews">Reviews</string>
+    <string name="review_by_x">Review by %1$s</string>
     <string name="review_format">\"%1$s\"</string>
     <string name="rewatch_intro_animation">Rewatch intro animation</string>
     <string name="romaji">Romaji</string>

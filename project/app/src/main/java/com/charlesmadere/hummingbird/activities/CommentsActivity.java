@@ -123,11 +123,11 @@ public class CommentsActivity extends BaseDrawerActivity implements
         getMenuInflater().inflate(R.menu.activity_comments, menu);
 
         final MenuItem user = menu.findItem(R.id.miViewUser);
-        user.setTitle(getResources().getString(R.string.view_x, mCommentStory.getPoster().getId()));
+        user.setTitle(getString(R.string.view_x, mCommentStory.getPoster().getId()));
 
         if (mCommentStory.hasGroupId()) {
             final MenuItem group = menu.findItem(R.id.miViewGroup);
-            group.setTitle(getResources().getString(R.string.view_x, mCommentStory.getGroup().getName()));
+            group.setTitle(getString(R.string.view_x, mCommentStory.getGroup().getName()));
             group.setVisible(true);
         }
 
