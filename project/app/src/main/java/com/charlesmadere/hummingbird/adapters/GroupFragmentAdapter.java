@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.fragments.GroupDetailsFragment;
+import com.charlesmadere.hummingbird.fragments.GroupFeedFragment;
 import com.charlesmadere.hummingbird.models.GroupDigest;
 
 public class GroupFragmentAdapter extends FragmentStatePagerAdapter {
@@ -37,8 +39,8 @@ public class GroupFragmentAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(final int position) {
         switch (position) {
-            case POSITION_DETAILS: return null;
-            case POSITION_FEED: return null;
+            case POSITION_DETAILS: return GroupDetailsFragment.create(mGroupDigest);
+            case POSITION_FEED: return GroupFeedFragment.create(mGroupDigest.getId());
             default: throw new IllegalArgumentException("illegal position: " + position);
         }
     }

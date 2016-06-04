@@ -59,7 +59,7 @@ public abstract class BaseFeedFragment extends BaseFragment implements
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_base_feed, container, false);
+        return inflater.inflate(R.layout.fragment_feed, container, false);
     }
 
     @Override

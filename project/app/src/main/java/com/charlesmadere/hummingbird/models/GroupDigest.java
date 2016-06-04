@@ -27,6 +27,10 @@ public class GroupDigest implements Parcelable {
         return mGroupMembers;
     }
 
+    public String getId() {
+        return mGroup.getId();
+    }
+
     public String getName() {
         return mGroup.getName();
     }
