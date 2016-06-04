@@ -33,6 +33,10 @@ public class MangaDigest implements Parcelable {
         return mCharacters;
     }
 
+    public String getId() {
+        return mManga.getId();
+    }
+
     public Manga getManga() {
         return mManga;
     }

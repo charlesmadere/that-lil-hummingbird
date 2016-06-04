@@ -6,9 +6,15 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.fragments.MangaDetailsFragment;
+import com.charlesmadere.hummingbird.fragments.MangaFeedFragment;
 import com.charlesmadere.hummingbird.models.MangaDigest;
 
 public class MangaFragmentAdapter extends FragmentStatePagerAdapter {
+
+    public static final int POSITION_DETAILS = 0;
+    public static final int POSITION_FEED = 1;
 
     private final MangaDigest mMangaDigest;
     private final Context mContext;
@@ -27,17 +33,25 @@ public class MangaFragmentAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return 2;
     }
 
     @Override
     public Fragment getItem(final int position) {
-        return null;
+        switch (position) {
+            case POSITION_DETAILS: return MangaDetailsFragment.create(mMangaDigest);
+            case POSITION_FEED: return MangaFeedFragment.create(mMangaDigest.getId());
+            default: throw new IllegalArgumentException("illegal position: " + position);
+        }
     }
 
     @Override
     public CharSequence getPageTitle(final int position) {
-        return super.getPageTitle(position);
+        switch (position) {
+            case POSITION_DETAILS: return mContext.getText(R.string.details);
+            case POSITION_FEED: return mContext.getText(R.string.feed);
+            default: throw new IllegalArgumentException("illegal position: " + position);
+        }
     }
 
 }
