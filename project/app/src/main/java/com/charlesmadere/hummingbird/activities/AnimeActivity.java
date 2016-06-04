@@ -28,8 +28,8 @@ import butterknife.BindView;
 
 public class AnimeActivity extends BaseDrawerActivity {
 
-    private static final String CNAME = AnimeActivity.class.getCanonicalName();
     private static final String TAG = "AnimeActivity";
+    private static final String CNAME = AnimeActivity.class.getCanonicalName();
     private static final String EXTRA_ANIME_ID = CNAME + ".AnimeId";
     private static final String EXTRA_ANIME_NAME = CNAME + ".AnimeName";
     private static final String KEY_ANIME_DIGEST = "AnimeDigest";
