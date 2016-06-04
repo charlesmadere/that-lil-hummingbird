@@ -120,7 +120,6 @@ public class AnimeActivity extends BaseDrawerActivity {
         }
 
         mViewPager.setAdapter(new AnimeFragmentAdapter(this, mAnimeDigest));
-
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);

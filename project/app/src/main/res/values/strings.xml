@@ -70,6 +70,7 @@
     <string name="error_loading_following_list">Error loading following list</string>
     <string name="error_loading_franchise">Error loading franchise</string>
     <string name="error_loading_image">Error loading image</string>
+    <string name="error_loading_manga">Error loading manga! Please check your network connection and try again.</string>
     <string name="error_loading_notifications">Error loading notifications</string>
     <string name="error_loading_on_hold_library">Error loading on hold library</string>
     <string name="error_loading_plan_to_watch_library">Error loading plan to watch library</string>
