@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.GroupFragmentAdapter;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.GroupDigest;
@@ -139,6 +140,7 @@ public class GroupActivity extends BaseDrawerActivity {
                     mAppBarLayout, mCollapsingToolbarLayout, mCoverImage, mTabLayout);
         }
 
+        mViewPager.setAdapter(new GroupFragmentAdapter(this, mGroupDigest));
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);

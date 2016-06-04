@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.MangaFragmentAdapter;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.MangaDigest;
@@ -139,6 +140,7 @@ public class MangaActivity extends BaseDrawerActivity {
                     mAppBarLayout, mCollapsingToolbarLayout, mCoverImage, mTabLayout);
         }
 
+        mViewPager.setAdapter(new MangaFragmentAdapter(this, mMangaDigest));
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);
