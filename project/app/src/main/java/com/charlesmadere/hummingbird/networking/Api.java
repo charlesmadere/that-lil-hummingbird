@@ -283,7 +283,8 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getMetadata().getCursor();
 
-        getApi().getGroup(getAuthTokenCookieString(), "json", groupId, page).enqueue(new Callback<Feed>() {
+        getApi().getGroup(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, groupId, page)
+                .enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 Feed body = null;
