@@ -1253,8 +1253,13 @@ public class AnimeDigest implements Parcelable {
 
         // hydrated fields
         private CharSequence mCompiledContent;
+        private String mAnimeTitle;
         private User mUser;
 
+
+        public String getAnimeTitle() {
+            return mAnimeTitle;
+        }
 
         public CharSequence getContent() {
             return mCompiledContent;
@@ -1310,6 +1315,7 @@ public class AnimeDigest implements Parcelable {
 
         public boolean hydrate(final AnimeDigest animeDigest) {
             mCompiledContent = JsoupUtils.parse(mContent);
+            mAnimeTitle = animeDigest.getTitle();
 
             for (final User user : animeDigest.getUsers()) {
                 if (mUserId.equalsIgnoreCase(user.getId())) {
@@ -1346,6 +1352,7 @@ public class AnimeDigest implements Parcelable {
             dest.writeString(mSummary);
             dest.writeString(mUserId);
             TextUtils.writeToParcel(mCompiledContent, dest, flags);
+            dest.writeString(mAnimeTitle);
             dest.writeParcelable(mUser, flags);
         }
 
@@ -1367,6 +1374,7 @@ public class AnimeDigest implements Parcelable {
                 r.mSummary = source.readString();
                 r.mUserId = source.readString();
                 r.mCompiledContent = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
+                r.mAnimeTitle = source.readString();
                 r.mUser = source.readParcelable(User.class.getClassLoader());
                 return r;
             }
