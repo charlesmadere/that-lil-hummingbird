@@ -44,10 +44,6 @@ public class Feed implements Parcelable {
     @SerializedName("users")
     private ArrayList<User> mUsers;
 
-    @Nullable
-    @SerializedName("group")
-    private Group mGroup;
-
     @SerializedName("meta")
     private Metadata mMetadata;
 
@@ -60,11 +56,6 @@ public class Feed implements Parcelable {
     @Nullable
     public ArrayList<GroupMember> getGroupMembers() {
         return mGroupMembers;
-    }
-
-    @Nullable
-    public Group getGroup() {
-        return mGroup;
     }
 
     @Nullable
@@ -107,10 +98,6 @@ public class Feed implements Parcelable {
 
     public boolean hasGroupMembers() {
         return mGroupMembers != null && !mGroupMembers.isEmpty();
-    }
-
-    public boolean hasGroup() {
-        return mGroup != null;
     }
 
     public boolean hasGroups() {
@@ -242,7 +229,6 @@ public class Feed implements Parcelable {
         dest.writeTypedList(mGroupMembers);
         dest.writeTypedList(mManga);
         dest.writeTypedList(mUsers);
-        dest.writeParcelable(mGroup, flags);
         dest.writeParcelable(mMetadata, flags);
     }
 
@@ -258,7 +244,6 @@ public class Feed implements Parcelable {
             f.mGroupMembers = source.createTypedArrayList(GroupMember.CREATOR);
             f.mManga = source.createTypedArrayList(Manga.CREATOR);
             f.mUsers = source.createTypedArrayList(User.CREATOR);
-            f.mGroup = source.readParcelable(Group.class.getClassLoader());
             f.mMetadata = source.readParcelable(Metadata.class.getClassLoader());
             return f;
         }

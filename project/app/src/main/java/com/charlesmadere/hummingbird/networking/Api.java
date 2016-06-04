@@ -19,6 +19,7 @@ import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.FeedPost;
 import com.charlesmadere.hummingbird.models.Franchise;
+import com.charlesmadere.hummingbird.models.GroupDigest;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.LibraryUpdate;
 import com.charlesmadere.hummingbird.models.MangaDigest;
@@ -275,19 +276,13 @@ public final class Api {
         });
     }
 
-    public static void getGroup(final String groupId, final ApiResponse<Feed> listener) {
-        getGroup(groupId, null, listener);
-    }
-
-    public static void getGroup(final String groupId, @Nullable final Feed feed,
-            final ApiResponse<Feed> listener) {
-        final int page = feed == null ? 1 : feed.getMetadata().getCursor();
-
-        getApi().getGroup(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, groupId, page)
-                .enqueue(new Callback<Feed>() {
+    public static void getGroup(final String groupId, final ApiResponse<GroupDigest> listener) {
+        getApi().getGroup(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, groupId).enqueue(
+                new Callback<GroupDigest>() {
             @Override
-            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
-                Feed body = null;
+            public void onResponse(final Call<GroupDigest> call,
+                    final Response<GroupDigest> response) {
+                GroupDigest body = null;
 
                 if (response.isSuccessful()) {
                     body = response.body();
@@ -296,13 +291,13 @@ public final class Api {
                 if (body == null) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
-                    hydrateFeed(body, feed, listener);
+                    listener.success(body);
                 }
             }
 
             @Override
-            public void onFailure(final Call<Feed> call, final Throwable t) {
-                Timber.e(TAG, "get group (" + groupId + ") (page " + page + ") failed", t);
+            public void onFailure(final Call<GroupDigest> call, final Throwable t) {
+                Timber.e(TAG, "get group (" + groupId + ") failed", t);
                 listener.failure(null);
             }
         });

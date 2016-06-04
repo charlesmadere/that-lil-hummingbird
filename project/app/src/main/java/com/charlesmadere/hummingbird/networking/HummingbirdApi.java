@@ -5,6 +5,7 @@ import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.Franchise;
+import com.charlesmadere.hummingbird.models.GroupDigest;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.LibraryUpdate;
 import com.charlesmadere.hummingbird.models.MangaDigest;
@@ -85,9 +86,9 @@ public interface HummingbirdApi {
     Call<Franchise> getFranchise(@Header("Cookie") String authToken, @Header("Accept") String json,
             @Path("franchiseId") String franchiseId);
 
-    @GET("groups")
-    Call<Feed> getGroup(@Header("Cookie") String authToken, @Header("Accept") String json,
-            @Query("group_id") String groupId, @Query("page") Integer page);
+    @GET("groups/{groupId}")
+    Call<GroupDigest> getGroup(@Header("Cookie") String authToken, @Header("Accept") String json,
+            @Path("groupId") String groupId);
 
     @GET("group_members")
     Call<Feed> getGroupMembers(@Header("Cookie") String authToken,
