@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.GroupDigest;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -133,7 +134,15 @@ public class GroupActivity extends BaseDrawerActivity {
     private void showGroupDigest(final GroupDigest groupDigest) {
         mGroupDigest = groupDigest;
 
+        if (groupDigest.getGroup().hasCoverImage()) {
+            PaletteUtils.applyParallaxColors(groupDigest.getGroup().getCoverImageUrl(), this,
+                    mAppBarLayout, mCollapsingToolbarLayout, mCoverImage, mTabLayout);
+        }
 
+        mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
+        mViewPager.setOffscreenPageLimit(3);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mSimpleProgressView.fadeOut();
     }
 
 

@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -58,6 +59,7 @@ public class Group implements Parcelable {
         return mBio;
     }
 
+    @Nullable
     public String getCoverImageUrl() {
         return mCoverImageUrl;
     }
@@ -81,6 +83,10 @@ public class Group implements Parcelable {
 
     public String getName() {
         return mName;
+    }
+
+    public boolean hasCoverImage() {
+        return !TextUtils.isEmpty(mCoverImageUrl);
     }
 
     public boolean hasGroupMembers() {
