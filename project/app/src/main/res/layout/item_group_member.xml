@@ -6,10 +6,22 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="horizontal">
-        <com.charlesmadere.hummingbird.views.AvatarView
-            android:id="@+id/avatarView"
+        <LinearLayout
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/root_padding"
-            style="@style/Avatar.Medium" />
+            android:layout_width="wrap_content"
+            android:orientation="vertical">
+            <com.charlesmadere.hummingbird.views.AvatarView
+                android:id="@+id/avatarView"
+                android:layout_gravity="center_horizontal"
+                style="@style/Avatar.Medium" />
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvGroupMemberBadge"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/root_padding_half"
+                tools:text="@string/member"
+                style="@style/GroupMemberBadge" />
+        </LinearLayout>
         <LinearLayout
             android:layout_gravity="center_vertical"
             android:layout_height="wrap_content"
@@ -23,10 +35,6 @@
                 android:id="@+id/tvBio"
                 tools:text="Hello, World!"
                 style="@style/UserBio.Limited" />
-            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                android:id="@+id/tvGroupMemberBadge"
-                tools:text="@string/member"
-                style="@style/GroupMemberBadge" />
         </LinearLayout>
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.GroupMemberItemView>
