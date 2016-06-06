@@ -5,13 +5,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.GroupMembersAdapter;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
+import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import java.lang.ref.WeakReference;
 
@@ -27,7 +32,17 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
     private static final String KEY_FEED = "Feed";
 
     private Feed mFeed;
+    private GroupMembersAdapter mAdapter;
     private String mGroupId;
+
+    @BindView(R.id.llEmpty)
+    LinearLayout mEmpty;
+
+    @BindView(R.id.llError)
+    LinearLayout mError;
+
+    @BindView(R.id.recyclerView)
+    RecyclerView mRecyclerView;
 
     @BindView(R.id.refreshLayout)
     RefreshLayout mRefreshLayout;
@@ -71,7 +86,7 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
         if (mFeed == null || !mFeed.hasGroupMembers()) {
             fetchFeed();
         } else {
-            showFeed(mFeed);
+            showGroupMembers(mFeed);
         }
     }
 
@@ -89,18 +104,36 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
         }
     }
 
-    private void showEmpty() {
+    @Override
+    protected void onViewsBound() {
+        super.onViewsBound();
+        mRefreshLayout.setOnRefreshListener(this);
+        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding_half);
+        mAdapter = new GroupMembersAdapter(this);
+        mRecyclerView.setAdapter(mAdapter);
+    }
 
+    private void showEmpty() {
+        mRecyclerView.setVisibility(View.GONE);
+        mError.setVisibility(View.GONE);
+        mEmpty.setVisibility(View.VISIBLE);
+        mRefreshLayout.setRefreshing(false);
     }
 
     private void showError() {
-
+        mRecyclerView.setVisibility(View.GONE);
+        mEmpty.setVisibility(View.GONE);
+        mError.setVisibility(View.VISIBLE);
+        mRefreshLayout.setRefreshing(false);
     }
 
-    private void showFeed(final Feed feed) {
+    private void showGroupMembers(final Feed feed) {
         mFeed = feed;
-
-
+        mAdapter.set(mFeed);
+        mEmpty.setVisibility(View.GONE);
+        mError.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mRefreshLayout.setRefreshing(false);
     }
 
 
@@ -126,7 +159,7 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
 
             if (activity != null && !activity.isDestroyed()) {
                 if (feed.hasGroupMembers()) {
-                    activity.showFeed(feed);
+                    activity.showGroupMembers(feed);
                 } else {
                     activity.showEmpty();
                 }
