@@ -110,9 +110,7 @@ public class LoginActivity extends BaseActivity {
                 mSimpleProgressView.show();
                 fetchCurrentUser();
             } else {
-                mUsernameContainer.setVisibility(View.VISIBLE);
-                mPasswordContainer.setVisibility(View.VISIBLE);
-                mLogin.setVisibility(View.VISIBLE);
+                showForm();
             }
         }
     }
@@ -152,6 +150,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void showError(@Nullable final String error) {
+        showForm();
         mSimpleProgressView.fadeOut();
         updateLoginEnabledState();
 
@@ -159,6 +158,12 @@ public class LoginActivity extends BaseActivity {
                 .setMessage(TextUtils.isEmpty(error) ? getText(R.string.error_logging_in) : error)
                 .setNeutralButton(R.string.ok, null)
                 .show();
+    }
+
+    private void showForm() {
+        mUsernameContainer.setVisibility(View.VISIBLE);
+        mPasswordContainer.setVisibility(View.VISIBLE);
+        mLogin.setVisibility(View.VISIBLE);
     }
 
     private void updateLoginEnabledState() {
