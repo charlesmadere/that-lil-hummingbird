@@ -50,6 +50,11 @@ public class ReplySubstory extends AbsSubstory implements Parcelable {
     }
 
     @Override
+    public String toString() {
+        return getType().toString() + ':' + mUserId;
+    }
+
+    @Override
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);
         mReply = source.readString();

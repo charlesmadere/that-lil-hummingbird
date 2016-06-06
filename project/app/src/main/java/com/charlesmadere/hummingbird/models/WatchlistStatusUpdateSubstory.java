@@ -70,6 +70,7 @@ public class WatchlistStatusUpdateSubstory extends AbsSubstory implements Parcel
         @SerializedName("Plan to Watch")
         PLAN_TO_WATCH(R.string.plans_to_watch);
 
+        @StringRes
         private final int mTextResId;
 
 

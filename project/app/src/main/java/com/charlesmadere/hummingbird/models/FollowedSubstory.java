@@ -39,7 +39,7 @@ public class FollowedSubstory extends AbsSubstory implements Parcelable {
 
     @Override
     public String toString() {
-        return getType().toString() + ':' + mUser.getId();
+        return getType().toString() + ':' + mUserId;
     }
 
     @Override
