@@ -2,7 +2,9 @@ package com.charlesmadere.hummingbird.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.StringRes;
 
+import com.charlesmadere.hummingbird.R;
 import com.google.gson.annotations.SerializedName;
 
 public class GroupMember implements Parcelable {
@@ -10,14 +12,14 @@ public class GroupMember implements Parcelable {
     @SerializedName("pending")
     private boolean mPending;
 
+    @SerializedName("rank")
+    private Rank mRank;
+
     @SerializedName("group_id")
     private String mGroupId;
 
     @SerializedName("id")
     private String mId;
-
-    @SerializedName("rank")
-    private String mRank;
 
     @SerializedName("user_id")
     private String mUserId;
@@ -34,7 +36,7 @@ public class GroupMember implements Parcelable {
         return mId;
     }
 
-    public String getRank() {
+    public Rank getRank() {
         return mRank;
     }
 
@@ -59,6 +61,14 @@ public class GroupMember implements Parcelable {
         return mPending;
     }
 
+    public boolean isRankAdmin() {
+        return mRank == Rank.ADMIN;
+    }
+
+    public boolean isRankPleb() {
+        return mRank == Rank.PLEB;
+    }
+
     @Override
     public String toString() {
         return mUserId;
@@ -72,9 +82,9 @@ public class GroupMember implements Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeInt(mPending ? 1 : 0);
+        dest.writeParcelable(mRank, flags);
         dest.writeString(mGroupId);
         dest.writeString(mId);
-        dest.writeString(mRank);
         dest.writeString(mUserId);
         dest.writeParcelable(mUser, flags);
     }
@@ -84,9 +94,9 @@ public class GroupMember implements Parcelable {
         public GroupMember createFromParcel(final Parcel source) {
             final GroupMember gm = new GroupMember();
             gm.mPending = source.readInt() != 0;
+            gm.mRank = source.readParcelable(Rank.class.getClassLoader());
             gm.mGroupId = source.readString();
             gm.mId = source.readString();
-            gm.mRank = source.readString();
             gm.mUserId = source.readString();
             gm.mUser = source.readParcelable(User.class.getClassLoader());
             return gm;
@@ -97,5 +107,49 @@ public class GroupMember implements Parcelable {
             return new GroupMember[size];
         }
     };
+
+
+    public enum Rank implements Parcelable {
+        @SerializedName("admin")
+        ADMIN(R.string.admin),
+
+        @SerializedName("pleb")
+        PLEB(R.string.member);
+
+        @StringRes
+        private final int mTextResId;
+
+
+        Rank(@StringRes final int textResId) {
+            mTextResId = textResId;
+        }
+
+        @StringRes
+        public int getTextResId() {
+            return mTextResId;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(final Parcel dest, final int flags) {
+            dest.writeInt(ordinal());
+        }
+
+        public static final Creator<Rank> CREATOR = new Creator<Rank>() {
+            @Override
+            public Rank createFromParcel(final Parcel source) {
+                return values()[source.readInt()];
+            }
+
+            @Override
+            public Rank[] newArray(final int size) {
+                return new Rank[size];
+            }
+        };
+    }
 
 }

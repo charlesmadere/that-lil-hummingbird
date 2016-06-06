@@ -3,6 +3,7 @@
 
     <string name="about_x">About %1$s</string>
     <string name="account">Account</string>
+    <string name="admin">Admin</string>
     <string name="age_rating">Age Rating</string>
     <string name="age_rating_g">G</string>
     <string name="age_rating_pg">PG</string>
@@ -110,7 +111,8 @@
     <string name="github">GitHub</string>
     <string name="group_activity">Group Activity</string>
     <string name="group_member">Group member</string>
-    <string name="group_members">Group members</string>
+    <string name="group_members">Group Members</string>
+    <string name="group_staff">Group Staff</string>
     <string name="groups">Groups</string>
     <string name="has_completed">has completed</string>
     <string name="has_dropped">has dropped</string>
