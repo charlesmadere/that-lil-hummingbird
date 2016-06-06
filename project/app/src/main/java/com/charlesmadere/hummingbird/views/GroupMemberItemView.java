@@ -4,11 +4,15 @@ import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.TextView;
 
+import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.GroupMember;
+import com.charlesmadere.hummingbird.models.User;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class GroupMemberItemView extends CardView implements AdapterView<GroupMember>,
@@ -16,7 +20,14 @@ public class GroupMemberItemView extends CardView implements AdapterView<GroupMe
 
     private GroupMember mGroupMember;
 
+    @BindView(R.id.avatarView)
+    AvatarView mAvatar;
 
+    @BindView(R.id.tvBio)
+    TextView mBio;
+
+    @BindView(R.id.tvTitle)
+    TextView mTitle;
 
 
     public GroupMemberItemView(final Context context, final AttributeSet attrs) {
@@ -45,7 +56,16 @@ public class GroupMemberItemView extends CardView implements AdapterView<GroupMe
     public void setContent(final GroupMember content) {
         mGroupMember = content;
 
+        final User user = mGroupMember.getUser();
+        mAvatar.setContent(user);
+        mTitle.setText(user.getId());
 
+        if (user.hasBio()) {
+            mBio.setText(user.getBio());
+            mBio.setVisibility(VISIBLE);
+        } else {
+            mBio.setVisibility(GONE);
+        }
     }
 
 }

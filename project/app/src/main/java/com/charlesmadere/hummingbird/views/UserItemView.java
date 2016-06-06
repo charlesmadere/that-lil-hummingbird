@@ -21,6 +21,9 @@ public class UserItemView extends CardView implements AdapterView<User>, View.On
     @BindView(R.id.avatarView)
     AvatarView mAvatar;
 
+    @BindView(R.id.tvBio)
+    TextView mBio;
+
     @BindView(R.id.tvTitle)
     TextView mTitle;
 
@@ -42,11 +45,6 @@ public class UserItemView extends CardView implements AdapterView<User>, View.On
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        if (isInEditMode()) {
-            return;
-        }
-
         ButterKnife.bind(this);
         setOnClickListener(this);
     }
@@ -54,8 +52,16 @@ public class UserItemView extends CardView implements AdapterView<User>, View.On
     @Override
     public void setContent(final User content) {
         mUser = content;
+
         mAvatar.setContent(mUser);
         mTitle.setText(mUser.getId());
+
+        if (mUser.hasBio()) {
+            mBio.setText(mUser.getBio());
+            mBio.setVisibility(VISIBLE);
+        } else {
+            mBio.setVisibility(GONE);
+        }
     }
 
 }

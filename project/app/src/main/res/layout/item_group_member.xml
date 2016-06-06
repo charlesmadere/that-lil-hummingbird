@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.charlesmadere.hummingbird.views.GroupMemberItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/CardItem">
-
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+        <com.charlesmadere.hummingbird.views.AvatarView
+            android:id="@+id/avatarView"
+            android:layout_marginEnd="@dimen/root_padding"
+            style="@style/Avatar.Medium" />
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvTitle"
+                tools:text="LimitB"
+                style="@style/UserTitle" />
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvBio"
+                tools:text="Hello, World!"
+                style="@style/UserBio.Limited" />
+        </LinearLayout>
+    </LinearLayout>
 </com.charlesmadere.hummingbird.views.GroupMemberItemView>

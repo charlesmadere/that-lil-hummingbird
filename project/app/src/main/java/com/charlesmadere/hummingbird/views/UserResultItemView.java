@@ -48,11 +48,6 @@ public class UserResultItemView extends CardView implements AdapterView<SearchBu
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        if (isInEditMode()) {
-            return;
-        }
-
         ButterKnife.bind(this);
         setOnClickListener(this);
     }

@@ -3,17 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/CardItem">
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
         <com.charlesmadere.hummingbird.views.AvatarView
             android:id="@+id/avatarView"
             android:layout_marginEnd="@dimen/root_padding"
             style="@style/Avatar.Medium" />
-        <com.charlesmadere.hummingbird.views.TypefaceTextView
-            android:id="@+id/tvTitle"
+        <LinearLayout
             android:layout_gravity="center_vertical"
-            tools:text="LimitB"
-            style="@style/UserTitle" />
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvTitle"
+                tools:text="LimitB"
+                style="@style/UserTitle" />
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvBio"
+                tools:text="Hello, World!"
+                style="@style/UserBio.Limited" />
+        </LinearLayout>
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.UserItemView>
