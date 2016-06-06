@@ -14,11 +14,6 @@ public class AuthInfo implements Parcelable {
     private final String mUsername;
 
 
-    private AuthInfo(final Parcel source) {
-        mPassword = source.readString();
-        mUsername = source.readString();
-    }
-
     public AuthInfo(final String username, final String password) {
         mPassword = password;
         mUsername = username;
@@ -46,7 +41,7 @@ public class AuthInfo implements Parcelable {
     public static final Creator<AuthInfo> CREATOR = new Creator<AuthInfo>() {
         @Override
         public AuthInfo createFromParcel(final Parcel source) {
-            return new AuthInfo(source);
+            return new AuthInfo(source.readString(), source.readString());
         }
 
         @Override
