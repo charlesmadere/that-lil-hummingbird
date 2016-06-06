@@ -98,8 +98,10 @@
     <string name="finished_airing">Finished airing</string>
     <string name="finished_airing_x">Finished airing %1$s</string>
     <string name="followers">Followers</string>
+    <string name="followers_of_x">Followers of %1$s</string>
     <string name="following">Following</string>
     <string name="following_no_one">Following no one</string>
+    <string name="following_x">Following %1$s</string>
     <string name="forums">Forums</string>
     <string name="franchise">Franchise</string>
     <string name="gallery">Gallery</string>
@@ -112,6 +114,7 @@
     <string name="group_activity">Group Activity</string>
     <string name="group_member">Group member</string>
     <string name="group_members">Group Members</string>
+    <string name="group_members_of_x">Group members of %1$s</string>
     <string name="group_staff">Group Staff</string>
     <string name="groups">Groups</string>
     <string name="has_completed">has completed</string>

@@ -76,7 +76,7 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
         setContentView(R.layout.activity_group_members);
 
         final Intent intent = getIntent();
-        setTitle(intent.getStringExtra(EXTRA_GROUP_NAME));
+        setTitle(getString(R.string.group_members_of_x, intent.getStringExtra(EXTRA_GROUP_NAME)));
         mGroupId = intent.getStringExtra(EXTRA_GROUP_ID);
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
