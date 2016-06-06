@@ -137,6 +137,7 @@
     <string name="log_viewer_is_empty">Log Viewer is empty</string>
     <string name="manga">Manga</string>
     <string name="manga_library">Manga Library</string>
+    <string name="member">Member</string>
     <string name="miscellaneous">Miscellaneous</string>
     <string name="movie">Movie</string>
     <string name="music">Music</string>
@@ -307,6 +308,11 @@
         <item quantity="other">Languages</item>
     </plurals>
 
+    <plurals name="members">
+        <item quantity="one">Member</item>
+        <item quantity="other">Members</item>
+    </plurals>
+
     <plurals name="out_of_x_titles">
         <item quantity="one">out of %1$s title</item>
         <item quantity="other">out of %1$s titles</item>
@@ -330,6 +336,11 @@
     <plurals name="x_hours">
         <item quantity="one">%1$s hour</item>
         <item quantity="other">%1$s hours</item>
+    </plurals>
+
+    <plurals name="x_members">
+        <item quantity="one">%1$s member</item>
+        <item quantity="other">%1$s members</item>
     </plurals>
 
     <plurals name="x_minutes">
