@@ -14,18 +14,23 @@ public class Group implements Parcelable {
     @SerializedName("member_count")
     private int mMemberCount;
 
+    @Nullable
     @SerializedName("about")
     private String mAbout;
 
+    @Nullable
     @SerializedName("about_formatted")
     private String mAboutFormatted;
 
+    @Nullable
     @SerializedName("avatar_url")
     private String mAvatarUrl;
 
+    @Nullable
     @SerializedName("bio")
     private String mBio;
 
+    @Nullable
     @SerializedName("cover_image_url")
     private String mCoverImageUrl;
 
@@ -43,18 +48,22 @@ public class Group implements Parcelable {
     private ArrayList<GroupMember> mGroupMembers;
 
 
+    @Nullable
     public String getAbout() {
         return mAbout;
     }
 
+    @Nullable
     public String getAboutFormatted() {
         return mAboutFormatted;
     }
 
+    @Nullable
     public String getAvatarUrl() {
         return mAvatarUrl;
     }
 
+    @Nullable
     public String getBio() {
         return mBio;
     }
@@ -83,6 +92,22 @@ public class Group implements Parcelable {
 
     public String getName() {
         return mName;
+    }
+
+    public boolean hasAbout() {
+        return !TextUtils.isEmpty(mAbout);
+    }
+
+    public boolean hasAboutFormatted() {
+        return !TextUtils.isEmpty(mAboutFormatted);
+    }
+
+    public boolean hasAvatar() {
+        return !TextUtils.isEmpty(mAvatarUrl);
+    }
+
+    public boolean hasBio() {
+        return !TextUtils.isEmpty(mBio);
     }
 
     public boolean hasCoverImage() {
