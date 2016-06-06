@@ -4,9 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.models.Manga;
 import com.charlesmadere.hummingbird.models.MangaDigest;
+
+import butterknife.BindView;
 
 public class MangaDetailsFragment extends BaseFragment {
 
@@ -14,6 +19,39 @@ public class MangaDetailsFragment extends BaseFragment {
     private static final String KEY_MANGA_DIGEST = "MangaDigest";
 
     private MangaDigest mMangaDigest;
+
+    @BindView(R.id.llChapters)
+    LinearLayout mChapters;
+
+    @BindView(R.id.tvChaptersBody)
+    TextView mChaptersBody;
+
+    @BindView(R.id.tvChaptersHeader)
+    TextView mChaptersHeader;
+
+    @BindView(R.id.llGenres)
+    LinearLayout mGenresContainer;
+
+    @BindView(R.id.llVolumes)
+    LinearLayout mVolumesContainer;
+
+    @BindView(R.id.tvGenresBody)
+    TextView mGenresBody;
+
+    @BindView(R.id.tvGenresHeader)
+    TextView mGenresHeader;
+
+    @BindView(R.id.tvSynopsis)
+    TextView mSynopsis;
+
+    @BindView(R.id.tvMangaType)
+    TextView mMangaType;
+
+    @BindView(R.id.tvVolumesBody)
+    TextView mVolumesBody;
+
+    @BindView(R.id.tvVolumesHeader)
+    TextView mVolumesHeader;
 
 
     public static MangaDetailsFragment create(final MangaDigest digest) {
@@ -50,6 +88,15 @@ public class MangaDetailsFragment extends BaseFragment {
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        final Manga manga = mMangaDigest.getManga();
+
+
+
+        if (manga.hasSynopsis()) {
+            mSynopsis.setText(manga.getSynopsis());
+        } else {
+            mSynopsis.setText(R.string.no_synopsis_available);
+        }
     }
 
 }

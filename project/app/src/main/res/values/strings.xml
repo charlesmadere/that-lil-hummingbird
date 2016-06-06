@@ -32,6 +32,7 @@
     <string name="canonical_title">Canonical title</string>
     <string name="casting">Casting</string>
     <string name="castings">Castings</string>
+    <string name="chapters">Chapters</string>
     <string name="characters">Characters</string>
     <string name="characters_">Characters…</string>
     <string name="charles_madere">Charles Madere</string>
@@ -268,6 +269,7 @@
     <string name="view_group">View Group</string>
     <string name="view_user">View User</string>
     <string name="view_x">View %1$s</string>
+    <string name="volumes">Volumes</string>
     <string name="waifu">Waifu</string>
     <string name="waifu_is">Waifu is</string>
     <string name="watched_episode_x">watched episode %1$s</string>
@@ -289,6 +291,11 @@
     <string name="x_y">%1$s %2$s</string>
     <string name="yes">Yes</string>
     <string name="youtube_link">YouTube Link</string>
+
+    <plurals name="chapters">
+        <item quantity="one">Chapter</item>
+        <item quantity="other">Chapters</item>
+    </plurals>
 
     <plurals name="episodes">
         <item quantity="one">Episode</item>
@@ -338,6 +345,11 @@
     <plurals name="producers">
         <item quantity="one">Producer</item>
         <item quantity="other">Producers</item>
+    </plurals>
+
+    <plurals name="volumes">
+        <item quantity="one">Volume</item>
+        <item quantity="other">Volumes</item>
     </plurals>
 
     <plurals name="x_episodes">

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:fillViewport="true"
     android:layout_height="match_parent"
@@ -11,6 +12,22 @@
         android:layout_width="match_parent"
         android:orientation="vertical">
         <android.support.v7.widget.CardView
+            android:foreground="?attr/selectableItemBackground"
+            android:id="@+id/cvPoster"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/root_padding_double"
+            android:layout_marginTop="@dimen/root_padding"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            app:cardElevation="@dimen/root_padding_half"
+            tools:visibility="visible">
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdvPoster"
+                android:layout_width="200dp"
+                style="@style/MangaCover" />
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
             android:layout_marginBottom="@dimen/root_padding"
             style="@style/ResponsiveWidthCard">
             <LinearLayout
@@ -18,10 +35,58 @@
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:text="@string/details"
                     style="@style/ResponsiveWidthCardHeader" />
-                <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:id="@+id/tvDescription"
-                    tools:text="Hello, World!"
-                    style="@style/ResponsiveWidthCardItemBody.Standalone" />
+                <LinearLayout
+                    style="@style/ResponsiveWidthCardItem">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvMangaType"
+                        tools:text="@string/novel"
+                        style="@style/ResponsiveWidthCardItemHeader" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:text="@string/type"
+                        style="@style/ResponsiveWidthCardItemBody" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llVolumes"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    style="@style/ResponsiveWidthCardItem">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvVolumesHeader"
+                        tools:text="2"
+                        style="@style/ResponsiveWidthCardItemHeader" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvVolumesBody"
+                        tools:text="@string/volumes"
+                        style="@style/ResponsiveWidthCardItemBody" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llChapters"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    style="@style/ResponsiveWidthCardItem">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvChaptersHeader"
+                        tools:text="15"
+                        style="@style/ResponsiveWidthCardItemHeader" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvChaptersBody"
+                        tools:text="@string/chapters"
+                        style="@style/ResponsiveWidthCardItemBody" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llGenres"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    style="@style/ResponsiveWidthCardItem">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvGenresHeader"
+                        tools:text="Comedy, Mystery, Romance"
+                        style="@style/ResponsiveWidthCardItemHeader" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:id="@+id/tvGenresBody"
+                        tools:text="@string/genre"
+                        style="@style/ResponsiveWidthCardItemBody" />
+                </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
