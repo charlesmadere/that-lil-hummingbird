@@ -5,6 +5,7 @@ import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.GroupMember;
 
@@ -12,6 +13,11 @@ import butterknife.ButterKnife;
 
 public class GroupMemberItemView extends CardView implements AdapterView<GroupMember>,
         View.OnClickListener {
+
+    private GroupMember mGroupMember;
+
+
+
 
     public GroupMemberItemView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
@@ -24,7 +30,8 @@ public class GroupMemberItemView extends CardView implements AdapterView<GroupMe
 
     @Override
     public void onClick(final View v) {
-
+        final Context context = getContext();
+        context.startActivity(UserActivity.getLaunchIntent(context, mGroupMember.getUserId()));
     }
 
     @Override
@@ -36,6 +43,8 @@ public class GroupMemberItemView extends CardView implements AdapterView<GroupMe
 
     @Override
     public void setContent(final GroupMember content) {
+        mGroupMember = content;
+
 
     }
 
