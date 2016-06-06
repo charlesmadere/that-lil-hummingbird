@@ -1,10 +1,12 @@
 package com.charlesmadere.hummingbird.models;
 
+import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
@@ -28,6 +30,7 @@ public class Manga implements Parcelable {
     @SerializedName("volume_count")
     private Integer mVolumeCount;
 
+    @Nullable
     @SerializedName("manga_type")
     private MangaType mMangaType;
 
@@ -75,6 +78,14 @@ public class Manga implements Parcelable {
         return mGenres;
     }
 
+    public String getGenresString(final Resources res) {
+        if (!hasGenres()) {
+            return "";
+        }
+
+        return TextUtils.join(res.getText(R.string.delimiter), mGenres);
+    }
+
     public String getId() {
         return mId;
     }
@@ -100,6 +111,7 @@ public class Manga implements Parcelable {
         return getRomajiTitle();
     }
 
+    @Nullable
     public MangaType getType() {
         return mMangaType;
     }
@@ -131,6 +143,10 @@ public class Manga implements Parcelable {
 
     public boolean hasSynopsis() {
         return !TextUtils.isEmpty(mSynopsis);
+    }
+
+    public boolean hasType() {
+        return mMangaType != null;
     }
 
     public boolean hasVolumeCount() {

@@ -36,6 +36,9 @@
                     android:text="@string/details"
                     style="@style/ResponsiveWidthCardHeader" />
                 <LinearLayout
+                    android:id="@+id/llMangaType"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     style="@style/ResponsiveWidthCardItem">
                     <com.charlesmadere.hummingbird.views.TypefaceTextView
                         android:id="@+id/tvMangaType"
