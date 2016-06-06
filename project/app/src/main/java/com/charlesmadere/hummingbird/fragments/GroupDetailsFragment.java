@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.GroupMembersActivity;
 import com.charlesmadere.hummingbird.models.Group;
 import com.charlesmadere.hummingbird.models.GroupDigest;
 
@@ -61,7 +62,8 @@ public class GroupDetailsFragment extends BaseFragment {
 
     @OnClick(R.id.llMembers)
     void onMembersClick() {
-        // TODO
+        startActivity(GroupMembersActivity.getLaunchIntent(getContext(), mGroupDigest.getId(),
+                mGroupDigest.getName()));
     }
 
     @Override
@@ -93,7 +95,7 @@ public class GroupDetailsFragment extends BaseFragment {
 
         final NumberFormat numberFormat = NumberFormat.getNumberInstance();
         mMembersHeader.setText(numberFormat.format(group.getMemberCount()));
-        mMembersBody.setText(getResources().getQuantityText(R.plurals.members,
+        mMembersBody.setText(getResources().getQuantityText(R.plurals.group_members,
                 group.getMemberCount()));
 
         mBioTitle.setText(getString(R.string.bio_for_x, group.getName()));

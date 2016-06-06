@@ -49,6 +49,11 @@
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
         <activity
+            android:label=""
+            android:name=".activities.GroupMembersActivity"
+            android:theme="@style/HummingbirdTheme.WithDrawer" />
+
+        <activity
             android:label="@string/home"
             android:launchMode="singleTop"
             android:name=".activities.HomeActivity"

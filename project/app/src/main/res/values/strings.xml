@@ -70,6 +70,7 @@
     <string name="error_loading_following_list">Error loading following list</string>
     <string name="error_loading_franchise">Error loading franchise</string>
     <string name="error_loading_group">Error loading group! Please check your network connection and try again.</string>
+    <string name="error_loading_group_members">Error loading group members</string>
     <string name="error_loading_image">Error loading image</string>
     <string name="error_loading_manga">Error loading manga! Please check your network connection and try again.</string>
     <string name="error_loading_notifications">Error loading notifications</string>
@@ -108,6 +109,8 @@
     <string name="get_hummingbird_pro">Get Hummingbird Pro</string>
     <string name="github">GitHub</string>
     <string name="group_activity">Group Activity</string>
+    <string name="group_member">Group member</string>
+    <string name="group_members">Group members</string>
     <string name="groups">Groups</string>
     <string name="has_completed">has completed</string>
     <string name="has_dropped">has dropped</string>
@@ -152,6 +155,7 @@
     <string name="no_favorites">No favorites</string>
     <string name="no_feed_content">No feed content</string>
     <string name="no_franchise_entries">No franchise entries</string>
+    <string name="no_group_members">No group members</string>
     <string name="no_images">No images</string>
     <string name="no_notifications">No notifications</string>
     <string name="no_one_is_following">No one is following</string>
@@ -302,6 +306,11 @@
     <plurals name="genres">
         <item quantity="one">Genre</item>
         <item quantity="other">Genres</item>
+    </plurals>
+
+    <plurals name="group_members">
+        <item quantity="one">Group member</item>
+        <item quantity="other">Group members</item>
     </plurals>
 
     <plurals name="languages">

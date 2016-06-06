@@ -34,7 +34,7 @@
                         style="@style/ResponsiveWidthCardItemHeader" />
                     <com.charlesmadere.hummingbird.views.TypefaceTextView
                         android:id="@+id/tvMembersBody"
-                        tools:text="@string/members"
+                        tools:text="@string/group_members"
                         style="@style/ResponsiveWidthCardItemBody" />
                 </LinearLayout>
             </LinearLayout>
