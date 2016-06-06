@@ -26,6 +26,9 @@ public class GroupMemberItemView extends CardView implements AdapterView<GroupMe
     @BindView(R.id.tvBio)
     TextView mBio;
 
+    @BindView(R.id.tvGroupMemberBadge)
+    TextView mGroupMemberBadge;
+
     @BindView(R.id.tvTitle)
     TextView mTitle;
 
@@ -66,6 +69,8 @@ public class GroupMemberItemView extends CardView implements AdapterView<GroupMe
         } else {
             mBio.setVisibility(GONE);
         }
+
+        mGroupMemberBadge.setText(mGroupMember.getRank().getTextResId());
     }
 
 }

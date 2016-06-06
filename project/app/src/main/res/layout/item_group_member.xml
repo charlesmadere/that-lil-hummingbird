@@ -23,6 +23,10 @@
                 android:id="@+id/tvBio"
                 tools:text="Hello, World!"
                 style="@style/UserBio.Limited" />
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvGroupMemberBadge"
+                tools:text="@string/member"
+                style="@style/GroupMemberBadge" />
         </LinearLayout>
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.GroupMemberItemView>
