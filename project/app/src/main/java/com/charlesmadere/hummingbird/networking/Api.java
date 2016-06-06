@@ -279,19 +279,31 @@ public final class Api {
     public static void getGroup(final String groupId, final ApiResponse<GroupDigest> listener) {
         getApi().getGroup(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, groupId).enqueue(
                 new Callback<GroupDigest>() {
+            private GroupDigest mGroupDigest;
+
             @Override
             public void onResponse(final Call<GroupDigest> call,
                     final Response<GroupDigest> response) {
-                GroupDigest body = null;
-
                 if (response.isSuccessful()) {
-                    body = response.body();
+                    mGroupDigest = response.body();
                 }
 
-                if (body == null) {
+                if (mGroupDigest == null) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
-                    listener.success(body);
+                    Threading.runOnBackground(new Runnable() {
+                        @Override
+                        public void run() {
+                            mGroupDigest.hydrate();
+
+                            Threading.runOnUi(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listener.success(mGroupDigest);
+                                }
+                            });
+                        }
+                    });
                 }
             }
 
