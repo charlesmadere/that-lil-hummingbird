@@ -39,6 +39,12 @@ public class GroupDigest implements Parcelable {
         return mGroupMembers != null && !mGroupMembers.isEmpty();
     }
 
+    public void hydrate() {
+        if (hasGroupMembers()) {
+            mGroup.hydrate(this);
+        }
+    }
+
     @Override
     public String toString() {
         return getName();

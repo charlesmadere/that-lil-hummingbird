@@ -93,16 +93,24 @@ public class Group implements Parcelable {
         return mGroupMembers != null && !mGroupMembers.isEmpty();
     }
 
-    public void hydrate(final Feed feed) {
+    private void hydrate(final ArrayList<GroupMember> groupMembers) {
         mGroupMembers = new ArrayList<>();
 
-        for (final GroupMember groupMember : feed.getGroupMembers()) {
+        for (final GroupMember groupMember : groupMembers) {
             if (mId.equalsIgnoreCase(groupMember.getGroupId())) {
                 mGroupMembers.add(groupMember);
             }
         }
 
         mGroupMembers.trimToSize();
+    }
+
+    public void hydrate(final Feed feed) {
+        hydrate(feed.getGroupMembers());
+    }
+
+    public void hydrate(final GroupDigest groupDigest) {
+        hydrate(groupDigest.getGroupMembers());
     }
 
     @Override
