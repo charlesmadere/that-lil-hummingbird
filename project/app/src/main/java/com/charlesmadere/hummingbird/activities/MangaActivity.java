@@ -32,7 +32,9 @@ public class MangaActivity extends BaseDrawerActivity {
     private static final String EXTRA_MANGA_ID = CNAME + ".MangaId";
     private static final String EXTRA_MANGA_NAME = CNAME + ".MangaName";
     private static final String KEY_MANGA_DIGEST = "MangaDigest";
+    private static final String KEY_STARTING_POSITION = "StartingPosition";
 
+    private int mStartingPosition;
     private MangaDigest mMangaDigest;
     private String mMangaId;
 
@@ -86,7 +88,10 @@ public class MangaActivity extends BaseDrawerActivity {
         setTitle(intent.getStringExtra(EXTRA_MANGA_NAME));
         mMangaId = intent.getStringExtra(EXTRA_MANGA_ID);
 
+        mStartingPosition = MangaFragmentAdapter.POSITION_FEED;
+
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
+            mStartingPosition = savedInstanceState.getInt(KEY_STARTING_POSITION, mStartingPosition);
             mMangaDigest = savedInstanceState.getParcelable(KEY_MANGA_DIGEST);
         }
 
@@ -100,6 +105,7 @@ public class MangaActivity extends BaseDrawerActivity {
     @Override
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putInt(KEY_STARTING_POSITION, mViewPager.getCurrentItem());
 
         if (mMangaDigest != null) {
             outState.putParcelable(KEY_MANGA_DIGEST, mMangaDigest);
@@ -141,9 +147,11 @@ public class MangaActivity extends BaseDrawerActivity {
         }
 
         mViewPager.setAdapter(new MangaFragmentAdapter(this, mMangaDigest));
+        mViewPager.setCurrentItem(mStartingPosition, false);
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);
+
         mSimpleProgressView.fadeOut();
     }
 

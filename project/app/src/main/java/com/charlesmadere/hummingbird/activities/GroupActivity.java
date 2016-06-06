@@ -32,8 +32,10 @@ public class GroupActivity extends BaseDrawerActivity {
     private static final String EXTRA_GROUP_ID = CNAME + ".GroupId";
     private static final String EXTRA_GROUP_NAME = CNAME + ".GroupName";
     private static final String KEY_GROUP_DIGEST = "GroupDigest";
+    private static final String KEY_STARTING_POSITION = "StartingPosition";
 
     private GroupDigest mGroupDigest;
+    private int mStartingPosition;
     private String mGroupId;
 
     @BindView(R.id.appBarLayout)
@@ -86,8 +88,11 @@ public class GroupActivity extends BaseDrawerActivity {
         setTitle(intent.getStringExtra(EXTRA_GROUP_NAME));
         mGroupId = intent.getStringExtra(EXTRA_GROUP_ID);
 
+        mStartingPosition = GroupFragmentAdapter.POSITION_FEED;
+
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mGroupDigest = savedInstanceState.getParcelable(KEY_GROUP_DIGEST);
+            mStartingPosition = savedInstanceState.getInt(KEY_STARTING_POSITION, mStartingPosition);
         }
 
         if (mGroupDigest == null) {
@@ -100,6 +105,7 @@ public class GroupActivity extends BaseDrawerActivity {
     @Override
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putInt(KEY_STARTING_POSITION, mViewPager.getCurrentItem());
 
         if (mGroupDigest != null) {
             outState.putParcelable(KEY_GROUP_DIGEST, mGroupDigest);
@@ -141,9 +147,11 @@ public class GroupActivity extends BaseDrawerActivity {
         }
 
         mViewPager.setAdapter(new GroupFragmentAdapter(this, mGroupDigest));
+        mViewPager.setCurrentItem(mStartingPosition, false);
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);
+
         mSimpleProgressView.fadeOut();
     }
 
