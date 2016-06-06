@@ -93,7 +93,7 @@ public class UserDigest implements Parcelable {
 
     public void setUser(final User user) {
         if (!isMissingUser()) {
-            throw new RuntimeException("User already exists: (" + getUser().getId() + ')');
+            throw new RuntimeException("User already exists: (" + getUserId() + ')');
         } else if (user == null) {
             throw new IllegalArgumentException("user parameter can't be null");
         }
