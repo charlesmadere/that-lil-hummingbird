@@ -44,9 +44,11 @@ public class Manga implements Parcelable {
     @SerializedName("id")
     private String mId;
 
+    @Nullable
     @SerializedName("poster_image")
     private String mPosterImage;
 
+    @Nullable
     @SerializedName("poster_image_thumb")
     private String mPosterImageThumb;
 
@@ -90,10 +92,12 @@ public class Manga implements Parcelable {
         return mId;
     }
 
+    @Nullable
     public String getPosterImage() {
         return mPosterImage;
     }
 
+    @Nullable
     public String getPosterImageThumb() {
         return mPosterImageThumb;
     }
@@ -139,6 +143,14 @@ public class Manga implements Parcelable {
 
     public boolean hasGenres() {
         return mGenres != null && !mGenres.isEmpty();
+    }
+
+    public boolean hasPosterImage() {
+        return !TextUtils.isEmpty(mPosterImage);
+    }
+
+    public boolean hasPosterImageThumb() {
+        return !TextUtils.isEmpty(mPosterImageThumb);
     }
 
     public boolean hasSynopsis() {

@@ -1,7 +1,9 @@
 package com.charlesmadere.hummingbird.fragments;
 
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.Manga;
 import com.charlesmadere.hummingbird.models.MangaDigest;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.text.NumberFormat;
 
@@ -23,6 +26,9 @@ public class MangaDetailsFragment extends BaseFragment {
 
     private MangaDigest mMangaDigest;
 
+    @BindView(R.id.cvCover)
+    CardView mCoverContainer;
+
     @BindView(R.id.llChapters)
     LinearLayout mChaptersContainer;
 
@@ -34,6 +40,9 @@ public class MangaDetailsFragment extends BaseFragment {
 
     @BindView(R.id.llVolumes)
     LinearLayout mVolumesContainer;
+
+    @BindView(R.id.sdvCover)
+    SimpleDraweeView mCover;
 
     @BindView(R.id.tvChaptersBody)
     TextView mChaptersBody;
@@ -95,6 +104,11 @@ public class MangaDetailsFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         final Manga manga = mMangaDigest.getManga();
+
+        if (manga.hasPosterImage()) {
+            mCover.setImageURI(Uri.parse(manga.getPosterImage()));
+            mCoverContainer.setVisibility(View.VISIBLE);
+        }
 
         if (manga.hasType()) {
             mMangaType.setText(manga.getType().getTextResId());
