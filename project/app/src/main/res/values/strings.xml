@@ -32,6 +32,7 @@
     <string name="canonical_title">Canonical title</string>
     <string name="casting">Casting</string>
     <string name="castings">Castings</string>
+    <string name="characters">Characters</string>
     <string name="characters_">Characters…</string>
     <string name="charles_madere">Charles Madere</string>
     <string name="clear">Clear</string>
@@ -155,6 +156,7 @@
     <string name="night">Night</string>
     <string name="no_bio_available">No bio available</string>
     <string name="no_castings">No castings</string>
+    <string name="no_characters">No characters</string>
     <string name="no_details">No details</string>
     <string name="no_episodes">No episodes</string>
     <string name="no_favorites">No favorites</string>
