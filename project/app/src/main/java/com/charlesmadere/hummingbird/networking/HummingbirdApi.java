@@ -94,6 +94,10 @@ public interface HummingbirdApi {
     Call<Feed> getGroupMembers(@Header("Cookie") String authToken,
             @Query("group_id") String groupId, @Query("page") Integer page);
 
+    @GET("stories")
+    Call<Feed> getGroupStories(@Header("Cookie") String authToken,
+            @Query("group_id") String groupId, @Query("page") Integer page);
+
     @GET("full_manga/{mangaId}")
     Call<MangaDigest> getMangaDigest(@Header("Cookie") String authToken,
             @Path("mangaId") String mangaId);
@@ -126,7 +130,7 @@ public interface HummingbirdApi {
 
     @GET("stories")
     Call<Feed> getUserStories(@Header("Cookie") String authToken,
-            @Query("user_id") String username);
+            @Query("user_id") String username, @Query("page") Integer page);
 
     @PUT("stories/{storyId}")
     Call<Void> likeStory(@Header("Cookie") String authToken, @Path("storyId") String storyId,

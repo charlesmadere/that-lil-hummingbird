@@ -336,13 +336,46 @@ public final class Api {
                 if (body == null) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
-                    hydrateFeed(body, null, listener);
+                    hydrateFeed(body, feed, listener);
                 }
             }
 
             @Override
             public void onFailure(final Call<Feed> call, final Throwable t) {
                 Timber.e(TAG, "get group (" + groupId + ") (page " + page + ") members failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
+    public static void getGroupStories(final String groupId, final ApiResponse<Feed> listener) {
+        getGroupStories(groupId, null, listener);
+    }
+
+    public static void getGroupStories(final String groupId, @Nullable final Feed feed,
+            final ApiResponse<Feed> listener) {
+        final int page = feed == null ? 1 : feed.getMetadata().getCursor();
+
+        getApi().getGroupStories(getAuthTokenCookieString(), groupId, page).enqueue(
+                new Callback<Feed>() {
+            @Override
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
+                Feed body = null;
+
+                if (response.isSuccessful()) {
+                    body = response.body();
+                }
+
+                if (body == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    hydrateFeed(body, feed, listener);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get group (" + groupId + ") (page " + page + ") stories failed", t);
                 listener.failure(null);
             }
         });
@@ -569,7 +602,15 @@ public final class Api {
     }
 
     public static void getUserStories(final String username, final ApiResponse<Feed> listener) {
-        getApi().getUserStories(getAuthTokenCookieString(), username).enqueue(new Callback<Feed>() {
+        getUserStories(username, null, listener);
+    }
+
+    public static void getUserStories(final String username, @Nullable final Feed feed,
+            final ApiResponse<Feed> listener) {
+        final int page = feed == null ? 1 : feed.getMetadata().getCursor();
+
+        getApi().getUserStories(getAuthTokenCookieString(), username, page).enqueue(
+                new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 Feed body = null;
@@ -581,7 +622,7 @@ public final class Api {
                 if (body == null) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
-                    hydrateFeed(body, null, listener);
+                    hydrateFeed(body, feed, listener);
                 }
             }
 
