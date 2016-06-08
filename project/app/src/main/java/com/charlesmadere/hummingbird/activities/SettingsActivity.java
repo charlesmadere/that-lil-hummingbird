@@ -223,6 +223,7 @@ public class SettingsActivity extends BaseDrawerActivity {
                         }
 
                         Preferences.NotificationPolling.Frequency.set(newPollFrequency);
+                        SyncManager.enableOrDisable();
                         refreshViews();
                     }
                 })
@@ -233,6 +234,7 @@ public class SettingsActivity extends BaseDrawerActivity {
     @OnClick(R.id.llPowerRequired)
     void onPowerRequiredClick() {
         Preferences.NotificationPolling.IsPowerRequired.toggle();
+        SyncManager.enableOrDisable();
         refreshViews();
     }
 
@@ -334,6 +336,7 @@ public class SettingsActivity extends BaseDrawerActivity {
     @OnClick(R.id.llWifiRequired)
     void onWifiRequired() {
         Preferences.NotificationPolling.IsWifiRequired.toggle();
+        SyncManager.enableOrDisable();
         refreshViews();
     }
 
