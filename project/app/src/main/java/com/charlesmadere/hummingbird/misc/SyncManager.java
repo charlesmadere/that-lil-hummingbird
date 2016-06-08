@@ -9,6 +9,8 @@ import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.preferences.Preferences;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.gcm.GcmNetworkManager;
 import com.google.android.gms.gcm.GcmTaskService;
 import com.google.android.gms.gcm.PeriodicTask;
@@ -34,8 +36,12 @@ public final class SyncManager extends GcmTaskService {
     }
 
     private static void enable() {
-        if (!GooglePlayServicesUtils.areGooglePlayServicesAvailable()) {
-            Timber.w(TAG, "Failed to schedule because Google Play Services are unavailable");
+        final int connectionStatus = GoogleApiAvailability.getInstance()
+                .isGooglePlayServicesAvailable(ThatLilHummingbird.get());
+
+        if (connectionStatus != ConnectionResult.SUCCESS) {
+            Timber.w(TAG, "Failed to schedule because Google Play Services are unavailable "
+                    + "(connectionStatus: " + connectionStatus + ")");
             return;
         }
 

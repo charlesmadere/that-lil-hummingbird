@@ -18,7 +18,6 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.ThatLilHummingbird;
 import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
-import com.charlesmadere.hummingbird.misc.GooglePlayServicesUtils;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.RequestCodes;
 import com.charlesmadere.hummingbird.misc.Timber;
@@ -153,7 +152,9 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @OnClick(R.id.tvGooglePlayServicesError)
     void onGooglePlayServicesErrorClick() {
-        final int connectionStatus = GooglePlayServicesUtils.getConnectionStatus();
+        GoogleApiAvailability googleApi = GoogleApiAvailability.getInstance();
+        int connectionStatus = googleApi.isGooglePlayServicesAvailable(
+                ThatLilHummingbird.get());
 
         if (connectionStatus == ConnectionResult.SUCCESS) {
             Toast.makeText(this, R.string.google_play_services_error_has_been_resolved,
@@ -162,10 +163,19 @@ public class SettingsActivity extends BaseDrawerActivity {
             return;
         }
 
-        if (GooglePlayServicesUtils.isUserResolvableError(connectionStatus)) {
-            GoogleApiAvailability googleApi = GoogleApiAvailability.getInstance();
-            googleApi.getErrorDialog(this, connectionStatus, 0).show();
+        if (googleApi.isUserResolvableError(connectionStatus)) {
+            Timber.d(TAG, "User is attempting to resolve a Google Play Services error ("
+                    + connectionStatus + ")");
+            googleApi.getErrorDialog(this, connectionStatus, RequestCodes.GOOGLE_PLAY_SERVICES,
+                    new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(final DialogInterface dialog) {
+                            refreshViews();
+                        }
+                    }).show();
         } else {
+            Timber.d(TAG, "User has encountered an unresolvable Google Play Services error ("
+                    + connectionStatus + ")");
             new AlertDialog.Builder(this)
                     .setMessage(getString(R.string.google_play_services_error_cant_be_resolved,
                             connectionStatus))
@@ -330,7 +340,15 @@ public class SettingsActivity extends BaseDrawerActivity {
         mTheme.setText(Preferences.General.Theme.get().getTextResId());
         mShowNsfwContent.setChecked(Preferences.General.ShowNsfwContent.get());
 
-        if (GooglePlayServicesUtils.areGooglePlayServicesAvailable()) {
+        mUseNotificationPolling.setChecked(Preferences.NotificationPolling.IsEnabled.get());
+        mPollFrequency.setText(Preferences.NotificationPolling.Frequency.get().getTextResId());
+        mPowerRequired.setChecked(Preferences.NotificationPolling.IsPowerRequired.get());
+        mWifiRequired.setChecked(Preferences.NotificationPolling.IsWifiRequired.get());
+
+        final int connectionStatus = GoogleApiAvailability.getInstance()
+                .isGooglePlayServicesAvailable(ThatLilHummingbird.get());
+
+        if (connectionStatus == ConnectionResult.SUCCESS) {
             mGooglePlayServicesError.setVisibility(View.GONE);
             mUseNotificationPollingContainer.setEnabled(true);
 
@@ -350,11 +368,6 @@ public class SettingsActivity extends BaseDrawerActivity {
             mPowerRequiredContainer.setEnabled(false);
             mWifiRequiredContainer.setEnabled(false);
         }
-
-        mUseNotificationPolling.setChecked(Preferences.NotificationPolling.IsEnabled.get());
-        mPollFrequency.setText(Preferences.NotificationPolling.Frequency.get().getTextResId());
-        mPowerRequired.setChecked(Preferences.NotificationPolling.IsPowerRequired.get());
-        mWifiRequired.setChecked(Preferences.NotificationPolling.IsWifiRequired.get());
 
         if (Preferences.NotificationPolling.LastPoll.exists()) {
             mLastPoll.setText(getText(R.string.last_check), DateUtils.getRelativeDateTimeString(
