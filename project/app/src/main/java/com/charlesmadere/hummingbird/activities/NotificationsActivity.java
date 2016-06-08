@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.NotificationsAdapter;
+import com.charlesmadere.hummingbird.misc.NotificationManager;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -51,6 +52,7 @@ public class NotificationsActivity extends BaseDrawerActivity implements
     private void fetchNotifications() {
         mRefreshLayout.setRefreshing(true);
         Api.getNotifications(new GetNotificationsListener(this));
+        NotificationManager.cancelAll();
     }
 
     @Override
@@ -77,6 +79,12 @@ public class NotificationsActivity extends BaseDrawerActivity implements
         } else {
             showFeed(mFeed);
         }
+    }
+
+    @Override
+    protected void onNewIntent(final Intent intent) {
+        super.onNewIntent(intent);
+        fetchNotifications();
     }
 
     @Override

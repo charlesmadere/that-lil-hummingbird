@@ -1,8 +1,14 @@
 package com.charlesmadere.hummingbird.misc;
 
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 
+import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.ThatLilHummingbird;
+import com.charlesmadere.hummingbird.activities.NotificationsActivity;
 import com.charlesmadere.hummingbird.models.AbsNotification;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
@@ -78,6 +84,43 @@ public final class SyncManager extends GcmTaskService {
                 ") (wifi required: " + Preferences.NotificationPolling.IsWifiRequired.get() + ")";
     }
 
+    @Nullable
+    private void checkForNotifications(final ArrayList<AbsNotification> notifications) {
+        final ArrayList<AbsNotification> newNotifications = new ArrayList<>();
+
+        for (final AbsNotification notification : notifications) {
+            if (!notification.isSeen()) {
+                newNotifications.add(notification);
+            }
+        }
+
+        if (newNotifications.isEmpty()) {
+            Timber.d(TAG, "No new notifications");
+            return;
+        }
+
+        Timber.d(TAG, "New notification(s): " + newNotifications.size());
+
+        final Context context = ThatLilHummingbird.get();
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                .setAutoCancel(true)
+                .setCategory(NotificationCompat.CATEGORY_SOCIAL)
+                .setContentTitle(context.getString(R.string.that_lil_hummingbird))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setSmallIcon(R.drawable.notification)
+                .setVisibility(NotificationCompat.VISIBILITY_PRIVATE);
+
+        // TODO
+        builder.setContentText("Notifications: " + newNotifications.size());
+
+        final Intent intent = NotificationsActivity.getLaunchIntent(context);
+        final PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(pendingIntent);
+
+        NotificationManager.show(builder);
+    }
+
     @Override
     public void onInitializeTasks() {
         super.onInitializeTasks();
@@ -102,22 +145,7 @@ public final class SyncManager extends GcmTaskService {
                     return;
                 }
 
-                final ArrayList<AbsNotification> newNotifications = new ArrayList<>();
-
-                for (final AbsNotification notification : feed.getNotifications()) {
-                    if (!notification.isSeen()) {
-                        newNotifications.add(notification);
-                    }
-                }
-
-                if (newNotifications.isEmpty()) {
-                    Timber.d(TAG, "No new notifications");
-                    return;
-                }
-
-                Timber.d(TAG, "New notification(s): " + newNotifications.size());
-
-                // TODO
+                checkForNotifications(feed.getNotifications());
             }
         });
 
