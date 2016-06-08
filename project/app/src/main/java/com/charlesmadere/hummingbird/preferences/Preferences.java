@@ -4,6 +4,7 @@ import android.content.Context;
 import android.preference.PreferenceManager;
 
 import com.charlesmadere.hummingbird.ThatLilHummingbird;
+import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.NightMode;
 import com.charlesmadere.hummingbird.models.PollFrequency;
 import com.charlesmadere.hummingbird.models.TitleType;
@@ -35,6 +36,7 @@ public final class Preferences {
                 .apply();
 
         erase(Account.TAG, General.TAG);
+        Timber.d(TAG, "All preferences have been erased");
     }
 
     public static final class Account {
@@ -46,22 +48,18 @@ public final class Preferences {
             AuthToken = new StringPreference(TAG, "AuthToken", null);
             Username = new StringPreference(TAG, "Username", null);
         }
-
-        public static void eraseAll() {
-            erase(Account.TAG);
-        }
     }
 
     public static final class General {
         private static final String TAG = Preferences.TAG + ".General";
         public static final BooleanPreference ShowNsfwContent;
-        public static final GsonPreference<TitleType> TitleLanguage;
         public static final GsonPreference<NightMode> Theme;
+        public static final GsonPreference<TitleType> TitleLanguage;
 
         static {
             ShowNsfwContent = new BooleanPreference(TAG, "ShowNsfwContent", Boolean.FALSE);
-            TitleLanguage = new GsonPreference<>(TAG, "TitleLanguage", TitleType.class, TitleType.ENGLISH);
             Theme = new GsonPreference<>(TAG, "NightMode", NightMode.class, NightMode.getDefault());
+            TitleLanguage = new GsonPreference<>(TAG, "TitleLanguage", TitleType.class, TitleType.ENGLISH);
         }
     }
 
@@ -72,7 +70,6 @@ public final class Preferences {
         public static final BooleanPreference IsWifiRequired;
         public static final GsonPreference<PollFrequency> Frequency;
         public static final LongPreference LastPoll;
-        public static final LongPreference MostRecentNotificationTime;
 
         static {
             IsEnabled = new BooleanPreference(TAG, "IsEnabled", Boolean.TRUE);
@@ -80,7 +77,6 @@ public final class Preferences {
             IsWifiRequired = new BooleanPreference(TAG, "IsWifiRequired", Boolean.TRUE);
             Frequency = new GsonPreference<>(TAG, "Frequency", PollFrequency.class, PollFrequency.DAILY);
             LastPoll = new LongPreference(TAG, "LastPoll", null);
-            MostRecentNotificationTime = new LongPreference(TAG, "MostRecentNotificationTime", null);
         }
     }
 

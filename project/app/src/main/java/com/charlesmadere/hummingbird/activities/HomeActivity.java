@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.HomeFragmentAdapter;
 import com.charlesmadere.hummingbird.adapters.UserFragmentAdapter;
+import com.charlesmadere.hummingbird.misc.SyncManager;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 
 import butterknife.BindView;
@@ -24,6 +25,10 @@ public class HomeActivity extends BaseDrawerActivity {
     @BindView(R.id.viewPager)
     ViewPager mViewPager;
 
+
+    static {
+        SyncManager.enableOrDisable();
+    }
 
     public static Intent getLaunchIntent(final Context context) {
         return new Intent(context, HomeActivity.class)

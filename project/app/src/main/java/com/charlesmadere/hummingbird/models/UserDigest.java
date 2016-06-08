@@ -16,6 +16,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.concurrent.TimeUnit;
 
 public class UserDigest implements Parcelable {
 
@@ -453,7 +454,7 @@ public class UserDigest implements Parcelable {
         }
 
         public long getLifeSpentOnAnimeSeconds() {
-            return mLifeSpentOnAnime * 60L;
+            return TimeUnit.SECONDS.toMinutes(mLifeSpentOnAnime);
         }
 
         public Genre getTopGenre() {

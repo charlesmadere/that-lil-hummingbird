@@ -6,21 +6,33 @@ import android.support.annotation.StringRes;
 
 import com.charlesmadere.hummingbird.R;
 
+import java.util.concurrent.TimeUnit;
+
 public enum PollFrequency implements Parcelable {
 
-    HOURLY(R.string.hourly),
-    EVERY_FOUR_HOURS(R.string.every_four_hours),
-    EVERY_EIGHT_HOURS(R.string.every_eight_hours),
-    DAILY(R.string.daily),
-    EVERY_THREE_DAYS(R.string.every_three_days),
-    WEEKLY(R.string.weekly);
+    HOURLY(R.string.hourly, TimeUnit.HOURS.toSeconds(1L)),
+    EVERY_FOUR_HOURS(R.string.every_four_hours, TimeUnit.HOURS.toSeconds(4L)),
+    EVERY_EIGHT_HOURS(R.string.every_eight_hours, TimeUnit.HOURS.toSeconds(8L)),
+    DAILY(R.string.daily, TimeUnit.DAYS.toSeconds(1L)),
+    EVERY_THREE_DAYS(R.string.every_three_days, TimeUnit.DAYS.toSeconds(3L)),
+    WEEKLY(R.string.weekly, TimeUnit.DAYS.toSeconds(7L));
 
     @StringRes
     private final int mTextResId;
 
+    private final long mPeriod;
 
-    PollFrequency(@StringRes final int textResId) {
+
+    PollFrequency(@StringRes final int textResId, final long period) {
         mTextResId = textResId;
+        mPeriod = period;
+    }
+
+    /**
+     * this is in seconds
+     */
+    public long getPeriod() {
+        return mPeriod;
     }
 
     @StringRes

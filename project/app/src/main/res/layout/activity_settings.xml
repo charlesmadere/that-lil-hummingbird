@@ -73,7 +73,18 @@
                         <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:text="@string/notification_polling_description"
                             style="@style/ResponsiveWidthCardItemBody.Standalone" />
-                        <LinearLayout
+                        <com.charlesmadere.hummingbird.views.TypefaceTextView
+                            android:background="?attr/selectableItemBackground"
+                            android:id="@+id/tvGooglePlayServicesError"
+                            android:paddingBottom="@dimen/root_padding_half"
+                            android:paddingTop="@dimen/root_padding_half"
+                            android:text="@string/notification_polling_requires_google_play_services"
+                            android:textColor="?attr/colorAccent"
+                            android:visibility="gone"
+                            app:typeface="open_sans_semibold"
+                            tools:visibility="visible"
+                            style="@style/ResponsiveWidthCardItemBody.Standalone" />
+                        <com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout
                             android:id="@+id/llUseNotificationPolling"
                             style="@style/ResponsiveWidthCardItem.Switch">
                             <com.charlesmadere.hummingbird.views.TypefaceTextView
@@ -84,7 +95,7 @@
                             <android.support.v7.widget.SwitchCompat
                                 android:id="@+id/scUseNotificationPolling"
                                 style="@style/Switch" />
-                        </LinearLayout>
+                        </com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout>
                         <com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout
                             android:id="@+id/llPollFrequency"
                             style="@style/ResponsiveWidthCardItem">
@@ -122,8 +133,8 @@
                         </com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout>
                         <com.charlesmadere.hummingbird.views.KeyValueTextView
                             android:id="@+id/kvtvLastPoll"
-                            android:visibility="gone"
                             android:textColor="?android:attr/textColorSecondary"
+                            android:visibility="gone"
                             app:keyTextColor="?android:attr/textColorSecondary"
                             app:valueTextColor="?android:attr/textColorPrimary"
                             style="@style/ResponsiveWidthCardItem" />

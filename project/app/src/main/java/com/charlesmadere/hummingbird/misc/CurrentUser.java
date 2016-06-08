@@ -35,13 +35,14 @@ public final class CurrentUser {
     }
 
     public static synchronized void signOut() {
-        Preferences.Account.eraseAll();
+        Preferences.eraseAll();
         sCurrentUserDigest = null;
         Timber.d(TAG, "current user signed out");
 
         final ArrayList<Activity> activities = ActivityRegister.get();
 
         if (activities == null || activities.isEmpty()) {
+            Timber.e(TAG, "unable to restart the app, no Activity is available");
             return;
         }
 

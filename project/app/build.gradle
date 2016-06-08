@@ -27,6 +27,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
+        applicationId 'com.charlesmadere.hummingbird'
         minSdkVersion 17
         targetSdkVersion 23
         versionCode 1
@@ -72,6 +73,9 @@ dependencies {
 
     // Google's GSON
     compile 'com.google.code.gson:gson:2.6.2'
+
+    // Google Play Services
+    compile 'com.google.android.gms:play-services-gcm:9.0.2'
 
     // jsoup
     compile 'org.jsoup:jsoup:1.9.2'

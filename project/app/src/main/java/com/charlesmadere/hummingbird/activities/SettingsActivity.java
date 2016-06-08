@@ -11,13 +11,16 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.BuildConfig;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.ThatLilHummingbird;
 import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
+import com.charlesmadere.hummingbird.misc.GooglePlayServicesUtils;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
+import com.charlesmadere.hummingbird.misc.RequestCodes;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.NightMode;
 import com.charlesmadere.hummingbird.models.PollFrequency;
@@ -25,6 +28,8 @@ import com.charlesmadere.hummingbird.models.TitleType;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.KeyValueTextView;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -54,6 +59,9 @@ public class SettingsActivity extends BaseDrawerActivity {
     @BindView(R.id.llPowerRequired)
     LinearLayout mPowerRequiredContainer;
 
+    @BindView(R.id.llUseNotificationPolling)
+    LinearLayout mUseNotificationPollingContainer;
+
     @BindView(R.id.llWifiRequired)
     LinearLayout mWifiRequiredContainer;
 
@@ -62,6 +70,9 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @BindView(R.id.tvAnimeTitleLanguage)
     TextView mAnimeTitleLanguage;
+
+    @BindView(R.id.tvGooglePlayServicesError)
+    TextView mGooglePlayServicesError;
 
     @BindView(R.id.tvPollFrequency)
     TextView mPollFrequency;
@@ -85,6 +96,17 @@ public class SettingsActivity extends BaseDrawerActivity {
     @Override
     protected NavigationDrawerItemView.Entry getSelectedNavigationDrawerItemViewEntry() {
         return NavigationDrawerItemView.Entry.SETTINGS;
+    }
+
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode,
+            final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RequestCodes.GOOGLE_PLAY_SERVICES) {
+            Timber.d(TAG, "Received result from Google Play Services: " + resultCode);
+            refreshViews();
+        }
     }
 
     @OnClick(R.id.llAnimeTitleLanguage)
@@ -127,6 +149,29 @@ public class SettingsActivity extends BaseDrawerActivity {
     @OnClick(R.id.tvGitHub)
     void onGitHubClick() {
         MiscUtils.openUrl(this, Constants.GITHUB_URL);
+    }
+
+    @OnClick(R.id.tvGooglePlayServicesError)
+    void onGooglePlayServicesErrorClick() {
+        final int connectionStatus = GooglePlayServicesUtils.getConnectionStatus();
+
+        if (connectionStatus == ConnectionResult.SUCCESS) {
+            Toast.makeText(this, R.string.google_play_services_error_has_been_resolved,
+                    Toast.LENGTH_LONG).show();
+            refreshViews();
+            return;
+        }
+
+        if (GooglePlayServicesUtils.isUserResolvableError(connectionStatus)) {
+            GoogleApiAvailability googleApi = GoogleApiAvailability.getInstance();
+            googleApi.getErrorDialog(this, connectionStatus, 0).show();
+        } else {
+            new AlertDialog.Builder(this)
+                    .setMessage(getString(R.string.google_play_services_error_cant_be_resolved,
+                            connectionStatus))
+                    .setNeutralButton(R.string.ok, null)
+                    .show();
+        }
     }
 
     @OnClick(R.id.tvHummingbirdOnTheWeb)
@@ -285,24 +330,35 @@ public class SettingsActivity extends BaseDrawerActivity {
         mTheme.setText(Preferences.General.Theme.get().getTextResId());
         mShowNsfwContent.setChecked(Preferences.General.ShowNsfwContent.get());
 
-        mUseNotificationPolling.setChecked(Preferences.NotificationPolling.IsEnabled.get());
-        mPollFrequency.setText(Preferences.NotificationPolling.Frequency.get().getTextResId());
-        mPowerRequired.setChecked(Preferences.NotificationPolling.IsPowerRequired.get());
-        mWifiRequired.setChecked(Preferences.NotificationPolling.IsWifiRequired.get());
+        if (GooglePlayServicesUtils.areGooglePlayServicesAvailable()) {
+            mGooglePlayServicesError.setVisibility(View.GONE);
+            mUseNotificationPollingContainer.setEnabled(true);
 
-        if (mUseNotificationPolling.isChecked()) {
-            mPollFrequencyContainer.setEnabled(true);
-            mPowerRequiredContainer.setEnabled(true);
-            mWifiRequiredContainer.setEnabled(true);
+            if (mUseNotificationPolling.isChecked()) {
+                mPollFrequencyContainer.setEnabled(true);
+                mPowerRequiredContainer.setEnabled(true);
+                mWifiRequiredContainer.setEnabled(true);
+            } else {
+                mPollFrequencyContainer.setEnabled(false);
+                mPowerRequiredContainer.setEnabled(false);
+                mWifiRequiredContainer.setEnabled(false);
+            }
         } else {
+            mGooglePlayServicesError.setVisibility(View.VISIBLE);
+            mUseNotificationPollingContainer.setEnabled(false);
             mPollFrequencyContainer.setEnabled(false);
             mPowerRequiredContainer.setEnabled(false);
             mWifiRequiredContainer.setEnabled(false);
         }
 
+        mUseNotificationPolling.setChecked(Preferences.NotificationPolling.IsEnabled.get());
+        mPollFrequency.setText(Preferences.NotificationPolling.Frequency.get().getTextResId());
+        mPowerRequired.setChecked(Preferences.NotificationPolling.IsPowerRequired.get());
+        mWifiRequired.setChecked(Preferences.NotificationPolling.IsWifiRequired.get());
+
         if (Preferences.NotificationPolling.LastPoll.exists()) {
-            mLastPoll.setText(getText(R.string.last_check), DateUtils.getRelativeDateTimeString(this,
-                    Preferences.NotificationPolling.LastPoll.get(), DateUtils.DAY_IN_MILLIS,
+            mLastPoll.setText(getText(R.string.last_check), DateUtils.getRelativeDateTimeString(
+                    this, Preferences.NotificationPolling.LastPoll.get(), DateUtils.DAY_IN_MILLIS,
                     DateUtils.WEEK_IN_MILLIS, 0));
             mLastPoll.setVisibility(View.VISIBLE);
         } else {
