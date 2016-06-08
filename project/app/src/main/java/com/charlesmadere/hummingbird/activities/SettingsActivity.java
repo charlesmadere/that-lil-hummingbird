@@ -20,6 +20,7 @@ import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.RequestCodes;
+import com.charlesmadere.hummingbird.misc.SyncManager;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.NightMode;
 import com.charlesmadere.hummingbird.models.PollFrequency;
@@ -319,6 +320,7 @@ public class SettingsActivity extends BaseDrawerActivity {
     @OnClick(R.id.llUseNotificationPolling)
     void onUseNotificationPollingClick() {
         Preferences.NotificationPolling.IsEnabled.toggle();
+        SyncManager.enableOrDisable();
         refreshViews();
     }
 
