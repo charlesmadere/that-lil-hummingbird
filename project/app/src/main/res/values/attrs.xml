@@ -11,6 +11,10 @@
         <attr name="textSize" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="GroupEnabledLinearLayout">
+        <attr name="start_enabled" format="boolean" />
+    </declare-styleable>
+
     <declare-styleable name="KeyValueTextView">
         <attr name="keyText" format="string" />
         <attr name="keyTextColor" format="color" />

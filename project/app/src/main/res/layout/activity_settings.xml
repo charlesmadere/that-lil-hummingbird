@@ -133,6 +133,7 @@
                         </com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout>
                         <com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout
                             android:id="@+id/llLastPoll"
+                            app:start_enabled="false"
                             style="@style/ResponsiveWidthCardItem">
                             <com.charlesmadere.hummingbird.views.TypefaceTextView
                                 android:id="@+id/tvLastPoll"
