@@ -107,6 +107,11 @@ public class UserDigest implements Parcelable {
     }
 
     @Override
+    public String toString() {
+        return getUserId();
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
@@ -454,7 +459,7 @@ public class UserDigest implements Parcelable {
         }
 
         public long getLifeSpentOnAnimeSeconds() {
-            return TimeUnit.SECONDS.toMinutes(mLifeSpentOnAnime);
+            return TimeUnit.MINUTES.toSeconds(mLifeSpentOnAnime);
         }
 
         public Genre getTopGenre() {

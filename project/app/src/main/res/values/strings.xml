@@ -152,6 +152,7 @@
     <string name="member">Member</string>
     <string name="members">Members</string>
     <string name="miscellaneous">Miscellaneous</string>
+    <string name="most_recent_poll">Most recent poll</string>
     <string name="movie">Movie</string>
     <string name="music">Music</string>
     <string name="must_be_charging">Must be charging</string>
@@ -177,7 +178,7 @@
     <string name="no_synopsis_available">No synopsis available</string>
     <string name="no_timeline_content">No timeline content</string>
     <string name="none">none</string>
-    <string name="notification_polling_description">This feature will periodically refresh your Hummingbird notifications and let you know if there\'s anything new.</string>
+    <string name="notification_polling_description">This feature will periodically refresh your Hummingbird notifications and let you know if there\'s anything new. Note that the poll frequency is just an estimate, it\'s not guaranteed to run at these exact intervals.</string>
     <string name="notification_polling_requires_google_play_services">Notification polling requires Google Play Services in order to function. Click here to try to resolve the issues with your Google Play services installation.</string>
     <string name="notifications">Notifications</string>
     <string name="novel">Novel</string>
@@ -287,6 +288,7 @@
     <string name="x_has_completed">%1$s has completed</string>
     <string name="x_has_dropped">%1$s has dropped</string>
     <string name="x_has_placed_on_hold">%1$s has placed on hold</string>
+    <string name="x_new_notifications">%1$s new notifications</string>
     <string name="x_of_y">%1$s of %2$s</string>
     <string name="x_out_of_y_users_found_this_review_helpful">%1$s out of %2$s users found this review helpful.</string>
     <string name="x_plans_to_watch">%1$s plans to watch</string>

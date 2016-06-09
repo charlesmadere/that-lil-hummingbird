@@ -19,7 +19,6 @@ import com.charlesmadere.hummingbird.ThatLilHummingbird;
 import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
-import com.charlesmadere.hummingbird.misc.RequestCodes;
 import com.charlesmadere.hummingbird.misc.SyncManager;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.NightMode;
@@ -33,6 +32,8 @@ import com.google.android.gms.common.GoogleApiAvailability;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.charlesmadere.hummingbird.misc.RequestCodes.GOOGLE_PLAY_SERVICES_RESOLUTION;
 
 public class SettingsActivity extends BaseDrawerActivity {
 
@@ -50,8 +51,8 @@ public class SettingsActivity extends BaseDrawerActivity {
     @BindView(R.id.kvtvGetHummingbirdPro)
     KeyValueTextView mGetHummingbirdPro;
 
-    @BindView(R.id.kvtvLastPoll)
-    KeyValueTextView mLastPoll;
+    @BindView(R.id.llLastPoll)
+    LinearLayout mLastPollContainer;
 
     @BindView(R.id.llPollFrequency)
     LinearLayout mPollFrequencyContainer;
@@ -73,6 +74,9 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @BindView(R.id.tvGooglePlayServicesError)
     TextView mGooglePlayServicesError;
+
+    @BindView(R.id.tvLastPoll)
+    TextView mLastPoll;
 
     @BindView(R.id.tvPollFrequency)
     TextView mPollFrequency;
@@ -103,7 +107,7 @@ public class SettingsActivity extends BaseDrawerActivity {
             final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RequestCodes.GOOGLE_PLAY_SERVICES) {
+        if (requestCode == GOOGLE_PLAY_SERVICES_RESOLUTION) {
             Timber.d(TAG, "Received result from Google Play Services: " + resultCode);
             refreshViews();
         }
@@ -153,9 +157,8 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @OnClick(R.id.tvGooglePlayServicesError)
     void onGooglePlayServicesErrorClick() {
-        GoogleApiAvailability googleApi = GoogleApiAvailability.getInstance();
-        int connectionStatus = googleApi.isGooglePlayServicesAvailable(
-                ThatLilHummingbird.get());
+        GoogleApiAvailability google = GoogleApiAvailability.getInstance();
+        int connectionStatus = google.isGooglePlayServicesAvailable(ThatLilHummingbird.get());
 
         if (connectionStatus == ConnectionResult.SUCCESS) {
             Toast.makeText(this, R.string.google_play_services_error_has_been_resolved,
@@ -164,18 +167,18 @@ public class SettingsActivity extends BaseDrawerActivity {
             return;
         }
 
-        if (googleApi.isUserResolvableError(connectionStatus)) {
+        if (google.isUserResolvableError(connectionStatus)) {
             Timber.d(TAG, "User is attempting to resolve a Google Play Services error ("
                     + connectionStatus + ")");
-            googleApi.getErrorDialog(this, connectionStatus, RequestCodes.GOOGLE_PLAY_SERVICES,
+            google.showErrorDialogFragment(this, connectionStatus, GOOGLE_PLAY_SERVICES_RESOLUTION,
                     new DialogInterface.OnCancelListener() {
                         @Override
                         public void onCancel(final DialogInterface dialog) {
                             refreshViews();
                         }
-                    }).show();
+                    });
         } else {
-            Timber.d(TAG, "User has encountered an unresolvable Google Play Services error ("
+            Timber.w(TAG, "User has encountered an unresolvable Google Play Services error ("
                     + connectionStatus + ")");
             new AlertDialog.Builder(this)
                     .setMessage(getString(R.string.google_play_services_error_cant_be_resolved,
@@ -366,22 +369,23 @@ public class SettingsActivity extends BaseDrawerActivity {
                 mPowerRequiredContainer.setEnabled(false);
                 mWifiRequiredContainer.setEnabled(false);
             }
+
+            if (Preferences.NotificationPolling.LastPoll.exists()) {
+                mLastPoll.setText(DateUtils.getRelativeDateTimeString(this,
+                        Preferences.NotificationPolling.LastPoll.get(), DateUtils.DAY_IN_MILLIS,
+                        DateUtils.WEEK_IN_MILLIS, 0));
+                mLastPollContainer.setVisibility(View.VISIBLE);
+            } else {
+                mLastPollContainer.setVisibility(View.GONE);
+            }
         } else {
+            Timber.w(TAG, "User has a Google Play Services error: " + connectionStatus);
             mGooglePlayServicesError.setVisibility(View.VISIBLE);
             mUseNotificationPollingContainer.setEnabled(false);
             mPollFrequencyContainer.setEnabled(false);
             mPowerRequiredContainer.setEnabled(false);
             mWifiRequiredContainer.setEnabled(false);
-        }
-
-        if (Preferences.NotificationPolling.LastPoll.exists()) {
-            mLastPoll.setText(getText(R.string.last_check), DateUtils.getRelativeDateTimeString(
-                    this, Preferences.NotificationPolling.LastPoll.get(), DateUtils.DAY_IN_MILLIS,
-                    DateUtils.WEEK_IN_MILLIS, 0));
-            mLastPoll.setVisibility(View.VISIBLE);
-        } else {
-            mLastPoll.setText("");
-            mLastPoll.setVisibility(View.GONE);
+            mLastPollContainer.setVisibility(View.GONE);
         }
 
         if (CurrentUser.get().getUser().isPro()) {

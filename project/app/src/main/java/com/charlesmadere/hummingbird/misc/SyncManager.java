@@ -23,6 +23,7 @@ import com.google.android.gms.gcm.PeriodicTask;
 import com.google.android.gms.gcm.Task;
 import com.google.android.gms.gcm.TaskParams;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public final class SyncManager extends GcmTaskService {
@@ -36,14 +37,14 @@ public final class SyncManager extends GcmTaskService {
     }
 
     private static void disable() {
-        GcmNetworkManager.getInstance(ThatLilHummingbird.get()).cancelAllTasks(SyncManager.class);
+        GcmNetworkManager.getInstance(getContext()).cancelAllTasks(SyncManager.class);
         Preferences.NotificationPolling.LastPoll.delete();
         Timber.d(TAG, "Sync has been disabled");
     }
 
     private static void enable() {
         final int connectionStatus = GoogleApiAvailability.getInstance()
-                .isGooglePlayServicesAvailable(ThatLilHummingbird.get());
+                .isGooglePlayServicesAvailable(getContext());
 
         if (connectionStatus != ConnectionResult.SUCCESS) {
             Timber.w(TAG, "Failed to schedule because Google Play Services are unavailable "
@@ -66,7 +67,7 @@ public final class SyncManager extends GcmTaskService {
         }
 
         final PeriodicTask periodicTask = builder.build();
-        GcmNetworkManager.getInstance(ThatLilHummingbird.get()).schedule(periodicTask);
+        GcmNetworkManager.getInstance(getContext()).schedule(periodicTask);
         Timber.d(TAG, "Sync has been enabled " + printConfigurationString());
     }
 
@@ -78,40 +79,57 @@ public final class SyncManager extends GcmTaskService {
         }
     }
 
+    private static Context getContext() {
+        return ThatLilHummingbird.get();
+    }
+
     private static String printConfigurationString() {
         return "(frequency: " + Preferences.NotificationPolling.Frequency.get().getPeriod() +
                 ") (power required: " + Preferences.NotificationPolling.IsPowerRequired.get() +
                 ") (wifi required: " + Preferences.NotificationPolling.IsWifiRequired.get() + ")";
     }
 
-    @Nullable
-    private void checkForNotifications(final ArrayList<AbsNotification> notifications) {
-        final ArrayList<AbsNotification> newNotifications = new ArrayList<>();
-
-        for (final AbsNotification notification : notifications) {
-            if (!notification.isSeen()) {
-                newNotifications.add(notification);
-            }
-        }
-
-        if (newNotifications.isEmpty()) {
-            Timber.d(TAG, "No new notifications");
-            return;
-        }
-
-        Timber.d(TAG, "New notification(s): " + newNotifications.size());
-
-        final Context context = ThatLilHummingbird.get();
-        final NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+    private NotificationCompat.Builder buildNotification() {
+        final Context context = getContext();
+        return new NotificationCompat.Builder(context)
                 .setAutoCancel(true)
                 .setCategory(NotificationCompat.CATEGORY_SOCIAL)
                 .setContentTitle(context.getString(R.string.that_lil_hummingbird))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setSmallIcon(R.drawable.notification)
                 .setVisibility(NotificationCompat.VISIBILITY_PRIVATE);
+    }
+
+    private void buildNotification(final AbsNotification notification) {
+        final NotificationCompat.Builder builder = buildNotification();
 
         // TODO
-        builder.setContentText("Notifications: " + newNotifications.size());
+        final Context context = getContext();
+        builder.setContentText(notification.getType().toString());
+
+        // TODO
+        final Intent intent = NotificationsActivity.getLaunchIntent(context);
+        final PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(pendingIntent);
+
+        NotificationManager.show(builder);
+    }
+
+    private void buildNotification(final ArrayList<AbsNotification> notifications) {
+        final NotificationCompat.Builder builder = buildNotification();
+
+        final Context context = getContext();
+        builder.setContentText(context.getString(R.string.x_new_notifications,
+                NumberFormat.getInstance().format(notifications.size())));
+
+        final NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle(builder);
+
+        for (int i = 0; i < notifications.size() && i < 5; ++i) {
+            // TODO
+            final AbsNotification notification = notifications.get(i);
+            style.addLine(notification.getType().toString());
+        }
 
         final Intent intent = NotificationsActivity.getLaunchIntent(context);
         final PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
@@ -145,7 +163,26 @@ public final class SyncManager extends GcmTaskService {
                     return;
                 }
 
-                checkForNotifications(feed.getNotifications());
+                final ArrayList<AbsNotification> newNotifications = new ArrayList<>();
+
+                for (final AbsNotification notification : feed.getNotifications()) {
+                    if (!notification.isSeen()) {
+                        newNotifications.add(notification);
+                    }
+                }
+
+                if (newNotifications.isEmpty()) {
+                    Timber.d(TAG, "No new notifications");
+                    return;
+                }
+
+                Timber.d(TAG, "New notification(s): " + newNotifications.size());
+
+                if (newNotifications.size() == 1) {
+                    buildNotification(newNotifications.get(0));
+                } else {
+                    buildNotification(newNotifications);
+                }
             }
         });
 

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -94,7 +95,17 @@ public class AnimeV1 extends AbsAnime implements Parcelable {
 
     @Override
     public String getTitle() {
-        return mTitle;
+        if (!hasAlternateTitle()) {
+            return mTitle;
+        }
+
+        final TitleType titleType = Preferences.General.TitleLanguage.get();
+
+        if (titleType == TitleType.ENGLISH) {
+            return getAlternateTitle();
+        } else {
+            return mTitle;
+        }
     }
 
     public String getUrl() {
@@ -104,6 +115,10 @@ public class AnimeV1 extends AbsAnime implements Parcelable {
     @Override
     public Version getVersion() {
         return Version.V1;
+    }
+
+    public boolean hasAlternateTitle() {
+        return !TextUtils.isEmpty(mAlternateTitle);
     }
 
     @Override
