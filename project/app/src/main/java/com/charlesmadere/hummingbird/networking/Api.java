@@ -6,7 +6,6 @@ import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
-import com.charlesmadere.hummingbird.misc.GsonUtils;
 import com.charlesmadere.hummingbird.misc.RetrofitUtils;
 import com.charlesmadere.hummingbird.misc.Threading;
 import com.charlesmadere.hummingbird.misc.Timber;
@@ -30,7 +29,6 @@ import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.charlesmadere.hummingbird.preferences.Preferences;
-import com.google.gson.JsonObject;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -96,6 +94,57 @@ public final class Api {
             @Override
             public void onFailure(final Call<String> call, final Throwable t) {
                 Timber.e(TAG, "authenticate failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
+    public static void deleteStory(final String storyId, final ApiResponse<Boolean> listener) {
+        getApi().deleteStory(getAuthTokenCookieString(), storyId).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(final Call<Boolean> call, final Response<Boolean> response) {
+                Boolean body = null;
+
+                if (response.isSuccessful()) {
+                    body = response.body();
+                }
+
+                if (body == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    listener.success(body);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Boolean> call, final Throwable t) {
+                Timber.e(TAG, "delete story (" + storyId + ") failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
+    public static void deleteSubstory(final String substoryId, final ApiResponse<Boolean> listener) {
+        getApi().deleteSubstory(getAuthTokenCookieString(), substoryId).enqueue(
+                new Callback<Boolean>() {
+            @Override
+            public void onResponse(final Call<Boolean> call, final Response<Boolean> response) {
+                Boolean body = null;
+
+                if (response.isSuccessful()) {
+                    body = response.body();
+                }
+
+                if (body == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    listener.success(body);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Boolean> call, final Throwable t) {
+                Timber.e(TAG, "delete substory (" + substoryId + ") failed", t);
                 listener.failure(null);
             }
         });
@@ -601,6 +650,72 @@ public final class Api {
         });
     }
 
+    public static void getUserGroups(final String userId, final ApiResponse<Feed> listener) {
+        getUserGroups(userId, null, listener);
+    }
+
+    public static void getUserGroups(final String userId, @Nullable final Feed feed,
+            final ApiResponse<Feed> listener) {
+        final int page = feed == null ? 1 : feed.getMetadata().getCursor();
+
+        getApi().getUserGroups(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, userId, page)
+                .enqueue(new Callback<Feed>() {
+            @Override
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
+                Feed body = null;
+
+                if (response.isSuccessful()) {
+                    body = response.body();
+                }
+
+                if (body == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    hydrateFeed(body, feed, listener);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get user (" + userId + ") groups failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
+    public static void getUserReviews(final String userId, final ApiResponse<Feed> listener) {
+        getUserReviews(userId, null, listener);
+    }
+
+    public static void getUserReviews(final String userId, @Nullable final Feed feed,
+            final ApiResponse<Feed> listener) {
+        final int page = feed == null ? 1 : feed.getMetadata().getCursor();
+
+        getApi().getUserReviews(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, userId, page)
+                .enqueue(new Callback<Feed>() {
+            @Override
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
+                Feed body = null;
+
+                if (response.isSuccessful()) {
+                    body = response.body();
+                }
+
+                if (body == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    hydrateFeed(body, feed, listener);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get user (" + userId + ") reviews failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
     public static void getUserStories(final String username, final ApiResponse<Feed> listener) {
         getUserStories(username, null, listener);
     }
@@ -660,8 +775,8 @@ public final class Api {
     }
 
     public static void favoriteQuote(final AnimeDigest.Quote quote) {
-        getApi().favoriteQuote(getAuthTokenCookieString(), quote.getId(), quote.getFavoriteJson())
-                .enqueue(new Callback<Void>() {
+        getApi().favoriteQuote(getAuthTokenCookieString(), quote.getId(), quote.toJson()).enqueue(
+                new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
                 // do nothing
@@ -690,10 +805,8 @@ public final class Api {
     }
 
     public static void postComment(final CommentPost commentPost, final ApiResponse<Void> listener) {
-        JsonObject json = new JsonObject();
-        json.add("substory", GsonUtils.getGson().toJsonTree(commentPost));
-
-        getApi().postComment(getAuthTokenCookieString(), json).enqueue(new Callback<Void>() {
+        getApi().postComment(getAuthTokenCookieString(), commentPost.toJson()).enqueue(
+                new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
                 if (response.isSuccessful()) {
@@ -712,10 +825,8 @@ public final class Api {
     }
 
     public static void postToFeed(final FeedPost feedPost, final ApiResponse<Void> listener) {
-        JsonObject json = new JsonObject();
-        json.add("story", GsonUtils.getGson().toJsonTree(feedPost));
-
-        getApi().postToFeed(getAuthTokenCookieString(), json).enqueue(new Callback<Void>() {
+        getApi().postToFeed(getAuthTokenCookieString(), feedPost.toJson()).enqueue(
+                new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
                 if (response.isSuccessful()) {
@@ -772,6 +883,21 @@ public final class Api {
             public void onFailure(final Call<SearchBundle> call, final Throwable t) {
                 Timber.e(TAG, "search (scope=" + scope + ") (query=" + query + ") failed", t);
                 listener.failure(null);
+            }
+        });
+    }
+
+    public static void toggleFollowingOfUser(final String userId) {
+        getApi().toggleFollowingOfUser(getAuthTokenCookieString(), userId).enqueue(
+                new Callback<Void>() {
+            @Override
+            public void onResponse(final Call<Void> call, final Response<Void> response) {
+                // do nothing
+            }
+
+            @Override
+            public void onFailure(final Call<Void> call, final Throwable t) {
+                Timber.e(TAG, "toggle following of user (" + userId + ") failed", t);
             }
         });
     }

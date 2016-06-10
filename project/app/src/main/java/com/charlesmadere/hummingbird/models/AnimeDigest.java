@@ -1130,18 +1130,6 @@ public class AnimeDigest implements Parcelable {
             return mId;
         }
 
-        public JsonObject getFavoriteJson() {
-            final JsonObject quote = new JsonObject();
-            quote.addProperty("anime_id", mAnimeId);
-            quote.addProperty("id", mId);
-            quote.addProperty("is_favorite", mIsFavorite);
-
-            final JsonObject json = new JsonObject();
-            json.add("quote", quote);
-
-            return json;
-        }
-
         public String getUsername() {
             return mUsername;
         }
@@ -1166,6 +1154,18 @@ public class AnimeDigest implements Parcelable {
 
         public void toggleFavorite() {
             setFavorite(!mIsFavorite);
+        }
+
+        public JsonObject toJson() {
+            final JsonObject quote = new JsonObject();
+            quote.addProperty("anime_id", mAnimeId);
+            quote.addProperty("id", mId);
+            quote.addProperty("is_favorite", mIsFavorite);
+
+            final JsonObject json = new JsonObject();
+            json.add("quote", quote);
+
+            return json;
         }
 
         @Override

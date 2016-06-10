@@ -24,15 +24,16 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.ThatLilHummingbird;
 
 import java.text.NumberFormat;
+import java.util.concurrent.TimeUnit;
 
 public final class MiscUtils {
 
-    private static final long MINUTE_IN_SECONDS = 60L;
-    private static final long HOUR_IN_SECONDS = MINUTE_IN_SECONDS * 60L;
-    private static final long DAY_IN_SECONDS = HOUR_IN_SECONDS * 24L;
-    private static final long WEEK_IN_SECONDS = DAY_IN_SECONDS * 7L;
-    private static final long MONTH_IN_SECONDS = DAY_IN_SECONDS * 30L;
-    private static final long YEAR_IN_SECONDS = DAY_IN_SECONDS * 365L;
+    private static final long MINUTE_IN_SECONDS = TimeUnit.MINUTES.toSeconds(1L);
+    private static final long HOUR_IN_SECONDS = TimeUnit.HOURS.toSeconds(1L);
+    private static final long DAY_IN_SECONDS = TimeUnit.DAYS.toSeconds(1L);
+    private static final long WEEK_IN_SECONDS = TimeUnit.DAYS.toSeconds(7L);
+    private static final long MONTH_IN_SECONDS = TimeUnit.DAYS.toSeconds(30L);
+    private static final long YEAR_IN_SECONDS = TimeUnit.DAYS.toSeconds(365L);
 
 
     public static void closeKeyboard(final Activity activity) {
@@ -82,7 +83,7 @@ public final class MiscUtils {
     }
 
     public static CharSequence getElapsedTime(final Resources res, long seconds) {
-        if (seconds <= 0) {
+        if (seconds <= 0L) {
             return res.getText(R.string.none);
         }
 

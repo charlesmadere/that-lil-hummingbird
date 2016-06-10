@@ -4,7 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.charlesmadere.hummingbird.misc.GsonUtils;
 import com.charlesmadere.hummingbird.preferences.Preferences;
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
 public class FeedPost implements Parcelable {
@@ -55,16 +57,23 @@ public class FeedPost implements Parcelable {
         return mComment;
     }
 
-    public String getType() {
-        return mType;
-    }
-
     public String getPosterId() {
         return mPosterId;
     }
 
+    public String getType() {
+        return mType;
+    }
+
     public String getUserId() {
         return mUserId;
+    }
+
+    public JsonObject toJson() {
+        final JsonObject json = new JsonObject();
+        json.add("story", GsonUtils.getGson().toJsonTree(this));
+
+        return json;
     }
 
     @Override

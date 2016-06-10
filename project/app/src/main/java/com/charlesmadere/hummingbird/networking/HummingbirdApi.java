@@ -60,10 +60,10 @@ public interface HummingbirdApi {
      */
 
     @DELETE("stories/{storyId}")
-    Call<Void> deleteStory(@Header("Cookie") String authToken, @Path("storyId") String storyId);
+    Call<Boolean> deleteStory(@Header("Cookie") String authToken, @Path("storyId") String storyId);
 
     @DELETE("substories/{substoryId}")
-    Call<Void> deleteSubstory(@Header("Cookie") String authToken,
+    Call<Boolean> deleteSubstory(@Header("Cookie") String authToken,
             @Path("substoryId") String substoryId);
 
     @PUT("quotes/{quoteId}")
@@ -145,5 +145,9 @@ public interface HummingbirdApi {
     @GET("search.json")
     Call<SearchBundle> search(@Query("scope") SearchScope searchScope,
             @Query("depth") SearchDepth depth, @Query("query") String query);
+
+    @POST("users/{userId}/follow")
+    Call<Void> toggleFollowingOfUser(@Header("Cookie") String authToken,
+            @Path("userId") String userId);
 
 }
