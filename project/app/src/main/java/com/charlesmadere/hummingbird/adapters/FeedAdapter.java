@@ -6,14 +6,14 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.AbsStory;
 import com.charlesmadere.hummingbird.models.Feed;
 
-public class FeedAdapter extends BaseAdapter<AbsStory> {
+public class FeedAdapter extends BasePaginationAdapter<AbsStory> {
 
     public FeedAdapter(final Context context) {
         super(context);
     }
 
     @Override
-    public int getItemViewType(final int position) {
+    public int getItemViewTypeForPosition(final int position) {
         switch (getItem(position).getType()) {
             case COMMENT:
                 return R.layout.item_comment_story;
