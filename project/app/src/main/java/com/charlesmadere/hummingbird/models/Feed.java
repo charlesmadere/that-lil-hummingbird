@@ -211,7 +211,7 @@ public class Feed implements Parcelable {
             }
         }
 
-        mMetadata.setCursor(feed.getMetadata().getCursor() + 1);
+        mMetadata.setCursor(feed.getMetadata().getCursor());
     }
 
     @Override
