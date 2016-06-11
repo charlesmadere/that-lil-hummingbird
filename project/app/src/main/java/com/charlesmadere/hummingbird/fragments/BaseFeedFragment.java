@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,10 +11,14 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.FeedAdapter;
+import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
+import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
+
+import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
@@ -105,6 +110,16 @@ public abstract class BaseFeedFragment extends BaseFragment implements
         mAdapter.setPaginating(true);
     }
 
+    protected void paginationComplete() {
+        // TODO
+        mAdapter.setPaginating(false);
+    }
+
+    protected void paginationError() {
+        mPaginator.setEnabled(false);
+        mAdapter.setPaginating(false);
+    }
+
     protected void showError() {
         mRecyclerView.setVisibility(View.GONE);
         mEmpty.setVisibility(View.GONE);
@@ -125,7 +140,67 @@ public abstract class BaseFeedFragment extends BaseFragment implements
         mEmpty.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
+        mPaginator.setEnabled(true);
         mRefreshLayout.setRefreshing(false);
+    }
+
+
+    protected static class GetFeedListener implements ApiResponse<Feed> {
+        private final WeakReference<BaseFeedFragment> mFragmentReference;
+
+        protected GetFeedListener(final BaseFeedFragment fragment) {
+            mFragmentReference = new WeakReference<>(fragment);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final BaseFeedFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                fragment.showError();
+            }
+        }
+
+        @Override
+        public void success(final Feed feed) {
+            final BaseFeedFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                if (feed.hasStories()) {
+                    fragment.showFeed(feed);
+                } else {
+                    fragment.showEmpty();
+                }
+            }
+        }
+    }
+
+    protected static class PaginateNewsFeedListener implements ApiResponse<Feed> {
+        private final WeakReference<BaseFeedFragment> mFragmentReference;
+        private final Feed mFeed;
+
+        protected PaginateNewsFeedListener(final BaseFeedFragment fragment, final Feed feed) {
+            mFragmentReference = new WeakReference<>(fragment);
+            mFeed = feed;
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final BaseFeedFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                fragment.paginationError();
+            }
+        }
+
+        @Override
+        public void success(final Feed feed) {
+            final BaseFeedFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                fragment.paginationComplete();
+            }
+        }
     }
 
 }

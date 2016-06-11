@@ -1,15 +1,9 @@
 package com.charlesmadere.hummingbird.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
 import com.charlesmadere.hummingbird.misc.CurrentUser;
-import com.charlesmadere.hummingbird.models.ErrorInfo;
-import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.networking.Api;
-import com.charlesmadere.hummingbird.networking.ApiResponse;
-
-import java.lang.ref.WeakReference;
 
 public class HomeFeedFragment extends BaseFeedFragment {
 
@@ -29,7 +23,7 @@ public class HomeFeedFragment extends BaseFeedFragment {
     @Override
     protected void fetchFeed() {
         super.fetchFeed();
-        Api.getNewsFeed(new GetNewsFeedListener(this));
+        Api.getNewsFeed(new GetFeedListener(this));
     }
 
     @Override
@@ -41,37 +35,6 @@ public class HomeFeedFragment extends BaseFeedFragment {
     public void paginate() {
         super.paginate();
 
-    }
-
-
-    private static class GetNewsFeedListener implements ApiResponse<Feed> {
-        private final WeakReference<HomeFeedFragment> mFragmentReference;
-
-        private GetNewsFeedListener(final HomeFeedFragment fragment) {
-            mFragmentReference = new WeakReference<>(fragment);
-        }
-
-        @Override
-        public void failure(@Nullable final ErrorInfo error) {
-            final HomeFeedFragment fragment = mFragmentReference.get();
-
-            if (fragment != null && !fragment.isDestroyed()) {
-                fragment.showError();
-            }
-        }
-
-        @Override
-        public void success(final Feed feed) {
-            final HomeFeedFragment fragment = mFragmentReference.get();
-
-            if (fragment != null && !fragment.isDestroyed()) {
-                if (feed.hasStories()) {
-                    fragment.showFeed(feed);
-                } else {
-                    fragment.showEmpty();
-                }
-            }
-        }
     }
 
 }
