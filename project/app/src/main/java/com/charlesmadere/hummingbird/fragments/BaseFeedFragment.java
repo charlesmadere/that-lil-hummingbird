@@ -179,9 +179,9 @@ public abstract class BaseFeedFragment extends BaseFragment implements
         private final WeakReference<BaseFeedFragment> mFragmentReference;
         private final int mStoriesSize;
 
-        protected PaginateFeedListener(final BaseFeedFragment fragment, final int storiesSize) {
+        protected PaginateFeedListener(final BaseFeedFragment fragment) {
             mFragmentReference = new WeakReference<>(fragment);
-            mStoriesSize = storiesSize;
+            mStoriesSize = fragment.mFeed.getStories().size();
         }
 
         @Override
