@@ -7,7 +7,7 @@ import com.charlesmadere.hummingbird.R;
 public abstract class BaseMultiPaginationAdapter extends BaseMultiAdapter implements
         PaginatingAdapter {
 
-    protected boolean mIsPaginating;
+    private boolean mIsPaginating;
 
 
     public BaseMultiPaginationAdapter(final Context context) {
@@ -34,7 +34,7 @@ public abstract class BaseMultiPaginationAdapter extends BaseMultiAdapter implem
         }
     }
 
-    protected abstract int getItemViewTypeForPosition(final int position);
+    public abstract int getItemViewTypeForPosition(final int position);
 
     @Override
     public boolean isPaginating() {
