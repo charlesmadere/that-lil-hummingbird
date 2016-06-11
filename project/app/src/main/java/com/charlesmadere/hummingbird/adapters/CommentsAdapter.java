@@ -18,7 +18,7 @@ public class CommentsAdapter extends BaseMultiAdapter {
     }
 
     @Override
-    protected HashMap<Class, Integer> getViewKeyMap() {
+    protected HashMap<Class, Integer> getItemViewKeyMap() {
         final HashMap<Class, Integer> map = new HashMap<>(2);
         map.put(CommentStory.class, R.layout.item_comment_story_standalone);
         map.put(ReplySubstory.class, R.layout.item_reply_substory_standalone);

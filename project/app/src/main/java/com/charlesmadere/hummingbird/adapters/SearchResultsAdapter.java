@@ -74,7 +74,7 @@ public class SearchResultsAdapter extends BaseMultiAdapter {
     }
 
     @Override
-    protected HashMap<Class, Integer> getViewKeyMap() {
+    protected HashMap<Class, Integer> getItemViewKeyMap() {
         final HashMap<Class, Integer> map = new HashMap<>(5);
         map.put(SearchBundle.AbsResult.Type.class, R.layout.item_search_result_type);
         map.put(SearchBundle.AnimeResult.class, R.layout.item_anime_result);

@@ -18,7 +18,7 @@ public class NotificationsAdapter extends BaseMultiAdapter {
     }
 
     @Override
-    protected HashMap<Class, Integer> getViewKeyMap() {
+    protected HashMap<Class, Integer> getItemViewKeyMap() {
         final HashMap<Class, Integer> map = new HashMap<>(2);
         map.put(CommentReplyNotification.class, R.layout.item_comment_reply_notification);
         map.put(ProfileCommentNotification.class, R.layout.item_profile_comment_notification);

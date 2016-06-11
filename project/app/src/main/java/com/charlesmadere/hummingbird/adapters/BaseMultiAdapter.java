@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public abstract class BaseMultiAdapter extends BaseAdapter<Object> {
 
-    private final HashMap<Class, Integer> mViewKey = getViewKeyMap();
+    private final HashMap<Class, Integer> mViewKey = getItemViewKeyMap();
 
 
     public BaseMultiAdapter(final Context context) {
@@ -18,6 +18,6 @@ public abstract class BaseMultiAdapter extends BaseAdapter<Object> {
         return mViewKey.get(getItem(position).getClass());
     }
 
-    protected abstract HashMap<Class, Integer> getViewKeyMap();
+    protected abstract HashMap<Class, Integer> getItemViewKeyMap();
 
 }
