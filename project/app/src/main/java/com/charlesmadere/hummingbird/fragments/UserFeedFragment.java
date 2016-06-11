@@ -36,6 +36,11 @@ public class UserFeedFragment extends BaseFeedFragment {
         return TAG;
     }
 
+    @Override
+    public void paginate() {
+
+    }
+
 
     private static class GetUserStoriesListener implements ApiResponse<Feed> {
         private final WeakReference<UserFeedFragment> mFragmentReference;

@@ -37,6 +37,11 @@ public class HomeFeedFragment extends BaseFeedFragment {
         return TAG;
     }
 
+    @Override
+    public void paginate() {
+
+    }
+
 
     private static class GetNewsFeedListener implements ApiResponse<Feed> {
         private final WeakReference<HomeFeedFragment> mFragmentReference;

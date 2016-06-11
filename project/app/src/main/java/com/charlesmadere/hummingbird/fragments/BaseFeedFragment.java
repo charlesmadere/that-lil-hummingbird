@@ -11,19 +11,21 @@ import android.widget.LinearLayout;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.FeedAdapter;
 import com.charlesmadere.hummingbird.models.Feed;
+import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import butterknife.BindView;
 
 public abstract class BaseFeedFragment extends BaseFragment implements
-        SwipeRefreshLayout.OnRefreshListener {
+        RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     protected static final String KEY_FEED = "Feed";
     protected static final String KEY_USERNAME = "Username";
 
     protected Feed mFeed;
     protected FeedAdapter mAdapter;
+    protected RecyclerViewPaginator mPaginator;
     protected String mUsername;
 
     @BindView(R.id.llEmpty)
@@ -41,6 +43,11 @@ public abstract class BaseFeedFragment extends BaseFragment implements
 
     protected void fetchFeed() {
         mRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public boolean isLoading() {
+        return mRefreshLayout.isRefreshing() || mAdapter.isPaginating();
     }
 
     @Override
@@ -84,6 +91,7 @@ public abstract class BaseFeedFragment extends BaseFragment implements
         SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
         mAdapter = new FeedAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
+        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
 
         if (mFeed == null) {
             fetchFeed();
