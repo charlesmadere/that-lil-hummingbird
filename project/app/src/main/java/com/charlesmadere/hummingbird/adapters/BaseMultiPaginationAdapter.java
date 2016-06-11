@@ -4,7 +4,8 @@ import android.content.Context;
 
 import com.charlesmadere.hummingbird.R;
 
-public abstract class BaseMultiPaginationAdapter extends BaseMultiAdapter {
+public abstract class BaseMultiPaginationAdapter extends BaseMultiAdapter implements
+        PaginatingAdapter {
 
     protected boolean mIsPaginating;
 
@@ -35,6 +36,7 @@ public abstract class BaseMultiPaginationAdapter extends BaseMultiAdapter {
 
     protected abstract int getItemViewTypeForPosition(final int position);
 
+    @Override
     public boolean isPaginating() {
         return mIsPaginating;
     }
@@ -49,6 +51,7 @@ public abstract class BaseMultiPaginationAdapter extends BaseMultiAdapter {
         }
     }
 
+    @Override
     public void setPaginating(final boolean paginating) {
         if (mIsPaginating == paginating) {
             return;
