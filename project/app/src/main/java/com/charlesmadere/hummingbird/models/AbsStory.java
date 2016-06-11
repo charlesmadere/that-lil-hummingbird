@@ -40,6 +40,11 @@ public abstract class AbsStory implements Parcelable {
     private User mUser;
 
 
+    @Override
+    public boolean equals(final Object o) {
+        return o instanceof AbsStory && mId.equalsIgnoreCase(((AbsStory) o).getId());
+    }
+
     public SimpleDate getCreatedAt() {
         return mCreatedAt;
     }
@@ -73,6 +78,11 @@ public abstract class AbsStory implements Parcelable {
 
     public String getUserId() {
         return mUserId;
+    }
+
+    @Override
+    public int hashCode() {
+        return mId.hashCode();
     }
 
     public boolean hasSubstoryIds() {

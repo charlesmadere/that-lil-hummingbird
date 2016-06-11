@@ -45,6 +45,11 @@ public abstract class AbsAnime implements Parcelable {
     private String mSynopsis;
 
 
+    @Override
+    public boolean equals(final Object o) {
+        return o instanceof AbsAnime && mId.equalsIgnoreCase(((AbsAnime) o).getId());
+    }
+
     @Nullable
     public AgeRating getAgeRating() {
         return mAgeRating;
@@ -111,6 +116,11 @@ public abstract class AbsAnime implements Parcelable {
     }
 
     public abstract boolean hasGenres();
+
+    @Override
+    public int hashCode() {
+        return mId.hashCode();
+    }
 
     public boolean hasStartedAiringDate() {
         return getStartedAiringDate() != null;

@@ -26,6 +26,11 @@ public abstract class AbsNotification implements Parcelable {
     private String mId;
 
 
+    @Override
+    public boolean equals(final Object o) {
+        return o instanceof AbsNotification && mId.equalsIgnoreCase(((AbsNotification) o).getId());
+    }
+
     public SimpleDate getCreatedAt() {
         return mCreatedAt;
     }
@@ -42,6 +47,11 @@ public abstract class AbsNotification implements Parcelable {
 
     public User getUser() {
         return mSource.getUser();
+    }
+
+    @Override
+    public int hashCode() {
+        return mId.hashCode();
     }
 
     public void hydrate(final Feed feed) {

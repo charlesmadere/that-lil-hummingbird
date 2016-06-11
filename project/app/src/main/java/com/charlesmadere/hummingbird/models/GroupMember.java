@@ -28,6 +28,11 @@ public class GroupMember implements Parcelable {
     private User mUser;
 
 
+    @Override
+    public boolean equals(final Object o) {
+        return o instanceof GroupMember && mId.equalsIgnoreCase(((GroupMember) o).getId());
+    }
+
     public String getGroupId() {
         return mGroupId;
     }
@@ -46,6 +51,11 @@ public class GroupMember implements Parcelable {
 
     public String getUserId() {
         return mUserId;
+    }
+
+    @Override
+    public int hashCode() {
+        return mId.hashCode();
     }
 
     public void hydrate(final Feed feed) {

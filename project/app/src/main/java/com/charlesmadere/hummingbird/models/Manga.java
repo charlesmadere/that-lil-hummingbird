@@ -60,6 +60,11 @@ public class Manga implements Parcelable {
     private String mSynopsis;
 
 
+    @Override
+    public boolean equals(final Object o) {
+        return o instanceof Manga && mId.equalsIgnoreCase(((Manga) o).getId());
+    }
+
     @Nullable
     public String getCoverImage() {
         return mCoverImage;
@@ -139,6 +144,11 @@ public class Manga implements Parcelable {
 
     public boolean hasCoverImageTopOffset() {
         return mCoverImageTopOffset != null && mCoverImageTopOffset >= 1;
+    }
+
+    @Override
+    public int hashCode() {
+        return mId.hashCode();
     }
 
     public boolean hasGenres() {

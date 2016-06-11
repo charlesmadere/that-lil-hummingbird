@@ -24,6 +24,11 @@ public abstract class AbsSubstory implements Parcelable {
     private String mStoryId;
 
 
+    @Override
+    public boolean equals(final Object o) {
+        return o instanceof AbsSubstory && mId.equalsIgnoreCase(((AbsSubstory) o).getId());
+    }
+
     public SimpleDate getCreatedAt() {
         return mCreatedAt;
     }
@@ -37,6 +42,11 @@ public abstract class AbsSubstory implements Parcelable {
     }
 
     public abstract Type getType();
+
+    @Override
+    public int hashCode() {
+        return mId.hashCode();
+    }
 
     public void hydrate(final Feed feed) {
         // method intentionally blank, children can override

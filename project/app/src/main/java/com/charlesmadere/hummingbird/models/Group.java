@@ -48,6 +48,11 @@ public class Group implements Parcelable {
     private ArrayList<GroupMember> mGroupMembers;
 
 
+    @Override
+    public boolean equals(final Object o) {
+        return o instanceof Group && mId.equalsIgnoreCase(((Group) o).getId());
+    }
+
     @Nullable
     public String getAbout() {
         return mAbout;
@@ -112,6 +117,11 @@ public class Group implements Parcelable {
 
     public boolean hasCoverImage() {
         return !TextUtils.isEmpty(mCoverImageUrl);
+    }
+
+    @Override
+    public int hashCode() {
+        return mId.hashCode();
     }
 
     public boolean hasGroupMembers() {

@@ -25,6 +25,11 @@ public class User implements Parcelable {
     private Data mData;
 
 
+    @Override
+    public boolean equals(final Object o) {
+        return o instanceof User && getId().equalsIgnoreCase(((User) o).getId());
+    }
+
     @Nullable
     public String getAbout() {
         return mData.mAbout;
@@ -116,6 +121,11 @@ public class User implements Parcelable {
 
     public boolean hasBio() {
         return !TextUtils.isEmpty(mData.mBio);
+    }
+
+    @Override
+    public int hashCode() {
+        return getId().hashCode();
     }
 
     public boolean hasHusbando() {
