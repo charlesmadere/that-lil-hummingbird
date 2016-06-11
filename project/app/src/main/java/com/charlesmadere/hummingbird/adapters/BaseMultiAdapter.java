@@ -14,7 +14,7 @@ public abstract class BaseMultiAdapter extends BaseAdapter<Object> {
     }
 
     @Override
-    public final int getItemViewType(final int position) {
+    public int getItemViewType(final int position) {
         return mViewKey.get(getItem(position).getClass());
     }
 
