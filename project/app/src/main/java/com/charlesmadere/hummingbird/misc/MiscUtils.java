@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
+import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.ActivityManagerCompat;
 import android.text.SpannableStringBuilder;
@@ -24,6 +25,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.ThatLilHummingbird;
 
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public final class MiscUtils {
@@ -47,6 +49,18 @@ public final class MiscUtils {
         final InputMethodManager imm = (InputMethodManager) activity.getSystemService(
                 Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public static <T> void exclusiveAdd(final List<T> list, @Nullable final List<T> elementsToAdd) {
+        if (elementsToAdd == null || elementsToAdd.isEmpty()) {
+            return;
+        }
+
+        for (final T elementToAdd : elementsToAdd) {
+            if (!list.contains(elementToAdd)) {
+                list.add(elementToAdd);
+            }
+        }
     }
 
     public static Activity getActivity(final Context context) {
