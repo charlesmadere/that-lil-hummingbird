@@ -33,7 +33,7 @@ public class UserFeedFragment extends BaseFeedFragment {
     @Override
     public void paginate() {
         super.paginate();
-
+        Api.getUserStories(mUsername, mFeed, new PaginateFeedListener(this));
     }
 
 }

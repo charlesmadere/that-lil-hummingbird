@@ -111,7 +111,7 @@ public abstract class BaseFeedFragment extends BaseFragment implements
     }
 
     protected void paginationComplete() {
-        // TODO
+        mAdapter.set(mFeed);
         mAdapter.setPaginating(false);
     }
 
@@ -175,13 +175,11 @@ public abstract class BaseFeedFragment extends BaseFragment implements
         }
     }
 
-    protected static class PaginateNewsFeedListener implements ApiResponse<Feed> {
+    protected static class PaginateFeedListener implements ApiResponse<Feed> {
         private final WeakReference<BaseFeedFragment> mFragmentReference;
-        private final Feed mFeed;
 
-        protected PaginateNewsFeedListener(final BaseFeedFragment fragment, final Feed feed) {
+        protected PaginateFeedListener(final BaseFeedFragment fragment) {
             mFragmentReference = new WeakReference<>(fragment);
-            mFeed = feed;
         }
 
         @Override
