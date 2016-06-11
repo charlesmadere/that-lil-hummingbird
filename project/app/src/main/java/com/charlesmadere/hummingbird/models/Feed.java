@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
@@ -165,7 +166,7 @@ public class Feed implements Parcelable {
 
         if (feed.hasAnime()) {
             if (hasAnime()) {
-                mAnime.addAll(feed.getAnime());
+                MiscUtils.exclusiveAdd(mAnime, feed.getAnime());
             } else {
                 mAnime = feed.getAnime();
             }
@@ -173,7 +174,7 @@ public class Feed implements Parcelable {
 
         if (feed.hasGroupMembers()) {
             if (hasGroupMembers()) {
-                mGroupMembers.addAll(feed.getGroupMembers());
+                MiscUtils.exclusiveAdd(mGroupMembers, feed.getGroupMembers());
             } else {
                 mGroupMembers = feed.getGroupMembers();
             }
@@ -181,7 +182,7 @@ public class Feed implements Parcelable {
 
         if (feed.hasGroups()) {
             if (hasGroups()) {
-                mGroups.addAll(feed.getGroups());
+                MiscUtils.exclusiveAdd(mGroups, feed.getGroups());
             } else {
                 mGroups = feed.getGroups();
             }
@@ -189,7 +190,7 @@ public class Feed implements Parcelable {
 
         if (feed.hasStories()) {
             if (hasStories()) {
-                mStories.addAll(feed.getStories());
+                MiscUtils.exclusiveAdd(mStories, feed.getStories());
             } else {
                 mStories = feed.getStories();
             }
@@ -197,7 +198,7 @@ public class Feed implements Parcelable {
 
         if (feed.hasSubstories()) {
             if (hasSubstories()) {
-                mSubstories.addAll(feed.getSubstories());
+                MiscUtils.exclusiveAdd(mSubstories, feed.getSubstories());
             } else {
                 mSubstories = feed.getSubstories();
             }
@@ -205,7 +206,7 @@ public class Feed implements Parcelable {
 
         if (feed.hasUsers()) {
             if (hasUsers()) {
-                mUsers.addAll(feed.getUsers());
+                MiscUtils.exclusiveAdd(mUsers, feed.getUsers());
             } else {
                 mUsers = feed.getUsers();
             }
