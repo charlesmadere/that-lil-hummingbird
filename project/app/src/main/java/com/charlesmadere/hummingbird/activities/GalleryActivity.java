@@ -92,15 +92,15 @@ public class GalleryActivity extends BaseActivity {
         prepareViewPager();
     }
 
-    @OnPageChange(R.id.viewPager)
-    void onViewPagerPageChange() {
-        updateToolbarTitle();
-    }
-
     @Override
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_CURRENT_POSITION, mViewPager.getCurrentItem());
+    }
+
+    @OnPageChange(R.id.viewPager)
+    void onViewPagerPageChange() {
+        updateToolbarTitle();
     }
 
     private void prepareViewPager() {
