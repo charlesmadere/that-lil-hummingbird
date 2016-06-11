@@ -4,12 +4,12 @@ import android.content.Context;
 
 import com.charlesmadere.hummingbird.R;
 
-public abstract class BasePaginationAdapter extends BaseMultiAdapter {
+public abstract class BaseMultiPaginationAdapter extends BaseMultiAdapter {
 
     protected boolean mIsPaginating;
 
 
-    public BasePaginationAdapter(final Context context) {
+    public BaseMultiPaginationAdapter(final Context context) {
         super(context);
     }
 
