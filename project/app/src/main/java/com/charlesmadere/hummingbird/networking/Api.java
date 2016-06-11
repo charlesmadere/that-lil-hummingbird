@@ -754,10 +754,11 @@ public final class Api {
         Threading.runOnBackground(new Runnable() {
             @Override
             public void run() {
-                newFeed.hydrate();
-
-                if (oldFeed != null) {
+                if (oldFeed == null) {
+                    newFeed.hydrate();
+                } else {
                     oldFeed.merge(newFeed);
+                    oldFeed.hydrate();
                 }
 
                 Threading.runOnUi(new Runnable() {
