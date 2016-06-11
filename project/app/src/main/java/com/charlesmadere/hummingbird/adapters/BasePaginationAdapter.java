@@ -27,7 +27,7 @@ public abstract class BasePaginationAdapter<T> extends BaseAdapter<T> implements
 
     @Override
     public final int getItemViewType(final int position) {
-        if (mIsPaginating) {
+        if (mIsPaginating && position == getItems().size()) {
             return R.layout.item_progress;
         } else {
             return getItemViewTypeForPosition(position);
