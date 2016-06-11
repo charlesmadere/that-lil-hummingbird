@@ -115,7 +115,7 @@ public abstract class BaseFeedFragment extends BaseFragment implements
         mAdapter.setPaginating(false);
     }
 
-    protected void paginationError() {
+    protected void paginationNoMore() {
         mPaginator.setEnabled(false);
         mAdapter.setPaginating(false);
     }
@@ -177,9 +177,11 @@ public abstract class BaseFeedFragment extends BaseFragment implements
 
     protected static class PaginateFeedListener implements ApiResponse<Feed> {
         private final WeakReference<BaseFeedFragment> mFragmentReference;
+        private final int mStoriesSize;
 
-        protected PaginateFeedListener(final BaseFeedFragment fragment) {
+        protected PaginateFeedListener(final BaseFeedFragment fragment, final int storiesSize) {
             mFragmentReference = new WeakReference<>(fragment);
+            mStoriesSize = storiesSize;
         }
 
         @Override
@@ -187,7 +189,7 @@ public abstract class BaseFeedFragment extends BaseFragment implements
             final BaseFeedFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {
-                fragment.paginationError();
+                fragment.paginationNoMore();
             }
         }
 
@@ -196,7 +198,11 @@ public abstract class BaseFeedFragment extends BaseFragment implements
             final BaseFeedFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {
-                fragment.paginationComplete();
+                if (feed.getStories().size() <= mStoriesSize) {
+                    fragment.paginationNoMore();
+                } else {
+                    fragment.paginationComplete();
+                }
             }
         }
     }
