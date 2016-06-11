@@ -100,6 +100,11 @@ public abstract class BaseFeedFragment extends BaseFragment implements
         }
     }
 
+    @Override
+    public void paginate() {
+        mAdapter.setPaginating(true);
+    }
+
     protected void showError() {
         mRecyclerView.setVisibility(View.GONE);
         mEmpty.setVisibility(View.GONE);

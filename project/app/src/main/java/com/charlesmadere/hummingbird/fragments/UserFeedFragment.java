@@ -38,6 +38,7 @@ public class UserFeedFragment extends BaseFeedFragment {
 
     @Override
     public void paginate() {
+        super.paginate();
 
     }
 
