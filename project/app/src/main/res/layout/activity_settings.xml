@@ -76,8 +76,6 @@
                         <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:background="?attr/selectableItemBackground"
                             android:id="@+id/tvGooglePlayServicesError"
-                            android:paddingBottom="@dimen/root_padding_half"
-                            android:paddingTop="@dimen/root_padding_half"
                             android:text="@string/notification_polling_requires_google_play_services"
                             android:textColor="?attr/colorAccent"
                             android:visibility="gone"
