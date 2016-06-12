@@ -121,7 +121,7 @@ public class FollowersActivity extends BaseDrawerActivity implements
     @Override
     public void paginate() {
         mAdapter.setPaginating(true);
-        Api.getFollowingUsers(mUsername, new PaginateFollowersListener(this));
+        Api.getFollowingUsers(mUsername, mFeed, new PaginateFollowersListener(this));
     }
 
     protected void paginationComplete() {
