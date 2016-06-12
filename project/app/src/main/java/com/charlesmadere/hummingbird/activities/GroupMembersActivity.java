@@ -127,6 +127,16 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
         Api.getGroupMembers(mGroupId, mFeed, new PaginateGroupMembersListener(this));
     }
 
+    protected void paginationComplete() {
+        mAdapter.set(mFeed);
+        mAdapter.setPaginating(false);
+    }
+
+    protected void paginationNoMore() {
+        mPaginator.setEnabled(false);
+        mAdapter.setPaginating(false);
+    }
+
     private void showEmpty() {
         mRecyclerView.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
@@ -196,7 +206,7 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
             final GroupMembersActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                activity.showError();
+                activity.paginationNoMore();
             }
         }
 
@@ -206,9 +216,9 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
 
             if (activity != null && !activity.isDestroyed()) {
                 if (feed.getGroupMembers().size() <= mGroupMembersSize) {
-                    activity.showGroupMembers(feed);
+                    activity.paginationNoMore();
                 } else {
-                    activity.showEmpty();
+                    activity.paginationComplete();
                 }
             }
         }
