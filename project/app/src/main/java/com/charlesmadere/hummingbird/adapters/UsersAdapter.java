@@ -6,14 +6,14 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.User;
 
-public class UsersAdapter extends BaseAdapter<User> {
+public class UsersAdapter extends BasePaginationAdapter<User> {
 
     public UsersAdapter(final Context context) {
         super(context);
     }
 
     @Override
-    public int getItemViewType(final int position) {
+    public int getItemViewTypeForPosition(final int position) {
         return R.layout.item_user;
     }
 

@@ -15,6 +15,7 @@ import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
@@ -23,7 +24,7 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 
 public class FollowersActivity extends BaseDrawerActivity implements
-        SwipeRefreshLayout.OnRefreshListener {
+        RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "FollowersActivity";
     private static final String CNAME = FollowersActivity.class.getCanonicalName();
@@ -31,6 +32,7 @@ public class FollowersActivity extends BaseDrawerActivity implements
     private static final String KEY_FEED = "Feed";
 
     private Feed mFeed;
+    private RecyclerViewPaginator mPaginator;
     private String mUsername;
     private UsersAdapter mAdapter;
 
@@ -60,6 +62,11 @@ public class FollowersActivity extends BaseDrawerActivity implements
     @Override
     public String getActivityName() {
         return TAG;
+    }
+
+    @Override
+    public boolean isLoading() {
+        return mRefreshLayout.isRefreshing() || mAdapter.isPaginating();
     }
 
     @Override
@@ -108,6 +115,23 @@ public class FollowersActivity extends BaseDrawerActivity implements
         SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding_half);
         mAdapter = new UsersAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
+        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
+    }
+
+    @Override
+    public void paginate() {
+        mAdapter.setPaginating(true);
+        Api.getFollowingUsers(mUsername, new PaginateFollowersListener(this));
+    }
+
+    protected void paginationComplete() {
+        mAdapter.set(mFeed);
+        mAdapter.setPaginating(false);
+    }
+
+    protected void paginationNoMore() {
+        mPaginator.setEnabled(false);
+        mAdapter.setPaginating(false);
     }
 
     private void showEmpty() {
@@ -130,6 +154,7 @@ public class FollowersActivity extends BaseDrawerActivity implements
         mEmpty.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
+        mPaginator.setEnabled(true);
         mRefreshLayout.setRefreshing(false);
     }
 
@@ -159,6 +184,38 @@ public class FollowersActivity extends BaseDrawerActivity implements
                     activity.showFollowers(feed);
                 } else {
                     activity.showEmpty();
+                }
+            }
+        }
+    }
+
+    private static class PaginateFollowersListener implements ApiResponse<Feed> {
+        private final WeakReference<FollowersActivity> mActivityReference;
+        private final int mUsersSize;
+
+        private PaginateFollowersListener(final FollowersActivity activity) {
+            mActivityReference = new WeakReference<>(activity);
+            mUsersSize = activity.mFeed.getUsers().size();
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final FollowersActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.paginationNoMore();
+            }
+        }
+
+        @Override
+        public void success(final Feed feed) {
+            final FollowersActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                if (feed.getUsers().size() <= mUsersSize) {
+                    activity.paginationNoMore();
+                } else {
+                    activity.paginationComplete();
                 }
             }
         }
