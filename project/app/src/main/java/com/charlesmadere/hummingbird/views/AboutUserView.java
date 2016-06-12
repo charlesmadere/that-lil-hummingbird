@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
@@ -25,11 +26,14 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
     private NumberFormat mNumberFormat;
     private UserDigest mUserDigest;
 
-    @BindView(R.id.kvtvLivesIn)
-    KeyValueTextView mLivesIn;
+    @BindView(R.id.llLocation)
+    LinearLayout mLocationContainer;
 
-    @BindView(R.id.kvtvWaifuOrHusbando)
-    KeyValueTextView mWaifuOrHusbando;
+    @BindView(R.id.llWaifuOrHusbando)
+    LinearLayout mWaifuOrHusbandoContainer;
+
+    @BindView(R.id.llWebsite)
+    LinearLayout mWebsiteContainer;
 
     @BindView(R.id.tvAbout)
     TextView mAbout;
@@ -43,11 +47,20 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
     @BindView(R.id.tvFollowingHeader)
     TextView mFollowingHeader;
 
+    @BindView(R.id.tvLocationHeader)
+    TextView mLocationHeader;
+
     @BindView(R.id.tvTitle)
     TextView mTitle;
 
-    @BindView(R.id.tvWebsite)
-    TextView mWebsite;
+    @BindView(R.id.tvWaifuOrHusbandoBody)
+    TextView mWaifuOrHusbandoBody;
+
+    @BindView(R.id.tvWaifuOrHusbandoHeader)
+    TextView mWaifuOrHusbandoHeader;
+
+    @BindView(R.id.tvWebsiteHeader)
+    TextView mWebsiteHeader;
 
 
     public AboutUserView(final Context context, final AttributeSet attrs) {
@@ -82,12 +95,12 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
         context.startActivity(FollowingActivity.getLaunchIntent(context, mUserDigest.getUserId()));
     }
 
-    @OnClick(R.id.kvtvWaifuOrHusbando)
+    @OnClick(R.id.llWaifuOrHusbando)
     void onWaifuOrHusbandoClick() {
         // TODO
     }
 
-    @OnClick(R.id.tvWebsite)
+    @OnClick(R.id.llWebsite)
     void onWebsiteClick() {
         MiscUtils.openUrl(getContext(), mUserDigest.getUser().getWebsite());
     }
@@ -108,25 +121,25 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
         }
 
         if (user.hasWaifuOrHusbando()) {
-            mWaifuOrHusbando.setText(res.getText(user.getWaifuOrHusbando().getExtendedTextResId()),
-                    user.getWaifu());
-            mWaifuOrHusbando.setVisibility(VISIBLE);
+            mWaifuOrHusbandoHeader.setText(user.getWaifu());
+            mWaifuOrHusbandoBody.setText(user.getWaifuOrHusbando().getTextResId());
+            mWaifuOrHusbandoContainer.setVisibility(VISIBLE);
         } else {
-            mWaifuOrHusbando.setVisibility(GONE);
+            mWaifuOrHusbandoContainer.setVisibility(GONE);
         }
 
         if (user.hasLocation()) {
-            mLivesIn.setText(res.getText(R.string.lives_in), user.getLocation());
-            mLivesIn.setVisibility(VISIBLE);
+            mLocationHeader.setText(user.getLocation());
+            mLocationContainer.setVisibility(VISIBLE);
         } else {
-            mLivesIn.setVisibility(GONE);
+            mLocationContainer.setVisibility(GONE);
         }
 
         if (user.hasWebsite()) {
-            mWebsite.setText(user.getWebsite());
-            mWebsite.setVisibility(VISIBLE);
+            mWebsiteHeader.setText(user.getWebsite());
+            mWebsiteContainer.setVisibility(VISIBLE);
         } else {
-            mWebsite.setVisibility(GONE);
+            mWebsiteContainer.setVisibility(GONE);
         }
 
         mFollowersHeader.setText(mNumberFormat.format(user.getFollowerCount()));
