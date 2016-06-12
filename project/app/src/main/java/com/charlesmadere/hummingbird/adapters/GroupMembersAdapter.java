@@ -6,14 +6,14 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.GroupMember;
 
-public class GroupMembersAdapter extends BaseAdapter<GroupMember> {
+public class GroupMembersAdapter extends BasePaginationAdapter<GroupMember> {
 
     public GroupMembersAdapter(final Context context) {
         super(context);
     }
 
     @Override
-    public int getItemViewType(final int position) {
+    public int getItemViewTypeForPosition(final int position) {
         return R.layout.item_group_member;
     }
 

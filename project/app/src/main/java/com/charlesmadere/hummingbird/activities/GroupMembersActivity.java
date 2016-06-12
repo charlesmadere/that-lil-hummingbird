@@ -15,6 +15,7 @@ import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
@@ -23,7 +24,7 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 
 public class GroupMembersActivity extends BaseDrawerActivity implements
-        SwipeRefreshLayout.OnRefreshListener {
+        RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "GroupMembersActivity";
     private static final String CNAME = GroupMembersActivity.class.getCanonicalName();
@@ -33,6 +34,7 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
 
     private Feed mFeed;
     private GroupMembersAdapter mAdapter;
+    private RecyclerViewPaginator mPaginator;
     private String mGroupId;
 
     @BindView(R.id.llEmpty)
@@ -63,6 +65,11 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
     @Override
     public String getActivityName() {
         return TAG;
+    }
+
+    @Override
+    public boolean isLoading() {
+        return mRefreshLayout.isRefreshing() || mAdapter.isPaginating();
     }
 
     @Override
@@ -111,6 +118,13 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
         SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding_half);
         mAdapter = new GroupMembersAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
+        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
+    }
+
+    @Override
+    public void paginate() {
+        mAdapter.setPaginating(true);
+        Api.getGroupMembers(mGroupId, mFeed, new PaginateGroupMembersListener(this));
     }
 
     private void showEmpty() {
@@ -133,6 +147,7 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
         mEmpty.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
+        mPaginator.setEnabled(true);
         mRefreshLayout.setRefreshing(false);
     }
 
@@ -159,6 +174,38 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
 
             if (activity != null && !activity.isDestroyed()) {
                 if (feed.hasGroupMembers()) {
+                    activity.showGroupMembers(feed);
+                } else {
+                    activity.showEmpty();
+                }
+            }
+        }
+    }
+
+    private static class PaginateGroupMembersListener implements ApiResponse<Feed> {
+        private final WeakReference<GroupMembersActivity> mActivityReference;
+        private final int mGroupMembersSize;
+
+        private PaginateGroupMembersListener(final GroupMembersActivity activity) {
+            mActivityReference = new WeakReference<>(activity);
+            mGroupMembersSize = activity.mFeed.getGroupMembers().size();
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final GroupMembersActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.showError();
+            }
+        }
+
+        @Override
+        public void success(final Feed feed) {
+            final GroupMembersActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                if (feed.getGroupMembers().size() <= mGroupMembersSize) {
                     activity.showGroupMembers(feed);
                 } else {
                     activity.showEmpty();
