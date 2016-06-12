@@ -81,7 +81,7 @@ public class FollowingActivity extends BaseDrawerActivity implements
 
         final Intent intent = getIntent();
         mUsername = intent.getStringExtra(EXTRA_USERNAME);
-        setTitle(getString(R.string.following_x, mUsername));
+        getSupportActionBar().setSubtitle(mUsername);
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mFeed = savedInstanceState.getParcelable(KEY_FEED);

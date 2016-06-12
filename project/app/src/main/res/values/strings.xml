@@ -186,6 +186,7 @@
     <string name="not_yet_aired">Not Yet Aired</string>
     <string name="nsfw">NSFW</string>
     <string name="nsfw_content">NSFW content</string>
+    <string name="of_x">of %1$s</string>
     <string name="ok">OK</string>
     <string name="ona">ONA</string>
     <string name="on_hold">On Hold</string>

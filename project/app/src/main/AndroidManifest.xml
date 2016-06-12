@@ -30,12 +30,12 @@
             android:windowSoftInputMode="adjustResize|stateUnchanged" />
 
         <activity
-            android:label=""
+            android:label="@string/followers"
             android:name=".activities.FollowersActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
         <activity
-            android:label=""
+            android:label="@string/following"
             android:name=".activities.FollowingActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
