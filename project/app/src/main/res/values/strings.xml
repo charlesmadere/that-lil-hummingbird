@@ -144,6 +144,7 @@
     <string name="library_updates">Library Updates</string>
     <string name="life_spent_on_anime">Life spent on anime</string>
     <string name="lives_in">Lives in</string>
+    <string name="location">Location</string>
     <string name="login">Login</string>
     <string name="log_viewer">Log Viewer</string>
     <string name="log_viewer_is_empty">Log Viewer is empty</string>

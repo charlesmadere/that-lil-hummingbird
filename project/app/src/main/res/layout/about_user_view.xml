@@ -41,13 +41,28 @@
             tools:text="https://duckduckgo.com/"
             tools:visibility="visible"
             style="@style/ResponsiveWidthCardItem" />
-        <com.charlesmadere.hummingbird.views.KeyValueTextView
-            android:id="@+id/kvtvFollowers"
-            tools:text="Followers 20"
-            style="@style/ResponsiveWidthCardItem" />
-        <com.charlesmadere.hummingbird.views.KeyValueTextView
-            android:id="@+id/kvtvFollowing"
-            tools:text="Following 12"
-            style="@style/ResponsiveWidthCardItem" />
+        <LinearLayout
+            android:id="@+id/llFollowers"
+            style="@style/ResponsiveWidthCardItem">
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvFollowersHeader"
+                tools:text="20"
+                style="@style/ResponsiveWidthCardItemHeader" />
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvFollowersBody"
+                tools:text="@string/followers"
+                style="@style/ResponsiveWidthCardItemBody" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llFollowing"
+            style="@style/ResponsiveWidthCardItem">
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvFollowingHeader"
+                tools:text="12"
+                style="@style/ResponsiveWidthCardItemHeader" />
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:text="@string/following"
+                style="@style/ResponsiveWidthCardItemBody" />
+        </LinearLayout>
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.AboutUserView>

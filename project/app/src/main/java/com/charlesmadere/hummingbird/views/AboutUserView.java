@@ -25,12 +25,6 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
     private NumberFormat mNumberFormat;
     private UserDigest mUserDigest;
 
-    @BindView(R.id.kvtvFollowers)
-    KeyValueTextView mFollowers;
-
-    @BindView(R.id.kvtvFollowing)
-    KeyValueTextView mFollowing;
-
     @BindView(R.id.kvtvLivesIn)
     KeyValueTextView mLivesIn;
 
@@ -39,6 +33,15 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
 
     @BindView(R.id.tvAbout)
     TextView mAbout;
+
+    @BindView(R.id.tvFollowersBody)
+    TextView mFollowersBody;
+
+    @BindView(R.id.tvFollowersHeader)
+    TextView mFollowersHeader;
+
+    @BindView(R.id.tvFollowingHeader)
+    TextView mFollowingHeader;
 
     @BindView(R.id.tvTitle)
     TextView mTitle;
@@ -67,13 +70,13 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
         mNumberFormat = NumberFormat.getInstance();
     }
 
-    @OnClick(R.id.kvtvFollowers)
+    @OnClick(R.id.llFollowers)
     void onFollowersClick() {
         final Context context = getContext();
         context.startActivity(FollowersActivity.getLaunchIntent(context, mUserDigest.getUserId()));
     }
 
-    @OnClick(R.id.kvtvFollowing)
+    @OnClick(R.id.llFollowing)
     void onFollowingClick() {
         final Context context = getContext();
         context.startActivity(FollowingActivity.getLaunchIntent(context, mUserDigest.getUserId()));
@@ -126,10 +129,10 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
             mWebsite.setVisibility(GONE);
         }
 
-        mFollowers.setText(res.getQuantityText(R.plurals.followers, user.getFollowerCount()),
-                mNumberFormat.format(user.getFollowerCount()));
-        mFollowing.setText(res.getText(R.string.following),
-                mNumberFormat.format(user.getFollowingCount()));
+        mFollowersHeader.setText(mNumberFormat.format(user.getFollowerCount()));
+        mFollowersBody.setText(res.getQuantityText(R.plurals.followers, user.getFollowingCount()));
+
+        mFollowingHeader.setText(mNumberFormat.format(user.getFollowingCount()));
     }
 
 }
