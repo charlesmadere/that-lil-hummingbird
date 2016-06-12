@@ -15,6 +15,7 @@ import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
@@ -23,7 +24,7 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 
 public class GroupFeedFragment extends BaseFragment implements
-        SwipeRefreshLayout.OnRefreshListener {
+        RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "GroupFeedFragment";
     private static final String KEY_FEED = "Feed";
@@ -31,6 +32,7 @@ public class GroupFeedFragment extends BaseFragment implements
 
     private Feed mFeed;
     private FeedAdapter mAdapter;
+    private RecyclerViewPaginator mPaginator;
     private String mGroupId;
 
     @BindView(R.id.llEmpty)
@@ -64,6 +66,11 @@ public class GroupFeedFragment extends BaseFragment implements
     @Override
     public String getFragmentName() {
         return TAG;
+    }
+
+    @Override
+    public boolean isLoading() {
+        return mRefreshLayout.isRefreshing() || mAdapter.isPaginating();
     }
 
     @Override
@@ -107,12 +114,29 @@ public class GroupFeedFragment extends BaseFragment implements
         SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
         mAdapter = new FeedAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
+        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
 
         if (mFeed == null) {
             fetchGroupStories();
         } else {
             showGroupStories(mFeed);
         }
+    }
+
+    @Override
+    public void paginate() {
+        mAdapter.setPaginating(true);
+        Api.getGroupStories(mGroupId, mFeed, new PaginateGroupStoriesListener(this));
+    }
+
+    protected void paginationComplete() {
+        mAdapter.set(mFeed);
+        mAdapter.setPaginating(false);
+    }
+
+    protected void paginationNoMore() {
+        mPaginator.setEnabled(false);
+        mAdapter.setPaginating(false);
     }
 
     private void showError() {
@@ -135,6 +159,7 @@ public class GroupFeedFragment extends BaseFragment implements
         mEmpty.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
+        mPaginator.setEnabled(true);
         mRefreshLayout.setRefreshing(false);
     }
 
@@ -164,6 +189,38 @@ public class GroupFeedFragment extends BaseFragment implements
                     fragment.showGroupStories(feed);
                 } else {
                     fragment.showEmpty();
+                }
+            }
+        }
+    }
+
+    private static class PaginateGroupStoriesListener implements ApiResponse<Feed> {
+        private final WeakReference<GroupFeedFragment> mFragmentReference;
+        private final int mStoriesSize;
+
+        private PaginateGroupStoriesListener(final GroupFeedFragment fragment) {
+            mFragmentReference = new WeakReference<>(fragment);
+            mStoriesSize = fragment.mFeed.getStories().size();
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final GroupFeedFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                fragment.paginationNoMore();
+            }
+        }
+
+        @Override
+        public void success(final Feed feed) {
+            final GroupFeedFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                if (feed.getStories().size() <= mStoriesSize) {
+                    fragment.paginationNoMore();
+                } else {
+                    fragment.paginationComplete();
                 }
             }
         }
