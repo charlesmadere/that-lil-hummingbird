@@ -130,7 +130,7 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
         }
 
         mFollowersHeader.setText(mNumberFormat.format(user.getFollowerCount()));
-        mFollowersBody.setText(res.getQuantityText(R.plurals.followers, user.getFollowingCount()));
+        mFollowersBody.setText(res.getQuantityText(R.plurals.followers, user.getFollowerCount()));
 
         mFollowingHeader.setText(mNumberFormat.format(user.getFollowingCount()));
     }
