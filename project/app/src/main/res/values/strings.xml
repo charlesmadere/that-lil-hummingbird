@@ -18,6 +18,7 @@
     <string name="anime_breakdown">Anime Breakdown</string>
     <string name="anime_library">Anime Library</string>
     <string name="anime_library_is_empty">Anime library is empty</string>
+    <string name="anime_review">Anime Review</string>
     <string name="apps">Apps</string>
     <string name="app_written_by">App written by</string>
     <string name="as_x">as %1$s</string>
@@ -150,6 +151,7 @@
     <string name="log_viewer_is_empty">Log Viewer is empty</string>
     <string name="manga">Manga</string>
     <string name="manga_library">Manga Library</string>
+    <string name="manga_review">Manga Review</string>
     <string name="member">Member</string>
     <string name="members">Members</string>
     <string name="miscellaneous">Miscellaneous</string>

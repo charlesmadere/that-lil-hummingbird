@@ -50,7 +50,7 @@ public class AnimeReviewActivity extends BaseDrawerActivity {
 
         final Intent intent = getIntent();
         final AnimeDigest.Review review = intent.getParcelableExtra(EXTRA_REVIEW);
-        setTitle(getString(R.string.review_of_x, review.getAnimeTitle()));
+        getSupportActionBar().setSubtitle(review.getAnimeTitle());
 
         mUserItemView.setContent(review.getUser());
         mContent.setText(review.getContent());

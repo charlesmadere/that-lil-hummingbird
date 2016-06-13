@@ -19,7 +19,7 @@
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
         <activity
-            android:label=""
+            android:label="@string/anime_review"
             android:name=".activities.AnimeReviewActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
@@ -50,7 +50,7 @@
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
         <activity
-            android:label=""
+            android:label="@string/group_members"
             android:name=".activities.GroupMembersActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
