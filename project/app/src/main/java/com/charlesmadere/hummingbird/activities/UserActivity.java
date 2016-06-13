@@ -148,7 +148,14 @@ public class UserActivity extends BaseDrawerActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(final Menu menu) {
-        // TODO
+        if (mUserDigest != null) {
+            if (mUserDigest.getUser().isFollowed()) {
+                menu.findItem(R.id.miUnfollow).setVisible(true);
+            } else {
+                menu.findItem(R.id.miFollow).setVisible(true);
+            }
+        }
+
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -206,6 +213,7 @@ public class UserActivity extends BaseDrawerActivity {
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);
 
+        supportInvalidateOptionsMenu();
         mSimpleProgressView.fadeOut();
     }
 
