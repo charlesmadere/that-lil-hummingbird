@@ -100,6 +100,7 @@
     <string name="filter">Filter</string>
     <string name="finished_airing">Finished airing</string>
     <string name="finished_airing_x">Finished airing %1$s</string>
+    <string name="follow">Follow</string>
     <string name="followers">Followers</string>
     <string name="followers_of_x">Followers of %1$s</string>
     <string name="following">Following</string>
@@ -266,6 +267,7 @@
     <string name="trending_groups">Trending Groups</string>
     <string name="tv">TV</string>
     <string name="type">Type</string>
+    <string name="unfollow">Unfollow</string>
     <string name="upcoming">Upcoming</string>
     <string name="updated_at_x">Updated at %1$s</string>
     <string name="use_notification_polling">Use notification polling</string>

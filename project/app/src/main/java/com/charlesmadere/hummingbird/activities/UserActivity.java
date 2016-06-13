@@ -10,6 +10,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
@@ -117,6 +118,12 @@ public class UserActivity extends BaseDrawerActivity {
         } else {
             showUserDigest(mUserDigest);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_user, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
