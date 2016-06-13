@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -32,6 +33,9 @@ public abstract class BaseFeedFragment extends BaseFragment implements
     protected FeedAdapter mAdapter;
     protected RecyclerViewPaginator mPaginator;
     protected String mUsername;
+
+    @BindView(R.id.floatingActionButton)
+    protected FloatingActionButton mReply;
 
     @BindView(R.id.llEmpty)
     protected LinearLayout mEmpty;
