@@ -11,6 +11,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -86,6 +87,10 @@ public class UserActivity extends BaseDrawerActivity {
         Api.getUserDigest(mUsername, new GetUserDigestListener(this));
     }
 
+    private void follow() {
+        // TODO
+    }
+
     @Override
     public String getActivityName() {
         return TAG;
@@ -124,6 +129,27 @@ public class UserActivity extends BaseDrawerActivity {
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.activity_user, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.miFollow:
+                follow();
+                return true;
+
+            case R.id.miUnfollow:
+                unfollow();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        // TODO
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -181,6 +207,10 @@ public class UserActivity extends BaseDrawerActivity {
         mTabLayout.setupWithViewPager(mViewPager);
 
         mSimpleProgressView.fadeOut();
+    }
+
+    private void unfollow() {
+        // TODO
     }
 
 
