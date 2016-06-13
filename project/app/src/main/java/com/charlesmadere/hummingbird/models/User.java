@@ -169,6 +169,10 @@ public class User implements Parcelable {
         return mData.mRatingType == RatingType.SIMPLE;
     }
 
+    public void toggleFollowed() {
+        mData.mIsFollowed = !mData.mIsFollowed;
+    }
+
     @Override
     public String toString() {
         return getId();

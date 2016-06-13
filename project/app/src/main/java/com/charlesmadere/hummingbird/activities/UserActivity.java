@@ -87,10 +87,6 @@ public class UserActivity extends BaseDrawerActivity {
         Api.getUserDigest(mUsername, new GetUserDigestListener(this));
     }
 
-    private void follow() {
-        // TODO
-    }
-
     @Override
     public String getActivityName() {
         return TAG;
@@ -135,11 +131,8 @@ public class UserActivity extends BaseDrawerActivity {
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.miFollow:
-                follow();
-                return true;
-
             case R.id.miUnfollow:
-                unfollow();
+                toggleFollowingOfUser();
                 return true;
         }
 
@@ -217,8 +210,10 @@ public class UserActivity extends BaseDrawerActivity {
         mSimpleProgressView.fadeOut();
     }
 
-    private void unfollow() {
-        // TODO
+    private void toggleFollowingOfUser() {
+        mUserDigest.getUser().toggleFollowed();
+        Api.toggleFollowingOfUser(mUsername);
+        supportInvalidateOptionsMenu();
     }
 
 
