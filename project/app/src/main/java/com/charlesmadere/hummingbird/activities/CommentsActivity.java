@@ -122,8 +122,15 @@ public class CommentsActivity extends BaseDrawerActivity implements
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.activity_comments, menu);
 
-        final MenuItem user = menu.findItem(R.id.miViewUser);
-        user.setTitle(getString(R.string.view_x, mCommentStory.getPoster().getId()));
+        final MenuItem poster = menu.findItem(R.id.miViewPoster);
+        poster.setTitle(getString(R.string.view_x, mCommentStory.getPosterId()));
+        poster.setVisible(true);
+
+        if (!mCommentStory.getPosterId().equalsIgnoreCase(mCommentStory.getUserId())) {
+            final MenuItem user = menu.findItem(R.id.miViewUser);
+            user.setTitle(getString(R.string.view_x, mCommentStory.getUserId()));
+            user.setVisible(true);
+        }
 
         if (mCommentStory.hasGroupId()) {
             final MenuItem group = menu.findItem(R.id.miViewGroup);
@@ -152,9 +159,14 @@ public class CommentsActivity extends BaseDrawerActivity implements
                 startActivity(GroupActivity.getLaunchIntent(this, group.getId(), group.getName()));
                 return true;
 
-            case R.id.miViewUser:
+            case R.id.miViewPoster:
                 final User poster = mCommentStory.getPoster();
                 startActivity(UserActivity.getLaunchIntent(this, poster));
+                return true;
+
+            case R.id.miViewUser:
+                final User user = mCommentStory.getUser();
+                startActivity(UserActivity.getLaunchIntent(this, user));
                 return true;
         }
 

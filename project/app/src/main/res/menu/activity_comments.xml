@@ -8,8 +8,14 @@
         android:title="@string/post_comment"
         compat:showAsAction="ifRoom" />
     <item
+        android:id="@+id/miViewPoster"
+        android:title="@string/view_poster"
+        android:visible="false"
+        compat:showAsAction="never" />
+    <item
         android:id="@+id/miViewUser"
         android:title="@string/view_user"
+        android:visible="false"
         compat:showAsAction="never" />
     <item
         android:id="@+id/miViewGroup"
