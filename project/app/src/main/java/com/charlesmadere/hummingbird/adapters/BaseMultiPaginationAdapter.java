@@ -30,11 +30,9 @@ public abstract class BaseMultiPaginationAdapter extends BaseMultiAdapter implem
         if (mIsPaginating && position == getItems().size()) {
             return R.layout.item_progress;
         } else {
-            return getItemViewTypeForPosition(position);
+            return super.getItemViewType(position);
         }
     }
-
-    public abstract int getItemViewTypeForPosition(final int position);
 
     @Override
     public boolean isPaginating() {
