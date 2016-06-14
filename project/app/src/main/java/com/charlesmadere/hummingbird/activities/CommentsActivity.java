@@ -26,6 +26,7 @@ import com.charlesmadere.hummingbird.models.Group;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
@@ -36,7 +37,7 @@ import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 
 public class CommentsActivity extends BaseDrawerActivity implements
-        SwipeRefreshLayout.OnRefreshListener {
+        RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "CommentsActivity";
     private static final String CNAME = CommentsActivity.class.getCanonicalName();
@@ -46,6 +47,7 @@ public class CommentsActivity extends BaseDrawerActivity implements
     private CommentsAdapter mAdapter;
     private CommentStory mCommentStory;
     private Feed mFeed;
+    private RecyclerViewPaginator mPaginator;
 
     @BindView(R.id.etComment)
     EditText mCommentField;
@@ -78,6 +80,11 @@ public class CommentsActivity extends BaseDrawerActivity implements
     private boolean isCommentFormValid() {
         final CharSequence text = mCommentField.getText();
         return !TextUtils.isEmpty(text) && TextUtils.getTrimmedLength(text) >= 1;
+    }
+
+    @Override
+    public boolean isLoading() {
+        return mRefreshLayout.isRefreshing() || mAdapter.isPaginating();
     }
 
     @Override
@@ -200,6 +207,22 @@ public class CommentsActivity extends BaseDrawerActivity implements
         SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding_half);
         mAdapter = new CommentsAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
+        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
+    }
+
+    @Override
+    public void paginate() {
+        // TODO
+    }
+
+    protected void paginationComplete() {
+        mAdapter.set(mCommentStory, mFeed);
+        mAdapter.setPaginating(false);
+    }
+
+    protected void paginationNoMore() {
+        mPaginator.setEnabled(false);
+        mAdapter.setPaginating(false);
     }
 
     private void postComment() {
@@ -261,6 +284,38 @@ public class CommentsActivity extends BaseDrawerActivity implements
 
             if (activity != null && !activity.isDestroyed()) {
                 activity.showFeed(feed);
+            }
+        }
+    }
+
+    private static class PaginateSubstoriesListener implements ApiResponse<Feed> {
+        private final WeakReference<CommentsActivity> mActivityReference;
+        private final int mSubstoriesSize;
+
+        private PaginateSubstoriesListener(final CommentsActivity activity) {
+            mActivityReference = new WeakReference<>(activity);
+            mSubstoriesSize = activity.mCommentStory.getSubstories().size();
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final CommentsActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.paginationNoMore();
+            }
+        }
+
+        @Override
+        public void success(final Feed feed) {
+            final CommentsActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                if (feed.getSubstories().size() <= mSubstoriesSize) {
+                    activity.paginationNoMore();
+                } else {
+                    activity.paginationComplete();
+                }
             }
         }
     }

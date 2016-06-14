@@ -11,7 +11,7 @@ import com.charlesmadere.hummingbird.models.ReplySubstory;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class CommentsAdapter extends BaseMultiAdapter {
+public class CommentsAdapter extends BaseMultiPaginationAdapter {
 
     public CommentsAdapter(final Context context) {
         super(context);
@@ -29,12 +29,9 @@ public class CommentsAdapter extends BaseMultiAdapter {
         final ArrayList<Object> list = new ArrayList<>();
         list.add(commentStory);
 
-        if (feed.hasSubstories()) {
-            for (final AbsSubstory substory : feed.getSubstories()) {
-                if (substory.getType() == AbsSubstory.Type.REPLY) {
-                    list.add(substory);
-                }
-            }
+        final ArrayList<AbsSubstory> substories = feed.getSubstories(AbsSubstory.Type.REPLY);
+        if (substories != null && !substories.isEmpty()) {
+            list.addAll(substories);
         }
 
         set(list);

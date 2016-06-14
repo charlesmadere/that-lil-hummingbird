@@ -89,6 +89,28 @@ public class Feed implements Parcelable {
     }
 
     @Nullable
+    public ArrayList<AbsSubstory> getSubstories(final AbsSubstory.Type type) {
+        if (!hasSubstories()) {
+            return null;
+        }
+
+        final ArrayList<AbsSubstory> substories = new ArrayList<>(mSubstories.size());
+
+        for (final AbsSubstory substory : mSubstories) {
+            if (substory.getType() == type) {
+                substories.add(substory);
+            }
+        }
+
+        if (substories.isEmpty()) {
+            return null;
+        } else {
+            substories.trimToSize();
+            return substories;
+        }
+    }
+
+    @Nullable
     public ArrayList<User> getUsers() {
         return mUsers;
     }
