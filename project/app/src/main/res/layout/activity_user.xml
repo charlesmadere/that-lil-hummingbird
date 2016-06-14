@@ -38,6 +38,11 @@
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        <android.support.design.widget.FloatingActionButton
+            android:src="@drawable/ic_reply_white_24dp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            style="@style/FloatingActionButton" />
     </android.support.design.widget.CoordinatorLayout>
     <include
         layout="@layout/simple_progress" />

@@ -51,6 +51,7 @@
     <string name="currently_watching_library_is_empty">Currently watching library is empty</string>
     <string name="day">Day</string>
     <string name="daily">Daily</string>
+    <string name="delete">Delete</string>
     <string name="delimiter">,\u0020</string>
     <string name="details">Details</string>
     <string name="dropped">Dropped</string>

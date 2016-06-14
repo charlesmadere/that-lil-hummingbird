@@ -3,6 +3,16 @@
 
     <style name="AlertDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
         <item name="colorAccent">@color/orange</item>
+        <item name="colorAccentSecondary">@color/orangeSecondary</item>
+        <item name="colorPrimary">@color/bar</item>
+        <item name="colorPrimaryDark">@color/barDark</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
+        <item name="colorAccent">@color/orange</item>
+        <item name="colorAccentSecondary">@color/orangeSecondary</item>
+        <item name="colorPrimary">@color/bar</item>
+        <item name="colorPrimaryDark">@color/barDark</item>
     </style>
 
 </resources>

@@ -28,10 +28,10 @@ public class FeedPost implements Parcelable {
 
 
     public FeedPost(final boolean adult, final String comment, final String userId) {
-        if (TextUtils.isEmpty(comment)) {
-            throw new IllegalArgumentException("comment can't be null / empty");
-        } else if (TextUtils.isEmpty(userId)) {
-            throw new IllegalArgumentException("userId can't be null / empty");
+        if (TextUtils.isEmpty(comment) || TextUtils.getTrimmedLength(comment) == 0) {
+            throw new IllegalArgumentException("comment can't be null / empty / whitespace");
+        } else if (TextUtils.isEmpty(userId) || TextUtils.getTrimmedLength(userId) == 0) {
+            throw new IllegalArgumentException("userId can't be null / empty / whitespace");
         }
 
         mAdult = adult;

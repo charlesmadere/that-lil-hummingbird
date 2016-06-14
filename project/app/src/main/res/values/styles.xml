@@ -534,10 +534,6 @@
         <item name="typeface">open_sans_extra_bold</item>
     </style>
 
-    <style name="SplashStatusBarSpace">
-        <item name="always_show">false</item>
-    </style>
-
     <style name="Switch">
         <item name="android:background">@null</item>
         <item name="android:clickable">false</item>

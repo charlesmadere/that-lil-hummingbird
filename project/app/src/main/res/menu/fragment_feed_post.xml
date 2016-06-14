@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:compat="http://schemas.android.com/apk/res-auto">
+    <item
+        android:enabled="false"
+        android:icon="@drawable/ic_delete"
+        android:id="@+id/miClear"
+        android:title="@string/clear"
+        compat:showAsAction="ifRoom" />
+    <item
+        android:enabled="false"
+        android:icon="@drawable/ic_send"
+        android:id="@+id/miPost"
+        android:title="@string/post"
+        compat:showAsAction="ifRoom" />
+    <item
+        android:checkable="true"
+        android:id="@+id/miNsfw"
+        android:title="@string/nsfw"
+        compat:showAsAction="ifRoom" />
+</menu>

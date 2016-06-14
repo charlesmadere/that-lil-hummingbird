@@ -5,5 +5,5 @@
         android:enabled="false"
         android:id="@+id/miClear"
         android:title="@string/clear"
-        compat:showAsAction="ifRoom" />
+        compat:showAsAction="ifRoom|withText" />
 </menu>

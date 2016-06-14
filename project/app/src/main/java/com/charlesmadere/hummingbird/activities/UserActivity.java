@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -14,12 +15,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.UserFragmentAdapter;
+import com.charlesmadere.hummingbird.fragments.FeedPostFragment;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
+import com.charlesmadere.hummingbird.models.FeedPost;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -31,8 +35,10 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import butterknife.OnPageChange;
 
-public class UserActivity extends BaseDrawerActivity {
+public class UserActivity extends BaseDrawerActivity implements FeedPostFragment.Listener {
 
     private static final String TAG = "UserActivity";
     private static final String CNAME = UserActivity.class.getCanonicalName();
@@ -52,6 +58,9 @@ public class UserActivity extends BaseDrawerActivity {
 
     @BindView(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout mCollapsingToolbarLayout;
+
+    @BindView(R.id.floatingActionButton)
+    FloatingActionButton mPostToFeed;
 
     @BindView(R.id.parallaxCoverImage)
     SimpleDraweeView mCoverImage;
@@ -128,6 +137,15 @@ public class UserActivity extends BaseDrawerActivity {
     }
 
     @Override
+    public void onFeedPostSubmit() {
+        final FeedPostFragment fragment = (FeedPostFragment) getSupportFragmentManager()
+                .findFragmentByTag(FeedPostFragment.TAG);
+        final FeedPost feedPost = new FeedPost(false, fragment.getFeedPostText(), mUsername);
+        Toast.makeText(this, feedPost.getComment(), Toast.LENGTH_LONG).show();
+        // TODO
+    }
+
+    @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.miFollow:
@@ -137,6 +155,11 @@ public class UserActivity extends BaseDrawerActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.floatingActionButton)
+    void onPostToFeedClick() {
+        FeedPostFragment.create().show(getSupportFragmentManager(), FeedPostFragment.TAG);
     }
 
     @Override
@@ -160,6 +183,11 @@ public class UserActivity extends BaseDrawerActivity {
         if (mUserDigest != null) {
             outState.putParcelable(KEY_USER_DIGEST, mUserDigest);
         }
+    }
+
+    @OnPageChange(R.id.viewPager)
+    void onViewPagerPageChange() {
+        updatePostToFeedVisibility();
     }
 
     private void showError() {
@@ -206,6 +234,7 @@ public class UserActivity extends BaseDrawerActivity {
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);
 
+        updatePostToFeedVisibility();
         supportInvalidateOptionsMenu();
         mSimpleProgressView.fadeOut();
     }
@@ -214,6 +243,14 @@ public class UserActivity extends BaseDrawerActivity {
         mUserDigest.getUser().toggleFollowed();
         Api.toggleFollowingOfUser(mUsername);
         supportInvalidateOptionsMenu();
+    }
+
+    private void updatePostToFeedVisibility() {
+        if (mViewPager.getCurrentItem() == UserFragmentAdapter.POSITION_FEED) {
+            mPostToFeed.show();
+        } else {
+            mPostToFeed.hide();
+        }
     }
 
 

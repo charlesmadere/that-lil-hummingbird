@@ -3,13 +3,13 @@
     xmlns:compat="http://schemas.android.com/apk/res-auto">
     <item
         android:enabled="false"
+        android:icon="@drawable/ic_send"
         android:id="@+id/miPostComment"
         android:title="@string/post_comment"
-        compat:showAsAction="ifRoom|withText" />
+        compat:showAsAction="ifRoom" />
     <item
         android:id="@+id/miViewUser"
         android:title="@string/view_user"
-        android:visible="true"
         compat:showAsAction="never" />
     <item
         android:id="@+id/miViewGroup"

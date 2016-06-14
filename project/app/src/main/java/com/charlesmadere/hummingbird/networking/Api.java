@@ -9,7 +9,6 @@ import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.RetrofitUtils;
 import com.charlesmadere.hummingbird.misc.Threading;
 import com.charlesmadere.hummingbird.misc.Timber;
-import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.CommentPost;
@@ -209,32 +208,6 @@ public final class Api {
             public void success(final UserDigest user) {
                 CurrentUser.set(user);
                 listener.success(user);
-            }
-        });
-    }
-
-    public static void getCurrentUserLibraryEntries(@Nullable final WatchingStatus watchingStatus,
-            final ApiResponse<ArrayList<LibraryEntry>> listener) {
-        getLibraryEntries(Preferences.Account.Username.get(), watchingStatus, listener);
-    }
-
-    public static void getFavoriteAnime(final String username,
-            final ApiResponse<ArrayList<AbsAnime>> listener) {
-        getApi().getFavoriteAnime(username).enqueue(new Callback<ArrayList<AbsAnime>>() {
-            @Override
-            public void onResponse(final Call<ArrayList<AbsAnime>> call,
-                    final Response<ArrayList<AbsAnime>> response) {
-                if (response.isSuccessful()) {
-                    listener.success(response.body());
-                } else {
-                    listener.failure(retrieveErrorInfo(response));
-                }
-            }
-
-            @Override
-            public void onFailure(final Call<ArrayList<AbsAnime>> call, final Throwable t) {
-                Timber.e(TAG, "get favorite anime for user (" + username + ") failed", t);
-                listener.failure(null);
             }
         });
     }

@@ -3,6 +3,9 @@
 
     <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/orange</item>
+        <item name="colorAccentSecondary">@color/orangeSecondary</item>
+        <item name="colorPrimary">@color/bar</item>
+        <item name="colorPrimaryDark">@color/barDark</item>
     </style>
 
     <style name="AppBarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -11,7 +14,8 @@
 
     <style name="BaseHummingbirdTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
-        <item name="buttonStyle">@style/ButtonTheme</item>
+        <item name="bottomSheetDialogTheme">@style/BottomSheetDialogTheme</item>
+        <item name="buttonStyle">@style/ButtonStyle</item>
         <item name="colorAccent">@color/orange</item>
         <item name="colorAccentSecondary">@color/orangeSecondary</item>
         <item name="colorButtonNormal">@color/bar</item>
@@ -38,7 +42,14 @@
         <item name="android:windowBackground">@color/barDark</item>
     </style>
 
-    <style name="ButtonTheme" parent="Widget.AppCompat.Button.Colored">
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="colorAccent">@color/orange</item>
+        <item name="colorAccentSecondary">@color/orangeSecondary</item>
+        <item name="colorPrimary">@color/bar</item>
+        <item name="colorPrimaryDark">@color/barDark</item>
+    </style>
+
+    <style name="ButtonStyle" parent="Widget.AppCompat.Button.Colored">
         <item name="android:paddingEnd">@dimen/root_padding_double</item>
         <item name="android:paddingStart">@dimen/root_padding_double</item>
     </style>

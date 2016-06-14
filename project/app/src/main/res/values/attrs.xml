@@ -44,8 +44,6 @@
         <attr name="height_ratio" format="integer" />
         <attr name="width_ratio" format="integer" />
 
-        <attr name="always_show" format="boolean" />
-
         <attr name="secondary_typeface" format="enum">
             <enum name="open_sans_bold" value="0" />
             <enum name="open_sans_extra_bold" value="1" />
