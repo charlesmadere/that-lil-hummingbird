@@ -77,8 +77,8 @@ public class FeedPostFragment extends BaseBottomSheetDialogFragment implements
     @Override
     public boolean onMenuItemClick(final MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.miClear:
-                mFeedPost.setText("");
+            case R.id.miNsfw:
+
                 return true;
 
             case R.id.miPost:

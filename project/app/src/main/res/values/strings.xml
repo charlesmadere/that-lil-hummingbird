@@ -189,6 +189,7 @@
     <string name="novel">Novel</string>
     <string name="not_yet_aired">Not Yet Aired</string>
     <string name="nsfw">NSFW</string>
+    <string name="nsfw_">NSFW?</string>
     <string name="nsfw_content">NSFW content</string>
     <string name="of_x">of %1$s</string>
     <string name="ok">OK</string>
@@ -243,6 +244,7 @@
     <string name="search_for_x_failed">Search for %1$s failed</string>
     <string name="season_x">Season %1$s</string>
     <string name="seen_x_of_y">Seen %1$d of %2$d</string>
+    <string name="select_all">Select All</string>
     <string name="settings">Settings</string>
     <string name="share">Share</string>
     <string name="show_all">Show All</string>
