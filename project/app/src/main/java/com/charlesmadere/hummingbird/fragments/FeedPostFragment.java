@@ -24,7 +24,6 @@ public class FeedPostFragment extends BaseBottomSheetDialogFragment implements
     public static final String TAG = "FeedPostFragment";
 
     private Listener mListener;
-    private MenuItem mClear;
     private MenuItem mPost;
 
     @BindView(R.id.etFeedPost)
@@ -69,18 +68,12 @@ public class FeedPostFragment extends BaseBottomSheetDialogFragment implements
     @OnTextChanged(R.id.etFeedPost)
     void onFeedPostTextChanged() {
         final String text = getFeedPostText();
-        final boolean isEmpty = TextUtils.isEmpty(text) || TextUtils.getTrimmedLength(text) == 0;
-        mClear.setEnabled(!isEmpty);
-        mPost.setEnabled(!isEmpty);
+        mPost.setEnabled(!TextUtils.isEmpty(text) && TextUtils.getTrimmedLength(text) >= 1);
     }
 
     @Override
     public boolean onMenuItemClick(final MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.miNsfw:
-
-                return true;
-
             case R.id.miPost:
                 mListener.onFeedPostSubmit();
                 dismiss();
@@ -100,7 +93,6 @@ public class FeedPostFragment extends BaseBottomSheetDialogFragment implements
         mToolbar.inflateMenu(R.menu.fragment_feed_post);
 
         final Menu menu = mToolbar.getMenu();
-        mClear = menu.findItem(R.id.miClear);
         mPost = menu.findItem(R.id.miPost);
 
         MiscUtils.openKeyboard(getContext(), mFeedPost);
