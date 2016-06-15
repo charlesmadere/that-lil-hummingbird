@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.UserFragmentAdapter;
@@ -140,8 +139,12 @@ public class UserActivity extends BaseDrawerActivity implements FeedPostFragment
     public void onFeedPostSubmit() {
         final FeedPostFragment fragment = (FeedPostFragment) getSupportFragmentManager()
                 .findFragmentByTag(FeedPostFragment.TAG);
-        final FeedPost feedPost = new FeedPost(false, fragment.getFeedPostText(), mUsername);
-        Toast.makeText(this, feedPost.getComment(), Toast.LENGTH_LONG).show();
+        final FeedPost feedPost = fragment.getFeedPost(mUsername);
+
+        if (feedPost == null) {
+            return;
+        }
+
         // TODO
     }
 

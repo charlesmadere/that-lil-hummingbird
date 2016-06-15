@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
+import com.charlesmadere.hummingbird.models.FeedPost;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -39,8 +40,14 @@ public class FeedPostFragment extends BaseBottomSheetDialogFragment {
     }
 
     @Nullable
-    public String getFeedPostText() {
-        return mFeedPost == null ? null : mFeedPost.getText().toString().trim();
+    public FeedPost getFeedPost(final String userId) {
+        final String text = mFeedPost.getText().toString().trim();
+
+        if (TextUtils.isEmpty(text)) {
+            return null;
+        }
+
+        return new FeedPost(mNsfw.isChecked(), text, userId);
     }
 
     @Override
@@ -89,7 +96,7 @@ public class FeedPostFragment extends BaseBottomSheetDialogFragment {
     }
 
     private void pollField() {
-        final String text = getFeedPostText();
+        final CharSequence text = mFeedPost.getText();
         mPost.setEnabled(!TextUtils.isEmpty(text) && TextUtils.getTrimmedLength(text) >= 1);
     }
 
