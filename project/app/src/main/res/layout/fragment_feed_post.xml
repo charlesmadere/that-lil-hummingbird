@@ -1,10 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:orientation="vertical">
-    <include
-        layout="@layout/toolbar" />
+    <RelativeLayout
+        style="@style/Toolbar">
+        <ImageButton
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/close"
+            android:id="@+id/ibClose"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:paddingEnd="@dimen/root_padding"
+            android:paddingStart="@dimen/root_padding"
+            android:src="@drawable/ic_close_white_24dp" />
+        <ImageButton
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/post"
+            android:id="@+id/ibPost"
+            android:layout_alignParentEnd="true"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:paddingEnd="@dimen/root_padding"
+            android:paddingStart="@dimen/root_padding"
+            android:src="@drawable/ic_send" />
+        <LinearLayout
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:id="@+id/llNsfw"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/root_padding"
+            android:layout_toStartOf="@id/ibPost"
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:paddingEnd="@dimen/root_padding"
+            android:paddingStart="@dimen/root_padding">
+            <CheckBox
+                android:background="@null"
+                android:clickable="false"
+                android:id="@+id/cbNsfw"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+            <android.support.v4.widget.Space
+                android:layout_height="match_parent"
+                android:layout_width="@dimen/root_padding_half" />
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/nsfw_"
+                android:textColor="?android:attr/textColorPrimary"
+                app:typeface="open_sans_semibold" />
+        </LinearLayout>
+    </RelativeLayout>
     <com.charlesmadere.hummingbird.views.TypefaceEditText
         android:background="@color/commentFieldBg"
         android:gravity="top"

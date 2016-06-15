@@ -3,34 +3,35 @@ package com.charlesmadere.hummingbird.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
-public class FeedPostFragment extends BaseBottomSheetDialogFragment implements
-        Toolbar.OnMenuItemClickListener, View.OnClickListener {
+public class FeedPostFragment extends BaseBottomSheetDialogFragment {
 
     public static final String TAG = "FeedPostFragment";
 
     private Listener mListener;
-    private MenuItem mPost;
+
+    @BindView(R.id.cbNsfw)
+    CheckBox mNsfw;
 
     @BindView(R.id.etFeedPost)
     EditText mFeedPost;
 
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+    @BindView(R.id.ibPost)
+    ImageButton mPost;
 
 
     public static FeedPostFragment create() {
@@ -53,8 +54,8 @@ public class FeedPostFragment extends BaseBottomSheetDialogFragment implements
         mListener = (Listener) MiscUtils.getActivity(context);
     }
 
-    @Override
-    public void onClick(final View v) {
+    @OnClick(R.id.ibClose)
+    void onCloseClick() {
         dismiss();
     }
 
@@ -67,35 +68,29 @@ public class FeedPostFragment extends BaseBottomSheetDialogFragment implements
 
     @OnTextChanged(R.id.etFeedPost)
     void onFeedPostTextChanged() {
-        final String text = getFeedPostText();
-        mPost.setEnabled(!TextUtils.isEmpty(text) && TextUtils.getTrimmedLength(text) >= 1);
+        pollField();
     }
 
-    @Override
-    public boolean onMenuItemClick(final MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.miPost:
-                mListener.onFeedPostSubmit();
-                dismiss();
-                return true;
-        }
+    @OnClick(R.id.llNsfw)
+    void onNsfwClick() {
+        mNsfw.setChecked(!mNsfw.isChecked());
+    }
 
-        return false;
+    @OnClick(R.id.ibPost)
+    void onPostClick() {
+        mListener.onFeedPostSubmit();
+        dismiss();
     }
 
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mToolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
-        mToolbar.setNavigationOnClickListener(this);
+        pollField();
+    }
 
-        mToolbar.setOnMenuItemClickListener(this);
-        mToolbar.inflateMenu(R.menu.fragment_feed_post);
-
-        final Menu menu = mToolbar.getMenu();
-        mPost = menu.findItem(R.id.miPost);
-
-        MiscUtils.openKeyboard(getContext(), mFeedPost);
+    private void pollField() {
+        final String text = getFeedPostText();
+        mPost.setEnabled(!TextUtils.isEmpty(text) && TextUtils.getTrimmedLength(text) >= 1);
     }
 
 
