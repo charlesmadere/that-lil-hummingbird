@@ -394,7 +394,7 @@
         <item name="android:drawablePadding">@dimen/root_padding</item>
         <item name="android:ellipsize">end</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:layout_height">@dimen/list_item_height</item>
+        <item name="android:layout_height">@dimen/navigation_drawer_item_height</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:lines">1</item>
         <item name="android:maxLines">1</item>

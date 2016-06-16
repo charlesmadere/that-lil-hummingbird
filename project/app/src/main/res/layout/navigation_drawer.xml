@@ -82,12 +82,17 @@
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
                 android:id="@+id/ndivSettings"
                 android:layout_below="@id/ndivSearch"
-                android:layout_marginBottom="@dimen/root_padding"
                 app:entry="settings"
+                style="@style/NavigationDrawerItemView" />
+            <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
+                android:id="@+id/ndivAppNews"
+                android:layout_below="@id/ndivSettings"
+                android:layout_marginBottom="@dimen/root_padding"
+                app:entry="app_news"
                 style="@style/NavigationDrawerItemView" />
             <FrameLayout
                 android:layout_alignParentBottom="true"
-                android:layout_below="@id/ndivSettings"
+                android:layout_below="@id/ndivAppNews"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent">
                 <View

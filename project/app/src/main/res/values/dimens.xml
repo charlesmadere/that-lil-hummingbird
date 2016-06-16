@@ -8,6 +8,7 @@
     <dimen name="central_content_width">280dp</dimen>
     <dimen name="list_item_height">48dp</dimen>
     <dimen name="navigation_bar_height">48dp</dimen>
+    <dimen name="navigation_drawer_item_height">42dp</dimen>
     <dimen name="navigation_drawer_view_width">280dp</dimen>
     <dimen name="parallax_cover_image_height">192dp</dimen>
     <dimen name="root_padding">16dp</dimen>

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.models.AppNews;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 import com.charlesmadere.hummingbird.views.NavigationDrawerView;
 
@@ -76,6 +77,10 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
         Intent intent = null;
 
         switch (v.getEntry()) {
+            case APP_NEWS:
+                intent = AppNewsActivity.getLaunchIntent(this);
+                break;
+
             case HOME:
                 intent = HomeActivity.getLaunchIntent(this);
                 break;
