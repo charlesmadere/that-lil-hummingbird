@@ -3,15 +3,33 @@ package com.charlesmadere.hummingbird.views;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.widget.TextView;
 
+import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AppNews;
 
+import java.text.NumberFormat;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AppNewsItemView extends CardView implements AdapterView<AppNews> {
 
-    // TODO
+    private AppNews mAppNews;
+    private NumberFormat mNumberFormat;
+
+    @BindView(R.id.tvBody)
+    TextView mBody;
+
+    @BindView(R.id.tvDate)
+    TextView mDate;
+
+    @BindView(R.id.tvLinks)
+    TextView mLinks;
+
+    @BindView(R.id.tvHead)
+    TextView mHead;
 
 
     public AppNewsItemView(final Context context, final AttributeSet attrs) {
@@ -27,11 +45,24 @@ public class AppNewsItemView extends CardView implements AdapterView<AppNews> {
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
+        mNumberFormat = NumberFormat.getInstance();
     }
 
     @Override
     public void setContent(final AppNews content) {
-        // TODO
+        mAppNews = content;
+
+        mHead.setText(content.getHead());
+        mDate.setText(String.valueOf(content.getEpoch()));
+        mBody.setText(content.getBody());
+
+        if (mAppNews.hasLinks()) {
+            mLinks.setText(getResources().getQuantityString(R.plurals.x_links,
+                    mAppNews.getLinks().size(), mNumberFormat.format(mAppNews.getLinks().size())));
+            mLinks.setVisibility(VISIBLE);
+        } else {
+            mLinks.setVisibility(GONE);
+        }
     }
 
 }
