@@ -386,6 +386,11 @@
         <item quantity="other">%1$s hours</item>
     </plurals>
 
+    <plurals name="x_links">
+        <item quantity="one">%1$s link</item>
+        <item quantity="other">%1$s links</item>
+    </plurals>
+
     <plurals name="x_members">
         <item quantity="one">%1$s member</item>
         <item quantity="other">%1$s members</item>
