@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
@@ -20,6 +21,9 @@ public class AppNewsItemView extends CardView implements AdapterView<AppNews> {
 
     private AppNews mAppNews;
     private NumberFormat mNumberFormat;
+
+    @BindView(R.id.ivStar)
+    ImageView mStar;
 
     @BindView(R.id.tvBody)
     TextView mBody;
@@ -43,6 +47,10 @@ public class AppNewsItemView extends CardView implements AdapterView<AppNews> {
         super(context, attrs, defStyleAttr);
     }
 
+    public AppNews getAppNews() {
+        return mAppNews;
+    }
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -54,6 +62,7 @@ public class AppNewsItemView extends CardView implements AdapterView<AppNews> {
     public void setContent(final AppNews content) {
         mAppNews = content;
 
+        mStar.setVisibility(content.isImportant() ? VISIBLE : INVISIBLE);
         mHead.setText(content.getHead());
         mDate.setText(String.valueOf(content.getEpoch()));
         mBody.setText(content.getBody());
