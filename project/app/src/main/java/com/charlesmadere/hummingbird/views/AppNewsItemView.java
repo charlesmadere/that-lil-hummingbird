@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
@@ -19,23 +18,13 @@ import butterknife.ButterKnife;
 
 public class AppNewsItemView extends CardView implements AdapterView<AppNews> {
 
-    private AppNews mAppNews;
     private NumberFormat mNumberFormat;
 
-    @BindView(R.id.ivStar)
-    ImageView mStar;
-
-    @BindView(R.id.tvBody)
-    TextView mBody;
-
-    @BindView(R.id.tvDate)
-    TextView mDate;
+    @BindView(R.id.internalAppNewsItemView)
+    InternalAppNewsItemView mInternalAppNewsItemView;
 
     @BindView(R.id.tvLinks)
     TextView mLinks;
-
-    @BindView(R.id.tvHead)
-    TextView mHead;
 
 
     public AppNewsItemView(final Context context, final AttributeSet attrs) {
@@ -48,7 +37,7 @@ public class AppNewsItemView extends CardView implements AdapterView<AppNews> {
     }
 
     public AppNews getAppNews() {
-        return mAppNews;
+        return mInternalAppNewsItemView.getAppNews();
     }
 
     @Override
@@ -60,16 +49,11 @@ public class AppNewsItemView extends CardView implements AdapterView<AppNews> {
 
     @Override
     public void setContent(final AppNews content) {
-        mAppNews = content;
+        mInternalAppNewsItemView.setContent(content);
 
-        mStar.setVisibility(content.isImportant() ? VISIBLE : INVISIBLE);
-        mHead.setText(content.getHead());
-        mDate.setText(String.valueOf(content.getEpoch()));
-        mBody.setText(content.getBody());
-
-        if (mAppNews.hasLinks()) {
+        if (content.hasLinks()) {
             mLinks.setText(getResources().getQuantityString(R.plurals.x_links,
-                    mAppNews.getLinks().size(), mNumberFormat.format(mAppNews.getLinks().size())));
+                    content.getLinks().size(), mNumberFormat.format(content.getLinks().size())));
             mLinks.setVisibility(VISIBLE);
         } else {
             mLinks.setVisibility(GONE);
