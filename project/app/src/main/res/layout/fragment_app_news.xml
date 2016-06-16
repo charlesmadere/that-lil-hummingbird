@@ -44,7 +44,6 @@
             android:id="@+id/tvBody"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:maxLines="2"
             tools:text="Bacon ipsum dolor amet corned beef alcatra fatback ribeye capicola sirloin tenderloin rump short loin pig brisket ham leberkas." />
         <LinearLayout
             android:id="@+id/llLinks"
