@@ -24,6 +24,17 @@
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
         <activity
+            android:label="@string/app_news"
+            android:launchMode="singleTop"
+            android:name=".activities.AppNewsActivity"
+            android:parentActivityName=".activities.HomeActivity"
+            android:theme="@style/HummingbirdTheme.WithDrawer">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.HomeActivity" />
+        </activity>
+
+        <activity
             android:label=""
             android:name=".activities.CommentsActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer"

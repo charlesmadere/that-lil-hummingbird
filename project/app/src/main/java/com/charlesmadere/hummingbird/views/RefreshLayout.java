@@ -82,29 +82,4 @@ public class RefreshLayout extends SwipeRefreshLayout {
         ta.recycle();
     }
 
-    /*
-     * https://code.google.com/p/android/issues/detail?id=77712
-     */
-    @Override
-    public void setRefreshing(final boolean refreshing) {
-        post(new Runnable() {
-            @Override
-            public void run() {
-                RefreshLayout.super.setRefreshing(refreshing);
-            }
-        });
-    }
-
-    public void setScrollingChild(final AbsListView view) {
-        scrollingChild = view;
-    }
-
-    public void setScrollingChild(final RecyclerView view) {
-        scrollingChild = view;
-    }
-
-    public void setScrollingChild(final ScrollView view) {
-        scrollingChild = view;
-    }
-
 }

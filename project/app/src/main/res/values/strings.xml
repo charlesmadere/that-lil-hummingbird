@@ -20,6 +20,7 @@
     <string name="anime_library_is_empty">Anime library is empty</string>
     <string name="anime_review">Anime Review</string>
     <string name="apps">Apps</string>
+    <string name="app_news">App News</string>
     <string name="app_written_by">App written by</string>
     <string name="as_x">as %1$s</string>
     <string name="atsuka_drawn_by">Atsuka drawn by</string>
@@ -66,6 +67,7 @@
     <string name="episode_length">Episode length</string>
     <string name="error_loading_anime">Error loading anime! Please check your network connection and try again.</string>
     <string name="error_loading_anime_library">Error loading anime library</string>
+    <string name="error_loading_app_news">Error loading app news</string>
     <string name="error_loading_comments">Error loading comments</string>
     <string name="error_loading_completed_library">Error loading completed library</string>
     <string name="error_loading_currently_watching_library">Error loading currently watching library</string>
@@ -164,6 +166,7 @@
     <string name="must_be_charging">Must be charging</string>
     <string name="must_be_on_wifi">Must be on wifi</string>
     <string name="night">Night</string>
+    <string name="no_app_news">No app news</string>
     <string name="no_bio_available">No bio available</string>
     <string name="no_castings">No castings</string>
     <string name="no_characters">No characters</string>

@@ -97,23 +97,30 @@ public class NavigationDrawerItemView extends AppCompatTextView {
 
 
     public enum Entry {
+        APP_NEWS(R.drawable.ic_new_releases, R.string.app_news),
         HOME(R.drawable.ic_home, R.string.home),
         NOTIFICATIONS(R.drawable.ic_notifications, R.string.notifications),
         SEARCH(R.drawable.ic_search, R.string.search),
         SETTINGS(R.drawable.ic_settings, R.string.settings);
 
+        @DrawableRes
         private final int mIconResId;
+
+        @StringRes
         private final int mTextResId;
+
 
         Entry(@DrawableRes final int iconResId, @StringRes final int textResId) {
             mIconResId = iconResId;
             mTextResId = textResId;
         }
 
+        @DrawableRes
         public int getIconResId() {
             return mIconResId;
         }
 
+        @StringRes
         public int getTextResId() {
             return mTextResId;
         }
