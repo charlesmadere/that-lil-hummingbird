@@ -15,6 +15,7 @@ import com.charlesmadere.hummingbird.models.AppNews;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.views.AppNewsItemView;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 
-public class AppNewsActivity extends BaseDrawerActivity implements
+public class AppNewsActivity extends BaseDrawerActivity implements AppNewsItemView.OnClickListener,
         SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "AppNewsActivity";
@@ -66,6 +67,11 @@ public class AppNewsActivity extends BaseDrawerActivity implements
     }
 
     @Override
+    public void onClick(final AppNewsItemView v) {
+
+    }
+
+    @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_news);
@@ -100,7 +106,7 @@ public class AppNewsActivity extends BaseDrawerActivity implements
         super.onViewsBound();
         mRefreshLayout.setOnRefreshListener(this);
         SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
-        mAdapter = new AppNewsAdapter(this);
+        mAdapter = new AppNewsAdapter(this, this);
         mRecyclerView.setAdapter(mAdapter);
     }
 

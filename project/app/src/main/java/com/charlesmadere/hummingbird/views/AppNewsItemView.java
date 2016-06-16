@@ -1,8 +1,10 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
@@ -63,6 +65,24 @@ public class AppNewsItemView extends CardView implements AdapterView<AppNews> {
         } else {
             mLinks.setVisibility(GONE);
         }
+    }
+
+    public void setOnClickListener(@Nullable final OnClickListener l) {
+        if (l == null) {
+            setClickable(false);
+        } else {
+            setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View view) {
+                    l.onClick(AppNewsItemView.this);
+                }
+            });
+        }
+    }
+
+
+    public interface OnClickListener {
+        void onClick(final AppNewsItemView v);
     }
 
 }

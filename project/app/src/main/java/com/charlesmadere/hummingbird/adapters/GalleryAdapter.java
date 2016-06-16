@@ -9,13 +9,17 @@ import com.charlesmadere.hummingbird.views.GalleryItemView;
 
 public class GalleryAdapter extends BaseAdapter<String> {
 
-    private final GalleryItemView.OnClickListener mOnCLickListener;
+    private final GalleryItemView.OnClickListener mOnClickListener;
 
+
+    public GalleryAdapter(final Context context) {
+        this(context, null);
+    }
 
     public GalleryAdapter(final Context context,
             @Nullable final GalleryItemView.OnClickListener onClickListener) {
         super(context);
-        mOnCLickListener = onClickListener;
+        mOnClickListener = onClickListener;
     }
 
     @Override
@@ -27,7 +31,7 @@ public class GalleryAdapter extends BaseAdapter<String> {
     public AdapterView.ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         final AdapterView.ViewHolder viewHolder = super.onCreateViewHolder(parent, viewType);
         final GalleryItemView view = (GalleryItemView) viewHolder.itemView;
-        view.setOnClickListener(mOnCLickListener);
+        view.setOnClickListener(mOnClickListener);
         return viewHolder;
     }
 
