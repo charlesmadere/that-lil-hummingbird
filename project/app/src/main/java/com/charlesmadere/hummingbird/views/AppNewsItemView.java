@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
@@ -18,10 +19,20 @@ import butterknife.ButterKnife;
 
 public class AppNewsItemView extends CardView implements AdapterView<AppNews> {
 
+    private AppNews mAppNews;
     private NumberFormat mNumberFormat;
 
-    @BindView(R.id.internalAppNewsItemView)
-    InternalAppNewsItemView mInternalAppNewsItemView;
+    @BindView(R.id.ivStar)
+    ImageView mStar;
+
+    @BindView(R.id.tvBody)
+    TextView mBody;
+
+    @BindView(R.id.tvDate)
+    TextView mDate;
+
+    @BindView(R.id.tvHead)
+    TextView mHead;
 
     @BindView(R.id.tvLinks)
     TextView mLinks;
@@ -37,7 +48,7 @@ public class AppNewsItemView extends CardView implements AdapterView<AppNews> {
     }
 
     public AppNews getAppNews() {
-        return mInternalAppNewsItemView.getAppNews();
+        return mAppNews;
     }
 
     @Override
@@ -49,11 +60,16 @@ public class AppNewsItemView extends CardView implements AdapterView<AppNews> {
 
     @Override
     public void setContent(final AppNews content) {
-        mInternalAppNewsItemView.setContent(content);
+        mAppNews = content;
 
-        if (content.hasLinks()) {
+        mStar.setVisibility(mAppNews.isImportant() ? VISIBLE : GONE);
+        mHead.setText(mAppNews.getHead());
+        mDate.setText(String.valueOf(content.getEpoch()));
+        mBody.setText(mAppNews.getBody());
+
+        if (mAppNews.hasLinks()) {
             mLinks.setText(getResources().getQuantityString(R.plurals.x_links,
-                    content.getLinks().size(), mNumberFormat.format(content.getLinks().size())));
+                    content.getLinks().size(), mNumberFormat.format(mAppNews.getLinks().size())));
             mLinks.setVisibility(VISIBLE);
         } else {
             mLinks.setVisibility(GONE);
