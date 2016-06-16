@@ -13,6 +13,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AppNewsAdapter;
 import com.charlesmadere.hummingbird.models.AppNews;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
+import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
@@ -51,7 +52,7 @@ public class AppNewsActivity extends BaseDrawerActivity implements
 
     private void fetchAppNews() {
         mRefreshLayout.setRefreshing(true);
-        // TODO
+        Api.getAppNews(new GetAppNewsListener(this));
     }
 
     @Override

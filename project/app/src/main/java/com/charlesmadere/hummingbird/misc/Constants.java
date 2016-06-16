@@ -2,7 +2,8 @@ package com.charlesmadere.hummingbird.misc;
 
 public final class Constants {
 
-    public static final String BASE_API_URL= "https://hummingbird.me/";
+    public static final String BASE_HUMMINGBIRD_API_URL= "https://hummingbird.me/";
+    public static final String BASE_WEBSITE_API_URL = "https://charlesmadere.github.io/that-lil-hummingbird-website/";
     public static final String CHARLES_TWITTER_URL = "https://twitter.com/charlesmadere";
     public static final String GITHUB_URL = "https://github.com/charlesmadere/that-lil-hummingbird";
     public static final String HUMMINGBIRD_URL = "https://hummingbird.me/";

@@ -10,6 +10,7 @@ import com.charlesmadere.hummingbird.misc.RetrofitUtils;
 import com.charlesmadere.hummingbird.misc.Threading;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
+import com.charlesmadere.hummingbird.models.AppNews;
 import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.CommentPost;
 import com.charlesmadere.hummingbird.models.CommentStory;
@@ -46,7 +47,8 @@ public final class Api {
 
     public static void addOrUpdateLibraryEntry(final String id, final LibraryUpdate libraryUpdate,
             final ApiResponse<LibraryEntry> listener) {
-        getApi().addOrUpdateLibraryEntry(id, libraryUpdate).enqueue(new Callback<LibraryEntry>() {
+        hummingbird().addOrUpdateLibraryEntry(id, libraryUpdate).enqueue(
+                new Callback<LibraryEntry>() {
             @Override
             public void onResponse(final Call<LibraryEntry> call,
                     final Response<LibraryEntry> response) {
@@ -72,7 +74,7 @@ public final class Api {
     }
 
     public static void authenticate(final AuthInfo authInfo, final ApiResponse<String> listener) {
-        getApi().authenticate(authInfo).enqueue(new Callback<String>() {
+        hummingbird().authenticate(authInfo).enqueue(new Callback<String>() {
             @Override
             public void onResponse(final Call<String> call, final Response<String> response) {
                 String body = null;
@@ -99,7 +101,8 @@ public final class Api {
     }
 
     public static void deleteStory(final String storyId, final ApiResponse<Boolean> listener) {
-        getApi().deleteStory(getAuthTokenCookieString(), storyId).enqueue(new Callback<Boolean>() {
+        hummingbird().deleteStory(getAuthTokenCookieString(), storyId).enqueue(
+                new Callback<Boolean>() {
             @Override
             public void onResponse(final Call<Boolean> call, final Response<Boolean> response) {
                 Boolean body = null;
@@ -124,7 +127,7 @@ public final class Api {
     }
 
     public static void deleteSubstory(final String substoryId, final ApiResponse<Boolean> listener) {
-        getApi().deleteSubstory(getAuthTokenCookieString(), substoryId).enqueue(
+        hummingbird().deleteSubstory(getAuthTokenCookieString(), substoryId).enqueue(
                 new Callback<Boolean>() {
             @Override
             public void onResponse(final Call<Boolean> call, final Response<Boolean> response) {
@@ -150,7 +153,7 @@ public final class Api {
     }
 
     public static void getAnimeDigest(final String animeId, final ApiResponse<AnimeDigest> listener) {
-        getApi().getAnimeDigest(getAuthTokenCookieString(), animeId).enqueue(
+        hummingbird().getAnimeDigest(getAuthTokenCookieString(), animeId).enqueue(
                 new Callback<AnimeDigest>() {
             private AnimeDigest mBody;
 
@@ -188,8 +191,24 @@ public final class Api {
         });
     }
 
-    private static HummingbirdApi getApi() {
-        return RetrofitUtils.getHummingbirdApi();
+    public static void getAppNews(final ApiResponse<ArrayList<AppNews>> listener) {
+        website().getAppNews().enqueue(new Callback<ArrayList<AppNews>>() {
+            @Override
+            public void onResponse(final Call<ArrayList<AppNews>> call,
+                    final Response<ArrayList<AppNews>> response) {
+                if (response.isSuccessful()) {
+                    listener.success(response.body());
+                } else {
+                    listener.failure(null);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<ArrayList<AppNews>> call, final Throwable t) {
+                Timber.e(TAG, "get app news failed", t);
+                listener.failure(null);
+            }
+        });
     }
 
     private static String getAuthTokenCookieString() {
@@ -220,7 +239,7 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getMetadata().getCursor();
 
-        getApi().getFollowedUsers(getAuthTokenCookieString(), username, page).enqueue(
+        hummingbird().getFollowedUsers(getAuthTokenCookieString(), username, page).enqueue(
                 new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
@@ -253,7 +272,7 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getMetadata().getCursor();
 
-        getApi().getFollowingUsers(getAuthTokenCookieString(), username, page).enqueue(
+        hummingbird().getFollowingUsers(getAuthTokenCookieString(), username, page).enqueue(
                 new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
@@ -279,7 +298,7 @@ public final class Api {
     }
 
     public static void getFranchise(final String franchiseId, final ApiResponse<Franchise> listener) {
-        getApi().getFranchise(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, franchiseId)
+        hummingbird().getFranchise(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, franchiseId)
                 .enqueue(new Callback<Franchise>() {
             @Override
             public void onResponse(final Call<Franchise> call, final Response<Franchise> response) {
@@ -299,8 +318,8 @@ public final class Api {
     }
 
     public static void getGroup(final String groupId, final ApiResponse<GroupDigest> listener) {
-        getApi().getGroup(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, groupId).enqueue(
-                new Callback<GroupDigest>() {
+        hummingbird().getGroup(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, groupId)
+                .enqueue(new Callback<GroupDigest>() {
             private GroupDigest mGroupDigest;
 
             @Override
@@ -345,7 +364,7 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getMetadata().getCursor();
 
-        getApi().getGroupMembers(getAuthTokenCookieString(), groupId, page).enqueue(
+        hummingbird().getGroupMembers(getAuthTokenCookieString(), groupId, page).enqueue(
                 new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
@@ -378,7 +397,7 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getMetadata().getCursor();
 
-        getApi().getGroupStories(getAuthTokenCookieString(), groupId, page).enqueue(
+        hummingbird().getGroupStories(getAuthTokenCookieString(), groupId, page).enqueue(
                 new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
@@ -406,7 +425,7 @@ public final class Api {
     public static void getLibraryEntries(final String username,
             @Nullable final WatchingStatus watchingStatus,
             final ApiResponse<ArrayList<LibraryEntry>> listener) {
-        getApi().getLibraryEntries(username, watchingStatus).enqueue(
+        hummingbird().getLibraryEntries(username, watchingStatus).enqueue(
                 new Callback<ArrayList<LibraryEntry>>() {
             @Override
             public void onResponse(final Call<ArrayList<LibraryEntry>> call,
@@ -428,7 +447,7 @@ public final class Api {
 
     public static void getMangaDigest(final String mangaId,
             final ApiResponse<MangaDigest> listener) {
-        getApi().getMangaDigest(getAuthTokenCookieString(), mangaId).enqueue(
+        hummingbird().getMangaDigest(getAuthTokenCookieString(), mangaId).enqueue(
                 new Callback<MangaDigest>() {
             @Override
             public void onResponse(final Call<MangaDigest> call,
@@ -461,7 +480,7 @@ public final class Api {
     public static void getNewsFeed(@Nullable final Feed feed, final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getMetadata().getCursor();
 
-        getApi().getNewsFeed(getAuthTokenCookieString(), Boolean.TRUE, page).enqueue(
+        hummingbird().getNewsFeed(getAuthTokenCookieString(), Boolean.TRUE, page).enqueue(
                 new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
@@ -487,8 +506,8 @@ public final class Api {
     }
 
     public static void getNotifications(final ApiResponse<Feed> listener) {
-        getApi().getNotifications(getAuthTokenCookieString(), Constants.MIMETYPE_JSON).enqueue(
-                new Callback<Feed>() {
+        hummingbird().getNotifications(getAuthTokenCookieString(), Constants.MIMETYPE_JSON)
+                .enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 Feed body = null;
@@ -513,7 +532,8 @@ public final class Api {
     }
 
     public static void getSubstories(final String storyId, final ApiResponse<Feed> listener) {
-        getApi().getSubstories(getAuthTokenCookieString(), storyId).enqueue(new Callback<Feed>() {
+        hummingbird().getSubstories(getAuthTokenCookieString(), storyId).enqueue(
+                new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 Feed body = null;
@@ -538,8 +558,8 @@ public final class Api {
     }
 
     public static void getUser(final String username, final ApiResponse<User> listener) {
-        getApi().getUser(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, username).enqueue(
-                new Callback<User>() {
+        hummingbird().getUser(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, username)
+                .enqueue(new Callback<User>() {
             @Override
             public void onResponse(final Call<User> call, final Response<User> response) {
                 User body = null;
@@ -564,7 +584,7 @@ public final class Api {
     }
 
     public static void getUserDigest(final String username, final ApiResponse<UserDigest> listener) {
-        getApi().getUserDigest(getAuthTokenCookieString(), username).enqueue(
+        hummingbird().getUserDigest(getAuthTokenCookieString(), username).enqueue(
                 new Callback<UserDigest>() {
             private UserDigest mBody;
 
@@ -631,8 +651,8 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getMetadata().getCursor();
 
-        getApi().getUserGroups(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, userId, page)
-                .enqueue(new Callback<Feed>() {
+        hummingbird().getUserGroups(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, userId,
+                page).enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 Feed body = null;
@@ -664,8 +684,8 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getMetadata().getCursor();
 
-        getApi().getUserReviews(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, userId, page)
-                .enqueue(new Callback<Feed>() {
+        hummingbird().getUserReviews(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, userId,
+                page).enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 Feed body = null;
@@ -697,7 +717,7 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getMetadata().getCursor();
 
-        getApi().getUserStories(getAuthTokenCookieString(), username, page).enqueue(
+        hummingbird().getUserStories(getAuthTokenCookieString(), username, page).enqueue(
                 new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
@@ -749,8 +769,8 @@ public final class Api {
     }
 
     public static void favoriteQuote(final AnimeDigest.Quote quote) {
-        getApi().favoriteQuote(getAuthTokenCookieString(), quote.getId(), quote.toJson()).enqueue(
-                new Callback<Void>() {
+        hummingbird().favoriteQuote(getAuthTokenCookieString(), quote.getId(), quote.toJson())
+                .enqueue(new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
                 // do nothing
@@ -763,8 +783,12 @@ public final class Api {
         });
     }
 
+    private static HummingbirdApi hummingbird() {
+        return RetrofitUtils.getHummingbirdApi();
+    }
+
     public static void likeStory(final CommentStory story) {
-        getApi().likeStory(getAuthTokenCookieString(), story.getId(), story.getLikeJson())
+        hummingbird().likeStory(getAuthTokenCookieString(), story.getId(), story.getLikeJson())
                 .enqueue(new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
@@ -779,7 +803,7 @@ public final class Api {
     }
 
     public static void postComment(final CommentPost commentPost, final ApiResponse<Void> listener) {
-        getApi().postComment(getAuthTokenCookieString(), commentPost.toJson()).enqueue(
+        hummingbird().postComment(getAuthTokenCookieString(), commentPost.toJson()).enqueue(
                 new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
@@ -799,7 +823,7 @@ public final class Api {
     }
 
     public static void postToFeed(final FeedPost feedPost, final ApiResponse<Void> listener) {
-        getApi().postToFeed(getAuthTokenCookieString(), feedPost.toJson()).enqueue(
+        hummingbird().postToFeed(getAuthTokenCookieString(), feedPost.toJson()).enqueue(
                 new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
@@ -820,7 +844,7 @@ public final class Api {
 
     @Nullable
     private static ErrorInfo retrieveErrorInfo(final Response response) {
-        final Retrofit retrofit = RetrofitUtils.getRetrofit();
+        final Retrofit retrofit = RetrofitUtils.getHummingbirdRetrofit();
         final Converter<ResponseBody, ErrorInfo> converter = retrofit
                 .responseBodyConverter(ErrorInfo.class, new Annotation[0]);
 
@@ -842,7 +866,8 @@ public final class Api {
 
     public static void search(final SearchScope scope, final String query,
             final ApiResponse<SearchBundle> listener) {
-        getApi().search(scope, SearchDepth.INSTANT, query).enqueue(new Callback<SearchBundle>() {
+        hummingbird().search(scope, SearchDepth.INSTANT, query).enqueue(
+                new Callback<SearchBundle>() {
             @Override
             public void onResponse(final Call<SearchBundle> call,
                     final Response<SearchBundle> response) {
@@ -862,7 +887,7 @@ public final class Api {
     }
 
     public static void toggleFollowingOfUser(final String userId) {
-        getApi().toggleFollowingOfUser(getAuthTokenCookieString(), userId).enqueue(
+        hummingbird().toggleFollowingOfUser(getAuthTokenCookieString(), userId).enqueue(
                 new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
@@ -874,6 +899,10 @@ public final class Api {
                 Timber.e(TAG, "toggle following of user (" + userId + ") failed", t);
             }
         });
+    }
+
+    private static WebsiteApi website() {
+        return RetrofitUtils.getWebsiteApi();
     }
 
 }

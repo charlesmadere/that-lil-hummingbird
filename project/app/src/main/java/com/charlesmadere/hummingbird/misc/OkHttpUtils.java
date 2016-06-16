@@ -8,7 +8,7 @@ import okhttp3.OkHttpClient;
 public final class OkHttpUtils {
 
     private static final String TAG = "OkHttpUtils";
-    private static final long CACHE_MAX_SIZE = 1024L * 1024L; // 1 Megabyte
+    private static final long CACHE_MAX_SIZE = 1024L * 1024L * 4L; // 4 megabytes
 
     private static OkHttpClient sOkHttpClient;
 
