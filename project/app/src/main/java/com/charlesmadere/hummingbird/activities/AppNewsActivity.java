@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AppNewsAdapter;
+import com.charlesmadere.hummingbird.fragments.AppNewsFragment;
 import com.charlesmadere.hummingbird.models.AppNews;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -68,7 +69,8 @@ public class AppNewsActivity extends BaseDrawerActivity implements AppNewsItemVi
 
     @Override
     public void onClick(final AppNewsItemView v) {
-
+        AppNewsFragment.create(v.getAppNews()).show(getSupportFragmentManager(),
+                AppNewsFragment.TAG);
     }
 
     @Override
