@@ -82,6 +82,11 @@
                             app:typeface="open_sans_semibold"
                             tools:visibility="visible"
                             style="@style/ResponsiveWidthCardItemBody.Standalone" />
+                        <com.charlesmadere.hummingbird.views.CheckablePreferenceView
+                            android:id="@+id/cpvUseNotificationPolling"
+                            app:checkable_type="switch_compat"
+                            app:titleText="@string/use_notification_polling"
+                            style="@style/ResponsiveWidthCardItem.Switch" />
                         <com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout
                             android:id="@+id/llUseNotificationPolling"
                             style="@style/ResponsiveWidthCardItem.Switch">

@@ -25,6 +25,7 @@ import com.charlesmadere.hummingbird.models.NightMode;
 import com.charlesmadere.hummingbird.models.PollFrequency;
 import com.charlesmadere.hummingbird.models.TitleType;
 import com.charlesmadere.hummingbird.preferences.Preferences;
+import com.charlesmadere.hummingbird.views.CheckablePreferenceView;
 import com.charlesmadere.hummingbird.views.KeyValueTextView;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 import com.google.android.gms.common.ConnectionResult;
@@ -38,6 +39,9 @@ import static com.charlesmadere.hummingbird.misc.RequestCodes.GOOGLE_PLAY_SERVIC
 public class SettingsActivity extends BaseDrawerActivity {
 
     private static final String TAG = "SettingsActivity";
+
+    @BindView(R.id.cpvUseNotificationPolling)
+    CheckablePreferenceView mUseNotificationPollingC;
 
     @BindView(R.id.cbPowerRequired)
     CheckBox mPowerRequired;

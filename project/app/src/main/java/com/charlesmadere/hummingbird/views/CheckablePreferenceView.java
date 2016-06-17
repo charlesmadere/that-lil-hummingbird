@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
+import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,8 +82,6 @@ public class CheckablePreferenceView extends RelativeLayout implements
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        ButterKnife.bind(this);
-        mTitle.setText(mTitleText);
 
         final LayoutInflater inflater = LayoutInflater.from(getContext());
 
@@ -93,6 +92,9 @@ public class CheckablePreferenceView extends RelativeLayout implements
         } else {
             throw new RuntimeException("mCheckableType is an illegal value: " + mCheckableType);
         }
+
+        ButterKnife.bind(this);
+        mTitle.setText(mTitleText);
     }
 
     @Override
