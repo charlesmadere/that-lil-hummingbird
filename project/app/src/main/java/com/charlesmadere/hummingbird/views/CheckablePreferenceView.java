@@ -19,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CheckablePreferenceView extends RelativeLayout implements
-        Preference.OnPreferenceChangeListener<Boolean> {
+        Preference.OnPreferenceChangeListener<Boolean>, View.OnClickListener {
 
     private static final int CHECKABLE_TYPE_CHECKBOX = 0;
     private static final int CHECKABLE_TYPE_SWITCH_COMPAT = 1;
@@ -62,6 +62,11 @@ public class CheckablePreferenceView extends RelativeLayout implements
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         update();
+    }
+
+    @Override
+    public void onClick(final View view) {
+        mPreference.toggle();
     }
 
     @Override
@@ -109,6 +114,7 @@ public class CheckablePreferenceView extends RelativeLayout implements
         mPreference = preference;
         mPreference.addListener(this);
         update();
+        setOnClickListener(this);
     }
 
     @Override
