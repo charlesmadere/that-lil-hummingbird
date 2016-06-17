@@ -23,5 +23,6 @@
     <dimen name="text_small">12sp</dimen>
     <dimen name="text_xlarge">18sp</dimen>
     <dimen name="text_xxlarge">20sp</dimen>
+    <dimen name="text_xxxlarge">24sp</dimen>
 
 </resources>

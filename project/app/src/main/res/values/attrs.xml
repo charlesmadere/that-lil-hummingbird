@@ -10,9 +10,24 @@
         <attr name="textColor" format="color" />
         <attr name="textSize" format="dimension" />
     </declare-styleable>
+    
+    <declare-styleable name="CheckablePreferenceView">
+        <attr name="descriptionText" format="string" />
+        <attr name="titleText" format="string" />
+        <attr name="checkable_type" format="enum">
+            <enum name="checkbox" value="0" />
+            <enum name="switch_compat" value="1" />
+        </attr>
+    </declare-styleable>
 
     <declare-styleable name="GroupEnabledLinearLayout">
         <attr name="start_enabled" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="HeadBodyItemView">
+        <attr name="bodyText" format="string" />
+        <attr name="headText" format="string" />
+        <attr name="iconDrawable" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="KeyValueTextView">

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class AppNews implements Parcelable {
 
@@ -29,6 +30,9 @@ public class AppNews implements Parcelable {
     @SerializedName("id")
     private String mId;
 
+    // hydrated fields
+    private SimpleDate mDate;
+
 
     @Override
     public boolean equals(final Object o) {
@@ -39,8 +43,12 @@ public class AppNews implements Parcelable {
         return mBody;
     }
 
-    public long getEpoch() {
-        return mEpoch;
+    public SimpleDate getDate() {
+        if (mDate == null) {
+            mDate = new SimpleDate(TimeUnit.SECONDS.toMillis(mEpoch));
+        }
+
+        return mDate;
     }
 
     public String getHead() {
@@ -87,6 +95,7 @@ public class AppNews implements Parcelable {
         dest.writeString(mBody);
         dest.writeString(mHead);
         dest.writeString(mId);
+        dest.writeParcelable(mDate, flags);
     }
 
     public static final Creator<AppNews> CREATOR = new Creator<AppNews>() {
@@ -99,6 +108,7 @@ public class AppNews implements Parcelable {
             an.mBody = source.readString();
             an.mHead = source.readString();
             an.mId = source.readString();
+            an.mDate = source.readParcelable(SimpleDate.class.getClassLoader());
             return an;
         }
 

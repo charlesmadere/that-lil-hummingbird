@@ -9,10 +9,19 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="vertical">
-        <include
-            layout="@layout/toolbar" />
+        <ImageButton
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/close"
+            android:id="@+id/ibClose"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/root_padding_half"
+            android:layout_width="wrap_content"
+            android:padding="@dimen/root_padding_half"
+            android:src="@drawable/ic_close_24dp" />
         <LinearLayout
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/root_padding"
+            android:layout_marginStart="@dimen/root_padding"
             android:layout_width="match_parent"
             android:orientation="horizontal">
             <com.charlesmadere.hummingbird.views.TypefaceTextView
@@ -21,12 +30,13 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:textColor="?android:attr/textColorPrimary"
-                android:textSize="@dimen/text_xlarge"
+                android:textSize="@dimen/text_xxxlarge"
                 app:typeface="open_sans_bold"
                 tools:text="Thanks!" />
             <ImageView
                 android:id="@+id/ivStar"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/root_padding_half"
                 android:layout_width="wrap_content"
                 android:src="@drawable/ic_star_18dp"
                 android:visibility="gone"
@@ -36,18 +46,26 @@
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvDate"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/root_padding_half"
+            android:layout_marginEnd="@dimen/root_padding"
+            android:layout_marginStart="@dimen/root_padding"
             android:layout_width="wrap_content"
-            android:textSize="@dimen/text_small"
             tools:text="1/1/1970" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:ellipsize="end"
             android:id="@+id/tvBody"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/root_padding"
+            android:layout_marginBottom="@dimen/root_padding"
+            android:layout_marginStart="@dimen/root_padding"
             android:layout_width="wrap_content"
+            android:lineSpacingExtra="2dp"
+            android:textSize="@dimen/text_large"
             tools:text="Bacon ipsum dolor amet corned beef alcatra fatback ribeye capicola sirloin tenderloin rump short loin pig brisket ham leberkas." />
         <LinearLayout
             android:id="@+id/llLinks"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/root_padding"
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:visibility="gone" />

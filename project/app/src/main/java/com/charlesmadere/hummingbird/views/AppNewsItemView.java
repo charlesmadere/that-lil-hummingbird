@@ -64,7 +64,7 @@ public class AppNewsItemView extends CardView implements AdapterView<AppNews> {
 
         mStar.setVisibility(mAppNews.isImportant() ? VISIBLE : GONE);
         mHead.setText(mAppNews.getHead());
-        mDate.setText(String.valueOf(content.getEpoch()));
+        mDate.setText(mAppNews.getDate().getRelativeTimeText(getContext()));
         mBody.setText(mAppNews.getBody());
 
         if (mAppNews.hasLinks()) {

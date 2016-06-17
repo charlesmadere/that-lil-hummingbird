@@ -23,6 +23,7 @@
             <ImageView
                 android:id="@+id/ivStar"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/root_padding_half"
                 android:layout_width="wrap_content"
                 android:src="@drawable/ic_star_18dp"
                 android:visibility="gone"

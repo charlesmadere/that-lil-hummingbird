@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.HeadBodyItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ResponsiveWidthCardItem">
+    <ImageView
+        android:id="@+id/ivIcon"
+        android:layout_alignParentEnd="true"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:padding="@dimen/root_padding_half"
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/ic_star_18dp" />
+    <com.charlesmadere.hummingbird.views.TypefaceTextView
+        android:id="@+id/tvHead"
+        android:layout_alignParentStart="true"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_toStartOf="@id/ivIcon"
+        tools:text="Hello, World!"
+        style="@style/ResponsiveWidthCardItemHeader" />
+    <com.charlesmadere.hummingbird.views.TypefaceTextView
+        android:id="@+id/tvBody"
+        android:layout_alignParentStart="true"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_below="@id/tvHead"
+        android:layout_toStartOf="@id/ivIcon"
+        tools:text="Hello, World!"
+        style="@style/ResponsiveWidthCardItemBody" />
+</com.charlesmadere.hummingbird.views.HeadBodyItemView>
