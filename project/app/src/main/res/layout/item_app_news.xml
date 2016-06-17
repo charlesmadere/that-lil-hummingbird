@@ -31,25 +31,34 @@
                 tools:visibility="visible" />
         </LinearLayout>
         <com.charlesmadere.hummingbird.views.TypefaceTextView
-            android:id="@+id/tvDate"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textSize="@dimen/text_small"
-            tools:text="1/1/1970" />
-        <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:ellipsize="end"
             android:id="@+id/tvBody"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/root_padding_quarter"
             android:layout_width="wrap_content"
             android:maxLines="2"
             tools:text="Bacon ipsum dolor amet corned beef alcatra fatback ribeye capicola sirloin tenderloin rump short loin pig brisket ham leberkas." />
-        <com.charlesmadere.hummingbird.views.TypefaceTextView
-            android:id="@+id/tvLinks"
+        <LinearLayout
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textSize="@dimen/text_small"
-            android:visibility="gone"
-            tools:text="3 links"
-            tools:visibility="visible" />
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvDate"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/text_small"
+                tools:text="1/1/1970" />
+            <android.support.v4.widget.Space
+                android:layout_height="1dp"
+                android:layout_width="@dimen/root_padding" />
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvLinks"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/text_small"
+                android:visibility="gone"
+                tools:text="3 links"
+                tools:visibility="visible" />
+        </LinearLayout>
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.AppNewsItemView>
