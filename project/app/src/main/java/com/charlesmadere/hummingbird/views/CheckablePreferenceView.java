@@ -21,6 +21,9 @@ public class CheckablePreferenceView extends RelativeLayout implements
         Preference.OnPreferenceChangeListener<Boolean> {
 
     private BooleanPreference mPreference;
+    private CharSequence mDisabledDescriptionText;
+    private CharSequence mEnabledDescriptionText;
+    private CharSequence mTitleText;
 
     @BindView(R.id.checkable)
     Checkable mCheckable;
@@ -69,6 +72,7 @@ public class CheckablePreferenceView extends RelativeLayout implements
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
+        mTitle.setText(mTitleText);
     }
 
     @Override
@@ -79,7 +83,9 @@ public class CheckablePreferenceView extends RelativeLayout implements
     private void parseAttributes(final AttributeSet attrs) {
         final TypedArray ta = getContext().obtainStyledAttributes(attrs,
                 R.styleable.CheckablePreferenceView);
-        
+        mDisabledDescriptionText = ta.getText(R.styleable.CheckablePreferenceView_disabledDescriptionText);
+        mEnabledDescriptionText = ta.getText(R.styleable.CheckablePreferenceView_enabledDescriptionText);
+        mTitleText = ta.getText(R.styleable.CheckablePreferenceView_titleText);
         ta.recycle();
     }
 
@@ -102,6 +108,9 @@ public class CheckablePreferenceView extends RelativeLayout implements
 
         if (isEnabled()) {
             mCheckable.setChecked(Boolean.TRUE.equals(mPreference.get()));
+            mDescription.setText(mEnabledDescriptionText);
+        } else {
+            mDescription.setText(mDisabledDescriptionText);
         }
     }
 
