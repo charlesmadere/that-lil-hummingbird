@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Checkable;
 import android.widget.RelativeLayout;
@@ -20,10 +21,14 @@ import butterknife.ButterKnife;
 public class CheckablePreferenceView extends RelativeLayout implements
         Preference.OnPreferenceChangeListener<Boolean> {
 
+    private static final int CHECKABLE_TYPE_CHECKBOX = 0;
+    private static final int CHECKABLE_TYPE_SWITCH_COMPAT = 1;
+
     private BooleanPreference mPreference;
     private CharSequence mDisabledDescriptionText;
     private CharSequence mEnabledDescriptionText;
     private CharSequence mTitleText;
+    private int mCheckableType;
 
     @BindView(R.id.checkable)
     Checkable mCheckable;
@@ -73,6 +78,16 @@ public class CheckablePreferenceView extends RelativeLayout implements
         super.onFinishInflate();
         ButterKnife.bind(this);
         mTitle.setText(mTitleText);
+
+        final LayoutInflater inflater = LayoutInflater.from(getContext());
+
+        if (mCheckableType == CHECKABLE_TYPE_CHECKBOX) {
+            inflater.inflate(R.layout.preference_checkbox, this);
+        } else if (mCheckableType == CHECKABLE_TYPE_SWITCH_COMPAT) {
+            inflater.inflate(R.layout.preference_switch, this);
+        } else {
+            throw new RuntimeException("mCheckableType is an illegal value: " + mCheckableType);
+        }
     }
 
     @Override
@@ -86,6 +101,7 @@ public class CheckablePreferenceView extends RelativeLayout implements
         mDisabledDescriptionText = ta.getText(R.styleable.CheckablePreferenceView_disabledDescriptionText);
         mEnabledDescriptionText = ta.getText(R.styleable.CheckablePreferenceView_enabledDescriptionText);
         mTitleText = ta.getText(R.styleable.CheckablePreferenceView_titleText);
+        mCheckableType = ta.getInt(R.styleable.CheckablePreferenceView_checkable_type, -1);
         ta.recycle();
     }
 
