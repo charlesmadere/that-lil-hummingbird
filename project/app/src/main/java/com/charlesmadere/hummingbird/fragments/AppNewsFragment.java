@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.AppNews;
 import com.charlesmadere.hummingbird.views.HeadBodyItemView;
 
@@ -74,7 +75,7 @@ public class AppNewsFragment extends BaseBottomSheetDialogFragment {
     }
 
     @Override
-    public void onViewCreated(final View view, final Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         if (mAppNews.isImportant()) {
@@ -89,9 +90,17 @@ public class AppNewsFragment extends BaseBottomSheetDialogFragment {
 
         if (mAppNews.hasLinks()) {
             for (final AppNews.Link link : mAppNews.getLinks()) {
-                final HeadBodyItemView hbiv = HeadBodyItemView.inflate(mLinks);
+                HeadBodyItemView hbiv = HeadBodyItemView.inflate(mLinks);
                 hbiv.setHead(link.getTitle());
                 hbiv.setBody(link.getUrl());
+
+                hbiv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View view) {
+                        MiscUtils.openUrl(getContext(), link.getUrl());
+                    }
+                });
+
                 mLinks.addView(hbiv);
             }
 
