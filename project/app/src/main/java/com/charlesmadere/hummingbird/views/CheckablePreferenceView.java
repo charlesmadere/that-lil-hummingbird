@@ -12,11 +12,15 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.preferences.BooleanPreference;
+import com.charlesmadere.hummingbird.preferences.Preference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CheckablePreferenceView extends RelativeLayout implements Checkable {
+public class CheckablePreferenceView extends RelativeLayout implements
+        Preference.OnPreferenceChangeListener<Boolean> {
+
+    private BooleanPreference mPreference;
 
     @BindView(R.id.checkable)
     Checkable mCheckable;
@@ -47,14 +51,29 @@ public class CheckablePreferenceView extends RelativeLayout implements Checkable
     }
 
     @Override
-    public boolean isChecked() {
-        return mCheckable.isChecked();
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        update();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+
+        if (mPreference != null) {
+            mPreference.removeListener(this);
+        }
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
+    }
+
+    @Override
+    public void onPreferenceChange(final Preference<Boolean> preference) {
+        update();
     }
 
     private void parseAttributes(final AttributeSet attrs) {
@@ -65,12 +84,9 @@ public class CheckablePreferenceView extends RelativeLayout implements Checkable
     }
 
     public void setBooleanPreference(final BooleanPreference preference) {
-
-    }
-
-    @Override
-    public void setChecked(final boolean checked) {
-        mCheckable.setChecked(checked);
+        mPreference = preference;
+        mPreference.addListener(this);
+        update();
     }
 
     @Override
@@ -81,9 +97,12 @@ public class CheckablePreferenceView extends RelativeLayout implements Checkable
         mTitle.setEnabled(enabled);
     }
 
-    @Override
-    public void toggle() {
-        mCheckable.toggle();
+    private void update() {
+        setEnabled(mPreference != null);
+
+        if (isEnabled()) {
+            mCheckable.setChecked(Boolean.TRUE.equals(mPreference.get()));
+        }
     }
 
 }
