@@ -326,12 +326,12 @@ public class SettingsActivity extends BaseDrawerActivity implements
     private void refresh() {
         mAnimeTitleLanguage.setText(Preferences.General.TitleLanguage.get().getTextResId());
         mTheme.setText(Preferences.General.Theme.get().getTextResId());
-        mShowNsfwContent.setChecked(Preferences.General.ShowNsfwContent.get());
+        mShowNsfwContent.refresh();
 
         mUseNotificationPolling.refresh();
         mPollFrequency.setText(Preferences.NotificationPolling.Frequency.get().getTextResId());
-        mPowerRequired.setChecked(Preferences.NotificationPolling.IsPowerRequired.get());
-        mWifiRequired.setChecked(Preferences.NotificationPolling.IsWifiRequired.get());
+        mPowerRequired.refresh();
+        mWifiRequired.refresh();
 
         final int connectionStatus = GoogleApiAvailability.getInstance()
                 .isGooglePlayServicesAvailable(ThatLilHummingbird.get());
