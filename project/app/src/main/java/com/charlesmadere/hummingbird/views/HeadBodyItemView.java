@@ -63,6 +63,12 @@ public class HeadBodyItemView extends RelativeLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+
+        if (getChildCount() == 0) {
+            final LayoutInflater inflater = LayoutInflater.from(getContext());
+            inflater.inflate(R.layout.item_head_body_internal, this);
+        }
+
         ButterKnife.bind(this);
 
         mBody.setText(mBodyText);

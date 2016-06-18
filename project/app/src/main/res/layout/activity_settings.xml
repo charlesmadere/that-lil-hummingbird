@@ -26,6 +26,10 @@
                         <com.charlesmadere.hummingbird.views.TypefaceTextView
                             android:text="@string/general"
                             style="@style/ResponsiveWidthCardHeader" />
+                        <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                            android:id="@+id/hbivAnimeTitleLanguage"
+                            app:headText="@string/preferred_anime_title_language"
+                            style="@style/ResponsiveWidthCardItem" />
                         <LinearLayout
                             android:id="@+id/llAnimeTitleLanguage"
                             style="@style/ResponsiveWidthCardItem">
