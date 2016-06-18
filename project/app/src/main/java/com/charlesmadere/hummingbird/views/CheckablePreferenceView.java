@@ -113,8 +113,13 @@ public class CheckablePreferenceView extends RelativeLayout implements
     }
 
     public void setBooleanPreference(final BooleanPreference preference) {
+        if (mPreference != null) {
+            mPreference.removeListener(this);
+        }
+
         mPreference = preference;
         mPreference.addListener(this);
+
         update();
         setOnClickListener(this);
     }
