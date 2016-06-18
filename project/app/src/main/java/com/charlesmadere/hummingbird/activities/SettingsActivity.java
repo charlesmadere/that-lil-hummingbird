@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.format.DateUtils;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,17 +39,17 @@ public class SettingsActivity extends BaseDrawerActivity implements
 
     private static final String TAG = "SettingsActivity";
 
+    @BindView(R.id.cpvPowerRequired)
+    CheckablePreferenceView mPowerRequired;
+
+    @BindView(R.id.cpvShowNsfwContent)
+    CheckablePreferenceView mShowNsfwContent;
+
     @BindView(R.id.cpvUseNotificationPolling)
     CheckablePreferenceView mUseNotificationPolling;
 
-    @BindView(R.id.cbPowerRequired)
-    CheckBox mPowerRequired;
-
-    @BindView(R.id.cbShowNsfwContent)
-    CheckBox mShowNsfwContent;
-
-    @BindView(R.id.cbWifiRequired)
-    CheckBox mWifiRequired;
+    @BindView(R.id.cpvWifiRequired)
+    CheckablePreferenceView mWifiRequired;
 
     @BindView(R.id.kvtvGetHummingbirdPro)
     KeyValueTextView mGetHummingbirdPro;
@@ -60,12 +59,6 @@ public class SettingsActivity extends BaseDrawerActivity implements
 
     @BindView(R.id.llPollFrequency)
     LinearLayout mPollFrequencyContainer;
-
-    @BindView(R.id.llPowerRequired)
-    LinearLayout mPowerRequiredContainer;
-
-    @BindView(R.id.llWifiRequired)
-    LinearLayout mWifiRequiredContainer;
 
     @BindView(R.id.tvAnimeTitleLanguage)
     TextView mAnimeTitleLanguage;
@@ -232,13 +225,6 @@ public class SettingsActivity extends BaseDrawerActivity implements
                 .show();
     }
 
-    @OnClick(R.id.llPowerRequired)
-    void onPowerRequiredClick() {
-        Preferences.NotificationPolling.IsPowerRequired.toggle();
-        SyncManager.enableOrDisable();
-        refresh();
-    }
-
     @Override
     public void onPreferenceChange(final CheckablePreferenceView v) {
         SyncManager.enableOrDisable();
@@ -264,12 +250,6 @@ public class SettingsActivity extends BaseDrawerActivity implements
     @OnClick(R.id.tvRewatchIntroAnimation)
     void onRewatchIntroAnimationClick() {
         startActivity(SplashActivity.getLaunchIntent(this));
-    }
-
-    @OnClick(R.id.llShowNsfwContent)
-    void onShowNsfwContentClick() {
-        Preferences.General.ShowNsfwContent.toggle();
-        refresh();
     }
 
     @OnClick(R.id.tvSignOut)
@@ -330,18 +310,17 @@ public class SettingsActivity extends BaseDrawerActivity implements
     protected void onViewsBound() {
         super.onViewsBound();
 
+        mShowNsfwContent.setBooleanPreference(Preferences.General.ShowNsfwContent);
+
         mUseNotificationPolling.setBooleanPreference(Preferences.NotificationPolling.IsEnabled);
         mUseNotificationPolling.setOnPreferenceChangeListener(this);
+        mPowerRequired.setBooleanPreference(Preferences.NotificationPolling.IsPowerRequired);
+        mPowerRequired.setOnPreferenceChangeListener(this);
+        mWifiRequired.setBooleanPreference(Preferences.NotificationPolling.IsWifiRequired);
+        mWifiRequired.setOnPreferenceChangeListener(this);
 
         mVersion.setText(getString(R.string.version_format, BuildConfig.VERSION_NAME,
                 BuildConfig.VERSION_CODE));
-    }
-
-    @OnClick(R.id.llWifiRequired)
-    void onWifiRequired() {
-        Preferences.NotificationPolling.IsWifiRequired.toggle();
-        SyncManager.enableOrDisable();
-        refresh();
     }
 
     private void refresh() {
@@ -363,12 +342,12 @@ public class SettingsActivity extends BaseDrawerActivity implements
 
             if (mUseNotificationPolling.isChecked()) {
                 mPollFrequencyContainer.setEnabled(true);
-                mPowerRequiredContainer.setEnabled(true);
-                mWifiRequiredContainer.setEnabled(true);
+                mPowerRequired.setEnabled(true);
+                mWifiRequired.setEnabled(true);
             } else {
                 mPollFrequencyContainer.setEnabled(false);
-                mPowerRequiredContainer.setEnabled(false);
-                mWifiRequiredContainer.setEnabled(false);
+                mPowerRequired.setEnabled(false);
+                mWifiRequired.setEnabled(false);
             }
 
             if (Preferences.NotificationPolling.LastPoll.exists()) {
@@ -384,8 +363,8 @@ public class SettingsActivity extends BaseDrawerActivity implements
             mGooglePlayServicesError.setVisibility(View.VISIBLE);
             mUseNotificationPolling.setEnabled(false);
             mPollFrequencyContainer.setEnabled(false);
-            mPowerRequiredContainer.setEnabled(false);
-            mWifiRequiredContainer.setEnabled(false);
+            mPowerRequired.setEnabled(false);
+            mWifiRequired.setEnabled(false);
             mLastPollContainer.setVisibility(View.GONE);
         }
 
