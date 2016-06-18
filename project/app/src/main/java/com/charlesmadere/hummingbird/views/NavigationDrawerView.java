@@ -120,12 +120,7 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout implements
     public void onPreferenceChange(final Preference<AppNewsStatus> preference) {
         final AppNewsStatus appNewsStatus = preference.get();
         final NavigationDrawerItemView appNewsView = getNavigationDrawerItemView(Entry.APP_NEWS);
-
-        if (appNewsStatus != null && appNewsStatus.isImportantNewsAvailable()) {
-
-        } else {
-
-        }
+        appNewsView.setActivated(appNewsStatus != null && appNewsStatus.isImportantNewsAvailable());
     }
 
     @Override

@@ -60,6 +60,12 @@ public class NavigationDrawerItemView extends AppCompatTextView {
         setTextAndIcon();
     }
 
+    @Override
+    public void setActivated(final boolean activated) {
+        super.setActivated(activated);
+        setTextAndIcon();
+    }
+
     public void setOnClickListener(@Nullable final OnClickListener l) {
         if (l == null) {
             setClickable(false);
@@ -91,7 +97,9 @@ public class NavigationDrawerItemView extends AppCompatTextView {
 
         setTextColor(color);
         setText(mEntry.getTextResId());
-        setCompoundDrawablesRelativeWithIntrinsicBounds(mEntry.getIconResId(), 0, 0, 0);
+
+        final int badge = isActivated() ? R.drawable.badge : 0;
+        setCompoundDrawablesRelativeWithIntrinsicBounds(mEntry.getIconResId(), 0, badge, 0);
     }
 
 
