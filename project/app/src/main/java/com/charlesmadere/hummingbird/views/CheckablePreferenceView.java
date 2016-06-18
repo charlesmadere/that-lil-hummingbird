@@ -20,7 +20,7 @@ import com.charlesmadere.hummingbird.preferences.Preference;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CheckablePreferenceView extends RelativeLayout implements
+public class CheckablePreferenceView extends RelativeLayout implements Checkable,
         Preference.OnPreferenceChangeListener<Boolean>, View.OnClickListener {
 
     private static final int CHECKABLE_TYPE_CHECKBOX = 0;
@@ -62,6 +62,11 @@ public class CheckablePreferenceView extends RelativeLayout implements
     }
 
     @Override
+    public boolean isChecked() {
+        return mPreference != null && Boolean.TRUE.equals(mPreference.get());
+    }
+
+    @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         refresh();
@@ -69,9 +74,7 @@ public class CheckablePreferenceView extends RelativeLayout implements
 
     @Override
     public void onClick(final View view) {
-        if (mPreference != null) {
-            mPreference.toggle();
-        }
+        toggle();
     }
 
     @Override
@@ -151,6 +154,13 @@ public class CheckablePreferenceView extends RelativeLayout implements
     }
 
     @Override
+    public void setChecked(final boolean checked) {
+        if (mPreference != null) {
+            mPreference.set(checked);
+        }
+    }
+
+    @Override
     public void setEnabled(final boolean enabled) {
         super.setEnabled(enabled);
         ((View) mCheckable).setEnabled(enabled);
@@ -160,6 +170,13 @@ public class CheckablePreferenceView extends RelativeLayout implements
 
     public void setOnPreferenceChangeListener(@Nullable final OnPreferenceChangeListener l) {
         this.opcl = l;
+    }
+
+    @Override
+    public void toggle() {
+        if (mPreference != null) {
+            mPreference.toggle();
+        }
     }
 
 
