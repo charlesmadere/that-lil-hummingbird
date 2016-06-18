@@ -132,7 +132,7 @@ public class CheckablePreferenceView extends RelativeLayout implements
         mTitle.setEnabled(enabled);
     }
 
-    private void update() {
+    public void update() {
         setEnabled(mPreference != null);
 
         if (isEnabled()) {
