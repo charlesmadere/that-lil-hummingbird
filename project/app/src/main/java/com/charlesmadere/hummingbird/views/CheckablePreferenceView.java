@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -134,6 +135,12 @@ public class CheckablePreferenceView extends RelativeLayout implements
             mDescription.setText(mEnabledDescriptionText);
         } else {
             mDescription.setText(mDisabledDescriptionText);
+        }
+
+        if (TextUtils.isEmpty(mDescription.getText())) {
+            mDescription.setVisibility(GONE);
+        } else {
+            mDescription.setVisibility(VISIBLE);
         }
     }
 
