@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.SwitchCompat;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.CheckBox;
@@ -36,12 +35,13 @@ import butterknife.OnClick;
 
 import static com.charlesmadere.hummingbird.misc.RequestCodes.GOOGLE_PLAY_SERVICES_RESOLUTION;
 
-public class SettingsActivity extends BaseDrawerActivity {
+public class SettingsActivity extends BaseDrawerActivity implements
+        CheckablePreferenceView.OnPreferenceChangeListener {
 
     private static final String TAG = "SettingsActivity";
 
     @BindView(R.id.cpvUseNotificationPolling)
-    CheckablePreferenceView mUseNotificationPollingC;
+    CheckablePreferenceView mUseNotificationPolling;
 
     @BindView(R.id.cbPowerRequired)
     CheckBox mPowerRequired;
@@ -64,14 +64,8 @@ public class SettingsActivity extends BaseDrawerActivity {
     @BindView(R.id.llPowerRequired)
     LinearLayout mPowerRequiredContainer;
 
-    @BindView(R.id.llUseNotificationPolling)
-    LinearLayout mUseNotificationPollingContainer;
-
     @BindView(R.id.llWifiRequired)
     LinearLayout mWifiRequiredContainer;
-
-    @BindView(R.id.scUseNotificationPolling)
-    SwitchCompat mUseNotificationPolling;
 
     @BindView(R.id.tvAnimeTitleLanguage)
     TextView mAnimeTitleLanguage;
@@ -113,7 +107,7 @@ public class SettingsActivity extends BaseDrawerActivity {
 
         if (requestCode == GOOGLE_PLAY_SERVICES_RESOLUTION) {
             Timber.d(TAG, "Received result from Google Play Services: " + resultCode);
-            refreshViews();
+            refresh();
         }
     }
 
@@ -131,7 +125,7 @@ public class SettingsActivity extends BaseDrawerActivity {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
                         Preferences.General.TitleLanguage.set(values[which]);
-                        refreshViews();
+                        refresh();
                     }
                 })
                 .setTitle(R.string.preferred_anime_title_language)
@@ -167,7 +161,7 @@ public class SettingsActivity extends BaseDrawerActivity {
         if (connectionStatus == ConnectionResult.SUCCESS) {
             Toast.makeText(this, R.string.google_play_services_error_has_been_resolved,
                     Toast.LENGTH_LONG).show();
-            refreshViews();
+            refresh();
             return;
         }
 
@@ -178,7 +172,7 @@ public class SettingsActivity extends BaseDrawerActivity {
                     new DialogInterface.OnCancelListener() {
                         @Override
                         public void onCancel(final DialogInterface dialog) {
-                            refreshViews();
+                            refresh();
                         }
                     });
         } else {
@@ -231,7 +225,7 @@ public class SettingsActivity extends BaseDrawerActivity {
 
                         Preferences.NotificationPolling.Frequency.set(newPollFrequency);
                         SyncManager.enableOrDisable();
-                        refreshViews();
+                        refresh();
                     }
                 })
                 .setTitle(R.string.poll_frequency)
@@ -242,7 +236,13 @@ public class SettingsActivity extends BaseDrawerActivity {
     void onPowerRequiredClick() {
         Preferences.NotificationPolling.IsPowerRequired.toggle();
         SyncManager.enableOrDisable();
-        refreshViews();
+        refresh();
+    }
+
+    @Override
+    public void onPreferenceChange(final CheckablePreferenceView v) {
+        SyncManager.enableOrDisable();
+        refresh();
     }
 
     @OnClick(R.id.kvtvPriscilla)
@@ -258,7 +258,7 @@ public class SettingsActivity extends BaseDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        refreshViews();
+        refresh();
     }
 
     @OnClick(R.id.tvRewatchIntroAnimation)
@@ -269,7 +269,7 @@ public class SettingsActivity extends BaseDrawerActivity {
     @OnClick(R.id.llShowNsfwContent)
     void onShowNsfwContentClick() {
         Preferences.General.ShowNsfwContent.toggle();
-        refreshViews();
+        refresh();
     }
 
     @OnClick(R.id.tvSignOut)
@@ -318,7 +318,7 @@ public class SettingsActivity extends BaseDrawerActivity {
                         }
 
                         Preferences.General.Theme.set(newNightMode);
-                        refreshViews();
+                        refresh();
                         showRestartDialog();
                     }
                 })
@@ -326,16 +326,13 @@ public class SettingsActivity extends BaseDrawerActivity {
                 .show();
     }
 
-    @OnClick(R.id.llUseNotificationPolling)
-    void onUseNotificationPollingClick() {
-        Preferences.NotificationPolling.IsEnabled.toggle();
-        SyncManager.enableOrDisable();
-        refreshViews();
-    }
-
     @Override
     protected void onViewsBound() {
         super.onViewsBound();
+
+        mUseNotificationPolling.setBooleanPreference(Preferences.NotificationPolling.IsEnabled);
+        mUseNotificationPolling.setOnPreferenceChangeListener(this);
+
         mVersion.setText(getString(R.string.version_format, BuildConfig.VERSION_NAME,
                 BuildConfig.VERSION_CODE));
     }
@@ -344,15 +341,15 @@ public class SettingsActivity extends BaseDrawerActivity {
     void onWifiRequired() {
         Preferences.NotificationPolling.IsWifiRequired.toggle();
         SyncManager.enableOrDisable();
-        refreshViews();
+        refresh();
     }
 
-    private void refreshViews() {
+    private void refresh() {
         mAnimeTitleLanguage.setText(Preferences.General.TitleLanguage.get().getTextResId());
         mTheme.setText(Preferences.General.Theme.get().getTextResId());
         mShowNsfwContent.setChecked(Preferences.General.ShowNsfwContent.get());
 
-        mUseNotificationPolling.setChecked(Preferences.NotificationPolling.IsEnabled.get());
+        mUseNotificationPolling.refresh();
         mPollFrequency.setText(Preferences.NotificationPolling.Frequency.get().getTextResId());
         mPowerRequired.setChecked(Preferences.NotificationPolling.IsPowerRequired.get());
         mWifiRequired.setChecked(Preferences.NotificationPolling.IsWifiRequired.get());
@@ -362,7 +359,7 @@ public class SettingsActivity extends BaseDrawerActivity {
 
         if (connectionStatus == ConnectionResult.SUCCESS) {
             mGooglePlayServicesError.setVisibility(View.GONE);
-            mUseNotificationPollingContainer.setEnabled(true);
+            mUseNotificationPolling.setEnabled(true);
 
             if (mUseNotificationPolling.isChecked()) {
                 mPollFrequencyContainer.setEnabled(true);
@@ -385,7 +382,7 @@ public class SettingsActivity extends BaseDrawerActivity {
         } else {
             Timber.w(TAG, "User has a Google Play Services error: " + connectionStatus);
             mGooglePlayServicesError.setVisibility(View.VISIBLE);
-            mUseNotificationPollingContainer.setEnabled(false);
+            mUseNotificationPolling.setEnabled(false);
             mPollFrequencyContainer.setEnabled(false);
             mPowerRequiredContainer.setEnabled(false);
             mWifiRequiredContainer.setEnabled(false);

@@ -88,18 +88,6 @@
                             app:titleText="@string/use_notification_polling"
                             style="@style/ResponsiveWidthCardItem.Switch" />
                         <com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout
-                            android:id="@+id/llUseNotificationPolling"
-                            style="@style/ResponsiveWidthCardItem.Switch">
-                            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:text="@string/use_notification_polling"
-                                style="@style/ResponsiveWidthCardItemHeader" />
-                            <android.support.v7.widget.SwitchCompat
-                                android:id="@+id/scUseNotificationPolling"
-                                style="@style/Switch" />
-                        </com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout>
-                        <com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout
                             android:id="@+id/llPollFrequency"
                             style="@style/ResponsiveWidthCardItem">
                             <com.charlesmadere.hummingbird.views.TypefaceTextView
