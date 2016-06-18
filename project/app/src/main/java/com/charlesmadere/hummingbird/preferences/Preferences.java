@@ -5,6 +5,7 @@ import android.preference.PreferenceManager;
 
 import com.charlesmadere.hummingbird.ThatLilHummingbird;
 import com.charlesmadere.hummingbird.misc.Timber;
+import com.charlesmadere.hummingbird.models.AppNewsStatus;
 import com.charlesmadere.hummingbird.models.NightMode;
 import com.charlesmadere.hummingbird.models.PollFrequency;
 import com.charlesmadere.hummingbird.models.TitleType;
@@ -65,10 +66,10 @@ public final class Preferences {
 
     public static final class Misc {
         private static final String TAG = Preferences.TAG + ".Misc";
-        public static final BooleanPreference ImportantNewsAvailable;
+        public static final GsonPreference<AppNewsStatus> AppNewsAvailability;
 
         static {
-            ImportantNewsAvailable = new BooleanPreference(TAG, "ImportantNewsAvailable", Boolean.FALSE);
+            AppNewsAvailability = new GsonPreference<>(TAG, "AppNewsAvailability", AppNewsStatus.class, null);
         }
     }
 
