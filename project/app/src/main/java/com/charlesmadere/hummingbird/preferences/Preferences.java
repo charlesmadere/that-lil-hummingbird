@@ -63,6 +63,15 @@ public final class Preferences {
         }
     }
 
+    public static final class Misc {
+        private static final String TAG = Preferences.TAG + ".Misc";
+        public static final BooleanPreference ImportantNewsAvailable;
+
+        static {
+            ImportantNewsAvailable = new BooleanPreference(TAG, "ImportantNewsAvailable", Boolean.FALSE);
+        }
+    }
+
     public static final class NotificationPolling {
         private static final String TAG = Preferences.TAG + ".Sync";
         public static final BooleanPreference IsEnabled;
