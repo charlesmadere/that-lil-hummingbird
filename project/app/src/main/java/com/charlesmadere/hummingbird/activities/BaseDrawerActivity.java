@@ -15,7 +15,7 @@ import com.charlesmadere.hummingbird.views.NavigationDrawerView;
 import butterknife.BindView;
 
 public abstract class BaseDrawerActivity extends BaseActivity implements
-        NavigationDrawerItemView.OnNavigationDrawerItemViewClickListener {
+        NavigationDrawerItemView.OnClickListener {
 
     protected ActionBarDrawerToggle mDrawerToggle;
 
@@ -52,21 +52,7 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
     }
 
     @Override
-    public void onConfigurationChanged(final Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    protected void onDrawerClosed() {
-        // method intentionally blank, children can override
-    }
-
-    protected void onDrawerOpened() {
-        // method intentionally blank, children can override
-    }
-
-    @Override
-    public final void onNavigationDrawerItemViewClick(final NavigationDrawerItemView v) {
+    public final void onClick(final NavigationDrawerItemView v) {
         closeDrawer();
 
         if (v.isSelected()) {
@@ -100,6 +86,20 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
         if (intent != null) {
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(final Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    protected void onDrawerClosed() {
+        // method intentionally blank, children can override
+    }
+
+    protected void onDrawerOpened() {
+        // method intentionally blank, children can override
     }
 
     @Override

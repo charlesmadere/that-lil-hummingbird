@@ -60,15 +60,14 @@ public class NavigationDrawerItemView extends AppCompatTextView {
         setTextAndIcon();
     }
 
-    public void setOnNavigationDrawerItemViewClickListener(
-            @Nullable final OnNavigationDrawerItemViewClickListener l) {
+    public void setOnClickListener(@Nullable final OnClickListener l) {
         if (l == null) {
             setClickable(false);
         } else {
-            setOnClickListener(new OnClickListener() {
+            setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
-                    l.onNavigationDrawerItemViewClick(NavigationDrawerItemView.this);
+                    l.onClick(NavigationDrawerItemView.this);
                 }
             });
         }
@@ -127,8 +126,8 @@ public class NavigationDrawerItemView extends AppCompatTextView {
     }
 
 
-    public interface OnNavigationDrawerItemViewClickListener {
-        void onNavigationDrawerItemViewClick(final NavigationDrawerItemView v);
+    public interface OnClickListener {
+        void onClick(final NavigationDrawerItemView v);
     }
 
 }

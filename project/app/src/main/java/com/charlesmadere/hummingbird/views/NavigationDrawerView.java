@@ -13,7 +13,10 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
+import com.charlesmadere.hummingbird.models.AppNewsStatus;
 import com.charlesmadere.hummingbird.models.User;
+import com.charlesmadere.hummingbird.preferences.Preference;
+import com.charlesmadere.hummingbird.views.NavigationDrawerItemView.Entry;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -22,7 +25,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NavigationDrawerView extends ScrimInsetsFrameLayout {
+public class NavigationDrawerView extends ScrimInsetsFrameLayout implements
+        Preference.OnPreferenceChangeListener<AppNewsStatus> {
 
     private NavigationDrawerItemView[] mNavigationDrawerItemViews;
 
@@ -81,6 +85,16 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout {
         }
     }
 
+    public NavigationDrawerItemView getNavigationDrawerItemView(final Entry entry) {
+        for (final NavigationDrawerItemView view : mNavigationDrawerItemViews) {
+            if (view.getEntry() == entry) {
+                return view;
+            }
+        }
+
+        throw new IllegalStateException(entry + " is missing from the navigation drawer");
+    }
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -103,19 +117,30 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout {
     }
 
     @Override
+    public void onPreferenceChange(final Preference<AppNewsStatus> preference) {
+        final AppNewsStatus appNewsStatus = preference.get();
+        final NavigationDrawerItemView appNewsView = getNavigationDrawerItemView(Entry.APP_NEWS);
+
+        if (appNewsStatus != null && appNewsStatus.isImportantNewsAvailable()) {
+
+        } else {
+
+        }
+    }
+
+    @Override
     public boolean onTouchEvent(final MotionEvent event) {
         return true;
     }
 
     public void setOnNavigationDrawerItemViewClickListener(
-            @Nullable final NavigationDrawerItemView.OnNavigationDrawerItemViewClickListener l) {
+            @Nullable final NavigationDrawerItemView.OnClickListener l) {
         for (final NavigationDrawerItemView view : mNavigationDrawerItemViews) {
-            view.setOnNavigationDrawerItemViewClickListener(l);
+            view.setOnClickListener(l);
         }
     }
 
-    public void setSelectedNavigationDrawerItemViewEntry(
-            @Nullable final NavigationDrawerItemView.Entry e) {
+    public void setSelectedNavigationDrawerItemViewEntry(@Nullable final Entry e) {
         for (final NavigationDrawerItemView view : mNavigationDrawerItemViews) {
             view.setSelected(e == view.getEntry());
         }
