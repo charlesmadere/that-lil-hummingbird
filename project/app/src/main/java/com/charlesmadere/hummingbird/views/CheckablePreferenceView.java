@@ -64,12 +64,14 @@ public class CheckablePreferenceView extends RelativeLayout implements
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        update();
+        refresh();
     }
 
     @Override
     public void onClick(final View view) {
-        mPreference.toggle();
+        if (mPreference != null) {
+            mPreference.toggle();
+        }
     }
 
     @Override
@@ -96,12 +98,14 @@ public class CheckablePreferenceView extends RelativeLayout implements
         }
 
         ButterKnife.bind(this);
+        setOnClickListener(this);
+
         mTitle.setText(mTitleText);
     }
 
     @Override
     public void onPreferenceChange(final Preference<Boolean> preference) {
-        update();
+        refresh();
 
         if (opcl != null) {
             opcl.onPreferenceChange(this);
@@ -118,31 +122,7 @@ public class CheckablePreferenceView extends RelativeLayout implements
         ta.recycle();
     }
 
-    public void setBooleanPreference(final BooleanPreference preference) {
-        if (mPreference != null) {
-            mPreference.removeListener(this);
-        }
-
-        mPreference = preference;
-        mPreference.addListener(this);
-
-        update();
-        setOnClickListener(this);
-    }
-
-    @Override
-    public void setEnabled(final boolean enabled) {
-        super.setEnabled(enabled);
-        ((View) mCheckable).setEnabled(enabled);
-        mDescription.setEnabled(enabled);
-        mTitle.setEnabled(enabled);
-    }
-
-    public void setOnPreferenceChangeListener(@Nullable final OnPreferenceChangeListener l) {
-        this.opcl = l;
-    }
-
-    public void update() {
+    public void refresh() {
         setEnabled(mPreference != null);
 
         if (isEnabled()) {
@@ -157,6 +137,29 @@ public class CheckablePreferenceView extends RelativeLayout implements
         } else {
             mDescription.setVisibility(VISIBLE);
         }
+    }
+
+    public void setBooleanPreference(final BooleanPreference preference) {
+        if (mPreference != null) {
+            mPreference.removeListener(this);
+        }
+
+        mPreference = preference;
+        mPreference.addListener(this);
+
+        refresh();
+    }
+
+    @Override
+    public void setEnabled(final boolean enabled) {
+        super.setEnabled(enabled);
+        ((View) mCheckable).setEnabled(enabled);
+        mDescription.setEnabled(enabled);
+        mTitle.setEnabled(enabled);
+    }
+
+    public void setOnPreferenceChangeListener(@Nullable final OnPreferenceChangeListener l) {
+        this.opcl = l;
     }
 
 
