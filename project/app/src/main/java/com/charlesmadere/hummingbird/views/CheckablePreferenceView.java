@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ public class CheckablePreferenceView extends RelativeLayout implements
     private CharSequence mEnabledDescriptionText;
     private CharSequence mTitleText;
     private int mCheckableType;
+    private OnPreferenceChangeListener opcl;
 
     @BindView(R.id.checkable)
     Checkable mCheckable;
@@ -100,6 +102,10 @@ public class CheckablePreferenceView extends RelativeLayout implements
     @Override
     public void onPreferenceChange(final Preference<Boolean> preference) {
         update();
+
+        if (opcl != null) {
+            opcl.onPreferenceChange(this);
+        }
     }
 
     private void parseAttributes(final AttributeSet attrs) {
@@ -132,6 +138,10 @@ public class CheckablePreferenceView extends RelativeLayout implements
         mTitle.setEnabled(enabled);
     }
 
+    public void setOnPreferenceChangeListener(@Nullable final OnPreferenceChangeListener l) {
+        this.opcl = l;
+    }
+
     public void update() {
         setEnabled(mPreference != null);
 
@@ -147,6 +157,11 @@ public class CheckablePreferenceView extends RelativeLayout implements
         } else {
             mDescription.setVisibility(VISIBLE);
         }
+    }
+
+
+    public interface OnPreferenceChangeListener {
+        void onPreferenceChange(final CheckablePreferenceView v);
     }
 
 }
