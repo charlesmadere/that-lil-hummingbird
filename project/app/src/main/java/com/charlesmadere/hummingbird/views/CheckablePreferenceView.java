@@ -136,11 +136,17 @@ public class CheckablePreferenceView extends RelativeLayout implements
             mDescription.setText(mDisabledDescriptionText);
         }
 
+        final LayoutParams lp = (RelativeLayout.LayoutParams) mTitle.getLayoutParams();
+
         if (TextUtils.isEmpty(mDescription.getText())) {
+            lp.addRule(CENTER_VERTICAL);
             mDescription.setVisibility(GONE);
         } else {
+            lp.removeRule(CENTER_VERTICAL);
             mDescription.setVisibility(VISIBLE);
         }
+
+        mTitle.setLayoutParams(lp);
     }
 
     public void setBooleanPreference(final BooleanPreference preference) {
