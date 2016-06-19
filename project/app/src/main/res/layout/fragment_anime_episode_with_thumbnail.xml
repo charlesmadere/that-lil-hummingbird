@@ -58,7 +58,8 @@
         android:orientation="vertical"
         android:overScrollMode="never"
         android:paddingBottom="@dimen/root_padding"
-        android:paddingTop="@dimen/root_padding">
+        android:paddingTop="@dimen/root_padding"
+        android:scrollbars="vertical">
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvSynopsis"
             android:layout_marginEnd="@dimen/root_padding"
