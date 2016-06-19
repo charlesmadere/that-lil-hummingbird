@@ -82,4 +82,13 @@ public class RefreshLayout extends SwipeRefreshLayout {
         ta.recycle();
     }
 
+    @Override
+    public void setRefreshing(final boolean refreshing) {
+        post(new Runnable() {
+            @Override
+            public void run() {
+                RefreshLayout.super.setRefreshing(refreshing);
+            }
+        });
+    }
 }
