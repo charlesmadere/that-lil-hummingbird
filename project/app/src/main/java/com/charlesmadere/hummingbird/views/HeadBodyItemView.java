@@ -25,6 +25,7 @@ public class HeadBodyItemView extends RelativeLayout {
 
     private CharSequence mBodyText;
     private CharSequence mHeadText;
+    private boolean mIsEnabled;
     private Drawable mIconDrawable;
 
     @BindView(R.id.ivIcon)
@@ -73,19 +74,17 @@ public class HeadBodyItemView extends RelativeLayout {
 
         mBody.setText(mBodyText);
         mHead.setText(mHeadText);
+        setEnabled(mIsEnabled);
         setIcon(mIconDrawable);
     }
 
-    protected void parseAttributes(@Nullable final AttributeSet attrs) {
-        if (attrs == null) {
-            return;
-        }
-
+    protected void parseAttributes(final AttributeSet attrs) {
         final TypedArray ta = getContext().obtainStyledAttributes(attrs,
                 R.styleable.HeadBodyItemView);
         mBodyText = ta.getText(R.styleable.HeadBodyItemView_bodyText);
         mHeadText = ta.getText(R.styleable.HeadBodyItemView_headText);
         mIconDrawable = ta.getDrawable(R.styleable.HeadBodyItemView_iconDrawable);
+        mIsEnabled = ta.getBoolean(R.styleable.HeadBodyItemView_isEnabled, true);
         ta.recycle();
     }
 

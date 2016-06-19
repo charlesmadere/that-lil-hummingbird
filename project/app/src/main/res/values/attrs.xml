@@ -29,6 +29,7 @@
         <attr name="bodyText" format="string" />
         <attr name="headText" format="string" />
         <attr name="iconDrawable" format="reference" />
+        <attr name="isEnabled" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="KeyValueTextView">
