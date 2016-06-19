@@ -45,10 +45,14 @@ public class AppNews implements Parcelable {
 
     public SimpleDate getDate() {
         if (mDate == null) {
-            mDate = new SimpleDate(TimeUnit.SECONDS.toMillis(mEpoch));
+            mDate = new SimpleDate(getEpoch());
         }
 
         return mDate;
+    }
+
+    public long getEpoch() {
+        return TimeUnit.SECONDS.toMillis(mEpoch);
     }
 
     public String getHead() {
