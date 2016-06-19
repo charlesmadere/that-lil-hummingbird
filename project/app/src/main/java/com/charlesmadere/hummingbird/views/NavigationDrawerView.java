@@ -100,6 +100,7 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout implements
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         Preferences.Misc.AppNewsAvailability.addListener(this);
+        refreshImportantNewsBadge();
     }
 
     @Override
@@ -129,18 +130,23 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout implements
         }
 
         Preferences.Misc.AppNewsAvailability.addListener(this);
+        refreshImportantNewsBadge();
     }
 
     @Override
     public void onPreferenceChange(final Preference<AppNewsStatus> preference) {
-        final AppNewsStatus appNewsStatus = preference.get();
-        final NavigationDrawerItemView appNewsView = getNavigationDrawerItemView(Entry.APP_NEWS);
-        appNewsView.setActivated(appNewsStatus != null && appNewsStatus.isImportantNewsAvailable());
+        refreshImportantNewsBadge();
     }
 
     @Override
     public boolean onTouchEvent(final MotionEvent event) {
         return true;
+    }
+
+    private void refreshImportantNewsBadge() {
+        final NavigationDrawerItemView appNewsView = getNavigationDrawerItemView(Entry.APP_NEWS);
+        final AppNewsStatus appNewsStatus = Preferences.Misc.AppNewsAvailability.get();
+        appNewsView.setActivated(appNewsStatus != null && appNewsStatus.isImportantNewsAvailable());
     }
 
     public void setOnNavigationDrawerItemViewClickListener(
