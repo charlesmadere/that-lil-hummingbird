@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public final class AppNewsChecker {
 
     private static final String TAG = "AppNewsChecker";
-    private static final long REFRESH_INTERNAL = TimeUnit.HOURS.toMillis(8L);
+    private static final long REFRESH_INTERNAL = TimeUnit.DAYS.toMillis(1L);
 
 
     private static void checkForImportantNews(final AppNewsStatus appNewsStatus) {
