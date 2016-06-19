@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.format.DateUtils;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +23,7 @@ import com.charlesmadere.hummingbird.models.PollFrequency;
 import com.charlesmadere.hummingbird.models.TitleType;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.CheckablePreferenceView;
+import com.charlesmadere.hummingbird.views.HeadBodyItemView;
 import com.charlesmadere.hummingbird.views.KeyValueTextView;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 import com.google.android.gms.common.ConnectionResult;
@@ -51,29 +51,23 @@ public class SettingsActivity extends BaseDrawerActivity implements
     @BindView(R.id.cpvWifiRequired)
     CheckablePreferenceView mWifiRequired;
 
+    @BindView(R.id.hbivAnimeTitleLanguage)
+    HeadBodyItemView mAnimeTitleLanguage;
+
+    @BindView(R.id.hbivLastPoll)
+    HeadBodyItemView mLastPoll;
+
+    @BindView(R.id.hbivPollFrequency)
+    HeadBodyItemView mPollFrequency;
+
+    @BindView(R.id.hbivTheme)
+    HeadBodyItemView mTheme;
+
     @BindView(R.id.kvtvGetHummingbirdPro)
     KeyValueTextView mGetHummingbirdPro;
 
-    @BindView(R.id.llLastPoll)
-    LinearLayout mLastPollContainer;
-
-    @BindView(R.id.llPollFrequency)
-    LinearLayout mPollFrequencyContainer;
-
-    @BindView(R.id.tvAnimeTitleLanguage)
-    TextView mAnimeTitleLanguage;
-
     @BindView(R.id.tvGooglePlayServicesError)
     TextView mGooglePlayServicesError;
-
-    @BindView(R.id.tvLastPoll)
-    TextView mLastPoll;
-
-    @BindView(R.id.tvPollFrequency)
-    TextView mPollFrequency;
-
-    @BindView(R.id.tvTheme)
-    TextView mTheme;
 
     @BindView(R.id.tvVersion)
     TextView mVersion;
@@ -104,7 +98,7 @@ public class SettingsActivity extends BaseDrawerActivity implements
         }
     }
 
-    @OnClick(R.id.llAnimeTitleLanguage)
+    @OnClick(R.id.hbivAnimeTitleLanguage)
     void onAnimeTitleLanguageClick() {
         final TitleType[] values = TitleType.values();
         CharSequence items[] = new CharSequence[values.length];
@@ -189,7 +183,7 @@ public class SettingsActivity extends BaseDrawerActivity implements
         startActivity(LogViewerActivity.getLaunchIntent(this));
     }
 
-    @OnClick(R.id.llPollFrequency)
+    @OnClick(R.id.hbivPollFrequency)
     void onPollFrequencyClick() {
         final PollFrequency[] values = PollFrequency.values();
         CharSequence items[] = new CharSequence[values.length];
@@ -267,7 +261,7 @@ public class SettingsActivity extends BaseDrawerActivity implements
                 .show();
     }
 
-    @OnClick(R.id.llTheme)
+    @OnClick(R.id.hbivTheme)
     void onThemeClick() {
         final NightMode[] values = NightMode.values();
         CharSequence items[] = new CharSequence[values.length];
@@ -324,12 +318,12 @@ public class SettingsActivity extends BaseDrawerActivity implements
     }
 
     private void refresh() {
-        mAnimeTitleLanguage.setText(Preferences.General.TitleLanguage.get().getTextResId());
-        mTheme.setText(Preferences.General.Theme.get().getTextResId());
+        mAnimeTitleLanguage.setBody(Preferences.General.TitleLanguage.get().getTextResId());
+        mTheme.setBody(Preferences.General.Theme.get().getTextResId());
         mShowNsfwContent.refresh();
 
         mUseNotificationPolling.refresh();
-        mPollFrequency.setText(Preferences.NotificationPolling.Frequency.get().getTextResId());
+        mPollFrequency.setBody(Preferences.NotificationPolling.Frequency.get().getTextResId());
         mPowerRequired.refresh();
         mWifiRequired.refresh();
 
@@ -341,31 +335,31 @@ public class SettingsActivity extends BaseDrawerActivity implements
             mUseNotificationPolling.setEnabled(true);
 
             if (mUseNotificationPolling.isChecked()) {
-                mPollFrequencyContainer.setEnabled(true);
+                mPollFrequency.setEnabled(true);
                 mPowerRequired.setEnabled(true);
                 mWifiRequired.setEnabled(true);
             } else {
-                mPollFrequencyContainer.setEnabled(false);
+                mPollFrequency.setEnabled(false);
                 mPowerRequired.setEnabled(false);
                 mWifiRequired.setEnabled(false);
             }
 
             if (Preferences.NotificationPolling.LastPoll.exists()) {
-                mLastPoll.setText(DateUtils.getRelativeDateTimeString(this,
+                mLastPoll.setHead(DateUtils.getRelativeDateTimeString(this,
                         Preferences.NotificationPolling.LastPoll.get(), DateUtils.DAY_IN_MILLIS,
                         DateUtils.WEEK_IN_MILLIS, 0));
-                mLastPollContainer.setVisibility(View.VISIBLE);
+                mLastPoll.setVisibility(View.VISIBLE);
             } else {
-                mLastPollContainer.setVisibility(View.GONE);
+                mLastPoll.setVisibility(View.GONE);
             }
         } else {
             Timber.w(TAG, "User has a Google Play Services error: " + connectionStatus);
             mGooglePlayServicesError.setVisibility(View.VISIBLE);
             mUseNotificationPolling.setEnabled(false);
-            mPollFrequencyContainer.setEnabled(false);
+            mPollFrequency.setEnabled(false);
             mPowerRequired.setEnabled(false);
             mWifiRequired.setEnabled(false);
-            mLastPollContainer.setVisibility(View.GONE);
+            mLastPoll.setVisibility(View.GONE);
         }
 
         if (CurrentUser.get().getUser().isPro()) {

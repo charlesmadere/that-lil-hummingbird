@@ -30,28 +30,10 @@
                             android:id="@+id/hbivAnimeTitleLanguage"
                             app:headText="@string/preferred_anime_title_language"
                             style="@style/ResponsiveWidthCardItem" />
-                        <LinearLayout
-                            android:id="@+id/llAnimeTitleLanguage"
-                            style="@style/ResponsiveWidthCardItem">
-                            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                                android:text="@string/preferred_anime_title_language"
-                                style="@style/ResponsiveWidthCardItemHeader" />
-                            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                                android:id="@+id/tvAnimeTitleLanguage"
-                                tools:text="@string/english"
-                                style="@style/ResponsiveWidthCardItemBody" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:id="@+id/llTheme"
-                            style="@style/ResponsiveWidthCardItem">
-                            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                                android:text="@string/theme"
-                                style="@style/ResponsiveWidthCardItemHeader" />
-                            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                                android:id="@+id/tvTheme"
-                                tools:text="@string/system"
-                                style="@style/ResponsiveWidthCardItemBody" />
-                        </LinearLayout>
+                        <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                            android:id="@+id/hbivTheme"
+                            app:headText="@string/theme"
+                            style="@style/ResponsiveWidthCardItem" />
                         <com.charlesmadere.hummingbird.views.CheckablePreferenceView
                             android:id="@+id/cpvShowNsfwContent"
                             app:checkable_type="checkbox"
@@ -84,17 +66,10 @@
                             app:checkable_type="switch_compat"
                             app:titleText="@string/use_notification_polling"
                             style="@style/ResponsiveWidthCardItem.Switch" />
-                        <com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout
-                            android:id="@+id/llPollFrequency"
-                            style="@style/ResponsiveWidthCardItem">
-                            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                                android:text="@string/poll_frequency"
-                                style="@style/ResponsiveWidthCardItemHeader" />
-                            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                                android:id="@+id/tvPollFrequency"
-                                tools:text="@string/daily"
-                                style="@style/ResponsiveWidthCardItemBody" />
-                        </com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout>
+                        <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                            android:id="@+id/hbivPollFrequency"
+                            app:headText="@string/poll_frequency"
+                            style="@style/ResponsiveWidthCardItem" />
                         <com.charlesmadere.hummingbird.views.CheckablePreferenceView
                             android:id="@+id/cpvPowerRequired"
                             app:checkable_type="checkbox"
@@ -105,17 +80,10 @@
                             app:checkable_type="checkbox"
                             app:titleText="@string/must_be_on_wifi"
                             style="@style/ResponsiveWidthCardItem.Switch" />
-                        <com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout
-                            android:id="@+id/llLastPoll"
-                            app:start_enabled="false"
-                            style="@style/ResponsiveWidthCardItem">
-                            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                                android:id="@+id/tvLastPoll"
-                                style="@style/ResponsiveWidthCardItemHeader" />
-                            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                                android:text="@string/most_recent_poll"
-                                style="@style/ResponsiveWidthCardItemBody" />
-                        </com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout>
+                        <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                            android:id="@+id/hbivLastPoll"
+                            app:bodyText="@string/most_recent_poll"
+                            style="@style/ResponsiveWidthCardItem" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
