@@ -13,18 +13,21 @@
             android:id="@+id/tvQuote"
             android:layout_alignParentStart="true"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/root_padding_half"
             android:layout_toStartOf="@id/likeTextView"
             android:layout_width="wrap_content"
-            tools:text="Explosion! "/>
+            tools:ignore="RelativeOverlap"
+            tools:text="Explosion!" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvName"
             android:layout_below="@id/tvQuote"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/root_padding_half"
             android:layout_width="wrap_content"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="@dimen/text_large"
+            android:visibility="gone"
             app:typeface="open_sans_semibold"
-            tools:text="Megumin" />
+            tools:text="Megumin"
+            tools:visibility="visible" />
     </RelativeLayout>
 </com.charlesmadere.hummingbird.views.AnimeQuoteItemView>

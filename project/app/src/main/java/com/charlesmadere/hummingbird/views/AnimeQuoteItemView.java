@@ -43,7 +43,13 @@ public class AnimeQuoteItemView extends CardView implements AdapterView<AnimeDig
     public void setContent(final AnimeDigest.Quote content) {
         mLikeTextView.setContent(content);
         mQuote.setText(content.getContent());
-        mName.setText(content.getCharacterName());
+
+        if (content.hasCharacterName()) {
+            mName.setText(content.getCharacterName());
+            mName.setVisibility(VISIBLE);
+        } else {
+            mName.setVisibility(GONE);
+        }
     }
 
 }

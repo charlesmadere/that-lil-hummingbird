@@ -1098,6 +1098,7 @@ public class AnimeDigest implements Parcelable {
         @SerializedName("anime_id")
         private String mAnimeId;
 
+        @Nullable
         @SerializedName("character_name")
         private String mCharacterName;
 
@@ -1115,6 +1116,7 @@ public class AnimeDigest implements Parcelable {
             return mAnimeId;
         }
 
+        @Nullable
         public String getCharacterName() {
             return mCharacterName;
         }
@@ -1133,6 +1135,10 @@ public class AnimeDigest implements Parcelable {
 
         public String getUsername() {
             return mUsername;
+        }
+
+        public boolean hasCharacterName() {
+            return !TextUtils.isEmpty(mCharacterName);
         }
 
         public boolean isFavorite() {
