@@ -11,7 +11,8 @@
         <RelativeLayout
             android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="ScrollViewSize">
             <com.charlesmadere.hummingbird.views.RatioRelativeLayout
                 android:id="@+id/rrlHeader"
                 android:layout_height="wrap_content"
@@ -25,11 +26,7 @@
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     app:actualImageScaleType="centerCrop"
-                    tools:ignore="ContentDescription" />
-                <View
-                    android:background="@drawable/image_overlay"
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent" />
+                    app:overlayImage="@drawable/image_overlay" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:ellipsize="end"
                     android:id="@+id/tvUsername"
