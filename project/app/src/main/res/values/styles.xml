@@ -420,7 +420,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="actualImageScaleType">centerCrop</item>
         <item name="layout_collapseMode">parallax</item>
-        <item name="overlayImage">@drawable/image_overlay</item>
+        <item name="overlayImage">@drawable/image_overlay_bottom</item>
         <item name="placeholderImageScaleType">centerCrop</item>
     </style>
 

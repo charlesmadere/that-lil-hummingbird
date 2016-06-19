@@ -26,7 +26,7 @@
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     app:actualImageScaleType="centerCrop"
-                    app:overlayImage="@drawable/image_overlay" />
+                    app:overlayImage="@drawable/image_overlay_bottom" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:ellipsize="end"
                     android:id="@+id/tvUsername"

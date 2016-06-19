@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         app:actualImageScaleType="centerCrop"
-        app:overlayImage="@drawable/image_overlay"
+        app:overlayImage="@drawable/image_overlay_top_and_bottom"
         app:placeholderImage="@drawable/image_placeholder"
         app:viewAspectRatio="1.78" />
     <ImageButton
