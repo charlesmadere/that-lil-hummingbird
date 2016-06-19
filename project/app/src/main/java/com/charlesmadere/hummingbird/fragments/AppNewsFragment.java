@@ -85,7 +85,7 @@ public class AppNewsFragment extends BaseBottomSheetDialogFragment {
         }
 
         mHead.setText(mAppNews.getHead());
-        mDate.setText(mAppNews.getDate().getRelativeTimeText(getContext()));
+        mDate.setText(mAppNews.getDate().getRelativeDateTimeText(getContext()));
         mBody.setText(mAppNews.getBody());
 
         if (mAppNews.hasLinks()) {

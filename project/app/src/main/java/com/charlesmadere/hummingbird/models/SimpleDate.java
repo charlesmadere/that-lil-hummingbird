@@ -45,6 +45,11 @@ public class SimpleDate implements Parcelable {
         return mDate;
     }
 
+    public CharSequence getRelativeDateTimeText(final Context context) {
+        return DateUtils.getRelativeDateTimeString(context, mDate.getTime(),
+                DateUtils.DAY_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, 0);
+    }
+
     public CharSequence getRelativeTimeText(final Context context) {
         return DateUtils.getRelativeTimeSpanString(context, mDate.getTime());
     }
