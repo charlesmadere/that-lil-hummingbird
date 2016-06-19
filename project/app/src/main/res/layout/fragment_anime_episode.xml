@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+        <ImageButton
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/close"
+            android:id="@+id/ibClose"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/root_padding_half"
+            android:layout_width="wrap_content"
+            android:padding="@dimen/root_padding_half"
+            android:src="@drawable/ic_close_24dp" />
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/root_padding_half"
+            android:layout_marginEnd="@dimen/root_padding"
+            android:layout_marginStart="@dimen/root_padding"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvTitle"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                tools:text="Naturals Election"
+                style="@style/AnimeTitle" />
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvNumber"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/root_padding_half"
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/text_xxlarge"
+                app:typeface="open_sans_light"
+                tools:text="12" />
+        </LinearLayout>
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:id="@+id/tvSynopsis"
+            android:layout_marginEnd="@dimen/root_padding"
+            android:layout_marginBottom="@dimen/root_padding"
+            android:layout_marginStart="@dimen/root_padding"
+            android:lineSpacingExtra="2dp"
+            tools:text="Bacon ipsum dolor amet corned beef alcatra fatback ribeye capicola sirloin tenderloin rump short loin pig brisket ham leberkas."
+            style="@style/AnimeSynopsis" />
+    </LinearLayout>
+</ScrollView>
