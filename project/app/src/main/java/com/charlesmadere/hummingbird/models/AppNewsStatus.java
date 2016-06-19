@@ -14,15 +14,6 @@ public class AppNewsStatus implements Parcelable {
     private long mPollTime;
 
 
-    public AppNewsStatus(final boolean importantNewsAvailable) {
-        mImportantNewsAvailable = importantNewsAvailable;
-    }
-
-    private AppNewsStatus(final Parcel source) {
-        mImportantNewsAvailable = source.readInt() != 0;
-        mPollTime = source.readLong();
-    }
-
     public long getPollTime() {
         return mPollTime;
     }
@@ -53,7 +44,10 @@ public class AppNewsStatus implements Parcelable {
     public static final Creator<AppNewsStatus> CREATOR = new Creator<AppNewsStatus>() {
         @Override
         public AppNewsStatus createFromParcel(final Parcel source) {
-            return new AppNewsStatus(source);
+            final AppNewsStatus ans = new AppNewsStatus();
+            ans.mImportantNewsAvailable = source.readInt() != 0;
+            ans.mPollTime = source.readLong();
+            return ans;
         }
 
         @Override
