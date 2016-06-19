@@ -1,5 +1,6 @@
 package com.charlesmadere.hummingbird.fragments;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.text.NumberFormat;
 
@@ -20,6 +22,9 @@ public class AnimeEpisodeFragment extends BaseBottomSheetDialogFragment {
     private static final String KEY_EPISODE = "Episode";
 
     private AnimeDigest.Episode mEpisode;
+
+    @BindView(R.id.sdvThumbnail)
+    SimpleDraweeView mThumbnail;
 
     @BindView(R.id.tvNumber)
     TextView mNumber;
@@ -72,6 +77,13 @@ public class AnimeEpisodeFragment extends BaseBottomSheetDialogFragment {
 
         mTitle.setText(mEpisode.getTitle());
         mNumber.setText(NumberFormat.getInstance().format(mEpisode.getNumber()));
+
+        if (mEpisode.hasThumbnail()) {
+            mThumbnail.setImageURI(Uri.parse(mEpisode.getThumbnail()));
+            mThumbnail.setVisibility(View.VISIBLE);
+        } else {
+            mThumbnail.setVisibility(View.GONE);
+        }
 
         if (mEpisode.hasSynopsis()) {
             mSynopsis.setText(mEpisode.getSynopsis());

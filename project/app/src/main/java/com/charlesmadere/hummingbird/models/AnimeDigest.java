@@ -468,7 +468,8 @@ public class AnimeDigest implements Parcelable {
         }
 
         public boolean hasThumbnail() {
-            return !TextUtils.isEmpty(mThumbnail);
+            return !TextUtils.isEmpty(mThumbnail) &&
+                    !"/thumbnails/original/missing.png".equalsIgnoreCase(mThumbnail);
         }
 
         @Override

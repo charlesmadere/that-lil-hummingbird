@@ -41,6 +41,16 @@
                 app:typeface="open_sans_light"
                 tools:text="12" />
         </LinearLayout>
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdvThumbnail"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/root_padding_half"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            app:actualImageScaleType="centerCrop"
+            app:placeholderImage="@drawable/image_placeholder"
+            app:viewAspectRatio="1.78"
+            tools:visibility="visible" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvSynopsis"
             android:layout_marginEnd="@dimen/root_padding"
