@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
@@ -16,8 +17,10 @@ import java.text.NumberFormat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AnimeEpisodeItemView extends CardView implements AdapterView<AnimeDigest.Episode> {
+public class AnimeEpisodeItemView extends CardView implements AdapterView<AnimeDigest.Episode>,
+        View.OnClickListener {
 
+    private AnimeDigest.Episode mEpisode;
     private NumberFormat mNumberFormat;
 
     @BindView(R.id.sdvThumbnail)
@@ -43,6 +46,11 @@ public class AnimeEpisodeItemView extends CardView implements AdapterView<AnimeD
     }
 
     @Override
+    public void onClick(final View view) {
+        
+    }
+
+    @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
 
@@ -56,17 +64,19 @@ public class AnimeEpisodeItemView extends CardView implements AdapterView<AnimeD
 
     @Override
     public void setContent(final AnimeDigest.Episode content) {
-        if (content.hasThumbnail()) {
-            mThumbnail.setImageURI(Uri.parse(content.getThumbnail()));
+        mEpisode = content;
+
+        if (mEpisode.hasThumbnail()) {
+            mThumbnail.setImageURI(Uri.parse(mEpisode.getThumbnail()));
         } else {
-            // TODO
+            mThumbnail.setImageURI(null);
         }
 
-        mNumber.setText(mNumberFormat.format(content.getNumber()));
-        mTitle.setText(content.getTitle());
+        mNumber.setText(mNumberFormat.format(mEpisode.getNumber()));
+        mTitle.setText(mEpisode.getTitle());
 
-        if (content.hasSynopsis()) {
-            mSynopsis.setText(content.getSynopsis());
+        if (mEpisode.hasSynopsis()) {
+            mSynopsis.setText(mEpisode.getSynopsis());
         } else {
             mSynopsis.setText(R.string.no_synopsis_available);
         }
