@@ -73,16 +73,20 @@
                         <com.charlesmadere.hummingbird.views.CheckablePreferenceView
                             android:id="@+id/cpvPowerRequired"
                             app:checkable_type="checkbox"
+                            app:disabledDescriptionText="@string/will_poll_regardless_of_being_plugged_in_or_not"
+                            app:enabledDescriptionText="@string/will_only_poll_if_plugged_in"
                             app:titleText="@string/must_be_charging"
                             style="@style/ResponsiveWidthCardItem.Switch" />
                         <com.charlesmadere.hummingbird.views.CheckablePreferenceView
                             android:id="@+id/cpvWifiRequired"
                             app:checkable_type="checkbox"
+                            app:disabledDescriptionText="@string/will_poll_on_any_data_connection"
+                            app:enabledDescriptionText="@string/will_only_poll_if_connected_to_wifi"
                             app:titleText="@string/must_be_on_wifi"
                             style="@style/ResponsiveWidthCardItem.Switch" />
                         <com.charlesmadere.hummingbird.views.HeadBodyItemView
                             android:id="@+id/hbivLastPoll"
-                            app:bodyText="@string/most_recent_poll"
+                            app:headText="@string/most_recent_poll"
                             style="@style/ResponsiveWidthCardItem" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>

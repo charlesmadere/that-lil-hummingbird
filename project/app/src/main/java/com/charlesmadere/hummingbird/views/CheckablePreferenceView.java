@@ -128,25 +128,29 @@ public class CheckablePreferenceView extends RelativeLayout implements
 
     public void refresh() {
         setEnabled(mPreference != null);
+        mCheckable.setChecked(Boolean.TRUE.equals(mPreference.get()));
 
-        if (isEnabled()) {
-            mCheckable.setChecked(Boolean.TRUE.equals(mPreference.get()));
+        if (mCheckable.isChecked()) {
             mDescription.setText(mEnabledDescriptionText);
         } else {
             mDescription.setText(mDisabledDescriptionText);
         }
 
-        final LayoutParams lp = (RelativeLayout.LayoutParams) mTitle.getLayoutParams();
+        final LayoutParams titleParams = (LayoutParams) mTitle.getLayoutParams();
+        final LayoutParams checkableParams = (LayoutParams) mCheckable.getLayoutParams();
 
         if (TextUtils.isEmpty(mDescription.getText())) {
-            lp.addRule(CENTER_VERTICAL);
             mDescription.setVisibility(GONE);
+            titleParams.addRule(CENTER_VERTICAL);
+            checkableParams.addRule(CENTER_VERTICAL);
         } else {
-            lp.removeRule(CENTER_VERTICAL);
             mDescription.setVisibility(VISIBLE);
+            titleParams.removeRule(CENTER_VERTICAL);
+            checkableParams.removeRule(CENTER_VERTICAL);
         }
 
-        mTitle.setLayoutParams(lp);
+        mTitle.setLayoutParams(titleParams);
+        mCheckable.setLayoutParams(checkableParams);
     }
 
     public void setBooleanPreference(final BooleanPreference preference) {

@@ -345,7 +345,7 @@ public class SettingsActivity extends BaseDrawerActivity implements
             }
 
             if (Preferences.NotificationPolling.LastPoll.exists()) {
-                mLastPoll.setHead(DateUtils.getRelativeDateTimeString(this,
+                mLastPoll.setBody(DateUtils.getRelativeDateTimeString(this,
                         Preferences.NotificationPolling.LastPoll.get(), DateUtils.DAY_IN_MILLIS,
                         DateUtils.WEEK_IN_MILLIS, 0));
                 mLastPoll.setVisibility(View.VISIBLE);

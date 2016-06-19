@@ -294,6 +294,10 @@
     <string name="website">Website</string>
     <string name="weekly">Weekly</string>
     <string name="whats_trending">What\'s Trending</string>
+    <string name="will_only_poll_if_connected_to_wifi">Will only poll if connected to wifi</string>
+    <string name="will_only_poll_if_plugged_in">Will only poll if plugged in</string>
+    <string name="will_poll_on_any_data_connection">Will poll on any data connection</string>
+    <string name="will_poll_regardless_of_being_plugged_in_or_not">Will poll regardless of being plugged in or not</string>
     <string name="write_something_">Write something…</string>
     <string name="wrote_a_comment_on_your_profile">wrote a comment on your profile</string>
     <string name="wrote_a_reply_to_your_comment">wrote a reply to your comment</string>
