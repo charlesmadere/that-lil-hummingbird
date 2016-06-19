@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.fragments;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ public class AnimeEpisodeFragment extends BaseBottomSheetDialogFragment {
 
     private AnimeDigest.Episode mEpisode;
 
+    @Nullable
     @BindView(R.id.sdvThumbnail)
     SimpleDraweeView mThumbnail;
 
@@ -68,7 +70,12 @@ public class AnimeEpisodeFragment extends BaseBottomSheetDialogFragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_anime_episode, container, false);
+
+        final int layoutResId = mEpisode.hasThumbnail() ?
+                R.layout.fragment_anime_episode_with_thumbnail :
+                R.layout.fragment_anime_episode_without_thumbnail;
+
+        return inflater.inflate(layoutResId, container, false);
     }
 
     @Override
@@ -80,9 +87,6 @@ public class AnimeEpisodeFragment extends BaseBottomSheetDialogFragment {
 
         if (mEpisode.hasThumbnail()) {
             mThumbnail.setImageURI(Uri.parse(mEpisode.getThumbnail()));
-            mThumbnail.setVisibility(View.VISIBLE);
-        } else {
-            mThumbnail.setVisibility(View.GONE);
         }
 
         if (mEpisode.hasSynopsis()) {
