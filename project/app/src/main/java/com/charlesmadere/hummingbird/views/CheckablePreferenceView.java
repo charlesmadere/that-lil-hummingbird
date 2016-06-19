@@ -9,7 +9,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Checkable;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,7 +34,7 @@ public class CheckablePreferenceView extends RelativeLayout implements
     private OnPreferenceChangeListener opcl;
 
     @BindView(R.id.checkable)
-    Checkable mCheckable;
+    CompoundButton mCheckable;
 
     @BindView(R.id.tvDescription)
     TextView mDescription;
@@ -163,7 +163,7 @@ public class CheckablePreferenceView extends RelativeLayout implements
     @Override
     public void setEnabled(final boolean enabled) {
         super.setEnabled(enabled);
-        ((View) mCheckable).setEnabled(enabled);
+        mCheckable.setEnabled(enabled);
         mDescription.setEnabled(enabled);
         mTitle.setEnabled(enabled);
     }
