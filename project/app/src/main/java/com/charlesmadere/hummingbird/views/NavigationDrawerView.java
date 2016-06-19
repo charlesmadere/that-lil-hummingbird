@@ -16,6 +16,7 @@ import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.models.AppNewsStatus;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.preferences.Preference;
+import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView.Entry;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -96,6 +97,18 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout implements
     }
 
     @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        Preferences.Misc.AppNewsAvailability.addListener(this);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        Preferences.Misc.AppNewsAvailability.removeListener(this);
+        super.onDetachedFromWindow();
+    }
+
+    @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
 
@@ -114,6 +127,8 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout implements
         if (user.isPro()) {
             mProBadge.setVisibility(VISIBLE);
         }
+
+        Preferences.Misc.AppNewsAvailability.addListener(this);
     }
 
     @Override
