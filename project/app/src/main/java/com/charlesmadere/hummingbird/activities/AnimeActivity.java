@@ -13,12 +13,14 @@ import android.support.v7.app.AlertDialog;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeFragmentAdapter;
+import com.charlesmadere.hummingbird.fragments.AnimeEpisodeFragment;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.views.AnimeEpisodeItemView;
 import com.charlesmadere.hummingbird.views.SimpleProgressView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -26,7 +28,8 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class AnimeActivity extends BaseDrawerActivity {
+public class AnimeActivity extends BaseDrawerActivity implements
+        AnimeEpisodeItemView.OnClickListener {
 
     private static final String TAG = "AnimeActivity";
     private static final String CNAME = AnimeActivity.class.getCanonicalName();
@@ -80,6 +83,11 @@ public class AnimeActivity extends BaseDrawerActivity {
     @Override
     protected boolean isUpNavigationEnabled() {
         return true;
+    }
+
+    @Override
+    public void onClick(final AnimeEpisodeItemView v) {
+        AnimeEpisodeFragment.create(v.getEpisode()).show(getSupportFragmentManager(), null);
     }
 
     @Override

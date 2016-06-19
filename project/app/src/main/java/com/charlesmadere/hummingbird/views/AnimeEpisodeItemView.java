@@ -1,5 +1,6 @@
 package com.charlesmadere.hummingbird.views;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -45,9 +47,17 @@ public class AnimeEpisodeItemView extends CardView implements AdapterView<AnimeD
         super(context, attrs, defStyleAttr);
     }
 
+    public AnimeDigest.Episode getEpisode() {
+        return mEpisode;
+    }
+
     @Override
     public void onClick(final View view) {
-        
+        final Activity activity = MiscUtils.getActivity(getContext());
+
+        if (activity instanceof OnClickListener) {
+            ((OnClickListener) activity).onClick(this);
+        }
     }
 
     @Override
@@ -59,6 +69,7 @@ public class AnimeEpisodeItemView extends CardView implements AdapterView<AnimeD
         }
 
         ButterKnife.bind(this);
+        setOnClickListener(this);
         mNumberFormat = NumberFormat.getInstance();
     }
 
@@ -80,6 +91,11 @@ public class AnimeEpisodeItemView extends CardView implements AdapterView<AnimeD
         } else {
             mSynopsis.setText(R.string.no_synopsis_available);
         }
+    }
+
+
+    public interface OnClickListener {
+        void onClick(final AnimeEpisodeItemView v);
     }
 
 }

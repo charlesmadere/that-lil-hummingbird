@@ -29,6 +29,7 @@
                 android:id="@+id/tvTitle"
                 android:layout_weight="1"
                 android:layout_width="0dp"
+                android:textSize="@dimen/text_xxxlarge"
                 tools:text="Naturals Election"
                 style="@style/AnimeTitle" />
             <com.charlesmadere.hummingbird.views.TypefaceTextView
