@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.AppNewsChecker;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 import com.charlesmadere.hummingbird.views.NavigationDrawerView;
 
@@ -111,6 +112,12 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
     protected void onPostCreate(final Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AppNewsChecker.refresh();
     }
 
     @Override

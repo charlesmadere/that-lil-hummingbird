@@ -13,9 +13,11 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AppNewsAdapter;
 import com.charlesmadere.hummingbird.fragments.AppNewsFragment;
 import com.charlesmadere.hummingbird.models.AppNews;
+import com.charlesmadere.hummingbird.models.AppNewsStatus;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.AppNewsItemView;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
@@ -157,6 +159,14 @@ public class AppNewsActivity extends BaseDrawerActivity implements AppNewsItemVi
             final AppNewsActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
+                final AppNewsStatus appNewsStatus = Preferences.Misc.AppNewsAvailability.get();
+
+                if (appNewsStatus != null) {
+                    appNewsStatus.setImportantNewsAvailable(false);
+                    appNewsStatus.updatePollTime();
+                    Preferences.Misc.AppNewsAvailability.set(appNewsStatus);
+                }
+
                 if (appNews == null || appNews.isEmpty()) {
                     activity.showEmpty();
                 } else {
