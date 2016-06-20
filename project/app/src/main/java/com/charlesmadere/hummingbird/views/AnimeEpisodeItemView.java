@@ -76,13 +76,7 @@ public class AnimeEpisodeItemView extends CardView implements AdapterView<AnimeD
     @Override
     public void setContent(final AnimeDigest.Episode content) {
         mEpisode = content;
-
-        if (mEpisode.hasThumbnail()) {
-            mThumbnail.setImageURI(Uri.parse(mEpisode.getThumbnail()));
-        } else {
-            mThumbnail.setImageURI(null);
-        }
-
+        mThumbnail.setImageURI(mEpisode.hasThumbnail() ? Uri.parse(mEpisode.getThumbnail()) : null);
         mNumber.setText(mNumberFormat.format(mEpisode.getNumber()));
         mTitle.setText(mEpisode.getTitle());
 
