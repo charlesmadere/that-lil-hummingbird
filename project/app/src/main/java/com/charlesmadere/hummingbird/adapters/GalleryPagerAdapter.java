@@ -31,6 +31,7 @@ public class GalleryPagerAdapter extends PagerAdapter {
     public Object instantiateItem(final ViewGroup container, final int position) {
         final GalleryPagerView view = GalleryPagerView.inflate(container);
         view.setContent(mUrls.get(position));
+        container.addView(view);
         return view;
     }
 

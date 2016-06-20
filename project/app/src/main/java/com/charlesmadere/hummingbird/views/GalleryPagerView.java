@@ -3,7 +3,6 @@ package com.charlesmadere.hummingbird.views;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.drawable.Animatable;
-import android.net.Uri;
 import android.os.Build;
 import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
@@ -17,12 +16,12 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.controller.AbstractDraweeController;
 import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.image.ImageInfo;
-import com.facebook.imagepipeline.request.ImageRequest;
-import com.facebook.imagepipeline.request.ImageRequestBuilder;
+
+import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,7 +70,6 @@ public class GalleryPagerView extends FrameLayout implements AdapterView<String>
     public void setContent(final String content) {
         mUrl = content;
 
-        mImage.setVisibility(GONE);
         mError.setVisibility(GONE);
         mProgressBar.setVisibility(VISIBLE);
 
@@ -81,40 +79,49 @@ public class GalleryPagerView extends FrameLayout implements AdapterView<String>
             return;
         }
 
-        final ImageRequest request = ImageRequestBuilder.newBuilderWithSource(
-                Uri.parse(mUrl)).build();
-
-        final AbstractDraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setControllerListener(new BaseControllerListener<ImageInfo>() {
-                    private boolean isAlive() {
-                        return ViewCompat.isAttachedToWindow(GalleryPagerView.this) &&
-                                TextUtils.equals(mUrl, content);
-                    }
-
-                    @Override
-                    public void onFailure(final String id, final Throwable throwable) {
-                        if (isAlive()) {
-                            mImage.setVisibility(GONE);
-                            mProgressBar.setVisibility(GONE);
-                            mError.setVisibility(VISIBLE);
-                        }
-                    }
-
-                    @Override
-                    public void onFinalImageSet(final String id, final ImageInfo imageInfo,
-                            final Animatable animatable) {
-                        if (isAlive()) {
-                            mError.setVisibility(GONE);
-                            mProgressBar.setVisibility(GONE);
-                            mImage.setVisibility(VISIBLE);
-                        }
-                    }
-                })
-                .setOldController(mImage.getController())
-                .setImageRequest(request)
+        final DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setControllerListener(new GetImageControllerListener(this, mUrl))
+                .setUri(mUrl)
                 .build();
 
         mImage.setController(controller);
+    }
+
+
+    private static class GetImageControllerListener extends BaseControllerListener<ImageInfo> {
+        private final WeakReference<GalleryPagerView> mViewReference;
+        private final String mUrl;
+
+        private GetImageControllerListener(final GalleryPagerView view, final String url) {
+            mViewReference = new WeakReference<>(view);
+            mUrl = url;
+        }
+
+        private boolean isAlive(final GalleryPagerView view) {
+            return view != null && ViewCompat.isAttachedToWindow(view) &&
+                    TextUtils.equals(mUrl, view.mUrl);
+        }
+
+        @Override
+        public void onFailure(final String id, final Throwable throwable) {
+            final GalleryPagerView view = mViewReference.get();
+
+            if (isAlive(view)) {
+                view.mProgressBar.setVisibility(GONE);
+                view.mError.setVisibility(VISIBLE);
+            }
+        }
+
+        @Override
+        public void onFinalImageSet(final String id, final ImageInfo imageInfo,
+                final Animatable animatable) {
+            final GalleryPagerView view = mViewReference.get();
+
+            if (isAlive(view)) {
+                view.mError.setVisibility(GONE);
+                view.mProgressBar.setVisibility(GONE);
+            }
+        }
     }
 
 }
