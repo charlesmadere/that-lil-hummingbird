@@ -10,7 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.adapters.GalleryFragmentAdapter;
+import com.charlesmadere.hummingbird.adapters.GalleryPagerAdapter;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 
 import java.text.NumberFormat;
@@ -106,7 +106,7 @@ public class GalleryActivity extends BaseActivity {
     private void prepareViewPager() {
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);
-        mViewPager.setAdapter(new GalleryFragmentAdapter(this, mUrls));
+        mViewPager.setAdapter(new GalleryPagerAdapter(mUrls));
         mViewPager.setCurrentItem(mStartingPosition, false);
         updateToolbarTitle();
     }
