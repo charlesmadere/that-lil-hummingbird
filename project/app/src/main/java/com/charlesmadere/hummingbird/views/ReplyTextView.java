@@ -35,7 +35,7 @@ public class ReplyTextView extends LinkTextView {
         builder.append(content.getUserId());
         builder.setSpan(mUserSpan, 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.append(' ');
-        builder.append(buildLinkSpan(content.getReply()));
+        builder.append(content.getReply());
         setText(builder);
     }
 

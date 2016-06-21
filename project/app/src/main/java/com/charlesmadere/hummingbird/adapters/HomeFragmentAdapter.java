@@ -19,7 +19,7 @@ public class HomeFragmentAdapter extends BaseUserFragmentAdapter {
     }
 
     @Override
-    protected BaseFeedFragment getFeedFragment() {
+    protected BaseFeedFragment createFeedFragment() {
         return HomeFeedFragment.create();
     }
 

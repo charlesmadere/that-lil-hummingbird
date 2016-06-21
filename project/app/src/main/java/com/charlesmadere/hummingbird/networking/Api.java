@@ -532,29 +532,36 @@ public final class Api {
     }
 
     public static void getSubstories(final String storyId, final ApiResponse<Feed> listener) {
-        hummingbird().getSubstories(getAuthTokenCookieString(), storyId).enqueue(
+        getSubstories(storyId, null, listener);
+    }
+
+    public static void getSubstories(final String storyId, @Nullable final Feed feed,
+            final ApiResponse<Feed> listener) {
+        final int page = feed == null ? 1 : feed.getMetadata().getCursor();
+
+        hummingbird().getSubstories(getAuthTokenCookieString(), storyId, page).enqueue(
                 new Callback<Feed>() {
-            @Override
-            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
-                Feed body = null;
+                    @Override
+                    public void onResponse(final Call<Feed> call, final Response<Feed> response) {
+                        Feed body = null;
 
-                if (response.isSuccessful()) {
-                    body = response.body();
-                }
+                        if (response.isSuccessful()) {
+                            body = response.body();
+                        }
 
-                if (body == null) {
-                    listener.failure(retrieveErrorInfo(response));
-                } else {
-                    hydrateFeed(body, null, listener);
-                }
-            }
+                        if (body == null) {
+                            listener.failure(retrieveErrorInfo(response));
+                        } else {
+                            hydrateFeed(body, feed, listener);
+                        }
+                    }
 
-            @Override
-            public void onFailure(final Call<Feed> call, final Throwable t) {
-                Timber.e(TAG, "get substories (" + storyId + ") failed", t);
-                listener.failure(null);
-            }
-        });
+                    @Override
+                    public void onFailure(final Call<Feed> call, final Throwable t) {
+                        Timber.e(TAG, "get substories (" + storyId + ") (page " + page + ") failed", t);
+                        listener.failure(null);
+                    }
+                });
     }
 
     public static void getUser(final String username, final ApiResponse<User> listener) {

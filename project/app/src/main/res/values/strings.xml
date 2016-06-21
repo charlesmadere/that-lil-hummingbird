@@ -90,6 +90,7 @@
     <string name="error_loading_user_check_network_connection">Error loading user! Please check your network connection and try again.</string>
     <string name="error_logging_in">Error logging in! Please check your credentials and network connection and then try again.</string>
     <string name="error_posting_comment">Error posting comment! Please check your network connection and try again.</string>
+    <string name="error_posting_to_feed">Error posting to feed! Please check your network connection and try again.</string>
     <string name="explore">Explore</string>
     <string name="explore_anime">Explore Anime</string>
     <string name="explore_manga">Explore Manga</string>

@@ -22,7 +22,6 @@
         android:id="@+id/tvTimeAgo"
         android:layout_below="@id/kvtvAction"
         android:layout_toEndOf="@id/avatarView"
-        android:textSize="@dimen/text_small"
         tools:text="2 days ago"
         style="@style/TimeOrDate" />
 </com.charlesmadere.hummingbird.views.MediaSubstoryItemView>

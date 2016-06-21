@@ -15,6 +15,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.MangaFragmentAdapter;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
+import com.charlesmadere.hummingbird.models.Manga;
 import com.charlesmadere.hummingbird.models.MangaDigest;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
@@ -54,6 +55,10 @@ public class MangaActivity extends BaseDrawerActivity {
     @BindView(R.id.viewPager)
     ViewPager mViewPager;
 
+
+    public static Intent getLaunchIntent(final Context context, final Manga manga) {
+        return getLaunchIntent(context, manga.getId(), manga.getTitle());
+    }
 
     public static Intent getLaunchIntent(final Context context, final String mangaId,
             final String mangaName) {

@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.util.SparseArrayCompat;
+import android.view.ViewGroup;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.fragments.AnimeLibraryFragment;
@@ -12,6 +14,8 @@ import com.charlesmadere.hummingbird.fragments.BaseFeedFragment;
 import com.charlesmadere.hummingbird.fragments.UserProfileFragment;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
+
+import java.lang.ref.WeakReference;
 
 public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter {
 
@@ -23,6 +27,7 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
             WatchingStatus.ON_HOLD, WatchingStatus.DROPPED };
 
     private final Context mContext;
+    private final SparseArrayCompat<WeakReference<Fragment>> mFragments;
     private final UserDigest mUserDigest;
 
 
@@ -35,6 +40,13 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
         super(fm);
         mContext = context;
         mUserDigest = digest;
+        mFragments = new SparseArrayCompat<>(getCount());
+    }
+
+    @Override
+    public void destroyItem(final ViewGroup container, final int position, final Object object) {
+        super.destroyItem(container, position, object);
+        mFragments.put(position, null);
     }
 
     @Override
@@ -42,7 +54,11 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
         return WatchingStatus.values().length + 2;
     }
 
-    protected abstract BaseFeedFragment getFeedFragment();
+    protected abstract BaseFeedFragment createFeedFragment();
+
+    public BaseFeedFragment getFeedFragment() {
+        return (BaseFeedFragment) mFragments.get(POSITION_FEED).get();
+    }
 
     @Override
     public Fragment getItem(final int position) {
@@ -54,7 +70,7 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
                 break;
 
             case POSITION_FEED:
-                fragment = getFeedFragment();
+                fragment = createFeedFragment();
                 break;
 
             default:
@@ -63,6 +79,7 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
                 break;
         }
 
+        mFragments.put(position, new WeakReference<>(fragment));
         return fragment;
     }
 
@@ -90,6 +107,13 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
 
     public UserDigest getUserDigest() {
         return mUserDigest;
+    }
+
+    @Override
+    public Object instantiateItem(final ViewGroup container, final int position) {
+        final Fragment fragment = (Fragment) super.instantiateItem(container, position);
+        mFragments.put(position, new WeakReference<>(fragment));
+        return fragment;
     }
 
 }

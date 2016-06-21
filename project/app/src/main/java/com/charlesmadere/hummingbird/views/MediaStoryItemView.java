@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.AnimeActivity;
+import com.charlesmadere.hummingbird.activities.MangaActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
@@ -68,7 +69,8 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
                 break;
 
             case MANGA:
-                // TODO
+                context.startActivity(MangaActivity.getLaunchIntent(context,
+                        ((MediaStory.MangaMedia) media).getManga()));
                 break;
 
             default:

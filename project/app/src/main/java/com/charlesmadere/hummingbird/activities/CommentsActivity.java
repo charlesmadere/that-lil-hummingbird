@@ -28,7 +28,6 @@ import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
-import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import java.lang.ref.WeakReference;
 
@@ -204,7 +203,6 @@ public class CommentsActivity extends BaseDrawerActivity implements
     protected void onViewsBound() {
         super.onViewsBound();
         mRefreshLayout.setOnRefreshListener(this);
-        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding_half);
         mAdapter = new CommentsAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
@@ -212,7 +210,8 @@ public class CommentsActivity extends BaseDrawerActivity implements
 
     @Override
     public void paginate() {
-        // TODO
+        mAdapter.setPaginating(true);
+        Api.getSubstories(mCommentStory.getId(), mFeed, new PaginateSubstoriesListener(this));
     }
 
     protected void paginationComplete() {

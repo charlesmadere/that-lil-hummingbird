@@ -20,7 +20,7 @@ public class UserFragmentAdapter extends BaseUserFragmentAdapter {
     }
 
     @Override
-    protected BaseFeedFragment getFeedFragment() {
+    protected BaseFeedFragment createFeedFragment() {
         return UserFeedFragment.create(getUserDigest().getUserId());
     }
 

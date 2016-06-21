@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.UserFragmentAdapter;
+import com.charlesmadere.hummingbird.fragments.BaseFeedFragment;
 import com.charlesmadere.hummingbird.fragments.FeedPostFragment;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
@@ -137,15 +138,17 @@ public class UserActivity extends BaseDrawerActivity implements FeedPostFragment
 
     @Override
     public void onFeedPostSubmit() {
-        final FeedPostFragment fragment = (FeedPostFragment) getSupportFragmentManager()
+        final FeedPostFragment postFragment = (FeedPostFragment) getSupportFragmentManager()
                 .findFragmentByTag(FeedPostFragment.TAG);
-        final FeedPost feedPost = fragment.getFeedPost(mUsername);
+        final FeedPost feedPost = postFragment.getFeedPost(mUsername);
 
         if (feedPost == null) {
             return;
         }
 
-        // TODO
+        final UserFragmentAdapter adapter = (UserFragmentAdapter) mViewPager.getAdapter();
+        final BaseFeedFragment feedFragment = adapter.getFeedFragment();
+        feedFragment.postToFeed(feedPost);
     }
 
     @Override

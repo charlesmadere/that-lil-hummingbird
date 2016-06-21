@@ -16,8 +16,8 @@ public class CommentTextView extends LinkTextView {
         super(context, attrs, defStyleAttr);
     }
 
-    public void setContent(final CommentStory content) {
-        setText(buildLinkSpan(content.getComment()));
+    public void setContent(final CommentStory commentStory) {
+        setText(commentStory.getComment());
     }
 
 }

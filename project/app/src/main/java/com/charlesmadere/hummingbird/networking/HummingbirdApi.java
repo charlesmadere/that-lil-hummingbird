@@ -106,7 +106,8 @@ public interface HummingbirdApi {
     Call<Feed> getNotifications(@Header("Cookie") String authToken, @Header("Accept") String json);
 
     @GET("substories")
-    Call<Feed> getSubstories(@Header("Cookie") String authToken, @Query("story_id") String storyId);
+    Call<Feed> getSubstories(@Header("Cookie") String authToken, @Query("story_id") String storyId,
+            @Query("page") Integer page);
 
     @GET("users/{username}")
     Call<User> getUser(@Header("Cookie") String authToken, @Header("Accept") String json,

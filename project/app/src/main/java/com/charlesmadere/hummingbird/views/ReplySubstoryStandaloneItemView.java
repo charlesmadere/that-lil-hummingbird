@@ -46,11 +46,6 @@ public class ReplySubstoryStandaloneItemView extends CardView implements Adapter
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        if (isInEditMode()) {
-            return;
-        }
-
         ButterKnife.bind(this);
     }
 

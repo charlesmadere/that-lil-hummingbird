@@ -38,16 +38,13 @@
             android:visibility="gone"
             tools:visibility="visible" />
         <com.charlesmadere.hummingbird.views.CommentTextView
-            android:ellipsize="end"
             android:id="@+id/commentTextView"
             android:layout_below="@id/tvTimeAgo"
             android:layout_toEndOf="@id/avatarView"
-            android:layout_width="match_parent"
-            android:maxLines="6"
             android:visibility="gone"
             tools:text="Hello, World!"
             tools:visibility="visible"
-            style="@style/CommentTextView" />
+            style="@style/CommentTextView.OP.Limited" />
         <LinearLayout
             android:divider="?android:attr/listDivider"
             android:id="@+id/llReplies"

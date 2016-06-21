@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.FeedAdapter;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
+import com.charlesmadere.hummingbird.models.FeedPost;
+import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
@@ -45,6 +48,13 @@ public abstract class BaseFeedFragment extends BaseFragment implements
     @BindView(R.id.refreshLayout)
     protected RefreshLayout mRefreshLayout;
 
+
+    private void feedPostFailure() {
+        new AlertDialog.Builder(getContext())
+                .setMessage(R.string.error_posting_to_feed)
+                .setNeutralButton(R.string.ok, null)
+                .show();
+    }
 
     protected void fetchFeed() {
         mRefreshLayout.setRefreshing(true);
@@ -120,6 +130,11 @@ public abstract class BaseFeedFragment extends BaseFragment implements
         mAdapter.setPaginating(false);
     }
 
+    public void postToFeed(final FeedPost feedPost) {
+        mRefreshLayout.setRefreshing(true);
+        Api.postToFeed(feedPost, new FeedPostListener(this));
+    }
+
     protected void showError() {
         mRecyclerView.setVisibility(View.GONE);
         mEmpty.setVisibility(View.GONE);
@@ -144,6 +159,32 @@ public abstract class BaseFeedFragment extends BaseFragment implements
         mRefreshLayout.setRefreshing(false);
     }
 
+
+    private static class FeedPostListener implements ApiResponse<Void> {
+        private final WeakReference<BaseFeedFragment> mFragmentReference;
+
+        private FeedPostListener(final BaseFeedFragment fragment) {
+            mFragmentReference = new WeakReference<>(fragment);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final BaseFeedFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                fragment.feedPostFailure();
+            }
+        }
+
+        @Override
+        public void success(@Nullable final Void v) {
+            final BaseFeedFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                fragment.fetchFeed();
+            }
+        }
+    }
 
     protected static class GetFeedListener implements ApiResponse<Feed> {
         private final WeakReference<BaseFeedFragment> mFragmentReference;
