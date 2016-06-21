@@ -3,21 +3,32 @@ package com.charlesmadere.hummingbird.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.BaseUserFragmentAdapter;
 import com.charlesmadere.hummingbird.adapters.HomeFragmentAdapter;
 import com.charlesmadere.hummingbird.adapters.UserFragmentAdapter;
+import com.charlesmadere.hummingbird.fragments.BaseFeedFragment;
+import com.charlesmadere.hummingbird.fragments.FeedPostFragment;
+import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.SyncManager;
+import com.charlesmadere.hummingbird.models.FeedPost;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import butterknife.OnPageChange;
 
-public class HomeActivity extends BaseDrawerActivity {
+public class HomeActivity extends BaseDrawerActivity implements FeedPostFragment.Listener {
 
     private static final String TAG = "HomeActivity";
     private static final String KEY_STARTING_POSITION = "StartingPosition";
+
+    @BindView(R.id.floatingActionButton)
+    FloatingActionButton mPostToFeed;
 
     @BindView(R.id.tabLayout)
     TabLayout mTabLayout;
@@ -66,12 +77,47 @@ public class HomeActivity extends BaseDrawerActivity {
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);
+
+        updatePostToFeedVisibility();
+    }
+
+    @Override
+    public void onFeedPostSubmit() {
+        final FeedPostFragment postFragment = (FeedPostFragment) getSupportFragmentManager()
+                .findFragmentByTag(FeedPostFragment.TAG);
+        final FeedPost feedPost = postFragment.getFeedPost(CurrentUser.get().getUserId());
+
+        if (feedPost == null) {
+            return;
+        }
+
+        final BaseUserFragmentAdapter adapter = (BaseUserFragmentAdapter) mViewPager.getAdapter();
+        final BaseFeedFragment feedFragment = adapter.getFeedFragment();
+        feedFragment.postToFeed(feedPost);
+    }
+
+    @OnClick(R.id.floatingActionButton)
+    void onPostToFeedClick() {
+        FeedPostFragment.create().show(getSupportFragmentManager(), FeedPostFragment.TAG);
     }
 
     @Override
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_STARTING_POSITION, mViewPager.getCurrentItem());
+    }
+
+    @OnPageChange(R.id.viewPager)
+    void onViewPagerPageChange() {
+        updatePostToFeedVisibility();
+    }
+
+    private void updatePostToFeedVisibility() {
+        if (mViewPager.getCurrentItem() == UserFragmentAdapter.POSITION_FEED) {
+            mPostToFeed.show();
+        } else {
+            mPostToFeed.hide();
+        }
     }
 
 }
