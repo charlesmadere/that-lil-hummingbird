@@ -10,7 +10,6 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsNotification;
-import com.charlesmadere.hummingbird.models.AbsStory;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.CommentReplyNotification;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
@@ -43,7 +42,7 @@ public class CommentReplyNotificationItemView extends CardView implements
         super(context, attrs, defStyleAttr);
     }
 
-    private void handleStoryAvatarClick(final AbsNotification.SubstorySource source) {
+    private void handleSubstoryAvatarClick(final AbsNotification.SubstorySource source) {
         final AbsSubstory story = source.getSubstory();
         final Context context = getContext();
 
@@ -54,8 +53,23 @@ public class CommentReplyNotificationItemView extends CardView implements
                 break;
 
             default:
-                throw new RuntimeException("encountered unknown " + AbsStory.Type.class.getName()
-                        + ": \"" + story.getType() + '"');
+                throw new RuntimeException("encountered unknown " +
+                        AbsSubstory.Type.class.getName() + ": \"" + story.getType() + '"');
+        }
+    }
+
+    private void handleSubstoryClick(final AbsNotification.SubstorySource source) {
+        final AbsSubstory story = source.getSubstory();
+        final Context context = getContext();
+
+        switch (story.getType()) {
+            case REPLY:
+                // TODO open CommentsActivity
+                break;
+
+            default:
+                throw new RuntimeException("encountered unknown " +
+                        AbsSubstory.Type.class.getName() + ": \"" + story.getType() + '"');
         }
     }
 
@@ -65,7 +79,7 @@ public class CommentReplyNotificationItemView extends CardView implements
 
         switch (source.getType()) {
             case SUBSTORY:
-                handleStoryAvatarClick((AbsNotification.SubstorySource) source);
+                handleSubstoryAvatarClick((AbsNotification.SubstorySource) source);
                 break;
 
             default:
@@ -77,7 +91,18 @@ public class CommentReplyNotificationItemView extends CardView implements
 
     @Override
     public void onClick(final View v) {
-        // TODO
+        final AbsNotification.AbsSource source = mCommentReplyNotification.getSource();
+
+        switch (source.getType()) {
+            case SUBSTORY:
+                handleSubstoryClick((AbsNotification.SubstorySource) source);
+                break;
+
+            default:
+                throw new RuntimeException("encountered unknown " +
+                        AbsNotification.AbsSource.Type.class.getName() + ": \"" +
+                        source.getType() + '"');
+        }
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.CommentsActivity;
 import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsNotification;
@@ -58,6 +59,22 @@ public class ProfileCommentNotificationItemView extends CardView implements
         }
     }
 
+    private void handleStoryClick(final AbsNotification.StorySource source) {
+        final AbsStory story = source.getStory();
+        final Context context = getContext();
+
+        switch (story.getType()) {
+            case COMMENT:
+                context.startActivity(CommentsActivity.getLaunchIntent(context,
+                        (CommentStory) story));
+                break;
+
+            default:
+                throw new RuntimeException("encountered unknown " + AbsStory.Type.class.getName()
+                        + ": \"" + story.getType() + '"');
+        }
+    }
+
     @OnClick(R.id.avatarView)
     void onAvatarClick() {
         final AbsNotification.AbsSource source = mProfileCommentNotification.getSource();
@@ -76,7 +93,18 @@ public class ProfileCommentNotificationItemView extends CardView implements
 
     @Override
     public void onClick(final View v) {
-        // TODO
+        final AbsNotification.AbsSource source = mProfileCommentNotification.getSource();
+
+        switch (source.getType()) {
+            case STORY:
+                handleStoryClick((AbsNotification.StorySource) source);
+                break;
+
+            default:
+                throw new RuntimeException("encountered unknown " +
+                        AbsNotification.AbsSource.Type.class.getName() + ": \"" +
+                        source.getType() + '"');
+        }
     }
 
     @Override
