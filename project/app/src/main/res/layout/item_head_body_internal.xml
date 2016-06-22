@@ -6,8 +6,8 @@
         android:layout_alignParentEnd="true"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:padding="@dimen/root_padding_half"
-        tools:ignore="ContentDescription"
+        android:paddingStart="@dimen/root_padding_half"
+        tools:ignore="ContentDescription,RtlSymmetry"
         tools:src="@drawable/ic_star_18dp" />
     <com.charlesmadere.hummingbird.views.TypefaceTextView
         android:id="@+id/tvHead"

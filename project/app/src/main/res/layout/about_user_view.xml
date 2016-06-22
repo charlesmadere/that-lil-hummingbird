@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.charlesmadere.hummingbird.views.AboutUserView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/aboutUserView"
     style="@style/ResponsiveWidthCard">
@@ -13,107 +14,32 @@
             android:id="@+id/tvAbout"
             tools:text="Bacon ipsum dolor amet boudin short ribs sausage ground round cow."
             style="@style/UserBio.WithMargins" />
-        <LinearLayout
-            android:id="@+id/llWaifuOrHusbando"
-            android:orientation="horizontal"
+        <com.charlesmadere.hummingbird.views.HeadBodyItemView
+            android:id="@+id/hbivWaifuOrHusbando"
             android:visibility="gone"
+            app:iconDrawable="@drawable/ic_favorite_24dp"
             tools:visibility="visible"
-            style="@style/ResponsiveWidthCardItem">
-            <LinearLayout
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:orientation="vertical">
-                <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:id="@+id/tvWaifuOrHusbandoHeader"
-                    tools:text="Ryuuko Matoi"
-                    style="@style/ResponsiveWidthCardItemHeader" />
-                <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:id="@+id/tvWaifuOrHusbandoBody"
-                    tools:text="Waifu"
-                    style="@style/ResponsiveWidthCardItemBody" />
-            </LinearLayout>
-            <ImageView
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/root_padding_half"
-                android:layout_width="wrap_content"
-                android:src="@drawable/ic_favorite_24dp"
-                tools:ignore="ContentDescription" />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/llLocation"
-            android:orientation="horizontal"
+            style="@style/ResponsiveWidthCardItem" />
+        <com.charlesmadere.hummingbird.views.HeadBodyItemView
+            android:id="@+id/hbivLocation"
             android:visibility="gone"
+            app:bodyText="@string/location"
+            app:iconDrawable="@drawable/ic_location_on_24dp"
             tools:visibility="visible"
-            style="@style/ResponsiveWidthCardItem">
-            <LinearLayout
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:orientation="vertical">
-                <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:id="@+id/tvLocationHeader"
-                    tools:text="Honnouji Academy"
-                    style="@style/ResponsiveWidthCardItemHeader" />
-                <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:text="@string/location"
-                    style="@style/ResponsiveWidthCardItemBody" />
-            </LinearLayout>
-            <ImageView
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/root_padding_half"
-                android:layout_width="wrap_content"
-                android:src="@drawable/ic_location_on_24dp"
-                tools:ignore="ContentDescription" />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/llWebsite"
-            android:orientation="horizontal"
+            style="@style/ResponsiveWidthCardItem" />
+        <com.charlesmadere.hummingbird.views.HeadBodyItemView
+            android:id="@+id/hbivWebsite"
             android:visibility="gone"
+            app:bodyText="@string/website"
+            app:iconDrawable="@drawable/ic_link_24dp"
             tools:visibility="visible"
-            style="@style/ResponsiveWidthCardItem">
-            <LinearLayout
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:orientation="vertical">
-                <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:id="@+id/tvWebsiteHeader"
-                    tools:text="https://duckduckgo.com/"
-                    style="@style/ResponsiveWidthCardItemHeader" />
-                <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:text="@string/website"
-                    style="@style/ResponsiveWidthCardItemBody" />
-            </LinearLayout>
-            <ImageView
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/root_padding_half"
-                android:layout_width="wrap_content"
-                android:src="@drawable/ic_link_24dp"
-                tools:ignore="ContentDescription" />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/llFollowers"
-            style="@style/ResponsiveWidthCardItem">
-            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                android:id="@+id/tvFollowersHeader"
-                tools:text="20"
-                style="@style/ResponsiveWidthCardItemHeader" />
-            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                android:id="@+id/tvFollowersBody"
-                tools:text="@string/followers"
-                style="@style/ResponsiveWidthCardItemBody" />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/llFollowing"
-            style="@style/ResponsiveWidthCardItem">
-            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                android:id="@+id/tvFollowingHeader"
-                tools:text="12"
-                style="@style/ResponsiveWidthCardItemHeader" />
-            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                android:text="@string/following"
-                style="@style/ResponsiveWidthCardItemBody" />
-        </LinearLayout>
+            style="@style/ResponsiveWidthCardItem" />
+        <com.charlesmadere.hummingbird.views.HeadBodyItemView
+            android:id="@+id/hbivFollowers"
+            style="@style/ResponsiveWidthCardItem" />
+        <com.charlesmadere.hummingbird.views.HeadBodyItemView
+            android:id="@+id/hbivFollowing"
+            app:bodyText="@string/following"
+            style="@style/ResponsiveWidthCardItem" />
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.AboutUserView>

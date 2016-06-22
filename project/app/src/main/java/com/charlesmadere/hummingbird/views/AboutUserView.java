@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
@@ -26,41 +25,26 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
     private NumberFormat mNumberFormat;
     private UserDigest mUserDigest;
 
-    @BindView(R.id.llLocation)
-    LinearLayout mLocationContainer;
+    @BindView(R.id.hbivFollowers)
+    HeadBodyItemView mFollowers;
 
-    @BindView(R.id.llWaifuOrHusbando)
-    LinearLayout mWaifuOrHusbandoContainer;
+    @BindView(R.id.hbivFollowing)
+    HeadBodyItemView mFollowing;
 
-    @BindView(R.id.llWebsite)
-    LinearLayout mWebsiteContainer;
+    @BindView(R.id.hbivLocation)
+    HeadBodyItemView mLocation;
+
+    @BindView(R.id.hbivWaifuOrHusbando)
+    HeadBodyItemView mWaifuOrHusbando;
+
+    @BindView(R.id.hbivWebsite)
+    HeadBodyItemView mWebsite;
 
     @BindView(R.id.tvAbout)
     TextView mAbout;
 
-    @BindView(R.id.tvFollowersBody)
-    TextView mFollowersBody;
-
-    @BindView(R.id.tvFollowersHeader)
-    TextView mFollowersHeader;
-
-    @BindView(R.id.tvFollowingHeader)
-    TextView mFollowingHeader;
-
-    @BindView(R.id.tvLocationHeader)
-    TextView mLocationHeader;
-
     @BindView(R.id.tvTitle)
     TextView mTitle;
-
-    @BindView(R.id.tvWaifuOrHusbandoBody)
-    TextView mWaifuOrHusbandoBody;
-
-    @BindView(R.id.tvWaifuOrHusbandoHeader)
-    TextView mWaifuOrHusbandoHeader;
-
-    @BindView(R.id.tvWebsiteHeader)
-    TextView mWebsiteHeader;
 
 
     public AboutUserView(final Context context, final AttributeSet attrs) {
@@ -83,24 +67,24 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
         mNumberFormat = NumberFormat.getInstance();
     }
 
-    @OnClick(R.id.llFollowers)
+    @OnClick(R.id.hbivFollowers)
     void onFollowersClick() {
         final Context context = getContext();
         context.startActivity(FollowersActivity.getLaunchIntent(context, mUserDigest.getUserId()));
     }
 
-    @OnClick(R.id.llFollowing)
+    @OnClick(R.id.hbivFollowing)
     void onFollowingClick() {
         final Context context = getContext();
         context.startActivity(FollowingActivity.getLaunchIntent(context, mUserDigest.getUserId()));
     }
 
-    @OnClick(R.id.llWaifuOrHusbando)
+    @OnClick(R.id.hbivWaifuOrHusbando)
     void onWaifuOrHusbandoClick() {
         // TODO
     }
 
-    @OnClick(R.id.llWebsite)
+    @OnClick(R.id.hbivWebsite)
     void onWebsiteClick() {
         MiscUtils.openUrl(getContext(), mUserDigest.getUser().getWebsite());
     }
@@ -121,31 +105,31 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
         }
 
         if (user.hasWaifuOrHusbando()) {
-            mWaifuOrHusbandoHeader.setText(user.getWaifu());
-            mWaifuOrHusbandoBody.setText(user.getWaifuOrHusbando().getTextResId());
-            mWaifuOrHusbandoContainer.setVisibility(VISIBLE);
+            mWaifuOrHusbando.setHead(user.getWaifu());
+            mWaifuOrHusbando.setBody(user.getWaifuOrHusbando().getTextResId());
+            mWaifuOrHusbando.setVisibility(VISIBLE);
         } else {
-            mWaifuOrHusbandoContainer.setVisibility(GONE);
+            mWaifuOrHusbando.setVisibility(GONE);
         }
 
         if (user.hasLocation()) {
-            mLocationHeader.setText(user.getLocation());
-            mLocationContainer.setVisibility(VISIBLE);
+            mLocation.setHead(user.getLocation());
+            mLocation.setVisibility(VISIBLE);
         } else {
-            mLocationContainer.setVisibility(GONE);
+            mLocation.setVisibility(GONE);
         }
 
         if (user.hasWebsite()) {
-            mWebsiteHeader.setText(user.getWebsite());
-            mWebsiteContainer.setVisibility(VISIBLE);
+            mWebsite.setHead(user.getWebsite());
+            mWebsite.setVisibility(VISIBLE);
         } else {
-            mWebsiteContainer.setVisibility(GONE);
+            mWebsite.setVisibility(GONE);
         }
 
-        mFollowersHeader.setText(mNumberFormat.format(user.getFollowerCount()));
-        mFollowersBody.setText(res.getQuantityText(R.plurals.followers, user.getFollowerCount()));
+        mFollowers.setHead(mNumberFormat.format(user.getFollowerCount()));
+        mFollowers.setBody(res.getQuantityText(R.plurals.followers, user.getFollowerCount()));
 
-        mFollowingHeader.setText(mNumberFormat.format(user.getFollowingCount()));
+        mFollowing.setHead(mNumberFormat.format(user.getFollowingCount()));
     }
 
 }
