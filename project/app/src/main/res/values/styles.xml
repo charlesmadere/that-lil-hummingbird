@@ -167,9 +167,7 @@
     </style>
 
     <style name="CardItem.Bare">
-        <item name="android:elevation" tools:ignore="NewApi">0dp</item>
         <item name="cardCornerRadius">0dp</item>
-        <item name="cardElevation">0dp</item>
     </style>
 
     <style name="CardItem.NoPadding">
