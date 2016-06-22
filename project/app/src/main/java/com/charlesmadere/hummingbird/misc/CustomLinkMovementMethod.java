@@ -7,6 +7,8 @@ import android.text.method.Touch;
 import android.text.style.ClickableSpan;
 import android.text.style.URLSpan;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewParent;
 import android.widget.TextView;
 
 public final class CustomLinkMovementMethod extends LinkMovementMethod {
@@ -41,7 +43,7 @@ public final class CustomLinkMovementMethod extends LinkMovementMethod {
 
         final ClickableSpan[] clickables = buffer.getSpans(off, off, ClickableSpan.class);
         if (clickables == null || clickables.length == 0) {
-            return Touch.onTouchEvent(widget, buffer, event);
+            return performClick(widget.getParent()) || Touch.onTouchEvent(widget, buffer, event);
         }
 
         final ClickableSpan clickable = clickables[0];
@@ -54,6 +56,15 @@ public final class CustomLinkMovementMethod extends LinkMovementMethod {
         }
 
         return true;
+    }
+
+    private boolean performClick(final ViewParent viewParent) {
+        if (viewParent instanceof View) {
+            final View view = (View) viewParent;
+            return view.performClick() || performClick(view.getParent());
+        } else {
+            return false;
+        }
     }
 
 }
