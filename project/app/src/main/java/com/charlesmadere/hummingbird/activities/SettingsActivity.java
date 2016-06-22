@@ -132,7 +132,7 @@ public class SettingsActivity extends BaseDrawerActivity implements
 
     @OnClick(R.id.kvtvGetHummingbirdPro)
     void onGetHummingbirdProClick() {
-        MiscUtils.openUrl(this, Constants.HUMMINGBIRD_PRO_URL);
+        MiscUtils.openUrl(this, Constants.HUMMINGBIRD_URL_PRO);
     }
 
     @OnClick(R.id.tvGitHub)

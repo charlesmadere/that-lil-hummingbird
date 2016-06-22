@@ -312,6 +312,8 @@
     <string name="x_out_of_y_users_found_this_review_helpful">%1$s out of %2$s users found this review helpful.</string>
     <string name="x_plans_to_watch">%1$s plans to watch</string>
     <string name="x_watched_episode_y">%1$s watched episode %2$s</string>
+    <string name="x_wrote_a_comment_on_your_profile">%1$s wrote a comment on your profile</string>
+    <string name="x_wrote_a_reply_to_your_comment">%1$s wrote a reply to your comment</string>
     <string name="x_y">%1$s %2$s</string>
     <string name="yes">Yes</string>
     <string name="youtube_link">YouTube Link</string>

@@ -14,7 +14,7 @@ public final class CustomLinkMovementMethod extends LinkMovementMethod {
     private static CustomLinkMovementMethod sInstance;
 
 
-    public static CustomLinkMovementMethod getInstance() {
+    public static synchronized CustomLinkMovementMethod getInstance() {
         if (sInstance == null) {
             sInstance = new CustomLinkMovementMethod();
         }
@@ -22,6 +22,9 @@ public final class CustomLinkMovementMethod extends LinkMovementMethod {
         return sInstance;
     }
 
+    /*
+     * Borrowed from Tenpenchii!! <3
+     */
     @Override
     public boolean onTouchEvent(final TextView widget, final Spannable buffer,
             final MotionEvent event) {

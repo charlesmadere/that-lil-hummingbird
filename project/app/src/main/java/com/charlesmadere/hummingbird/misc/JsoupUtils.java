@@ -1,5 +1,6 @@
 package com.charlesmadere.hummingbird.misc;
 
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.text.Html;
 import android.text.TextUtils;
@@ -15,28 +16,27 @@ import java.util.List;
 
 public final class JsoupUtils {
 
-    private static final String RELATIVE_URL = "//hummingbird.me/";
-
-
     private static void fixA(final Document document) {
         final Elements as = document.select("a");
 
-        if (as != null && !as.isEmpty()) {
-            for (final Element a : as) {
-                String href = a.attr("href");
+        if (as == null || as.isEmpty()) {
+            return;
+        }
 
-                stripAttributes(a);
-                stripChildren(a);
+        for (final Element a : as) {
+            String href = a.attr("href");
 
-                if (!TextUtils.isEmpty(href) && href.startsWith(RELATIVE_URL)) {
-                    href = "https:" + href;
-                }
+            stripAttributes(a);
+            stripChildren(a);
 
-                a.attr("href", href);
+            if (!TextUtils.isEmpty(href) && href.startsWith(Constants.HUMMINGBIRD_URL_RELATIVE)) {
+                href = "https:" + href;
+            }
 
-                if (TextUtils.isEmpty(a.html())) {
-                    a.html(href);
-                }
+            a.attr("href", href);
+
+            if (TextUtils.isEmpty(a.html())) {
+                a.html(href);
             }
         }
     }
@@ -44,35 +44,39 @@ public final class JsoupUtils {
     private static void fixIframe(final Document document) {
         Elements iframes = document.select("iframe");
 
-        if (iframes != null && !iframes.isEmpty()) {
-            iframes = iframes.tagName("a");
+        if (iframes == null || iframes.isEmpty()) {
+            return;
+        }
 
-            for (final Element iframe : iframes) {
-                final String src = iframe.attr("src");
+        iframes = iframes.tagName("a");
 
-                stripAttributes(iframe);
-                stripChildren(iframe);
+        for (final Element iframe : iframes) {
+            final String src = iframe.attr("src");
 
-                iframe.attr("href", src);
-                iframe.html(src);
-            }
+            stripAttributes(iframe);
+            stripChildren(iframe);
+
+            iframe.attr("href", src);
+            iframe.html(src);
         }
     }
 
     private static void fixImg(final Document document) {
         Elements imgs = document.select("img");
 
-        if (imgs != null && !imgs.isEmpty()) {
-            imgs = imgs.tagName("a");
+        if (imgs == null || imgs.isEmpty()) {
+            return;
+        }
 
-            for (final Element img : imgs) {
-                final String src = img.attr("src");
+        imgs = imgs.tagName("a");
 
-                stripAttributes(img);
-                stripChildren(img);
+        for (final Element img : imgs) {
+            final String src = img.attr("src");
 
-                img.attr("href", src);
-            }
+            stripAttributes(img);
+            stripChildren(img);
+
+            img.attr("href", src);
         }
     }
 
@@ -86,18 +90,26 @@ public final class JsoupUtils {
     }
 
     @Nullable
-    public static CharSequence parse(@Nullable final String text) {
+    public static CharSequence parse(@Nullable String text) {
         if (TextUtils.isEmpty(text) || TextUtils.getTrimmedLength(text) == 0) {
             return text;
         }
 
+        text = text.trim();
         final Document document = Jsoup.parse(text, Constants.HUMMINGBIRD_URL);
 
         fixA(document);
         fixIframe(document);
         fixImg(document);
 
-        return Html.fromHtml(document.body().toString().trim());
+        final String html = document.body().toString().trim();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT);
+        } else {
+            // noinspection deprecation
+            return Html.fromHtml(html);
+        }
     }
 
     private static void stripAttributes(final Element element) {

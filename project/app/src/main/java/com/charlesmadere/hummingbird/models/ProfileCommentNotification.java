@@ -1,9 +1,15 @@
 package com.charlesmadere.hummingbird.models;
 
+import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class ProfileCommentNotification extends AbsNotification implements Parcelable {
+
+    @Override
+    public CharSequence getText(final Resources res) {
+        return null;
+    }
 
     @Override
     public Type getType() {

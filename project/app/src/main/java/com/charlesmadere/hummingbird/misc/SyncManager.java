@@ -33,7 +33,7 @@ public final class SyncManager extends GcmTaskService {
 
     private static boolean canEnable() {
         return Preferences.Account.AuthToken.exists() && Preferences.Account.Username.exists()
-                && Preferences.NotificationPolling.IsEnabled.get();
+                && Boolean.TRUE.equals(Preferences.NotificationPolling.IsEnabled.get());
     }
 
     private static void disable() {
@@ -55,12 +55,13 @@ public final class SyncManager extends GcmTaskService {
         final PeriodicTask.Builder builder = new PeriodicTask.Builder()
                 .setPeriod(Preferences.NotificationPolling.Frequency.get().getPeriod())
                 .setPersisted(true)
-                .setRequiresCharging(Preferences.NotificationPolling.IsPowerRequired.get())
+                .setRequiresCharging(Boolean.TRUE.equals(
+                        Preferences.NotificationPolling.IsPowerRequired.get()))
                 .setService(SyncManager.class)
                 .setTag(TAG)
                 .setUpdateCurrent(true);
 
-        if (Preferences.NotificationPolling.IsWifiRequired.get()) {
+        if (Boolean.TRUE.equals(Preferences.NotificationPolling.IsWifiRequired.get())) {
             builder.setRequiredNetwork(Task.NETWORK_STATE_UNMETERED);
         } else {
             builder.setRequiredNetwork(Task.NETWORK_STATE_CONNECTED);
@@ -102,17 +103,8 @@ public final class SyncManager extends GcmTaskService {
 
     private void buildNotification(final AbsNotification notification) {
         final NotificationCompat.Builder builder = buildNotification();
-
-        // TODO
-        final Context context = getContext();
-        builder.setContentText(notification.getType().toString());
-
-        // TODO
-        final Intent intent = NotificationsActivity.getLaunchIntent(context);
-        final PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(pendingIntent);
-
+        builder.setContentText(notification.getText(getResources()));
+        setBuilderContentIntent(builder);
         NotificationManager.show(builder);
     }
 
@@ -126,16 +118,11 @@ public final class SyncManager extends GcmTaskService {
         final NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle(builder);
 
         for (int i = 0; i < notifications.size() && i < 5; ++i) {
-            // TODO
             final AbsNotification notification = notifications.get(i);
-            style.addLine(notification.getType().toString());
+            style.addLine(notification.getText(getResources()));
         }
 
-        final Intent intent = NotificationsActivity.getLaunchIntent(context);
-        final PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(pendingIntent);
-
+        setBuilderContentIntent(builder);
         NotificationManager.show(builder);
     }
 
@@ -153,7 +140,11 @@ public final class SyncManager extends GcmTaskService {
         Api.getNotifications(new ApiResponse<Feed>() {
             @Override
             public void failure(@Nullable final ErrorInfo error) {
-                // this can be safely ignored
+                if (error == null) {
+                    Timber.e(TAG, "Sync failed");
+                } else {
+                    Timber.e(TAG, "Sync failed: " + error.getError());
+                }
             }
 
             @Override
@@ -187,6 +178,13 @@ public final class SyncManager extends GcmTaskService {
         });
 
         return GcmNetworkManager.RESULT_SUCCESS;
+    }
+
+    private void setBuilderContentIntent(final NotificationCompat.Builder builder) {
+        final Intent intent = NotificationsActivity.getLaunchIntent(getContext());
+        final PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(pendingIntent);
     }
 
 }

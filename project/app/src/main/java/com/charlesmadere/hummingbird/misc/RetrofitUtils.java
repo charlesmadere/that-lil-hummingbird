@@ -39,7 +39,7 @@ public final class RetrofitUtils {
                     .client(OkHttpUtils.getOkHttpClient())
                     .addConverterFactory(GsonConverterFactory.create(GsonUtils.getGson()))
                     .addConverterFactory(new EnumConverterFactory())
-                    .baseUrl(Constants.BASE_HUMMINGBIRD_API_URL)
+                    .baseUrl(Constants.HUMMINGBIRD_URL)
                     .build();
         }
 
@@ -71,7 +71,7 @@ public final class RetrofitUtils {
                     .client(OkHttpUtils.getOkHttpClient())
                     .addConverterFactory(GsonConverterFactory.create(GsonUtils.getGson()))
                     .addConverterFactory(new EnumConverterFactory())
-                    .baseUrl(Constants.BASE_WEBSITE_API_URL)
+                    .baseUrl(Constants.WEBSITE_URL)
                     .build();
         }
 

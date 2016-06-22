@@ -72,7 +72,7 @@ dependencies {
     compile "com.facebook.fresco:imagepipeline-okhttp3:0.11.0"
 
     // Google's GSON
-    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.google.code.gson:gson:2.7'
 
     // Google Play Services
     compile 'com.google.android.gms:play-services-gcm:9.0.2'
@@ -81,8 +81,8 @@ dependencies {
     compile 'org.jsoup:jsoup:1.9.2'
 
     // Square's Retrofit
-    compile 'com.squareup.retrofit2:retrofit:2.0.2'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
 
     // Twitter's Fabric
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {

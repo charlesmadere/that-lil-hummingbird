@@ -2,14 +2,12 @@ package com.charlesmadere.hummingbird.views;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
 
 import com.charlesmadere.hummingbird.models.User;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.BaseControllerListener;
-import com.facebook.drawee.controller.ControllerListener;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -43,17 +41,15 @@ public class AvatarView extends SimpleDraweeView {
             return;
         }
 
-        final ControllerListener<ImageInfo> controllerListener = new BaseControllerListener<ImageInfo>() {
-            @Override
-            public void onFailure(final String id, final Throwable throwable) {
-                super.onFailure(id, throwable);
-                fetchAvatars(user, avatars, index + 1);
-            }
-        };
-
         final DraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setControllerListener(controllerListener)
-                .setUri(Uri.parse(avatars[index]))
+                .setControllerListener(new BaseControllerListener<ImageInfo>() {
+                    @Override
+                    public void onFailure(final String id, final Throwable throwable) {
+                        super.onFailure(id, throwable);
+                        fetchAvatars(user, avatars, index + 1);
+                    }
+                })
+                .setUri(avatars[index])
                 .build();
 
         setController(controller);

@@ -1,5 +1,6 @@
 package com.charlesmadere.hummingbird.models;
 
+import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -42,6 +43,8 @@ public abstract class AbsNotification implements Parcelable {
     public AbsSource getSource() {
         return mSource;
     }
+
+    public abstract CharSequence getText(final Resources res);
 
     public abstract Type getType();
 

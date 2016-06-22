@@ -107,7 +107,7 @@ public class NotificationTitleTextView extends AppCompatTextView {
     private void setText(final CommentStory story) {
         final SpannableStringBuilder spannable = new SpannableStringBuilder();
 
-        spannable.append(story.getPoster().getId());
+        spannable.append(story.getPosterId());
         spannable.setSpan(mUserNameSpan, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannable.append(' ');
 
@@ -121,7 +121,19 @@ public class NotificationTitleTextView extends AppCompatTextView {
     }
 
     private void setText(final ReplySubstory substory) {
-        // TODO
+        final SpannableStringBuilder spannable = new SpannableStringBuilder();
+
+        spannable.append(substory.getUserId());
+        spannable.setSpan(mUserNameSpan, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.append(' ');
+
+        final int length = spannable.length();
+        spannable.append(getResources().getText(R.string.wrote_a_reply_to_your_comment));
+        spannable.setSpan(mSecondaryColorSpan, length, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(mSecondarySizeSpan, length, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(mSecondaryTypefaceSpan, length, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        setText(spannable);
     }
 
 }
