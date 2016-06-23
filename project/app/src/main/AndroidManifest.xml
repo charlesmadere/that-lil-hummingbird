@@ -143,7 +143,7 @@
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
         <activity
-            android:label="@string/user_reviews"
+            android:label="@string/anime_reviews"
             android:name=".activities.UserAnimeReviewsActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
