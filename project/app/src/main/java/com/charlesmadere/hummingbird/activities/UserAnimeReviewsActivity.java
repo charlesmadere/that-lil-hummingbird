@@ -50,7 +50,7 @@ public class UserAnimeReviewsActivity extends BaseDrawerActivity implements
 
 
     public static Intent getLaunchIntent(final Context context, final String username) {
-        return new Intent(context, UserActivity.class)
+        return new Intent(context, UserAnimeReviewsActivity.class)
                 .putExtra(EXTRA_USERNAME, username);
     }
 
