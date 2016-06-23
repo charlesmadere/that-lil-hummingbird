@@ -41,5 +41,9 @@
             android:id="@+id/hbivFollowing"
             app:bodyText="@string/following"
             style="@style/ResponsiveWidthCardItem" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:id="@+id/tvAnimeReviews"
+            android:text="@string/anime_reviews"
+            style="@style/ResponsiveWidthCardItem" />
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.AboutUserView>

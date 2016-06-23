@@ -19,6 +19,7 @@
     <string name="anime_library">Anime Library</string>
     <string name="anime_library_is_empty">Anime library is empty</string>
     <string name="anime_review">Anime Review</string>
+    <string name="anime_reviews">Anime reviews</string>
     <string name="apps">Apps</string>
     <string name="app_news">App News</string>
     <string name="app_written_by">App written by</string>
@@ -84,6 +85,7 @@
     <string name="error_loading_notifications">Error loading notifications</string>
     <string name="error_loading_on_hold_library">Error loading on hold library</string>
     <string name="error_loading_plan_to_watch_library">Error loading plan to watch library</string>
+    <string name="error_loading_reviews">Error loading reviews</string>
     <string name="error_loading_search_results">Error loading search results</string>
     <string name="error_loading_timeline">Error loading timeline</string>
     <string name="error_loading_user">Error loading user</string>
@@ -158,6 +160,7 @@
     <string name="manga">Manga</string>
     <string name="manga_library">Manga Library</string>
     <string name="manga_review">Manga Review</string>
+    <string name="manga_reviews">Manga reviews</string>
     <string name="member">Member</string>
     <string name="members">Members</string>
     <string name="miscellaneous">Miscellaneous</string>
@@ -217,6 +220,7 @@
     <string name="preferred_anime_title_language">Preferred anime title language</string>
     <string name="priscilla_zhou">Priscilla Zhou</string>
     <string name="privacy">Privacy</string>
+    <string name="_private">Private</string>
     <string name="pro">Pro</string>
     <string name="producer">Producer</string>
     <string name="producers">Producers</string>
@@ -224,6 +228,7 @@
     <string name="progress">Progress</string>
     <string name="progress_format">%1$s / %2$s</string>
     <string name="project_is_open_source_on_github">Project is open source on GitHub</string>
+    <string name="_public">Public</string>
     <string name="pull_to_refresh">Pull to refresh</string>
     <string name="pull_to_refresh_to_check_again">Pull to refresh to check again</string>
     <string name="pull_to_refresh_to_try_again">Pull to refresh to try again</string>
@@ -234,14 +239,17 @@
     <string name="recommendations">Recommendations</string>
     <string name="refresh">Refresh</string>
     <string name="remove">Remove</string>
+    <string name="remove_from_library">Remove from Library</string>
     <string name="retry">Retry</string>
     <string name="reviews">Reviews</string>
     <string name="review_by_x">Review by %1$s</string>
     <string name="review_format">\"%1$s\"</string>
     <string name="review_of_x">Review of %1$s</string>
+    <string name="rewatching">Rewatching</string>
     <string name="rewatch_intro_animation">Rewatch intro animation</string>
     <string name="romaji">Romaji</string>
     <string name="romaji_title">Romaji title</string>
+    <string name="save">Save</string>
     <string name="search">Search</string>
     <string name="search_">Search…</string>
     <string name="search_for_">Search for…</string>
@@ -282,6 +290,8 @@
     <string name="username">Username</string>
     <string name="users">Users</string>
     <string name="user_activity">User Activity</string>
+    <string name="user_has_no_reviews">User has no reviews</string>
+    <string name="user_reviews">User reviews</string>
     <string name="verdict">Verdict</string>
     <string name="version_format">v%1$s (%2$d)</string>
     <string name="view_group">View Group</string>
@@ -371,6 +381,16 @@
     <plurals name="producers">
         <item quantity="one">Producer</item>
         <item quantity="other">Producers</item>
+    </plurals>
+
+    <plurals name="reviews">
+        <item quantity="one">Review</item>
+        <item quantity="other">Reviews</item>
+    </plurals>
+
+    <plurals name="rewatched_x_times">
+        <item quantity="one">Rewatched %1$s time</item>
+        <item quantity="other">Rewatched %1$s times</item>
     </plurals>
 
     <plurals name="volumes">

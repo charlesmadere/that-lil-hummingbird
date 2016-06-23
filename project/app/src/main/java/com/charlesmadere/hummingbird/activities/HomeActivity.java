@@ -22,7 +22,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
 
-public class HomeActivity extends BaseDrawerActivity implements FeedPostFragment.Listener {
+public class HomeActivity extends BaseDrawerActivity implements BaseFeedFragment.Listener,
+        FeedPostFragment.Listener {
 
     private static final String TAG = "HomeActivity";
     private static final String KEY_STARTING_POSITION = "StartingPosition";
@@ -82,6 +83,16 @@ public class HomeActivity extends BaseDrawerActivity implements FeedPostFragment
     }
 
     @Override
+    public void onFeedBeganLoading() {
+        updatePostToFeedVisibility();
+    }
+
+    @Override
+    public void onFeedFinishedLoading() {
+        updatePostToFeedVisibility();
+    }
+
+    @Override
     public void onFeedPostSubmit() {
         final FeedPostFragment postFragment = (FeedPostFragment) getSupportFragmentManager()
                 .findFragmentByTag(FeedPostFragment.TAG);
@@ -114,7 +125,14 @@ public class HomeActivity extends BaseDrawerActivity implements FeedPostFragment
 
     private void updatePostToFeedVisibility() {
         if (mViewPager.getCurrentItem() == UserFragmentAdapter.POSITION_FEED) {
-            mPostToFeed.show();
+            final BaseFeedFragment fragment = ((BaseUserFragmentAdapter) mViewPager.getAdapter())
+                    .getFeedFragment();
+
+            if (fragment == null || fragment.isFetchingFeed()) {
+                mPostToFeed.hide();
+            } else {
+                mPostToFeed.show();
+            }
         } else {
             mPostToFeed.hide();
         }

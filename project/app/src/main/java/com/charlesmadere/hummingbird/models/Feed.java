@@ -30,6 +30,10 @@ public class Feed implements Parcelable {
     private ArrayList<AbsSubstory> mSubstories;
 
     @Nullable
+    @SerializedName("reviews")
+    private ArrayList<AnimeReview> mAnimeReviews;
+
+    @Nullable
     @SerializedName("groups")
     private ArrayList<Group> mGroups;
 
@@ -52,6 +56,11 @@ public class Feed implements Parcelable {
     @Nullable
     public ArrayList<AbsAnime> getAnime() {
         return mAnime;
+    }
+
+    @Nullable
+    public ArrayList<AnimeReview> getAnimeReviews() {
+        return mAnimeReviews;
     }
 
     @Nullable
@@ -117,6 +126,10 @@ public class Feed implements Parcelable {
 
     public boolean hasAnime() {
         return mAnime != null && !mAnime.isEmpty();
+    }
+
+    public boolean hasAnimeReviews() {
+        return mAnimeReviews != null && !mAnimeReviews.isEmpty();
     }
 
     public boolean hasGroupMembers() {
@@ -194,6 +207,14 @@ public class Feed implements Parcelable {
             }
         }
 
+        if (feed.hasAnimeReviews()) {
+            if (hasAnimeReviews()) {
+                MiscUtils.exclusiveAdd(mAnimeReviews, feed.getAnimeReviews());
+            } else {
+                mAnimeReviews = feed.getAnimeReviews();
+            }
+        }
+
         if (feed.hasGroupMembers()) {
             if (hasGroupMembers()) {
                 MiscUtils.exclusiveAdd(mGroupMembers, feed.getGroupMembers());
@@ -264,6 +285,7 @@ public class Feed implements Parcelable {
         ParcelableUtils.writeAbsNotificationListToParcel(mNotifications, dest, flags);
         ParcelableUtils.writeAbsStoryListToParcel(mStories, dest, flags);
         ParcelableUtils.writeAbsSubstoryListToParcel(mSubstories, dest, flags);
+        dest.writeTypedList(mAnimeReviews);
         dest.writeTypedList(mGroups);
         dest.writeTypedList(mGroupMembers);
         dest.writeTypedList(mManga);
@@ -279,6 +301,7 @@ public class Feed implements Parcelable {
             f.mNotifications = ParcelableUtils.readAbsNotificationListFromParcel(source);
             f.mStories = ParcelableUtils.readAbsStoryListFromParcel(source);
             f.mSubstories = ParcelableUtils.readAbsSubstoryListFromParcel(source);
+            f.mAnimeReviews = source.createTypedArrayList(AnimeReview.CREATOR);
             f.mGroups = source.createTypedArrayList(Group.CREATOR);
             f.mGroupMembers = source.createTypedArrayList(GroupMember.CREATOR);
             f.mManga = source.createTypedArrayList(Manga.CREATOR);

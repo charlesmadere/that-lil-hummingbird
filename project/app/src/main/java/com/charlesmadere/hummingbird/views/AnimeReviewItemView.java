@@ -10,7 +10,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.AnimeReviewActivity;
 import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
-import com.charlesmadere.hummingbird.models.AnimeDigest;
+import com.charlesmadere.hummingbird.models.AnimeReview;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -19,10 +19,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AnimeReviewItemView extends CardView implements AdapterView<AnimeDigest.Review>,
+public class AnimeReviewItemView extends CardView implements AdapterView<AnimeReview>,
         View.OnClickListener {
 
-    private AnimeDigest.Review mReview;
+    private AnimeReview mReview;
     private NumberFormat mNumberFormat;
 
     @BindView(R.id.avatarView)
@@ -68,7 +68,7 @@ public class AnimeReviewItemView extends CardView implements AdapterView<AnimeDi
     }
 
     @Override
-    public void setContent(final AnimeDigest.Review content) {
+    public void setContent(final AnimeReview content) {
         mReview = content;
         mAvatarView.setContent(mReview.getUser());
         mRating.setText(String.format(Locale.getDefault(), "%.1f", mReview.getRating()));

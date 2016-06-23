@@ -257,6 +257,7 @@ public class CommentsActivity extends BaseDrawerActivity implements
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
         mCommentField.setEnabled(true);
+        mPaginator.setEnabled(true);
         mRefreshLayout.setRefreshing(false);
     }
 

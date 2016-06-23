@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.FollowersActivity;
 import com.charlesmadere.hummingbird.activities.FollowingActivity;
+import com.charlesmadere.hummingbird.activities.UserAnimeReviewsActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.User;
@@ -53,6 +54,12 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
 
     public AboutUserView(final Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    @OnClick(R.id.tvAnimeReviews)
+    void onAnimeReviewsClick() {
+        final Context context = getContext();
+        context.startActivity(UserAnimeReviewsActivity.getLaunchIntent(context, mUserDigest.getUserId()));
     }
 
     @Override

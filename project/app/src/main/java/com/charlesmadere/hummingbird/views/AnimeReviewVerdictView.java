@@ -7,14 +7,14 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
-import com.charlesmadere.hummingbird.models.AnimeDigest;
+import com.charlesmadere.hummingbird.models.AnimeReview;
 
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AnimeReviewVerdictView extends CardView implements AdapterView<AnimeDigest.Review> {
+public class AnimeReviewVerdictView extends CardView implements AdapterView<AnimeReview> {
 
     @BindView(R.id.tvRatingAnimation)
     TextView mRatingAnimation;
@@ -57,7 +57,7 @@ public class AnimeReviewVerdictView extends CardView implements AdapterView<Anim
     }
 
     @Override
-    public void setContent(final AnimeDigest.Review content) {
+    public void setContent(final AnimeReview content) {
         final String rating = String.valueOf(content.getRating());
         mVerdictWhole.setText(rating.substring(0, 1));
         mVerdictDecimal.setText(rating.substring(1));

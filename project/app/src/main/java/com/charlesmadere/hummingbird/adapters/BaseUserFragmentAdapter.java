@@ -1,7 +1,7 @@
 package com.charlesmadere.hummingbird.adapters;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.fragments.AnimeLibraryFragment;
 import com.charlesmadere.hummingbird.fragments.BaseFeedFragment;
+import com.charlesmadere.hummingbird.fragments.BaseFragment;
 import com.charlesmadere.hummingbird.fragments.UserProfileFragment;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
@@ -27,7 +28,7 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
             WatchingStatus.ON_HOLD, WatchingStatus.DROPPED };
 
     private final Context mContext;
-    private final SparseArrayCompat<WeakReference<Fragment>> mFragments;
+    private final SparseArrayCompat<WeakReference<BaseFragment>> mFragments;
     private final UserDigest mUserDigest;
 
 
@@ -56,13 +57,20 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
 
     protected abstract BaseFeedFragment createFeedFragment();
 
+    @Nullable
     public BaseFeedFragment getFeedFragment() {
-        return (BaseFeedFragment) mFragments.get(POSITION_FEED).get();
+        final WeakReference<BaseFragment> fragmentReference = mFragments.get(POSITION_FEED);
+
+        if (fragmentReference == null) {
+            return null;
+        } else {
+            return (BaseFeedFragment) fragmentReference.get();
+        }
     }
 
     @Override
-    public Fragment getItem(final int position) {
-        final Fragment fragment;
+    public BaseFragment getItem(final int position) {
+        final BaseFragment fragment;
 
         switch (position) {
             case POSITION_PROFILE:
@@ -111,7 +119,7 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
 
     @Override
     public Object instantiateItem(final ViewGroup container, final int position) {
-        final Fragment fragment = (Fragment) super.instantiateItem(container, position);
+        final BaseFragment fragment = (BaseFragment) super.instantiateItem(container, position);
         mFragments.put(position, new WeakReference<>(fragment));
         return fragment;
     }

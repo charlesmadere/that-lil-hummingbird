@@ -39,7 +39,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
 
-public class UserActivity extends BaseDrawerActivity implements FeedPostFragment.Listener {
+public class UserActivity extends BaseDrawerActivity implements BaseFeedFragment.Listener,
+        FeedPostFragment.Listener {
 
     private static final String TAG = "UserActivity";
     private static final String CNAME = UserActivity.class.getCanonicalName();
@@ -135,6 +136,16 @@ public class UserActivity extends BaseDrawerActivity implements FeedPostFragment
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.activity_user, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onFeedBeganLoading() {
+        updatePostToFeedVisibility();
+    }
+
+    @Override
+    public void onFeedFinishedLoading() {
+        updatePostToFeedVisibility();
     }
 
     @Override
@@ -254,7 +265,14 @@ public class UserActivity extends BaseDrawerActivity implements FeedPostFragment
 
     private void updatePostToFeedVisibility() {
         if (mViewPager.getCurrentItem() == UserFragmentAdapter.POSITION_FEED) {
-            mPostToFeed.show();
+            final BaseFeedFragment fragment = ((BaseUserFragmentAdapter) mViewPager.getAdapter())
+                    .getFeedFragment();
+
+            if (fragment == null || fragment.isFetchingFeed()) {
+                mPostToFeed.hide();
+            } else {
+                mPostToFeed.show();
+            }
         } else {
             mPostToFeed.hide();
         }

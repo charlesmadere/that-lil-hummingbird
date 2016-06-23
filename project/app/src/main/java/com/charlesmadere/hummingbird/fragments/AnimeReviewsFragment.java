@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeReviewsAdapter;
-import com.charlesmadere.hummingbird.models.AnimeDigest;
+import com.charlesmadere.hummingbird.models.AnimeReview;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class AnimeReviewsFragment extends BaseFragment {
     private static final String TAG = "AnimeReviewsFragment";
     private static final String KEY_REVIEWS = "Reviews";
 
-    private ArrayList<AnimeDigest.Review> mReviews;
+    private ArrayList<AnimeReview> mReviews;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -30,7 +30,7 @@ public class AnimeReviewsFragment extends BaseFragment {
     TextView mEmpty;
 
 
-    public static AnimeReviewsFragment create(final ArrayList<AnimeDigest.Review> reviews) {
+    public static AnimeReviewsFragment create(final ArrayList<AnimeReview> reviews) {
         final Bundle args = new Bundle(1);
         args.putParcelableArrayList(KEY_REVIEWS, reviews);
 

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.models.AnimeDigest;
+import com.charlesmadere.hummingbird.models.AnimeReview;
 import com.charlesmadere.hummingbird.views.AnimeReviewVerdictView;
 import com.charlesmadere.hummingbird.views.UserItemView;
 
@@ -28,7 +28,7 @@ public class AnimeReviewActivity extends BaseDrawerActivity {
     UserItemView mUserItemView;
 
 
-    public static Intent getLaunchIntent(final Context context, final AnimeDigest.Review review) {
+    public static Intent getLaunchIntent(final Context context, final AnimeReview review) {
         return new Intent(context, AnimeReviewActivity.class)
                 .putExtra(EXTRA_REVIEW, review);
     }
@@ -49,7 +49,7 @@ public class AnimeReviewActivity extends BaseDrawerActivity {
         setContentView(R.layout.activity_anime_review);
 
         final Intent intent = getIntent();
-        final AnimeDigest.Review review = intent.getParcelableExtra(EXTRA_REVIEW);
+        final AnimeReview review = intent.getParcelableExtra(EXTRA_REVIEW);
         getSupportActionBar().setSubtitle(review.getAnimeTitle());
 
         mUserItemView.setContent(review.getUser());

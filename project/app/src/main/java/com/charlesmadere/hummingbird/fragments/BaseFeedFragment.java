@@ -1,5 +1,6 @@
 package com.charlesmadere.hummingbird.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.FeedAdapter;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.FeedPost;
@@ -31,8 +33,10 @@ public abstract class BaseFeedFragment extends BaseFragment implements
     protected static final String KEY_FEED = "Feed";
     protected static final String KEY_USERNAME = "Username";
 
+    protected boolean mFetchingFeed;
     protected Feed mFeed;
     protected FeedAdapter mAdapter;
+    protected Listener mListener;
     protected RecyclerViewPaginator mPaginator;
     protected String mUsername;
 
@@ -57,12 +61,24 @@ public abstract class BaseFeedFragment extends BaseFragment implements
     }
 
     protected void fetchFeed() {
+        mFetchingFeed = true;
         mRefreshLayout.setRefreshing(true);
+        mListener.onFeedBeganLoading();
+    }
+
+    public boolean isFetchingFeed() {
+        return mFetchingFeed;
     }
 
     @Override
     public boolean isLoading() {
-        return mRefreshLayout.isRefreshing() || mAdapter.isPaginating();
+        return mFetchingFeed || mRefreshLayout.isRefreshing() || mAdapter.isPaginating();
+    }
+
+    @Override
+    public void onAttach(final Context context) {
+        super.onAttach(context);
+        mListener = (Listener) MiscUtils.getActivity(context);
     }
 
     @Override
@@ -157,6 +173,8 @@ public abstract class BaseFeedFragment extends BaseFragment implements
         mRecyclerView.setVisibility(View.VISIBLE);
         mPaginator.setEnabled(true);
         mRefreshLayout.setRefreshing(false);
+        mFetchingFeed = false;
+        mListener.onFeedFinishedLoading();
     }
 
 
@@ -246,6 +264,11 @@ public abstract class BaseFeedFragment extends BaseFragment implements
                 }
             }
         }
+    }
+
+    public interface Listener {
+        void onFeedBeganLoading();
+        void onFeedFinishedLoading();
     }
 
 }
