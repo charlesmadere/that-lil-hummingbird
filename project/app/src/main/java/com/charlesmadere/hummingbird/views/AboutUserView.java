@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.activities.FollowersActivity;
 import com.charlesmadere.hummingbird.activities.FollowingActivity;
 import com.charlesmadere.hummingbird.activities.UserAnimeReviewsActivity;
@@ -59,7 +60,8 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
     @OnClick(R.id.tvAnimeReviews)
     void onAnimeReviewsClick() {
         final Context context = getContext();
-        context.startActivity(UserAnimeReviewsActivity.getLaunchIntent(context, mUserDigest.getUserId()));
+        context.startActivity(UserAnimeReviewsActivity.getLaunchIntent(context,
+                mUserDigest.getUserId()));
     }
 
     @Override
@@ -88,7 +90,9 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
 
     @OnClick(R.id.hbivWaifuOrHusbando)
     void onWaifuOrHusbandoClick() {
-        // TODO
+        final Context context = getContext();
+        context.startActivity(AnimeActivity.getLaunchIntent(context,
+                mUserDigest.getUser().getWaifuSlug()));
     }
 
     @OnClick(R.id.hbivWebsite)

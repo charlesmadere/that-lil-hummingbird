@@ -10,6 +10,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeFragmentAdapter;
@@ -63,11 +64,20 @@ public class AnimeActivity extends BaseDrawerActivity implements
         return getLaunchIntent(context, anime.getId(), anime.getTitle());
     }
 
+    public static Intent getLaunchIntent(final Context context, final String animeId) {
+        return getLaunchIntent(context, animeId, null);
+    }
+
     public static Intent getLaunchIntent(final Context context, final String animeId,
-            final String animeName) {
-        return new Intent(context, AnimeActivity.class)
-                .putExtra(EXTRA_ANIME_ID, animeId)
-                .putExtra(EXTRA_ANIME_NAME, animeName);
+            @Nullable final String animeName) {
+        final Intent intent = new Intent(context, AnimeActivity.class)
+                .putExtra(EXTRA_ANIME_ID, animeId);
+
+        if (!TextUtils.isEmpty(animeName)) {
+            intent.putExtra(EXTRA_ANIME_NAME, animeName);
+        }
+
+        return intent;
     }
 
     private void fetchAnimeDigest() {
@@ -96,8 +106,11 @@ public class AnimeActivity extends BaseDrawerActivity implements
         setContentView(R.layout.activity_anime);
 
         final Intent intent = getIntent();
-        setTitle(intent.getStringExtra(EXTRA_ANIME_NAME));
         mAnimeId = intent.getStringExtra(EXTRA_ANIME_ID);
+
+        if (intent.hasExtra(EXTRA_ANIME_NAME)) {
+            setTitle(intent.getStringExtra(EXTRA_ANIME_NAME));
+        }
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mAnimeDigest = savedInstanceState.getParcelable(KEY_ANIME_DIGEST);
@@ -121,6 +134,10 @@ public class AnimeActivity extends BaseDrawerActivity implements
 
     private void showAnimeDigest(final AnimeDigest animeDigest) {
         mAnimeDigest = animeDigest;
+
+        if (TextUtils.isEmpty(getTitle())) {
+            setTitle(mAnimeDigest.getTitle());
+        }
 
         if (animeDigest.getInfo().hasCoverImage()) {
             PaletteUtils.applyParallaxColors(animeDigest.getInfo().getCoverImage(), this,
