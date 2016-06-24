@@ -11,13 +11,16 @@ import com.charlesmadere.hummingbird.activities.AnimeReviewActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AnimeReview;
 
+import java.text.NumberFormat;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class UserAnimeReviewItemView extends CardView implements AdapterView<AnimeReview>,
         View.OnClickListener {
 
-    private AnimeReview mAnimeReview;
+    private AnimeReview mReview;
+    private NumberFormat mNumberFormat;
 
     @BindView(R.id.tvReviewHelpfulness)
     TextView mReviewHelpfulness;
@@ -41,7 +44,7 @@ public class UserAnimeReviewItemView extends CardView implements AdapterView<Ani
     @Override
     public void onClick(final View view) {
         final Context context = getContext();
-        context.startActivity(AnimeReviewActivity.getLaunchIntent(context, mAnimeReview));
+        context.startActivity(AnimeReviewActivity.getLaunchIntent(context, mReview));
     }
 
     @Override
@@ -49,12 +52,17 @@ public class UserAnimeReviewItemView extends CardView implements AdapterView<Ani
         super.onFinishInflate();
         ButterKnife.bind(this);
         setOnClickListener(this);
+        mNumberFormat = NumberFormat.getInstance();
     }
 
     @Override
     public void setContent(final AnimeReview content) {
-        mAnimeReview = content;
-
+        mReview = content;
+        mSummary.setText(mReview.getSummary());
+        mReviewHelpfulness.setText(getResources().getString(
+                R.string.x_out_of_y_users_found_this_review_helpful,
+                mNumberFormat.format(mReview.getPositiveVotes()),
+                mNumberFormat.format(mReview.getTotalVotes())));
     }
 
 }
