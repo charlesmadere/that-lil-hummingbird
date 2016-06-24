@@ -22,6 +22,9 @@ public class UserAnimeReviewItemView extends CardView implements AdapterView<Ani
     private AnimeReview mReview;
     private NumberFormat mNumberFormat;
 
+    @BindView(R.id.reviewRatingView)
+    ReviewRatingView mReviewRatingView;
+
     @BindView(R.id.tvReviewHelpfulness)
     TextView mReviewHelpfulness;
 

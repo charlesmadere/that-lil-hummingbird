@@ -5,8 +5,16 @@
     <RelativeLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
+        <include
+            android:id="@+id/reviewRatingView"
+            android:layout_alignParentEnd="true"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            layout="@layout/review_rating_view" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvTitle"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/reviewRatingView"
             tools:text="Durarara!!"
             style="@style/AnimeTitle" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
