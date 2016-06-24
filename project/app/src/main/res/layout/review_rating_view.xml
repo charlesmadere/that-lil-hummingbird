@@ -9,40 +9,30 @@
         android:id="@+id/ivStarZero"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:visibility="gone"
         tools:ignore="ContentDescription"
-        tools:src="@drawable/ic_star_18dp"
-        tools:visibility="visible" />
+        tools:src="@drawable/ic_star_18dp" />
     <ImageView
         android:id="@+id/ivStarOne"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:visibility="gone"
         tools:ignore="ContentDescription"
-        tools:src="@drawable/ic_star_18dp"
-        tools:visibility="visible" />
+        tools:src="@drawable/ic_star_18dp" />
     <ImageView
         android:id="@+id/ivStarTwo"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:visibility="gone"
         tools:ignore="ContentDescription"
-        tools:src="@drawable/ic_star_half_18dp"
-        tools:visibility="visible" />
+        tools:src="@drawable/ic_star_half_18dp" />
     <ImageView
         android:id="@+id/ivStarThree"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:visibility="gone"
         tools:ignore="ContentDescription"
-        tools:src="@drawable/ic_star_border_18dp"
-        tools:visibility="visible" />
+        tools:src="@drawable/ic_star_border_18dp" />
     <ImageView
         android:id="@+id/ivStarFour"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:visibility="gone"
         tools:ignore="ContentDescription"
-        tools:src="@drawable/ic_star_border_18dp"
-        tools:visibility="visible" />
+        tools:src="@drawable/ic_star_border_18dp" />
 </com.charlesmadere.hummingbird.views.ReviewRatingView>

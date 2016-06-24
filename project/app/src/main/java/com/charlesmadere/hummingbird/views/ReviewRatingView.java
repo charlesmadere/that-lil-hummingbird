@@ -51,8 +51,29 @@ public class ReviewRatingView extends LinearLayout {
         ButterKnife.bind(this);
     }
 
-    public void setContent() {
+    public void setRating(float rating) {
+        if (rating < 0f) {
+            rating = 0f;
+        } else if (rating > 5f) {
+            rating = 5f;
+        }
 
+        setStar(rating, mStarZero, 1f, 0f);
+        setStar(rating, mStarOne, 2f, 1f);
+        setStar(rating, mStarTwo, 3f, 2f);
+        setStar(rating, mStarThree, 4f, 3f);
+        setStar(rating, mStarFour, 5f, 4f);
+    }
+
+    private void setStar(final float rating, final ImageView view, final float full,
+            final float half) {
+        if (rating >= full) {
+            view.setImageResource(R.drawable.ic_star_18dp);
+        } else if (rating > half) {
+            view.setImageResource(R.drawable.ic_star_half_18dp);
+        } else {
+            view.setImageResource(R.drawable.ic_star_border_18dp);
+        }
     }
 
 }
