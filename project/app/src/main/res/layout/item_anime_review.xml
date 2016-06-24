@@ -3,37 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/CardItem">
-    <RelativeLayout
+    <LinearLayout
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
-        <com.charlesmadere.hummingbird.views.TypefaceTextView
-            android:id="@+id/tvRating"
-            android:layout_below="@id/avatarView"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+        <LinearLayout
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="@dimen/text_large"
-            app:typeface="open_sans_semibold"
-            tools:text="4.5" />
-        <com.charlesmadere.hummingbird.views.AvatarView
-            android:id="@+id/avatarView"
-            android:layout_marginBottom="@dimen/root_padding_half"
             android:layout_marginEnd="@dimen/root_padding_half"
-            style="@style/Avatar.Small" />
-        <com.charlesmadere.hummingbird.views.TypefaceTextView
-            android:id="@+id/tvSummary"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/root_padding_half"
-            android:layout_toEndOf="@id/avatarView"
             android:layout_width="wrap_content"
-            tools:text="Ridiculously over-the-top popcorn anime with an amazing OST and creative art style." />
-        <com.charlesmadere.hummingbird.views.TypefaceTextView
-            android:id="@+id/tvReviewHelpfulness"
-            android:layout_below="@id/tvSummary"
+            android:orientation="vertical">
+            <com.charlesmadere.hummingbird.views.AvatarView
+                android:id="@+id/avatarView"
+                android:layout_marginBottom="@dimen/root_padding_half"
+                style="@style/Avatar.Small" />
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:gravity="center"
+                android:id="@+id/tvRating"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="@dimen/text_large"
+                app:typeface="open_sans_semibold"
+                tools:text="4.5" />
+        </LinearLayout>
+        <LinearLayout
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/avatarView"
             android:layout_width="wrap_content"
-            android:textSize="@dimen/text_small"
-            tools:text="73 out of 81 users found this review helpful." />
-    </RelativeLayout>
+            android:orientation="vertical">
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvSummary"
+                tools:text="Ridiculously over-the-top popcorn anime with an amazing OST and creative art style."
+                style="@style/ReviewSummary" />
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvReviewHelpfulness"
+                tools:text="73 out of 81 users found this review helpful."
+                style="@style/ReviewHelpfulness" />
+        </LinearLayout>
+    </LinearLayout>
 </com.charlesmadere.hummingbird.views.AnimeReviewItemView>

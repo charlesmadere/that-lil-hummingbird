@@ -154,7 +154,7 @@ public class FollowingActivity extends BaseDrawerActivity implements
         mEmpty.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
-        mPaginator.setEnabled(true);
+        mPaginator.setEnabled(feed.hasCursor());
         mRefreshLayout.setRefreshing(false);
     }
 
@@ -212,10 +212,10 @@ public class FollowingActivity extends BaseDrawerActivity implements
             final FollowingActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                if (feed.getUsers().size() <= mUsersSize) {
-                    activity.paginationNoMore();
-                } else {
+                if (feed.hasCursor() && feed.getUsers().size() > mUsersSize) {
                     activity.paginationComplete();
+                } else {
+                    activity.paginationNoMore();
                 }
             }
         }

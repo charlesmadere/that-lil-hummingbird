@@ -171,7 +171,7 @@ public abstract class BaseFeedFragment extends BaseFragment implements
         mEmpty.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
-        mPaginator.setEnabled(true);
+        mPaginator.setEnabled(feed.hasCursor());
         mRefreshLayout.setRefreshing(false);
         mFetchingFeed = false;
         mListener.onFeedFinishedLoading();
@@ -257,10 +257,10 @@ public abstract class BaseFeedFragment extends BaseFragment implements
             final BaseFeedFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {
-                if (feed.getStories().size() <= mStoriesSize) {
-                    fragment.paginationNoMore();
-                } else {
+                if (feed.hasCursor() && feed.getStories().size() > mStoriesSize) {
                     fragment.paginationComplete();
+                } else {
+                    fragment.paginationNoMore();
                 }
             }
         }

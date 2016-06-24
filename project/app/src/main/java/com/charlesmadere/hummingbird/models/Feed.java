@@ -49,6 +49,7 @@ public class Feed implements Parcelable {
     @SerializedName("users")
     private ArrayList<User> mUsers;
 
+    @Nullable
     @SerializedName("meta")
     private Metadata mMetadata;
 
@@ -63,6 +64,14 @@ public class Feed implements Parcelable {
         return mAnimeReviews;
     }
 
+    public int getCursor() {
+        if (mMetadata == null || mMetadata.mCursor == null) {
+            return 1;
+        } else {
+            return mMetadata.mCursor;
+        }
+    }
+
     @Nullable
     public ArrayList<GroupMember> getGroupMembers() {
         return mGroupMembers;
@@ -71,10 +80,6 @@ public class Feed implements Parcelable {
     @Nullable
     public ArrayList<Group> getGroups() {
         return mGroups;
-    }
-
-    public Metadata getMetadata() {
-        return mMetadata;
     }
 
     @Nullable
@@ -142,6 +147,10 @@ public class Feed implements Parcelable {
 
     public boolean hasManga() {
         return mManga != null && !mManga.isEmpty();
+    }
+
+    public boolean hasCursor() {
+        return mMetadata != null && mMetadata.mCursor != null;
     }
 
     public boolean hasNotifications() {
@@ -271,7 +280,7 @@ public class Feed implements Parcelable {
             }
         }
 
-        mMetadata = feed.getMetadata();
+        mMetadata = feed.mMetadata;
     }
 
     @Override
@@ -318,18 +327,10 @@ public class Feed implements Parcelable {
 
 
     public static class Metadata implements Parcelable {
+        @Nullable
         @SerializedName("cursor")
-        private int mCursor;
+        private Integer mCursor;
 
-
-        public int getCursor() {
-            return mCursor;
-        }
-
-        @Override
-        public String toString() {
-            return String.valueOf(mCursor);
-        }
 
         @Override
         public int describeContents() {
@@ -338,14 +339,14 @@ public class Feed implements Parcelable {
 
         @Override
         public void writeToParcel(final Parcel dest, final int flags) {
-            dest.writeInt(mCursor);
+            ParcelableUtils.writeInteger(mCursor, dest);
         }
 
         public static final Creator<Metadata> CREATOR = new Creator<Metadata>() {
             @Override
             public Metadata createFromParcel(final Parcel source) {
                 final Metadata m = new Metadata();
-                m.mCursor = source.readInt();
+                m.mCursor = ParcelableUtils.readInteger(source);
                 return m;
             }
 

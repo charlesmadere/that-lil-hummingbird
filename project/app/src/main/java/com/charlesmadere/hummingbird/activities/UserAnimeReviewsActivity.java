@@ -154,7 +154,7 @@ public class UserAnimeReviewsActivity extends BaseDrawerActivity implements
         mEmpty.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
-        mPaginator.setEnabled(true);
+        mPaginator.setEnabled(feed.hasCursor());
         mRefreshLayout.setRefreshing(false);
     }
 
@@ -212,10 +212,10 @@ public class UserAnimeReviewsActivity extends BaseDrawerActivity implements
             final UserAnimeReviewsActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                if (feed.getAnimeReviews().size() <= mReviewsSize) {
-                    activity.paginationNoMore();
-                } else {
+                if (feed.hasCursor() && feed.getAnimeReviews().size() > mReviewsSize) {
                     activity.paginationComplete();
+                } else {
+                    activity.paginationNoMore();
                 }
             }
         }

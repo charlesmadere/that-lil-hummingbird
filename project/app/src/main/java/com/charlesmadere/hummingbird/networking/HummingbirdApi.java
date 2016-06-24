@@ -1,5 +1,6 @@
 package com.charlesmadere.hummingbird.networking;
 
+import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.Feed;
@@ -65,6 +66,10 @@ public interface HummingbirdApi {
     @PUT("quotes/{quoteId}")
     Call<Void> favoriteQuote(@Header("Cookie") String authToken, @Path("quoteId") String quoteId,
             @Body JsonElement json);
+
+    @GET("anime/{animeId}")
+    Call<AbsAnime> getAnime(@Header("Cookie") String authToken, @Header("Accept") String json,
+            @Path("animeId") String animeId);
 
     @GET("full_anime/{animeId}")
     Call<AnimeDigest> getAnimeDigest(@Header("Cookie") String authToken,

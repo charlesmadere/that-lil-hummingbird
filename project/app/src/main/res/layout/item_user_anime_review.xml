@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.charlesmadere.hummingbird.views.UserAnimeReviewItem xmlns:android="http://schemas.android.com/apk/res/android"
+<com.charlesmadere.hummingbird.views.UserAnimeReviewItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/CardItem">
-
-</com.charlesmadere.hummingbird.views.UserAnimeReviewItem>
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:id="@+id/tvTitle"
+            tools:text="Durarara!!"
+            style="@style/AnimeTitle" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:id="@+id/tvSummary"
+            android:layout_below="@id/tvTitle"
+            tools:text="Ridiculously over-the-top popcorn anime with an amazing OST and creative art style."
+            style="@style/ReviewSummary" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:id="@+id/tvReviewHelpfulness"
+            android:layout_below="@id/tvSummary"
+            android:textSize="@dimen/text_small"
+            tools:text="73 out of 81 users found this review helpful."
+            style="@style/ReviewHelpfulness" />
+    </RelativeLayout>
+</com.charlesmadere.hummingbird.views.UserAnimeReviewItemView>

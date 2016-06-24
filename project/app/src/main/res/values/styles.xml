@@ -549,6 +549,18 @@
         <item name="typeface">open_sans_semibold</item>
     </style>
 
+    <style name="ReviewHelpfulness">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">@dimen/text_small</item>
+    </style>
+
+    <style name="ReviewSummary">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/root_padding_half</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
     <style name="SectionHeader">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>

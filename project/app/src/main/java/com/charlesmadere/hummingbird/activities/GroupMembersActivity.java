@@ -157,7 +157,7 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
         mEmpty.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
-        mPaginator.setEnabled(true);
+        mPaginator.setEnabled(feed.hasCursor());
         mRefreshLayout.setRefreshing(false);
     }
 
@@ -215,10 +215,10 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
             final GroupMembersActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                if (feed.getGroupMembers().size() <= mGroupMembersSize) {
-                    activity.paginationNoMore();
-                } else {
+                if (feed.hasCursor() && feed.getGroupMembers().size() > mGroupMembersSize) {
                     activity.paginationComplete();
+                } else {
+                    activity.paginationNoMore();
                 }
             }
         }

@@ -257,7 +257,7 @@ public class CommentsActivity extends BaseDrawerActivity implements
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
         mCommentField.setEnabled(true);
-        mPaginator.setEnabled(true);
+        mPaginator.setEnabled(feed.hasCursor());
         mRefreshLayout.setRefreshing(false);
     }
 
@@ -311,10 +311,10 @@ public class CommentsActivity extends BaseDrawerActivity implements
             final CommentsActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                if (feed.getSubstories().size() <= mSubstoriesSize) {
-                    activity.paginationNoMore();
-                } else {
+                if (feed.hasCursor() && feed.getSubstories().size() > mSubstoriesSize) {
                     activity.paginationComplete();
+                } else {
+                    activity.paginationNoMore();
                 }
             }
         }

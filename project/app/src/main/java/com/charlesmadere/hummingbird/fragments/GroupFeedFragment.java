@@ -159,7 +159,7 @@ public class GroupFeedFragment extends BaseFragment implements
         mEmpty.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
-        mPaginator.setEnabled(true);
+        mPaginator.setEnabled(feed.hasCursor());
         mRefreshLayout.setRefreshing(false);
     }
 
@@ -217,10 +217,10 @@ public class GroupFeedFragment extends BaseFragment implements
             final GroupFeedFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {
-                if (feed.getStories().size() <= mStoriesSize) {
-                    fragment.paginationNoMore();
-                } else {
+                if (feed.hasCursor() && feed.getStories().size() > mStoriesSize) {
                     fragment.paginationComplete();
+                } else {
+                    fragment.paginationNoMore();
                 }
             }
         }

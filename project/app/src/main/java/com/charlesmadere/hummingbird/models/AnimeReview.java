@@ -2,9 +2,11 @@ package com.charlesmadere.hummingbird.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.JsoupUtils;
+import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
 public class AnimeReview implements Parcelable {
@@ -36,8 +38,14 @@ public class AnimeReview implements Parcelable {
     @SerializedName("total_votes")
     private int mTotalVotes;
 
+    @SerializedName("anime_id")
+    private String mAnimeId;
+
     @SerializedName("content")
     private String mContent;
+
+    @SerializedName("formatted_content")
+    private String mFormattedContent;
 
     @SerializedName("id")
     private String mId;
@@ -49,18 +57,36 @@ public class AnimeReview implements Parcelable {
     private String mUserId;
 
     // hydrated fields
+    @Nullable
+    private AbsAnime mAnime;
     private CharSequence mCompiledContent;
     private String mAnimeTitle;
     private User mUser;
 
+
+    private void compileContent() {
+        if (TextUtils.isEmpty(mCompiledContent)) {
+            mCompiledContent = JsoupUtils.parse(TextUtils.isEmpty(mFormattedContent)
+                    ? mContent : mFormattedContent);
+        }
+    }
 
     @Override
     public boolean equals(final Object o) {
         return o instanceof AnimeReview && mId.equalsIgnoreCase(((AnimeReview) o).getId());
     }
 
+    @Nullable
+    public AbsAnime getAnime() {
+        return mAnime;
+    }
+
+    public String getAnimeId() {
+        return mAnimeId;
+    }
+
     public String getAnimeTitle() {
-        return mAnimeTitle;
+        return mAnime == null ? mAnimeTitle : mAnime.getTitle();
     }
 
     public CharSequence getContent() {
@@ -120,8 +146,13 @@ public class AnimeReview implements Parcelable {
         return mId.hashCode();
     }
 
+    public void hydrate(final AbsAnime anime) {
+        compileContent();
+        mAnime = anime;
+    }
+
     public boolean hydrate(final AnimeDigest animeDigest) {
-        mCompiledContent = JsoupUtils.parse(mContent);
+        compileContent();
         mAnimeTitle = animeDigest.getTitle();
 
         for (final User user : animeDigest.getUsers()) {
@@ -154,10 +185,13 @@ public class AnimeReview implements Parcelable {
         dest.writeFloat(mRatingStory);
         dest.writeInt(mPositiveVotes);
         dest.writeInt(mTotalVotes);
+        dest.writeString(mAnimeId);
         dest.writeString(mContent);
+        dest.writeString(mFormattedContent);
         dest.writeString(mId);
         dest.writeString(mSummary);
         dest.writeString(mUserId);
+        ParcelableUtils.writeAbsAnimeToParcel(mAnime, dest, flags);
         TextUtils.writeToParcel(mCompiledContent, dest, flags);
         dest.writeString(mAnimeTitle);
         dest.writeParcelable(mUser, flags);
@@ -166,24 +200,27 @@ public class AnimeReview implements Parcelable {
     public static final Creator<AnimeReview> CREATOR = new Creator<AnimeReview>() {
         @Override
         public AnimeReview createFromParcel(final Parcel source) {
-            final AnimeReview r = new AnimeReview();
-            r.mLiked = source.readInt() != 0;
-            r.mRating = source.readFloat();
-            r.mRatingAnimation = source.readFloat();
-            r.mRatingCharacters = source.readFloat();
-            r.mRatingEnjoyment = source.readFloat();
-            r.mRatingSound = source.readFloat();
-            r.mRatingStory = source.readFloat();
-            r.mPositiveVotes = source.readInt();
-            r.mTotalVotes = source.readInt();
-            r.mContent = source.readString();
-            r.mId = source.readString();
-            r.mSummary = source.readString();
-            r.mUserId = source.readString();
-            r.mCompiledContent = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
-            r.mAnimeTitle = source.readString();
-            r.mUser = source.readParcelable(User.class.getClassLoader());
-            return r;
+            final AnimeReview ar = new AnimeReview();
+            ar.mLiked = source.readInt() != 0;
+            ar.mRating = source.readFloat();
+            ar.mRatingAnimation = source.readFloat();
+            ar.mRatingCharacters = source.readFloat();
+            ar.mRatingEnjoyment = source.readFloat();
+            ar.mRatingSound = source.readFloat();
+            ar.mRatingStory = source.readFloat();
+            ar.mPositiveVotes = source.readInt();
+            ar.mTotalVotes = source.readInt();
+            ar.mAnimeId = source.readString();
+            ar.mContent = source.readString();
+            ar.mFormattedContent = source.readString();
+            ar.mId = source.readString();
+            ar.mSummary = source.readString();
+            ar.mUserId = source.readString();
+            ar.mAnime = ParcelableUtils.readAbsAnimeFromParcel(source);
+            ar.mCompiledContent = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
+            ar.mAnimeTitle = source.readString();
+            ar.mUser = source.readParcelable(User.class.getClassLoader());
+            return ar;
         }
 
         @Override

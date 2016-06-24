@@ -18,7 +18,7 @@
                 android:layout_width="match_parent">
                 <android.support.v7.widget.RecyclerView
                     android:id="@id/recyclerView"
-                    style="@style/List" />
+                    style="@style/ListOrGrid" />
                 <LinearLayout
                     android:id="@+id/llError"
                     style="@style/ListMessageContainer">
