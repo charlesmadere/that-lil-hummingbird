@@ -34,7 +34,7 @@ import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 
 public class SearchActivity extends BaseDrawerActivity implements
-        SearchScopeSpinner.OnSearchScopeSelectedListener {
+        SearchScopeSpinner.OnItemSelectedListener {
 
     private static final String TAG = "SearchActivity";
     private static final long SEARCH_DELAY_MS = 250L;
@@ -120,7 +120,7 @@ public class SearchActivity extends BaseDrawerActivity implements
     }
 
     @Override
-    public void onSearchScopeSelected(final SearchScopeSpinner v) {
+    public void onItemSelected(final SearchScopeSpinner v) {
         onSearchTextChanged();
     }
 
@@ -143,15 +143,15 @@ public class SearchActivity extends BaseDrawerActivity implements
             mHandler.removeCallbacksAndMessages(null);
         }
 
-        mHandler.postDelayed(new Search(this, mSearchScope.getSelectedSearchScope(),
-                query), SEARCH_DELAY_MS);
+        mHandler.postDelayed(new Search(this, mSearchScope.getSelectedItem(), query),
+                SEARCH_DELAY_MS);
     }
 
     @Override
     protected void onViewsBound() {
         super.onViewsBound();
         SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
-        mSearchScope.setOnSearchScopeSelectedListener(this);
+        mSearchScope.setOnItemSelectedListener(this);
         mAdapter = new SearchResultsAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -178,7 +178,7 @@ public class SearchActivity extends BaseDrawerActivity implements
     }
 
     private void showSearchResults(final SearchBundle searchBundle) {
-        mAdapter.set(searchBundle, mSearchScope.getSelectedSearchScope());
+        mAdapter.set(searchBundle, mSearchScope.getSelectedItem());
         mProgressBar.setVisibility(View.GONE);
         mInitialMessage.setVisibility(View.GONE);
         mEmpty.setVisibility(View.GONE);
@@ -209,7 +209,7 @@ public class SearchActivity extends BaseDrawerActivity implements
 
         private boolean proceed(final SearchActivity activity) {
             return activity != null && !activity.isDestroyed() &&
-                    mSearchScope == activity.mSearchScope.getSelectedSearchScope() &&
+                    mSearchScope == activity.mSearchScope.getSelectedItem() &&
                     mQuery.equals(activity.getSearchQuery());
         }
 

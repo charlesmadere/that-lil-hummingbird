@@ -12,32 +12,46 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.models.SearchScope;
+import com.charlesmadere.hummingbird.models.WatchingStatusUpdate;
 
-public class SearchScopeSpinner extends AppCompatSpinner implements
+public class WatchingStatusUpdateSpinner extends AppCompatSpinner implements
         AdapterView.OnItemSelectedListener {
 
     private OnItemSelectedListener mListener;
+    private WatchingStatusUpdate[] mWatchingStatusUpdates;
 
 
-    public SearchScopeSpinner(final Context context, final AttributeSet attrs) {
+    public WatchingStatusUpdateSpinner(final Context context, final AttributeSet attrs) {
         super(context, attrs);
+        initialize();
     }
 
-    public SearchScopeSpinner(final Context context, final AttributeSet attrs,
+    public WatchingStatusUpdateSpinner(final Context context, final AttributeSet attrs,
             final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initialize();
     }
 
     @Override
-    public SearchScope getSelectedItem() {
-        return (SearchScope) super.getSelectedItem();
+    public WatchingStatusUpdate getSelectedItem() {
+        return (WatchingStatusUpdate) super.getSelectedItem();
+    }
+
+    private void initialize() {
+        mWatchingStatusUpdates = new WatchingStatusUpdate[] {
+                WatchingStatusUpdate.CURRENTLY_WATCHING,
+                WatchingStatusUpdate.PLAN_TO_WATCH,
+                WatchingStatusUpdate.COMPLETED,
+                WatchingStatusUpdate.ON_HOLD,
+                WatchingStatusUpdate.DROPPED,
+                WatchingStatusUpdate.REMOVE_FROM_LIBRARY
+        };
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        setAdapter(new SearchScopeAdapter());
+        setAdapter(new WatchingStatusUpdateAdapter());
         setOnItemSelectedListener(this);
     }
 
@@ -58,21 +72,29 @@ public class SearchScopeSpinner extends AppCompatSpinner implements
         mListener = l;
     }
 
-
-    public interface OnItemSelectedListener {
-        void onItemSelected(final SearchScopeSpinner v);
+    public void setWatchingStatusUpdate(final WatchingStatusUpdate wsu) {
+        for (int i = 0; i < mWatchingStatusUpdates.length; ++i) {
+            if (mWatchingStatusUpdates[i].equals(wsu)) {
+                setSelection(i);
+            }
+        }
     }
 
 
-    private static class SearchScopeAdapter extends BaseAdapter {
+    public interface OnItemSelectedListener {
+        void onItemSelected(final WatchingStatusUpdateSpinner v);
+    }
+
+
+    private class WatchingStatusUpdateAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            return SearchScope.values().length;
+            return mWatchingStatusUpdates.length;
         }
 
         @Override
-        public SearchScope getItem(final int position) {
-            return SearchScope.values()[position];
+        public WatchingStatusUpdate getItem(final int position) {
+            return mWatchingStatusUpdates[position];
         }
 
         @Override

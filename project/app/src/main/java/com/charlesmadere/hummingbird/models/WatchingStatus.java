@@ -29,9 +29,13 @@ public enum WatchingStatus implements Parcelable {
     PLAN_TO_WATCH(R.string.plan_to_watch_library_is_empty,
             R.string.error_loading_plan_to_watch_library, R.string.plan_to_watch);
 
-
+    @StringRes
     private final int mEmptyTextResId;
+
+    @StringRes
     private final int mErrorTextResId;
+
+    @StringRes
     private final int mTextResId;
 
 
@@ -70,8 +74,7 @@ public enum WatchingStatus implements Parcelable {
     public static final Creator<WatchingStatus> CREATOR = new Creator<WatchingStatus>() {
         @Override
         public WatchingStatus createFromParcel(final Parcel source) {
-            final int ordinal = source.readInt();
-            return values()[ordinal];
+            return values()[source.readInt()];
         }
 
         @Override
