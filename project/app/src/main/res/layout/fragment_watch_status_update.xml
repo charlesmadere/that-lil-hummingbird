@@ -3,5 +3,27 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:orientation="vertical">
+    <RelativeLayout
+        style="@style/Toolbar">
+        <ImageButton
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/close"
+            android:id="@+id/ibClose"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:paddingEnd="@dimen/root_padding"
+            android:paddingStart="@dimen/root_padding"
+            android:src="@drawable/ic_close_white_24dp" />
+        <ImageButton
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/save"
+            android:id="@+id/ibSave"
+            android:layout_alignParentEnd="true"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:paddingEnd="@dimen/root_padding"
+            android:paddingStart="@dimen/root_padding"
+            android:src="@drawable/ic_save" />
+    </RelativeLayout>
 
 </LinearLayout>
