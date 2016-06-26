@@ -49,6 +49,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
     public static LibraryUpdateFragment create() {
         final Bundle args = new Bundle();
+        // TODO
 
         final LibraryUpdateFragment fragment = new LibraryUpdateFragment();
         fragment.setArguments(args);
