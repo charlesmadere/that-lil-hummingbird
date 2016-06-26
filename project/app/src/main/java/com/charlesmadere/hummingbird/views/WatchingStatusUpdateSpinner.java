@@ -12,13 +12,13 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.models.WatchingStatusUpdate;
+import com.charlesmadere.hummingbird.models.WatchingStatus;
 
 public class WatchingStatusUpdateSpinner extends AppCompatSpinner implements
         AdapterView.OnItemSelectedListener {
 
     private OnItemSelectedListener mListener;
-    private WatchingStatusUpdate[] mWatchingStatusUpdates;
+    private WatchingStatus[] mWatchingStatuses;
 
 
     public WatchingStatusUpdateSpinner(final Context context, final AttributeSet attrs) {
@@ -33,19 +33,15 @@ public class WatchingStatusUpdateSpinner extends AppCompatSpinner implements
     }
 
     @Override
-    public WatchingStatusUpdate getSelectedItem() {
-        return (WatchingStatusUpdate) super.getSelectedItem();
+    public WatchingStatus getSelectedItem() {
+        return (WatchingStatus) super.getSelectedItem();
     }
 
     private void initialize() {
-        mWatchingStatusUpdates = new WatchingStatusUpdate[] {
-                WatchingStatusUpdate.CURRENTLY_WATCHING,
-                WatchingStatusUpdate.PLAN_TO_WATCH,
-                WatchingStatusUpdate.COMPLETED,
-                WatchingStatusUpdate.ON_HOLD,
-                WatchingStatusUpdate.DROPPED,
-                WatchingStatusUpdate.REMOVE_FROM_LIBRARY
-        };
+        mWatchingStatuses = new WatchingStatus[] {
+                WatchingStatus.CURRENTLY_WATCHING, WatchingStatus.PLAN_TO_WATCH,
+                WatchingStatus.COMPLETED, WatchingStatus.ON_HOLD, WatchingStatus.DROPPED,
+                WatchingStatus.REMOVE_FROM_LIBRARY };
     }
 
     @Override
@@ -72,9 +68,9 @@ public class WatchingStatusUpdateSpinner extends AppCompatSpinner implements
         mListener = l;
     }
 
-    public void setWatchingStatusUpdate(final WatchingStatusUpdate wsu) {
-        for (int i = 0; i < mWatchingStatusUpdates.length; ++i) {
-            if (mWatchingStatusUpdates[i].equals(wsu)) {
+    public void setWatchingStatusUpdate(final WatchingStatus wsu) {
+        for (int i = 0; i < mWatchingStatuses.length; ++i) {
+            if (mWatchingStatuses[i].equals(wsu)) {
                 setSelection(i);
             }
         }
@@ -89,12 +85,12 @@ public class WatchingStatusUpdateSpinner extends AppCompatSpinner implements
     private class WatchingStatusUpdateAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            return mWatchingStatusUpdates.length;
+            return mWatchingStatuses.length;
         }
 
         @Override
-        public WatchingStatusUpdate getItem(final int position) {
-            return mWatchingStatusUpdates[position];
+        public WatchingStatus getItem(final int position) {
+            return mWatchingStatuses[position];
         }
 
         @Override
