@@ -17,10 +17,10 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class WatchStatusUpdateFragment extends BaseBottomSheetDialogFragment implements
+public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment implements
         ModifyRatingSpinner.OnItemSelectedListener, WatchingStatusUpdateSpinner.OnItemSelectedListener {
 
-    private static final String TAG = "WatchStatusUpdateFragment";
+    private static final String TAG = "LibraryUpdateFragment";
 
     @BindView(R.id.cbRewatching)
     CheckBox mRewatching;
@@ -44,10 +44,10 @@ public class WatchStatusUpdateFragment extends BaseBottomSheetDialogFragment imp
     WatchingStatusUpdateSpinner mWatchingStatusUpdateSpinner;
 
 
-    public static WatchStatusUpdateFragment create() {
+    public static LibraryUpdateFragment create() {
         final Bundle args = new Bundle();
 
-        final WatchStatusUpdateFragment fragment = new WatchStatusUpdateFragment();
+        final LibraryUpdateFragment fragment = new LibraryUpdateFragment();
         fragment.setArguments(args);
 
         return fragment;
@@ -75,7 +75,7 @@ public class WatchStatusUpdateFragment extends BaseBottomSheetDialogFragment imp
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_watch_status_update, container, false);
+        return inflater.inflate(R.layout.fragment_library_update, container, false);
     }
 
     @Override
