@@ -109,9 +109,13 @@ public class ModifyWatchCountView extends LinearLayout {
     private void update() {
         if (mMax == null) {
             mWatchCount.setText(mNumberFormat.format(mCount));
+            mDecrease.setEnabled(true);
+            mIncrease.setEnabled(true);
         } else {
             mWatchCount.setText(getResources().getString(R.string.progress_format,
                     mNumberFormat.format(mCount), mNumberFormat.format(mMax)));
+            mDecrease.setEnabled(mCount >= 1);
+            mIncrease.setEnabled(mCount < mMax);
         }
     }
 

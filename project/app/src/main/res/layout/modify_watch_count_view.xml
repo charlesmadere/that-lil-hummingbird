@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:paddingEnd="@dimen/root_padding"
         android:paddingStart="@dimen/root_padding"
-        android:src="@drawable/ic_remove_circle_outline_24dp" />
+        android:src="@drawable/ic_remove_circle_outline" />
     <com.charlesmadere.hummingbird.views.TypefaceTextView
         android:id="@+id/tvWatchCount"
         android:layout_height="wrap_content"
@@ -34,5 +34,5 @@
         android:layout_width="wrap_content"
         android:paddingEnd="@dimen/root_padding"
         android:paddingStart="@dimen/root_padding"
-        android:src="@drawable/ic_add_circle_outline_24dp" />
+        android:src="@drawable/ic_add_circle_outline" />
 </com.charlesmadere.hummingbird.views.ModifyWatchCountView>
