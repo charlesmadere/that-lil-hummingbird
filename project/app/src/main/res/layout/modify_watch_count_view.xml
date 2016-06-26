@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.ModifyWatchCountView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center"
+    android:id="@+id/modifyWatchCountView"
+    android:layout_height="@dimen/list_item_height"
+    android:layout_width="match_parent"
+    android:orientation="horizontal">
+    <ImageButton
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/decrease"
+        android:id="@+id/ibDecreaseCount"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:paddingEnd="@dimen/root_padding"
+        android:paddingStart="@dimen/root_padding"
+        android:src="@drawable/ic_remove_circle_outline_24dp" />
+    <com.charlesmadere.hummingbird.views.TypefaceTextView
+        android:id="@+id/tvWatchCount"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:paddingEnd="@dimen/root_padding"
+        android:paddingStart="@dimen/root_padding"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="@dimen/text_large"
+        app:typeface="open_sans_extra_bold"
+        tools:text="24 / 128" />
+    <ImageButton
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/increase"
+        android:id="@+id/ibIncreaseCount"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:paddingEnd="@dimen/root_padding"
+        android:paddingStart="@dimen/root_padding"
+        android:src="@drawable/ic_add_circle_outline_24dp" />
+</com.charlesmadere.hummingbird.views.ModifyWatchCountView>

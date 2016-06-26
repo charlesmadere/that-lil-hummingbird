@@ -40,6 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:orientation="vertical">
+            <include
+                layout="@layout/modify_watch_count_view" />
             <com.charlesmadere.hummingbird.views.WatchingStatusUpdateSpinner
                 android:id="@+id/watchingStatusUpdateSpinner"
                 android:layout_height="@dimen/list_item_height"
