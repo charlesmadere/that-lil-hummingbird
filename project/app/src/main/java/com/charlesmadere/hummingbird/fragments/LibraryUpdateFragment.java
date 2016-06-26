@@ -18,7 +18,10 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment implements
-        ModifyRatingSpinner.OnItemSelectedListener, WatchingStatusUpdateSpinner.OnItemSelectedListener {
+        ModifyPublicPrivateView.OnSelectionChangedListener,
+        ModifyRatingSpinner.OnItemSelectedListener,
+        ModifyWatchCountView.OnWatchCountChangedListener,
+        WatchingStatusUpdateSpinner.OnItemSelectedListener {
 
     private static final String TAG = "LibraryUpdateFragment";
 
@@ -99,8 +102,21 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     }
 
     @Override
+    public void onSelectionChanged(final ModifyPublicPrivateView v) {
+
+    }
+
+    @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mModifyPublicPrivateView.setOnSelectionChangedListener(this);
+        mModifyRatingSpinner.setOnItemSelectedListener(this);
+        mModifyWatchCountView.setOnWatchCountChangedListener(this);
+    }
+
+    @Override
+    public void onWatchCountChanged(final ModifyWatchCountView v) {
 
     }
 

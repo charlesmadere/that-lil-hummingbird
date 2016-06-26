@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.views;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -14,6 +15,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ModifyPublicPrivateView extends LinearLayout {
+
+    private OnSelectionChangedListener mListener;
 
     @BindView(R.id.rbPrivate)
     RadioButton mPrivate;
@@ -53,14 +56,30 @@ public class ModifyPublicPrivateView extends LinearLayout {
 
     @OnClick(R.id.llPrivate)
     void onPrivateClick() {
-        mPublic.setChecked(false);
-        mPrivate.setChecked(true);
+        update(false, true);
     }
 
     @OnClick(R.id.llPublic)
     void onPublicClick() {
-        mPrivate.setChecked(false);
-        mPublic.setChecked(true);
+        update(true, false);
+    }
+
+    public void setOnSelectionChangedListener(@Nullable final OnSelectionChangedListener l) {
+        mListener = l;
+    }
+
+    private void update(final boolean _public, final boolean _private) {
+        mPublic.setChecked(_public);
+        mPrivate.setChecked(_private);
+
+        if (mListener != null) {
+            mListener.onSelectionChanged(this);
+        }
+    }
+
+
+    public interface OnSelectionChangedListener {
+        void onSelectionChanged(final ModifyPublicPrivateView v);
     }
 
 }
