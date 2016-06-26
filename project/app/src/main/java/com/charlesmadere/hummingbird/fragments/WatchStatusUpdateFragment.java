@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.views.ModifyPublicPrivateView;
+import com.charlesmadere.hummingbird.views.ModifyRatingSpinner;
 import com.charlesmadere.hummingbird.views.ModifyWatchCountView;
 import com.charlesmadere.hummingbird.views.WatchingStatusUpdateSpinner;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -28,6 +29,9 @@ public class WatchStatusUpdateFragment extends BaseBottomSheetDialogFragment {
 
     @BindView(R.id.modifyPublicPrivateView)
     ModifyPublicPrivateView mModifyPublicPrivateView;
+
+    @BindView(R.id.modifyRatingSpinner)
+    ModifyRatingSpinner mModifyRatingSpinner;
 
     @BindView(R.id.modifyWatchCountView)
     ModifyWatchCountView mModifyWatchCountView;

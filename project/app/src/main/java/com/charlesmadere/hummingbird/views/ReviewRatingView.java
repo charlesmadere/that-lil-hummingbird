@@ -8,11 +8,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.models.LibraryUpdate;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ReviewRatingView extends LinearLayout {
+public class ReviewRatingView extends LinearLayout implements AdapterView<LibraryUpdate.Rating> {
 
     @BindView(R.id.ivStarZero)
     ImageView mStarZero;
@@ -51,7 +53,7 @@ public class ReviewRatingView extends LinearLayout {
         ButterKnife.bind(this);
     }
 
-    public void setRating(float rating) {
+    public void setContent(float rating) {
         if (rating < 0f) {
             rating = 0f;
         } else if (rating > 5f) {
@@ -63,6 +65,11 @@ public class ReviewRatingView extends LinearLayout {
         setStar(rating, mStarTwo, 3f, 2f);
         setStar(rating, mStarThree, 4f, 3f);
         setStar(rating, mStarFour, 5f, 4f);
+    }
+
+    @Override
+    public void setContent(final LibraryUpdate.Rating content) {
+        setContent(content.getValue());
     }
 
     private void setStar(final float rating, final ImageView view, final float full,

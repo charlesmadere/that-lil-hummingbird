@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="wrap_content"
     android:layout_width="match_parent">
     <RelativeLayout
@@ -48,6 +49,12 @@
                 android:layout_width="match_parent" />
             <include
                 layout="@layout/modify_public_private_view" />
+            <com.charlesmadere.hummingbird.views.ModifyRatingSpinner
+                android:id="@+id/modifyRatingSpinner"
+                android:layout_height="@dimen/list_item_height"
+                android:layout_width="match_parent"
+                android:paddingStart="@dimen/root_padding"
+                tools:ignore="RtlSymmetry" />
             <LinearLayout
                 android:background="?attr/selectableItemBackground"
                 android:id="@+id/llRewatching"

@@ -227,46 +227,52 @@ public class LibraryUpdate implements Parcelable {
 
     public enum Rating implements Parcelable {
         @SerializedName("0")
-        ZERO("0"),
+        ZERO("0", 0f),
 
         @SerializedName("0.5")
-        ZERO_POINT_FIVE("0.5"),
+        ZERO_POINT_FIVE("0.5", 0.5f),
 
         @SerializedName("1")
-        ONE("1"),
+        ONE("1", 1f),
 
         @SerializedName("1.5")
-        ONE_POINT_FIVE("1.5"),
+        ONE_POINT_FIVE("1.5", 1.5f),
 
         @SerializedName("2")
-        TWO("2"),
+        TWO("2", 2f),
 
         @SerializedName("2.5")
-        TWO_POINT_FIVE("2.5"),
+        TWO_POINT_FIVE("2.5", 2.5f),
 
         @SerializedName("3")
-        THREE("3"),
+        THREE("3", 3f),
 
         @SerializedName("3.5")
-        THREE_POINT_FIVE("3.5"),
+        THREE_POINT_FIVE("3.5", 3.5f),
 
         @SerializedName("4")
-        FOUR("4"),
+        FOUR("4", 4f),
 
         @SerializedName("4.5")
-        FOUR_POINT_FIVE("4.5"),
+        FOUR_POINT_FIVE("4.5", 4.5f),
 
         @SerializedName("5")
-        FIVE("5");
+        FIVE("5", 5f);
 
-        private final String mValue;
+        private final float mValue;
+        private final String mText;
 
 
-        Rating(final String value) {
+        Rating(final String text, final float value) {
+            mText = text;
             mValue = value;
         }
 
-        public String getValue() {
+        public String getText() {
+            return mText;
+        }
+
+        public float getValue() {
             return mValue;
         }
 
@@ -283,8 +289,7 @@ public class LibraryUpdate implements Parcelable {
         public static final Creator<Rating> CREATOR = new Creator<Rating>() {
             @Override
             public Rating createFromParcel(final Parcel source) {
-                final int ordinal = source.readInt();
-                return values()[ordinal];
+                return values()[source.readInt()];
             }
 
             @Override
