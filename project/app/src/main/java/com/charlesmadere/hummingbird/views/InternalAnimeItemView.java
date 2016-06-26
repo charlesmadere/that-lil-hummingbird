@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,10 +20,15 @@ import java.text.NumberFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class InternalAnimeItemView extends LinearLayout {
 
     private NumberFormat mNumberFormat;
+    private OnEditClickListener mListener;
+
+    @BindView(R.id.ibEdit)
+    ImageButton mEdit;
 
     @BindView(R.id.kvtvProgress)
     KeyValueTextView mProgress;
@@ -58,6 +65,11 @@ public class InternalAnimeItemView extends LinearLayout {
     public InternalAnimeItemView(final Context context, final AttributeSet attrs,
             final int defStyleAttr, final int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+    @OnClick(R.id.ibEdit)
+    void onEditClick() {
+        mListener.onEditClick(this);
     }
 
     @Override
@@ -114,6 +126,18 @@ public class InternalAnimeItemView extends LinearLayout {
         } else {
             mRating.setVisibility(GONE);
         }
+
+        mEdit.setVisibility(mListener == null ? GONE : VISIBLE);
+    }
+
+    public void setOnEditClickListener(@Nullable final OnEditClickListener l) {
+        mListener = l;
+        mEdit.setVisibility(VISIBLE);
+    }
+
+
+    public interface OnEditClickListener {
+        void onEditClick(final InternalAnimeItemView v);
     }
 
 }

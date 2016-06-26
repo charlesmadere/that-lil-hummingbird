@@ -4,10 +4,27 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:orientation="horizontal">
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/sdvPoster"
+    <LinearLayout
+        android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/root_padding"
-        style="@style/AnimePoster" />
+        android:layout_width="wrap_content"
+        android:orientation="vertical">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdvPoster"
+            android:layout_marginBottom="@dimen/root_padding"
+            style="@style/AnimePoster" />
+        <ImageButton
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/edit"
+            android:id="@+id/ibEdit"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:padding="@dimen/root_padding_half"
+            android:src="@drawable/ic_mode_edit_18dp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+    </LinearLayout>
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
