@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-    android:layout_width="match_parent"
-    android:orientation="vertical">
+    android:layout_width="match_parent">
     <RelativeLayout
         style="@style/Toolbar">
         <ImageButton
@@ -25,5 +24,50 @@
             android:paddingStart="@dimen/root_padding"
             android:src="@drawable/ic_save" />
     </RelativeLayout>
-
-</LinearLayout>
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sdvPoster"
+        android:layout_below="@id/toolbar"
+        android:layout_marginEnd="@dimen/root_padding"
+        style="@style/AnimePoster" />
+    <android.support.v4.widget.NestedScrollView
+        android:layout_below="@id/toolbar"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/sdvPoster"
+        android:layout_width="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="vertical">
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+            <com.charlesmadere.hummingbird.views.WatchingStatusUpdateSpinner
+                android:id="@+id/watchingStatusUpdateSpinner"
+                android:layout_height="@dimen/list_item_height"
+                android:layout_width="match_parent" />
+            <LinearLayout
+                android:background="?attr/selectableItemBackground"
+                android:id="@+id/llRewatching"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/root_padding_half"
+                android:paddingEnd="@dimen/root_padding"
+                android:paddingStart="@dimen/root_padding"
+                android:paddingTop="@dimen/root_padding_half">
+                <com.charlesmadere.hummingbird.views.TypefaceTextView
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:text="@string/rewatching"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="@dimen/text_large" />
+                <CheckBox
+                    android:background="@null"
+                    android:clickable="false"
+                    android:id="@+id/cbRewatching"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>
