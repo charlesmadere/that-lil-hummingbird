@@ -1,39 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="wrap_content"
-    android:layout_width="match_parent">
-    <RelativeLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:orientation="horizontal"
         style="@style/Toolbar">
         <ImageButton
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/close"
             android:id="@+id/ibClose"
             android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/root_padding_half"
             android:layout_width="wrap_content"
             android:paddingEnd="@dimen/root_padding"
             android:paddingStart="@dimen/root_padding"
             android:src="@drawable/ic_close_white_24dp" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:gravity="center_vertical"
+            android:id="@+id/tvTitle"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:textSize="@dimen/text_xxlarge"
+            app:typeface="open_sans_semibold"
+            tools:text="Squid Girl" />
         <ImageButton
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/save"
             android:id="@+id/ibSave"
-            android:layout_alignParentEnd="true"
             android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/root_padding_half"
             android:layout_width="wrap_content"
             android:paddingEnd="@dimen/root_padding"
             android:paddingStart="@dimen/root_padding"
             android:src="@drawable/ic_save" />
-    </RelativeLayout>
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/sdvPoster"
-        android:layout_below="@id/toolbar"
-        android:layout_marginEnd="@dimen/root_padding"
-        style="@style/AnimePoster" />
+    </LinearLayout>
     <android.support.v4.widget.NestedScrollView
-        android:layout_below="@id/toolbar"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/sdvPoster"
         android:layout_width="match_parent"
         android:overScrollMode="never"
         android:scrollbars="vertical">
@@ -46,12 +52,14 @@
             <com.charlesmadere.hummingbird.views.WatchingStatusUpdateSpinner
                 android:id="@+id/watchingStatusUpdateSpinner"
                 android:layout_height="@dimen/list_item_height"
+                android:layout_marginEnd="@dimen/root_padding"
                 android:layout_width="match_parent" />
             <include
                 layout="@layout/modify_public_private_view" />
             <com.charlesmadere.hummingbird.views.ModifyRatingSpinner
                 android:id="@+id/modifyRatingSpinner"
                 android:layout_height="@dimen/list_item_height"
+                android:layout_marginEnd="@dimen/root_padding"
                 android:layout_width="match_parent"
                 android:paddingStart="@dimen/root_padding"
                 tools:ignore="RtlSymmetry" />
@@ -81,4 +89,4 @@
             </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-</RelativeLayout>
+</LinearLayout>

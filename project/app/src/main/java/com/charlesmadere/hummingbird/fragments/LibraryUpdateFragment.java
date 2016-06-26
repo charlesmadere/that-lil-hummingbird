@@ -1,18 +1,19 @@
 package com.charlesmadere.hummingbird.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.views.ModifyPublicPrivateView;
 import com.charlesmadere.hummingbird.views.ModifyRatingSpinner;
 import com.charlesmadere.hummingbird.views.ModifyWatchCountView;
 import com.charlesmadere.hummingbird.views.WatchingStatusUpdateSpinner;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -40,8 +41,8 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     @BindView(R.id.modifyWatchCountView)
     ModifyWatchCountView mModifyWatchCountView;
 
-    @BindView(R.id.sdvPoster)
-    SimpleDraweeView mPoster;
+    @BindView(R.id.tvTitle)
+    TextView mTitle;
 
     @BindView(R.id.watchingStatusUpdateSpinner)
     WatchingStatusUpdateSpinner mWatchingStatusUpdateSpinner;
@@ -60,6 +61,12 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     @Override
     public String getFragmentName() {
         return TAG;
+    }
+
+    @Override
+    public void onAttach(final Context context) {
+        super.onAttach(context);
+        // TODO
     }
 
     @OnClick(R.id.ibClose)
