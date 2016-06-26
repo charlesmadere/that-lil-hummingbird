@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.ModifyPublicPrivateView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/modifyPublicPrivateView"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:background="?attr/selectableItemBackground"
+        android:id="@+id/llPublic"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/root_padding_half"
+        android:paddingEnd="@dimen/root_padding"
+        android:paddingStart="@dimen/root_padding"
+        android:paddingTop="@dimen/root_padding_half">
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="@string/_public"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="@dimen/text_large" />
+        <RadioButton
+            android:background="@null"
+            android:clickable="false"
+            android:id="@+id/rbPublic"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:background="?attr/selectableItemBackground"
+        android:id="@+id/llPrivate"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/root_padding_half"
+        android:paddingEnd="@dimen/root_padding"
+        android:paddingStart="@dimen/root_padding"
+        android:paddingTop="@dimen/root_padding_half">
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="@string/_private"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="@dimen/text_large" />
+        <RadioButton
+            android:background="@null"
+            android:clickable="false"
+            android:id="@+id/rbPrivate"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+    </LinearLayout>
+</com.charlesmadere.hummingbird.views.ModifyPublicPrivateView>

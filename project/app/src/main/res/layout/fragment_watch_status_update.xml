@@ -46,6 +46,8 @@
                 android:id="@+id/watchingStatusUpdateSpinner"
                 android:layout_height="@dimen/list_item_height"
                 android:layout_width="match_parent" />
+            <include
+                layout="@layout/modify_public_private_view" />
             <LinearLayout
                 android:background="?attr/selectableItemBackground"
                 android:id="@+id/llRewatching"
