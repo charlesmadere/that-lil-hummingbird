@@ -23,7 +23,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
         ModifyWatchCountView.OnWatchCountChangedListener,
         WatchingStatusUpdateSpinner.OnItemSelectedListener {
 
-    private static final String TAG = "LibraryUpdateFragment";
+    public static final String TAG = "LibraryUpdateFragment";
 
     @BindView(R.id.cbRewatching)
     CheckBox mRewatching;

@@ -102,7 +102,7 @@ public class AnimeLibraryFragment extends BaseFragment implements
 
     @Override
     public void onEditClick(final InternalAnimeItemView v) {
-        // TODO
+        LibraryUpdateFragment.create().show(getChildFragmentManager(), LibraryUpdateFragment.TAG);
     }
 
     @Override
