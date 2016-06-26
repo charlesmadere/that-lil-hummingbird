@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -57,6 +58,10 @@ public class LibraryEntryItemView extends CardView implements AdapterView<Librar
     public void setContent(final LibraryEntry content) {
         mLibraryEntry = content;
         mAnimeView.setContent(content);
+    }
+
+    public void setOnEditClickListener(@Nullable final InternalAnimeItemView.OnEditClickListener l) {
+        mAnimeView.setOnEditClickListener(l);
     }
 
 }

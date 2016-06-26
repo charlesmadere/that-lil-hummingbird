@@ -132,7 +132,7 @@ public class InternalAnimeItemView extends LinearLayout {
 
     public void setOnEditClickListener(@Nullable final OnEditClickListener l) {
         mListener = l;
-        mEdit.setVisibility(VISIBLE);
+        mEdit.setVisibility(mListener == null ? GONE : VISIBLE);
     }
 
 

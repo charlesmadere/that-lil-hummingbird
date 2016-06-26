@@ -17,6 +17,7 @@ import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.views.InternalAnimeItemView;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 
 public class AnimeLibraryFragment extends BaseFragment implements
-        SwipeRefreshLayout.OnRefreshListener {
+        InternalAnimeItemView.OnEditClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "AnimeLibraryFragment";
     private static final String KEY_LIBRARY_ENTRIES = "LibraryEntries";
@@ -100,6 +101,11 @@ public class AnimeLibraryFragment extends BaseFragment implements
     }
 
     @Override
+    public void onEditClick(final InternalAnimeItemView v) {
+        // TODO
+    }
+
+    @Override
     public void onRefresh() {
         fetchLibraryEntries();
     }
@@ -118,7 +124,7 @@ public class AnimeLibraryFragment extends BaseFragment implements
         super.onViewCreated(view, savedInstanceState);
 
         mRefreshLayout.setOnRefreshListener(this);
-        mAdapter = new LibraryEntriesAdapter(getContext());
+        mAdapter = new LibraryEntriesAdapter(getContext(), this);
         mRecyclerView.setAdapter(mAdapter);
         SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
 
