@@ -19,11 +19,14 @@
             android:paddingStart="@dimen/root_padding"
             android:src="@drawable/ic_close_white_24dp" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:ellipsize="end"
             android:gravity="center_vertical"
             android:id="@+id/tvTitle"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_width="0dp"
+            android:maxLines="1"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="@dimen/text_xxlarge"
             app:typeface="open_sans_semibold"
             tools:text="Squid Girl" />
@@ -67,6 +70,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:id="@+id/llRewatching"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/root_padding"
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/root_padding_half"

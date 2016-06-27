@@ -122,6 +122,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mTitle.setText(mLibraryEntry.getAnime().getTitle());
         mModifyPublicPrivateView.setOnSelectionChangedListener(this);
         mModifyRatingSpinner.setOnItemSelectedListener(this);
         mModifyWatchCountView.setOnWatchCountChangedListener(this);
