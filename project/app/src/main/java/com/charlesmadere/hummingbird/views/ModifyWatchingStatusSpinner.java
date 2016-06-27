@@ -14,19 +14,19 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 
-public class WatchingStatusUpdateSpinner extends AppCompatSpinner implements
+public class ModifyWatchingStatusSpinner extends AppCompatSpinner implements
         AdapterView.OnItemSelectedListener {
 
     private OnItemSelectedListener mListener;
     private WatchingStatus[] mWatchingStatuses;
 
 
-    public WatchingStatusUpdateSpinner(final Context context, final AttributeSet attrs) {
+    public ModifyWatchingStatusSpinner(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         initialize();
     }
 
-    public WatchingStatusUpdateSpinner(final Context context, final AttributeSet attrs,
+    public ModifyWatchingStatusSpinner(final Context context, final AttributeSet attrs,
             final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initialize();
@@ -78,7 +78,7 @@ public class WatchingStatusUpdateSpinner extends AppCompatSpinner implements
 
 
     public interface OnItemSelectedListener {
-        void onItemSelected(final WatchingStatusUpdateSpinner v);
+        void onItemSelected(final ModifyWatchingStatusSpinner v);
     }
 
 

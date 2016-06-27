@@ -16,6 +16,11 @@ import butterknife.ButterKnife;
 
 public class RatingView extends LinearLayout implements AdapterView<LibraryUpdate.Rating> {
 
+    private static final int SIZE_SMALL = 0;
+    private static final int SIZE_LARGE = 1;
+
+    private int mSize;
+
     @BindView(R.id.ivStarZero)
     ImageView mStarZero;
 
@@ -34,22 +39,29 @@ public class RatingView extends LinearLayout implements AdapterView<LibraryUpdat
 
     public RatingView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
+        parseAttributes(attrs);
     }
 
     public RatingView(final Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        parseAttributes(attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public RatingView(final Context context, final AttributeSet attrs, final int defStyleAttr,
             final int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        parseAttributes(attrs);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
+    }
+
+    private void parseAttributes(final AttributeSet attrs) {
+
     }
 
     public void setContent(float rating) {

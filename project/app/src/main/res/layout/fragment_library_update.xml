@@ -52,8 +52,8 @@
             android:orientation="vertical">
             <include
                 layout="@layout/modify_watch_count_view" />
-            <com.charlesmadere.hummingbird.views.WatchingStatusUpdateSpinner
-                android:id="@+id/watchingStatusUpdateSpinner"
+            <com.charlesmadere.hummingbird.views.ModifyWatchingStatusSpinner
+                android:id="@+id/modifyWatchingStatusSpinner"
                 android:layout_height="@dimen/list_item_height"
                 android:layout_marginEnd="@dimen/root_padding"
                 android:layout_width="match_parent" />
@@ -64,7 +64,6 @@
                 android:layout_height="@dimen/list_item_height"
                 android:layout_marginEnd="@dimen/root_padding"
                 android:layout_width="match_parent"
-                android:paddingStart="@dimen/root_padding"
                 tools:ignore="RtlSymmetry" />
             <LinearLayout
                 android:background="?attr/selectableItemBackground"

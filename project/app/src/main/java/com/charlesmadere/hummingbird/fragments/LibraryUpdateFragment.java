@@ -14,7 +14,7 @@ import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.views.ModifyPublicPrivateView;
 import com.charlesmadere.hummingbird.views.ModifyRatingSpinner;
 import com.charlesmadere.hummingbird.views.ModifyWatchCountView;
-import com.charlesmadere.hummingbird.views.WatchingStatusUpdateSpinner;
+import com.charlesmadere.hummingbird.views.ModifyWatchingStatusSpinner;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -23,7 +23,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
         ModifyPublicPrivateView.OnSelectionChangedListener,
         ModifyRatingSpinner.OnItemSelectedListener,
         ModifyWatchCountView.OnWatchCountChangedListener,
-        WatchingStatusUpdateSpinner.OnItemSelectedListener {
+        ModifyWatchingStatusSpinner.OnItemSelectedListener {
 
     public static final String TAG = "LibraryUpdateFragment";
     private static final String KEY_LIBRARY_ENTRY = "LibraryEntry";
@@ -45,11 +45,11 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     @BindView(R.id.modifyWatchCountView)
     ModifyWatchCountView mModifyWatchCountView;
 
+    @BindView(R.id.watchingStatusUpdateSpinner)
+    ModifyWatchingStatusSpinner mModifyWatchingStatusSpinner;
+
     @BindView(R.id.tvTitle)
     TextView mTitle;
-
-    @BindView(R.id.watchingStatusUpdateSpinner)
-    WatchingStatusUpdateSpinner mWatchingStatusUpdateSpinner;
 
 
     public static LibraryUpdateFragment create(final LibraryEntry libraryEntry) {
@@ -99,7 +99,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     }
 
     @Override
-    public void onItemSelected(final WatchingStatusUpdateSpinner v) {
+    public void onItemSelected(final ModifyWatchingStatusSpinner v) {
         // TODO
     }
 
@@ -123,6 +123,9 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
         super.onViewCreated(view, savedInstanceState);
 
         mTitle.setText(mLibraryEntry.getAnime().getTitle());
+
+
+        mModifyWatchingStatusSpinner.setOnItemSelectedListener(this);
         mModifyPublicPrivateView.setOnSelectionChangedListener(this);
         mModifyRatingSpinner.setOnItemSelectedListener(this);
         mModifyWatchCountView.setOnWatchCountChangedListener(this);
