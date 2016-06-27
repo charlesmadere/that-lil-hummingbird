@@ -14,7 +14,7 @@ import com.charlesmadere.hummingbird.models.LibraryUpdate;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ReviewRatingView extends LinearLayout implements AdapterView<LibraryUpdate.Rating> {
+public class RatingView extends LinearLayout implements AdapterView<LibraryUpdate.Rating> {
 
     @BindView(R.id.ivStarZero)
     ImageView mStarZero;
@@ -32,18 +32,17 @@ public class ReviewRatingView extends LinearLayout implements AdapterView<Librar
     ImageView mStarFour;
 
 
-    public ReviewRatingView(final Context context, final AttributeSet attrs) {
+    public RatingView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ReviewRatingView(final Context context, final AttributeSet attrs,
-            final int defStyleAttr) {
+    public RatingView(final Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ReviewRatingView(final Context context, final AttributeSet attrs,
-            final int defStyleAttr, final int defStyleRes) {
+    public RatingView(final Context context, final AttributeSet attrs, final int defStyleAttr,
+            final int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 

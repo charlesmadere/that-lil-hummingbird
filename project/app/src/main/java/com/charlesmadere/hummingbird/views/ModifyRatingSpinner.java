@@ -88,7 +88,7 @@ public class ModifyRatingSpinner extends AppCompatSpinner implements
             }
 
             final ViewHolder viewHolder = (ViewHolder) convertView.getTag();
-            viewHolder.mReviewRatingView.setContent(getItem(position));
+            viewHolder.mRatingView.setContent(getItem(position));
 
             return convertView;
         }
@@ -96,10 +96,10 @@ public class ModifyRatingSpinner extends AppCompatSpinner implements
 
 
     private static class ViewHolder {
-        private final ReviewRatingView mReviewRatingView;
+        private final RatingView mRatingView;
 
         private ViewHolder(final View view) {
-            mReviewRatingView = (ReviewRatingView) view;
+            mRatingView = (RatingView) view;
         }
     }
 
