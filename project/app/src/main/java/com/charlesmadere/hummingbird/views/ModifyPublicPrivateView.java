@@ -66,7 +66,11 @@ public class ModifyPublicPrivateView extends LinearLayout {
     }
 
     public void setContent(final LibraryEntry libraryEntry) {
-
+        if (libraryEntry.isPrivate()) {
+            setPrivateChecked();
+        } else {
+            setPublicChecked();
+        }
     }
 
     public void setPrivateChecked() {
