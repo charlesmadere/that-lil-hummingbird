@@ -83,7 +83,7 @@ public class ModifyRatingSpinner extends AppCompatSpinner implements
         public View getView(final int position, View convertView, final ViewGroup parent) {
             if (convertView == null) {
                 final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-                convertView = inflater.inflate(R.layout.review_rating_view, parent, false);
+                convertView = inflater.inflate(R.layout.rating_view, parent, false);
                 convertView.setTag(new ViewHolder(convertView));
             }
 
