@@ -102,7 +102,9 @@ public class AnimeLibraryFragment extends BaseFragment implements
 
     @Override
     public void onEditClick(final InternalAnimeItemView v) {
-        LibraryUpdateFragment.create().show(getChildFragmentManager(), LibraryUpdateFragment.TAG);
+        final int position = mRecyclerView.getChildAdapterPosition((View) v.getParent());
+        LibraryUpdateFragment.create(mLibraryEntries.get(position)).show(getChildFragmentManager(),
+                LibraryUpdateFragment.TAG);
     }
 
     @Override

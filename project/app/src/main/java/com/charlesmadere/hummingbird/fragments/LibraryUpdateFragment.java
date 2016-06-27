@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.views.ModifyPublicPrivateView;
 import com.charlesmadere.hummingbird.views.ModifyRatingSpinner;
 import com.charlesmadere.hummingbird.views.ModifyWatchCountView;
@@ -25,6 +26,9 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
         WatchingStatusUpdateSpinner.OnItemSelectedListener {
 
     public static final String TAG = "LibraryUpdateFragment";
+    private static final String KEY_LIBRARY_ENTRY = "LibraryEntry";
+
+    private LibraryEntry mLibraryEntry;
 
     @BindView(R.id.cbRewatching)
     CheckBox mRewatching;
@@ -48,9 +52,9 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     WatchingStatusUpdateSpinner mWatchingStatusUpdateSpinner;
 
 
-    public static LibraryUpdateFragment create() {
-        final Bundle args = new Bundle();
-        // TODO
+    public static LibraryUpdateFragment create(final LibraryEntry libraryEntry) {
+        final Bundle args = new Bundle(1);
+        args.putParcelable(KEY_LIBRARY_ENTRY, libraryEntry);
 
         final LibraryUpdateFragment fragment = new LibraryUpdateFragment();
         fragment.setArguments(args);
@@ -79,7 +83,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
         super.onCreate(savedInstanceState);
 
         final Bundle args = getArguments();
-
+        mLibraryEntry = args.getParcelable(KEY_LIBRARY_ENTRY);
     }
 
     @Override

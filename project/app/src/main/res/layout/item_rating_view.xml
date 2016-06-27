@@ -15,29 +15,29 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         tools:ignore="ContentDescription"
-        tools:src="@drawable/ic_star_18dp" />
+        tools:src="@drawable/ic_star_24dp" />
     <ImageView
         android:id="@+id/ivStarOne"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         tools:ignore="ContentDescription"
-        tools:src="@drawable/ic_star_18dp" />
+        tools:src="@drawable/ic_star_24dp" />
     <ImageView
         android:id="@+id/ivStarTwo"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         tools:ignore="ContentDescription"
-        tools:src="@drawable/ic_star_half_18dp" />
+        tools:src="@drawable/ic_star_half_24dp" />
     <ImageView
         android:id="@+id/ivStarThree"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         tools:ignore="ContentDescription"
-        tools:src="@drawable/ic_star_border_18dp" />
+        tools:src="@drawable/ic_star_border_24dp" />
     <ImageView
         android:id="@+id/ivStarFour"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         tools:ignore="ContentDescription"
-        tools:src="@drawable/ic_star_border_18dp" />
+        tools:src="@drawable/ic_star_border_24dp" />
 </com.charlesmadere.hummingbird.views.RatingView>
