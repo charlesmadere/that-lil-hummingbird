@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.models.LibraryEntry;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,11 +57,23 @@ public class ModifyPublicPrivateView extends LinearLayout {
 
     @OnClick(R.id.llPrivate)
     void onPrivateClick() {
-        update(false, true);
+        setPrivateChecked();
     }
 
     @OnClick(R.id.llPublic)
     void onPublicClick() {
+        setPublicChecked();
+    }
+
+    public void setContent(final LibraryEntry libraryEntry) {
+
+    }
+
+    public void setPrivateChecked() {
+        update(false, true);
+    }
+
+    public void setPublicChecked() {
         update(true, false);
     }
 

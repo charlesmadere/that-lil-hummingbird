@@ -129,6 +129,11 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
         mTitle.setText(mLibraryEntry.getAnime().getTitle());
         mSave.setEnabled(false);
 
+        mModifyWatchCountView.setContent(mLibraryEntry);
+        mModifyWatchingStatusSpinner.setContent(mLibraryEntry);
+        mModifyPublicPrivateView.setContent(mLibraryEntry);
+        mModifyRatingSpinner.setContent(mLibraryEntry);
+
         mRewatching.setChecked(mLibraryEntry.isRewatching());
         mPersonalNotes.setText(mLibraryEntry.getNotes());
 

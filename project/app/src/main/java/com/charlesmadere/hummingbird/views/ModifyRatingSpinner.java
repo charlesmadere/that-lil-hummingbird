@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.LibraryUpdate;
 
 public class ModifyRatingSpinner extends AppCompatSpinner implements
@@ -51,6 +52,10 @@ public class ModifyRatingSpinner extends AppCompatSpinner implements
     @Override
     public void onNothingSelected(final AdapterView<?> parent) {
         // intentionally empty
+    }
+
+    public void setContent(final LibraryEntry libraryEntry) {
+        // TODO
     }
 
     public void setOnItemSelectedListener(@Nullable final OnItemSelectedListener listener) {
