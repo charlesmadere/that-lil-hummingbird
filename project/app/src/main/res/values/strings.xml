@@ -213,6 +213,7 @@
     <string name="other">Other</string>
     <string name="ova">OVA</string>
     <string name="password">Password</string>
+    <string name="personal_notes">Personal notes</string>
     <string name="pg13">PG13</string>
     <string name="plan_to_watch">Plan to Watch</string>
     <string name="plan_to_watch_library_is_empty">Plan to watch library is empty</string>

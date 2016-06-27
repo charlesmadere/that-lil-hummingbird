@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -32,6 +33,9 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
     @BindView(R.id.cbRewatching)
     CheckBox mRewatching;
+
+    @BindView(R.id.etPersonalNotes)
+    EditText mPersonalNotes;
 
     @BindView(R.id.ibSave)
     ImageButton mSave;
@@ -124,6 +128,9 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
         mTitle.setText(mLibraryEntry.getAnime().getTitle());
         mSave.setEnabled(false);
+
+        mRewatching.setChecked(mLibraryEntry.isRewatching());
+        mPersonalNotes.setText(mLibraryEntry.getNotes());
 
         mModifyWatchingStatusSpinner.setOnItemSelectedListener(this);
         mModifyPublicPrivateView.setOnSelectionChangedListener(this);
