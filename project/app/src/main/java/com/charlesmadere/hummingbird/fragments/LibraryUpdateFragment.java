@@ -45,7 +45,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     @BindView(R.id.modifyWatchCountView)
     ModifyWatchCountView mModifyWatchCountView;
 
-    @BindView(R.id.watchingStatusUpdateSpinner)
+    @BindView(R.id.modifyWatchingStatusSpinner)
     ModifyWatchingStatusSpinner mModifyWatchingStatusSpinner;
 
     @BindView(R.id.tvTitle)
@@ -123,7 +123,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
         super.onViewCreated(view, savedInstanceState);
 
         mTitle.setText(mLibraryEntry.getAnime().getTitle());
-
+        mSave.setEnabled(false);
 
         mModifyWatchingStatusSpinner.setOnItemSelectedListener(this);
         mModifyPublicPrivateView.setOnSelectionChangedListener(this);
