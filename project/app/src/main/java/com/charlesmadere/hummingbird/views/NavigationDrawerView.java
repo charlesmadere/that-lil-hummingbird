@@ -2,7 +2,6 @@ package com.charlesmadere.hummingbird.views;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -122,7 +121,7 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout implements
 
         final User user = CurrentUser.get().getUser();
         mAvatar.setContent(user);
-        mCoverImage.setImageURI(Uri.parse(user.getCoverImageUrl()));
+        mCoverImage.setImageURI(user.getCoverImage());
         mUsername.setText(user.getId());
 
         if (user.isPro()) {
