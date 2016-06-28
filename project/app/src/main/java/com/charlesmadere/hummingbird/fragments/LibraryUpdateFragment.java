@@ -23,6 +23,7 @@ import com.charlesmadere.hummingbird.views.ModifyWatchingStatusSpinner;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
 public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment implements
         ModifyPublicPrivateView.OnSelectionChangedListener,
@@ -128,17 +129,26 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
     @Override
     public void onItemSelected(final ModifyRatingSpinner v) {
-        // TODO
+        mLibraryUpdate.setRating(v.getSelectedItem());
+        update();
     }
 
     @Override
     public void onItemSelected(final ModifyWatchingStatusSpinner v) {
-        // TODO
+        mLibraryUpdate.setWatchingStatus(v.getSelectedItem());
+        update();
+    }
+
+    @OnTextChanged(R.id.etPersonalNotes)
+    void onPersonalNotesTextChanged() {
+        mLibraryUpdate.setNotes(mPersonalNotes.getText().toString().trim());
+        update();
     }
 
     @OnClick(R.id.llRewatching)
     void onRewatchingClick() {
         mRewatching.toggle();
+        update();
     }
 
     @OnClick(R.id.ibSave)
@@ -157,7 +167,9 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
     @Override
     public void onSelectionChanged(final ModifyPublicPrivateView v) {
-        // TODO
+        mLibraryUpdate.setPrivacy(v.isPrivateChecked() ? LibraryUpdate.Privacy.PRIVATE :
+                LibraryUpdate.Privacy.PUBLIC);
+        update();
     }
 
     @Override
@@ -183,7 +195,8 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
     @Override
     public void onWatchCountChanged(final ModifyWatchCountView v) {
-        // TODO
+        mLibraryUpdate.setEpisodesWatched(v.getCount());
+        update();
     }
 
     private void update() {
