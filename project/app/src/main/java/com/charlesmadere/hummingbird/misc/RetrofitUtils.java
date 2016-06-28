@@ -16,11 +16,29 @@ public final class RetrofitUtils {
 
     private static final String TAG = "RetrofitUtils";
 
+    private static EnumConverterFactory sEnumConverterFactory;
+    private static GsonConverterFactory sGsonConverterFactory;
     private static HummingbirdApi sHummingbirdApi;
     private static Retrofit sHummingbirdRetrofit;
     private static Retrofit sWebsiteRetrofit;
     private static WebsiteApi sWebsiteApi;
 
+
+    private static synchronized EnumConverterFactory getEnumConverterFactory() {
+        if (sEnumConverterFactory == null) {
+            sEnumConverterFactory = new EnumConverterFactory();
+        }
+
+        return sEnumConverterFactory;
+    }
+
+    public static synchronized GsonConverterFactory getGsonConverterFactory() {
+        if (sGsonConverterFactory == null) {
+            sGsonConverterFactory = GsonConverterFactory.create(GsonUtils.getGson());
+        }
+
+        return sGsonConverterFactory;
+    }
 
     public static synchronized HummingbirdApi getHummingbirdApi() {
         if (sHummingbirdApi == null) {
@@ -37,8 +55,8 @@ public final class RetrofitUtils {
             Timber.d(TAG, "creating Hummingbird Retrofit instance");
             sHummingbirdRetrofit = new Retrofit.Builder()
                     .client(OkHttpUtils.getOkHttpClient())
-                    .addConverterFactory(GsonConverterFactory.create(GsonUtils.getGson()))
-                    .addConverterFactory(new EnumConverterFactory())
+                    .addConverterFactory(getGsonConverterFactory())
+                    .addConverterFactory(getEnumConverterFactory())
                     .baseUrl(Constants.HUMMINGBIRD_URL)
                     .build();
         }
@@ -69,8 +87,8 @@ public final class RetrofitUtils {
             Timber.d(TAG, "creating Website Retrofit instance");
             sWebsiteRetrofit = new Retrofit.Builder()
                     .client(OkHttpUtils.getOkHttpClient())
-                    .addConverterFactory(GsonConverterFactory.create(GsonUtils.getGson()))
-                    .addConverterFactory(new EnumConverterFactory())
+                    .addConverterFactory(getGsonConverterFactory())
+                    .addConverterFactory(getEnumConverterFactory())
                     .baseUrl(Constants.WEBSITE_URL)
                     .build();
         }
