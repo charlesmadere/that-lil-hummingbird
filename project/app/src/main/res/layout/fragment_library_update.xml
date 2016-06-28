@@ -56,6 +56,7 @@
                 android:id="@+id/modifyWatchingStatusSpinner"
                 android:layout_height="@dimen/list_item_height"
                 android:layout_marginEnd="@dimen/root_padding"
+                android:layout_marginStart="@dimen/root_padding"
                 android:layout_width="match_parent" />
             <include
                 layout="@layout/modify_public_private_view" />
@@ -63,6 +64,7 @@
                 android:id="@+id/modifyRatingSpinner"
                 android:layout_height="@dimen/list_item_height"
                 android:layout_marginEnd="@dimen/root_padding"
+                android:layout_marginStart="@dimen/root_padding"
                 android:layout_width="match_parent"
                 tools:ignore="RtlSymmetry" />
             <LinearLayout
@@ -93,6 +95,8 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/root_padding"
+                android:layout_marginEnd="@dimen/root_padding_half"
+                android:layout_marginStart="@dimen/root_padding_half"
                 android:layout_width="match_parent">
                 <com.charlesmadere.hummingbird.views.TypefaceTextInputEditText
                     android:hint="@string/personal_notes"

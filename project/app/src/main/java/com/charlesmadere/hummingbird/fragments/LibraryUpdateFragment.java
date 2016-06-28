@@ -138,7 +138,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
     @OnClick(R.id.llRewatching)
     void onRewatchingClick() {
-        // TODO
+        mRewatching.toggle();
     }
 
     @OnClick(R.id.ibSave)
