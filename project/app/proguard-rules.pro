@@ -17,6 +17,9 @@
 #}
 
 
+-keepclassmembers enum com.charlesmadere.hummingbird.** { *; }
+
+
 #################
 ## ButterKnife ##
 #################
