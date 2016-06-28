@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.views;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.ImageView;
@@ -16,10 +17,10 @@ import butterknife.ButterKnife;
 
 public class RatingView extends LinearLayout implements AdapterView<LibraryUpdate.Rating> {
 
-    private static final int SIZE_SMALL = 0;
-    private static final int SIZE_LARGE = 1;
+    private static final int STAR_SIZE_SMALL = 0;
+    private static final int STAR_SIZE_LARGE = 1;
 
-    private int mSize;
+    private int mStarSize;
 
     @BindView(R.id.ivStarZero)
     ImageView mStarZero;
@@ -61,7 +62,13 @@ public class RatingView extends LinearLayout implements AdapterView<LibraryUpdat
     }
 
     private void parseAttributes(final AttributeSet attrs) {
+        final TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.RatingView);
+        mStarSize = ta.getInt(R.styleable.RatingView_star_size, STAR_SIZE_SMALL);
+        ta.recycle();
 
+        if (mStarSize != STAR_SIZE_SMALL && mStarSize != STAR_SIZE_LARGE) {
+            throw new RuntimeException("star size is invalid: " + mStarSize);
+        }
     }
 
     public void setContent(float rating) {
@@ -86,11 +93,23 @@ public class RatingView extends LinearLayout implements AdapterView<LibraryUpdat
     private void setStar(final float rating, final ImageView view, final float full,
             final float half) {
         if (rating >= full) {
-            view.setImageResource(R.drawable.ic_star_18dp);
+            if (mStarSize == STAR_SIZE_SMALL) {
+                view.setImageResource(R.drawable.ic_star_18dp);
+            } else {
+                view.setImageResource(R.drawable.ic_star_24dp);
+            }
         } else if (rating > half) {
-            view.setImageResource(R.drawable.ic_star_half_18dp);
+            if (mStarSize == STAR_SIZE_SMALL) {
+                view.setImageResource(R.drawable.ic_star_half_18dp);
+            } else {
+                view.setImageResource(R.drawable.ic_star_half_24dp);
+            }
         } else {
-            view.setImageResource(R.drawable.ic_star_border_18dp);
+            if (mStarSize == STAR_SIZE_SMALL) {
+                view.setImageResource(R.drawable.ic_star_border_18dp);
+            } else {
+                view.setImageResource(R.drawable.ic_star_border_24dp);
+            }
         }
     }
 

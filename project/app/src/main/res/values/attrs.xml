@@ -49,6 +49,13 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="RatingView">
+        <attr name="star_size" format="enum">
+            <enum name="small" value="0" />
+            <enum name="large" value="1" />
+        </attr>
+    </declare-styleable>
+
     <declare-styleable name="RefreshLayout">
         <attr name="scrolling_child" format="reference" />
         <attr name="spinner_colors" format="reference" />
