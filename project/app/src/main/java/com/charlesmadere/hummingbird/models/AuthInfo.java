@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -15,6 +16,12 @@ public class AuthInfo implements Parcelable {
 
 
     public AuthInfo(final String username, final String password) {
+        if (TextUtils.isEmpty(username)) {
+            throw new IllegalArgumentException("username can't be null / empty");
+        } else if (TextUtils.isEmpty(password)) {
+            throw new IllegalArgumentException("password can't be null / empty");
+        }
+
         mUsername = username;
         mPassword = password;
     }
