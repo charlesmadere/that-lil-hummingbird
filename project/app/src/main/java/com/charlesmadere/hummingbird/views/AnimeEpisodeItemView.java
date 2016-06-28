@@ -2,7 +2,6 @@ package com.charlesmadere.hummingbird.views;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -76,7 +75,8 @@ public class AnimeEpisodeItemView extends CardView implements AdapterView<AnimeD
     @Override
     public void setContent(final AnimeDigest.Episode content) {
         mEpisode = content;
-        mThumbnail.setImageURI(mEpisode.hasThumbnail() ? Uri.parse(mEpisode.getThumbnail()) : null);
+
+        mThumbnail.setImageURI(mEpisode.hasThumbnail() ? mEpisode.getThumbnail() : null);
         mNumber.setText(mNumberFormat.format(mEpisode.getNumber()));
         mTitle.setText(mEpisode.getTitle());
 

@@ -13,6 +13,7 @@ import com.charlesmadere.hummingbird.adapters.HomeFragmentAdapter;
 import com.charlesmadere.hummingbird.adapters.UserFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.BaseFeedFragment;
 import com.charlesmadere.hummingbird.fragments.FeedPostFragment;
+import com.charlesmadere.hummingbird.fragments.LibraryUpdateFragment;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.SyncManager;
 import com.charlesmadere.hummingbird.models.FeedPost;
@@ -23,7 +24,7 @@ import butterknife.OnClick;
 import butterknife.OnPageChange;
 
 public class HomeActivity extends BaseDrawerActivity implements BaseFeedFragment.Listener,
-        FeedPostFragment.Listener {
+        FeedPostFragment.Listener, LibraryUpdateFragment.Listener {
 
     private static final String TAG = "HomeActivity";
     private static final String KEY_STARTING_POSITION = "StartingPosition";
@@ -105,6 +106,11 @@ public class HomeActivity extends BaseDrawerActivity implements BaseFeedFragment
         final BaseUserFragmentAdapter adapter = (BaseUserFragmentAdapter) mViewPager.getAdapter();
         final BaseFeedFragment feedFragment = adapter.getFeedFragment();
         feedFragment.postToFeed(feedPost);
+    }
+
+    @Override
+    public void onLibraryUpdateSave() {
+        // TODO
     }
 
     @OnClick(R.id.floatingActionButton)

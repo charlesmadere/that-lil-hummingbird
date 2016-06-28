@@ -63,6 +63,76 @@ public class LibraryUpdate implements Parcelable {
         mAuthToken = authToken;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        final LibraryUpdate that = (LibraryUpdate) o;
+
+        if (mIncrementEpisodes != null ? !mIncrementEpisodes.equals(that.mIncrementEpisodes) :
+                that.mIncrementEpisodes != null) {
+            return false;
+        }
+
+        if (mRewatching != null ? !mRewatching.equals(that.mRewatching) :
+                that.mRewatching != null) {
+            return false;
+        }
+
+        if (mEpisodesWatched != null ? !mEpisodesWatched.equals(that.mEpisodesWatched) :
+                that.mEpisodesWatched != null) {
+            return false;
+        }
+
+        if (mRewatchedTimes != null ? !mRewatchedTimes.equals(that.mRewatchedTimes) :
+                that.mRewatchedTimes != null) {
+            return false;
+        }
+
+        if (mPrivacy != that.mPrivacy) {
+            return false;
+        }
+
+        if (mRating != that.mRating) {
+            return false;
+        }
+
+        if (mSameRatingUpdate != that.mSameRatingUpdate) {
+            return false;
+        }
+
+        if (mAuthToken != null ? !mAuthToken.equals(that.mAuthToken) : that.mAuthToken != null) {
+            return false;
+        }
+
+        if (mNotes != null ? !mNotes.equals(that.mNotes) : that.mNotes != null) {
+            return false;
+        }
+
+        return mWatchingStatus == that.mWatchingStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mIncrementEpisodes != null ? mIncrementEpisodes.hashCode() : 0;
+        result = 31 * result + (mRewatching != null ? mRewatching.hashCode() : 0);
+        result = 31 * result + (mEpisodesWatched != null ? mEpisodesWatched.hashCode() : 0);
+        result = 31 * result + (mRewatchedTimes != null ? mRewatchedTimes.hashCode() : 0);
+        result = 31 * result + (mPrivacy != null ? mPrivacy.hashCode() : 0);
+        result = 31 * result + (mRating != null ? mRating.hashCode() : 0);
+        result = 31 * result + (mSameRatingUpdate != null ? mSameRatingUpdate.hashCode() : 0);
+        result = 31 * result + (mAuthToken != null ? mAuthToken.hashCode() : 0);
+        result = 31 * result + (mNotes != null ? mNotes.hashCode() : 0);
+        result = 31 * result + (mWatchingStatus != null ? mWatchingStatus.hashCode() : 0);
+        return result;
+    }
+
     public String getAuthToken() {
         return mAuthToken;
     }

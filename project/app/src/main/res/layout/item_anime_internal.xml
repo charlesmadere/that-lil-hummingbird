@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:padding="@dimen/root_padding_half"
-            android:src="@drawable/ic_mode_edit_18dp"
+            android:src="@drawable/ic_mode_edit_24dp"
             android:visibility="gone"
             tools:visibility="visible" />
     </LinearLayout>

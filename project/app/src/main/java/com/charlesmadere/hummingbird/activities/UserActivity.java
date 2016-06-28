@@ -21,6 +21,7 @@ import com.charlesmadere.hummingbird.adapters.BaseUserFragmentAdapter;
 import com.charlesmadere.hummingbird.adapters.UserFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.BaseFeedFragment;
 import com.charlesmadere.hummingbird.fragments.FeedPostFragment;
+import com.charlesmadere.hummingbird.fragments.LibraryUpdateFragment;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
@@ -40,7 +41,7 @@ import butterknife.OnClick;
 import butterknife.OnPageChange;
 
 public class UserActivity extends BaseDrawerActivity implements BaseFeedFragment.Listener,
-        FeedPostFragment.Listener {
+        FeedPostFragment.Listener, LibraryUpdateFragment.Listener {
 
     private static final String TAG = "UserActivity";
     private static final String CNAME = UserActivity.class.getCanonicalName();
@@ -164,6 +165,11 @@ public class UserActivity extends BaseDrawerActivity implements BaseFeedFragment
     }
 
     @Override
+    public void onLibraryUpdateSave() {
+        // TODO
+    }
+
+    @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.miFollow:
@@ -238,8 +244,12 @@ public class UserActivity extends BaseDrawerActivity implements BaseFeedFragment
         mUserDigest = userDigest;
 
         final User user = mUserDigest.getUser();
-        PaletteUtils.applyParallaxColors(user.getCoverImageUrl(), this, mAppBarLayout,
-                mCollapsingToolbarLayout, mCoverImage, mTabLayout);
+
+        if (user.hasCoverImage()) {
+            PaletteUtils.applyParallaxColors(user.getCoverImage(), this, mAppBarLayout,
+                    mCollapsingToolbarLayout, mCoverImage, mTabLayout);
+        }
+
         mAvatar.setContent(user);
 
         if (user.isPro()) {

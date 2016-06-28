@@ -11,7 +11,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
+import com.charlesmadere.hummingbird.models.LibraryUpdate;
 import com.charlesmadere.hummingbird.views.ModifyPublicPrivateView;
 import com.charlesmadere.hummingbird.views.ModifyRatingSpinner;
 import com.charlesmadere.hummingbird.views.ModifyWatchCountView;
@@ -28,8 +30,11 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
     public static final String TAG = "LibraryUpdateFragment";
     private static final String KEY_LIBRARY_ENTRY = "LibraryEntry";
+    private static final String KEY_LIBRARY_UPDATE = "LibraryUpdate";
 
     private LibraryEntry mLibraryEntry;
+    private LibraryUpdate mLibraryUpdate;
+    private Listener mListener;
 
     @BindView(R.id.cbRewatching)
     CheckBox mRewatching;
@@ -74,7 +79,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     @Override
     public void onAttach(final Context context) {
         super.onAttach(context);
-        // TODO
+        mListener = (Listener) MiscUtils.getActivity(context);
     }
 
     @OnClick(R.id.ibClose)
@@ -88,6 +93,14 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
         final Bundle args = getArguments();
         mLibraryEntry = args.getParcelable(KEY_LIBRARY_ENTRY);
+
+        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
+            mLibraryUpdate = savedInstanceState.getParcelable(KEY_LIBRARY_UPDATE);
+        }
+
+        if (mLibraryUpdate == null) {
+            mLibraryUpdate = new LibraryUpdate();
+        }
     }
 
     @Override
@@ -114,7 +127,16 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
     @OnClick(R.id.ibSave)
     void onSaveClick() {
-        // TODO
+        mListener.onLibraryUpdateSave();
+    }
+
+    @Override
+    public void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (mLibraryUpdate != null) {
+            outState.putParcelable(KEY_LIBRARY_UPDATE, mLibraryUpdate);
+        }
     }
 
     @Override
@@ -146,6 +168,15 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     @Override
     public void onWatchCountChanged(final ModifyWatchCountView v) {
         // TODO
+    }
+
+    private void update() {
+        // TODO
+    }
+
+
+    public interface Listener {
+        void onLibraryUpdateSave();
     }
 
 }

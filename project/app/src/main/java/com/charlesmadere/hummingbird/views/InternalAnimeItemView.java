@@ -3,7 +3,6 @@ package com.charlesmadere.hummingbird.views;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -24,6 +23,8 @@ import butterknife.OnClick;
 
 public class InternalAnimeItemView extends LinearLayout {
 
+    private AbsAnime mAnime;
+    private LibraryEntry mLibraryEntry;
     private NumberFormat mNumberFormat;
     private OnEditClickListener mListener;
 
@@ -67,6 +68,14 @@ public class InternalAnimeItemView extends LinearLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
+    public AbsAnime getAnime() {
+        return mAnime;
+    }
+
+    public LibraryEntry getLibraryEntry() {
+        return mLibraryEntry;
+    }
+
     @OnClick(R.id.ibEdit)
     void onEditClick() {
         mListener.onEditClick(this);
@@ -85,43 +94,52 @@ public class InternalAnimeItemView extends LinearLayout {
     }
 
     public void setContent(final AbsAnime content) {
-        mPoster.setImageURI(Uri.parse(content.getImage()));
-        mTitle.setText(content.getTitle());
+        mAnime = content;
+        mLibraryEntry = null;
 
-        if (content.hasType()) {
-            mAnimeType.setText(content.getType().getTextResId());
+        mPoster.setImageURI(mAnime.getImage());
+        mTitle.setText(mAnime.getTitle());
+
+        if (mAnime.hasType()) {
+            mAnimeType.setText(mAnime.getType().getTextResId());
             mAnimeType.setVisibility(VISIBLE);
         } else {
             mAnimeType.setVisibility(GONE);
         }
 
-        if (content.hasGenres()) {
-            mGenres.setText(content.getGenresString(getResources()));
+        if (mAnime.hasGenres()) {
+            mGenres.setText(mAnime.getGenresString(getResources()));
             mGenres.setVisibility(VISIBLE);
         } else {
             mGenres.setVisibility(GONE);
         }
 
-        if (content.hasSynopsis()) {
-            mSynopsis.setText(content.getSynopsis());
+        if (mAnime.hasSynopsis()) {
+            mSynopsis.setText(mAnime.getSynopsis());
         } else {
             mSynopsis.setText(R.string.no_synopsis_available);
         }
     }
 
     public void setContent(final LibraryEntry content) {
-        final AbsAnime anime = content.getAnime();
-        setContent(anime);
+        setContent(content.getAnime());
+        mLibraryEntry = content;
 
         final Resources res = getResources();
-        mProgress.setText(res.getText(R.string.progress), anime.hasEpisodeCount() &&
-                anime.getEpisodeCount() >= 1 ? res.getString(R.string.progress_format,
-                mNumberFormat.format(content.getEpisodesWatched()), mNumberFormat.format(
-                        anime.getEpisodeCount())) : mNumberFormat.format(content.getEpisodesWatched()));
+
+        if (mAnime.hasEpisodeCount()) {
+            mProgress.setText(res.getText(R.string.progress), res.getString(
+                    R.string.progress_format, mNumberFormat.format(mLibraryEntry.
+                            getEpisodesWatched()), mNumberFormat.format(mAnime.getEpisodeCount())));
+        } else {
+            mProgress.setText(res.getText(R.string.progress), mNumberFormat.format(
+                    mLibraryEntry.getEpisodesWatched()));
+        }
+
         mProgress.setVisibility(VISIBLE);
 
-        if (content.hasRating()) {
-            mRating.setText(res.getText(R.string.rating), content.getRating().getValue());
+        if (mLibraryEntry.hasRating()) {
+            mRating.setText(res.getText(R.string.rating), mLibraryEntry.getRating().getValue());
             mRating.setVisibility(VISIBLE);
         } else {
             mRating.setVisibility(GONE);

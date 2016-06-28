@@ -1,7 +1,6 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
@@ -154,7 +153,7 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
     private void setPosterView(final SimpleDraweeView view,
             final ArrayList<UserDigest.Favorite.AnimeItem> anime, final int index) {
         if (anime.size() >= index) {
-            view.setImageURI(Uri.parse(anime.get(index - 1).getAnime().getImage()));
+            view.setImageURI(anime.get(index - 1).getAnime().getImage());
             view.setVisibility(VISIBLE);
         } else {
             view.setVisibility(INVISIBLE);

@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.views;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import com.charlesmadere.hummingbird.models.User;
@@ -37,8 +38,10 @@ public class AvatarView extends SimpleDraweeView {
     }
 
     private void fetchAvatars(final User user, final String[] avatars, final int index) {
-        if (mUser != user || index >= avatars.length) {
+        if (mUser != user) {
             return;
+        } else if (index >= avatars.length) {
+            setImageURI((String) null);
         }
 
         final DraweeController controller = Fresco.newDraweeControllerBuilder()
@@ -57,7 +60,28 @@ public class AvatarView extends SimpleDraweeView {
 
     public void setContent(final User content) {
         mUser = content;
-        fetchAvatars(mUser, mUser.getAvatars(), 0);
+
+        final String[] avatars = mUser.getAvatars();
+
+        if (avatars == null || avatars.length == 0) {
+            setImageURI((String) null);
+            return;
+        }
+
+        boolean fetch = false;
+
+        for (final String avatar : avatars) {
+            if (!TextUtils.isEmpty(avatar)) {
+                fetch = true;
+                break;
+            }
+        }
+
+        if (fetch) {
+            fetchAvatars(mUser, avatars, 0);
+        } else {
+            setImageURI((String) null);
+        }
     }
 
 }

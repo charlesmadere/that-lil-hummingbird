@@ -61,7 +61,7 @@ public class User implements Parcelable {
         return mData.mBio;
     }
 
-    public String getCoverImageUrl() {
+    public String getCoverImage() {
         return mData.mCoverImageUrl;
     }
 
@@ -121,6 +121,10 @@ public class User implements Parcelable {
 
     public boolean hasBio() {
         return !TextUtils.isEmpty(mData.mBio);
+    }
+
+    public boolean hasCoverImage() {
+        return !TextUtils.isEmpty(mData.mCoverImageUrl);
     }
 
     @Override

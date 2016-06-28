@@ -87,6 +87,7 @@ public class GalleryPagerView extends FrameLayout implements AdapterView<String>
                         mProgressBar.setVisibility(GONE);
                     }
                 })
+                .setOldController(mImage.getController())
                 .setUri(content)
                 .build();
 
