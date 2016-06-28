@@ -3,7 +3,9 @@ package com.charlesmadere.hummingbird.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,6 +81,11 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
         return TAG;
     }
 
+    @Nullable
+    public LibraryUpdate getLibraryUpdate() {
+        return mLibraryUpdate;
+    }
+
     @Override
     public void onAttach(final Context context) {
         super.onAttach(context);
@@ -141,7 +148,14 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
     @OnTextChanged(R.id.etPersonalNotes)
     void onPersonalNotesTextChanged() {
-        mLibraryUpdate.setNotes(mPersonalNotes.getText().toString().trim());
+        final CharSequence text = mPersonalNotes.getText();
+
+        if (TextUtils.isEmpty(text) || TextUtils.getTrimmedLength(text) == 0) {
+            mLibraryUpdate.setNotes(null);
+        } else {
+            mLibraryUpdate.setNotes(text.toString().trim());
+        }
+
         update();
     }
 
@@ -200,7 +214,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     }
 
     private void update() {
-        // TODO
+        mSave.setEnabled(mLibraryUpdate.containsModifications(mLibraryEntry));
     }
 
 

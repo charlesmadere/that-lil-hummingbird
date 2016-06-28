@@ -63,6 +63,11 @@ public class LibraryUpdate implements Parcelable {
         mAuthToken = authToken;
     }
 
+    public boolean containsModifications(final LibraryEntry libraryEntry) {
+        
+        return false;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
