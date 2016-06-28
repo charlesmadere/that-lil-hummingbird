@@ -22,7 +22,10 @@ public enum NightMode implements Parcelable {
     @SerializedName("system")
     SYSTEM(R.string.system, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
 
+    @StringRes
     private final int mTextResId;
+
+    @AppCompatDelegate.NightMode
     private final int mThemeValue;
 
 
@@ -58,8 +61,7 @@ public enum NightMode implements Parcelable {
     public static final Creator<NightMode> CREATOR = new Creator<NightMode>() {
         @Override
         public NightMode createFromParcel(final Parcel source) {
-            final int ordinal = source.readInt();
-            return values()[ordinal];
+            return values()[source.readInt()];
         }
 
         @Override
