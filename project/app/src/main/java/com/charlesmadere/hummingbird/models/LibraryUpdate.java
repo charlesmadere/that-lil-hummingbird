@@ -12,10 +12,6 @@ import com.google.gson.annotations.SerializedName;
 public class LibraryUpdate implements Parcelable {
 
     @Nullable
-    @SerializedName("increment_episodes")
-    private Boolean mIncrementEpisodes;
-
-    @Nullable
     @SerializedName("rewatching")
     private Boolean mRewatching;
 
@@ -64,7 +60,7 @@ public class LibraryUpdate implements Parcelable {
     }
 
     public boolean containsModifications(final LibraryEntry libraryEntry) {
-        
+        // TODO
         return false;
     }
 
@@ -79,11 +75,6 @@ public class LibraryUpdate implements Parcelable {
         }
 
         final LibraryUpdate that = (LibraryUpdate) o;
-
-        if (mIncrementEpisodes != null ? !mIncrementEpisodes.equals(that.mIncrementEpisodes) :
-                that.mIncrementEpisodes != null) {
-            return false;
-        }
 
         if (mRewatching != null ? !mRewatching.equals(that.mRewatching) :
                 that.mRewatching != null) {
@@ -123,21 +114,6 @@ public class LibraryUpdate implements Parcelable {
         return mWatchingStatus == that.mWatchingStatus;
     }
 
-    @Override
-    public int hashCode() {
-        int result = mIncrementEpisodes != null ? mIncrementEpisodes.hashCode() : 0;
-        result = 31 * result + (mRewatching != null ? mRewatching.hashCode() : 0);
-        result = 31 * result + (mEpisodesWatched != null ? mEpisodesWatched.hashCode() : 0);
-        result = 31 * result + (mRewatchedTimes != null ? mRewatchedTimes.hashCode() : 0);
-        result = 31 * result + (mPrivacy != null ? mPrivacy.hashCode() : 0);
-        result = 31 * result + (mRating != null ? mRating.hashCode() : 0);
-        result = 31 * result + (mSameRatingUpdate != null ? mSameRatingUpdate.hashCode() : 0);
-        result = 31 * result + (mAuthToken != null ? mAuthToken.hashCode() : 0);
-        result = 31 * result + (mNotes != null ? mNotes.hashCode() : 0);
-        result = 31 * result + (mWatchingStatus != null ? mWatchingStatus.hashCode() : 0);
-        return result;
-    }
-
     public String getAuthToken() {
         return mAuthToken;
     }
@@ -145,11 +121,6 @@ public class LibraryUpdate implements Parcelable {
     @Nullable
     public Integer getEpisodesWatched() {
         return mEpisodesWatched;
-    }
-
-    @Nullable
-    public Boolean getIncrementEpisodesStatus() {
-        return mIncrementEpisodes;
     }
 
     @Nullable
@@ -182,12 +153,22 @@ public class LibraryUpdate implements Parcelable {
         return mSameRatingUpdate;
     }
 
-    public void setEpisodesWatched(@Nullable final Integer episodesWatched) {
-        mEpisodesWatched = episodesWatched;
+    @Override
+    public int hashCode() {
+        int result = mRewatching != null ? mRewatching.hashCode() : 0;
+        result = 31 * result + (mEpisodesWatched != null ? mEpisodesWatched.hashCode() : 0);
+        result = 31 * result + (mRewatchedTimes != null ? mRewatchedTimes.hashCode() : 0);
+        result = 31 * result + (mPrivacy != null ? mPrivacy.hashCode() : 0);
+        result = 31 * result + (mRating != null ? mRating.hashCode() : 0);
+        result = 31 * result + (mSameRatingUpdate != null ? mSameRatingUpdate.hashCode() : 0);
+        result = 31 * result + (mAuthToken != null ? mAuthToken.hashCode() : 0);
+        result = 31 * result + (mNotes != null ? mNotes.hashCode() : 0);
+        result = 31 * result + (mWatchingStatus != null ? mWatchingStatus.hashCode() : 0);
+        return result;
     }
 
-    public void setIncrementEpisodesStatus(@Nullable final Boolean incrementEpisodes) {
-        mIncrementEpisodes = incrementEpisodes;
+    public void setEpisodesWatched(@Nullable final Integer episodesWatched) {
+        mEpisodesWatched = episodesWatched;
     }
 
     public void setNotes(@Nullable final String notes) {
@@ -233,7 +214,6 @@ public class LibraryUpdate implements Parcelable {
         // intentionally at the top
         dest.writeString(mAuthToken);
 
-        ParcelableUtils.writeBoolean(mIncrementEpisodes, dest);
         ParcelableUtils.writeBoolean(mRewatching, dest);
         ParcelableUtils.writeInteger(mEpisodesWatched, dest);
         ParcelableUtils.writeInteger(mRewatchedTimes, dest);
@@ -248,7 +228,6 @@ public class LibraryUpdate implements Parcelable {
         @Override
         public LibraryUpdate createFromParcel(final Parcel source) {
             final LibraryUpdate lu = new LibraryUpdate(source.readString());
-            lu.mIncrementEpisodes = ParcelableUtils.readBoolean(source);
             lu.mRewatching = ParcelableUtils.readBoolean(source);
             lu.mEpisodesWatched = ParcelableUtils.readInteger(source);
             lu.mRewatchedTimes = ParcelableUtils.readInteger(source);
@@ -288,8 +267,7 @@ public class LibraryUpdate implements Parcelable {
         public static final Creator<Privacy> CREATOR = new Creator<Privacy>() {
             @Override
             public Privacy createFromParcel(final Parcel source) {
-                final int ordinal = source.readInt();
-                return values()[ordinal];
+                return values()[source.readInt()];
             }
 
             @Override

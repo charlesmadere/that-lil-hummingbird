@@ -18,6 +18,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.LibraryUpdate;
+import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.charlesmadere.hummingbird.views.ModifyPublicPrivateView;
 import com.charlesmadere.hummingbird.views.ModifyRatingSpinner;
 import com.charlesmadere.hummingbird.views.ModifyWatchCountView;
@@ -209,7 +210,24 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
     @Override
     public void onWatchCountChanged(final ModifyWatchCountView v) {
-        mLibraryUpdate.setEpisodesWatched(v.getCount());
+        final int count = v.getCount();
+
+        if (mLibraryEntry.getEpisodesWatched() == count) {
+            mLibraryUpdate.setEpisodesWatched(null);
+        } else {
+            mLibraryUpdate.setEpisodesWatched(count);
+        }
+
+        mLibraryUpdate.setEpisodesWatched(count);
+
+        if (mLibraryEntry.getAnime().hasEpisodeCount()) {
+            if (mLibraryEntry.getAnime().getEpisodeCount() == count) {
+                mModifyWatchingStatusSpinner.setWatchingStatus(WatchingStatus.COMPLETED);
+            } else {
+                mModifyWatchingStatusSpinner.setWatchingStatus(mLibraryEntry.getStatus());
+            }
+        }
+
         update();
     }
 
