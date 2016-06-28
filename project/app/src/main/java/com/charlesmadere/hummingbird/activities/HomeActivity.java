@@ -12,19 +12,15 @@ import com.charlesmadere.hummingbird.adapters.BaseUserFragmentAdapter;
 import com.charlesmadere.hummingbird.adapters.HomeFragmentAdapter;
 import com.charlesmadere.hummingbird.adapters.UserFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.BaseFeedFragment;
-import com.charlesmadere.hummingbird.fragments.FeedPostFragment;
-import com.charlesmadere.hummingbird.fragments.LibraryUpdateFragment;
-import com.charlesmadere.hummingbird.misc.CurrentUser;
+import com.charlesmadere.hummingbird.fragments.HomeFeedFragment;
 import com.charlesmadere.hummingbird.misc.SyncManager;
-import com.charlesmadere.hummingbird.models.FeedPost;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
 
-public class HomeActivity extends BaseDrawerActivity implements BaseFeedFragment.Listener,
-        FeedPostFragment.Listener, LibraryUpdateFragment.Listener {
+public class HomeActivity extends BaseDrawerActivity implements BaseFeedFragment.Listener {
 
     private static final String TAG = "HomeActivity";
     private static final String KEY_STARTING_POSITION = "StartingPosition";
@@ -93,29 +89,14 @@ public class HomeActivity extends BaseDrawerActivity implements BaseFeedFragment
         updatePostToFeedVisibility();
     }
 
-    @Override
-    public void onFeedPostSubmit() {
-        final FeedPostFragment postFragment = (FeedPostFragment) getSupportFragmentManager()
-                .findFragmentByTag(FeedPostFragment.TAG);
-        final FeedPost feedPost = postFragment.getFeedPost(CurrentUser.get().getUserId());
-
-        if (feedPost == null) {
-            return;
-        }
-
-        final BaseUserFragmentAdapter adapter = (BaseUserFragmentAdapter) mViewPager.getAdapter();
-        final BaseFeedFragment feedFragment = adapter.getFeedFragment();
-        feedFragment.postToFeed(feedPost);
-    }
-
-    @Override
-    public void onLibraryUpdateSave() {
-        // TODO
-    }
-
     @OnClick(R.id.floatingActionButton)
     void onPostToFeedClick() {
-        FeedPostFragment.create().show(getSupportFragmentManager(), FeedPostFragment.TAG);
+        final HomeFragmentAdapter adapter = (HomeFragmentAdapter) mViewPager.getAdapter();
+        final HomeFeedFragment fragment = adapter.getFeedFragment();
+
+        if (fragment != null) {
+            fragment.showFeedPostFragment();
+        }
     }
 
     @Override

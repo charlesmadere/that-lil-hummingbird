@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 
-public class AnimeLibraryFragment extends BaseFragment implements
+public class AnimeLibraryFragment extends BaseFragment implements LibraryUpdateFragment.Listener,
         InternalAnimeItemView.OnEditClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "AnimeLibraryFragment";
@@ -104,6 +104,11 @@ public class AnimeLibraryFragment extends BaseFragment implements
     public void onEditClick(final InternalAnimeItemView v) {
         LibraryUpdateFragment.create(v.getLibraryEntry()).show(getChildFragmentManager(),
                 LibraryUpdateFragment.TAG);
+    }
+
+    @Override
+    public void onLibraryUpdateSave() {
+        // TODO
     }
 
     @Override

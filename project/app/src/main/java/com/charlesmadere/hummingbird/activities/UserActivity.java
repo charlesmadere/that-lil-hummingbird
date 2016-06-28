@@ -20,12 +20,10 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.BaseUserFragmentAdapter;
 import com.charlesmadere.hummingbird.adapters.UserFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.BaseFeedFragment;
-import com.charlesmadere.hummingbird.fragments.FeedPostFragment;
-import com.charlesmadere.hummingbird.fragments.LibraryUpdateFragment;
+import com.charlesmadere.hummingbird.fragments.UserFeedFragment;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
-import com.charlesmadere.hummingbird.models.FeedPost;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -40,8 +38,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
 
-public class UserActivity extends BaseDrawerActivity implements BaseFeedFragment.Listener,
-        FeedPostFragment.Listener, LibraryUpdateFragment.Listener {
+public class UserActivity extends BaseDrawerActivity implements BaseFeedFragment.Listener {
 
     private static final String TAG = "UserActivity";
     private static final String CNAME = UserActivity.class.getCanonicalName();
@@ -150,26 +147,6 @@ public class UserActivity extends BaseDrawerActivity implements BaseFeedFragment
     }
 
     @Override
-    public void onFeedPostSubmit() {
-        final FeedPostFragment postFragment = (FeedPostFragment) getSupportFragmentManager()
-                .findFragmentByTag(FeedPostFragment.TAG);
-        final FeedPost feedPost = postFragment.getFeedPost(mUsername);
-
-        if (feedPost == null) {
-            return;
-        }
-
-        final BaseUserFragmentAdapter adapter = (BaseUserFragmentAdapter) mViewPager.getAdapter();
-        final BaseFeedFragment feedFragment = adapter.getFeedFragment();
-        feedFragment.postToFeed(feedPost);
-    }
-
-    @Override
-    public void onLibraryUpdateSave() {
-        // TODO
-    }
-
-    @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.miFollow:
@@ -183,7 +160,12 @@ public class UserActivity extends BaseDrawerActivity implements BaseFeedFragment
 
     @OnClick(R.id.floatingActionButton)
     void onPostToFeedClick() {
-        FeedPostFragment.create().show(getSupportFragmentManager(), FeedPostFragment.TAG);
+        final UserFragmentAdapter adapter = (UserFragmentAdapter) mViewPager.getAdapter();
+        final UserFeedFragment fragment = adapter.getFeedFragment();
+
+        if (fragment != null) {
+            fragment.showFeedPostFragment();
+        }
     }
 
     @Override

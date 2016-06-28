@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.FeedAdapter;
+import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
@@ -27,7 +28,7 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public abstract class BaseFeedFragment extends BaseFragment implements
+public abstract class BaseFeedFragment extends BaseFragment implements FeedPostFragment.Listener,
         RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     protected static final String KEY_FEED = "Feed";
@@ -101,6 +102,20 @@ public abstract class BaseFeedFragment extends BaseFragment implements
     }
 
     @Override
+    public void onFeedPostSubmit() {
+        final FeedPostFragment feedPostFragment = (FeedPostFragment) getChildFragmentManager()
+                .findFragmentByTag(FeedPostFragment.TAG);
+        final FeedPost feedPost = feedPostFragment.getFeedPost(CurrentUser.get().getUserId());
+
+        if (feedPost == null) {
+            return;
+        }
+
+        mRefreshLayout.setRefreshing(true);
+        Api.postToFeed(feedPost, new FeedPostListener(this));
+    }
+
+    @Override
     public void onRefresh() {
         fetchFeed();
     }
@@ -146,11 +161,6 @@ public abstract class BaseFeedFragment extends BaseFragment implements
         mAdapter.setPaginating(false);
     }
 
-    public void postToFeed(final FeedPost feedPost) {
-        mRefreshLayout.setRefreshing(true);
-        Api.postToFeed(feedPost, new FeedPostListener(this));
-    }
-
     protected void showError() {
         mRecyclerView.setVisibility(View.GONE);
         mEmpty.setVisibility(View.GONE);
@@ -175,6 +185,10 @@ public abstract class BaseFeedFragment extends BaseFragment implements
         mRefreshLayout.setRefreshing(false);
         mFetchingFeed = false;
         mListener.onFeedFinishedLoading();
+    }
+
+    public void showFeedPostFragment() {
+        FeedPostFragment.create().show(getChildFragmentManager(), FeedPostFragment.TAG);
     }
 
 

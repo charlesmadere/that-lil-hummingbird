@@ -1,8 +1,10 @@
 package com.charlesmadere.hummingbird.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +60,21 @@ public class FeedPostFragment extends BaseBottomSheetDialogFragment {
     @Override
     public void onAttach(final Context context) {
         super.onAttach(context);
-        mListener = (Listener) MiscUtils.getActivity(context);
+
+        final Fragment fragment = getParentFragment();
+        if (fragment instanceof Listener) {
+            mListener = (Listener) fragment;
+        } else {
+            final Activity activity = MiscUtils.getActivity(context);
+
+            if (activity instanceof Listener) {
+                mListener = (Listener) activity;
+            }
+        }
+
+        if (mListener == null) {
+            throw new IllegalStateException(TAG + " must have a Listener");
+        }
     }
 
     @OnClick(R.id.ibClose)
