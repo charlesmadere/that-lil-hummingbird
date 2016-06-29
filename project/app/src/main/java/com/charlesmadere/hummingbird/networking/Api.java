@@ -901,7 +901,12 @@ public final class Api {
     }
 
     @Nullable
-    private static ErrorInfo retrieveErrorInfo(final Response response) {
+    private static ErrorInfo retrieveErrorInfo(@Nullable final Response response) {
+        if (response == null) {
+            Timber.e(TAG, "can't retrieve error info from null response");
+            return null;
+        }
+
         final Retrofit retrofit = RetrofitUtils.getHummingbirdRetrofit();
         final Converter<ResponseBody, ErrorInfo> converter = retrofit
                 .responseBodyConverter(ErrorInfo.class, new Annotation[0]);
@@ -913,10 +918,10 @@ public final class Api {
             errorInfo = converter.convert(errorBody);
 
             if (errorInfo != null) {
-                Timber.e(TAG, "Received server error: \"" + errorInfo.getError() + '"');
+                Timber.e(TAG, "retrieved error info: \"" + errorInfo.getError() + '"');
             }
         } catch (final Exception e) {
-            Timber.e(TAG, "couldn't convert response's error body", e);
+            Timber.e(TAG, "couldn't retrieve error info from response", e);
         }
 
         return errorInfo;
