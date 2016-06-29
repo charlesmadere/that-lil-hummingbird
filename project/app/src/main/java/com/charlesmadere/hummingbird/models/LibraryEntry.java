@@ -28,6 +28,7 @@ public class LibraryEntry implements Parcelable {
     @SerializedName("rewatched_times")
     private int mRewatchedTimes;
 
+    @Nullable
     @SerializedName("rating")
     private Rating mRating;
 
@@ -46,7 +47,7 @@ public class LibraryEntry implements Parcelable {
 
 
     public boolean areNotesPresent() {
-        return mNotesPresent;
+        return mNotesPresent && !TextUtils.isEmpty(mNotes);
     }
 
     public AbsAnime getAnime() {
@@ -66,6 +67,7 @@ public class LibraryEntry implements Parcelable {
         return mNotes;
     }
 
+    @Nullable
     public Rating getRating() {
         return mRating;
     }
@@ -83,7 +85,7 @@ public class LibraryEntry implements Parcelable {
     }
 
     public boolean hasRating() {
-        return !TextUtils.isEmpty(mRating.getValue());
+        return mRating != null && mRating.hasValue();
     }
 
     public boolean isPrivate() {
@@ -146,27 +148,25 @@ public class LibraryEntry implements Parcelable {
 
 
     public static class Rating implements Parcelable {
+        @SerializedName("type")
+        private RatingType mType;
+
+        @Nullable
         @SerializedName("value")
         private String mValue;
 
-        @SerializedName("type")
-        private Type mType;
 
-
-        public Type getType() {
+        public RatingType getType() {
             return mType;
         }
 
+        @Nullable
         public String getValue() {
             return mValue;
         }
 
-        public boolean isRatingTypeAdvanced() {
-            return mType == Type.ADVANCED;
-        }
-
-        public boolean isRatingTypeSimple() {
-            return mType == Type.SIMPLE;
+        public boolean hasValue() {
+            return !TextUtils.isEmpty(mValue);
         }
 
         @Override
@@ -185,7 +185,7 @@ public class LibraryEntry implements Parcelable {
             public Rating createFromParcel(final Parcel source) {
                 final Rating r = new Rating();
                 r.mValue = source.readString();
-                r.mType = source.readParcelable(Type.class.getClassLoader());
+                r.mType = source.readParcelable(RatingType.class.getClassLoader());
                 return r;
             }
 
@@ -194,37 +194,6 @@ public class LibraryEntry implements Parcelable {
                 return new Rating[size];
             }
         };
-
-        public enum Type implements Parcelable {
-            @SerializedName("advanced")
-            ADVANCED,
-
-            @SerializedName("simple")
-            SIMPLE;
-
-            @Override
-            public int describeContents() {
-                return 0;
-            }
-
-            @Override
-            public void writeToParcel(final Parcel dest, final int flags) {
-                dest.writeInt(ordinal());
-            }
-
-            public static final Creator<Type> CREATOR = new Creator<Type>() {
-                @Override
-                public Type createFromParcel(final Parcel source) {
-                    final int ordinal = source.readInt();
-                    return values()[ordinal];
-                }
-
-                @Override
-                public Type[] newArray(final int size) {
-                    return new Type[size];
-                }
-            };
-        }
     }
 
 }

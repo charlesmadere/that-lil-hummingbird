@@ -11,6 +11,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeFragmentAdapter;
@@ -121,6 +123,24 @@ public class AnimeActivity extends BaseDrawerActivity implements
         } else {
             showAnimeDigest(mAnimeDigest);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_anime, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.miAddToLibrary:
+                // TODO
+                return true;
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -37,8 +37,8 @@ public interface HummingbirdApi {
      */
 
     @POST("api/v1/libaries/{id}")
-    Call<LibraryEntry> addOrUpdateLibraryEntry(@Path("id") String id,
-            @Body LibraryUpdate libraryUpdate);
+    Call<LibraryEntry> addOrUpdateLibraryEntry(@Header("auth_token") String authToken,
+            @Path("id") String id, @Body LibraryUpdate libraryUpdate);
 
     @POST("api/v1/users/authenticate")
     Call<String> authenticate(@Body AuthInfo authInfo);

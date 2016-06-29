@@ -46,29 +46,23 @@ public final class Api {
     private static final String TAG = "Api";
 
 
-    public static void addOrUpdateLibraryEntry(final String id, final LibraryUpdate libraryUpdate,
+    public static void addOrUpdateLibraryEntry(final LibraryUpdate libraryUpdate,
             final ApiResponse<LibraryEntry> listener) {
-        hummingbird().addOrUpdateLibraryEntry(id, libraryUpdate).enqueue(
-                new Callback<LibraryEntry>() {
+        hummingbird().addOrUpdateLibraryEntry(getAuthTokenCookieString(),
+                libraryUpdate.getAnimeId(), libraryUpdate).enqueue(new Callback<LibraryEntry>() {
             @Override
             public void onResponse(final Call<LibraryEntry> call,
                     final Response<LibraryEntry> response) {
-                LibraryEntry body = null;
-
                 if (response.isSuccessful()) {
-                    body = response.body();
-                }
-
-                if (body == null) {
-                    listener.failure(retrieveErrorInfo(response));
+                    listener.success(response.body());
                 } else {
-                    listener.success(body);
+                    listener.failure(retrieveErrorInfo(response));
                 }
             }
 
             @Override
             public void onFailure(final Call<LibraryEntry> call, final Throwable t) {
-                Timber.e(TAG, "add or update library entry (" + id + ") failed", t);
+                Timber.e(TAG, "add or update library entry (" + libraryUpdate.getAnimeId() + ") failed", t);
                 listener.failure(null);
             }
         });
@@ -240,6 +234,11 @@ public final class Api {
 
     private static String getAuthTokenCookieString() {
         final String authToken = Preferences.Account.AuthToken.get();
+
+        if (TextUtils.isEmpty(authToken)) {
+            throw new IllegalStateException("authToken can't be null / empty");
+        }
+
         return "token=" + authToken + ';';
     }
 
@@ -871,6 +870,31 @@ public final class Api {
             @Override
             public void onFailure(final Call<Void> call, final Throwable t) {
                 Timber.e(TAG, "post to feed (" + feedPost.getUserId() + ") failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
+    public static void removeLibraryEntry(final LibraryUpdate libraryUpdate,
+            final ApiResponse<Boolean> listener) {
+        removeLibraryEntry(libraryUpdate.getAnimeId(), listener);
+    }
+
+    public static void removeLibraryEntry(final String id, final ApiResponse<Boolean> listener) {
+        hummingbird().removeLibraryEntry(getAuthTokenCookieString(), id).enqueue(
+                new Callback<Boolean>() {
+            @Override
+            public void onResponse(final Call<Boolean> call, final Response<Boolean> response) {
+                if (response.isSuccessful()) {
+                    listener.success(response.body());
+                } else {
+                    listener.failure(retrieveErrorInfo(response));
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Boolean> call, final Throwable t) {
+                Timber.e(TAG, "remove library entry (" + id + ") failed", t);
                 listener.failure(null);
             }
         });

@@ -18,6 +18,7 @@
 
 
 -keepclassmembers enum com.charlesmadere.hummingbird.** { *; }
+-keep class com.charlesmadere.hummingbird.models.** { *; }
 
 
 #################

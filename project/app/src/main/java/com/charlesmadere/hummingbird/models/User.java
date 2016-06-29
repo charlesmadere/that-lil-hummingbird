@@ -346,36 +346,4 @@ public class User implements Parcelable {
         };
     }
 
-
-    public enum RatingType implements Parcelable {
-        @SerializedName("advanced")
-        ADVANCED,
-
-        @SerializedName("simple")
-        SIMPLE;
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(final Parcel dest, final int flags) {
-            dest.writeInt(ordinal());
-        }
-
-        public static final Creator<RatingType> CREATOR = new Creator<RatingType>() {
-            @Override
-            public RatingType createFromParcel(final Parcel source) {
-                final int ordinal = source.readInt();
-                return values()[ordinal];
-            }
-
-            @Override
-            public RatingType[] newArray(final int size) {
-                return new RatingType[size];
-            }
-        };
-    }
-
 }

@@ -3,6 +3,7 @@
 
     <string name="about_x">About %1$s</string>
     <string name="account">Account</string>
+    <string name="add_to_library">Add to Library</string>
     <string name="admin">Admin</string>
     <string name="age_rating">Age Rating</string>
     <string name="age_rating_g">G</string>

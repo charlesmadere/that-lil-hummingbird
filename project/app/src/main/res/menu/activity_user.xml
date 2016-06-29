@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:compat="http://schemas.android.com/apk/res-auto">
+    xmlns:compat="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <item
         android:id="@+id/miFollow"
         android:title="@string/follow"
         android:visible="false"
-        compat:showAsAction="never" />
+        compat:showAsAction="never"
+        tools:visible="true" />
     <item
         android:id="@+id/miUnfollow"
         android:title="@string/unfollow"

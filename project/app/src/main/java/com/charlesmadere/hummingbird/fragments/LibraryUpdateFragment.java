@@ -84,7 +84,11 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
     @Nullable
     public LibraryUpdate getLibraryUpdate() {
-        return mLibraryUpdate;
+        if (mLibraryUpdate.containsModifications()) {
+            return mLibraryUpdate;
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -124,7 +128,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
         }
 
         if (mLibraryUpdate == null) {
-            mLibraryUpdate = new LibraryUpdate();
+            mLibraryUpdate = new LibraryUpdate(mLibraryEntry);
         }
     }
 
@@ -137,26 +141,32 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
     @Override
     public void onItemSelected(final ModifyRatingSpinner v) {
-        mLibraryUpdate.setRating(v.getSelectedItem());
+        mLibraryUpdate.setRating(v.getSelectedItem(), mLibraryEntry);
         update();
     }
 
     @Override
     public void onItemSelected(final ModifyWatchingStatusSpinner v) {
-        mLibraryUpdate.setWatchingStatus(v.getSelectedItem());
+        mLibraryUpdate.setWatchingStatus(v.getSelectedItem(), mLibraryEntry);
         update();
     }
 
     @OnTextChanged(R.id.etPersonalNotes)
     void onPersonalNotesTextChanged() {
-        final CharSequence text = mPersonalNotes.getText();
+        final CharSequence charSequence = mPersonalNotes.getText();
+        String string = null;
 
-        if (TextUtils.isEmpty(text) || TextUtils.getTrimmedLength(text) == 0) {
-            mLibraryUpdate.setNotes(null);
-        } else {
-            mLibraryUpdate.setNotes(text.toString().trim());
+        if (!TextUtils.isEmpty(charSequence)) {
+            string = charSequence.toString().trim();
         }
 
+        mLibraryUpdate.setNotes(string, mLibraryEntry);
+        update();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         update();
     }
 
@@ -169,6 +179,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     @OnClick(R.id.ibSave)
     void onSaveClick() {
         mListener.onLibraryUpdateSave();
+        dismiss();
     }
 
     @Override
@@ -183,7 +194,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     @Override
     public void onSelectionChanged(final ModifyPublicPrivateView v) {
         mLibraryUpdate.setPrivacy(v.isPrivateChecked() ? LibraryUpdate.Privacy.PRIVATE :
-                LibraryUpdate.Privacy.PUBLIC);
+                LibraryUpdate.Privacy.PUBLIC, mLibraryEntry);
         update();
     }
 
@@ -211,14 +222,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     @Override
     public void onWatchCountChanged(final ModifyWatchCountView v) {
         final int count = v.getCount();
-
-        if (mLibraryEntry.getEpisodesWatched() == count) {
-            mLibraryUpdate.setEpisodesWatched(null);
-        } else {
-            mLibraryUpdate.setEpisodesWatched(count);
-        }
-
-        mLibraryUpdate.setEpisodesWatched(count);
+        mLibraryUpdate.setEpisodesWatched(count, mLibraryEntry);
 
         if (mLibraryEntry.getAnime().hasEpisodeCount()) {
             if (mLibraryEntry.getAnime().getEpisodeCount() == count) {
@@ -232,7 +236,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     }
 
     private void update() {
-        mSave.setEnabled(mLibraryUpdate.containsModifications(mLibraryEntry));
+        mSave.setEnabled(mLibraryUpdate.containsModifications());
     }
 
 

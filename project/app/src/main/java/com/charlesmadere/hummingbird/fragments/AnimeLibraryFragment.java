@@ -14,6 +14,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.LibraryEntriesAdapter;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
+import com.charlesmadere.hummingbird.models.LibraryUpdate;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
@@ -108,7 +109,21 @@ public class AnimeLibraryFragment extends BaseFragment implements LibraryUpdateF
 
     @Override
     public void onLibraryUpdateSave() {
-        // TODO
+        final LibraryUpdateFragment libraryUpdateFragment = (LibraryUpdateFragment)
+                getChildFragmentManager().findFragmentByTag(LibraryUpdateFragment.TAG);
+        final LibraryUpdate libraryUpdate = libraryUpdateFragment.getLibraryUpdate();
+
+        if (libraryUpdate == null) {
+            return;
+        }
+
+        mRefreshLayout.setRefreshing(true);
+
+        if (WatchingStatus.REMOVE_FROM_LIBRARY.equals(libraryUpdate.getWatchingStatus())) {
+            Api.removeLibraryEntry(libraryUpdate, new RemoveLibraryEntryListener(this));
+        } else {
+            Api.addOrUpdateLibraryEntry(libraryUpdate, new AddOrUpdateLibraryEntryListener(this));
+        }
     }
 
     @Override
@@ -168,6 +183,24 @@ public class AnimeLibraryFragment extends BaseFragment implements LibraryUpdateF
     }
 
 
+    private static class AddOrUpdateLibraryEntryListener implements ApiResponse<LibraryEntry> {
+        private final WeakReference<AnimeLibraryFragment> mFragmentReference;
+
+        private AddOrUpdateLibraryEntryListener(final AnimeLibraryFragment fragment) {
+            mFragmentReference = new WeakReference<>(fragment);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            // TODO
+        }
+
+        @Override
+        public void success(@Nullable final LibraryEntry object) {
+            // TODO
+        }
+    }
+
     private static class GetLibraryEntriesListener implements ApiResponse<ArrayList<LibraryEntry>> {
         private final WeakReference<AnimeLibraryFragment> mFragmentReference;
 
@@ -195,6 +228,24 @@ public class AnimeLibraryFragment extends BaseFragment implements LibraryUpdateF
                     fragment.showList(stories);
                 }
             }
+        }
+    }
+
+    private static class RemoveLibraryEntryListener implements ApiResponse<Boolean> {
+        private final WeakReference<AnimeLibraryFragment> mFragmentReference;
+
+        private RemoveLibraryEntryListener(final AnimeLibraryFragment fragment) {
+            mFragmentReference = new WeakReference<>(fragment);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            // TODO
+        }
+
+        @Override
+        public void success(@Nullable final Boolean object) {
+            // TODO
         }
     }
 

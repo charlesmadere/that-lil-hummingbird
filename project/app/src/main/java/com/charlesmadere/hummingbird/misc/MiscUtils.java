@@ -38,6 +38,10 @@ public final class MiscUtils {
     private static final long YEAR_IN_SECONDS = TimeUnit.DAYS.toSeconds(365L);
 
 
+    public static boolean booleanEquals(@Nullable final Boolean lhs, @Nullable final Boolean rhs) {
+        return lhs == null && rhs == null || lhs != null && rhs != null && lhs.equals(rhs);
+    }
+
     public static void closeKeyboard(final Activity activity) {
         View view = activity.getCurrentFocus();
 
@@ -216,6 +220,10 @@ public final class MiscUtils {
 
     public static int integerCompare(final int lhs, final int rhs) {
         return lhs < rhs ? -1 : (lhs == rhs ? 0 : 1);
+    }
+
+    public static boolean integerEquals(@Nullable final Integer lhs, @Nullable final Integer rhs) {
+        return lhs == null && rhs == null || lhs != null && rhs != null && lhs.equals(rhs);
     }
 
     public static boolean isLowRamDevice() {

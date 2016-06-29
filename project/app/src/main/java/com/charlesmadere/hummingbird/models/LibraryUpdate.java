@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.google.gson.annotations.SerializedName;
@@ -32,8 +33,11 @@ public class LibraryUpdate implements Parcelable {
     private Rating mRating;
 
     @Nullable
-    @SerializedName("same_rating_update")
-    private Rating mSameRatingUpdate;
+    @SerializedName("sane_rating_update")
+    private Rating mSaneRatingUpdate;
+
+    @SerializedName("id")
+    private final String mAnimeId;
 
     @SerializedName("auth_token")
     private final String mAuthToken;
@@ -47,71 +51,32 @@ public class LibraryUpdate implements Parcelable {
     private WatchingStatus mWatchingStatus;
 
 
-    public LibraryUpdate() {
-        this(Preferences.Account.AuthToken.get());
+    public LibraryUpdate(final LibraryEntry libraryEntry) {
+        this(libraryEntry.getAnime().getId(), Preferences.Account.AuthToken.get());
+
+        if (libraryEntry.hasRating()) {
+            mSaneRatingUpdate = Rating.from(libraryEntry);
+        }
     }
 
-    private LibraryUpdate(final String authToken) {
-        if (TextUtils.isEmpty(authToken)) {
+    private LibraryUpdate(final String animeId, final String authToken) {
+        if (TextUtils.isEmpty(animeId)) {
+            throw new IllegalArgumentException("animeId can't be null / empty");
+        } else if (TextUtils.isEmpty(authToken)) {
             throw new IllegalArgumentException("authToken can't be null / empty");
         }
 
+        mAnimeId = animeId;
         mAuthToken = authToken;
     }
 
-    public boolean containsModifications(final LibraryEntry libraryEntry) {
-        // TODO
-        return false;
+    public boolean containsModifications() {
+        return mRewatching != null || mEpisodesWatched != null || mRewatchedTimes != null ||
+                mPrivacy != null || mRating != null || mNotes != null || mWatchingStatus != null;
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        final LibraryUpdate that = (LibraryUpdate) o;
-
-        if (mRewatching != null ? !mRewatching.equals(that.mRewatching) :
-                that.mRewatching != null) {
-            return false;
-        }
-
-        if (mEpisodesWatched != null ? !mEpisodesWatched.equals(that.mEpisodesWatched) :
-                that.mEpisodesWatched != null) {
-            return false;
-        }
-
-        if (mRewatchedTimes != null ? !mRewatchedTimes.equals(that.mRewatchedTimes) :
-                that.mRewatchedTimes != null) {
-            return false;
-        }
-
-        if (mPrivacy != that.mPrivacy) {
-            return false;
-        }
-
-        if (mRating != that.mRating) {
-            return false;
-        }
-
-        if (mSameRatingUpdate != that.mSameRatingUpdate) {
-            return false;
-        }
-
-        if (mAuthToken != null ? !mAuthToken.equals(that.mAuthToken) : that.mAuthToken != null) {
-            return false;
-        }
-
-        if (mNotes != null ? !mNotes.equals(that.mNotes) : that.mNotes != null) {
-            return false;
-        }
-
-        return mWatchingStatus == that.mWatchingStatus;
+    public String getAnimeId() {
+        return mAnimeId;
     }
 
     public String getAuthToken() {
@@ -144,55 +109,8 @@ public class LibraryUpdate implements Parcelable {
     }
 
     @Nullable
-    public Boolean getRewatchingStatus() {
-        return mRewatching;
-    }
-
-    @Nullable
-    public Rating getSameRatingUpdate() {
-        return mSameRatingUpdate;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = mRewatching != null ? mRewatching.hashCode() : 0;
-        result = 31 * result + (mEpisodesWatched != null ? mEpisodesWatched.hashCode() : 0);
-        result = 31 * result + (mRewatchedTimes != null ? mRewatchedTimes.hashCode() : 0);
-        result = 31 * result + (mPrivacy != null ? mPrivacy.hashCode() : 0);
-        result = 31 * result + (mRating != null ? mRating.hashCode() : 0);
-        result = 31 * result + (mSameRatingUpdate != null ? mSameRatingUpdate.hashCode() : 0);
-        result = 31 * result + (mAuthToken != null ? mAuthToken.hashCode() : 0);
-        result = 31 * result + (mNotes != null ? mNotes.hashCode() : 0);
-        result = 31 * result + (mWatchingStatus != null ? mWatchingStatus.hashCode() : 0);
-        return result;
-    }
-
-    public void setEpisodesWatched(@Nullable final Integer episodesWatched) {
-        mEpisodesWatched = episodesWatched;
-    }
-
-    public void setNotes(@Nullable final String notes) {
-        mNotes = notes;
-    }
-
-    public void setPrivacy(@Nullable final Privacy privacy) {
-        mPrivacy = privacy;
-    }
-
-    public void setRating(@Nullable final Rating rating) {
-        mRating = rating;
-    }
-
-    public void setRewatchedTimes(@Nullable final Integer rewatchedTimes) {
-        mRewatchedTimes = rewatchedTimes;
-    }
-
-    public void setRewatchingStatus(@Nullable final Boolean rewatching) {
-        mRewatching = rewatching;
-    }
-
-    public void setSameRatingUpdate(@Nullable final Rating sameRatingUpdate) {
-        mSameRatingUpdate = sameRatingUpdate;
+    public Rating getSaneRatingUpdate() {
+        return mSaneRatingUpdate;
     }
 
     @Nullable
@@ -200,8 +118,97 @@ public class LibraryUpdate implements Parcelable {
         return mWatchingStatus;
     }
 
-    public void setWatchingStatus(@Nullable final WatchingStatus watchingStatus) {
-        mWatchingStatus = watchingStatus;
+    @Nullable
+    public Boolean isRewatching() {
+        return mRewatching;
+    }
+
+    public void setEpisodesWatched(@Nullable final Integer episodesWatched,
+            final LibraryEntry libraryEntry) {
+        if (MiscUtils.integerEquals(episodesWatched, libraryEntry.getEpisodesWatched())) {
+            mEpisodesWatched = null;
+        } else {
+            mEpisodesWatched = episodesWatched;
+        }
+    }
+
+    public void setNotes(@Nullable final String notes, final LibraryEntry libraryEntry) {
+        if (TextUtils.equals(notes, libraryEntry.getNotes())) {
+            mNotes = null;
+        } else {
+            mNotes = notes;
+
+            if (!TextUtils.isEmpty(mNotes)) {
+                mNotes = mNotes.trim();
+            }
+        }
+    }
+
+    public void setPrivacy(@Nullable final Privacy privacy, final LibraryEntry libraryEntry) {
+        if (privacy == null || privacy.equals(Privacy.PRIVATE) && libraryEntry.isPrivate()
+                || privacy.equals(Privacy.PUBLIC) && !libraryEntry.isPrivate()) {
+            mPrivacy = null;
+        } else {
+            mPrivacy = privacy;
+        }
+    }
+
+    public void setRating(@Nullable final Rating rating, final LibraryEntry libraryEntry) {
+        if (rating == null) {
+            mRating = null;
+
+            if (libraryEntry.hasRating()) {
+                mSaneRatingUpdate = Rating.from(libraryEntry);
+            } else {
+                mSaneRatingUpdate = null;
+            }
+        } else {
+            if (libraryEntry.hasRating()) {
+                final Rating libraryEntryRating = Rating.from(libraryEntry);
+
+                if (rating.equals(libraryEntryRating)) {
+                    mRating = null;
+                    mSaneRatingUpdate = libraryEntryRating;
+                } else {
+                    mRating = rating;
+                    mSaneRatingUpdate = null;
+                }
+            } else {
+                mRating = rating;
+                mSaneRatingUpdate = null;
+            }
+        }
+    }
+
+    public void setRewatchedTimes(@Nullable final Integer rewatchedTimes,
+            final LibraryEntry libraryEntry) {
+        if (MiscUtils.integerEquals(rewatchedTimes, libraryEntry.getRewatchedTimes())) {
+            mRewatchedTimes = null;
+        } else {
+            mRewatchedTimes = rewatchedTimes;
+        }
+    }
+
+    public void setRewatching(@Nullable final Boolean rewatching, final LibraryEntry libraryEntry) {
+        if (MiscUtils.booleanEquals(rewatching, libraryEntry.isRewatching())) {
+            mRewatching = null;
+        } else {
+            mRewatching = rewatching;
+        }
+    }
+
+    public void setWatchingStatus(@Nullable final WatchingStatus watchingStatus,
+            final LibraryEntry libraryEntry) {
+        if (WatchingStatus.equals(watchingStatus, libraryEntry.getStatus())) {
+            mWatchingStatus = null;
+        } else {
+            mWatchingStatus = watchingStatus;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return getAnimeId();
     }
 
     @Override
@@ -212,6 +219,7 @@ public class LibraryUpdate implements Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         // intentionally at the top
+        dest.writeString(mAnimeId);
         dest.writeString(mAuthToken);
 
         ParcelableUtils.writeBoolean(mRewatching, dest);
@@ -219,7 +227,7 @@ public class LibraryUpdate implements Parcelable {
         ParcelableUtils.writeInteger(mRewatchedTimes, dest);
         dest.writeParcelable(mPrivacy, flags);
         dest.writeParcelable(mRating, flags);
-        dest.writeParcelable(mSameRatingUpdate, flags);
+        dest.writeParcelable(mSaneRatingUpdate, flags);
         dest.writeString(mNotes);
         dest.writeParcelable(mWatchingStatus, flags);
     }
@@ -227,13 +235,13 @@ public class LibraryUpdate implements Parcelable {
     public static final Creator<LibraryUpdate> CREATOR = new Creator<LibraryUpdate>() {
         @Override
         public LibraryUpdate createFromParcel(final Parcel source) {
-            final LibraryUpdate lu = new LibraryUpdate(source.readString());
+            final LibraryUpdate lu = new LibraryUpdate(source.readString(), source.readString());
             lu.mRewatching = ParcelableUtils.readBoolean(source);
             lu.mEpisodesWatched = ParcelableUtils.readInteger(source);
             lu.mRewatchedTimes = ParcelableUtils.readInteger(source);
             lu.mPrivacy = source.readParcelable(Privacy.class.getClassLoader());
             lu.mRating = source.readParcelable(Rating.class.getClassLoader());
-            lu.mSameRatingUpdate = source.readParcelable(Rating.class.getClassLoader());
+            lu.mSaneRatingUpdate = source.readParcelable(Rating.class.getClassLoader());
             lu.mNotes = source.readString();
             lu.mWatchingStatus = source.readParcelable(WatchingStatus.class.getClassLoader());
             return lu;
@@ -315,6 +323,40 @@ public class LibraryUpdate implements Parcelable {
         private final float mValue;
         private final String mText;
 
+
+        private static Rating from(final LibraryEntry libraryEntry) {
+            final LibraryEntry.Rating rating = libraryEntry.getRating();
+
+            if (rating == null || !rating.hasValue()) {
+                throw new IllegalArgumentException("rating is null or has no value");
+            }
+
+            final float value = Float.parseFloat(rating.getValue());
+
+            if (value >= FIVE.mValue) {
+                return FIVE;
+            } else if (value >= FOUR_POINT_FIVE.mValue) {
+                return FOUR_POINT_FIVE;
+            } else if (value >= FOUR.mValue) {
+                return FOUR;
+            } else if (value >= THREE_POINT_FIVE.mValue) {
+                return THREE_POINT_FIVE;
+            } else if (value >= THREE.mValue) {
+                return THREE;
+            } else if (value >= TWO_POINT_FIVE.mValue) {
+                return TWO_POINT_FIVE;
+            } else if (value >= TWO.mValue) {
+                return TWO;
+            } else if (value >= ONE_POINT_FIVE.mValue) {
+                return ONE_POINT_FIVE;
+            } else if (value >= ONE.mValue) {
+                return ONE;
+            } else if (value >= ZERO_POINT_FIVE.mValue) {
+                return ZERO_POINT_FIVE;
+            } else {
+                return ZERO;
+            }
+        }
 
         Rating(final String text, final float value) {
             mText = text;

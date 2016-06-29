@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 
 import com.charlesmadere.hummingbird.R;
@@ -41,6 +42,11 @@ public enum WatchingStatus implements Parcelable {
     @StringRes
     private final int mTextResId;
 
+
+    public static boolean equals(@Nullable final WatchingStatus lhs,
+            @Nullable final WatchingStatus rhs) {
+        return lhs == null && rhs == null || lhs != null && rhs != null && lhs.equals(rhs);
+    }
 
     WatchingStatus(@StringRes final int emptyTextResId, @StringRes final int errorTextResId,
             @StringRes final int textResId) {

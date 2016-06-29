@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <ImageView
         android:adjustViewBounds="true"
@@ -12,20 +11,15 @@
     <ScrollView
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/root_padding_quadruple"
         android:layout_width="@dimen/central_content_width">
         <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:orientation="vertical">
             <com.charlesmadere.hummingbird.views.TypefaceTextView
-                android:gravity="center"
-                android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/root_padding_double"
-                android:layout_width="match_parent"
-                android:text="@string/that_lil_hummingbird"
-                android:textSize="32sp"
-                app:typeface="open_sans_bold" />
+                android:layout_marginTop="@dimen/root_padding_quadruple"
+                style="@style/LoginTitle" />
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/tilUsername"
                 android:layout_height="wrap_content"
