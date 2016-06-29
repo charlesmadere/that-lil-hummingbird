@@ -1,5 +1,6 @@
 package com.charlesmadere.hummingbird.misc;
 
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -44,7 +45,7 @@ public final class Timber {
         getLogger().d(tag, msg);
     }
 
-    public static void d(final String tag, final String msg, final Throwable tr) {
+    public static void d(final String tag, final String msg, @Nullable final Throwable tr) {
         addEntry(new DebugEntry(tag, msg, tr));
         getLogger().d(tag, msg, tr);
     }
@@ -54,7 +55,7 @@ public final class Timber {
         getLogger().e(tag, msg);
     }
 
-    public static void e(final String tag, final String msg, final Throwable tr) {
+    public static void e(final String tag, final String msg, @Nullable final Throwable tr) {
         addEntry(new ErrorEntry(tag, msg, tr));
         getLogger().e(tag, msg, tr);
     }
@@ -74,7 +75,7 @@ public final class Timber {
         getLogger().v(tag, msg);
     }
 
-    public static void v(final String tag, final String msg, final Throwable tr) {
+    public static void v(final String tag, final String msg, @Nullable final Throwable tr) {
         addEntry(new VerboseEntry(tag, msg, tr));
         getLogger().v(tag, msg, tr);
     }
@@ -84,7 +85,7 @@ public final class Timber {
         getLogger().w(tag, msg);
     }
 
-    public static void w(final String tag, final String msg, final Throwable tr) {
+    public static void w(final String tag, final String msg, @Nullable final Throwable tr) {
         addEntry(new WarnEntry(tag, msg, tr));
         getLogger().w(tag, msg, tr);
     }
@@ -99,7 +100,7 @@ public final class Timber {
             this(tag, message, null);
         }
 
-        private BaseEntry(final String tag, final String message, final Throwable tr) {
+        private BaseEntry(final String tag, final String message, @Nullable final Throwable tr) {
             mTag = tag;
             mMessage = message;
 
@@ -137,7 +138,7 @@ public final class Timber {
             super(tag, message);
         }
 
-        private DebugEntry(final String tag, final String message, final Throwable tr) {
+        private DebugEntry(final String tag, final String message, @Nullable final Throwable tr) {
             super(tag, message, tr);
         }
 
@@ -158,7 +159,7 @@ public final class Timber {
             super(tag, message);
         }
 
-        private ErrorEntry(final String tag, final String message, final Throwable tr) {
+        private ErrorEntry(final String tag, final String message, @Nullable final Throwable tr) {
             super(tag, message, tr);
         }
 
@@ -179,7 +180,7 @@ public final class Timber {
             super(tag, message);
         }
 
-        private VerboseEntry(final String tag, final String message, final Throwable tr) {
+        private VerboseEntry(final String tag, final String message, @Nullable final Throwable tr) {
             super(tag, message, tr);
         }
 
@@ -200,7 +201,7 @@ public final class Timber {
             super(tag, message);
         }
 
-        private WarnEntry(final String tag, final String message, final Throwable tr) {
+        private WarnEntry(final String tag, final String message, @Nullable final Throwable tr) {
             super(tag, message, tr);
         }
 
