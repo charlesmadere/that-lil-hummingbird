@@ -89,7 +89,7 @@ public final class Api {
 
             @Override
             public void onFailure(final Call<String> call, final Throwable t) {
-                Timber.e(TAG, "authenticate failed", t);
+                Timber.e(TAG, "authentication failed", t);
                 listener.failure(null);
             }
         });
