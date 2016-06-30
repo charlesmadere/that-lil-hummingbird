@@ -4,23 +4,29 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
-import com.charlesmadere.hummingbird.models.LibraryUpdate;
+import com.charlesmadere.hummingbird.models.Rating;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RatingView extends LinearLayout implements AdapterView<LibraryUpdate.Rating> {
+public class RatingView extends LinearLayout implements AdapterView<Rating> {
 
     private static final int STAR_SIZE_SMALL = 0;
     private static final int STAR_SIZE_LARGE = 1;
 
     private int mStarSize;
+    private ViewHolder mViewHolder;
 
     @BindView(R.id.ivStarZero)
     ImageView mStarZero;
@@ -37,6 +43,15 @@ public class RatingView extends LinearLayout implements AdapterView<LibraryUpdat
     @BindView(R.id.ivStarFour)
     ImageView mStarFour;
 
+    @Nullable
+    @BindView(R.id.tvNoRating)
+    TextView mNoRating;
+
+
+    public static RatingView inflate(final ViewGroup parent) {
+        final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        return (RatingView) inflater.inflate(R.layout.item_rating_view, parent, false);
+    }
 
     public RatingView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
@@ -53,6 +68,14 @@ public class RatingView extends LinearLayout implements AdapterView<LibraryUpdat
             final int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         parseAttributes(attrs);
+    }
+
+    public ViewHolder getViewHolder() {
+        if (mViewHolder == null) {
+            mViewHolder = new ViewHolder();
+        }
+
+        return mViewHolder;
     }
 
     @Override
@@ -86,8 +109,25 @@ public class RatingView extends LinearLayout implements AdapterView<LibraryUpdat
     }
 
     @Override
-    public void setContent(final LibraryUpdate.Rating content) {
-        setContent(content.getValue());
+    public void setContent(@Nullable final Rating content) {
+        if (content == null) {
+            if (mNoRating == null) {
+                setContent(Rating.ZERO);
+            } else {
+                mStarZero.setVisibility(GONE);
+                mStarOne.setVisibility(GONE);
+                mStarTwo.setVisibility(GONE);
+                mStarThree.setVisibility(GONE);
+                mStarFour.setVisibility(GONE);
+                mNoRating.setVisibility(VISIBLE);
+            }
+        } else {
+            if (mNoRating != null) {
+                mNoRating.setVisibility(GONE);
+            }
+
+            setContent(content.getValue());
+        }
     }
 
     private void setStar(final float rating, final ImageView view, final float full,
@@ -110,6 +150,19 @@ public class RatingView extends LinearLayout implements AdapterView<LibraryUpdat
             } else {
                 view.setImageResource(R.drawable.ic_star_border_24dp);
             }
+        }
+
+        view.setVisibility(VISIBLE);
+    }
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private ViewHolder() {
+            super(RatingView.this);
+        }
+
+        public RatingView getView() {
+            return RatingView.this;
         }
     }
 

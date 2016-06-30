@@ -42,6 +42,7 @@ public class AvatarView extends SimpleDraweeView {
             return;
         } else if (index >= avatars.length) {
             setImageURI((String) null);
+            return;
         }
 
         final DraweeController controller = Fresco.newDraweeControllerBuilder()
@@ -52,6 +53,7 @@ public class AvatarView extends SimpleDraweeView {
                         fetchAvatars(user, avatars, index + 1);
                     }
                 })
+                .setOldController(getController())
                 .setUri(avatars[index])
                 .build();
 

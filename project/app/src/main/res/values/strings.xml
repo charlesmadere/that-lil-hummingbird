@@ -189,6 +189,7 @@
     <string name="no_notifications">No notifications</string>
     <string name="no_one_is_following">No one is following</string>
     <string name="no_quotes">No quotes</string>
+    <string name="no_rating">No rating</string>
     <string name="no_results_for_x">No results for %1$s</string>
     <string name="no_reviews">No reviews</string>
     <string name="no_search_results">No search results</string>
@@ -290,6 +291,7 @@
     <string name="tv">TV</string>
     <string name="type">Type</string>
     <string name="unfollow">Unfollow</string>
+    <string name="unrated">Unrated</string>
     <string name="upcoming">Upcoming</string>
     <string name="updated_at_x">Updated at %1$s</string>
     <string name="use_notification_polling">Use notification polling</string>

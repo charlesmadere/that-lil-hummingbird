@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.views;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatSpinner;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -112,18 +113,20 @@ public class ModifyWatchingStatusSpinner extends AppCompatSpinner implements
             }
 
             final ViewHolder viewHolder = (ViewHolder) convertView.getTag();
-            viewHolder.mTextView.setText(getItem(position).getTextResId());
+            viewHolder.getView().setText(getItem(position).getTextResId());
 
             return convertView;
         }
     }
 
 
-    private static class ViewHolder {
-        private final TextView mTextView;
+    private static class ViewHolder extends RecyclerView.ViewHolder {
+        private ViewHolder(final View itemView) {
+            super(itemView);
+        }
 
-        private ViewHolder(final View view) {
-            mTextView = (TextView) view;
+        private TextView getView() {
+            return (TextView) itemView;
         }
     }
 

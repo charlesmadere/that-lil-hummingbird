@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
+import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.LibraryUpdate;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
@@ -147,7 +148,21 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
     @Override
     public void onItemSelected(final ModifyWatchingStatusSpinner v) {
-        mLibraryUpdate.setWatchingStatus(v.getSelectedItem(), mLibraryEntry);
+        final WatchingStatus watchingStatus = v.getSelectedItem();
+        mLibraryUpdate.setWatchingStatus(watchingStatus, mLibraryEntry);
+
+        if (WatchingStatus.COMPLETED.equals(watchingStatus)) {
+            final AbsAnime anime = mLibraryEntry.getAnime();
+
+            if (anime.hasEpisodeCount()) {
+                mModifyWatchCountView.setCountAndMax(anime.getEpisodeCount(),
+                        anime.getEpisodeCount());
+            } else if (mLibraryUpdate.getEpisodesWatched() != null &&
+                    mLibraryUpdate.getEpisodesWatched() == 0) {
+                mModifyWatchCountView.setCountAndMax(1, 1);
+            }
+        }
+
         update();
     }
 
@@ -214,10 +229,10 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
         mRewatching.setChecked(mLibraryEntry.isRewatching());
         mPersonalNotes.setText(mLibraryEntry.getNotes());
 
+        mModifyWatchCountView.setOnWatchCountChangedListener(this);
         mModifyWatchingStatusSpinner.setOnItemSelectedListener(this);
         mModifyPublicPrivateView.setOnSelectionChangedListener(this);
         mModifyRatingSpinner.setOnItemSelectedListener(this);
-        mModifyWatchCountView.setOnWatchCountChangedListener(this);
     }
 
     @Override

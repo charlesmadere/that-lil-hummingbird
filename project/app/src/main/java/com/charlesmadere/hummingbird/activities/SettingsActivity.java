@@ -23,6 +23,7 @@ import com.charlesmadere.hummingbird.models.PollFrequency;
 import com.charlesmadere.hummingbird.models.TitleType;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.CheckablePreferenceView;
+import com.charlesmadere.hummingbird.views.CheckablePreferenceView.OnPreferenceChangeListener;
 import com.charlesmadere.hummingbird.views.HeadBodyItemView;
 import com.charlesmadere.hummingbird.views.KeyValueTextView;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
@@ -34,10 +35,26 @@ import butterknife.OnClick;
 
 import static com.charlesmadere.hummingbird.misc.RequestCodes.GOOGLE_PLAY_SERVICES_RESOLUTION;
 
-public class SettingsActivity extends BaseDrawerActivity implements
-        CheckablePreferenceView.OnPreferenceChangeListener {
+public class SettingsActivity extends BaseDrawerActivity {
 
     private static final String TAG = "SettingsActivity";
+
+    private final OnPreferenceChangeListener mOnShowNsfwPreferenceChangeListener =
+            new OnPreferenceChangeListener() {
+        @Override
+        public void onPreferenceChange(final CheckablePreferenceView v) {
+            refresh();
+        }
+    };
+
+    private final OnPreferenceChangeListener mOnSyncPreferenceChangeListener =
+            new OnPreferenceChangeListener() {
+        @Override
+        public void onPreferenceChange(final CheckablePreferenceView v) {
+            SyncManager.enableOrDisable();
+            refresh();
+        }
+    };
 
     @BindView(R.id.cpvPowerRequired)
     CheckablePreferenceView mPowerRequired;
@@ -219,12 +236,6 @@ public class SettingsActivity extends BaseDrawerActivity implements
                 .show();
     }
 
-    @Override
-    public void onPreferenceChange(final CheckablePreferenceView v) {
-        SyncManager.enableOrDisable();
-        refresh();
-    }
-
     @OnClick(R.id.kvtvPriscilla)
     void onPriscillaClick() {
         MiscUtils.openUrl(this, Constants.PRISCILLA_URL);
@@ -305,13 +316,14 @@ public class SettingsActivity extends BaseDrawerActivity implements
         super.onViewsBound();
 
         mShowNsfwContent.setBooleanPreference(Preferences.General.ShowNsfwContent);
+        mShowNsfwContent.setOnPreferenceChangeListener(mOnShowNsfwPreferenceChangeListener);
 
         mUseNotificationPolling.setBooleanPreference(Preferences.NotificationPolling.IsEnabled);
-        mUseNotificationPolling.setOnPreferenceChangeListener(this);
+        mUseNotificationPolling.setOnPreferenceChangeListener(mOnSyncPreferenceChangeListener);
         mPowerRequired.setBooleanPreference(Preferences.NotificationPolling.IsPowerRequired);
-        mPowerRequired.setOnPreferenceChangeListener(this);
+        mPowerRequired.setOnPreferenceChangeListener(mOnSyncPreferenceChangeListener);
         mWifiRequired.setBooleanPreference(Preferences.NotificationPolling.IsWifiRequired);
-        mWifiRequired.setOnPreferenceChangeListener(this);
+        mWifiRequired.setOnPreferenceChangeListener(mOnSyncPreferenceChangeListener);
 
         mVersion.setText(getString(R.string.version_format, BuildConfig.VERSION_NAME,
                 BuildConfig.VERSION_CODE));

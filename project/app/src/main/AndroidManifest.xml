@@ -8,6 +8,7 @@
     <application
         android:allowBackup="true"
         android:fullBackupContent="true"
+        android:icon="@mipmap/launcher"
         android:label="@string/that_lil_hummingbird"
         android:name=".ThatLilHummingbird"
         android:supportsRtl="true"

@@ -192,12 +192,20 @@ public class AnimeLibraryFragment extends BaseFragment implements LibraryUpdateF
 
         @Override
         public void failure(@Nullable final ErrorInfo error) {
-            // TODO
+            final AnimeLibraryFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                // TODO
+            }
         }
 
         @Override
         public void success(@Nullable final LibraryEntry object) {
-            // TODO
+            final AnimeLibraryFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                // TODO
+            }
         }
     }
 
@@ -240,12 +248,20 @@ public class AnimeLibraryFragment extends BaseFragment implements LibraryUpdateF
 
         @Override
         public void failure(@Nullable final ErrorInfo error) {
-            // TODO
+            final AnimeLibraryFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                // TODO
+            }
         }
 
         @Override
         public void success(@Nullable final Boolean object) {
-            // TODO
+            final AnimeLibraryFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                // TODO
+            }
         }
     }
 

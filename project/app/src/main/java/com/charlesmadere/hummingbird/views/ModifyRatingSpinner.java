@@ -4,15 +4,13 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatSpinner;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 
-import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
-import com.charlesmadere.hummingbird.models.LibraryUpdate;
+import com.charlesmadere.hummingbird.models.Rating;
 
 public class ModifyRatingSpinner extends AppCompatSpinner implements
         AdapterView.OnItemSelectedListener {
@@ -29,9 +27,16 @@ public class ModifyRatingSpinner extends AppCompatSpinner implements
         super(context, attrs, defStyleAttr);
     }
 
+    @Nullable
     @Override
-    public LibraryUpdate.Rating getSelectedItem() {
-        return (LibraryUpdate.Rating) super.getSelectedItem();
+    public Rating getItemAtPosition(final int position) {
+        return (Rating) super.getItemAtPosition(position);
+    }
+
+    @Nullable
+    @Override
+    public Rating getSelectedItem() {
+        return (Rating) super.getSelectedItem();
     }
 
     @Override
@@ -55,7 +60,22 @@ public class ModifyRatingSpinner extends AppCompatSpinner implements
     }
 
     public void setContent(final LibraryEntry libraryEntry) {
-        // TODO
+        if (libraryEntry.hasRating()) {
+            final Rating rating = Rating.from(libraryEntry);
+            int position;
+
+            for (position = 0; position < getCount(); ++position) {
+                final Rating r = getItemAtPosition(position);
+
+                if (rating.equals(r)) {
+                    break;
+                }
+            }
+
+            setSelection(position);
+        } else {
+            setSelection(0);
+        }
     }
 
     public void setOnItemSelectedListener(@Nullable final OnItemSelectedListener listener) {
@@ -71,12 +91,17 @@ public class ModifyRatingSpinner extends AppCompatSpinner implements
     private static class ModifyRatingAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            return LibraryUpdate.Rating.values().length;
+            return Rating.values().length + 1;
         }
 
+        @Nullable
         @Override
-        public LibraryUpdate.Rating getItem(final int position) {
-            return LibraryUpdate.Rating.values()[position];
+        public Rating getItem(final int position) {
+            if (position == 0) {
+                return null;
+            } else {
+                return Rating.values()[position - 1];
+            }
         }
 
         @Override
@@ -87,24 +112,13 @@ public class ModifyRatingSpinner extends AppCompatSpinner implements
         @Override
         public View getView(final int position, View convertView, final ViewGroup parent) {
             if (convertView == null) {
-                final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-                convertView = inflater.inflate(R.layout.item_rating_view, parent, false);
-                convertView.setTag(new ViewHolder(convertView));
+                convertView = RatingView.inflate(parent);
             }
 
-            final ViewHolder viewHolder = (ViewHolder) convertView.getTag();
-            viewHolder.mRatingView.setContent(getItem(position));
+            final RatingView.ViewHolder viewHolder = ((RatingView) convertView).getViewHolder();
+            viewHolder.getView().setContent(getItem(position));
 
             return convertView;
-        }
-    }
-
-
-    private static class ViewHolder {
-        private final RatingView mRatingView;
-
-        private ViewHolder(final View view) {
-            mRatingView = (RatingView) view;
         }
     }
 

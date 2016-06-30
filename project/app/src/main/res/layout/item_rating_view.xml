@@ -42,4 +42,12 @@
         android:layout_width="wrap_content"
         tools:ignore="ContentDescription"
         tools:src="@drawable/ic_star_border_24dp" />
+    <com.charlesmadere.hummingbird.views.TypefaceTextView
+        android:id="@+id/tvNoRating"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/no_rating"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="@dimen/text_large"
+        android:visibility="gone" />
 </com.charlesmadere.hummingbird.views.RatingView>
