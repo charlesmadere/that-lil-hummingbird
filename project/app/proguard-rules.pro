@@ -78,6 +78,12 @@
 ##---------------End: proguard configuration for Gson  ----------
 
 
+###########
+## jsoup ##
+###########
+-keeppackagenames org.jsoup.nodes
+
+
 #######################
 ## Square's Retrofit ##
 #######################
@@ -85,6 +91,10 @@
 -keep class retrofit2.** { *; }
 -keepattributes Signature
 -keepattributes Exceptions
+
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
 
 
 ######################
