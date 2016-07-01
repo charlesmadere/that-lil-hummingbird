@@ -53,19 +53,10 @@ public class LibraryUpdate implements Parcelable {
 
     public LibraryUpdate(final LibraryEntry libraryEntry) {
         this(libraryEntry.getAnime().getId(), Preferences.Account.AuthToken.get());
-
-        if (libraryEntry.hasRating()) {
-            mSaneRating = Rating.from(libraryEntry);
-        }
+        mSaneRating = Rating.from(libraryEntry);
     }
 
     private LibraryUpdate(final String animeId, final String authToken) {
-        if (TextUtils.isEmpty(animeId)) {
-            throw new IllegalArgumentException("animeId can't be null / empty");
-        } else if (TextUtils.isEmpty(authToken)) {
-            throw new IllegalArgumentException("authToken can't be null / empty");
-        }
-
         mAnimeId = animeId;
         mAuthToken = authToken;
     }
@@ -146,41 +137,21 @@ public class LibraryUpdate implements Parcelable {
     }
 
     public void setPrivacy(@Nullable final Privacy privacy, final LibraryEntry libraryEntry) {
-        if (privacy == null || privacy.equals(Privacy.PRIVATE) && libraryEntry.isPrivate()
-                || privacy.equals(Privacy.PUBLIC) && !libraryEntry.isPrivate()) {
+        if (privacy == null || (privacy == Privacy.PRIVATE && libraryEntry.isPrivate())
+                || (privacy == Privacy.PUBLIC && !libraryEntry.isPrivate())) {
             mPrivacy = null;
         } else {
             mPrivacy = privacy;
         }
     }
 
-    public void setRating(@Nullable final Rating rating, final LibraryEntry libraryEntry) {
-        if (rating == null) {
+    public void setRating(final Rating rating, final LibraryEntry libraryEntry) {
+        if (rating == Rating.from(libraryEntry)) {
             mRating = null;
-
-            if (libraryEntry.hasRating()) {
-                mSaneRating = Rating.from(libraryEntry);
-            } else {
-                mSaneRating = null;
-            }
+            mSaneRating = rating;
         } else {
-            if (Rating.UNRATED.equals(rating)) {
-                mRating = null;
-                mSaneRating = null;
-            } else if (libraryEntry.hasRating()) {
-                final Rating libraryEntryRating = Rating.from(libraryEntry);
-
-                if (rating.equals(libraryEntryRating)) {
-                    mRating = null;
-                    mSaneRating = libraryEntryRating;
-                } else {
-                    mRating = rating;
-                    mSaneRating = null;
-                }
-            } else {
-                mRating = rating;
-                mSaneRating = null;
-            }
+            mRating = rating;
+            mSaneRating = null;
         }
     }
 

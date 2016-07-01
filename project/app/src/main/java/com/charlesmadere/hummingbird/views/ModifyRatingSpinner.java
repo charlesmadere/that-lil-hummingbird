@@ -58,18 +58,12 @@ public class ModifyRatingSpinner extends AppCompatSpinner implements
     }
 
     public void setContent(final LibraryEntry libraryEntry) {
-        final Rating rating;
-
-        if (libraryEntry.hasRating()) {
-            rating = Rating.from(libraryEntry);
-        } else {
-            rating = Rating.UNRATED;
-        }
+        final Rating rating = Rating.from(libraryEntry);
 
         for (int position = 0; position < getCount(); ++position) {
-            final Rating r = getItemAtPosition(position);
+            final Rating item = getItemAtPosition(position);
 
-            if (rating.equals(r)) {
+            if (rating == item) {
                 setSelection(position);
                 return;
             }

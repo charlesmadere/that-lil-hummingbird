@@ -7,6 +7,9 @@ import com.google.gson.annotations.SerializedName;
 
 public enum Rating implements Parcelable {
 
+    @SerializedName("unrated")
+    UNRATED(Float.MIN_VALUE),
+
     @SerializedName("0")
     ZERO(0f),
 
@@ -38,19 +41,16 @@ public enum Rating implements Parcelable {
     FOUR_POINT_FIVE(4.5f),
 
     @SerializedName("5")
-    FIVE(5f),
+    FIVE(5f);
 
-    @SerializedName("unrated")
-    UNRATED(Float.MIN_VALUE);
-
-    private final float mValue;
+    public final float mValue;
 
 
     public static Rating from(final LibraryEntry libraryEntry) {
         final LibraryEntry.Rating rating = libraryEntry.getRating();
 
         if (rating == null || !rating.hasValue()) {
-            throw new IllegalArgumentException("rating is null or has no value");
+            return UNRATED;
         }
 
         final float value = Float.parseFloat(rating.getValue());
@@ -82,10 +82,6 @@ public enum Rating implements Parcelable {
 
     Rating(final float value) {
         mValue = value;
-    }
-
-    public float getValue() {
-        return mValue;
     }
 
     @Override
