@@ -22,6 +22,21 @@ public class MiscUtilsTest {
         assertTrue(MiscUtils.booleanEquals(false, false));
 
         assertFalse(MiscUtils.booleanEquals(Boolean.TRUE, Boolean.FALSE));
+        assertFalse(MiscUtils.booleanEquals(Boolean.TRUE, false));
+        assertFalse(MiscUtils.booleanEquals(Boolean.TRUE, null));
+        assertFalse(MiscUtils.booleanEquals(true, Boolean.FALSE));
+        assertFalse(MiscUtils.booleanEquals(true, false));
+        assertFalse(MiscUtils.booleanEquals(true, null));
+
+        assertFalse(MiscUtils.booleanEquals(Boolean.FALSE, Boolean.TRUE));
+        assertFalse(MiscUtils.booleanEquals(Boolean.FALSE, true));
+        assertFalse(MiscUtils.booleanEquals(Boolean.FALSE, null));
+        assertFalse(MiscUtils.booleanEquals(false, Boolean.TRUE));
+        assertFalse(MiscUtils.booleanEquals(false, true));
+        assertFalse(MiscUtils.booleanEquals(false, null));
+
+        assertFalse(MiscUtils.booleanEquals(false, true));
+
     }
 
     @Test
