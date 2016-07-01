@@ -34,9 +34,6 @@ public class MiscUtilsTest {
         assertFalse(MiscUtils.booleanEquals(false, Boolean.TRUE));
         assertFalse(MiscUtils.booleanEquals(false, true));
         assertFalse(MiscUtils.booleanEquals(false, null));
-
-        assertFalse(MiscUtils.booleanEquals(false, true));
-
     }
 
     @Test
