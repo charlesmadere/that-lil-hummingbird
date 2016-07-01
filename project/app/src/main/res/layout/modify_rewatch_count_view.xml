@@ -14,7 +14,8 @@
         android:layout_weight="1"
         android:layout_width="0dp"
         android:text="@string/rewatched_times"
-        android:textSize="@dimen/text_xlarge" />
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="@dimen/text_large" />
     <ImageButton
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/decrease"

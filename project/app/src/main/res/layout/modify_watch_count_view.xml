@@ -2,11 +2,20 @@
 <com.charlesmadere.hummingbird.views.ModifyWatchCountView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:gravity="center"
+    android:gravity="center_vertical"
     android:id="@+id/modifyWatchCountView"
     android:layout_height="@dimen/list_item_height"
     android:layout_width="match_parent"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingEnd="@dimen/root_padding"
+    android:paddingStart="@dimen/root_padding">
+    <com.charlesmadere.hummingbird.views.TypefaceTextView
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:text="@string/watched"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="@dimen/text_large" />
     <ImageButton
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/decrease"
