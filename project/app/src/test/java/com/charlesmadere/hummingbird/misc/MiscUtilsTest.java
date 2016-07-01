@@ -2,6 +2,9 @@ package com.charlesmadere.hummingbird.misc;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -38,13 +41,34 @@ public class MiscUtilsTest {
 
     @Test
     public void testExclusiveAdd() throws Exception {
+        final ArrayList<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
 
+        MiscUtils.exclusiveAdd(list, Arrays.asList(1, 2, 3));
+        assertTrue(list.size() == 3);
+
+        MiscUtils.exclusiveAdd(list, Arrays.asList(1, 2, 3, 6));
+        assertTrue(list.size() == 4);
+
+        MiscUtils.exclusiveAdd(list, Arrays.asList(10, 20, 30, 1));
+        assertTrue(list.size() == 7);
     }
 
     @Test
     public void testIntegerEquals() throws Exception {
         assertTrue(MiscUtils.integerEquals(null, null));
 
+        assertTrue(MiscUtils.integerEquals(-1, -1));
+        assertTrue(MiscUtils.integerEquals(0, 0));
+        assertTrue(MiscUtils.integerEquals(1, 1));
+
+        assertFalse(MiscUtils.integerEquals(0, null));
+        assertFalse(MiscUtils.integerEquals(null, 0));
+
+        assertFalse(MiscUtils.integerEquals(-1, 1));
+        assertFalse(MiscUtils.integerEquals(1, -1));
     }
 
 }
