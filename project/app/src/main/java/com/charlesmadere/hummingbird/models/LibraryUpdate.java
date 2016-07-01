@@ -61,10 +61,9 @@ public class LibraryUpdate implements Parcelable {
         mAuthToken = authToken;
     }
 
-    public boolean containsModifications(final LibraryEntry libraryEntry) {
+    public boolean containsModifications() {
         return mEpisodesWatched != null || mRewatching != null || mRewatchedTimes != null ||
-                mPrivacy != null || mNotes != null || mWatchingStatus != null || mRating != null
-                || (mSaneRating == null && libraryEntry.hasRating());
+                mPrivacy != null || mNotes != null || mWatchingStatus != null || mRating != null;
     }
 
     public String getAnimeId() {

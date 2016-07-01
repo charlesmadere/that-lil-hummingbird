@@ -66,7 +66,17 @@ public class ModifyPublicPrivateSpinner extends AppCompatSpinner implements
     }
 
     public void setContent(final Privacy privacy) {
+        for (int position = 0; position < getCount(); ++position) {
+            final Privacy item = getItemAtPosition(position);
 
+            if (privacy == item) {
+                setSelection(position);
+                return;
+            }
+        }
+
+        throw new RuntimeException("The given " + Privacy.class.getSimpleName() + " (" + privacy
+                + ") doesn't exist in the list");
     }
 
     public void setOnSelectionChangedListener(@Nullable final OnItemSelectedListener l) {

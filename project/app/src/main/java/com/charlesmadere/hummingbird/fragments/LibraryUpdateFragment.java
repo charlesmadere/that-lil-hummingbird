@@ -94,7 +94,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
     @Nullable
     public LibraryUpdate getLibraryUpdate() {
-        if (mLibraryUpdate.containsModifications(mLibraryEntry)) {
+        if (mLibraryUpdate.containsModifications()) {
             return mLibraryUpdate;
         } else {
             return null;
@@ -284,7 +284,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     }
 
     private void update() {
-        mSave.setEnabled(mLibraryUpdate.containsModifications(mLibraryEntry));
+        mSave.setEnabled(mLibraryUpdate.containsModifications());
     }
 
 
