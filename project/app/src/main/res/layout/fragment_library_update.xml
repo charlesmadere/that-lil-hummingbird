@@ -58,8 +58,13 @@
                 android:layout_marginEnd="@dimen/root_padding"
                 android:layout_marginStart="@dimen/root_padding"
                 android:layout_width="match_parent" />
-            <include
-                layout="@layout/modify_public_private_view" />
+            <com.charlesmadere.hummingbird.views.ModifyPublicPrivateSpinner
+                android:id="@+id/modifyPublicPrivateSpinner"
+                android:layout_height="@dimen/list_item_height"
+                android:layout_marginEnd="@dimen/root_padding"
+                android:layout_marginStart="@dimen/root_padding"
+                android:layout_width="match_parent"
+                tools:ignore="RtlSymmetry" />
             <com.charlesmadere.hummingbird.views.ModifyRatingSpinner
                 android:id="@+id/modifyRatingSpinner"
                 android:layout_height="@dimen/list_item_height"

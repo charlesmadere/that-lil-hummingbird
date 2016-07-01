@@ -21,7 +21,7 @@ import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.LibraryUpdate;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout;
-import com.charlesmadere.hummingbird.views.ModifyPublicPrivateView;
+import com.charlesmadere.hummingbird.views.ModifyPublicPrivateSpinner;
 import com.charlesmadere.hummingbird.views.ModifyRatingSpinner;
 import com.charlesmadere.hummingbird.views.ModifyRewatchCountView;
 import com.charlesmadere.hummingbird.views.ModifyWatchCountView;
@@ -32,7 +32,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
 public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment implements
-        ModifyPublicPrivateView.OnSelectionChangedListener,
+        ModifyPublicPrivateSpinner.OnItemSelectedListener,
         ModifyRatingSpinner.OnItemSelectedListener,
         ModifyRewatchCountView.OnRewatchCountChangedListener,
         ModifyWatchCountView.OnWatchCountChangedListener,
@@ -58,8 +58,8 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     @BindView(R.id.ibSave)
     ImageButton mSave;
 
-    @BindView(R.id.modifyPublicPrivateView)
-    ModifyPublicPrivateView mModifyPublicPrivateView;
+    @BindView(R.id.modifyPublicPrivateSpinner)
+    ModifyPublicPrivateSpinner mModifyPublicPrivateSpinner;
 
     @BindView(R.id.modifyRatingSpinner)
     ModifyRatingSpinner mModifyRatingSpinner;
@@ -150,6 +150,12 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     }
 
     @Override
+    public void onItemSelected(final ModifyPublicPrivateSpinner v) {
+        mLibraryUpdate.setPrivacy(v.getSelectedItem(), mLibraryEntry);
+        update();
+    }
+
+    @Override
     public void onItemSelected(final ModifyRatingSpinner v) {
         mLibraryUpdate.setRating(v.getSelectedItem(), mLibraryEntry);
         update();
@@ -162,14 +168,14 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
         if (WatchingStatus.REMOVE_FROM_LIBRARY.equals(watchingStatus)) {
             mModifyWatchCountView.setEnabled(false);
-            mModifyPublicPrivateView.setEnabled(false);
+            mModifyPublicPrivateSpinner.setEnabled(false);
             mModifyRatingSpinner.setEnabled(false);
             mRewatchingContainer.setEnabled(false);
             mModifyRewatchCountView.setEnabled(false);
             mPersonalNotes.setEnabled(false);
         } else {
             mModifyWatchCountView.setEnabled(true);
-            mModifyPublicPrivateView.setEnabled(true);
+            mModifyPublicPrivateSpinner.setEnabled(true);
             mModifyRatingSpinner.setEnabled(true);
             mRewatchingContainer.setEnabled(true);
             mModifyRewatchCountView.setEnabled(true);
@@ -239,13 +245,6 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     }
 
     @Override
-    public void onSelectionChanged(final ModifyPublicPrivateView v) {
-        mLibraryUpdate.setPrivacy(v.isPrivateChecked() ? LibraryUpdate.Privacy.PRIVATE :
-                LibraryUpdate.Privacy.PUBLIC, mLibraryEntry);
-        update();
-    }
-
-    @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -254,7 +253,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
         mModifyWatchCountView.setContent(mLibraryEntry);
         mModifyWatchingStatusSpinner.setContent(mLibraryEntry);
-        mModifyPublicPrivateView.setContent(mLibraryEntry);
+        mModifyPublicPrivateSpinner.setContent(mLibraryEntry);
         mModifyRatingSpinner.setContent(mLibraryEntry);
         mModifyRewatchCountView.setContent(mLibraryEntry);
 
@@ -263,7 +262,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
         mModifyWatchCountView.setOnWatchCountChangedListener(this);
         mModifyWatchingStatusSpinner.setOnItemSelectedListener(this);
-        mModifyPublicPrivateView.setOnSelectionChangedListener(this);
+        mModifyPublicPrivateSpinner.setOnSelectionChangedListener(this);
         mModifyRatingSpinner.setOnItemSelectedListener(this);
         mModifyRewatchCountView.setOnRewatchCountChangedListener(this);
     }

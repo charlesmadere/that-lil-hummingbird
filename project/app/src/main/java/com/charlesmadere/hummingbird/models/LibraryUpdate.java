@@ -229,35 +229,4 @@ public class LibraryUpdate implements Parcelable {
     };
 
 
-    public enum Privacy implements Parcelable {
-        @SerializedName("private")
-        PRIVATE,
-
-        @SerializedName("public")
-        PUBLIC;
-
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(final Parcel dest, final int flags) {
-            dest.writeInt(ordinal());
-        }
-
-        public static final Creator<Privacy> CREATOR = new Creator<Privacy>() {
-            @Override
-            public Privacy createFromParcel(final Parcel source) {
-                return values()[source.readInt()];
-            }
-
-            @Override
-            public Privacy[] newArray(final int size) {
-                return new Privacy[size];
-            }
-        };
-    }
-
 }
