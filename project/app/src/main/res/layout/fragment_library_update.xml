@@ -55,20 +55,20 @@
             <com.charlesmadere.hummingbird.views.ModifyWatchingStatusSpinner
                 android:id="@+id/modifyWatchingStatusSpinner"
                 android:layout_height="@dimen/list_item_height"
+                android:layout_marginEnd="@dimen/root_padding"
                 android:layout_width="match_parent"
-                android:paddingEnd="@dimen/root_padding"
                 tools:ignore="RtlSymmetry" />
             <com.charlesmadere.hummingbird.views.ModifyPublicPrivateSpinner
                 android:id="@+id/modifyPublicPrivateSpinner"
                 android:layout_height="@dimen/list_item_height"
+                android:layout_marginEnd="@dimen/root_padding"
                 android:layout_width="match_parent"
-                android:paddingEnd="@dimen/root_padding"
                 tools:ignore="RtlSymmetry" />
             <com.charlesmadere.hummingbird.views.ModifyRatingSpinner
                 android:id="@+id/modifyRatingSpinner"
                 android:layout_height="@dimen/list_item_height"
+                android:layout_marginEnd="@dimen/root_padding"
                 android:layout_width="match_parent"
-                android:paddingEnd="@dimen/root_padding"
                 tools:ignore="RtlSymmetry" />
             <com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout
                 android:background="?attr/selectableItemBackground"
