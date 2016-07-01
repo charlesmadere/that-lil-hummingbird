@@ -20,8 +20,10 @@ import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.LibraryUpdate;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
+import com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout;
 import com.charlesmadere.hummingbird.views.ModifyPublicPrivateView;
 import com.charlesmadere.hummingbird.views.ModifyRatingSpinner;
+import com.charlesmadere.hummingbird.views.ModifyRewatchCountView;
 import com.charlesmadere.hummingbird.views.ModifyWatchCountView;
 import com.charlesmadere.hummingbird.views.ModifyWatchingStatusSpinner;
 
@@ -32,6 +34,7 @@ import butterknife.OnTextChanged;
 public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment implements
         ModifyPublicPrivateView.OnSelectionChangedListener,
         ModifyRatingSpinner.OnItemSelectedListener,
+        ModifyRewatchCountView.OnRewatchCountChangedListener,
         ModifyWatchCountView.OnWatchCountChangedListener,
         ModifyWatchingStatusSpinner.OnItemSelectedListener {
 
@@ -49,6 +52,9 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     @BindView(R.id.etPersonalNotes)
     EditText mPersonalNotes;
 
+    @BindView(R.id.gellRewatching)
+    GroupEnabledLinearLayout mRewatchingContainer;
+
     @BindView(R.id.ibSave)
     ImageButton mSave;
 
@@ -57,6 +63,9 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
     @BindView(R.id.modifyRatingSpinner)
     ModifyRatingSpinner mModifyRatingSpinner;
+
+    @BindView(R.id.modifyRewatchCountView)
+    ModifyRewatchCountView mModifyRewatchCountView;
 
     @BindView(R.id.modifyWatchCountView)
     ModifyWatchCountView mModifyWatchCountView;
@@ -85,7 +94,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
     @Nullable
     public LibraryUpdate getLibraryUpdate() {
-        if (mLibraryUpdate.containsModifications()) {
+        if (mLibraryUpdate.containsModifications(mLibraryEntry)) {
             return mLibraryUpdate;
         } else {
             return null;
@@ -151,15 +160,31 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
         final WatchingStatus watchingStatus = v.getSelectedItem();
         mLibraryUpdate.setWatchingStatus(watchingStatus, mLibraryEntry);
 
-        if (WatchingStatus.COMPLETED.equals(watchingStatus)) {
-            final AbsAnime anime = mLibraryEntry.getAnime();
+        if (WatchingStatus.REMOVE_FROM_LIBRARY.equals(watchingStatus)) {
+            mModifyWatchCountView.setEnabled(false);
+            mModifyPublicPrivateView.setEnabled(false);
+            mModifyRatingSpinner.setEnabled(false);
+            mRewatchingContainer.setEnabled(false);
+            mModifyRewatchCountView.setEnabled(false);
+            mPersonalNotes.setEnabled(false);
+        } else {
+            mModifyWatchCountView.setEnabled(true);
+            mModifyPublicPrivateView.setEnabled(true);
+            mModifyRatingSpinner.setEnabled(true);
+            mRewatchingContainer.setEnabled(true);
+            mModifyRewatchCountView.setEnabled(true);
+            mPersonalNotes.setEnabled(true);
 
-            if (anime.hasEpisodeCount()) {
-                mModifyWatchCountView.setCountAndMax(anime.getEpisodeCount(),
-                        anime.getEpisodeCount());
-            } else if (mLibraryUpdate.getEpisodesWatched() != null &&
-                    mLibraryUpdate.getEpisodesWatched() == 0) {
-                mModifyWatchCountView.setCountAndMax(1, 1);
+            if (WatchingStatus.COMPLETED.equals(watchingStatus)) {
+                final AbsAnime anime = mLibraryEntry.getAnime();
+
+                if (anime.hasEpisodeCount()) {
+                    mModifyWatchCountView.setCountAndMax(anime.getEpisodeCount(),
+                            anime.getEpisodeCount());
+                } else if (mLibraryUpdate.getEpisodesWatched() != null &&
+                        mLibraryUpdate.getEpisodesWatched() == 0) {
+                    mModifyWatchCountView.setCountAndMax(1, 1);
+                }
             }
         }
 
@@ -185,7 +210,13 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
         update();
     }
 
-    @OnClick(R.id.llRewatching)
+    @Override
+    public void onRewatchCountChanged(final ModifyRewatchCountView v) {
+        mLibraryUpdate.setRewatchedTimes(v.getCount(), mLibraryEntry);
+        update();
+    }
+
+    @OnClick(R.id.gellRewatching)
     void onRewatchingClick() {
         mRewatching.toggle();
         mLibraryUpdate.setRewatching(mRewatching.isChecked(), mLibraryEntry);
@@ -225,6 +256,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
         mModifyWatchingStatusSpinner.setContent(mLibraryEntry);
         mModifyPublicPrivateView.setContent(mLibraryEntry);
         mModifyRatingSpinner.setContent(mLibraryEntry);
+        mModifyRewatchCountView.setContent(mLibraryEntry);
 
         mRewatching.setChecked(mLibraryEntry.isRewatching());
         mPersonalNotes.setText(mLibraryEntry.getNotes());
@@ -233,6 +265,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
         mModifyWatchingStatusSpinner.setOnItemSelectedListener(this);
         mModifyPublicPrivateView.setOnSelectionChangedListener(this);
         mModifyRatingSpinner.setOnItemSelectedListener(this);
+        mModifyRewatchCountView.setOnRewatchCountChangedListener(this);
     }
 
     @Override
@@ -252,7 +285,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     }
 
     private void update() {
-        mSave.setEnabled(mLibraryUpdate.containsModifications());
+        mSave.setEnabled(mLibraryUpdate.containsModifications(mLibraryEntry));
     }
 
 

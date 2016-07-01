@@ -34,7 +34,7 @@ public class LibraryUpdate implements Parcelable {
 
     @Nullable
     @SerializedName("sane_rating_update")
-    private Rating mSaneRatingUpdate;
+    private Rating mSaneRating;
 
     @SerializedName("id")
     private final String mAnimeId;
@@ -55,7 +55,7 @@ public class LibraryUpdate implements Parcelable {
         this(libraryEntry.getAnime().getId(), Preferences.Account.AuthToken.get());
 
         if (libraryEntry.hasRating()) {
-            mSaneRatingUpdate = Rating.from(libraryEntry);
+            mSaneRating = Rating.from(libraryEntry);
         }
     }
 
@@ -70,9 +70,10 @@ public class LibraryUpdate implements Parcelable {
         mAuthToken = authToken;
     }
 
-    public boolean containsModifications() {
-        return mRewatching != null || mEpisodesWatched != null || mRewatchedTimes != null ||
-                mPrivacy != null || mRating != null || mNotes != null || mWatchingStatus != null;
+    public boolean containsModifications(final LibraryEntry libraryEntry) {
+        return mEpisodesWatched != null || mRewatching != null || mRewatchedTimes != null ||
+                mPrivacy != null || mNotes != null || mWatchingStatus != null || mRating != null
+                || (mSaneRating == null && libraryEntry.hasRating());
     }
 
     public String getAnimeId() {
@@ -109,8 +110,8 @@ public class LibraryUpdate implements Parcelable {
     }
 
     @Nullable
-    public Rating getSaneRatingUpdate() {
-        return mSaneRatingUpdate;
+    public Rating getSaneRating() {
+        return mSaneRating;
     }
 
     @Nullable
@@ -158,24 +159,27 @@ public class LibraryUpdate implements Parcelable {
             mRating = null;
 
             if (libraryEntry.hasRating()) {
-                mSaneRatingUpdate = Rating.from(libraryEntry);
+                mSaneRating = Rating.from(libraryEntry);
             } else {
-                mSaneRatingUpdate = null;
+                mSaneRating = null;
             }
         } else {
-            if (libraryEntry.hasRating()) {
+            if (Rating.UNRATED.equals(rating)) {
+                mRating = null;
+                mSaneRating = null;
+            } else if (libraryEntry.hasRating()) {
                 final Rating libraryEntryRating = Rating.from(libraryEntry);
 
                 if (rating.equals(libraryEntryRating)) {
                     mRating = null;
-                    mSaneRatingUpdate = libraryEntryRating;
+                    mSaneRating = libraryEntryRating;
                 } else {
                     mRating = rating;
-                    mSaneRatingUpdate = null;
+                    mSaneRating = null;
                 }
             } else {
                 mRating = rating;
-                mSaneRatingUpdate = null;
+                mSaneRating = null;
             }
         }
     }
@@ -227,7 +231,7 @@ public class LibraryUpdate implements Parcelable {
         ParcelableUtils.writeInteger(mRewatchedTimes, dest);
         dest.writeParcelable(mPrivacy, flags);
         dest.writeParcelable(mRating, flags);
-        dest.writeParcelable(mSaneRatingUpdate, flags);
+        dest.writeParcelable(mSaneRating, flags);
         dest.writeString(mNotes);
         dest.writeParcelable(mWatchingStatus, flags);
     }
@@ -241,7 +245,7 @@ public class LibraryUpdate implements Parcelable {
             lu.mRewatchedTimes = ParcelableUtils.readInteger(source);
             lu.mPrivacy = source.readParcelable(Privacy.class.getClassLoader());
             lu.mRating = source.readParcelable(Rating.class.getClassLoader());
-            lu.mSaneRatingUpdate = source.readParcelable(Rating.class.getClassLoader());
+            lu.mSaneRating = source.readParcelable(Rating.class.getClassLoader());
             lu.mNotes = source.readString();
             lu.mWatchingStatus = source.readParcelable(WatchingStatus.class.getClassLoader());
             return lu;

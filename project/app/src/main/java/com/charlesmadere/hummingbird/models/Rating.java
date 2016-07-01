@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 public enum Rating implements Parcelable {
+
     @SerializedName("0")
     ZERO(0f),
 
@@ -37,7 +38,10 @@ public enum Rating implements Parcelable {
     FOUR_POINT_FIVE(4.5f),
 
     @SerializedName("5")
-    FIVE(5f);
+    FIVE(5f),
+
+    @SerializedName("unrated")
+    UNRATED(Float.MIN_VALUE);
 
     private final float mValue;
 
@@ -105,4 +109,5 @@ public enum Rating implements Parcelable {
             return new Rating[size];
         }
     };
+
 }

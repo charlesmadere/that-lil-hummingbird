@@ -31,11 +31,13 @@ public class AnimeLibraryFragment extends BaseFragment implements LibraryUpdateF
         InternalAnimeItemView.OnEditClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "AnimeLibraryFragment";
+    private static final String KEY_EDITABLE_LIBRARY = "EditableLibrary";
     private static final String KEY_LIBRARY_ENTRIES = "LibraryEntries";
     private static final String KEY_USERNAME = "Username";
     private static final String KEY_WATCHING_STATUS = "WatchingStatus";
 
     private ArrayList<LibraryEntry> mLibraryEntries;
+    private boolean mEditableLibrary;
     private LibraryEntriesAdapter mAdapter;
     private String mUsername;
     private WatchingStatus mWatchingStatus;
@@ -60,10 +62,11 @@ public class AnimeLibraryFragment extends BaseFragment implements LibraryUpdateF
 
 
     public static AnimeLibraryFragment create(final String username,
-            final WatchingStatus watchingStatus) {
-        final Bundle args = new Bundle(2);
+            final WatchingStatus watchingStatus, final boolean editableLibrary) {
+        final Bundle args = new Bundle(3);
         args.putString(KEY_USERNAME, username);
         args.putParcelable(KEY_WATCHING_STATUS, watchingStatus);
+        args.putBoolean(KEY_EDITABLE_LIBRARY, editableLibrary);
 
         final AnimeLibraryFragment fragment = new AnimeLibraryFragment();
         fragment.setArguments(args);
@@ -88,6 +91,7 @@ public class AnimeLibraryFragment extends BaseFragment implements LibraryUpdateF
         final Bundle args = getArguments();
         mUsername = args.getString(KEY_USERNAME);
         mWatchingStatus = args.getParcelable(KEY_WATCHING_STATUS);
+        mEditableLibrary = args.getBoolean(KEY_EDITABLE_LIBRARY);
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mLibraryEntries = savedInstanceState.getParcelableArrayList(KEY_LIBRARY_ENTRIES);
@@ -145,7 +149,13 @@ public class AnimeLibraryFragment extends BaseFragment implements LibraryUpdateF
         super.onViewCreated(view, savedInstanceState);
 
         mRefreshLayout.setOnRefreshListener(this);
-        mAdapter = new LibraryEntriesAdapter(getContext(), this);
+
+        if (mEditableLibrary) {
+            mAdapter = new LibraryEntriesAdapter(getContext(), this);
+        } else {
+            mAdapter = new LibraryEntriesAdapter(getContext());
+        }
+
         mRecyclerView.setAdapter(mAdapter);
         SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
 

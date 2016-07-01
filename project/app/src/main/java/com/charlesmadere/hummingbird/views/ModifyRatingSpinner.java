@@ -27,13 +27,11 @@ public class ModifyRatingSpinner extends AppCompatSpinner implements
         super(context, attrs, defStyleAttr);
     }
 
-    @Nullable
     @Override
     public Rating getItemAtPosition(final int position) {
         return (Rating) super.getItemAtPosition(position);
     }
 
-    @Nullable
     @Override
     public Rating getSelectedItem() {
         return (Rating) super.getSelectedItem();
@@ -60,22 +58,25 @@ public class ModifyRatingSpinner extends AppCompatSpinner implements
     }
 
     public void setContent(final LibraryEntry libraryEntry) {
+        final Rating rating;
+
         if (libraryEntry.hasRating()) {
-            final Rating rating = Rating.from(libraryEntry);
-            int position;
-
-            for (position = 0; position < getCount(); ++position) {
-                final Rating r = getItemAtPosition(position);
-
-                if (rating.equals(r)) {
-                    break;
-                }
-            }
-
-            setSelection(position);
+            rating = Rating.from(libraryEntry);
         } else {
-            setSelection(0);
+            rating = Rating.UNRATED;
         }
+
+        for (int position = 0; position < getCount(); ++position) {
+            final Rating r = getItemAtPosition(position);
+
+            if (rating.equals(r)) {
+                setSelection(position);
+                return;
+            }
+        }
+
+        throw new RuntimeException("The given " + Rating.class.getSimpleName() + " (" + rating +
+                ") doesn't exist in the list");
     }
 
     public void setOnItemSelectedListener(@Nullable final OnItemSelectedListener listener) {
@@ -91,17 +92,12 @@ public class ModifyRatingSpinner extends AppCompatSpinner implements
     private static class ModifyRatingAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            return Rating.values().length + 1;
+            return Rating.values().length;
         }
 
-        @Nullable
         @Override
         public Rating getItem(final int position) {
-            if (position == 0) {
-                return null;
-            } else {
-                return Rating.values()[position - 1];
-            }
+            return Rating.values()[position];
         }
 
         @Override

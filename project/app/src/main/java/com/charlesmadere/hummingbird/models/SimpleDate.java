@@ -34,7 +34,7 @@ public class SimpleDate implements Parcelable {
     }
 
     private SimpleDate(final Parcel source) {
-        mDate = new Date(source.readLong());
+        this(source.readLong());
     }
 
     private SimpleDate(final SimpleDateFormat format, final String dateString) throws ParseException {

@@ -20,6 +20,11 @@ public class UserFragmentAdapter extends BaseUserFragmentAdapter {
     }
 
     @Override
+    protected boolean areLibrariesEditable() {
+        return false;
+    }
+
+    @Override
     protected UserFeedFragment createFeedFragment() {
         return UserFeedFragment.create(getUserDigest().getUserId());
     }

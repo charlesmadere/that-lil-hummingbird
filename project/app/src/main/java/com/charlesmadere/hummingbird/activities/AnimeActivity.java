@@ -137,10 +137,18 @@ public class AnimeActivity extends BaseDrawerActivity implements
             case R.id.miAddToLibrary:
                 // TODO
                 return true;
-
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        if (mAnimeDigest != null && mAnimeDigest.getInfo().hasLibraryEntryId()) {
+            menu.findItem(R.id.miAddToLibrary).setVisible(true);
+        }
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -168,6 +176,8 @@ public class AnimeActivity extends BaseDrawerActivity implements
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);
+
+        supportInvalidateOptionsMenu();
         mSimpleProgressView.fadeOut();
     }
 

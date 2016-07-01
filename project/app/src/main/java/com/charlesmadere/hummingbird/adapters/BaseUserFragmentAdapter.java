@@ -44,6 +44,8 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
         mFragments = new SparseArrayCompat<>(getCount());
     }
 
+    protected abstract boolean areLibrariesEditable();
+
     protected abstract BaseFeedFragment createFeedFragment();
 
     @Override
@@ -83,7 +85,8 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
 
             default:
                 final WatchingStatus watchingStatus = mWatchingStatuses[position - 2];
-                fragment = AnimeLibraryFragment.create(mUserDigest.getUserId(), watchingStatus);
+                fragment = AnimeLibraryFragment.create(mUserDigest.getUserId(), watchingStatus,
+                        areLibrariesEditable());
                 break;
         }
 

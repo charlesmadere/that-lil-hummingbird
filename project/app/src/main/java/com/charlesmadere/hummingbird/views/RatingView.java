@@ -110,7 +110,7 @@ public class RatingView extends LinearLayout implements AdapterView<Rating> {
 
     @Override
     public void setContent(@Nullable final Rating content) {
-        if (content == null) {
+        if (content == null || Rating.UNRATED == content) {
             if (mNoRating == null) {
                 setContent(Rating.ZERO);
             } else {

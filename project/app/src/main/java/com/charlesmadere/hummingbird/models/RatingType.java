@@ -32,7 +32,7 @@ public enum RatingType implements Parcelable {
 
         @Override
         public RatingType[] newArray(final int size) {
-            return new RatingType[0];
+            return new RatingType[size];
         }
     };
 

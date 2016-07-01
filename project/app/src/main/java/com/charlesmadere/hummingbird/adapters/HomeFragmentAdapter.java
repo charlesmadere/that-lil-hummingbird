@@ -19,6 +19,11 @@ public class HomeFragmentAdapter extends BaseUserFragmentAdapter {
     }
 
     @Override
+    protected boolean areLibrariesEditable() {
+        return true;
+    }
+
+    @Override
     protected HomeFeedFragment createFeedFragment() {
         return HomeFeedFragment.create();
     }

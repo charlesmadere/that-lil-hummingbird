@@ -67,9 +67,9 @@
                 android:layout_marginStart="@dimen/root_padding"
                 android:layout_width="match_parent"
                 tools:ignore="RtlSymmetry" />
-            <LinearLayout
+            <com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout
                 android:background="?attr/selectableItemBackground"
-                android:id="@+id/llRewatching"
+                android:id="@+id/gellRewatching"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/root_padding_half"
                 android:layout_width="match_parent"
@@ -91,7 +91,9 @@
                     android:id="@+id/cbRewatching"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content" />
-            </LinearLayout>
+            </com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout>
+            <include
+                layout="@layout/modify_rewatch_count_view" />
             <android.support.design.widget.TextInputLayout
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/root_padding"

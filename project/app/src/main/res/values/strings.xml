@@ -252,6 +252,7 @@
     <string name="review_by_x">Review by %1$s</string>
     <string name="review_format">\"%1$s\"</string>
     <string name="review_of_x">Review of %1$s</string>
+    <string name="rewatched_times">Rewatched times</string>
     <string name="rewatching">Rewatching</string>
     <string name="rewatch_intro_animation">Rewatch intro animation</string>
     <string name="romaji">Romaji</string>
