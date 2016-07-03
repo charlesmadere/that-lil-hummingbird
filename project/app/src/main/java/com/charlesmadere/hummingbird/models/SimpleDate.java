@@ -33,10 +33,6 @@ public class SimpleDate implements Parcelable {
         mDate = new Date(time);
     }
 
-    private SimpleDate(final Parcel source) {
-        this(source.readLong());
-    }
-
     private SimpleDate(final SimpleDateFormat format, final String dateString) throws ParseException {
         mDate = format.parse(dateString);
     }
@@ -72,7 +68,7 @@ public class SimpleDate implements Parcelable {
     public static final Creator<SimpleDate> CREATOR = new Creator<SimpleDate>() {
         @Override
         public SimpleDate createFromParcel(final Parcel source) {
-            return new SimpleDate(source);
+            return new SimpleDate(source.readLong());
         }
 
         @Override
