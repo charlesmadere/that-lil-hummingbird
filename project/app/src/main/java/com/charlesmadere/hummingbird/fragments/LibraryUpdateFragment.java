@@ -2,8 +2,10 @@ package com.charlesmadere.hummingbird.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -145,7 +147,16 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
     @OnClick(R.id.ibDelete)
     void onDeleteClick() {
-        // TODO
+        new AlertDialog.Builder(getContext())
+                .setMessage(R.string.are_you_sure_you_want_to_remove_this_from_your_library)
+                .setNegativeButton(R.string.cancel, null)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        mListeners.onRemoveLibraryEntry();
+                    }
+                })
+                .show();
     }
 
     @Override
