@@ -95,6 +95,23 @@ public class LibraryUpdateTest {
     }
 
     @Test
+    public void testSetRewatchedTimes() throws Exception {
+        assertFalse(mLibraryUpdate.containsModifications());
+
+        mLibraryUpdate.setRewatchedTimes(mLibraryEntry.getRewatchedTimes(), mLibraryEntry);
+        assertFalse(mLibraryUpdate.containsModifications());
+
+        mLibraryUpdate.setRewatchedTimes(5, mLibraryEntry);
+        assertTrue(mLibraryUpdate.containsModifications());
+
+        mLibraryUpdate.setRewatchedTimes(null, mLibraryEntry);
+        assertFalse(mLibraryUpdate.containsModifications());
+
+        mLibraryUpdate.setRewatchedTimes(20, mLibraryEntry);
+        assertTrue(mLibraryUpdate.containsModifications());
+    }
+
+    @Test
     public void testSetRewatching() throws Exception {
         assertFalse(mLibraryUpdate.containsModifications());
 
