@@ -28,4 +28,9 @@ public class LibraryEntryTest {
         return sLibraryEntry;
     }
 
+    @Test
+    public void testGetAnimeGetVersion() throws Exception {
+        Assert.assertTrue(get().getAnime().getVersion() == AbsAnime.Version.V1);
+    }
+
 }
