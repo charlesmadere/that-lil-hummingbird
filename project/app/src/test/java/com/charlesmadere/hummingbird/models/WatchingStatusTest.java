@@ -25,7 +25,7 @@ public class WatchingStatusTest {
 
         assertFalse(WatchingStatus.equals(null, WatchingStatus.COMPLETED));
         assertFalse(WatchingStatus.equals(WatchingStatus.DROPPED, null));
-        assertFalse(WatchingStatus.equals(WatchingStatus.PLAN_TO_WATCH, WatchingStatus.REMOVE_FROM_LIBRARY));
+        assertFalse(WatchingStatus.equals(WatchingStatus.PLAN_TO_WATCH, WatchingStatus.CURRENTLY_WATCHING));
         assertFalse(WatchingStatus.equals(WatchingStatus.ON_HOLD, WatchingStatus.COMPLETED));
     }
 
