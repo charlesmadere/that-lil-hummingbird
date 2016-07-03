@@ -1,11 +1,20 @@
 package com.charlesmadere.hummingbird.models;
 
+import android.os.Build;
+
+import com.charlesmadere.hummingbird.BuildConfig;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
 public class LibraryUpdateTest {
 
     private static final String NOTES = "Hello, World!";
