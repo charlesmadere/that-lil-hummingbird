@@ -163,7 +163,7 @@ public class LibraryUpdate implements Parcelable {
         }
     }
 
-    public void setRewatching(@Nullable final Boolean rewatching, final LibraryEntry libraryEntry) {
+    public void setRewatching(final boolean rewatching, final LibraryEntry libraryEntry) {
         if (MiscUtils.booleanEquals(rewatching, libraryEntry.isRewatching())) {
             mRewatching = null;
         } else {

@@ -67,10 +67,14 @@ public class SearchResultsAdapter extends BaseMultiAdapter {
     }
 
     private void buildUnsectionedList(final SearchBundle searchBundle) {
-        final ArrayList<SearchBundle.AbsResult> results = searchBundle.getResults();
-        final ArrayList<Object> list = new ArrayList<>(results.size());
-        list.addAll(searchBundle.getResults());
-        set(list);
+        if (searchBundle.hasResults()) {
+            final ArrayList<SearchBundle.AbsResult> results = searchBundle.getResults();
+            final ArrayList<Object> list = new ArrayList<>(results.size());
+            list.addAll(searchBundle.getResults());
+            set(list);
+        } else {
+            set(null);
+        }
     }
 
     @Override

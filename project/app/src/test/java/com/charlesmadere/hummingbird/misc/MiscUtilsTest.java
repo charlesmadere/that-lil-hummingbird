@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -53,6 +54,18 @@ public class MiscUtilsTest {
         assertTrue(list.size() == 4);
 
         MiscUtils.exclusiveAdd(list, Arrays.asList(10, 20, 30, 1));
+        assertTrue(list.size() == 7);
+
+        MiscUtils.exclusiveAdd(list, Arrays.asList(30, 3, 2, 1, 6));
+        assertTrue(list.size() == 7);
+
+        MiscUtils.exclusiveAdd(list, null);
+        assertTrue(list.size() == 7);
+
+        MiscUtils.exclusiveAdd(list, new ArrayList<Integer>());
+        assertTrue(list.size() == 7);
+
+        MiscUtils.exclusiveAdd(list, new LinkedList<Integer>());
         assertTrue(list.size() == 7);
     }
 

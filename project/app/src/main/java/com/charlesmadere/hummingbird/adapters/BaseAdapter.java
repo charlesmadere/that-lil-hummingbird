@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.adapters;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,14 +22,14 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<AdapterView.Vi
         mContext = context;
     }
 
-    public void add(final T item) {
+    public void add(@Nullable final T item) {
         if (item != null) {
             mItems.add(item);
             notifyDataSetChanged();
         }
     }
 
-    public void add(final List<T> items) {
+    public void add(@Nullable final List<T> items) {
         if (items != null && !items.isEmpty()) {
             mItems.addAll(items);
             notifyDataSetChanged();
@@ -77,7 +78,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<AdapterView.Vi
         return new AdapterView.ViewHolder(view);
     }
 
-    public void set(final List<T> items) {
+    public void set(@Nullable final List<T> items) {
         mItems.clear();
 
         if (items != null && !items.isEmpty()) {
