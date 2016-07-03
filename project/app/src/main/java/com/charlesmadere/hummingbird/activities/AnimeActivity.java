@@ -145,7 +145,7 @@ public class AnimeActivity extends BaseDrawerActivity implements
 
     @Override
     public boolean onPrepareOptionsMenu(final Menu menu) {
-        if (mAnimeDigest != null && mAnimeDigest.getInfo().hasLibraryEntryId()) {
+        if (mAnimeDigest != null && !mAnimeDigest.getInfo().hasLibraryEntryId()) {
             menu.findItem(R.id.miAddToLibrary).setVisible(true);
         }
 
