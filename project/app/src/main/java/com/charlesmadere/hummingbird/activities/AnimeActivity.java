@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.AnimeEpisodeFragment;
+import com.charlesmadere.hummingbird.fragments.LibraryUpdateFragment;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
@@ -32,7 +33,7 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 
 public class AnimeActivity extends BaseDrawerActivity implements
-        AnimeEpisodeItemView.OnClickListener {
+        AnimeEpisodeItemView.OnClickListener, LibraryUpdateFragment.Listeners {
 
     private static final String TAG = "AnimeActivity";
     private static final String CNAME = AnimeActivity.class.getCanonicalName();
@@ -152,12 +153,22 @@ public class AnimeActivity extends BaseDrawerActivity implements
     }
 
     @Override
+    public void onRemoveLibraryEntry() {
+        // TODO
+    }
+
+    @Override
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
 
         if (mAnimeDigest != null) {
             outState.putParcelable(KEY_ANIME_DIGEST, mAnimeDigest);
         }
+    }
+
+    @Override
+    public void onUpdateLibraryEntry() {
+        // TODO
     }
 
     private void showAnimeDigest(final AnimeDigest animeDigest) {
