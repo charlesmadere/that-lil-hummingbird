@@ -13,7 +13,6 @@
             android:contentDescription="@string/close"
             android:id="@+id/ibClose"
             android:layout_height="match_parent"
-            android:layout_marginEnd="@dimen/root_padding_half"
             android:layout_width="wrap_content"
             android:paddingEnd="@dimen/root_padding"
             android:paddingStart="@dimen/root_padding"
@@ -23,6 +22,8 @@
             android:gravity="center_vertical"
             android:id="@+id/tvTitle"
             android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/root_padding_half"
+            android:layout_marginStart="@dimen/root_padding_half"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:maxLines="1"
@@ -32,10 +33,18 @@
             tools:text="Squid Girl" />
         <ImageButton
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/remove_from_library"
+            android:id="@+id/ibDelete"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:paddingEnd="@dimen/root_padding"
+            android:paddingStart="@dimen/root_padding"
+            android:src="@drawable/ic_delete_white_24dp" />
+        <ImageButton
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/save"
             android:id="@+id/ibSave"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/root_padding_half"
             android:layout_width="wrap_content"
             android:paddingEnd="@dimen/root_padding"
             android:paddingStart="@dimen/root_padding"
@@ -70,9 +79,9 @@
                 android:layout_marginEnd="@dimen/root_padding"
                 android:layout_width="match_parent"
                 tools:ignore="RtlSymmetry" />
-            <com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout
+            <LinearLayout
                 android:background="?attr/selectableItemBackground"
-                android:id="@+id/gellRewatching"
+                android:id="@+id/llRewatching"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
@@ -93,7 +102,7 @@
                     android:id="@+id/cbRewatching"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content" />
-            </com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout>
+            </LinearLayout>
             <include
                 layout="@layout/modify_rewatch_count_view" />
             <android.support.v4.widget.Space

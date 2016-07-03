@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 
-public class AnimeLibraryFragment extends BaseFragment implements LibraryUpdateFragment.Listener,
+public class AnimeLibraryFragment extends BaseFragment implements LibraryUpdateFragment.Listeners,
         InternalAnimeItemView.OnEditClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "AnimeLibraryFragment";
@@ -112,27 +112,18 @@ public class AnimeLibraryFragment extends BaseFragment implements LibraryUpdateF
     }
 
     @Override
-    public void onLibraryUpdateSave() {
+    public void onRefresh() {
+        fetchLibraryEntries();
+    }
+
+    @Override
+    public void onRemoveLibraryEntry() {
         final LibraryUpdateFragment libraryUpdateFragment = (LibraryUpdateFragment)
                 getChildFragmentManager().findFragmentByTag(LibraryUpdateFragment.TAG);
         final LibraryUpdate libraryUpdate = libraryUpdateFragment.getLibraryUpdate();
 
-        if (libraryUpdate == null) {
-            return;
-        }
-
         mRefreshLayout.setRefreshing(true);
-
-        if (WatchingStatus.REMOVE_FROM_LIBRARY.equals(libraryUpdate.getWatchingStatus())) {
-            Api.removeLibraryEntry(libraryUpdate, new RemoveLibraryEntryListener(this));
-        } else {
-            Api.addOrUpdateLibraryEntry(libraryUpdate, new AddOrUpdateLibraryEntryListener(this));
-        }
-    }
-
-    @Override
-    public void onRefresh() {
-        fetchLibraryEntries();
+        Api.removeLibraryEntry(libraryUpdate, new RemoveLibraryEntryListener(this));
     }
 
     @Override
@@ -142,6 +133,16 @@ public class AnimeLibraryFragment extends BaseFragment implements LibraryUpdateF
         if (mLibraryEntries != null && !mLibraryEntries.isEmpty()) {
             outState.putParcelableArrayList(KEY_WATCHING_STATUS, mLibraryEntries);
         }
+    }
+
+    @Override
+    public void onUpdateLibraryEntry() {
+        final LibraryUpdateFragment libraryUpdateFragment = (LibraryUpdateFragment)
+                getChildFragmentManager().findFragmentByTag(LibraryUpdateFragment.TAG);
+        final LibraryUpdate libraryUpdate = libraryUpdateFragment.getLibraryUpdate();
+
+        mRefreshLayout.setRefreshing(true);
+        Api.addOrUpdateLibraryEntry(libraryUpdate, new AddOrUpdateLibraryEntryListener(this));
     }
 
     @Override

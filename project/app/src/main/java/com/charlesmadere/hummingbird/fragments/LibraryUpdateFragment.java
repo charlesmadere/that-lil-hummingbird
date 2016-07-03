@@ -3,7 +3,6 @@ package com.charlesmadere.hummingbird.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
@@ -20,7 +20,6 @@ import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.LibraryUpdate;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
-import com.charlesmadere.hummingbird.views.GroupEnabledLinearLayout;
 import com.charlesmadere.hummingbird.views.ModifyPublicPrivateSpinner;
 import com.charlesmadere.hummingbird.views.ModifyRatingSpinner;
 import com.charlesmadere.hummingbird.views.ModifyRewatchCountView;
@@ -44,7 +43,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
     private LibraryEntry mLibraryEntry;
     private LibraryUpdate mLibraryUpdate;
-    private Listener mListener;
+    private Listeners mListeners;
 
     @BindView(R.id.cbRewatching)
     CheckBox mRewatching;
@@ -52,11 +51,11 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     @BindView(R.id.etPersonalNotes)
     EditText mPersonalNotes;
 
-    @BindView(R.id.gellRewatching)
-    GroupEnabledLinearLayout mRewatchingContainer;
-
     @BindView(R.id.ibSave)
     ImageButton mSave;
+
+    @BindView(R.id.llRewatching)
+    LinearLayout mRewatchingContainer;
 
     @BindView(R.id.modifyPublicPrivateSpinner)
     ModifyPublicPrivateSpinner mModifyPublicPrivateSpinner;
@@ -92,13 +91,8 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
         return TAG;
     }
 
-    @Nullable
     public LibraryUpdate getLibraryUpdate() {
-        if (mLibraryUpdate.containsModifications()) {
-            return mLibraryUpdate;
-        } else {
-            return null;
-        }
+        return mLibraryUpdate;
     }
 
     @Override
@@ -106,17 +100,17 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
         super.onAttach(context);
 
         final Fragment fragment = getParentFragment();
-        if (fragment instanceof Listener) {
-            mListener = (Listener) fragment;
+        if (fragment instanceof Listeners) {
+            mListeners = (Listeners) fragment;
         } else {
             final Activity activity = MiscUtils.getActivity(context);
 
-            if (activity instanceof Listener) {
-                mListener = (Listener) activity;
+            if (activity instanceof Listeners) {
+                mListeners = (Listeners) activity;
             }
         }
 
-        if (mListener == null) {
+        if (mListeners == null) {
             throw new IllegalStateException(TAG + " must have a Listener");
         }
     }
@@ -149,6 +143,11 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
         return inflater.inflate(R.layout.fragment_library_update, container, false);
     }
 
+    @OnClick(R.id.ibDelete)
+    void onDeleteClick() {
+        // TODO
+    }
+
     @Override
     public void onItemSelected(final ModifyPublicPrivateSpinner v) {
         mLibraryUpdate.setPrivacy(v.getSelectedItem(), mLibraryEntry);
@@ -166,31 +165,15 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
         final WatchingStatus watchingStatus = v.getSelectedItem();
         mLibraryUpdate.setWatchingStatus(watchingStatus, mLibraryEntry);
 
-        if (WatchingStatus.REMOVE_FROM_LIBRARY.equals(watchingStatus)) {
-            mModifyWatchCountView.setEnabled(false);
-            mModifyPublicPrivateSpinner.setEnabled(false);
-            mModifyRatingSpinner.setEnabled(false);
-            mRewatchingContainer.setEnabled(false);
-            mModifyRewatchCountView.setEnabled(false);
-            mPersonalNotes.setEnabled(false);
-        } else {
-            mModifyWatchCountView.setEnabled(true);
-            mModifyPublicPrivateSpinner.setEnabled(true);
-            mModifyRatingSpinner.setEnabled(true);
-            mRewatchingContainer.setEnabled(true);
-            mModifyRewatchCountView.setEnabled(true);
-            mPersonalNotes.setEnabled(true);
+        if (WatchingStatus.COMPLETED.equals(watchingStatus)) {
+            final AbsAnime anime = mLibraryEntry.getAnime();
 
-            if (WatchingStatus.COMPLETED.equals(watchingStatus)) {
-                final AbsAnime anime = mLibraryEntry.getAnime();
-
-                if (anime.hasEpisodeCount()) {
-                    mModifyWatchCountView.setCountAndMax(anime.getEpisodeCount(),
-                            anime.getEpisodeCount());
-                } else if (mLibraryUpdate.getEpisodesWatched() != null &&
-                        mLibraryUpdate.getEpisodesWatched() == 0) {
-                    mModifyWatchCountView.setCountAndMax(1, 1);
-                }
+            if (anime.hasEpisodeCount()) {
+                mModifyWatchCountView.setCountAndMax(anime.getEpisodeCount(),
+                        anime.getEpisodeCount());
+            } else if (mLibraryUpdate.getEpisodesWatched() != null &&
+                    mLibraryUpdate.getEpisodesWatched() == 0) {
+                mModifyWatchCountView.setCountAndMax(1, 1);
             }
         }
 
@@ -222,7 +205,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
         update();
     }
 
-    @OnClick(R.id.gellRewatching)
+    @OnClick(R.id.llRewatching)
     void onRewatchingClick() {
         mRewatching.toggle();
         mLibraryUpdate.setRewatching(mRewatching.isChecked(), mLibraryEntry);
@@ -231,7 +214,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
     @OnClick(R.id.ibSave)
     void onSaveClick() {
-        mListener.onLibraryUpdateSave();
+        mListeners.onUpdateLibraryEntry();
         dismiss();
     }
 
@@ -288,8 +271,9 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     }
 
 
-    public interface Listener {
-        void onLibraryUpdateSave();
+    public interface Listeners {
+        void onRemoveLibraryEntry();
+        void onUpdateLibraryEntry();
     }
 
 }

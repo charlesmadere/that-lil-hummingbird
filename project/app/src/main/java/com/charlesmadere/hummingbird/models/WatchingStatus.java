@@ -28,10 +28,7 @@ public enum WatchingStatus implements Parcelable {
 
     @SerializedName("plan-to-watch")
     PLAN_TO_WATCH(R.string.plan_to_watch_library_is_empty,
-            R.string.error_loading_plan_to_watch_library, R.string.plan_to_watch),
-
-    @SerializedName("remove-from-library")
-    REMOVE_FROM_LIBRARY(0, 0, R.string.remove_from_library);
+            R.string.error_loading_plan_to_watch_library, R.string.plan_to_watch);
 
     @StringRes
     private final int mEmptyTextResId;

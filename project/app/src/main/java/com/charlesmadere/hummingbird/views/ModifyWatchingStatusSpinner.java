@@ -42,8 +42,7 @@ public class ModifyWatchingStatusSpinner extends AppCompatSpinner implements
     private void initialize() {
         mWatchingStatuses = new WatchingStatus[] {
                 WatchingStatus.CURRENTLY_WATCHING, WatchingStatus.PLAN_TO_WATCH,
-                WatchingStatus.COMPLETED, WatchingStatus.ON_HOLD, WatchingStatus.DROPPED,
-                WatchingStatus.REMOVE_FROM_LIBRARY };
+                WatchingStatus.COMPLETED, WatchingStatus.ON_HOLD, WatchingStatus.DROPPED };
     }
 
     @Override
