@@ -78,6 +78,23 @@ public class LibraryUpdateTest {
     }
 
     @Test
+    public void testSetRating() throws Exception {
+        assertFalse(mLibraryUpdate.containsModifications());
+
+        mLibraryUpdate.setRating(Rating.from(mLibraryEntry), mLibraryEntry);
+        assertFalse(mLibraryUpdate.containsModifications());
+
+        mLibraryUpdate.setRating(Rating.FOUR, mLibraryEntry);
+        assertTrue(mLibraryUpdate.containsModifications());
+
+        mLibraryUpdate.setRating(null, mLibraryEntry);
+        assertFalse(mLibraryUpdate.containsModifications());
+
+        mLibraryUpdate.setRating(Rating.UNRATED, mLibraryEntry);
+        assertTrue(mLibraryUpdate.containsModifications());
+    }
+
+    @Test
     public void testSetRewatching() throws Exception {
         assertFalse(mLibraryUpdate.containsModifications());
 
