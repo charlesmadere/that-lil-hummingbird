@@ -154,6 +154,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
                         mListeners.onRemoveLibraryEntry();
+                        dismiss();
                     }
                 })
                 .show();
