@@ -98,12 +98,6 @@ public class LibraryUpdateTest {
         mLibraryUpdate.setWatchingStatus(mLibraryEntry.getStatus(), mLibraryEntry);
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setWatchingStatus(null, mLibraryEntry);
-        assertTrue(mLibraryUpdate.containsModifications());
-
-        mLibraryUpdate.setWatchingStatus(mLibraryEntry.getStatus(), mLibraryEntry);
-        assertFalse(mLibraryUpdate.containsModifications());
-
         mLibraryUpdate.setWatchingStatus(WatchingStatus.PLAN_TO_WATCH, mLibraryEntry);
         assertTrue(mLibraryUpdate.containsModifications());
 
