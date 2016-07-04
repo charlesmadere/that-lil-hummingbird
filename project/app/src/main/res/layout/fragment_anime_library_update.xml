@@ -108,7 +108,7 @@
             <include
                 layout="@layout/modify_rewatch_count_view" />
             <android.support.v4.widget.Space
-                android:layout_height="@dimen/root_padding_half"
+                android:layout_height="@dimen/root_padding"
                 android:layout_width="match_parent" />
             <android.support.design.widget.TextInputLayout
                 android:layout_height="wrap_content"
@@ -123,6 +123,8 @@
                     android:inputType="textCapSentences|textMultiLine"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
+                    android:paddingEnd="@dimen/root_padding_half"
+                    android:paddingStart="@dimen/root_padding_half"
                     android:maxLines="5" />
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
