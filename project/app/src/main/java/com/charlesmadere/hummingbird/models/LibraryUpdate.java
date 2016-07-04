@@ -186,7 +186,7 @@ public class LibraryUpdate implements Parcelable {
     public JsonObject toJson() {
         final JsonElement libraryUpdate = GsonUtils.getGson().toJsonTree(this);
         final JsonObject json = new JsonObject();
-        json.add("library_update", libraryUpdate);
+        json.add("library_entry", libraryUpdate);
 
         return json;
     }
