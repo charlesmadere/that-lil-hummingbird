@@ -14,9 +14,12 @@ import com.google.gson.annotations.SerializedName;
 
 public class LibraryUpdate implements Parcelable {
 
+    @SerializedName("private")
+    private boolean mIsPrivate;
+
     @Nullable
     @SerializedName("rewatching")
-    private Boolean mRewatching;
+    private Boolean mIsRewatching;
 
     @Nullable
     @SerializedName("episodes_watched")
@@ -55,7 +58,7 @@ public class LibraryUpdate implements Parcelable {
     }
 
     public boolean containsModifications() {
-        return mEpisodesWatched != null || mRewatching != null || mRewatchedTimes != null ||
+        return mEpisodesWatched != null || mIsRewatching != null || mRewatchedTimes != null ||
                 mPrivacy != null || mNotes != null || mWatchingStatus != null || mRating != null;
     }
 
@@ -93,9 +96,13 @@ public class LibraryUpdate implements Parcelable {
         return mWatchingStatus;
     }
 
+    public boolean isPrivate() {
+        return mIsPrivate;
+    }
+
     @Nullable
     public Boolean isRewatching() {
-        return mRewatching;
+        return mIsRewatching;
     }
 
     public void setEpisodesWatched(@Nullable final Integer episodesWatched,
@@ -147,9 +154,9 @@ public class LibraryUpdate implements Parcelable {
 
     public void setRewatching(final boolean rewatching, final LibraryEntry libraryEntry) {
         if (MiscUtils.booleanEquals(rewatching, libraryEntry.isRewatching())) {
-            mRewatching = null;
+            mIsRewatching = null;
         } else {
-            mRewatching = rewatching;
+            mIsRewatching = rewatching;
         }
     }
 
@@ -185,7 +192,8 @@ public class LibraryUpdate implements Parcelable {
         // intentionally at the top
         dest.writeString(mAnimeId);
 
-        ParcelableUtils.writeBoolean(mRewatching, dest);
+        dest.writeInt(mIsPrivate ? 1 : 0);
+        ParcelableUtils.writeBoolean(mIsRewatching, dest);
         ParcelableUtils.writeInteger(mEpisodesWatched, dest);
         ParcelableUtils.writeInteger(mRewatchedTimes, dest);
         dest.writeParcelable(mPrivacy, flags);
@@ -198,7 +206,8 @@ public class LibraryUpdate implements Parcelable {
         @Override
         public LibraryUpdate createFromParcel(final Parcel source) {
             final LibraryUpdate lu = new LibraryUpdate(source.readString());
-            lu.mRewatching = ParcelableUtils.readBoolean(source);
+            lu.mIsPrivate = source.readInt() != 0;
+            lu.mIsRewatching = ParcelableUtils.readBoolean(source);
             lu.mEpisodesWatched = ParcelableUtils.readInteger(source);
             lu.mRewatchedTimes = ParcelableUtils.readInteger(source);
             lu.mPrivacy = source.readParcelable(Privacy.class.getClassLoader());
