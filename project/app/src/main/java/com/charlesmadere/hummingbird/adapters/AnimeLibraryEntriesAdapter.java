@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
-import com.charlesmadere.hummingbird.views.InternalAnimeItemView;
 import com.charlesmadere.hummingbird.views.AnimeLibraryEntryItemView;
+import com.charlesmadere.hummingbird.views.InternalAnimeItemView;
 
 public class AnimeLibraryEntriesAdapter extends BaseAdapter<AnimeLibraryEntry> {
 
