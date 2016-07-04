@@ -89,6 +89,10 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         return TAG;
     }
 
+    public LibraryEntry getLibraryEntry() {
+        return mLibraryEntry;
+    }
+
     public LibraryUpdate getLibraryUpdate() {
         return mLibraryUpdate;
     }

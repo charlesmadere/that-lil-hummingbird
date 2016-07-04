@@ -38,6 +38,9 @@ public class LibraryEntry implements Parcelable {
     @SerializedName("updated_at")
     private SimpleDate mUpdatedAt;
 
+    @SerializedName("id")
+    private String mId;
+
     @Nullable
     @SerializedName("notes")
     private String mNotes;
@@ -56,6 +59,10 @@ public class LibraryEntry implements Parcelable {
 
     public int getEpisodesWatched() {
         return mEpisodesWatched;
+    }
+
+    public String getId() {
+        return mId;
     }
 
     public SimpleDate getLastWatched() {
@@ -118,6 +125,7 @@ public class LibraryEntry implements Parcelable {
         dest.writeParcelable(mRating, flags);
         dest.writeParcelable(mLastWatched, flags);
         dest.writeParcelable(mUpdatedAt, flags);
+        dest.writeString(mId);
         dest.writeString(mNotes);
         dest.writeParcelable(mStatus, flags);
     }
@@ -135,6 +143,7 @@ public class LibraryEntry implements Parcelable {
             le.mRating = source.readParcelable(Rating.class.getClassLoader());
             le.mLastWatched = source.readParcelable(SimpleDate.class.getClassLoader());
             le.mUpdatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
+            le.mId = source.readString();
             le.mNotes = source.readString();
             le.mStatus = source.readParcelable(WatchingStatus.class.getClassLoader());
             return le;

@@ -5,9 +5,12 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.charlesmadere.hummingbird.misc.GsonUtils;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.charlesmadere.hummingbird.preferences.Preferences;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
 public class LibraryUpdate implements Parcelable {
@@ -178,6 +181,14 @@ public class LibraryUpdate implements Parcelable {
         } else {
             mWatchingStatus = watchingStatus;
         }
+    }
+
+    public JsonObject toJson() {
+        final JsonElement libraryUpdate = GsonUtils.getGson().toJsonTree(this);
+        final JsonObject json = new JsonObject();
+        json.add("library_update", libraryUpdate);
+
+        return json;
     }
 
     @Override

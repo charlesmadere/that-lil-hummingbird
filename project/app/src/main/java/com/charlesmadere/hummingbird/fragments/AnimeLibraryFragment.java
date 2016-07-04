@@ -140,9 +140,10 @@ public class AnimeLibraryFragment extends BaseFragment implements AnimeLibraryUp
         final AnimeLibraryUpdateFragment fragment = (AnimeLibraryUpdateFragment)
                 getChildFragmentManager().findFragmentByTag(AnimeLibraryUpdateFragment.TAG);
         final LibraryUpdate libraryUpdate = fragment.getLibraryUpdate();
+        final String libraryEntryId = fragment.getLibraryEntry().getId();
 
         mRefreshLayout.setRefreshing(true);
-        Api.addOrUpdateLibraryEntry(libraryUpdate, new AddOrUpdateLibraryEntryListener(this));
+        Api.updateLibraryEntry(libraryEntryId, libraryUpdate, new UpdateLibraryEntryListener(this));
     }
 
     @Override
@@ -194,32 +195,6 @@ public class AnimeLibraryFragment extends BaseFragment implements AnimeLibraryUp
     }
 
 
-    private static class AddOrUpdateLibraryEntryListener implements ApiResponse<LibraryEntry> {
-        private final WeakReference<AnimeLibraryFragment> mFragmentReference;
-
-        private AddOrUpdateLibraryEntryListener(final AnimeLibraryFragment fragment) {
-            mFragmentReference = new WeakReference<>(fragment);
-        }
-
-        @Override
-        public void failure(@Nullable final ErrorInfo error) {
-            final AnimeLibraryFragment fragment = mFragmentReference.get();
-
-            if (fragment != null && !fragment.isDestroyed()) {
-                // TODO
-            }
-        }
-
-        @Override
-        public void success(@Nullable final LibraryEntry object) {
-            final AnimeLibraryFragment fragment = mFragmentReference.get();
-
-            if (fragment != null && !fragment.isDestroyed()) {
-                // TODO
-            }
-        }
-    }
-
     private static class GetLibraryEntriesListener implements ApiResponse<ArrayList<LibraryEntry>> {
         private final WeakReference<AnimeLibraryFragment> mFragmentReference;
 
@@ -268,6 +243,32 @@ public class AnimeLibraryFragment extends BaseFragment implements AnimeLibraryUp
 
         @Override
         public void success(@Nullable final Boolean object) {
+            final AnimeLibraryFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                // TODO
+            }
+        }
+    }
+
+    private static class UpdateLibraryEntryListener implements ApiResponse<Void> {
+        private final WeakReference<AnimeLibraryFragment> mFragmentReference;
+
+        private UpdateLibraryEntryListener(final AnimeLibraryFragment fragment) {
+            mFragmentReference = new WeakReference<>(fragment);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final AnimeLibraryFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                // TODO
+            }
+        }
+
+        @Override
+        public void success(@Nullable final Void object) {
             final AnimeLibraryFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {

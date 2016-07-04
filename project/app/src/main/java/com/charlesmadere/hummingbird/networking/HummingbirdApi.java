@@ -7,7 +7,6 @@ import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.Franchise;
 import com.charlesmadere.hummingbird.models.GroupDigest;
 import com.charlesmadere.hummingbird.models.LibraryEntry;
-import com.charlesmadere.hummingbird.models.LibraryUpdate;
 import com.charlesmadere.hummingbird.models.MangaDigest;
 import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.charlesmadere.hummingbird.models.SearchDepth;
@@ -36,10 +35,6 @@ public interface HummingbirdApi {
      * https://github.com/hummingbird-me/hummingbird/wiki/API-v1-Methods
      */
 
-    @POST("api/v1/libaries/{id}")
-    Call<LibraryEntry> addOrUpdateLibraryEntry(@Header("auth_token") String authToken,
-            @Path("id") String id, @Body LibraryUpdate libraryUpdate);
-
     @POST("api/v1/users/authenticate")
     Call<String> authenticate(@Body AuthInfo authInfo);
 
@@ -56,6 +51,13 @@ public interface HummingbirdApi {
      * internal API
      */
 
+    @POST("library_entries")
+    Call<Void> addLibraryEntry(@Header("Cookie") String authToken, @Body JsonElement body);
+
+    @DELETE("library_entries/{libraryEntryId}")
+    Call<Void> deleteLibraryEntry(@Header("Cookie") String authToken,
+            @Path("libraryEntryId") String libraryEntryId);
+
     @DELETE("stories/{storyId}")
     Call<Boolean> deleteStory(@Header("Cookie") String authToken, @Path("storyId") String storyId);
 
@@ -65,7 +67,7 @@ public interface HummingbirdApi {
 
     @PUT("quotes/{quoteId}")
     Call<Void> favoriteQuote(@Header("Cookie") String authToken, @Path("quoteId") String quoteId,
-            @Body JsonElement json);
+            @Body JsonElement body);
 
     @GET("anime/{animeId}")
     Call<AbsAnime> getAnime(@Header("Cookie") String authToken, @Header("Accept") String json,
@@ -136,13 +138,13 @@ public interface HummingbirdApi {
 
     @PUT("stories/{storyId}")
     Call<Void> likeStory(@Header("Cookie") String authToken, @Path("storyId") String storyId,
-            @Body JsonElement json);
+            @Body JsonElement body);
 
     @POST("substories")
-    Call<Void> postComment(@Header("Cookie") String authToken, @Body JsonElement json);
+    Call<Void> postComment(@Header("Cookie") String authToken, @Body JsonElement body);
 
     @POST("stories")
-    Call<Void> postToFeed(@Header("Cookie") String authToken, @Body JsonElement json);
+    Call<Void> postToFeed(@Header("Cookie") String authToken, @Body JsonElement body);
 
     @GET("search.json")
     Call<SearchBundle> search(@Query("scope") SearchScope searchScope,
@@ -151,5 +153,9 @@ public interface HummingbirdApi {
     @POST("users/{userId}/follow")
     Call<Void> toggleFollowingOfUser(@Header("Cookie") String authToken,
             @Path("userId") String userId);
+
+    @PUT("library_entries/{libraryEntryId}")
+    Call<Void> updateLibraryEntry(@Header("Cookie") String authToken, @Header("Accept") String json,
+            @Path("libraryEntryId") String libraryEntryId, @Body JsonElement body);
 
 }
