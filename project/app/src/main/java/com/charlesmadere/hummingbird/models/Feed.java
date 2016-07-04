@@ -317,6 +317,7 @@ public class Feed implements Parcelable {
         dest.writeTypedList(mGroups);
         dest.writeTypedList(mGroupMembers);
         dest.writeTypedList(mManga);
+        dest.writeTypedList(mMangaLibraryEntries);
         dest.writeTypedList(mUsers);
         dest.writeParcelable(mMetadata, flags);
     }
@@ -333,6 +334,7 @@ public class Feed implements Parcelable {
             f.mGroups = source.createTypedArrayList(Group.CREATOR);
             f.mGroupMembers = source.createTypedArrayList(GroupMember.CREATOR);
             f.mManga = source.createTypedArrayList(Manga.CREATOR);
+            f.mMangaLibraryEntries = source.createTypedArrayList(MangaLibraryEntry.CREATOR);
             f.mUsers = source.createTypedArrayList(User.CREATOR);
             f.mMetadata = source.readParcelable(Metadata.class.getClassLoader());
             return f;
