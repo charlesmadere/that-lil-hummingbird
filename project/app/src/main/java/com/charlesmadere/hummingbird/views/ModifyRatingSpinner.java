@@ -65,7 +65,11 @@ public class ModifyRatingSpinner extends AppCompatSpinner implements
         setContent(Rating.from(libraryUpdate.getLibraryEntry()));
     }
 
-    public void setContent(final Rating rating) {
+    public void setContent(@Nullable Rating rating) {
+        if (rating == null) {
+            rating = Rating.UNRATED;
+        }
+
         for (int position = 0; position < getCount(); ++position) {
             final Rating item = getItemAtPosition(position);
 

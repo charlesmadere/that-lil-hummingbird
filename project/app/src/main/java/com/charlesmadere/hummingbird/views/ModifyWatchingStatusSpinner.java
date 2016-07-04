@@ -19,30 +19,30 @@ import com.charlesmadere.hummingbird.models.WatchingStatus;
 public class ModifyWatchingStatusSpinner extends AppCompatSpinner implements
         AdapterView.OnItemSelectedListener {
 
+    private static final WatchingStatus[] VALUES = { WatchingStatus.CURRENTLY_WATCHING,
+            WatchingStatus.PLAN_TO_WATCH, WatchingStatus.COMPLETED, WatchingStatus.ON_HOLD,
+            WatchingStatus.DROPPED };
+
     private OnItemSelectedListener mListener;
-    private WatchingStatus[] mWatchingStatuses;
 
 
     public ModifyWatchingStatusSpinner(final Context context, final AttributeSet attrs) {
         super(context, attrs);
-        initialize();
     }
 
     public ModifyWatchingStatusSpinner(final Context context, final AttributeSet attrs,
             final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initialize();
+    }
+
+    @Override
+    public WatchingStatus getItemAtPosition(final int position) {
+        return (WatchingStatus) super.getItemAtPosition(position);
     }
 
     @Override
     public WatchingStatus getSelectedItem() {
         return (WatchingStatus) super.getSelectedItem();
-    }
-
-    private void initialize() {
-        mWatchingStatuses = new WatchingStatus[] {
-                WatchingStatus.CURRENTLY_WATCHING, WatchingStatus.PLAN_TO_WATCH,
-                WatchingStatus.COMPLETED, WatchingStatus.ON_HOLD, WatchingStatus.DROPPED };
     }
 
     @Override
@@ -66,19 +66,29 @@ public class ModifyWatchingStatusSpinner extends AppCompatSpinner implements
     }
 
     public void setContent(final AnimeLibraryUpdate libraryUpdate) {
-        setWatchingStatus(libraryUpdate.getWatchingStatus());
+        setContent(libraryUpdate.getWatchingStatus());
+    }
+
+    public void setContent(@Nullable WatchingStatus watchingStatus) {
+        if (watchingStatus == null) {
+            watchingStatus = WatchingStatus.PLAN_TO_WATCH;
+        }
+
+        for (int position = 0; position < getCount(); ++position) {
+            final WatchingStatus item = getItemAtPosition(position);
+
+            if (watchingStatus == item) {
+                setSelection(position);
+                return;
+            }
+        }
+
+        throw new RuntimeException("The given " + WatchingStatus.class.getSimpleName() + " (" +
+                watchingStatus + ") doesn't exist in the list");
     }
 
     public void setOnItemSelectedListener(@Nullable final OnItemSelectedListener l) {
         mListener = l;
-    }
-
-    public void setWatchingStatus(final WatchingStatus wsu) {
-        for (int i = 0; i < mWatchingStatuses.length; ++i) {
-            if (mWatchingStatuses[i].equals(wsu)) {
-                setSelection(i);
-            }
-        }
     }
 
 
@@ -87,15 +97,15 @@ public class ModifyWatchingStatusSpinner extends AppCompatSpinner implements
     }
 
 
-    private class WatchingStatusUpdateAdapter extends BaseAdapter {
+    private static class WatchingStatusUpdateAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            return mWatchingStatuses.length;
+            return VALUES.length;
         }
 
         @Override
         public WatchingStatus getItem(final int position) {
-            return mWatchingStatuses[position];
+            return VALUES[position];
         }
 
         @Override
