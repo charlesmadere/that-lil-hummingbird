@@ -29,6 +29,9 @@ public class MangaLibraryEntry implements Parcelable {
     @SerializedName("status")
     private ReadingStatus mStatus;
 
+    @SerializedName("last_read")
+    private SimpleDate mLastRead;
+
     @SerializedName("id")
     private String mId;
 
@@ -49,6 +52,10 @@ public class MangaLibraryEntry implements Parcelable {
 
     public String getId() {
         return mId;
+    }
+
+    public SimpleDate getLastRead() {
+        return mLastRead;
     }
 
     public String getMangaId() {
@@ -103,6 +110,7 @@ public class MangaLibraryEntry implements Parcelable {
         dest.writeInt(mVolumesRead);
         dest.writeParcelable(mRating, flags);
         dest.writeParcelable(mStatus, flags);
+        dest.writeParcelable(mLastRead, flags);
         dest.writeString(mId);
         dest.writeString(mMangaId);
         dest.writeString(mNotes);
@@ -120,6 +128,7 @@ public class MangaLibraryEntry implements Parcelable {
             mle.mVolumesRead = source.readInt();
             mle.mRating = source.readParcelable(Rating.class.getClassLoader());
             mle.mStatus = source.readParcelable(ReadingStatus.class.getClassLoader());
+            mle.mLastRead = source.readParcelable(SimpleDate.class.getClassLoader());
             mle.mId = source.readString();
             mle.mMangaId = source.readString();
             mle.mNotes = source.readString();
