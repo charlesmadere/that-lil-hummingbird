@@ -48,10 +48,19 @@ public interface HummingbirdApi {
      */
 
     @POST("library_entries")
-    Call<Void> addLibraryEntry(@Header("Cookie") String authToken, @Body JsonElement body);
+    Call<Void> addLibraryEntry(@Header("Cookie") String authToken, @Header("Accept") String json,
+            @Body JsonElement body);
+
+    @POST("manga_library_entries")
+    Call<Void> addMangaLibraryEntry(@Header("Cookie") String authToken,
+            @Header("Accept") String json, @Body JsonElement body);
 
     @DELETE("library_entries/{libraryEntryId}")
     Call<Void> deleteLibraryEntry(@Header("Cookie") String authToken,
+            @Path("libraryEntryId") String libraryEntryId);
+
+    @DELETE("manga_library_entries/{libraryEntryId}")
+    Call<Void> deleteMangaLibraryEntry(@Header("Cookie") String authToken,
             @Path("libraryEntryId") String libraryEntryId);
 
     @DELETE("stories/{storyId}")
@@ -153,5 +162,10 @@ public interface HummingbirdApi {
     @PUT("library_entries/{libraryEntryId}")
     Call<Void> updateLibraryEntry(@Header("Cookie") String authToken, @Header("Accept") String json,
             @Path("libraryEntryId") String libraryEntryId, @Body JsonElement body);
+
+    @PUT("manga_library_entries/{libraryEntryId}")
+    Call<Void> updateMangaLibraryEntry(@Header("Cookie") String authToken,
+            @Header("Accept") String json, @Path("libraryEntryId") String libraryEntryId,
+            @Body JsonElement body);
 
 }
