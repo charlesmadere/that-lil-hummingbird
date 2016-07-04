@@ -13,14 +13,14 @@ public class AnimeLibraryEntry implements Parcelable {
     @SerializedName("anime")
     private AbsAnime mAnime;
 
-    @SerializedName("notes_present")
-    private boolean mNotesPresent;
-
     @SerializedName("private")
-    private boolean mPrivate;
+    private boolean mIsPrivate;
 
     @SerializedName("rewatching")
-    private boolean mRewatching;
+    private boolean mIsRewatching;
+
+    @SerializedName("notes_present")
+    private boolean mNotesPresent;
 
     @SerializedName("episodes_watched")
     private int mEpisodesWatched;
@@ -96,11 +96,11 @@ public class AnimeLibraryEntry implements Parcelable {
     }
 
     public boolean isPrivate() {
-        return mPrivate;
+        return mIsPrivate;
     }
 
     public boolean isRewatching() {
-        return mRewatching;
+        return mIsRewatching;
     }
 
     @Override
@@ -117,9 +117,9 @@ public class AnimeLibraryEntry implements Parcelable {
     public void writeToParcel(final Parcel dest, final int flags) {
         ParcelableUtils.writeAbsAnimeToParcel(mAnime, dest, flags);
         dest.writeParcelable(mAnime, flags);
+        dest.writeInt(mIsPrivate ? 1 : 0);
+        dest.writeInt(mIsRewatching ? 1 : 0);
         dest.writeInt(mNotesPresent ? 1 : 0);
-        dest.writeInt(mPrivate ? 1 : 0);
-        dest.writeInt(mRewatching ? 1 : 0);
         dest.writeInt(mEpisodesWatched);
         dest.writeInt(mRewatchedTimes);
         dest.writeParcelable(mRating, flags);
@@ -135,9 +135,9 @@ public class AnimeLibraryEntry implements Parcelable {
         public AnimeLibraryEntry createFromParcel(final Parcel source) {
             final AnimeLibraryEntry le = new AnimeLibraryEntry();
             le.mAnime = ParcelableUtils.readAbsAnimeFromParcel(source);
+            le.mIsPrivate = source.readInt() != 0;
+            le.mIsRewatching = source.readInt() != 0;
             le.mNotesPresent = source.readInt() != 0;
-            le.mPrivate = source.readInt() != 0;
-            le.mRewatching = source.readInt() != 0;
             le.mEpisodesWatched = source.readInt();
             le.mRewatchedTimes = source.readInt();
             le.mRating = source.readParcelable(Rating.class.getClassLoader());

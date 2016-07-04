@@ -2,13 +2,48 @@ package com.charlesmadere.hummingbird.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import com.google.gson.JsonObject;
 
 public class MangaLibraryUpdate implements Parcelable {
 
-    // TODO
+    private final MangaLibraryEntry mLibraryEntry;
 
+    private boolean mIsPrivate;
+    private boolean mIsReReading;
+    private int mChaptersRead;
+    private int mVolumesRead;
+
+    @Nullable
+    private Rating mRating;
+
+    @Nullable
+    private String mNotes;
+
+    private ReadingStatus mReadingStatus;
+
+
+    public MangaLibraryUpdate(final MangaLibraryEntry libraryEntry) {
+        mLibraryEntry = libraryEntry;
+        mIsReReading = libraryEntry.isReReading();
+        mChaptersRead = libraryEntry.getChaptersRead();
+        mVolumesRead = libraryEntry.getVolumesRead();
+        mRating = libraryEntry.getRating();
+        mNotes = libraryEntry.getNotes();
+        mReadingStatus = libraryEntry.getStatus();
+    }
+
+    private MangaLibraryUpdate(final Parcel source) {
+        mLibraryEntry = source.readParcelable(MangaLibraryEntry.class.getClassLoader());
+        mIsPrivate = source.readInt() != 0;
+        mIsReReading = source.readInt() != 0;
+        mChaptersRead = source.readInt();
+        mVolumesRead = source.readInt();
+        mRating = source.readParcelable(Rating.class.getClassLoader());
+        mNotes = source.readString();
+        mReadingStatus = source.readParcelable(ReadingStatus.class.getClassLoader());
+    }
 
     public JsonObject toJson() {
         // TODO
@@ -32,9 +67,7 @@ public class MangaLibraryUpdate implements Parcelable {
     public static final Creator<MangaLibraryUpdate> CREATOR = new Creator<MangaLibraryUpdate>() {
         @Override
         public MangaLibraryUpdate createFromParcel(final Parcel source) {
-            final MangaLibraryUpdate mlu = new MangaLibraryUpdate();
-            // TODO
-            return mlu;
+            return new MangaLibraryUpdate(source);
         }
 
         @Override

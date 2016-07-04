@@ -11,6 +11,9 @@ public class MangaLibraryEntry implements Parcelable {
     @SerializedName("is_favorite")
     private boolean mIsFavorite;
 
+    @SerializedName("private")
+    private boolean mIsPrivate;
+
     @SerializedName("rereading")
     private boolean mIsReReading;
 
@@ -96,6 +99,10 @@ public class MangaLibraryEntry implements Parcelable {
         return mIsFavorite;
     }
 
+    public boolean isPrivate() {
+        return mIsPrivate;
+    }
+
     public boolean isReReading() {
         return mIsReReading;
     }
@@ -113,6 +120,7 @@ public class MangaLibraryEntry implements Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeInt(mIsFavorite ? 1 : 0);
+        dest.writeInt(mIsPrivate ? 1 : 0);
         dest.writeInt(mIsReReading ? 1 : 0);
         dest.writeInt(mChaptersRead);
         dest.writeInt(mReReadCount);
@@ -131,6 +139,7 @@ public class MangaLibraryEntry implements Parcelable {
         public MangaLibraryEntry createFromParcel(final Parcel source) {
             final MangaLibraryEntry mle = new MangaLibraryEntry();
             mle.mIsFavorite = source.readInt() != 0;
+            mle.mIsPrivate = source.readInt() != 0;
             mle.mIsReReading = source.readInt() != 0;
             mle.mChaptersRead = source.readInt();
             mle.mReReadCount = source.readInt();
