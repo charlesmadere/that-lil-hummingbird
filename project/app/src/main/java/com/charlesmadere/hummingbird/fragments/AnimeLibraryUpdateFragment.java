@@ -162,20 +162,20 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
 
     @Override
     public void onItemSelected(final ModifyPublicPrivateSpinner v) {
-        mLibraryUpdate.setPrivacy(v.getSelectedItem(), mLibraryEntry);
+        mLibraryUpdate.setPrivacy(v.getSelectedItem());
         update();
     }
 
     @Override
     public void onItemSelected(final ModifyRatingSpinner v) {
-        mLibraryUpdate.setRating(v.getSelectedItem(), mLibraryEntry);
+        mLibraryUpdate.setRating(v.getSelectedItem());
         update();
     }
 
     @Override
     public void onItemSelected(final ModifyWatchingStatusSpinner v) {
         final WatchingStatus watchingStatus = v.getSelectedItem();
-        mLibraryUpdate.setWatchingStatus(watchingStatus, mLibraryEntry);
+        mLibraryUpdate.setWatchingStatus(watchingStatus);
 
         if (WatchingStatus.COMPLETED.equals(watchingStatus)) {
             final AbsAnime anime = mLibraryEntry.getAnime();
@@ -183,8 +183,7 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
             if (anime.hasEpisodeCount()) {
                 mModifyWatchCountView.setCountAndMax(anime.getEpisodeCount(),
                         anime.getEpisodeCount());
-            } else if (mLibraryUpdate.getEpisodesWatched() != null &&
-                    mLibraryUpdate.getEpisodesWatched() == 0) {
+            } else if (mLibraryUpdate.getEpisodesWatched() == 0) {
                 mModifyWatchCountView.setCountAndMax(1, 1);
             }
         }
@@ -195,13 +194,13 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     @OnTextChanged(R.id.etPersonalNotes)
     void onPersonalNotesTextChanged() {
         final CharSequence charSequence = mPersonalNotes.getText();
-        String string = null;
+        String notes = null;
 
         if (!TextUtils.isEmpty(charSequence)) {
-            string = charSequence.toString().trim();
+            notes = charSequence.toString().trim();
         }
 
-        mLibraryUpdate.setNotes(string, mLibraryEntry);
+        mLibraryUpdate.setNotes(notes);
         update();
     }
 
@@ -213,14 +212,14 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
 
     @Override
     public void onRewatchCountChanged(final ModifyRewatchCountView v) {
-        mLibraryUpdate.setRewatchedTimes(v.getCount(), mLibraryEntry);
+        mLibraryUpdate.setRewatchCount(v.getCount());
         update();
     }
 
     @OnClick(R.id.llRewatching)
     void onRewatchingClick() {
         mRewatching.toggle();
-        mLibraryUpdate.setRewatching(mRewatching.isChecked(), mLibraryEntry);
+        mLibraryUpdate.setRewatching(mRewatching.isChecked());
         update();
     }
 
@@ -265,7 +264,7 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     @Override
     public void onWatchCountChanged(final ModifyWatchCountView v) {
         final int count = v.getCount();
-        mLibraryUpdate.setEpisodesWatched(count, mLibraryEntry);
+        mLibraryUpdate.setEpisodesWatched(count);
 
         if (mLibraryEntry.getAnime().hasEpisodeCount()) {
             if (mLibraryEntry.getAnime().getEpisodeCount() == count) {

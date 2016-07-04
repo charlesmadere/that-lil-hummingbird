@@ -17,32 +17,28 @@ import static org.junit.Assert.assertTrue;
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
 public class LibraryUpdateTest {
 
-    private static final String NOTES = "Hello, World!";
-
-    private LibraryEntry mLibraryEntry;
     private LibraryUpdate mLibraryUpdate;
 
 
     @Before
     public void setUp() throws Exception {
-        mLibraryEntry = LibraryEntryTest.get();
-        mLibraryUpdate = new LibraryUpdate(mLibraryEntry);
+        mLibraryUpdate = new LibraryUpdate(LibraryEntryTest.get());
     }
 
     @Test
     public void testSetEpisodesWatched() throws Exception {
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setEpisodesWatched(mLibraryEntry.getEpisodesWatched(), mLibraryEntry);
+        mLibraryUpdate.setEpisodesWatched(mLibraryUpdate.getEpisodesWatched());
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setEpisodesWatched(mLibraryEntry.getEpisodesWatched() + 1, mLibraryEntry);
+        mLibraryUpdate.setEpisodesWatched(mLibraryUpdate.getEpisodesWatched() + 1);
         assertTrue(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setEpisodesWatched(mLibraryEntry.getEpisodesWatched(), mLibraryEntry);
+        mLibraryUpdate.setEpisodesWatched(mLibraryUpdate.getLibraryEntry().getEpisodesWatched());
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setEpisodesWatched(mLibraryEntry.getEpisodesWatched() + 2, mLibraryEntry);
+        mLibraryUpdate.setEpisodesWatched(mLibraryUpdate.getEpisodesWatched() + 2);
         assertTrue(mLibraryUpdate.containsModifications());
     }
 
@@ -50,13 +46,13 @@ public class LibraryUpdateTest {
     public void testSetNotesModifications() throws Exception {
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setNotes(mLibraryEntry.getNotes(), mLibraryEntry);
+        mLibraryUpdate.setNotes(mLibraryUpdate.getNotes());
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setNotes(NOTES, mLibraryEntry);
+        mLibraryUpdate.setNotes("Hello, World!");
         assertTrue(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setNotes(mLibraryEntry.getNotes(), mLibraryEntry);
+        mLibraryUpdate.setNotes(mLibraryUpdate.getLibraryEntry().getNotes());
         assertFalse(mLibraryUpdate.containsModifications());
     }
 
@@ -64,16 +60,15 @@ public class LibraryUpdateTest {
     public void testSetPrivacyModifications() throws Exception {
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setPrivacy(mLibraryEntry.isPrivate() ? Privacy.PRIVATE : Privacy.PUBLIC,
-                mLibraryEntry);
+        mLibraryUpdate.setPrivacy(mLibraryUpdate.getLibraryEntry().isPrivate() ?
+                Privacy.PRIVATE : Privacy.PUBLIC);
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setPrivacy(mLibraryEntry.isPrivate() ? Privacy.PUBLIC : Privacy.PRIVATE,
-                mLibraryEntry);
+        mLibraryUpdate.setPrivacy(mLibraryUpdate.isPrivate() ? Privacy.PUBLIC : Privacy.PRIVATE);
         assertTrue(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setPrivacy(mLibraryEntry.isPrivate() ? Privacy.PRIVATE : Privacy.PUBLIC,
-                mLibraryEntry);
+        mLibraryUpdate.setPrivacy(mLibraryUpdate.getLibraryEntry().isPrivate() ?
+                Privacy.PRIVATE : Privacy.PUBLIC);
         assertFalse(mLibraryUpdate.containsModifications());
     }
 
@@ -81,16 +76,16 @@ public class LibraryUpdateTest {
     public void testSetRating() throws Exception {
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setRating(Rating.from(mLibraryEntry), mLibraryEntry);
+        mLibraryUpdate.setRating(Rating.from(mLibraryUpdate.getLibraryEntry()));
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setRating(Rating.FOUR, mLibraryEntry);
+        mLibraryUpdate.setRating(Rating.FOUR);
         assertTrue(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setRating(null, mLibraryEntry);
+        mLibraryUpdate.setRating(Rating.from(mLibraryUpdate.getLibraryEntry()));
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setRating(Rating.UNRATED, mLibraryEntry);
+        mLibraryUpdate.setRating(Rating.UNRATED);
         assertTrue(mLibraryUpdate.containsModifications());
     }
 
@@ -98,16 +93,16 @@ public class LibraryUpdateTest {
     public void testSetRewatchedTimes() throws Exception {
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setRewatchedTimes(mLibraryEntry.getRewatchedTimes(), mLibraryEntry);
+        mLibraryUpdate.setRewatchCount(mLibraryUpdate.getRewatchCount());
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setRewatchedTimes(5, mLibraryEntry);
+        mLibraryUpdate.setRewatchCount(5);
         assertTrue(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setRewatchedTimes(null, mLibraryEntry);
+        mLibraryUpdate.setRewatchCount(mLibraryUpdate.getLibraryEntry().getRewatchedTimes());
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setRewatchedTimes(20, mLibraryEntry);
+        mLibraryUpdate.setRewatchCount(20);
         assertTrue(mLibraryUpdate.containsModifications());
     }
 
@@ -115,13 +110,13 @@ public class LibraryUpdateTest {
     public void testSetRewatching() throws Exception {
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setRewatching(mLibraryEntry.isRewatching(), mLibraryEntry);
+        mLibraryUpdate.setRewatching(mLibraryUpdate.isRewatching());
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setRewatching(!mLibraryEntry.isRewatching(), mLibraryEntry);
+        mLibraryUpdate.setRewatching(!mLibraryUpdate.isRewatching());
         assertTrue(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setRewatching(mLibraryEntry.isRewatching(), mLibraryEntry);
+        mLibraryUpdate.setRewatching(!mLibraryUpdate.isRewatching());
         assertFalse(mLibraryUpdate.containsModifications());
     }
 
@@ -129,16 +124,16 @@ public class LibraryUpdateTest {
     public void testSetWatchingStatus() throws Exception {
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setWatchingStatus(mLibraryEntry.getStatus(), mLibraryEntry);
+        mLibraryUpdate.setWatchingStatus(mLibraryUpdate.getWatchingStatus());
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setWatchingStatus(WatchingStatus.PLAN_TO_WATCH, mLibraryEntry);
+        mLibraryUpdate.setWatchingStatus(WatchingStatus.PLAN_TO_WATCH);
         assertTrue(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setWatchingStatus(null, mLibraryEntry);
+        mLibraryUpdate.setWatchingStatus(mLibraryUpdate.getLibraryEntry().getStatus());
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setWatchingStatus(WatchingStatus.ON_HOLD, mLibraryEntry);
+        mLibraryUpdate.setWatchingStatus(WatchingStatus.ON_HOLD);
         assertTrue(mLibraryUpdate.containsModifications());
     }
 

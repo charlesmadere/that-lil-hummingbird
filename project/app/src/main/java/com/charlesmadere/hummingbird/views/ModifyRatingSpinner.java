@@ -15,6 +15,10 @@ import com.charlesmadere.hummingbird.models.Rating;
 public class ModifyRatingSpinner extends AppCompatSpinner implements
         AdapterView.OnItemSelectedListener {
 
+    private static final Rating[] VALUES = { Rating.UNRATED, Rating.ZERO_POINT_FIVE,
+            Rating.ONE, Rating.ONE_POINT_FIVE, Rating.TWO, Rating.TWO_POINT_FIVE, Rating.THREE,
+            Rating.THREE_POINT_FIVE, Rating.FOUR, Rating.FOUR_POINT_FIVE, Rating.FIVE };
+
     private OnItemSelectedListener mListener;
 
 
@@ -88,12 +92,12 @@ public class ModifyRatingSpinner extends AppCompatSpinner implements
     private static class ModifyRatingAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            return Rating.values().length;
+            return VALUES.length;
         }
 
         @Override
         public Rating getItem(final int position) {
-            return Rating.values()[position];
+            return VALUES[position];
         }
 
         @Override

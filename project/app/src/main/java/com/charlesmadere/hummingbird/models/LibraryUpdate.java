@@ -5,70 +5,64 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.charlesmadere.hummingbird.misc.GsonUtils;
-import com.charlesmadere.hummingbird.misc.MiscUtils;
-import com.charlesmadere.hummingbird.misc.ParcelableUtils;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.annotations.SerializedName;
 
 public class LibraryUpdate implements Parcelable {
 
-    @SerializedName("private")
+    private final LibraryEntry mLibraryEntry;
+
     private boolean mIsPrivate;
+    private boolean mIsRewatching;
+    private int mEpisodesWatched;
+    private int mRewatchCount;
 
     @Nullable
-    @SerializedName("rewatching")
-    private Boolean mIsRewatching;
-
-    @Nullable
-    @SerializedName("episodes_watched")
-    private Integer mEpisodesWatched;
-
-    @Nullable
-    @SerializedName("rewatched_times")
-    private Integer mRewatchedTimes;
-
-    @Nullable
-    @SerializedName("privacy")
-    private Privacy mPrivacy;
-
-    @Nullable
-    @SerializedName("rating")
     private Rating mRating;
 
-    @SerializedName("anime_id")
-    private final String mAnimeId;
-
     @Nullable
-    @SerializedName("notes")
     private String mNotes;
 
-    @Nullable
-    @SerializedName("status")
     private WatchingStatus mWatchingStatus;
 
 
     public LibraryUpdate(final LibraryEntry libraryEntry) {
-        this(libraryEntry.getAnime().getId());
+        mLibraryEntry = libraryEntry;
+        mIsPrivate = libraryEntry.isPrivate();
+        mIsRewatching = libraryEntry.isRewatching();
+        mEpisodesWatched = libraryEntry.getEpisodesWatched();
+        mRewatchCount = libraryEntry.getRewatchedTimes();
+        mRating = Rating.from(libraryEntry);
+        mNotes = libraryEntry.getNotes();
+        mWatchingStatus = libraryEntry.getStatus();
     }
 
-    private LibraryUpdate(final String animeId) {
-        mAnimeId = animeId;
+    private LibraryUpdate(final Parcel source) {
+        mLibraryEntry = source.readParcelable(LibraryEntry.class.getClassLoader());
+        mIsPrivate = source.readInt() != 0;
+        mIsRewatching = source.readInt() != 0;
+        mEpisodesWatched = source.readInt();
+        mRewatchCount = source.readInt();
+        mRating = source.readParcelable(Rating.class.getClassLoader());
+        mNotes = source.readString();
+        mWatchingStatus = source.readParcelable(WatchingStatus.class.getClassLoader());
     }
 
     public boolean containsModifications() {
-        return mEpisodesWatched != null || mIsRewatching != null || mRewatchedTimes != null ||
-                mPrivacy != null || mNotes != null || mWatchingStatus != null || mRating != null;
+        return mIsPrivate != mLibraryEntry.isPrivate() ||
+                mIsRewatching != mLibraryEntry.isRewatching() ||
+                mEpisodesWatched != mLibraryEntry.getEpisodesWatched() ||
+                mRewatchCount != mLibraryEntry.getRewatchedTimes() ||
+                mRating != Rating.from(mLibraryEntry) ||
+                !TextUtils.equals(mNotes, mLibraryEntry.getNotes()) ||
+                mWatchingStatus != mLibraryEntry.getStatus();
     }
 
-    public String getAnimeId() {
-        return mAnimeId;
-    }
-
-    @Nullable
-    public Integer getEpisodesWatched() {
+    public int getEpisodesWatched() {
         return mEpisodesWatched;
+    }
+
+    public LibraryEntry getLibraryEntry() {
+        return mLibraryEntry;
     }
 
     @Nullable
@@ -77,18 +71,12 @@ public class LibraryUpdate implements Parcelable {
     }
 
     @Nullable
-    public Privacy getPrivacy() {
-        return mPrivacy;
-    }
-
-    @Nullable
     public Rating getRating() {
         return mRating;
     }
 
-    @Nullable
-    public Integer getRewatchedTimes() {
-        return mRewatchedTimes;
+    public int getRewatchCount() {
+        return mRewatchCount;
     }
 
     @Nullable
@@ -100,86 +88,88 @@ public class LibraryUpdate implements Parcelable {
         return mIsPrivate;
     }
 
-    @Nullable
-    public Boolean isRewatching() {
+    public boolean isRewatching() {
         return mIsRewatching;
     }
 
-    public void setEpisodesWatched(@Nullable final Integer episodesWatched,
-            final LibraryEntry libraryEntry) {
-        if (MiscUtils.integerEquals(episodesWatched, libraryEntry.getEpisodesWatched())) {
-            mEpisodesWatched = null;
+    public void setEpisodesWatched(final int episodesWatched) {
+        if (episodesWatched < 0) {
+            throw new IllegalArgumentException("episodesWatched is negative: " + episodesWatched);
+        }
+
+        mEpisodesWatched = episodesWatched;
+    }
+
+    public void setNotes(@Nullable String notes) {
+        if (TextUtils.isEmpty(notes) || TextUtils.getTrimmedLength(notes) == 0) {
+            notes = null;
         } else {
-            mEpisodesWatched = episodesWatched;
+            notes = notes.trim();
+        }
+
+        mNotes = notes;
+    }
+
+    public void setPrivacy(final Privacy privacy) {
+        if (Privacy.PRIVATE == privacy) {
+            mIsPrivate = true;
+        } else if (Privacy.PUBLIC == privacy) {
+            mIsPrivate = false;
+        } else {
+            throw new IllegalArgumentException("privacy is an illegal value: " + privacy);
         }
     }
 
-    public void setNotes(@Nullable final String notes, final LibraryEntry libraryEntry) {
-        if (TextUtils.equals(notes, libraryEntry.getNotes())) {
-            mNotes = null;
-        } else {
-            mNotes = notes;
-
-            if (!TextUtils.isEmpty(mNotes)) {
-                mNotes = mNotes.trim();
-            }
-        }
+    public void setRating(@Nullable final Rating rating) {
+        mRating = rating;
     }
 
-    public void setPrivacy(@Nullable final Privacy privacy, final LibraryEntry libraryEntry) {
-        if (privacy == null || (privacy == Privacy.PRIVATE && libraryEntry.isPrivate())
-                || (privacy == Privacy.PUBLIC && !libraryEntry.isPrivate())) {
-            mPrivacy = null;
-        } else {
-            mPrivacy = privacy;
+    public void setRewatchCount(final int rewatchCount) {
+        if (rewatchCount < 0) {
+            throw new IllegalArgumentException("rewatchCount is negative: " + rewatchCount);
         }
+
+        mRewatchCount = rewatchCount;
     }
 
-    public void setRating(final Rating rating, final LibraryEntry libraryEntry) {
-        if (rating == Rating.from(libraryEntry)) {
-            mRating = null;
-        } else {
-            mRating = rating;
-        }
+    public void setRewatching(final boolean rewatching) {
+        mIsRewatching = rewatching;
     }
 
-    public void setRewatchedTimes(@Nullable final Integer rewatchedTimes,
-            final LibraryEntry libraryEntry) {
-        if (MiscUtils.integerEquals(rewatchedTimes, libraryEntry.getRewatchedTimes())) {
-            mRewatchedTimes = null;
-        } else {
-            mRewatchedTimes = rewatchedTimes;
+    public void setWatchingStatus(final WatchingStatus watchingStatus) {
+        if (watchingStatus == null) {
+            throw new IllegalArgumentException("watchingStatus can't be null");
         }
-    }
 
-    public void setRewatching(final boolean rewatching, final LibraryEntry libraryEntry) {
-        if (MiscUtils.booleanEquals(rewatching, libraryEntry.isRewatching())) {
-            mIsRewatching = null;
-        } else {
-            mIsRewatching = rewatching;
-        }
-    }
-
-    public void setWatchingStatus(@Nullable final WatchingStatus watchingStatus,
-            final LibraryEntry libraryEntry) {
-        if (WatchingStatus.equals(watchingStatus, libraryEntry.getStatus())) {
-            mWatchingStatus = null;
-        } else {
-            mWatchingStatus = watchingStatus;
-        }
+        mWatchingStatus = watchingStatus;
     }
 
     public JsonObject toJson() {
-        final JsonElement libraryUpdate = GsonUtils.getGson().toJsonTree(this);
-        final JsonObject json = new JsonObject();
-        json.add("library_entry", libraryUpdate);
+        final JsonObject inner = new JsonObject();
+        inner.addProperty("anime_id", mLibraryEntry.getId());
+        inner.addProperty("private", mIsPrivate);
+        inner.addProperty("rewatching", mIsRewatching);
+        inner.addProperty("episodes_watched", mEpisodesWatched);
+        inner.addProperty("rewatch_count", mRewatchCount);
 
-        return json;
-    }
+        if (mRating == null || mRating == Rating.UNRATED) {
+            inner.add("rating", null);
+        } else {
+            inner.addProperty("rating", mRating.mValue);
+        }
 
-    @Override
-    public String toString() {
-        return getAnimeId();
+        if (TextUtils.isEmpty(mNotes) || TextUtils.getTrimmedLength(mNotes) == 0) {
+            inner.add("notes", null);
+        } else {
+            inner.addProperty("notes", mNotes);
+        }
+
+        inner.addProperty("status", mWatchingStatus.getLibraryUpdateValue());
+
+        final JsonObject outer = new JsonObject();
+        outer.add("library_entry", inner);
+
+        return outer;
     }
 
     @Override
@@ -190,13 +180,12 @@ public class LibraryUpdate implements Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         // intentionally at the top
-        dest.writeString(mAnimeId);
+        dest.writeParcelable(mLibraryEntry, flags);
 
         dest.writeInt(mIsPrivate ? 1 : 0);
-        ParcelableUtils.writeBoolean(mIsRewatching, dest);
-        ParcelableUtils.writeInteger(mEpisodesWatched, dest);
-        ParcelableUtils.writeInteger(mRewatchedTimes, dest);
-        dest.writeParcelable(mPrivacy, flags);
+        dest.writeInt(mIsRewatching ? 1 : 0);
+        dest.writeInt(mEpisodesWatched);
+        dest.writeInt(mRewatchCount);
         dest.writeParcelable(mRating, flags);
         dest.writeString(mNotes);
         dest.writeParcelable(mWatchingStatus, flags);
@@ -205,16 +194,7 @@ public class LibraryUpdate implements Parcelable {
     public static final Creator<LibraryUpdate> CREATOR = new Creator<LibraryUpdate>() {
         @Override
         public LibraryUpdate createFromParcel(final Parcel source) {
-            final LibraryUpdate lu = new LibraryUpdate(source.readString());
-            lu.mIsPrivate = source.readInt() != 0;
-            lu.mIsRewatching = ParcelableUtils.readBoolean(source);
-            lu.mEpisodesWatched = ParcelableUtils.readInteger(source);
-            lu.mRewatchedTimes = ParcelableUtils.readInteger(source);
-            lu.mPrivacy = source.readParcelable(Privacy.class.getClassLoader());
-            lu.mRating = source.readParcelable(Rating.class.getClassLoader());
-            lu.mNotes = source.readString();
-            lu.mWatchingStatus = source.readParcelable(WatchingStatus.class.getClassLoader());
-            return lu;
+            return new LibraryUpdate(source);
         }
 
         @Override

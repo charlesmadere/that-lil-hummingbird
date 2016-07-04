@@ -61,7 +61,7 @@ public final class Api {
 
             @Override
             public void onFailure(final Call<Void> call, final Throwable t) {
-                Timber.e(TAG, "add library entry (" + libraryUpdate.getAnimeId() + ") failed", t);
+                Timber.e(TAG, "add library entry failed", t);
                 listener.failure(null);
             }
         });

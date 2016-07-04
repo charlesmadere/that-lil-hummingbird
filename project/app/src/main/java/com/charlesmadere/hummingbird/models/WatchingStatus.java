@@ -2,7 +2,6 @@ package com.charlesmadere.hummingbird.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 
 import com.charlesmadere.hummingbird.R;
@@ -12,23 +11,24 @@ public enum WatchingStatus implements Parcelable {
 
     @SerializedName("completed")
     COMPLETED(R.string.completed_library_is_empty, R.string.error_loading_completed_library,
-            R.string.completed),
+            R.string.completed, "Completed"),
 
     @SerializedName("currently-watching")
     CURRENTLY_WATCHING(R.string.currently_watching_library_is_empty,
-            R.string.error_loading_currently_watching_library, R.string.currently_watching),
+            R.string.error_loading_currently_watching_library, R.string.currently_watching,
+            "Currently Watching"),
 
     @SerializedName("dropped")
     DROPPED(R.string.dropped_library_is_empty, R.string.error_loading_dropped_library,
-            R.string.dropped),
+            R.string.dropped, "Dropped"),
 
     @SerializedName("on-hold")
     ON_HOLD(R.string.on_hold_library_is_empty, R.string.error_loading_on_hold_library,
-            R.string.on_hold),
+            R.string.on_hold, "On Hold"),
 
     @SerializedName("plan-to-watch")
     PLAN_TO_WATCH(R.string.plan_to_watch_library_is_empty,
-            R.string.error_loading_plan_to_watch_library, R.string.plan_to_watch);
+            R.string.error_loading_plan_to_watch_library, R.string.plan_to_watch, "Plan to Watch");
 
     @StringRes
     private final int mEmptyTextResId;
@@ -39,17 +39,15 @@ public enum WatchingStatus implements Parcelable {
     @StringRes
     private final int mTextResId;
 
+    private final String mLibraryUpdateValue;
 
-    public static boolean equals(@Nullable final WatchingStatus lhs,
-            @Nullable final WatchingStatus rhs) {
-        return lhs == null && rhs == null || lhs != null && rhs != null && lhs.equals(rhs);
-    }
 
     WatchingStatus(@StringRes final int emptyTextResId, @StringRes final int errorTextResId,
-            @StringRes final int textResId) {
+            @StringRes final int textResId, final String libraryUpdateValue) {
         mEmptyTextResId = emptyTextResId;
         mErrorTextResId = errorTextResId;
         mTextResId = textResId;
+        mLibraryUpdateValue = libraryUpdateValue;
     }
 
     @StringRes
@@ -60,6 +58,10 @@ public enum WatchingStatus implements Parcelable {
     @StringRes
     public int getErrorTextResId() {
         return mErrorTextResId;
+    }
+
+    public String getLibraryUpdateValue() {
+        return mLibraryUpdateValue;
     }
 
     @StringRes
