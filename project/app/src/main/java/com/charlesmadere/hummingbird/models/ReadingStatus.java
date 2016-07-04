@@ -11,23 +11,24 @@ public enum ReadingStatus implements Parcelable {
 
     @SerializedName("completed")
     COMPLETED(R.string.completed_library_is_empty, R.string.error_loading_completed_library,
-            R.string.completed),
+            R.string.completed, "Completed"),
 
     @SerializedName("currently-reading")
     CURRENTLY_READING(R.string.currently_reading_library_is_empty,
-            R.string.error_loading_currently_reading_library, R.string.currently_reading),
+            R.string.error_loading_currently_reading_library, R.string.currently_reading,
+            "Currently Reading"),
 
     @SerializedName("dropped")
     DROPPED(R.string.dropped_library_is_empty, R.string.error_loading_dropped_library,
-            R.string.dropped),
+            R.string.dropped, "Dropped"),
 
     @SerializedName("on-hold")
     ON_HOLD(R.string.on_hold_library_is_empty, R.string.error_loading_on_hold_library,
-            R.string.on_hold),
+            R.string.on_hold, "On Hold"),
 
     @SerializedName("plan-to-read")
     PLAN_TO_READ(R.string.plan_to_read_library_is_empty,
-            R.string.error_loading_plan_to_read_library, R.string.plan_to_read);
+            R.string.error_loading_plan_to_read_library, R.string.plan_to_read, "Plan to Read");
 
     @StringRes
     private final int mEmptyTextResId;
@@ -38,12 +39,15 @@ public enum ReadingStatus implements Parcelable {
     @StringRes
     private final int mTextResId;
 
+    private final String mLibraryUpdateValue;
+
 
     ReadingStatus(@StringRes final int emptyTextResId, @StringRes final int errorTextResId,
-            @StringRes final int textResId) {
+            @StringRes final int textResId, final String libraryUpdateValue) {
         mEmptyTextResId = emptyTextResId;
         mErrorTextResId = errorTextResId;
         mTextResId = textResId;
+        mLibraryUpdateValue = libraryUpdateValue;
     }
 
     @StringRes
@@ -54,6 +58,10 @@ public enum ReadingStatus implements Parcelable {
     @StringRes
     public int getErrorTextResId() {
         return mErrorTextResId;
+    }
+
+    public String getLibraryUpdateValue() {
+        return mLibraryUpdateValue;
     }
 
     @StringRes
