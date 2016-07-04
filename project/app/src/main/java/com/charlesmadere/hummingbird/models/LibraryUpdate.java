@@ -34,11 +34,7 @@ public class LibraryUpdate implements Parcelable {
     @SerializedName("rating")
     private Rating mRating;
 
-    @Nullable
-    @SerializedName("sane_rating_update")
-    private Rating mSaneRating;
-
-    @SerializedName("id")
+    @SerializedName("anime_id")
     private final String mAnimeId;
 
     @Nullable
@@ -52,7 +48,6 @@ public class LibraryUpdate implements Parcelable {
 
     public LibraryUpdate(final LibraryEntry libraryEntry) {
         this(libraryEntry.getAnime().getId());
-        mSaneRating = Rating.from(libraryEntry);
     }
 
     private LibraryUpdate(final String animeId) {
@@ -91,11 +86,6 @@ public class LibraryUpdate implements Parcelable {
     @Nullable
     public Integer getRewatchedTimes() {
         return mRewatchedTimes;
-    }
-
-    @Nullable
-    public Rating getSaneRating() {
-        return mSaneRating;
     }
 
     @Nullable
@@ -141,10 +131,8 @@ public class LibraryUpdate implements Parcelable {
     public void setRating(final Rating rating, final LibraryEntry libraryEntry) {
         if (rating == Rating.from(libraryEntry)) {
             mRating = null;
-            mSaneRating = rating;
         } else {
             mRating = rating;
-            mSaneRating = null;
         }
     }
 
@@ -202,7 +190,6 @@ public class LibraryUpdate implements Parcelable {
         ParcelableUtils.writeInteger(mRewatchedTimes, dest);
         dest.writeParcelable(mPrivacy, flags);
         dest.writeParcelable(mRating, flags);
-        dest.writeParcelable(mSaneRating, flags);
         dest.writeString(mNotes);
         dest.writeParcelable(mWatchingStatus, flags);
     }
@@ -216,7 +203,6 @@ public class LibraryUpdate implements Parcelable {
             lu.mRewatchedTimes = ParcelableUtils.readInteger(source);
             lu.mPrivacy = source.readParcelable(Privacy.class.getClassLoader());
             lu.mRating = source.readParcelable(Rating.class.getClassLoader());
-            lu.mSaneRating = source.readParcelable(Rating.class.getClassLoader());
             lu.mNotes = source.readString();
             lu.mWatchingStatus = source.readParcelable(WatchingStatus.class.getClassLoader());
             return lu;
@@ -227,6 +213,5 @@ public class LibraryUpdate implements Parcelable {
             return new LibraryUpdate[size];
         }
     };
-
 
 }
