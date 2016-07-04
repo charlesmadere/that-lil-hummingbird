@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
@@ -32,14 +31,14 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
-public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment implements
+public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment implements
         ModifyPublicPrivateSpinner.OnItemSelectedListener,
         ModifyRatingSpinner.OnItemSelectedListener,
         ModifyRewatchCountView.OnRewatchCountChangedListener,
         ModifyWatchCountView.OnWatchCountChangedListener,
         ModifyWatchingStatusSpinner.OnItemSelectedListener {
 
-    public static final String TAG = "LibraryUpdateFragment";
+    public static final String TAG = "AnimeLibraryUpdateFragment";
     private static final String KEY_LIBRARY_ENTRY = "LibraryEntry";
     private static final String KEY_LIBRARY_UPDATE = "LibraryUpdate";
 
@@ -55,9 +54,6 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
 
     @BindView(R.id.ibSave)
     ImageButton mSave;
-
-    @BindView(R.id.llRewatching)
-    LinearLayout mRewatchingContainer;
 
     @BindView(R.id.modifyPublicPrivateSpinner)
     ModifyPublicPrivateSpinner mModifyPublicPrivateSpinner;
@@ -78,11 +74,11 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     TextView mTitle;
 
 
-    public static LibraryUpdateFragment create(final LibraryEntry libraryEntry) {
+    public static AnimeLibraryUpdateFragment create(final LibraryEntry libraryEntry) {
         final Bundle args = new Bundle(1);
         args.putParcelable(KEY_LIBRARY_ENTRY, libraryEntry);
 
-        final LibraryUpdateFragment fragment = new LibraryUpdateFragment();
+        final AnimeLibraryUpdateFragment fragment = new AnimeLibraryUpdateFragment();
         fragment.setArguments(args);
 
         return fragment;
@@ -142,7 +138,7 @@ public class LibraryUpdateFragment extends BaseBottomSheetDialogFragment impleme
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_library_update, container, false);
+        return inflater.inflate(R.layout.fragment_anime_library_update, container, false);
     }
 
     @OnClick(R.id.ibDelete)

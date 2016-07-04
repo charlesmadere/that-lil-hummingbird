@@ -17,7 +17,7 @@ import android.view.MenuItem;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.AnimeEpisodeFragment;
-import com.charlesmadere.hummingbird.fragments.LibraryUpdateFragment;
+import com.charlesmadere.hummingbird.fragments.AnimeLibraryUpdateFragment;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
@@ -33,7 +33,7 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 
 public class AnimeActivity extends BaseDrawerActivity implements
-        AnimeEpisodeItemView.OnClickListener, LibraryUpdateFragment.Listeners {
+        AnimeEpisodeItemView.OnClickListener, AnimeLibraryUpdateFragment.Listeners {
 
     private static final String TAG = "AnimeActivity";
     private static final String CNAME = AnimeActivity.class.getCanonicalName();
