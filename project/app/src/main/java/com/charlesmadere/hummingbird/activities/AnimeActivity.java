@@ -33,7 +33,7 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 
 public class AnimeActivity extends BaseDrawerActivity implements
-        AnimeEpisodeItemView.OnClickListener, AnimeLibraryUpdateFragment.Listeners {
+        AnimeEpisodeItemView.OnClickListener, AnimeLibraryUpdateFragment.UpdateListener {
 
     private static final String TAG = "AnimeActivity";
     private static final String CNAME = AnimeActivity.class.getCanonicalName();
@@ -136,7 +136,8 @@ public class AnimeActivity extends BaseDrawerActivity implements
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.miAddToLibrary:
-                // TODO
+                AnimeLibraryUpdateFragment.create(mAnimeDigest).show(getSupportFragmentManager(),
+                        AnimeLibraryUpdateFragment.TAG);
                 return true;
         }
 
@@ -150,11 +151,6 @@ public class AnimeActivity extends BaseDrawerActivity implements
         }
 
         return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public void onRemoveLibraryEntry() {
-        // TODO
     }
 
     @Override

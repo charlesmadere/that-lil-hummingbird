@@ -46,13 +46,17 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     private AnimeDigest mAnimeDigest;
     private AnimeLibraryEntry mLibraryEntry;
     private AnimeLibraryUpdate mLibraryUpdate;
-    private Listeners mListeners;
+    private RemoveListener mRemoveListener;
+    private UpdateListener mUpdateListener;
 
     @BindView(R.id.cbRewatching)
     CheckBox mRewatching;
 
     @BindView(R.id.etPersonalNotes)
     EditText mPersonalNotes;
+
+    @BindView(R.id.ibDelete)
+    ImageButton mDelete;
 
     @BindView(R.id.ibSave)
     ImageButton mSave;
@@ -114,18 +118,26 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         super.onAttach(context);
 
         final Fragment fragment = getParentFragment();
-        if (fragment instanceof Listeners) {
-            mListeners = (Listeners) fragment;
+        if (fragment instanceof UpdateListener) {
+            mUpdateListener = (UpdateListener) fragment;
+
+            if (fragment instanceof RemoveListener) {
+                mRemoveListener = (RemoveListener) fragment;
+            }
         } else {
             final Activity activity = MiscUtils.getActivity(context);
 
-            if (activity instanceof Listeners) {
-                mListeners = (Listeners) activity;
+            if (activity instanceof UpdateListener) {
+                mUpdateListener = (UpdateListener) activity;
+
+                if (activity instanceof RemoveListener) {
+                    mRemoveListener = (RemoveListener) activity;
+                }
             }
         }
 
-        if (mListeners == null) {
-            throw new IllegalStateException(TAG + " must have a Listener");
+        if (mUpdateListener == null && mRemoveListener == null) {
+            throw new IllegalStateException(TAG + " must have a listener attached");
         }
     }
 
@@ -170,7 +182,7 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
-                        mListeners.onRemoveLibraryEntry();
+                        mRemoveListener.onRemoveLibraryEntry();
                         dismiss();
                     }
                 })
@@ -229,7 +241,7 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
 
     @OnClick(R.id.ibSave)
     void onSaveClick() {
-        mListeners.onUpdateLibraryEntry();
+        mUpdateListener.onUpdateLibraryEntry();
         dismiss();
     }
 
@@ -248,6 +260,10 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
 
         mTitle.setText(mLibraryUpdate.getAnimeTitle());
         mSave.setEnabled(false);
+
+        if (mRemoveListener != null) {
+            mDelete.setVisibility(View.VISIBLE);
+        }
 
         if (mAnimeDigest == null) {
             mModifyWatchCountView.setContent(mLibraryUpdate, mLibraryEntry);
@@ -281,8 +297,11 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     }
 
 
-    public interface Listeners {
+    public interface RemoveListener {
         void onRemoveLibraryEntry();
+    }
+
+    public interface UpdateListener {
         void onUpdateLibraryEntry();
     }
 
