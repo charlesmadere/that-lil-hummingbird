@@ -68,9 +68,6 @@ public class SettingsActivity extends BaseDrawerActivity {
     @BindView(R.id.cpvWifiRequired)
     CheckablePreferenceView mWifiRequired;
 
-    @BindView(R.id.hbivAnimeTitleLanguage)
-    HeadBodyItemView mAnimeTitleLanguage;
-
     @BindView(R.id.hbivLastPoll)
     HeadBodyItemView mLastPoll;
 
@@ -79,6 +76,9 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @BindView(R.id.hbivTheme)
     HeadBodyItemView mTheme;
+
+    @BindView(R.id.hbivTitleLanguage)
+    HeadBodyItemView mTitleLanguage;
 
     @BindView(R.id.kvtvGetHummingbirdPro)
     KeyValueTextView mGetHummingbirdPro;
@@ -115,7 +115,7 @@ public class SettingsActivity extends BaseDrawerActivity {
         }
     }
 
-    @OnClick(R.id.hbivAnimeTitleLanguage)
+    @OnClick(R.id.hbivTitleLanguage)
     void onAnimeTitleLanguageClick() {
         final TitleType[] values = TitleType.values();
         CharSequence items[] = new CharSequence[values.length];
@@ -132,7 +132,7 @@ public class SettingsActivity extends BaseDrawerActivity {
                         refresh();
                     }
                 })
-                .setTitle(R.string.preferred_anime_title_language)
+                .setTitle(R.string.preferred_title_language)
                 .show();
     }
 
@@ -330,7 +330,7 @@ public class SettingsActivity extends BaseDrawerActivity {
     }
 
     private void refresh() {
-        mAnimeTitleLanguage.setBody(Preferences.General.TitleLanguage.get().getTextResId());
+        mTitleLanguage.setBody(Preferences.General.TitleLanguage.get().getTextResId());
         mTheme.setBody(Preferences.General.Theme.get().getTextResId());
         mShowNsfwContent.refresh();
 
