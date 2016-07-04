@@ -127,7 +127,6 @@ public class CheckablePreferenceView extends RelativeLayout implements
     }
 
     public void refresh() {
-        setEnabled(mPreference != null);
         mCheckable.setChecked(Boolean.TRUE.equals(mPreference.get()));
 
         if (mCheckable.isChecked()) {
