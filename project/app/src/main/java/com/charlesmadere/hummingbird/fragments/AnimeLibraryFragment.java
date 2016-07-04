@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.LibraryEntriesAdapter;
@@ -171,6 +172,11 @@ public class AnimeLibraryFragment extends BaseFragment implements AnimeLibraryUp
         }
     }
 
+    private void showEditLibraryEntryError() {
+        mRefreshLayout.setRefreshing(false);
+        Toast.makeText(getContext(), R.string.error_editing_library_entry, Toast.LENGTH_LONG).show();
+    }
+
     private void showError() {
         mRecyclerView.setVisibility(View.GONE);
         mEmpty.setVisibility(View.GONE);
@@ -207,7 +213,7 @@ public class AnimeLibraryFragment extends BaseFragment implements AnimeLibraryUp
             final AnimeLibraryFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {
-                // TODO
+                fragment.showEditLibraryEntryError();
             }
         }
 
