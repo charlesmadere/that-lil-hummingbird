@@ -53,6 +53,8 @@
     <string name="contact">Contact</string>
     <string name="credits">Credits</string>
     <string name="currently_airing">Currently Airing</string>
+    <string name="currently_reading">Currently Reading</string>
+    <string name="currently_reading_library_is_empty">Currently reading library is empty</string>
     <string name="currently_watching">Currently Watching</string>
     <string name="currently_watching_library_is_empty">Currently watching library is empty</string>
     <string name="day">Day</string>
@@ -76,6 +78,7 @@
     <string name="error_loading_app_news">Error loading app news</string>
     <string name="error_loading_comments">Error loading comments</string>
     <string name="error_loading_completed_library">Error loading completed library</string>
+    <string name="error_loading_currently_reading_library">Error loading currently reading library</string>
     <string name="error_loading_currently_watching_library">Error loading currently watching library</string>
     <string name="error_loading_dropped_library">Error loading dropped library</string>
     <string name="error_loading_favorites">Error loading favorites</string>
@@ -89,6 +92,7 @@
     <string name="error_loading_manga">Error loading manga! Please check your network connection and try again.</string>
     <string name="error_loading_notifications">Error loading notifications</string>
     <string name="error_loading_on_hold_library">Error loading on hold library</string>
+    <string name="error_loading_plan_to_read_library">Error loading plan to read library</string>
     <string name="error_loading_plan_to_watch_library">Error loading plan to watch library</string>
     <string name="error_loading_reviews">Error loading reviews</string>
     <string name="error_loading_search_results">Error loading search results</string>
@@ -218,8 +222,11 @@
     <string name="password">Password</string>
     <string name="personal_notes">Personal notes</string>
     <string name="pg13">PG13</string>
+    <string name="plan_to_read">Plan to Read</string>
+    <string name="plan_to_read_library_is_empty">Plan to read library is empty</string>
     <string name="plan_to_watch">Plan to Watch</string>
     <string name="plan_to_watch_library_is_empty">Plan to watch library is empty</string>
+    <string name="plans_to_read">plans to read</string>
     <string name="plans_to_watch">plans to watch</string>
     <string name="poll_frequency">Poll frequency</string>
     <string name="posted_to">posted to</string>
