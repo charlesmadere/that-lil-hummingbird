@@ -121,7 +121,7 @@ public class AnimeLibraryFragment extends BaseFragment implements AnimeLibraryUp
     public void onRemoveLibraryEntry() {
         final AnimeLibraryUpdateFragment fragment = (AnimeLibraryUpdateFragment)
                 getChildFragmentManager().findFragmentByTag(AnimeLibraryUpdateFragment.TAG);
-        final AnimeLibraryEntry libraryEntry = fragment.getLibraryUpdate().getLibraryEntry();
+        final AnimeLibraryEntry libraryEntry = fragment.getLibraryEntry();
 
         mRefreshLayout.setRefreshing(true);
         Api.removeLibraryEntry(libraryEntry, new EditLibraryEntryListener(this));
@@ -141,7 +141,7 @@ public class AnimeLibraryFragment extends BaseFragment implements AnimeLibraryUp
         final AnimeLibraryUpdateFragment fragment = (AnimeLibraryUpdateFragment)
                 getChildFragmentManager().findFragmentByTag(AnimeLibraryUpdateFragment.TAG);
         final AnimeLibraryUpdate libraryUpdate = fragment.getLibraryUpdate();
-        final String libraryEntryId = fragment.getLibraryUpdate().getLibraryEntry().getId();
+        final String libraryEntryId = fragment.getLibraryEntry().getId();
 
         mRefreshLayout.setRefreshing(true);
         Api.updateLibraryEntry(libraryEntryId, libraryUpdate, new EditLibraryEntryListener(this));

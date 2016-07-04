@@ -35,7 +35,7 @@ public class AnimeLibraryUpdateTest {
         mLibraryUpdate.setEpisodesWatched(mLibraryUpdate.getEpisodesWatched() + 1);
         assertTrue(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setEpisodesWatched(mLibraryUpdate.getLibraryEntry().getEpisodesWatched());
+        mLibraryUpdate.setEpisodesWatched(mLibraryUpdate.getDefaults().getEpisodesWatched());
         assertFalse(mLibraryUpdate.containsModifications());
 
         mLibraryUpdate.setEpisodesWatched(mLibraryUpdate.getEpisodesWatched() + 2);
@@ -52,7 +52,7 @@ public class AnimeLibraryUpdateTest {
         mLibraryUpdate.setNotes("Hello, World!");
         assertTrue(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setNotes(mLibraryUpdate.getLibraryEntry().getNotes());
+        mLibraryUpdate.setNotes(mLibraryUpdate.getDefaults().getNotes());
         assertFalse(mLibraryUpdate.containsModifications());
     }
 
@@ -60,14 +60,14 @@ public class AnimeLibraryUpdateTest {
     public void testSetPrivacyModifications() throws Exception {
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setPrivacy(mLibraryUpdate.getLibraryEntry().isPrivate() ?
+        mLibraryUpdate.setPrivacy(mLibraryUpdate.getDefaults().isPrivate() ?
                 Privacy.PRIVATE : Privacy.PUBLIC);
         assertFalse(mLibraryUpdate.containsModifications());
 
         mLibraryUpdate.setPrivacy(mLibraryUpdate.isPrivate() ? Privacy.PUBLIC : Privacy.PRIVATE);
         assertTrue(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setPrivacy(mLibraryUpdate.getLibraryEntry().isPrivate() ?
+        mLibraryUpdate.setPrivacy(mLibraryUpdate.getDefaults().isPrivate() ?
                 Privacy.PRIVATE : Privacy.PUBLIC);
         assertFalse(mLibraryUpdate.containsModifications());
     }
@@ -76,13 +76,13 @@ public class AnimeLibraryUpdateTest {
     public void testSetRating() throws Exception {
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setRating(Rating.from(mLibraryUpdate.getLibraryEntry()));
+        mLibraryUpdate.setRating(mLibraryUpdate.getDefaults().getRating());
         assertFalse(mLibraryUpdate.containsModifications());
 
         mLibraryUpdate.setRating(Rating.FOUR);
         assertTrue(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setRating(Rating.from(mLibraryUpdate.getLibraryEntry()));
+        mLibraryUpdate.setRating(mLibraryUpdate.getDefaults().getRating());
         assertFalse(mLibraryUpdate.containsModifications());
 
         mLibraryUpdate.setRating(Rating.UNRATED);
@@ -90,16 +90,16 @@ public class AnimeLibraryUpdateTest {
     }
 
     @Test
-    public void testSetRewatchedTimes() throws Exception {
+    public void testSetRewatchCount() throws Exception {
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setRewatchCount(mLibraryUpdate.getRewatchCount());
+        mLibraryUpdate.setRewatchCount(mLibraryUpdate.getDefaults().getRewatchCount());
         assertFalse(mLibraryUpdate.containsModifications());
 
         mLibraryUpdate.setRewatchCount(5);
         assertTrue(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setRewatchCount(mLibraryUpdate.getLibraryEntry().getRewatchedTimes());
+        mLibraryUpdate.setRewatchCount(mLibraryUpdate.getDefaults().getRewatchCount());
         assertFalse(mLibraryUpdate.containsModifications());
 
         mLibraryUpdate.setRewatchCount(20);
@@ -124,13 +124,13 @@ public class AnimeLibraryUpdateTest {
     public void testSetWatchingStatus() throws Exception {
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setWatchingStatus(mLibraryUpdate.getWatchingStatus());
+        mLibraryUpdate.setWatchingStatus(mLibraryUpdate.getDefaults().getWatchingStatus());
         assertFalse(mLibraryUpdate.containsModifications());
 
         mLibraryUpdate.setWatchingStatus(WatchingStatus.PLAN_TO_WATCH);
         assertTrue(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setWatchingStatus(mLibraryUpdate.getLibraryEntry().getStatus());
+        mLibraryUpdate.setWatchingStatus(mLibraryUpdate.getDefaults().getWatchingStatus());
         assertFalse(mLibraryUpdate.containsModifications());
 
         mLibraryUpdate.setWatchingStatus(WatchingStatus.ON_HOLD);

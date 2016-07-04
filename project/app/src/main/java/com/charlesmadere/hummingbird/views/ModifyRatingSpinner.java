@@ -62,7 +62,7 @@ public class ModifyRatingSpinner extends AppCompatSpinner implements
     }
 
     public void setContent(final AnimeLibraryUpdate libraryUpdate) {
-        setContent(Rating.from(libraryUpdate.getLibraryEntry()));
+        setContent(libraryUpdate.getRating());
     }
 
     public void setContent(@Nullable Rating rating) {

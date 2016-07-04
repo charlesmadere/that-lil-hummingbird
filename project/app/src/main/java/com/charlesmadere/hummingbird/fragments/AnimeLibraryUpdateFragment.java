@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -17,10 +18,9 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
-import com.charlesmadere.hummingbird.models.AbsAnime;
+import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
-import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.charlesmadere.hummingbird.views.ModifyPublicPrivateSpinner;
 import com.charlesmadere.hummingbird.views.ModifyRatingSpinner;
 import com.charlesmadere.hummingbird.views.ModifyRewatchCountView;
@@ -39,9 +39,12 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         ModifyWatchingStatusSpinner.OnItemSelectedListener {
 
     public static final String TAG = "AnimeLibraryUpdateFragment";
-    private static final String KEY_LIBRARY_ENTRY = "AnimeLibraryEntry";
-    private static final String KEY_LIBRARY_UPDATE = "AnimeLibraryUpdate";
+    private static final String KEY_ANIME_DIGEST = "AnimeDigest";
+    private static final String KEY_LIBRARY_ENTRY = "LibraryEntry";
+    private static final String KEY_LIBRARY_UPDATE = "LibraryUpdate";
 
+    private AnimeDigest mAnimeDigest;
+    private AnimeLibraryEntry mLibraryEntry;
     private AnimeLibraryUpdate mLibraryUpdate;
     private Listeners mListeners;
 
@@ -73,8 +76,18 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     TextView mTitle;
 
 
+    public static AnimeLibraryUpdateFragment create(final AnimeDigest animeDigest) {
+        return create(animeDigest, null);
+    }
+
     public static AnimeLibraryUpdateFragment create(final AnimeLibraryEntry libraryEntry) {
-        final Bundle args = new Bundle(1);
+        return create(null, libraryEntry);
+    }
+
+    private static AnimeLibraryUpdateFragment create(@Nullable final AnimeDigest animeDigest,
+            @Nullable final AnimeLibraryEntry libraryEntry) {
+        final Bundle args = new Bundle(2);
+        args.putParcelable(KEY_ANIME_DIGEST, animeDigest);
         args.putParcelable(KEY_LIBRARY_ENTRY, libraryEntry);
 
         final AnimeLibraryUpdateFragment fragment = new AnimeLibraryUpdateFragment();
@@ -86,6 +99,10 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     @Override
     public String getFragmentName() {
         return TAG;
+    }
+
+    public AnimeLibraryEntry getLibraryEntry() {
+        return mLibraryEntry;
     }
 
     public AnimeLibraryUpdate getLibraryUpdate() {
@@ -121,14 +138,20 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        final Bundle args = getArguments();
+        mAnimeDigest = args.getParcelable(KEY_ANIME_DIGEST);
+        mLibraryEntry = args.getParcelable(KEY_LIBRARY_ENTRY);
+
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mLibraryUpdate = savedInstanceState.getParcelable(KEY_LIBRARY_UPDATE);
         }
 
         if (mLibraryUpdate == null) {
-            final Bundle args = getArguments();
-            final AnimeLibraryEntry libraryEntry = args.getParcelable(KEY_LIBRARY_ENTRY);
-            mLibraryUpdate = new AnimeLibraryUpdate(libraryEntry);
+            if (mLibraryEntry == null) {
+                mLibraryUpdate = new AnimeLibraryUpdate(mAnimeDigest);
+            } else {
+                mLibraryUpdate = new AnimeLibraryUpdate(mLibraryEntry);
+            }
         }
     }
 
@@ -223,10 +246,15 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mTitle.setText(mLibraryUpdate.getLibraryEntry().getAnime().getTitle());
+        mTitle.setText(mLibraryUpdate.getAnimeTitle());
         mSave.setEnabled(false);
 
-        mModifyWatchCountView.setContent(mLibraryUpdate);
+        if (mAnimeDigest == null) {
+            mModifyWatchCountView.setContent(mLibraryUpdate, mLibraryEntry);
+        } else {
+            mModifyWatchCountView.setContent(mLibraryUpdate, mAnimeDigest);
+        }
+
         mModifyWatchingStatusSpinner.setContent(mLibraryUpdate);
         mModifyPublicPrivateSpinner.setContent(mLibraryUpdate);
         mModifyRatingSpinner.setContent(mLibraryUpdate);
@@ -244,19 +272,7 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
 
     @Override
     public void onWatchCountChanged(final ModifyWatchCountView v) {
-        final int count = v.getCount();
-        mLibraryUpdate.setEpisodesWatched(count);
-
-        final AbsAnime anime = mLibraryUpdate.getLibraryEntry().getAnime();
-
-        if (anime.hasEpisodeCount()) {
-            if (anime.getEpisodeCount() == count) {
-                mModifyWatchingStatusSpinner.setWatchingStatus(WatchingStatus.COMPLETED);
-            } else {
-                mModifyWatchingStatusSpinner.setWatchingStatus(mLibraryUpdate.getWatchingStatus());
-            }
-        }
-
+        mLibraryUpdate.setEpisodesWatched(v.getCount());
         update();
     }
 
