@@ -5,20 +5,20 @@ import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.models.LibraryEntry;
+import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 import com.charlesmadere.hummingbird.views.InternalAnimeItemView;
-import com.charlesmadere.hummingbird.views.LibraryEntryItemView;
+import com.charlesmadere.hummingbird.views.AnimeLibraryEntryItemView;
 
-public class LibraryEntriesAdapter extends BaseAdapter<LibraryEntry> {
+public class AnimeLibraryEntriesAdapter extends BaseAdapter<AnimeLibraryEntry> {
 
     private final InternalAnimeItemView.OnEditClickListener mEditClickListener;
 
 
-    public LibraryEntriesAdapter(final Context context) {
+    public AnimeLibraryEntriesAdapter(final Context context) {
         this(context, null);
     }
 
-    public LibraryEntriesAdapter(final Context context,
+    public AnimeLibraryEntriesAdapter(final Context context,
             @Nullable final InternalAnimeItemView.OnEditClickListener editClickListener) {
         super(context);
         mEditClickListener = editClickListener;
@@ -32,7 +32,7 @@ public class LibraryEntriesAdapter extends BaseAdapter<LibraryEntry> {
     @Override
     public AdapterView.ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         final AdapterView.ViewHolder viewHolder = super.onCreateViewHolder(parent, viewType);
-        final LibraryEntryItemView view = (LibraryEntryItemView) viewHolder.itemView;
+        final AnimeLibraryEntryItemView view = (AnimeLibraryEntryItemView) viewHolder.itemView;
         view.setOnEditClickListener(mEditClickListener);
         return viewHolder;
     }

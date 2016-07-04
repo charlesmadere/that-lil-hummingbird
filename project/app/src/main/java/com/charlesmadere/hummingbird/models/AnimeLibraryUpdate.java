@@ -7,9 +7,9 @@ import android.text.TextUtils;
 
 import com.google.gson.JsonObject;
 
-public class LibraryUpdate implements Parcelable {
+public class AnimeLibraryUpdate implements Parcelable {
 
-    private final LibraryEntry mLibraryEntry;
+    private final AnimeLibraryEntry mLibraryEntry;
 
     private boolean mIsPrivate;
     private boolean mIsRewatching;
@@ -25,7 +25,7 @@ public class LibraryUpdate implements Parcelable {
     private WatchingStatus mWatchingStatus;
 
 
-    public LibraryUpdate(final LibraryEntry libraryEntry) {
+    public AnimeLibraryUpdate(final AnimeLibraryEntry libraryEntry) {
         mLibraryEntry = libraryEntry;
         mIsPrivate = libraryEntry.isPrivate();
         mIsRewatching = libraryEntry.isRewatching();
@@ -36,8 +36,8 @@ public class LibraryUpdate implements Parcelable {
         mWatchingStatus = libraryEntry.getStatus();
     }
 
-    private LibraryUpdate(final Parcel source) {
-        mLibraryEntry = source.readParcelable(LibraryEntry.class.getClassLoader());
+    private AnimeLibraryUpdate(final Parcel source) {
+        mLibraryEntry = source.readParcelable(AnimeLibraryEntry.class.getClassLoader());
         mIsPrivate = source.readInt() != 0;
         mIsRewatching = source.readInt() != 0;
         mEpisodesWatched = source.readInt();
@@ -61,7 +61,7 @@ public class LibraryUpdate implements Parcelable {
         return mEpisodesWatched;
     }
 
-    public LibraryEntry getLibraryEntry() {
+    public AnimeLibraryEntry getLibraryEntry() {
         return mLibraryEntry;
     }
 
@@ -191,15 +191,15 @@ public class LibraryUpdate implements Parcelable {
         dest.writeParcelable(mWatchingStatus, flags);
     }
 
-    public static final Creator<LibraryUpdate> CREATOR = new Creator<LibraryUpdate>() {
+    public static final Creator<AnimeLibraryUpdate> CREATOR = new Creator<AnimeLibraryUpdate>() {
         @Override
-        public LibraryUpdate createFromParcel(final Parcel source) {
-            return new LibraryUpdate(source);
+        public AnimeLibraryUpdate createFromParcel(final Parcel source) {
+            return new AnimeLibraryUpdate(source);
         }
 
         @Override
-        public LibraryUpdate[] newArray(final int size) {
-            return new LibraryUpdate[size];
+        public AnimeLibraryUpdate[] newArray(final int size) {
+            return new AnimeLibraryUpdate[size];
         }
     };
 

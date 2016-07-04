@@ -9,31 +9,27 @@ import android.view.View;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
-import com.charlesmadere.hummingbird.models.LibraryEntry;
+import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class LibraryEntryItemView extends CardView implements AdapterView<LibraryEntry>,
+public class AnimeLibraryEntryItemView extends CardView implements AdapterView<AnimeLibraryEntry>,
         View.OnClickListener {
 
-    private LibraryEntry mLibraryEntry;
+    private AnimeLibraryEntry mLibraryEntry;
 
     @BindView(R.id.animeView)
     InternalAnimeItemView mAnimeView;
 
 
-    public LibraryEntryItemView(final Context context, final AttributeSet attrs) {
+    public AnimeLibraryEntryItemView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public LibraryEntryItemView(final Context context, final AttributeSet attrs,
+    public AnimeLibraryEntryItemView(final Context context, final AttributeSet attrs,
             final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    public LibraryEntry getLibraryEntry() {
-        return mLibraryEntry;
     }
 
     @Override
@@ -55,7 +51,7 @@ public class LibraryEntryItemView extends CardView implements AdapterView<Librar
     }
 
     @Override
-    public void setContent(final LibraryEntry content) {
+    public void setContent(final AnimeLibraryEntry content) {
         mLibraryEntry = content;
         mAnimeView.setContent(content);
     }

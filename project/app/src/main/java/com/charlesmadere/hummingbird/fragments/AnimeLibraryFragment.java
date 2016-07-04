@@ -12,10 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.adapters.LibraryEntriesAdapter;
+import com.charlesmadere.hummingbird.adapters.AnimeLibraryEntriesAdapter;
+import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
+import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
-import com.charlesmadere.hummingbird.models.LibraryEntry;
-import com.charlesmadere.hummingbird.models.LibraryUpdate;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
@@ -37,9 +37,9 @@ public class AnimeLibraryFragment extends BaseFragment implements AnimeLibraryUp
     private static final String KEY_USERNAME = "Username";
     private static final String KEY_WATCHING_STATUS = "WatchingStatus";
 
-    private ArrayList<LibraryEntry> mLibraryEntries;
+    private ArrayList<AnimeLibraryEntry> mLibraryEntries;
     private boolean mEditableLibrary;
-    private LibraryEntriesAdapter mAdapter;
+    private AnimeLibraryEntriesAdapter mAdapter;
     private String mUsername;
     private WatchingStatus mWatchingStatus;
 
@@ -121,7 +121,7 @@ public class AnimeLibraryFragment extends BaseFragment implements AnimeLibraryUp
     public void onRemoveLibraryEntry() {
         final AnimeLibraryUpdateFragment fragment = (AnimeLibraryUpdateFragment)
                 getChildFragmentManager().findFragmentByTag(AnimeLibraryUpdateFragment.TAG);
-        final LibraryEntry libraryEntry = fragment.getLibraryUpdate().getLibraryEntry();
+        final AnimeLibraryEntry libraryEntry = fragment.getLibraryUpdate().getLibraryEntry();
 
         mRefreshLayout.setRefreshing(true);
         Api.removeLibraryEntry(libraryEntry, new EditLibraryEntryListener(this));
@@ -140,7 +140,7 @@ public class AnimeLibraryFragment extends BaseFragment implements AnimeLibraryUp
     public void onUpdateLibraryEntry() {
         final AnimeLibraryUpdateFragment fragment = (AnimeLibraryUpdateFragment)
                 getChildFragmentManager().findFragmentByTag(AnimeLibraryUpdateFragment.TAG);
-        final LibraryUpdate libraryUpdate = fragment.getLibraryUpdate();
+        final AnimeLibraryUpdate libraryUpdate = fragment.getLibraryUpdate();
         final String libraryEntryId = fragment.getLibraryUpdate().getLibraryEntry().getId();
 
         mRefreshLayout.setRefreshing(true);
@@ -154,9 +154,9 @@ public class AnimeLibraryFragment extends BaseFragment implements AnimeLibraryUp
         mRefreshLayout.setOnRefreshListener(this);
 
         if (mEditableLibrary) {
-            mAdapter = new LibraryEntriesAdapter(getContext(), this);
+            mAdapter = new AnimeLibraryEntriesAdapter(getContext(), this);
         } else {
-            mAdapter = new LibraryEntriesAdapter(getContext());
+            mAdapter = new AnimeLibraryEntriesAdapter(getContext());
         }
 
         mRecyclerView.setAdapter(mAdapter);
@@ -191,7 +191,7 @@ public class AnimeLibraryFragment extends BaseFragment implements AnimeLibraryUp
         mRefreshLayout.setRefreshing(false);
     }
 
-    private void showList(final ArrayList<LibraryEntry> libraryEntries) {
+    private void showList(final ArrayList<AnimeLibraryEntry> libraryEntries) {
         mLibraryEntries = libraryEntries;
         mAdapter.set(libraryEntries);
         mEmpty.setVisibility(View.GONE);
@@ -227,7 +227,7 @@ public class AnimeLibraryFragment extends BaseFragment implements AnimeLibraryUp
         }
     }
 
-    private static class GetLibraryEntriesListener implements ApiResponse<ArrayList<LibraryEntry>> {
+    private static class GetLibraryEntriesListener implements ApiResponse<ArrayList<AnimeLibraryEntry>> {
         private final WeakReference<AnimeLibraryFragment> mFragmentReference;
 
         private GetLibraryEntriesListener(final AnimeLibraryFragment fragment) {
@@ -244,7 +244,7 @@ public class AnimeLibraryFragment extends BaseFragment implements AnimeLibraryUp
         }
 
         @Override
-        public void success(@Nullable final ArrayList<LibraryEntry> stories) {
+        public void success(@Nullable final ArrayList<AnimeLibraryEntry> stories) {
             final AnimeLibraryFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {

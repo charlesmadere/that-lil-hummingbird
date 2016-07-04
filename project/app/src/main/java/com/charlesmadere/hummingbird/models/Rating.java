@@ -46,8 +46,8 @@ public enum Rating implements Parcelable {
     public final float mValue;
 
 
-    public static Rating from(final LibraryEntry libraryEntry) {
-        final LibraryEntry.Rating rating = libraryEntry.getRating();
+    public static Rating from(final AnimeLibraryEntry animeLibraryEntry) {
+        final AnimeLibraryEntry.Rating rating = animeLibraryEntry.getRating();
 
         if (rating == null || !rating.hasValue()) {
             return UNRATED;

@@ -15,14 +15,14 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
-public class LibraryUpdateTest {
+public class AnimeLibraryUpdateTest {
 
-    private LibraryUpdate mLibraryUpdate;
+    private AnimeLibraryUpdate mLibraryUpdate;
 
 
     @Before
     public void setUp() throws Exception {
-        mLibraryUpdate = new LibraryUpdate(LibraryEntryTest.get());
+        mLibraryUpdate = new AnimeLibraryUpdate(AnimeLibraryEntryTest.get());
     }
 
     @Test

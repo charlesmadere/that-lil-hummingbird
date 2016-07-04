@@ -11,6 +11,8 @@ import com.charlesmadere.hummingbird.misc.Threading;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
+import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
+import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
 import com.charlesmadere.hummingbird.models.AppNews;
 import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.CommentPost;
@@ -20,8 +22,6 @@ import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.FeedPost;
 import com.charlesmadere.hummingbird.models.Franchise;
 import com.charlesmadere.hummingbird.models.GroupDigest;
-import com.charlesmadere.hummingbird.models.LibraryEntry;
-import com.charlesmadere.hummingbird.models.LibraryUpdate;
 import com.charlesmadere.hummingbird.models.MangaDigest;
 import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.charlesmadere.hummingbird.models.SearchDepth;
@@ -46,7 +46,7 @@ public final class Api {
     private static final String TAG = "Api";
 
 
-    public static void addLibraryEntry(final LibraryUpdate libraryUpdate,
+    public static void addLibraryEntry(final AnimeLibraryUpdate libraryUpdate,
             final ApiResponse<Void> listener) {
         hummingbird().addLibraryEntry(getAuthTokenCookieString(), libraryUpdate.toJson())
                 .enqueue(new Callback<Void>() {
@@ -470,12 +470,12 @@ public final class Api {
 
     public static void getLibraryEntries(final String username,
             @Nullable final WatchingStatus watchingStatus,
-            final ApiResponse<ArrayList<LibraryEntry>> listener) {
+            final ApiResponse<ArrayList<AnimeLibraryEntry>> listener) {
         hummingbird().getLibraryEntries(username, watchingStatus).enqueue(
-                new Callback<ArrayList<LibraryEntry>>() {
+                new Callback<ArrayList<AnimeLibraryEntry>>() {
             @Override
-            public void onResponse(final Call<ArrayList<LibraryEntry>> call,
-                    final Response<ArrayList<LibraryEntry>> response) {
+            public void onResponse(final Call<ArrayList<AnimeLibraryEntry>> call,
+                    final Response<ArrayList<AnimeLibraryEntry>> response) {
                 if (response.isSuccessful()) {
                     listener.success(response.body());
                 } else {
@@ -484,7 +484,7 @@ public final class Api {
             }
 
             @Override
-            public void onFailure(final Call<ArrayList<LibraryEntry>> call, final Throwable t) {
+            public void onFailure(final Call<ArrayList<AnimeLibraryEntry>> call, final Throwable t) {
                 Timber.e(TAG, "get library entries for user (" + username + ") failed", t);
                 listener.failure(null);
             }
@@ -895,7 +895,7 @@ public final class Api {
         });
     }
 
-    public static void removeLibraryEntry(final LibraryEntry libraryEntry,
+    public static void removeLibraryEntry(final AnimeLibraryEntry libraryEntry,
             final ApiResponse<Void> listener) {
         removeLibraryEntry(libraryEntry.getId(), listener);
     }
@@ -986,7 +986,7 @@ public final class Api {
     }
 
     public static void updateLibraryEntry(final String libraryEntryId,
-            final LibraryUpdate libraryUpdate, final ApiResponse<Void> listener) {
+            final AnimeLibraryUpdate libraryUpdate, final ApiResponse<Void> listener) {
         hummingbird().updateLibraryEntry(getAuthTokenCookieString(), Constants.MIMETYPE_JSON,
                 libraryEntryId, libraryUpdate.toJson()).enqueue(new Callback<Void>() {
             @Override

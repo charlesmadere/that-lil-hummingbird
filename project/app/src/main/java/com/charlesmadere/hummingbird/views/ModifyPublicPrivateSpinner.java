@@ -13,7 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.models.LibraryUpdate;
+import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
 import com.charlesmadere.hummingbird.models.Privacy;
 
 public class ModifyPublicPrivateSpinner extends AppCompatSpinner implements
@@ -61,7 +61,7 @@ public class ModifyPublicPrivateSpinner extends AppCompatSpinner implements
         // intentionally empty
     }
 
-    public void setContent(final LibraryUpdate libraryUpdate) {
+    public void setContent(final AnimeLibraryUpdate libraryUpdate) {
         setContent(libraryUpdate.isPrivate() ? Privacy.PRIVATE : Privacy.PUBLIC);
     }
 

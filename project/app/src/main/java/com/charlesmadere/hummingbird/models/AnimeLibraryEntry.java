@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
-public class LibraryEntry implements Parcelable {
+public class AnimeLibraryEntry implements Parcelable {
 
     @SerializedName("anime")
     private AbsAnime mAnime;
@@ -130,10 +130,10 @@ public class LibraryEntry implements Parcelable {
         dest.writeParcelable(mStatus, flags);
     }
 
-    public static final Creator<LibraryEntry> CREATOR = new Creator<LibraryEntry>() {
+    public static final Creator<AnimeLibraryEntry> CREATOR = new Creator<AnimeLibraryEntry>() {
         @Override
-        public LibraryEntry createFromParcel(final Parcel source) {
-            final LibraryEntry le = new LibraryEntry();
+        public AnimeLibraryEntry createFromParcel(final Parcel source) {
+            final AnimeLibraryEntry le = new AnimeLibraryEntry();
             le.mAnime = ParcelableUtils.readAbsAnimeFromParcel(source);
             le.mNotesPresent = source.readInt() != 0;
             le.mPrivate = source.readInt() != 0;
@@ -150,8 +150,8 @@ public class LibraryEntry implements Parcelable {
         }
 
         @Override
-        public LibraryEntry[] newArray(final int size) {
-            return new LibraryEntry[size];
+        public AnimeLibraryEntry[] newArray(final int size) {
+            return new AnimeLibraryEntry[size];
         }
     };
 

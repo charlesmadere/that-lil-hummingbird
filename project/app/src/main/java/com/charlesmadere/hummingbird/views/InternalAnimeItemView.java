@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.AbsAnime;
-import com.charlesmadere.hummingbird.models.LibraryEntry;
+import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.text.NumberFormat;
@@ -24,7 +24,7 @@ import butterknife.OnClick;
 public class InternalAnimeItemView extends LinearLayout {
 
     private AbsAnime mAnime;
-    private LibraryEntry mLibraryEntry;
+    private AnimeLibraryEntry mLibraryEntry;
     private NumberFormat mNumberFormat;
     private OnEditClickListener mListener;
 
@@ -72,7 +72,7 @@ public class InternalAnimeItemView extends LinearLayout {
         return mAnime;
     }
 
-    public LibraryEntry getLibraryEntry() {
+    public AnimeLibraryEntry getLibraryEntry() {
         return mLibraryEntry;
     }
 
@@ -121,7 +121,7 @@ public class InternalAnimeItemView extends LinearLayout {
         }
     }
 
-    public void setContent(final LibraryEntry content) {
+    public void setContent(final AnimeLibraryEntry content) {
         setContent(content.getAnime());
         mLibraryEntry = content;
 

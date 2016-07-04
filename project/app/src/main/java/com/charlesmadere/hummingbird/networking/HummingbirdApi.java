@@ -2,11 +2,11 @@ package com.charlesmadere.hummingbird.networking;
 
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
+import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.Franchise;
 import com.charlesmadere.hummingbird.models.GroupDigest;
-import com.charlesmadere.hummingbird.models.LibraryEntry;
 import com.charlesmadere.hummingbird.models.MangaDigest;
 import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.charlesmadere.hummingbird.models.SearchDepth;
@@ -39,7 +39,7 @@ public interface HummingbirdApi {
     Call<String> authenticate(@Body AuthInfo authInfo);
 
     @GET("api/v1/users/{username}/library")
-    Call<ArrayList<LibraryEntry>> getLibraryEntries(@Path("username") String username,
+    Call<ArrayList<AnimeLibraryEntry>> getLibraryEntries(@Path("username") String username,
             @Query("status") WatchingStatus watchingStatus);
 
 

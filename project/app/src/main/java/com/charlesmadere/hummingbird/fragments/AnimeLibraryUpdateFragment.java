@@ -18,8 +18,8 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.AbsAnime;
-import com.charlesmadere.hummingbird.models.LibraryEntry;
-import com.charlesmadere.hummingbird.models.LibraryUpdate;
+import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
+import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.charlesmadere.hummingbird.views.ModifyPublicPrivateSpinner;
 import com.charlesmadere.hummingbird.views.ModifyRatingSpinner;
@@ -39,10 +39,10 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         ModifyWatchingStatusSpinner.OnItemSelectedListener {
 
     public static final String TAG = "AnimeLibraryUpdateFragment";
-    private static final String KEY_LIBRARY_ENTRY = "LibraryEntry";
-    private static final String KEY_LIBRARY_UPDATE = "LibraryUpdate";
+    private static final String KEY_LIBRARY_ENTRY = "AnimeLibraryEntry";
+    private static final String KEY_LIBRARY_UPDATE = "AnimeLibraryUpdate";
 
-    private LibraryUpdate mLibraryUpdate;
+    private AnimeLibraryUpdate mLibraryUpdate;
     private Listeners mListeners;
 
     @BindView(R.id.cbRewatching)
@@ -73,7 +73,7 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     TextView mTitle;
 
 
-    public static AnimeLibraryUpdateFragment create(final LibraryEntry libraryEntry) {
+    public static AnimeLibraryUpdateFragment create(final AnimeLibraryEntry libraryEntry) {
         final Bundle args = new Bundle(1);
         args.putParcelable(KEY_LIBRARY_ENTRY, libraryEntry);
 
@@ -88,7 +88,7 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         return TAG;
     }
 
-    public LibraryUpdate getLibraryUpdate() {
+    public AnimeLibraryUpdate getLibraryUpdate() {
         return mLibraryUpdate;
     }
 
@@ -127,8 +127,8 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
 
         if (mLibraryUpdate == null) {
             final Bundle args = getArguments();
-            final LibraryEntry libraryEntry = args.getParcelable(KEY_LIBRARY_ENTRY);
-            mLibraryUpdate = new LibraryUpdate(libraryEntry);
+            final AnimeLibraryEntry libraryEntry = args.getParcelable(KEY_LIBRARY_ENTRY);
+            mLibraryUpdate = new AnimeLibraryUpdate(libraryEntry);
         }
     }
 
@@ -168,20 +168,7 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
 
     @Override
     public void onItemSelected(final ModifyWatchingStatusSpinner v) {
-        final WatchingStatus watchingStatus = v.getSelectedItem();
-        mLibraryUpdate.setWatchingStatus(watchingStatus);
-
-        if (WatchingStatus.COMPLETED.equals(watchingStatus)) {
-            final AbsAnime anime = mLibraryUpdate.getLibraryEntry().getAnime();
-
-            if (anime.hasEpisodeCount()) {
-                mModifyWatchCountView.setCountAndMax(anime.getEpisodeCount(),
-                        anime.getEpisodeCount());
-            } else if (mLibraryUpdate.getEpisodesWatched() == 0) {
-                mModifyWatchCountView.setCountAndMax(1, 1);
-            }
-        }
-
+        mLibraryUpdate.setWatchingStatus(v.getSelectedItem());
         update();
     }
 
