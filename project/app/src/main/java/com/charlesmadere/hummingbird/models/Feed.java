@@ -46,6 +46,10 @@ public class Feed implements Parcelable {
     private ArrayList<Manga> mManga;
 
     @Nullable
+    @SerializedName("manga_library_entries")
+    private ArrayList<MangaLibraryEntry> mMangaLibraryEntries;
+
+    @Nullable
     @SerializedName("users")
     private ArrayList<User> mUsers;
 
@@ -85,6 +89,11 @@ public class Feed implements Parcelable {
     @Nullable
     public ArrayList<Manga> getManga() {
         return mManga;
+    }
+
+    @Nullable
+    public ArrayList<MangaLibraryEntry> getMangaLibraryEntries() {
+        return mMangaLibraryEntries;
     }
 
     @Nullable
@@ -149,6 +158,10 @@ public class Feed implements Parcelable {
         return mManga != null && !mManga.isEmpty();
     }
 
+    public boolean hasMangaLibraryEntries() {
+        return mMangaLibraryEntries != null && !mMangaLibraryEntries.isEmpty();
+    }
+
     public boolean hasCursor() {
         return mMetadata != null && mMetadata.mCursor != null;
     }
@@ -179,6 +192,12 @@ public class Feed implements Parcelable {
         if (hasGroups()) {
             for (final Group group : mGroups) {
                 group.hydrate(this);
+            }
+        }
+
+        if (hasMangaLibraryEntries()) {
+            for (final MangaLibraryEntry mle : mMangaLibraryEntries) {
+                mle.hydrate(this);
             }
         }
 

@@ -83,6 +83,15 @@ public class MangaLibraryEntry implements Parcelable {
         return mVolumesRead;
     }
 
+    public void hydrate(final Feed feed) {
+        for (final Manga manga : feed.getManga()) {
+            if (mMangaId.equalsIgnoreCase(manga.getId())) {
+                mManga = manga;
+                break;
+            }
+        }
+    }
+
     public boolean isFavorite() {
         return mIsFavorite;
     }
