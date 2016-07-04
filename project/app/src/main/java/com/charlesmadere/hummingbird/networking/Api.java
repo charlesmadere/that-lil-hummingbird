@@ -48,8 +48,8 @@ public final class Api {
 
     public static void addLibraryEntry(final AnimeLibraryUpdate libraryUpdate,
             final ApiResponse<Void> listener) {
-        hummingbird().addLibraryEntry(getAuthTokenCookieString(), libraryUpdate.toJson())
-                .enqueue(new Callback<Void>() {
+        hummingbird().addLibraryEntry(getAuthTokenCookieString(), Constants.MIMETYPE_JSON,
+                libraryUpdate.toJson()).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
                 if (response.isSuccessful()) {
