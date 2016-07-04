@@ -13,7 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.models.LibraryEntry;
+import com.charlesmadere.hummingbird.models.LibraryUpdate;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 
 public class ModifyWatchingStatusSpinner extends AppCompatSpinner implements
@@ -65,8 +65,8 @@ public class ModifyWatchingStatusSpinner extends AppCompatSpinner implements
         // intentionally empty
     }
 
-    public void setContent(final LibraryEntry libraryEntry) {
-        setWatchingStatus(libraryEntry.getStatus());
+    public void setContent(final LibraryUpdate libraryUpdate) {
+        setWatchingStatus(libraryUpdate.getWatchingStatus());
     }
 
     public void setOnItemSelectedListener(@Nullable final OnItemSelectedListener l) {

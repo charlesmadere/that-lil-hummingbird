@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.models.LibraryEntry;
+import com.charlesmadere.hummingbird.models.LibraryUpdate;
 
 import java.text.NumberFormat;
 
@@ -81,8 +81,8 @@ public class ModifyRewatchCountView extends LinearLayout {
         notifyListener();
     }
 
-    public void setContent(final LibraryEntry libraryEntry) {
-        setCount(libraryEntry.getRewatchedTimes());
+    public void setContent(final LibraryUpdate libraryUpdate) {
+        setCount(libraryUpdate.getRewatchCount());
     }
 
     public void setCount(int count) {

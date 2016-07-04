@@ -42,7 +42,6 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     private static final String KEY_LIBRARY_ENTRY = "LibraryEntry";
     private static final String KEY_LIBRARY_UPDATE = "LibraryUpdate";
 
-    private LibraryEntry mLibraryEntry;
     private LibraryUpdate mLibraryUpdate;
     private Listeners mListeners;
 
@@ -89,10 +88,6 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         return TAG;
     }
 
-    public LibraryEntry getLibraryEntry() {
-        return mLibraryEntry;
-    }
-
     public LibraryUpdate getLibraryUpdate() {
         return mLibraryUpdate;
     }
@@ -126,15 +121,14 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final Bundle args = getArguments();
-        mLibraryEntry = args.getParcelable(KEY_LIBRARY_ENTRY);
-
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mLibraryUpdate = savedInstanceState.getParcelable(KEY_LIBRARY_UPDATE);
         }
 
         if (mLibraryUpdate == null) {
-            mLibraryUpdate = new LibraryUpdate(mLibraryEntry);
+            final Bundle args = getArguments();
+            final LibraryEntry libraryEntry = args.getParcelable(KEY_LIBRARY_ENTRY);
+            mLibraryUpdate = new LibraryUpdate(libraryEntry);
         }
     }
 
@@ -178,7 +172,7 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         mLibraryUpdate.setWatchingStatus(watchingStatus);
 
         if (WatchingStatus.COMPLETED.equals(watchingStatus)) {
-            final AbsAnime anime = mLibraryEntry.getAnime();
+            final AbsAnime anime = mLibraryUpdate.getLibraryEntry().getAnime();
 
             if (anime.hasEpisodeCount()) {
                 mModifyWatchCountView.setCountAndMax(anime.getEpisodeCount(),
@@ -242,17 +236,17 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mTitle.setText(mLibraryEntry.getAnime().getTitle());
+        mTitle.setText(mLibraryUpdate.getLibraryEntry().getAnime().getTitle());
         mSave.setEnabled(false);
 
-        mModifyWatchCountView.setContent(mLibraryEntry);
-        mModifyWatchingStatusSpinner.setContent(mLibraryEntry);
-        mModifyPublicPrivateSpinner.setContent(mLibraryEntry);
-        mModifyRatingSpinner.setContent(mLibraryEntry);
-        mModifyRewatchCountView.setContent(mLibraryEntry);
+        mModifyWatchCountView.setContent(mLibraryUpdate);
+        mModifyWatchingStatusSpinner.setContent(mLibraryUpdate);
+        mModifyPublicPrivateSpinner.setContent(mLibraryUpdate);
+        mModifyRatingSpinner.setContent(mLibraryUpdate);
+        mModifyRewatchCountView.setContent(mLibraryUpdate);
 
-        mRewatching.setChecked(mLibraryEntry.isRewatching());
-        mPersonalNotes.setText(mLibraryEntry.getNotes());
+        mRewatching.setChecked(mLibraryUpdate.isRewatching());
+        mPersonalNotes.setText(mLibraryUpdate.getNotes());
 
         mModifyWatchCountView.setOnWatchCountChangedListener(this);
         mModifyWatchingStatusSpinner.setOnItemSelectedListener(this);
@@ -266,11 +260,13 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         final int count = v.getCount();
         mLibraryUpdate.setEpisodesWatched(count);
 
-        if (mLibraryEntry.getAnime().hasEpisodeCount()) {
-            if (mLibraryEntry.getAnime().getEpisodeCount() == count) {
+        final AbsAnime anime = mLibraryUpdate.getLibraryEntry().getAnime();
+
+        if (anime.hasEpisodeCount()) {
+            if (anime.getEpisodeCount() == count) {
                 mModifyWatchingStatusSpinner.setWatchingStatus(WatchingStatus.COMPLETED);
             } else {
-                mModifyWatchingStatusSpinner.setWatchingStatus(mLibraryEntry.getStatus());
+                mModifyWatchingStatusSpinner.setWatchingStatus(mLibraryUpdate.getWatchingStatus());
             }
         }
 

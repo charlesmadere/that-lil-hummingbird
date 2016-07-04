@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.models.LibraryEntry;
+import com.charlesmadere.hummingbird.models.LibraryUpdate;
 
 import java.text.NumberFormat;
 
@@ -89,8 +89,9 @@ public class ModifyWatchCountView extends LinearLayout {
         notifyListener();
     }
 
-    public void setContent(final LibraryEntry libraryEntry) {
-        setCountAndMax(libraryEntry.getEpisodesWatched(), libraryEntry.getAnime().getEpisodeCount());
+    public void setContent(final LibraryUpdate libraryUpdate) {
+        setCountAndMax(libraryUpdate.getEpisodesWatched(), libraryUpdate.getLibraryEntry()
+                .getAnime().getEpisodeCount());
     }
 
     public void setCountAndMax(int count, @Nullable Integer max) {
