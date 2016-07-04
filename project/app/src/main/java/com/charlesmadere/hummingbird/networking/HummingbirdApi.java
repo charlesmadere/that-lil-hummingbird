@@ -42,10 +42,6 @@ public interface HummingbirdApi {
     Call<ArrayList<LibraryEntry>> getLibraryEntries(@Path("username") String username,
             @Query("status") WatchingStatus watchingStatus);
 
-    @POST("api/v1/libraries/{id}/remove")
-    Call<Boolean> removeLibraryEntry(@Header("auth_token") String authToken,
-            @Path("id") String id);
-
 
     /*
      * internal API

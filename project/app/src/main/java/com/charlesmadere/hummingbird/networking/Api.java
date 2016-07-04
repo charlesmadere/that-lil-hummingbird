@@ -895,16 +895,17 @@ public final class Api {
         });
     }
 
-    public static void removeLibraryEntry(final LibraryUpdate libraryUpdate,
-            final ApiResponse<Boolean> listener) {
-        removeLibraryEntry(libraryUpdate.getAnimeId(), listener);
+    public static void removeLibraryEntry(final LibraryEntry libraryEntry,
+            final ApiResponse<Void> listener) {
+        removeLibraryEntry(libraryEntry.getId(), listener);
     }
 
-    public static void removeLibraryEntry(final String id, final ApiResponse<Boolean> listener) {
-        hummingbird().removeLibraryEntry(getAuthTokenCookieString(), id).enqueue(
-                new Callback<Boolean>() {
+    public static void removeLibraryEntry(final String libraryEntryId,
+            final ApiResponse<Void> listener) {
+        hummingbird().deleteLibraryEntry(getAuthTokenCookieString(), libraryEntryId).enqueue(
+                new Callback<Void>() {
             @Override
-            public void onResponse(final Call<Boolean> call, final Response<Boolean> response) {
+            public void onResponse(final Call<Void> call, final Response<Void> response) {
                 if (response.isSuccessful()) {
                     listener.success(response.body());
                 } else {
@@ -913,8 +914,8 @@ public final class Api {
             }
 
             @Override
-            public void onFailure(final Call<Boolean> call, final Throwable t) {
-                Timber.e(TAG, "remove library entry (" + id + ") failed", t);
+            public void onFailure(final Call<Void> call, final Throwable t) {
+                Timber.e(TAG, "remove library entry (" + libraryEntryId + ") failed", t);
                 listener.failure(null);
             }
         });
