@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import com.charlesmadere.hummingbird.misc.GsonUtils;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
-import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
@@ -42,9 +41,6 @@ public class LibraryUpdate implements Parcelable {
     @SerializedName("id")
     private final String mAnimeId;
 
-    @SerializedName("auth_token")
-    private final String mAuthToken;
-
     @Nullable
     @SerializedName("notes")
     private String mNotes;
@@ -55,13 +51,12 @@ public class LibraryUpdate implements Parcelable {
 
 
     public LibraryUpdate(final LibraryEntry libraryEntry) {
-        this(libraryEntry.getAnime().getId(), Preferences.Account.AuthToken.get());
+        this(libraryEntry.getAnime().getId());
         mSaneRating = Rating.from(libraryEntry);
     }
 
-    private LibraryUpdate(final String animeId, final String authToken) {
+    private LibraryUpdate(final String animeId) {
         mAnimeId = animeId;
-        mAuthToken = authToken;
     }
 
     public boolean containsModifications() {
@@ -71,10 +66,6 @@ public class LibraryUpdate implements Parcelable {
 
     public String getAnimeId() {
         return mAnimeId;
-    }
-
-    public String getAuthToken() {
-        return mAuthToken;
     }
 
     @Nullable
@@ -205,7 +196,6 @@ public class LibraryUpdate implements Parcelable {
     public void writeToParcel(final Parcel dest, final int flags) {
         // intentionally at the top
         dest.writeString(mAnimeId);
-        dest.writeString(mAuthToken);
 
         ParcelableUtils.writeBoolean(mRewatching, dest);
         ParcelableUtils.writeInteger(mEpisodesWatched, dest);
@@ -220,7 +210,7 @@ public class LibraryUpdate implements Parcelable {
     public static final Creator<LibraryUpdate> CREATOR = new Creator<LibraryUpdate>() {
         @Override
         public LibraryUpdate createFromParcel(final Parcel source) {
-            final LibraryUpdate lu = new LibraryUpdate(source.readString(), source.readString());
+            final LibraryUpdate lu = new LibraryUpdate(source.readString());
             lu.mRewatching = ParcelableUtils.readBoolean(source);
             lu.mEpisodesWatched = ParcelableUtils.readInteger(source);
             lu.mRewatchedTimes = ParcelableUtils.readInteger(source);
