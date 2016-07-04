@@ -895,6 +895,10 @@ public class AnimeDigest implements Parcelable {
             return !TextUtils.isEmpty(mYouTubeVideoId);
         }
 
+        public void setLibraryEntryId(@Nullable final String libraryEntryId) {
+            mLibraryEntryId = libraryEntryId;
+        }
+
         @Override
         public String toString() {
             return getTitle();

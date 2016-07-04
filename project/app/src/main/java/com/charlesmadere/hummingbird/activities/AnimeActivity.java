@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeFragmentAdapter;
@@ -20,7 +21,9 @@ import com.charlesmadere.hummingbird.fragments.AnimeEpisodeFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeLibraryUpdateFragment;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.AbsAnime;
+import com.charlesmadere.hummingbird.models.AddAnimeLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
+import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
@@ -81,6 +84,13 @@ public class AnimeActivity extends BaseDrawerActivity implements
         }
 
         return intent;
+    }
+
+    private void addedLibraryEntry(final AddAnimeLibraryEntryResponse response) {
+        mAnimeDigest.getInfo().setLibraryEntryId(response.getLibraryEntry().getId());
+        mSimpleProgressView.fadeOut();
+        supportInvalidateOptionsMenu();
+        Toast.makeText(this, R.string.added_to_library, Toast.LENGTH_LONG).show();
     }
 
     private void fetchAnimeDigest() {
@@ -164,7 +174,17 @@ public class AnimeActivity extends BaseDrawerActivity implements
 
     @Override
     public void onUpdateLibraryEntry() {
-        // TODO
+        final AnimeLibraryUpdateFragment fragment = (AnimeLibraryUpdateFragment)
+                getSupportFragmentManager().findFragmentByTag(AnimeLibraryUpdateFragment.TAG);
+        final AnimeLibraryUpdate libraryUpdate = fragment.getLibraryUpdate();
+
+        mSimpleProgressView.fadeIn();
+        Api.addLibraryEntry(libraryUpdate, new AddLibraryEntryListener(this));
+    }
+
+    private void showAddLibraryEntryError() {
+        mSimpleProgressView.fadeOut();
+        Toast.makeText(this, R.string.error_adding_library_entry, Toast.LENGTH_LONG).show();
     }
 
     private void showAnimeDigest(final AnimeDigest animeDigest) {
@@ -214,6 +234,32 @@ public class AnimeActivity extends BaseDrawerActivity implements
                 .show();
     }
 
+
+    private static class AddLibraryEntryListener implements ApiResponse<AddAnimeLibraryEntryResponse> {
+        private final WeakReference<AnimeActivity> mActivityReference;
+
+        private AddLibraryEntryListener(final AnimeActivity activity) {
+            mActivityReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final AnimeActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.showAddLibraryEntryError();
+            }
+        }
+
+        @Override
+        public void success(final AddAnimeLibraryEntryResponse response) {
+            final AnimeActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.addedLibraryEntry(response);
+            }
+        }
+    }
 
     private static class GetAnimeDigestListener implements ApiResponse<AnimeDigest> {
         private final WeakReference<AnimeActivity> mActivityReference;

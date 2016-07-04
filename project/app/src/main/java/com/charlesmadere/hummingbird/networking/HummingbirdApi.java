@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.networking;
 
 import com.charlesmadere.hummingbird.models.AbsAnime;
+import com.charlesmadere.hummingbird.models.AddAnimeLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 import com.charlesmadere.hummingbird.models.AuthInfo;
@@ -48,8 +49,8 @@ public interface HummingbirdApi {
      */
 
     @POST("library_entries")
-    Call<Void> addLibraryEntry(@Header("Cookie") String authToken, @Header("Accept") String json,
-            @Body JsonElement body);
+    Call<AddAnimeLibraryEntryResponse> addLibraryEntry(@Header("Cookie") String authToken,
+            @Header("Accept") String json, @Body JsonElement body);
 
     @POST("manga_library_entries")
     Call<Void> addMangaLibraryEntry(@Header("Cookie") String authToken,

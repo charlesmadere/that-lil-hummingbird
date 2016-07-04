@@ -4,6 +4,7 @@
     <string name="about_x">About %1$s</string>
     <string name="account">Account</string>
     <string name="add_to_library">Add to Library</string>
+    <string name="added_to_library">Added to library</string>
     <string name="admin">Admin</string>
     <string name="age_rating">Age Rating</string>
     <string name="age_rating_g">G</string>
@@ -73,6 +74,7 @@
     <string name="enter_your_username_not_your_email">Enter your username, not your email.</string>
     <string name="episodes">Episodes</string>
     <string name="episode_length">Episode length</string>
+    <string name="error_adding_library_entry">Error adding library entry! Please check your network connection and try again.</string>
     <string name="error_editing_library_entry">Error editing library entry! Please check your network connection and try again.</string>
     <string name="error_loading_anime">Error loading anime! Please check your network connection and try again.</string>
     <string name="error_loading_anime_library">Error loading anime library</string>

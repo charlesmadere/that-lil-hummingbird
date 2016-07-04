@@ -10,6 +10,7 @@ import com.charlesmadere.hummingbird.misc.RetrofitUtils;
 import com.charlesmadere.hummingbird.misc.Threading;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.AbsAnime;
+import com.charlesmadere.hummingbird.models.AddAnimeLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
@@ -47,20 +48,28 @@ public final class Api {
 
 
     public static void addLibraryEntry(final AnimeLibraryUpdate libraryUpdate,
-            final ApiResponse<Void> listener) {
+            final ApiResponse<AddAnimeLibraryEntryResponse> listener) {
         hummingbird().addLibraryEntry(getAuthTokenCookieString(), Constants.MIMETYPE_JSON,
-                libraryUpdate.toJson()).enqueue(new Callback<Void>() {
+                libraryUpdate.toJson()).enqueue(new Callback<AddAnimeLibraryEntryResponse>() {
             @Override
-            public void onResponse(final Call<Void> call, final Response<Void> response) {
+            public void onResponse(final Call<AddAnimeLibraryEntryResponse> call,
+                    final Response<AddAnimeLibraryEntryResponse> response) {
+                AddAnimeLibraryEntryResponse body = null;
+
                 if (response.isSuccessful()) {
-                    listener.success(response.body());
-                } else {
+                    body = response.body();
+                }
+
+                if (body == null) {
                     listener.failure(retrieveErrorInfo(response));
+                } else {
+                    listener.success(body);
                 }
             }
 
             @Override
-            public void onFailure(final Call<Void> call, final Throwable t) {
+            public void onFailure(final Call<AddAnimeLibraryEntryResponse> call,
+                    final Throwable t) {
                 Timber.e(TAG, "add library entry failed", t);
                 listener.failure(null);
             }
