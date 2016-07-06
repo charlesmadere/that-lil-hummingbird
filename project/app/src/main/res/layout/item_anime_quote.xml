@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_toStartOf="@id/likeTextView"
             android:layout_width="wrap_content"
-            tools:ignore="RelativeOverlap"
+            tools:ignore="RelativeOverlap,UnknownId"
             tools:text="Explosion!" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvName"

@@ -40,7 +40,8 @@
             android:layout_below="@id/toolbar"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
-            app:scrolling_child="@+id/recyclerView">
+            app:scrolling_child="@+id/recyclerView"
+            tools:ignore="UnknownId">
             <FrameLayout
                 android:layout_height="match_parent"
                 android:layout_width="match_parent">

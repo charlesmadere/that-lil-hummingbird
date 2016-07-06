@@ -25,6 +25,7 @@ public class AnimeLibraryUpdate implements Parcelable {
     @Nullable
     private String mNotes;
 
+    @Nullable
     private WatchingStatus mWatchingStatus;
 
 
@@ -317,14 +318,14 @@ public class AnimeLibraryUpdate implements Parcelable {
         }
 
         @Override
-        public void writeToParcel(final Parcel source, final int flags) {
-            source.writeInt(mIsPrivate ? 1 : 0);
-            source.writeInt(mIsRewatching ? 1 : 0);
-            source.writeInt(mEpisodesWatched);
-            source.writeInt(mRewatchCount);
-            source.writeParcelable(mRating, flags);
-            source.writeString(mNotes);
-            source.writeParcelable(mWatchingStatus, flags);
+        public void writeToParcel(final Parcel dest, final int flags) {
+            dest.writeInt(mIsPrivate ? 1 : 0);
+            dest.writeInt(mIsRewatching ? 1 : 0);
+            dest.writeInt(mEpisodesWatched);
+            dest.writeInt(mRewatchCount);
+            dest.writeParcelable(mRating, flags);
+            dest.writeString(mNotes);
+            dest.writeParcelable(mWatchingStatus, flags);
         }
 
         public static final Creator<Defaults> CREATOR = new Creator<Defaults>() {

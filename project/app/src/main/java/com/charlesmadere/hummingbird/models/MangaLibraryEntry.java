@@ -61,6 +61,10 @@ public class MangaLibraryEntry implements Parcelable {
         return mLastRead;
     }
 
+    public Manga getManga() {
+        return mManga;
+    }
+
     public String getMangaId() {
         return mMangaId;
     }
