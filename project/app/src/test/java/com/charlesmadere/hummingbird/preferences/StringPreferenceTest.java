@@ -44,7 +44,7 @@ public class StringPreferenceTest {
 
         assertTrue(helloPref.exists());
         helloPref.set("");
-        assertTrue(helloPref.exists());
+        assertFalse(helloPref.exists());
         helloPref.set("qrrbrbirlbel");
         assertTrue(helloPref.exists());
         helloPref.delete();

@@ -13,7 +13,7 @@ public class StringPreference extends Preference<String> {
 
     @Override
     public boolean exists() {
-        return !TextUtils.isEmpty(get()) || !TextUtils.isEmpty(getDefaultValue());
+        return !TextUtils.isEmpty(get());
     }
 
     @Nullable
