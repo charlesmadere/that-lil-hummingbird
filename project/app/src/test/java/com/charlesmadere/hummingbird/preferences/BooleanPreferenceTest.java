@@ -50,6 +50,8 @@ public class BooleanPreferenceTest {
         assertTrue(booleans[0]);
         mNullPref.set(Boolean.FALSE);
         assertFalse(booleans[0]);
+
+        mNullPref.delete();
     }
 
     @Test
@@ -75,6 +77,10 @@ public class BooleanPreferenceTest {
         mTruePref.delete();
         assertTrue(mTruePref.exists());
         assertTrue(mTruePref.get());
+
+        mNullPref.delete();
+        mFalsePref.delete();
+        mTruePref.delete();
     }
 
     @Test
@@ -96,6 +102,10 @@ public class BooleanPreferenceTest {
         assertTrue(mTruePref.exists());
         mTruePref.delete();
         assertTrue(mTruePref.exists());
+
+        mNullPref.delete();
+        mFalsePref.delete();
+        mTruePref.delete();
     }
 
     @Test
@@ -113,6 +123,10 @@ public class BooleanPreferenceTest {
         assertFalse(mTruePref.get());
         mTruePref.set((Boolean) null);
         assertTrue(mTruePref.get());
+
+        mNullPref.delete();
+        mFalsePref.delete();
+        mTruePref.delete();
     }
 
     @Test
@@ -128,6 +142,10 @@ public class BooleanPreferenceTest {
         assertTrue(mTruePref.getDefaultValue());
         mTruePref.set(Boolean.FALSE);
         assertTrue(mTruePref.getDefaultValue());
+
+        mNullPref.delete();
+        mFalsePref.delete();
+        mTruePref.delete();
     }
 
     @Test
@@ -166,6 +184,8 @@ public class BooleanPreferenceTest {
         mNullPref.removeListener(opcl);
         mNullPref.set(Boolean.TRUE);
         assertFalse(booleans[0]);
+
+        mNullPref.delete();
     }
 
     @Test
@@ -185,6 +205,10 @@ public class BooleanPreferenceTest {
         assertTrue(mTruePref.get());
         mTruePref.set(Boolean.FALSE);
         assertFalse(mTruePref.get());
+
+        mNullPref.delete();
+        mFalsePref.delete();
+        mTruePref.delete();
     }
 
     @Test
@@ -201,6 +225,10 @@ public class BooleanPreferenceTest {
         assertFalse(mTruePref.get());
         mTruePref.toggle();
         assertTrue(mTruePref.get());
+
+        mNullPref.delete();
+        mFalsePref.delete();
+        mTruePref.delete();
     }
 
 }

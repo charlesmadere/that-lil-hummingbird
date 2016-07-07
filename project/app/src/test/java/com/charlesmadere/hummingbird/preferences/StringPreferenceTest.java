@@ -4,6 +4,7 @@ import android.os.Build;
 
 import com.charlesmadere.hummingbird.BuildConfig;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricGradleTestRunner;
@@ -19,55 +20,54 @@ public class StringPreferenceTest {
 
     private static final String CNAME = StringPreferenceTest.class.getCanonicalName();
 
+    private StringPreference mEmptyPref;
+    private StringPreference mHelloPref;
 
-    private StringPreference createEmptyPref() {
-        return new StringPreference(CNAME, "emptyPref", "");
-    }
 
-    private StringPreference createHelloPref() {
-        return new StringPreference(CNAME, "helloPref", "Hello, World!");
+    @Before
+    public void setUp() throws Exception {
+        mEmptyPref = new StringPreference(CNAME, "mEmptyPref", "");
+        mHelloPref = new StringPreference(CNAME, "mHelloPref", "Hello, World!");
     }
 
     @Test
     public void testExists() throws Exception {
-        final StringPreference emptyPref = createEmptyPref();
+        assertFalse(mEmptyPref.exists());
+        mEmptyPref.set((String) null);
+        assertFalse(mEmptyPref.exists());
+        mEmptyPref.set("Blah");
+        assertTrue(mEmptyPref.exists());
+        mEmptyPref.delete();
+        assertFalse(mEmptyPref.exists());
 
-        assertFalse(emptyPref.exists());
-        emptyPref.set((String) null);
-        assertFalse(emptyPref.exists());
-        emptyPref.set("Blah");
-        assertTrue(emptyPref.exists());
-        emptyPref.delete();
-        assertFalse(emptyPref.exists());
+        assertTrue(mHelloPref.exists());
+        mHelloPref.set("");
+        assertFalse(mHelloPref.exists());
+        mHelloPref.set("qrrbrbirlbel");
+        assertTrue(mHelloPref.exists());
+        mHelloPref.delete();
+        assertTrue(mHelloPref.exists());
 
-        final StringPreference helloPref = createHelloPref();
-
-        assertTrue(helloPref.exists());
-        helloPref.set("");
-        assertFalse(helloPref.exists());
-        helloPref.set("qrrbrbirlbel");
-        assertTrue(helloPref.exists());
-        helloPref.delete();
-        assertTrue(helloPref.exists());
+        mEmptyPref.delete();
+        mHelloPref.delete();
     }
 
     @Test
     public void testGet() throws Exception {
-        final StringPreference emptyPref = createEmptyPref();
+        assertEquals(mEmptyPref.get(), "");
+        mEmptyPref.set("hi");
+        assertEquals(mEmptyPref.get(), "hi");
+        mEmptyPref.delete();
+        assertEquals(mEmptyPref.get(), "");
 
-        assertEquals(emptyPref.get(), "");
-        emptyPref.set("hi");
-        assertEquals(emptyPref.get(), "hi");
-        emptyPref.delete();
-        assertEquals(emptyPref.get(), "");
+        assertEquals(mHelloPref.get(), "Hello, World!");
+        mHelloPref.set((String) null);
+        assertEquals(mHelloPref.get(), "Hello, World!");
+        mHelloPref.delete();
+        assertEquals(mHelloPref.get(), "Hello, World!");
 
-        final StringPreference helloPref = createHelloPref();
-
-        assertEquals(helloPref.get(), "Hello, World!");
-        helloPref.set((String) null);
-        assertEquals(helloPref.get(), "Hello, World!");
-        helloPref.delete();
-        assertEquals(helloPref.get(), "Hello, World!");
+        mEmptyPref.delete();
+        mHelloPref.delete();
     }
 
 }
