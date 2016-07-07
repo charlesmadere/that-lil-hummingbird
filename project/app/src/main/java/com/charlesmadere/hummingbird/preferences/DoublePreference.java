@@ -16,6 +16,11 @@ public class DoublePreference extends Preference<Double> {
     }
 
     @Override
+    protected boolean contains() {
+        return mStringPreference.contains();
+    }
+
+    @Override
     public boolean exists() {
         return mStringPreference.exists();
     }
@@ -23,7 +28,7 @@ public class DoublePreference extends Preference<Double> {
     @Nullable
     @Override
     public Double get() {
-        if (exists()) {
+        if (contains()) {
             final String value = mStringPreference.get();
 
             try {

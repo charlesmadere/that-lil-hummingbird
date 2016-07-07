@@ -96,6 +96,10 @@ public abstract class Preference<T> {
         }
     }
 
+    protected boolean contains() {
+        return readSharedPreferences().contains(getKey());
+    }
+
     /**
      * removes this Preference from storage and notifies listeners
      */

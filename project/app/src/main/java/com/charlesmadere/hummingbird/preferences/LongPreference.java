@@ -11,13 +11,13 @@ public class LongPreference extends Preference<Long> {
 
     @Override
     public boolean exists() {
-        return readSharedPreferences().contains(getKey()) || getDefaultValue() != null;
+        return contains() || getDefaultValue() != null;
     }
 
     @Nullable
     @Override
     public Long get() {
-        if (exists()) {
+        if (contains()) {
             // at this point, returning the fallback value is impossible
             return readSharedPreferences().getLong(getKey(), 0L);
         } else {

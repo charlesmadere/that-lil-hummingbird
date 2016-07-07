@@ -12,13 +12,13 @@ public class BooleanPreference extends Preference<Boolean> {
 
     @Override
     public boolean exists() {
-        return readSharedPreferences().contains(getKey()) || getDefaultValue() != null;
+        return contains() || getDefaultValue() != null;
     }
 
     @Nullable
     @Override
     public Boolean get() {
-        if (exists()) {
+        if (contains()) {
             // at this point, returning the fallback value is impossible
             return readSharedPreferences().getBoolean(getKey(), false);
         } else {

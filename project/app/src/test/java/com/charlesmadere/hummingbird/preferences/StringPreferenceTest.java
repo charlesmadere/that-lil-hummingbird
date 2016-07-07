@@ -47,9 +47,6 @@ public class StringPreferenceTest {
         assertTrue(mHelloPref.exists());
         mHelloPref.delete();
         assertTrue(mHelloPref.exists());
-
-        mEmptyPref.delete();
-        mHelloPref.delete();
     }
 
     @Test
@@ -65,9 +62,6 @@ public class StringPreferenceTest {
         assertEquals(mHelloPref.get(), "Hello, World!");
         mHelloPref.delete();
         assertEquals(mHelloPref.get(), "Hello, World!");
-
-        mEmptyPref.delete();
-        mHelloPref.delete();
     }
 
 }

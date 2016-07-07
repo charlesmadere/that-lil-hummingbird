@@ -25,6 +25,11 @@ public class GsonPreference<T> extends Preference<T> {
     }
 
     @Override
+    protected boolean contains() {
+        return mStringPreference.contains();
+    }
+
+    @Override
     public boolean exists() {
         return mStringPreference.exists();
     }

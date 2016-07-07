@@ -12,13 +12,13 @@ public class FloatPreference extends Preference<Float> {
 
     @Override
     public boolean exists() {
-        return readSharedPreferences().contains(getKey()) || getDefaultValue() != null;
+        return contains() || getDefaultValue() != null;
     }
 
     @Nullable
     @Override
     public Float get() {
-        if (exists()) {
+        if (contains()) {
             // at this point, returning the fallback value is impossible
             return readSharedPreferences().getFloat(getKey(), 0f);
         } else {
