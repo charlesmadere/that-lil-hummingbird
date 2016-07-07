@@ -16,11 +16,6 @@ public class DoublePreference extends Preference<Double> {
     }
 
     @Override
-    protected boolean contains() {
-        return mStringPreference.contains();
-    }
-
-    @Override
     public boolean exists() {
         return mStringPreference.exists();
     }
