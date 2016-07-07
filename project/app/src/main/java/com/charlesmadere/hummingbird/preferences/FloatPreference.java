@@ -5,13 +5,14 @@ import android.support.annotation.Nullable;
 
 public class FloatPreference extends Preference<Float> {
 
-    public FloatPreference(final String name, final String key, @Nullable final Float defaultValue) {
+    public FloatPreference(final String name, final String key,
+            @Nullable final Float defaultValue) {
         super(name, key, defaultValue);
     }
 
     @Override
     public boolean exists() {
-        return readSharedPreferences().contains(getKey());
+        return readSharedPreferences().contains(getKey()) || getDefaultValue() != null;
     }
 
     @Nullable

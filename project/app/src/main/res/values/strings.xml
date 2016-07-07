@@ -40,6 +40,7 @@
     <string name="casting">Casting</string>
     <string name="castings">Castings</string>
     <string name="chapters">Chapters</string>
+    <string name="chapters_read">Chapters Read</string>
     <string name="characters">Characters</string>
     <string name="characters_">Characters…</string>
     <string name="charles_madere">Charles Madere</string>
@@ -258,6 +259,7 @@
     <string name="refresh">Refresh</string>
     <string name="remove">Remove</string>
     <string name="remove_from_library">Remove from Library</string>
+    <string name="rereading">Rereading</string>
     <string name="retry">Retry</string>
     <string name="reviews">Reviews</string>
     <string name="review_by_x">Review by %1$s</string>
@@ -319,6 +321,7 @@
     <string name="view_user">View User</string>
     <string name="view_x">View %1$s</string>
     <string name="volumes">Volumes</string>
+    <string name="volumes_read">Volumes Read</string>
     <string name="waifu">Waifu</string>
     <string name="waifu_is">Waifu is</string>
     <string name="watched">Watched</string>

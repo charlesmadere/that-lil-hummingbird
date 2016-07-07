@@ -6,13 +6,14 @@ import android.text.TextUtils;
 
 public class StringPreference extends Preference<String> {
 
-    public StringPreference(final String name, final String key, @Nullable final String defaultValue) {
+    public StringPreference(final String name, final String key,
+            @Nullable final String defaultValue) {
         super(name, key, defaultValue);
     }
 
     @Override
     public boolean exists() {
-        return !TextUtils.isEmpty(get());
+        return !TextUtils.isEmpty(get()) || !TextUtils.isEmpty(getDefaultValue());
     }
 
     @Nullable

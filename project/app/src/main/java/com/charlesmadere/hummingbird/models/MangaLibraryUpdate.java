@@ -28,6 +28,19 @@ public class MangaLibraryUpdate implements Parcelable {
     private String mNotes;
 
 
+    public MangaLibraryUpdate(final MangaDigest digest) {
+        mDefaults = new Defaults();
+        mIsPrivate = mDefaults.isPrivate();
+        mIsReReading = mDefaults.isReReading();
+        mChaptersRead = mDefaults.getChaptersRead();
+        mVolumesRead = mDefaults.getVolumesRead();
+        mRating = mDefaults.getRating();
+        mReadingStatus = mDefaults.getReadingStatus();
+        mMangaId = digest.getId();
+        mMangaTitle = digest.getTitle();
+        mNotes = mDefaults.getNotes();
+    }
+
     public MangaLibraryUpdate(final MangaLibraryEntry libraryEntry) {
         mDefaults = new Defaults(libraryEntry);
         mIsPrivate = mDefaults.isPrivate();
@@ -52,6 +65,49 @@ public class MangaLibraryUpdate implements Parcelable {
         mMangaId = source.readString();
         mMangaTitle = source.readString();
         mNotes = source.readString();
+    }
+
+    public int getChaptersRead() {
+        return mChaptersRead;
+    }
+
+    public Defaults getDefaults() {
+        return mDefaults;
+    }
+
+    public String getMangaId() {
+        return mMangaId;
+    }
+
+    public String getMangaTitle() {
+        return mMangaTitle;
+    }
+
+    @Nullable
+    public String getNotes() {
+        return mNotes;
+    }
+
+    @Nullable
+    public Rating getRating() {
+        return mRating;
+    }
+
+    @Nullable
+    public ReadingStatus getReadingStatus() {
+        return mReadingStatus;
+    }
+
+    public int getVolumesRead() {
+        return mVolumesRead;
+    }
+
+    public boolean isPrivate() {
+        return mIsPrivate;
+    }
+
+    public boolean isReReading() {
+        return mIsReReading;
     }
 
     public JsonObject toJson() {

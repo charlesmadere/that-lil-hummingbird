@@ -5,13 +5,14 @@ import android.support.annotation.Nullable;
 
 public class IntegerPreference extends Preference<Integer> {
 
-    public IntegerPreference(final String name, final String key, @Nullable final Integer defaultValue) {
+    public IntegerPreference(final String name, final String key,
+            @Nullable final Integer defaultValue) {
         super(name, key, defaultValue);
     }
 
     @Override
     public boolean exists() {
-        return readSharedPreferences().contains(getKey());
+        return readSharedPreferences().contains(getKey()) || getDefaultValue() != null;
     }
 
     @Nullable

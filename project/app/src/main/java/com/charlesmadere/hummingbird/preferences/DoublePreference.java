@@ -8,7 +8,8 @@ public class DoublePreference extends Preference<Double> {
     private final StringPreference mStringPreference;
 
 
-    public DoublePreference(final String name, final String key, @Nullable final Double defaultValue) {
+    public DoublePreference(final String name, final String key,
+            @Nullable final Double defaultValue) {
         super(name, key, defaultValue);
         mStringPreference = new StringPreference(name, key, defaultValue == null ? null :
                 defaultValue.toString());

@@ -11,7 +11,7 @@ public class LongPreference extends Preference<Long> {
 
     @Override
     public boolean exists() {
-        return readSharedPreferences().contains(getKey());
+        return readSharedPreferences().contains(getKey()) || getDefaultValue() != null;
     }
 
     @Nullable

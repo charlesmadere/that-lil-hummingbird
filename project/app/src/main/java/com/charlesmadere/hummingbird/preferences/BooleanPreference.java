@@ -5,13 +5,14 @@ import android.support.annotation.Nullable;
 
 public class BooleanPreference extends Preference<Boolean> {
 
-    public BooleanPreference(final String name, final String key, @Nullable final Boolean defaultValue) {
+    public BooleanPreference(final String name, final String key,
+            @Nullable final Boolean defaultValue) {
         super(name, key, defaultValue);
     }
 
     @Override
     public boolean exists() {
-        return readSharedPreferences().contains(getKey());
+        return readSharedPreferences().contains(getKey()) || getDefaultValue() != null;
     }
 
     @Nullable
