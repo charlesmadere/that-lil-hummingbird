@@ -59,7 +59,7 @@ public class StringPreferenceTest {
 
         assertEquals(mHelloPref.get(), "Hello, World!");
         mHelloPref.set((String) null);
-        assertEquals(mHelloPref.get(), null);
+        assertEquals(mHelloPref.get(), "Hello, World!");
         mHelloPref.delete();
         assertEquals(mHelloPref.get(), "Hello, World!");
     }

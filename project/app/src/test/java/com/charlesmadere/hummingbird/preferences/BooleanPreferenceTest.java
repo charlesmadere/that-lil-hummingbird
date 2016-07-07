@@ -111,6 +111,8 @@ public class BooleanPreferenceTest {
         assertTrue(mTruePref.get());
         mTruePref.set(Boolean.FALSE);
         assertFalse(mTruePref.get());
+        mTruePref.set((Boolean) null);
+        assertTrue(mTruePref.get());
     }
 
     @Test

@@ -11,7 +11,6 @@ import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
 import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 
@@ -58,14 +57,11 @@ public class DoublePreferenceTest {
         mNullPref.delete();
         assertNull(mNullPref.get());
 
-        assertNotNull(mTwoPref.get());
         assertTrue(mTwoPref.get() == 2D);
         mTwoPref.set(Double.MIN_VALUE);
         assertTrue(mTwoPref.get() == Double.MIN_VALUE);
-        assertFalse(mTwoPref.get() == Double.MIN_VALUE);
         mTwoPref.set(Double.MAX_VALUE);
         assertTrue(mTwoPref.get() == Double.MAX_VALUE);
-        assertFalse(mTwoPref.get() == Double.MAX_VALUE);
         mTwoPref.delete();
         assertTrue(mTwoPref.get() == 2D);
     }
