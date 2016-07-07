@@ -82,7 +82,6 @@ public class SimpleDateTest {
         assertTrue(calendar.get(Calendar.YEAR) == 2016);
         assertTrue(calendar.get(Calendar.MONTH) == Calendar.MARCH);
         assertTrue(calendar.get(Calendar.DAY_OF_MONTH) == 4);
-
     }
 
 }
