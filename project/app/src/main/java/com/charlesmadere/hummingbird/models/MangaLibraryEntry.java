@@ -49,6 +49,11 @@ public class MangaLibraryEntry implements Parcelable {
     private Manga mManga;
 
 
+    @Override
+    public boolean equals(final Object o) {
+        return o instanceof MangaLibraryEntry && mId.equalsIgnoreCase(((MangaLibraryEntry) o).getId());
+    }
+
     public int getChaptersRead() {
         return mChaptersRead;
     }
@@ -88,6 +93,11 @@ public class MangaLibraryEntry implements Parcelable {
 
     public int getVolumesRead() {
         return mVolumesRead;
+    }
+
+    @Override
+    public int hashCode() {
+        return mId.hashCode();
     }
 
     public void hydrate(final Feed feed) {

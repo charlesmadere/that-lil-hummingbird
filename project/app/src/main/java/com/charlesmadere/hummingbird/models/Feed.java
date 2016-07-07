@@ -267,6 +267,14 @@ public class Feed implements Parcelable {
             }
         }
 
+        if (feed.hasMangaLibraryEntries()) {
+            if (hasMangaLibraryEntries()) {
+                MiscUtils.exclusiveAdd(mMangaLibraryEntries, feed.getMangaLibraryEntries());
+            } else {
+                mMangaLibraryEntries = feed.getMangaLibraryEntries();
+            }
+        }
+
         if (feed.hasNotifications()) {
             if (hasNotifications()) {
                 MiscUtils.exclusiveAdd(mNotifications, feed.getNotifications());
