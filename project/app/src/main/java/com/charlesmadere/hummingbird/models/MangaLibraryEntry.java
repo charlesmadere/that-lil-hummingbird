@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -26,6 +27,7 @@ public class MangaLibraryEntry implements Parcelable {
     @SerializedName("volumes_read")
     private int mVolumesRead;
 
+    @Nullable
     @SerializedName("rating")
     private Rating mRating;
 
@@ -79,6 +81,7 @@ public class MangaLibraryEntry implements Parcelable {
         return mNotes;
     }
 
+    @Nullable
     public Rating getRating() {
         return mRating;
     }
@@ -100,11 +103,19 @@ public class MangaLibraryEntry implements Parcelable {
         return mId.hashCode();
     }
 
+    public boolean hasNotes() {
+        return !TextUtils.isEmpty(mNotes);
+    }
+
+    public boolean hasRating() {
+        return mRating != null;
+    }
+
     public void hydrate(final Feed feed) {
         for (final Manga manga : feed.getManga()) {
             if (mMangaId.equalsIgnoreCase(manga.getId())) {
                 mManga = manga;
-                break;
+                return;
             }
         }
     }

@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
+import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.views.AnimeLibraryEntryItemView;
 import com.charlesmadere.hummingbird.views.InternalAnimeItemView;
 
@@ -35,6 +36,10 @@ public class AnimeLibraryEntriesAdapter extends BaseAdapter<AnimeLibraryEntry> {
         final AnimeLibraryEntryItemView view = (AnimeLibraryEntryItemView) viewHolder.itemView;
         view.setOnEditClickListener(mEditClickListener);
         return viewHolder;
+    }
+
+    public void set(final Feed feed) {
+        super.set(feed.getAnimeLibraryEntries());
     }
 
 }

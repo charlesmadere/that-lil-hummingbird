@@ -11,10 +11,11 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
@@ -48,8 +49,17 @@ public class BooleanPreferenceTest {
         assertFalse(booleans[0]);
         mNullPref.set(Boolean.TRUE);
         assertTrue(booleans[0]);
-        mNullPref.set(Boolean.FALSE);
+        mNullPref.set(Boolean.FALSE, true);
         assertFalse(booleans[0]);
+        mNullPref.set((Boolean) null, true);
+        assertNull(booleans[0]);
+    }
+
+    @Test
+    public void testGetContext() throws Exception {
+        assertNotNull(mNullPref.getContext());
+        assertNotNull(mFalsePref.getContext());
+        assertNotNull(mTruePref.getContext());
     }
 
     @Test
@@ -75,6 +85,22 @@ public class BooleanPreferenceTest {
         mTruePref.delete();
         assertTrue(mTruePref.exists());
         assertTrue(mTruePref.get());
+    }
+
+    @Test
+    public void testDontNotifyListener() throws Exception {
+        final Boolean[] booleans = { Boolean.FALSE };
+
+        mTruePref.addListener(new OnPreferenceChangeListener<Boolean>() {
+            @Override
+            public void onPreferenceChange(final Preference<Boolean> preference) {
+                booleans[0] = Boolean.TRUE;
+            }
+        });
+
+        assertFalse(booleans[0]);
+        mTruePref.set(Boolean.FALSE, false);
+        assertFalse(booleans[0]);
     }
 
     @Test

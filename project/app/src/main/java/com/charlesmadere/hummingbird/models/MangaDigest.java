@@ -19,6 +19,10 @@ public class MangaDigest implements Parcelable {
     @SerializedName("characters")
     private ArrayList<Character> mCharacters;
 
+    @Nullable
+    @SerializedName("manga_library_entries")
+    private ArrayList<MangaLibraryEntry> mLibraryEntries;
+
     @SerializedName("full_manga")
     private Manga mManga;
 
@@ -37,6 +41,11 @@ public class MangaDigest implements Parcelable {
         return mManga.getId();
     }
 
+    @Nullable
+    public ArrayList<MangaLibraryEntry> getLibraryEntries() {
+        return mLibraryEntries;
+    }
+
     public Manga getManga() {
         return mManga;
     }
@@ -53,6 +62,10 @@ public class MangaDigest implements Parcelable {
         return mCharacters != null && !mCharacters.isEmpty();
     }
 
+    public boolean hasLibraryEntries() {
+        return mLibraryEntries != null && !mLibraryEntries.isEmpty();
+    }
+
     @Override
     public String toString() {
         return getTitle();
@@ -67,6 +80,7 @@ public class MangaDigest implements Parcelable {
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeTypedList(mCastings);
         dest.writeTypedList(mCharacters);
+        dest.writeTypedList(mLibraryEntries);
         dest.writeParcelable(mManga, flags);
     }
 
@@ -76,6 +90,7 @@ public class MangaDigest implements Parcelable {
             final MangaDigest md = new MangaDigest();
             md.mCastings = source.createTypedArrayList(Casting.CREATOR);
             md.mCharacters = source.createTypedArrayList(Character.CREATOR);
+            md.mLibraryEntries = source.createTypedArrayList(MangaLibraryEntry.CREATOR);
             md.mManga = source.readParcelable(Manga.class.getClassLoader());
             return md;
         }

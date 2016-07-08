@@ -16,6 +16,7 @@ import com.charlesmadere.hummingbird.adapters.AnimeLibraryEntriesAdapter;
 import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
+import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
@@ -24,7 +25,6 @@ import com.charlesmadere.hummingbird.views.RefreshLayout;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 
 import butterknife.BindView;
 
@@ -34,13 +34,13 @@ public class AnimeLibraryFragment extends BaseFragment implements
 
     private static final String TAG = "AnimeLibraryFragment";
     private static final String KEY_EDITABLE_LIBRARY = "EditableLibrary";
-    private static final String KEY_LIBRARY_ENTRIES = "LibraryEntries";
+    private static final String KEY_FEED = "Feed";
     private static final String KEY_USERNAME = "Username";
     private static final String KEY_WATCHING_STATUS = "WatchingStatus";
 
-    private ArrayList<AnimeLibraryEntry> mLibraryEntries;
-    private boolean mEditableLibrary;
     private AnimeLibraryEntriesAdapter mAdapter;
+    private boolean mEditableLibrary;
+    private Feed mFeed;
     private String mUsername;
     private WatchingStatus mWatchingStatus;
 
@@ -96,7 +96,7 @@ public class AnimeLibraryFragment extends BaseFragment implements
         mEditableLibrary = args.getBoolean(KEY_EDITABLE_LIBRARY);
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mLibraryEntries = savedInstanceState.getParcelableArrayList(KEY_LIBRARY_ENTRIES);
+            mFeed = savedInstanceState.getParcelable(KEY_FEED);
         }
     }
 
@@ -132,8 +132,8 @@ public class AnimeLibraryFragment extends BaseFragment implements
     public void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if (mLibraryEntries != null && !mLibraryEntries.isEmpty()) {
-            outState.putParcelableArrayList(KEY_WATCHING_STATUS, mLibraryEntries);
+        if (mFeed != null && mFeed.hasAnimeLibraryEntries()) {
+            outState.putParcelable(KEY_FEED, mFeed);
         }
     }
 
@@ -166,10 +166,10 @@ public class AnimeLibraryFragment extends BaseFragment implements
         mEmptyText.setText(mWatchingStatus.getEmptyTextResId());
         mErrorText.setText(mWatchingStatus.getErrorTextResId());
 
-        if (mLibraryEntries == null || mLibraryEntries.isEmpty()) {
-            fetchLibraryEntries();
+        if (mFeed != null && !mFeed.hasAnimeLibraryEntries()) {
+            showLibraryEntries(mFeed);
         } else {
-            showList(mLibraryEntries);
+            fetchLibraryEntries();
         }
     }
 
@@ -192,9 +192,9 @@ public class AnimeLibraryFragment extends BaseFragment implements
         mRefreshLayout.setRefreshing(false);
     }
 
-    private void showList(final ArrayList<AnimeLibraryEntry> libraryEntries) {
-        mLibraryEntries = libraryEntries;
-        mAdapter.set(libraryEntries);
+    private void showLibraryEntries(final Feed feed) {
+        mFeed = feed;
+        mAdapter.set(mFeed);
         mEmpty.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
@@ -228,7 +228,7 @@ public class AnimeLibraryFragment extends BaseFragment implements
         }
     }
 
-    private static class GetLibraryEntriesListener implements ApiResponse<ArrayList<AnimeLibraryEntry>> {
+    private static class GetLibraryEntriesListener implements ApiResponse<Feed> {
         private final WeakReference<AnimeLibraryFragment> mFragmentReference;
 
         private GetLibraryEntriesListener(final AnimeLibraryFragment fragment) {
@@ -245,14 +245,14 @@ public class AnimeLibraryFragment extends BaseFragment implements
         }
 
         @Override
-        public void success(@Nullable final ArrayList<AnimeLibraryEntry> stories) {
+        public void success(final Feed feed) {
             final AnimeLibraryFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {
-                if (stories == null || stories.isEmpty()) {
-                    fragment.showEmpty();
+                if (feed.hasAnimeLibraryEntries()) {
+                    fragment.showLibraryEntries(feed);
                 } else {
-                    fragment.showList(stories);
+                    fragment.showEmpty();
                 }
             }
         }

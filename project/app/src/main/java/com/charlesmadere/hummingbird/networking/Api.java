@@ -478,22 +478,33 @@ public final class Api {
     }
 
     public static void getLibraryEntries(final String username,
-            @Nullable final WatchingStatus watchingStatus,
-            final ApiResponse<ArrayList<AnimeLibraryEntry>> listener) {
-        hummingbird().getLibraryEntries(username, watchingStatus).enqueue(
-                new Callback<ArrayList<AnimeLibraryEntry>>() {
+            @Nullable final WatchingStatus status, final ApiResponse<Feed> listener) {
+        getLibraryEntries(username, status, null, listener);
+    }
+
+    public static void getLibraryEntries(final String username,
+            @Nullable final WatchingStatus status, @Nullable final Feed feed,
+            final ApiResponse<Feed> listener) {
+        hummingbird().getLibraryEntries(getAuthTokenCookieString(), Constants.MIMETYPE_JSON,
+                username, status == null ? null : status.getPostValue())
+                .enqueue(new Callback<Feed>() {
             @Override
-            public void onResponse(final Call<ArrayList<AnimeLibraryEntry>> call,
-                    final Response<ArrayList<AnimeLibraryEntry>> response) {
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
+                Feed body = null;
+
                 if (response.isSuccessful()) {
-                    listener.success(response.body());
-                } else {
+                    body = response.body();
+                }
+
+                if (body == null) {
                     listener.failure(retrieveErrorInfo(response));
+                } else {
+                    hydrateFeed(body, feed, listener);
                 }
             }
 
             @Override
-            public void onFailure(final Call<ArrayList<AnimeLibraryEntry>> call, final Throwable t) {
+            public void onFailure(final Call<Feed> call, final Throwable t) {
                 Timber.e(TAG, "get library entries for user (" + username + ") failed", t);
                 listener.failure(null);
             }

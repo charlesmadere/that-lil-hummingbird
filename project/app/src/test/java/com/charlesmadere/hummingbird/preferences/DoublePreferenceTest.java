@@ -10,9 +10,9 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
@@ -35,6 +35,8 @@ public class DoublePreferenceTest {
         assertFalse(mNullPref.exists());
         mNullPref.set(5D);
         assertTrue(mNullPref.exists());
+        mNullPref.set((Double) null);
+        assertFalse(mNullPref.exists());
         mNullPref.delete();
         assertFalse(mNullPref.exists());
 

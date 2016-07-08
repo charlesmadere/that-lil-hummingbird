@@ -3,7 +3,13 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
+
+import java.lang.reflect.Type;
 
 public enum Rating implements Parcelable {
 
@@ -43,42 +49,10 @@ public enum Rating implements Parcelable {
     @SerializedName("5")
     FIVE(5f);
 
+    private static final String TAG = "Rating";
+
     public final float mValue;
 
-
-    public static Rating from(final AnimeLibraryEntry animeLibraryEntry) {
-        final AnimeLibraryEntry.Rating rating = animeLibraryEntry.getRating();
-
-        if (rating == null || !rating.hasValue()) {
-            return UNRATED;
-        }
-
-        final float value = Float.parseFloat(rating.getValue());
-
-        if (value >= FIVE.mValue) {
-            return FIVE;
-        } else if (value >= FOUR_POINT_FIVE.mValue) {
-            return FOUR_POINT_FIVE;
-        } else if (value >= FOUR.mValue) {
-            return FOUR;
-        } else if (value >= THREE_POINT_FIVE.mValue) {
-            return THREE_POINT_FIVE;
-        } else if (value >= THREE.mValue) {
-            return THREE;
-        } else if (value >= TWO_POINT_FIVE.mValue) {
-            return TWO_POINT_FIVE;
-        } else if (value >= TWO.mValue) {
-            return TWO;
-        } else if (value >= ONE_POINT_FIVE.mValue) {
-            return ONE_POINT_FIVE;
-        } else if (value >= ONE.mValue) {
-            return ONE;
-        } else if (value >= ZERO_POINT_FIVE.mValue) {
-            return ZERO_POINT_FIVE;
-        } else {
-            return ZERO;
-        }
-    }
 
     Rating(final float value) {
         mValue = value;
@@ -103,6 +77,42 @@ public enum Rating implements Parcelable {
         @Override
         public Rating[] newArray(final int size) {
             return new Rating[size];
+        }
+    };
+
+    public static final JsonDeserializer<Rating> JSON_DESERIALIZER = new JsonDeserializer<Rating>() {
+        @Override
+        public Rating deserialize(final JsonElement json, final Type typeOfT,
+                final JsonDeserializationContext context) throws JsonParseException {
+            if (json.isJsonNull()) {
+                return null;
+            }
+
+            final float value = json.getAsFloat();
+
+            if (value >= FIVE.mValue) {
+                return FIVE;
+            } else if (value >= FOUR_POINT_FIVE.mValue) {
+                return FOUR_POINT_FIVE;
+            } else if (value >= FOUR.mValue) {
+                return FOUR;
+            } else if (value >= THREE_POINT_FIVE.mValue) {
+                return THREE_POINT_FIVE;
+            } else if (value >= THREE.mValue) {
+                return THREE;
+            } else if (value >= TWO_POINT_FIVE.mValue) {
+                return TWO_POINT_FIVE;
+            } else if (value >= TWO.mValue) {
+                return TWO;
+            } else if (value >= ONE_POINT_FIVE.mValue) {
+                return ONE_POINT_FIVE;
+            } else if (value >= ONE.mValue) {
+                return ONE;
+            } else if (value >= ZERO_POINT_FIVE.mValue) {
+                return ZERO_POINT_FIVE;
+            } else {
+                return ZERO;
+            }
         }
     };
 

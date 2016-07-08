@@ -165,11 +165,7 @@ public class AnimeLibraryUpdate implements Parcelable {
         mIsRewatching = rewatching;
     }
 
-    public void setWatchingStatus(final WatchingStatus watchingStatus) {
-        if (watchingStatus == null) {
-            throw new IllegalArgumentException("watchingStatus can't be null");
-        }
-
+    public void setWatchingStatus(@Nullable final WatchingStatus watchingStatus) {
         mWatchingStatus = watchingStatus;
     }
 
@@ -193,7 +189,11 @@ public class AnimeLibraryUpdate implements Parcelable {
             inner.addProperty("notes", mNotes);
         }
 
-        inner.addProperty("status", mWatchingStatus.getLibraryUpdateValue());
+        if (mWatchingStatus == null) {
+            inner.add("status", null);
+        } else {
+            inner.addProperty("status", mWatchingStatus.getPostValue());
+        }
 
         final JsonObject outer = new JsonObject();
         outer.add("library_entry", inner);
@@ -265,8 +265,8 @@ public class AnimeLibraryUpdate implements Parcelable {
             mIsPrivate = libraryEntry.isPrivate();
             mIsRewatching = libraryEntry.isRewatching();
             mEpisodesWatched = libraryEntry.getEpisodesWatched();
-            mRewatchCount = libraryEntry.getRewatchedTimes();
-            mRating = Rating.from(libraryEntry);
+            mRewatchCount = libraryEntry.getRewatchCount();
+            mRating = libraryEntry.getRating();
             mNotes = libraryEntry.getNotes();
             mWatchingStatus = libraryEntry.getStatus();
         }

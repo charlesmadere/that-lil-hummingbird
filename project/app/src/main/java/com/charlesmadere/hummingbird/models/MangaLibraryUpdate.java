@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.google.gson.JsonObject;
 
@@ -13,6 +14,7 @@ public class MangaLibraryUpdate implements Parcelable {
     private boolean mIsPrivate;
     private boolean mIsReReading;
     private int mChaptersRead;
+    private int mReReadCount;
     private int mVolumesRead;
 
     @Nullable
@@ -33,6 +35,7 @@ public class MangaLibraryUpdate implements Parcelable {
         mIsPrivate = mDefaults.isPrivate();
         mIsReReading = mDefaults.isReReading();
         mChaptersRead = mDefaults.getChaptersRead();
+        mReReadCount = mDefaults.getReReadCount();
         mVolumesRead = mDefaults.getVolumesRead();
         mRating = mDefaults.getRating();
         mReadingStatus = mDefaults.getReadingStatus();
@@ -46,6 +49,7 @@ public class MangaLibraryUpdate implements Parcelable {
         mIsPrivate = mDefaults.isPrivate();
         mIsReReading = mDefaults.isReReading();
         mChaptersRead = mDefaults.getChaptersRead();
+        mReReadCount = mDefaults.getReReadCount();
         mVolumesRead = mDefaults.getVolumesRead();
         mRating = mDefaults.getRating();
         mReadingStatus = mDefaults.getReadingStatus();
@@ -59,12 +63,24 @@ public class MangaLibraryUpdate implements Parcelable {
         mIsPrivate = source.readInt() != 0;
         mIsReReading = source.readInt() != 0;
         mChaptersRead = source.readInt();
+        mReReadCount = source.readInt();
         mVolumesRead = source.readInt();
         mRating = source.readParcelable(Rating.class.getClassLoader());
         mReadingStatus = source.readParcelable(ReadingStatus.class.getClassLoader());
         mMangaId = source.readString();
         mMangaTitle = source.readString();
         mNotes = source.readString();
+    }
+
+    public boolean containsModifications() {
+        return mIsPrivate != mDefaults.isPrivate() ||
+                mIsReReading != mDefaults.isReReading() ||
+                mChaptersRead != mDefaults.getChaptersRead() ||
+                mReReadCount != mDefaults.getReReadCount() ||
+                mVolumesRead != mDefaults.getVolumesRead() ||
+                mRating != mDefaults.getRating() ||
+                mReadingStatus != mDefaults.getReadingStatus() ||
+                !TextUtils.equals(mNotes, mDefaults.getNotes());
     }
 
     public int getChaptersRead() {
@@ -96,6 +112,10 @@ public class MangaLibraryUpdate implements Parcelable {
     @Nullable
     public ReadingStatus getReadingStatus() {
         return mReadingStatus;
+    }
+
+    public int getReReadCount() {
+        return mReReadCount;
     }
 
     public int getVolumesRead() {
@@ -131,6 +151,7 @@ public class MangaLibraryUpdate implements Parcelable {
         dest.writeInt(mIsPrivate ? 1 : 0);
         dest.writeInt(mIsReReading ? 1 : 0);
         dest.writeInt(mChaptersRead);
+        dest.writeInt(mReReadCount);
         dest.writeInt(mVolumesRead);
         dest.writeParcelable(mRating, flags);
         dest.writeParcelable(mReadingStatus, flags);
@@ -156,6 +177,7 @@ public class MangaLibraryUpdate implements Parcelable {
         private final boolean mIsPrivate;
         private final boolean mIsReReading;
         private final int mChaptersRead;
+        private final int mReReadCount;
         private final int mVolumesRead;
 
         @Nullable
@@ -172,6 +194,7 @@ public class MangaLibraryUpdate implements Parcelable {
             mIsPrivate = false;
             mIsReReading = false;
             mChaptersRead = 0;
+            mReReadCount = 0;
             mVolumesRead = 0;
             mRating = null;
             mNotes = null;
@@ -182,6 +205,7 @@ public class MangaLibraryUpdate implements Parcelable {
             mIsPrivate = libraryEntry.isPrivate();
             mIsReReading = libraryEntry.isReReading();
             mChaptersRead = libraryEntry.getChaptersRead();
+            mReReadCount = libraryEntry.getReReadCount();
             mVolumesRead = libraryEntry.getVolumesRead();
             mRating = libraryEntry.getRating();
             mNotes = libraryEntry.getNotes();
@@ -192,6 +216,7 @@ public class MangaLibraryUpdate implements Parcelable {
             mIsPrivate = source.readInt() != 0;
             mIsReReading = source.readInt() != 0;
             mChaptersRead = source.readInt();
+            mReReadCount = source.readInt();
             mVolumesRead = source.readInt();
             mRating = source.readParcelable(Rating.class.getClassLoader());
             mNotes = source.readString();
@@ -217,6 +242,10 @@ public class MangaLibraryUpdate implements Parcelable {
             return mReadingStatus;
         }
 
+        public int getReReadCount() {
+            return mReReadCount;
+        }
+
         public int getVolumesRead() {
             return mVolumesRead;
         }
@@ -239,6 +268,7 @@ public class MangaLibraryUpdate implements Parcelable {
             dest.writeInt(mIsPrivate ? 1 : 0);
             dest.writeInt(mIsReReading ? 1 : 0);
             dest.writeInt(mChaptersRead);
+            dest.writeInt(mReReadCount);
             dest.writeInt(mVolumesRead);
             dest.writeParcelable(mRating, flags);
             dest.writeString(mNotes);

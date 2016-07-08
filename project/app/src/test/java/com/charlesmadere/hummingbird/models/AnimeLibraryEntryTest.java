@@ -5,17 +5,19 @@ import android.os.Build;
 import com.charlesmadere.hummingbird.BuildConfig;
 import com.charlesmadere.hummingbird.misc.GsonUtils;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
 public class AnimeLibraryEntryTest {
 
-    private static final String JSON_LIBRARY_ENTRY = "{\"id\":13406029,\"episodes_watched\":0,\"last_watched\":\"2016-06-08T21:37:42.787Z\",\"updated_at\":\"2016-06-08T21:37:44.640Z\",\"rewatched_times\":0,\"notes\":null,\"notes_present\":null,\"status\":\"currently-watching\",\"private\":false,\"rewatching\":false,\"anime\":{\"id\":11818,\"mal_id\":32681,\"slug\":\"uchuu-patrol-luluco\",\"status\":\"Finished Airing\",\"url\":\"https://hummingbird.me/anime/uchuu-patrol-luluco\",\"title\":\"Uchuu Patrol Luluco\",\"alternate_title\":\"Space Patrol Luluco\",\"episode_count\":13,\"episode_length\":8,\"cover_image\":\"https://static.hummingbird.me/anime/poster_images/000/011/818/large/luluco-2nd-kv.jpg?1458325087\",\"synopsis\":\"\\\"My First Love, Big Bang.\\\"\\r\\n\\r\\nThe headquarters of the space patrol is said to be located in the center of this galactic system. The story is set in \\\"OGIKUBO,\\\" a special ward for remote space immigrants in the solar system, designated by the space patrol. 20 years after the immigration began, space slums have been created, which have the lowest level of the space deviation.\\r\\n\\r\\nLuluco is a normal junior high school girl whose father is a detective at the space patrol. One day, she visits the Ogikubo branch of the space patrol to save her father who is suddenly frozen. But she happens to be assigned as a space patrol by the chief director Overjustice. Wearing a space patrol suit with strange functions, will she able to save her father and keep the peace of Ogikubo from space criminals? And will she fulfill her life as a junior high school student, including love and study?\\r\\n\\r\\n(Source: Crunchyroll)\",\"show_type\":\"TV\",\"started_airing\":\"2016-04-01\",\"finished_airing\":\"2016-06-24\",\"community_rating\":4.02510471338673,\"age_rating\":\"PG13\",\"genres\":[{\"name\":\"Action\"},{\"name\":\"Adventure\"},{\"name\":\"Comedy\"},{\"name\":\"Sci-Fi\"},{\"name\":\"Space\"},{\"name\":\"Romance\"},{\"name\":\"Parody\"}]},\"rating\":{\"type\":\"simple\",\"value\":\"5.0\"}}";
+    private static final String JSON_LIBRARY_ENTRY = "{\"id\":12956689,\"status\":\"Plan to Watch\",\"is_favorite\":false,\"rating\":\"5.0\",\"episodes_watched\":12,\"private\":true,\"rewatching\":false,\"rewatch_count\":0,\"last_watched\":\"2016-07-07T22:49:24.563Z\",\"anime_id\":\"non-non-biyori\",\"mAnime\":{\"id\":\"non-non-biyori\",\"canonical_title\":\"Non Non Biyori\",\"english_title\":\"\",\"romaji_title\":\"Non Non Biyori\",\"synopsis\":\"Elementary school student Ichijou Hotaru has moved with her parents from Tokyo to the middle of the country. Now she must adapt to her new school, where there are a total of 5 students in the same class who range through elementary and middle school ages. Join their everyday adventures in the countryside. \\r\\n(Source: MangaHelpers)\",\"poster_image\":\"https://static.hummingbird.me/anime/poster_images/000/007/711/large/9152138980_dbc9a427bf_b.jpg?1416279437\",\"poster_image_thumb\":\"https://static.hummingbird.me/anime/poster_images/000/007/711/medium/9152138980_dbc9a427bf_b.jpg?1416279437\",\"show_type\":\"TV\",\"age_rating\":\"PG13\",\"age_rating_guide\":\"Teens 13 or older\",\"episode_count\":12,\"episode_length\":24,\"started_airing\":\"2013-10-08\",\"started_airing_date_known\":true,\"finished_airing\":\"2013-12-24\",\"genres\":[\"Comedy\",\"School\",\"Slice of Life\"],\"updated_at\":\"2016-07-07T00:31:54.149Z\"}}";
 
     private static AnimeLibraryEntry sLibraryEntry;
 
@@ -29,8 +31,13 @@ public class AnimeLibraryEntryTest {
     }
 
     @Test
-    public void testGetAnimeGetVersion() throws Exception {
-        Assert.assertTrue(get().getAnime().getVersion() == AbsAnime.Version.V1);
+    public void testHasNotes() throws Exception {
+        assertFalse(get().hasNotes());
+    }
+
+    @Test
+    public void testHasRating() throws Exception {
+        assertTrue(get().hasRating());
     }
 
 }

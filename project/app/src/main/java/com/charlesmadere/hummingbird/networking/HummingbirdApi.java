@@ -3,7 +3,6 @@ package com.charlesmadere.hummingbird.networking;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AddAnimeLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
-import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.Franchise;
@@ -14,10 +13,7 @@ import com.charlesmadere.hummingbird.models.SearchDepth;
 import com.charlesmadere.hummingbird.models.SearchScope;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.UserDigest;
-import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.google.gson.JsonElement;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -38,10 +34,6 @@ public interface HummingbirdApi {
 
     @POST("api/v1/users/authenticate")
     Call<String> authenticate(@Body AuthInfo authInfo);
-
-    @GET("api/v1/users/{username}/library")
-    Call<ArrayList<AnimeLibraryEntry>> getLibraryEntries(@Path("username") String username,
-            @Query("status") WatchingStatus watchingStatus);
 
 
     /*
@@ -107,9 +99,18 @@ public interface HummingbirdApi {
     Call<Feed> getGroupStories(@Header("Cookie") String authToken,
             @Query("group_id") String groupId, @Query("page") Integer page);
 
+    @GET("library_entries")
+    Call<Feed> getLibraryEntries(@Header("Cookie") String authToken, @Header("Accept") String json,
+            @Query("user_id") String userId, @Query("status") String watchingStatusLibraryUpdateValue);
+
     @GET("full_manga/{mangaId}")
     Call<MangaDigest> getMangaDigest(@Header("Cookie") String authToken,
             @Path("mangaId") String mangaId);
+
+    @GET("manga_library_entries")
+    Call<Feed> getMangaLibraryEntries(@Header("Cookie") String authToken,
+            @Header("Accept") String json, @Query("user_id") String userId,
+            @Query("status") String readingStatusLibraryUpdateValue);
 
     @GET("stories")
     Call<Feed> getNewsFeed(@Header("Cookie") String authToken,

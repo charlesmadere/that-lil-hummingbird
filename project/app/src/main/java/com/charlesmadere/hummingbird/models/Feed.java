@@ -30,6 +30,10 @@ public class Feed implements Parcelable {
     private ArrayList<AbsSubstory> mSubstories;
 
     @Nullable
+    @SerializedName("library_entries")
+    private ArrayList<AnimeLibraryEntry> mAnimeLibraryEntries;
+
+    @Nullable
     @SerializedName("reviews")
     private ArrayList<AnimeReview> mAnimeReviews;
 
@@ -61,6 +65,11 @@ public class Feed implements Parcelable {
     @Nullable
     public ArrayList<AbsAnime> getAnime() {
         return mAnime;
+    }
+
+    @Nullable
+    public ArrayList<AnimeLibraryEntry> getAnimeLibraryEntries() {
+        return mAnimeLibraryEntries;
     }
 
     @Nullable
@@ -142,6 +151,10 @@ public class Feed implements Parcelable {
         return mAnime != null && !mAnime.isEmpty();
     }
 
+    public boolean hasAnimeLibraryEntries() {
+        return mAnimeLibraryEntries != null && !mAnimeLibraryEntries.isEmpty();
+    }
+
     public boolean hasAnimeReviews() {
         return mAnimeReviews != null && !mAnimeReviews.isEmpty();
     }
@@ -183,6 +196,12 @@ public class Feed implements Parcelable {
     }
 
     public void hydrate() {
+        if (hasAnimeLibraryEntries()) {
+            for (final AnimeLibraryEntry ale : mAnimeLibraryEntries) {
+                ale.hydrate(this);
+            }
+        }
+
         if (hasGroupMembers()) {
             for (final GroupMember groupMember : mGroupMembers) {
                 groupMember.hydrate(this);
@@ -232,6 +251,14 @@ public class Feed implements Parcelable {
                 MiscUtils.exclusiveAdd(mAnime, feed.getAnime());
             } else {
                 mAnime = feed.getAnime();
+            }
+        }
+
+        if (feed.hasAnimeLibraryEntries()) {
+            if (hasAnimeLibraryEntries()) {
+                MiscUtils.exclusiveAdd(mAnimeLibraryEntries, feed.getAnimeLibraryEntries());
+            } else {
+                mAnimeLibraryEntries = feed.getAnimeLibraryEntries();
             }
         }
 
@@ -321,6 +348,7 @@ public class Feed implements Parcelable {
         ParcelableUtils.writeAbsNotificationListToParcel(mNotifications, dest, flags);
         ParcelableUtils.writeAbsStoryListToParcel(mStories, dest, flags);
         ParcelableUtils.writeAbsSubstoryListToParcel(mSubstories, dest, flags);
+        dest.writeTypedList(mAnimeLibraryEntries);
         dest.writeTypedList(mAnimeReviews);
         dest.writeTypedList(mGroups);
         dest.writeTypedList(mGroupMembers);
@@ -338,6 +366,7 @@ public class Feed implements Parcelable {
             f.mNotifications = ParcelableUtils.readAbsNotificationListFromParcel(source);
             f.mStories = ParcelableUtils.readAbsStoryListFromParcel(source);
             f.mSubstories = ParcelableUtils.readAbsSubstoryListFromParcel(source);
+            f.mAnimeLibraryEntries = source.createTypedArrayList(AnimeLibraryEntry.CREATOR);
             f.mAnimeReviews = source.createTypedArrayList(AnimeReview.CREATOR);
             f.mGroups = source.createTypedArrayList(Group.CREATOR);
             f.mGroupMembers = source.createTypedArrayList(GroupMember.CREATOR);
@@ -360,6 +389,11 @@ public class Feed implements Parcelable {
         @SerializedName("cursor")
         private Integer mCursor;
 
+
+        @Override
+        public String toString() {
+            return mCursor == null ? null : String.valueOf(mCursor);
+        }
 
         @Override
         public int describeContents() {
