@@ -127,7 +127,7 @@ public class AnimeLibraryUpdateTest {
         mLibraryUpdate.setWatchingStatus(mLibraryUpdate.getDefaults().getWatchingStatus());
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setWatchingStatus(WatchingStatus.PLAN_TO_WATCH);
+        mLibraryUpdate.setWatchingStatus(WatchingStatus.COMPLETED);
         assertTrue(mLibraryUpdate.containsModifications());
 
         mLibraryUpdate.setWatchingStatus(mLibraryUpdate.getDefaults().getWatchingStatus());
