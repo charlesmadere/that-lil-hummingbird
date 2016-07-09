@@ -27,7 +27,7 @@ public class AnimeLibraryEntriesAdapter extends BaseAdapter<AnimeLibraryEntry> {
 
     @Override
     public int getItemViewType(final int position) {
-        return R.layout.item_library_entry;
+        return R.layout.item_anime_library_entry;
     }
 
     @Override
