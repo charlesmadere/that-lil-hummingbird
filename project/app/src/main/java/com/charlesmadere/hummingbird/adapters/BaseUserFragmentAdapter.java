@@ -23,10 +23,13 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
     public static final int POSITION_PROFILE = 0;
     public static final int POSITION_FEED = 1;
 
+    private static final WatchingStatus[] WATCHING_STATUSES = { WatchingStatus.CURRENTLY_WATCHING,
+            WatchingStatus.COMPLETED, WatchingStatus.PLAN_TO_WATCH, WatchingStatus.ON_HOLD,
+            WatchingStatus.DROPPED };
+
     private final Context mContext;
     private final SparseArrayCompat<WeakReference<BaseFragment>> mFragments;
     private final UserDigest mUserDigest;
-    private final WatchingStatus[] mWatchingStatuses;
 
 
     public BaseUserFragmentAdapter(final FragmentActivity activity, final UserDigest digest) {
@@ -38,9 +41,6 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
         super(fm);
         mContext = context;
         mUserDigest = digest;
-        mWatchingStatuses = new WatchingStatus[] { WatchingStatus.CURRENTLY_WATCHING,
-                WatchingStatus.COMPLETED, WatchingStatus.PLAN_TO_WATCH,
-                WatchingStatus.ON_HOLD, WatchingStatus.DROPPED };
         mFragments = new SparseArrayCompat<>(getCount());
     }
 
@@ -56,7 +56,7 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
 
     @Override
     public int getCount() {
-        return mWatchingStatuses.length + 2;
+        return WATCHING_STATUSES.length + 2;
     }
 
     @Nullable
@@ -84,7 +84,7 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
                 break;
 
             default:
-                final WatchingStatus watchingStatus = mWatchingStatuses[position - 2];
+                final WatchingStatus watchingStatus = WATCHING_STATUSES[position - 2];
                 fragment = AnimeLibraryFragment.create(mUserDigest.getUserId(), watchingStatus,
                         areLibrariesEditable());
                 break;
@@ -108,7 +108,7 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
                 break;
 
             default:
-                final WatchingStatus watchingStatus = mWatchingStatuses[position - 2];
+                final WatchingStatus watchingStatus = WATCHING_STATUSES[position - 2];
                 pageTitleResId = watchingStatus.getTextResId();
                 break;
         }
