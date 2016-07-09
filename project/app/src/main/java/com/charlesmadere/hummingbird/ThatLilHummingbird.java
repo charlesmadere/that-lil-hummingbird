@@ -50,6 +50,7 @@ public class ThatLilHummingbird extends Application {
         final ArrayList<Activity> activities = ActivityRegister.get();
 
         if (activities == null || activities.isEmpty()) {
+            Timber.w(TAG, "No Activity available to restart with");
             return;
         }
 
