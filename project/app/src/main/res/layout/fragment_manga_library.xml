@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.RefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/refreshLayout"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    app:scrolling_child="@+id/recyclerView">
+    <FrameLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@id/recyclerView"
+            style="@style/ListOrGrid" />
+        <LinearLayout
+            android:id="@+id/llError"
+            style="@style/ListMessageContainer">
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvError"
+                tools:text="@string/error_loading_currently_reading_library"
+                style="@style/ListMessageTitle" />
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:text="@string/pull_to_refresh_to_try_again"
+                style="@style/ListMessageSubtitle" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llEmpty"
+            style="@style/ListMessageContainer">
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvEmpty"
+                tools:text="@string/currently_reading_library_is_empty"
+                style="@style/ListMessageTitle" />
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:text="@string/pull_to_refresh_to_check_again"
+                style="@style/ListMessageSubtitle" />
+        </LinearLayout>
+    </FrameLayout>
+</com.charlesmadere.hummingbird.views.RefreshLayout>
