@@ -7,6 +7,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.MangaLibraryFragmentAdapter;
+import com.charlesmadere.hummingbird.misc.CurrentUser;
 
 import butterknife.BindView;
 
@@ -42,6 +44,16 @@ public class MangaLibraryActivity extends BaseDrawerActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manga_library);
+
+        final Intent intent = getIntent();
+        final String username = intent.getStringExtra(EXTRA_USERNAME);
+        getSupportActionBar().setSubtitle(username);
+
+        mViewPager.setAdapter(new MangaLibraryFragmentAdapter(this, username,
+                CurrentUser.get().getUserId().equalsIgnoreCase(username)));
+        mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
+        mViewPager.setOffscreenPageLimit(3);
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
 }
