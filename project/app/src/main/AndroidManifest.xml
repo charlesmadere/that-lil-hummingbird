@@ -95,6 +95,11 @@
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
         <activity
+            android:label="@string/manga_library"
+            android:name=".activities.MangaLibraryActivity"
+            android:theme="@style/HummingbirdTheme.WithDrawer" />
+
+        <activity
             android:label="@string/notifications"
             android:launchMode="singleTop"
             android:name=".activities.NotificationsActivity"
