@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:compat="http://schemas.android.com/apk/res-auto">
     <item
-
+        android:icon="@drawable/ic_library_books_white_24dp"
         android:id="@+id/miMangaLibrary"
         android:title="@string/manga_library"
         android:titleCondensed="@string/manga"
