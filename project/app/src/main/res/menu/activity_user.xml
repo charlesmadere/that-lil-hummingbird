@@ -3,6 +3,12 @@
     xmlns:compat="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <item
+
+        android:id="@+id/miMangaLibrary"
+        android:title="@string/manga_library"
+        android:titleCondensed="@string/manga"
+        compat:showAsAction="ifRoom|withText" />
+    <item
         android:id="@+id/miFollow"
         android:title="@string/follow"
         android:visible="false"

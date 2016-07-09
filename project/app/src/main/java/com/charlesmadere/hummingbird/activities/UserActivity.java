@@ -153,6 +153,10 @@ public class UserActivity extends BaseDrawerActivity implements BaseFeedFragment
             case R.id.miUnfollow:
                 toggleFollowingOfUser();
                 return true;
+
+            case R.id.miMangaLibrary:
+                startActivity(MangaLibraryActivity.getLaunchIntent(this, mUsername));
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

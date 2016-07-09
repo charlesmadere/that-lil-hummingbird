@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.BaseUserFragmentAdapter;
@@ -13,6 +15,7 @@ import com.charlesmadere.hummingbird.adapters.HomeFragmentAdapter;
 import com.charlesmadere.hummingbird.adapters.UserFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.BaseFeedFragment;
 import com.charlesmadere.hummingbird.fragments.HomeFeedFragment;
+import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.SyncManager;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 
@@ -80,6 +83,12 @@ public class HomeActivity extends BaseDrawerActivity implements BaseFeedFragment
     }
 
     @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_home, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public void onFeedBeganLoading() {
         updatePostToFeedVisibility();
     }
@@ -87,6 +96,17 @@ public class HomeActivity extends BaseDrawerActivity implements BaseFeedFragment
     @Override
     public void onFeedFinishedLoading() {
         updatePostToFeedVisibility();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.miMangaLibrary:
+                startActivity(MangaLibraryActivity.getLaunchIntent(this, CurrentUser.get().getUserId()));
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @OnClick(R.id.floatingActionButton)
