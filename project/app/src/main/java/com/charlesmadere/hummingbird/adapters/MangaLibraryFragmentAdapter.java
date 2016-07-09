@@ -1,5 +1,6 @@
 package com.charlesmadere.hummingbird.adapters;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -15,17 +16,19 @@ public class MangaLibraryFragmentAdapter extends FragmentStatePagerAdapter {
             ReadingStatus.DROPPED};
 
     private final boolean mEditableLibrary;
+    private final Context mContext;
     private final String mUsername;
 
 
     public MangaLibraryFragmentAdapter(final FragmentActivity activity, final String username,
             final boolean editableLibrary) {
-        this(activity.getSupportFragmentManager(), username, editableLibrary);
+        this(activity, activity.getSupportFragmentManager(), username, editableLibrary);
     }
 
-    public MangaLibraryFragmentAdapter(final FragmentManager fm, final String username,
-            final boolean editableLibrary) {
+    public MangaLibraryFragmentAdapter(final Context context, final FragmentManager fm,
+            final String username, final boolean editableLibrary) {
         super(fm);
+        mContext = context;
         mUsername = username;
         mEditableLibrary = editableLibrary;
     }
@@ -38,6 +41,11 @@ public class MangaLibraryFragmentAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(final int position) {
         return MangaLibraryFragment.create(READING_STATUSES[position], mUsername, mEditableLibrary);
+    }
+
+    @Override
+    public CharSequence getPageTitle(final int position) {
+        return mContext.getText(READING_STATUSES[position].getTextResId());
     }
 
 }
