@@ -166,7 +166,7 @@ public class AnimeLibraryFragment extends BaseFragment implements
         mEmptyText.setText(mWatchingStatus.getEmptyTextResId());
         mErrorText.setText(mWatchingStatus.getErrorTextResId());
 
-        if (mFeed != null && !mFeed.hasAnimeLibraryEntries()) {
+        if (mFeed != null && mFeed.hasAnimeLibraryEntries()) {
             showLibraryEntries(mFeed);
         } else {
             fetchLibraryEntries();
