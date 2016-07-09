@@ -178,17 +178,17 @@ public class AnimeLibraryFragment extends BaseFragment implements
         Toast.makeText(getContext(), R.string.error_editing_library_entry, Toast.LENGTH_LONG).show();
     }
 
-    private void showError() {
-        mRecyclerView.setVisibility(View.GONE);
-        mEmpty.setVisibility(View.GONE);
-        mError.setVisibility(View.VISIBLE);
-        mRefreshLayout.setRefreshing(false);
-    }
-
     private void showEmpty() {
         mRecyclerView.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mEmpty.setVisibility(View.VISIBLE);
+        mRefreshLayout.setRefreshing(false);
+    }
+
+    private void showError() {
+        mRecyclerView.setVisibility(View.GONE);
+        mEmpty.setVisibility(View.GONE);
+        mError.setVisibility(View.VISIBLE);
         mRefreshLayout.setRefreshing(false);
     }
 
