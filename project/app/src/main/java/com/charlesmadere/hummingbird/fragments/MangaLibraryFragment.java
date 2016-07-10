@@ -16,6 +16,7 @@ import com.charlesmadere.hummingbird.adapters.MangaLibraryEntriesAdapter;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.ReadingStatus;
+import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.MangaLibraryEntryItemView;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
@@ -75,7 +76,7 @@ public class MangaLibraryFragment extends BaseFragment implements
 
     private void fetchLibraryEntries() {
         mRefreshLayout.setRefreshing(true);
-        // TODO
+        Api.getMangaLibraryEntries(mUsername, mReadingStatus, new GetLibraryEntriesListener(this));
     }
 
     @Override
