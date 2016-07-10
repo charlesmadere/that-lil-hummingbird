@@ -51,7 +51,7 @@ public class CommentTitleTextView extends AppCompatTextView implements AdapterVi
         final Context context = getContext();
         final TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.View);
         final int typefaceEntryOrdinal = ta.getInt(R.styleable.View_typeface,
-                TypefaceEntry.TEKO_SEMIBOLD.ordinal());
+                TypefaceEntry.OSWALD_BOLD.ordinal());
         final int secondaryTypefaceEntryOrdinal = ta.getInt(R.styleable.View_secondary_typeface,
                 TypefaceEntry.OPEN_SANS_REGULAR.ordinal());
         ta.recycle();

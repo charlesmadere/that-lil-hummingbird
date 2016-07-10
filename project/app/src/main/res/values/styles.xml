@@ -65,10 +65,10 @@
     <style name="AnimeTitle">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:lineSpacingExtra">-4dp</item>
+        <item name="android:lineSpacingExtra">-2dp</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
-        <item name="android:textSize">@dimen/text_xxlarge</item>
-        <item name="typeface">teko_semibold</item>
+        <item name="android:textSize">@dimen/text_xlarge</item>
+        <item name="typeface">oswald_bold</item>
     </style>
 
     <style name="AnimeTitle.Small">
@@ -302,8 +302,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
-        <item name="android:textSize">@dimen/text_xlarge</item>
-        <item name="typeface">teko_semibold</item>
+        <item name="android:textSize">@dimen/text_large</item>
+        <item name="typeface">oswald_bold</item>
     </style>
 
     <style name="LikeTextView">
@@ -411,8 +411,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
-        <item name="android:textSize">@dimen/text_xxlarge</item>
-        <item name="typeface">teko_semibold</item>
+        <item name="android:textSize">@dimen/text_xlarge</item>
+        <item name="typeface">oswald_bold</item>
     </style>
 
     <style name="MangaTitle.Small">
@@ -656,8 +656,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
-        <item name="android:textSize">@dimen/text_xlarge</item>
-        <item name="typeface">teko_semibold</item>
+        <item name="android:textSize">@dimen/text_large</item>
+        <item name="typeface">oswald_bold</item>
     </style>
 
 </resources>
