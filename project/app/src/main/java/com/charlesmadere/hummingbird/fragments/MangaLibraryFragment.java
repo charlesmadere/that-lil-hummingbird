@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,16 +13,21 @@ import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.MangaLibraryEntriesAdapter;
+import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.ReadingStatus;
+import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.views.MangaLibraryEntryItemView;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
+
+import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
 public class MangaLibraryFragment extends BaseFragment implements
-        MangaLibraryUpdateFragment.RemoveListener, MangaLibraryUpdateFragment.UpdateListener,
-        SwipeRefreshLayout.OnRefreshListener {
+        MangaLibraryEntryItemView.OnEditClickListener, MangaLibraryUpdateFragment.RemoveListener,
+        MangaLibraryUpdateFragment.UpdateListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "MangaLibraryFragment";
     private static final String KEY_EDITABLE_LIBRARY = "EditableLibrary";
@@ -99,6 +105,11 @@ public class MangaLibraryFragment extends BaseFragment implements
     }
 
     @Override
+    public void onEditClick(final MangaLibraryEntryItemView v) {
+        // TODO
+    }
+
+    @Override
     public void onRefresh() {
         fetchLibraryEntries();
     }
@@ -127,6 +138,12 @@ public class MangaLibraryFragment extends BaseFragment implements
         super.onViewCreated(view, savedInstanceState);
 
         mRefreshLayout.setOnRefreshListener(this);
+
+        if (mEditableLibrary) {
+            mAdapter = new MangaLibraryEntriesAdapter(getContext(), this);
+        } else {
+            mAdapter = new MangaLibraryEntriesAdapter(getContext());
+        }
 
         mRecyclerView.setAdapter(mAdapter);
         SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
@@ -167,6 +184,63 @@ public class MangaLibraryFragment extends BaseFragment implements
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
         mRefreshLayout.setRefreshing(false);
+    }
+
+
+    private static class EditLibraryEntryListener implements ApiResponse<Void> {
+        private final WeakReference<MangaLibraryFragment> mFragmentReference;
+
+        private EditLibraryEntryListener(final MangaLibraryFragment fragment) {
+            mFragmentReference = new WeakReference<>(fragment);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final MangaLibraryFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                fragment.showEditLibraryEntryError();
+            }
+        }
+
+        @Override
+        public void success(@Nullable final Void object) {
+            final MangaLibraryFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                fragment.fetchLibraryEntries();
+            }
+        }
+    }
+
+    private static class GetLibraryEntriesListener implements ApiResponse<Feed> {
+        private final WeakReference<MangaLibraryFragment> mFragmentReference;
+
+        private GetLibraryEntriesListener(final MangaLibraryFragment fragment) {
+            mFragmentReference = new WeakReference<>(fragment);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final MangaLibraryFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                fragment.showError();
+            }
+        }
+
+        @Override
+        public void success(final Feed feed) {
+            final MangaLibraryFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                if (feed.hasMangaLibraryEntries()) {
+                    fragment.showLibraryEntries(feed);
+                } else {
+                    fragment.showEmpty();
+                }
+            }
+        }
     }
 
 }
