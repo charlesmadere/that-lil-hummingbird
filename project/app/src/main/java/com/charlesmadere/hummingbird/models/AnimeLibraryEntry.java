@@ -61,6 +61,10 @@ public class AnimeLibraryEntry implements Parcelable {
         return mAnime;
     }
 
+    public String getAnimeId() {
+        return mAnimeId;
+    }
+
     public int getEpisodesWatched() {
         return mEpisodesWatched;
     }
