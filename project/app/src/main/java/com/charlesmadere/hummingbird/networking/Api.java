@@ -24,6 +24,7 @@ import com.charlesmadere.hummingbird.models.FeedPost;
 import com.charlesmadere.hummingbird.models.Franchise;
 import com.charlesmadere.hummingbird.models.GroupDigest;
 import com.charlesmadere.hummingbird.models.MangaDigest;
+import com.charlesmadere.hummingbird.models.ReadingStatus;
 import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.charlesmadere.hummingbird.models.SearchDepth;
 import com.charlesmadere.hummingbird.models.SearchScope;
@@ -534,6 +535,34 @@ public final class Api {
             @Override
             public void onFailure(final Call<MangaDigest> call, final Throwable t) {
                 Timber.e(TAG, "get manga (" + mangaId + ") digest failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
+    public static void getMangaLibraryEntries(final String username,
+            @Nullable final ReadingStatus status, final ApiResponse<Feed> listener) {
+        hummingbird().getMangaLibraryEntries(getAuthTokenCookieString(), Constants.MIMETYPE_JSON,
+                username, status == null ? null : status.getPostValue()).enqueue(
+                new Callback<Feed>() {
+            @Override
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
+                Feed body = null;
+
+                if (response.isSuccessful()) {
+                    body = response.body();
+                }
+
+                if (body == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    listener.success(body);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get manga library entries for user (" + username + ") failed", t);
                 listener.failure(null);
             }
         });
