@@ -57,16 +57,12 @@
                 android:id="@+id/kvtvChapters"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:visibility="gone"
-                tools:text="Chapters 3 / 12"
-                tools:visibility="visible" />
+                tools:text="Chapters 3 / 12" />
             <com.charlesmadere.hummingbird.views.KeyValueTextView
                 android:id="@+id/kvtvVolumes"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:visibility="gone"
-                tools:text="Volumes 2 / 3"
-                tools:visibility="visible" />
+                tools:text="Volumes 2 / 3" />
             <com.charlesmadere.hummingbird.views.KeyValueTextView
                 android:id="@+id/kvtvRating"
                 android:layout_height="wrap_content"
