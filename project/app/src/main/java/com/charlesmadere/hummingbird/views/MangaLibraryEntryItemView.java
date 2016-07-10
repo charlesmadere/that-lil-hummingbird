@@ -19,6 +19,7 @@ import java.text.NumberFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MangaLibraryEntryItemView extends CardView implements AdapterView<MangaLibraryEntry>,
         View.OnClickListener {
@@ -70,6 +71,11 @@ public class MangaLibraryEntryItemView extends CardView implements AdapterView<M
 
     @Override
     public void onClick(final View view) {
+        // TODO
+    }
+
+    @OnClick(R.id.ibEdit)
+    void onEditClick() {
         mListener.onEditClick(this);
     }
 
