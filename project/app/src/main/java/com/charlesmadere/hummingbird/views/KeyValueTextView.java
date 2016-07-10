@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.views;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -48,6 +49,10 @@ public class KeyValueTextView extends TypefaceTextView {
         }
 
         ta.recycle();
+    }
+
+    public void setText(@StringRes final int keyTextResId, @Nullable final CharSequence value) {
+        setText(getResources().getText(keyTextResId), value);
     }
 
     public void setText(@Nullable final CharSequence key, @Nullable final CharSequence value) {
