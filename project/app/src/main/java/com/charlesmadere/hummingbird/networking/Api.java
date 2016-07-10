@@ -556,7 +556,7 @@ public final class Api {
                 if (body == null) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
-                    listener.success(body);
+                    hydrateFeed(body, null, listener);
                 }
             }
 
