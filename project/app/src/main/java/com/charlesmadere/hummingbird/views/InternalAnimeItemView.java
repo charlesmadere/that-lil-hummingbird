@@ -128,19 +128,19 @@ public class InternalAnimeItemView extends LinearLayout {
         final Resources res = getResources();
 
         if (mAnime.hasEpisodeCount()) {
-            mProgress.setText(res.getText(R.string.progress), res.getString(
-                    R.string.progress_format, mNumberFormat.format(mLibraryEntry.
-                            getEpisodesWatched()), mNumberFormat.format(mAnime.getEpisodeCount())));
+            mProgress.setText(R.string.progress, res.getString(R.string.progress_format,
+                    mNumberFormat.format(mLibraryEntry.getEpisodesWatched()),
+                    mNumberFormat.format(mAnime.getEpisodeCount())));
         } else {
-            mProgress.setText(res.getText(R.string.progress), mNumberFormat.format(
+            mProgress.setText(R.string.progress, mNumberFormat.format(
                     mLibraryEntry.getEpisodesWatched()));
         }
 
         mProgress.setVisibility(VISIBLE);
 
         if (mLibraryEntry.hasRating()) {
-            mRating.setText(res.getText(R.string.rating),
-                    mNumberFormat.format(mLibraryEntry.getRating().mValue));
+            mRating.setText(R.string.rating, mNumberFormat.format(
+                    mLibraryEntry.getRating().mValue));
             mRating.setVisibility(VISIBLE);
         } else {
             mRating.setVisibility(GONE);
