@@ -778,15 +778,15 @@ public final class Api {
         });
     }
 
-    public static void getUserReviews(final String userId, final ApiResponse<Feed> listener) {
-        getUserReviews(userId, null, listener);
+    public static void getUserReviews(final String username, final ApiResponse<Feed> listener) {
+        getUserReviews(username, null, listener);
     }
 
-    public static void getUserReviews(final String userId, @Nullable final Feed feed,
+    public static void getUserReviews(final String username, @Nullable final Feed feed,
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        hummingbird().getUserReviews(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, userId,
+        hummingbird().getUserReviews(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, username,
                 page).enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
@@ -805,7 +805,7 @@ public final class Api {
 
             @Override
             public void onFailure(final Call<Feed> call, final Throwable t) {
-                Timber.e(TAG, "get user (" + userId + ") reviews failed", t);
+                Timber.e(TAG, "get user (" + username + ") reviews failed", t);
                 listener.failure(null);
             }
         });
