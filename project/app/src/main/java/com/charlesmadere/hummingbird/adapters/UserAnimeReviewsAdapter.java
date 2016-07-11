@@ -18,7 +18,7 @@ public class UserAnimeReviewsAdapter extends BasePaginationAdapter<AnimeReview> 
     }
 
     public void set(final Feed feed) {
-        set(feed.getAnimeReviews());
+        super.set(feed.getAnimeReviews());
     }
 
 }

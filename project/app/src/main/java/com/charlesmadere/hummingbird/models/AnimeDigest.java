@@ -174,20 +174,18 @@ public class AnimeDigest implements Parcelable {
             Collections.sort(mEpisodes, Episode.COMPARATOR);
         }
 
-        if (hasReviews()) {
-            if (hasUsers()) {
-                final Iterator<AnimeReview> iterator = mReviews.iterator();
+        if (hasReviews() && hasUsers()) {
+            final Iterator<AnimeReview> iterator = mReviews.iterator();
 
-                do {
-                    final AnimeReview review = iterator.next();
+            do {
+                final AnimeReview review = iterator.next();
 
-                    if (!review.hydrate(this)) {
-                        iterator.remove();
-                    }
-                } while (iterator.hasNext());
-            } else {
-                mReviews = null;
-            }
+                if (!review.hydrate(this)) {
+                    iterator.remove();
+                }
+            } while (iterator.hasNext());
+        } else {
+            mReviews = null;
         }
     }
 
