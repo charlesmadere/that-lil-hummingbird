@@ -150,24 +150,22 @@ public class AnimeDigest implements Parcelable {
     }
 
     public void hydrate() {
-        if (hasCastings()) {
-            if (hasPeople()) {
-                final Iterator<Casting> iterator = mCastings.iterator();
+        if (hasCastings() && hasPeople()) {
+            final Iterator<Casting> iterator = mCastings.iterator();
 
-                do {
-                    final Casting casting = iterator.next();
+            do {
+                final Casting casting = iterator.next();
 
-                    if (TextUtils.isEmpty(casting.getPersonId()) || !casting.hydrate(this)) {
-                        iterator.remove();
-                    }
-                } while (iterator.hasNext());
-
-                if (mCastings.isEmpty()) {
-                    mCastings = null;
+                if (TextUtils.isEmpty(casting.getPersonId()) || !casting.hydrate(this)) {
+                    iterator.remove();
                 }
-            } else {
+            } while (iterator.hasNext());
+
+            if (mCastings.isEmpty()) {
                 mCastings = null;
             }
+        } else {
+            mCastings = null;
         }
 
         if (hasEpisodes()) {
