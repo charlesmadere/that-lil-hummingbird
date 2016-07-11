@@ -86,7 +86,7 @@ public class AnimeReview implements Parcelable {
     }
 
     public String getAnimeTitle() {
-        return mAnime == null ? mAnimeTitle : mAnime.getTitle();
+        return mAnime.getTitle();
     }
 
     public CharSequence getContent() {
