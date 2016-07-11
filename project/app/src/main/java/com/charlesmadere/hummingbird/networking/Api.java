@@ -15,6 +15,7 @@ import com.charlesmadere.hummingbird.models.AddAnimeLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
+import com.charlesmadere.hummingbird.models.AnimeReview;
 import com.charlesmadere.hummingbird.models.AppNews;
 import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.CommentPost;
@@ -841,8 +842,32 @@ public final class Api {
 
                 if (body == null) {
                     listener.failure(retrieveErrorInfo(response));
-                } else {
-                    hydrateFeed(body, feed, listener);
+                } else if (body.hasAnimeReviews()) {
+                    final ArrayList<AnimeReview> animeReviews = body.getAnimeReviews();
+                    final ArrayList<String> animeIds = new ArrayList<>(animeReviews.size());
+
+                    for (final AnimeReview animeReview : animeReviews) {
+                        animeIds.add(animeReview.getAnimeId());
+                    }
+
+                    // TODO
+                    // TODO
+                    // Multiple reviews for the same anime?
+                    // TODO
+                    // TODO
+
+                    getAnime(animeIds, new ApiResponse<ArrayList<AbsAnime>>() {
+                        @Override
+                        public void failure(@Nullable final ErrorInfo error) {
+                            listener.failure(error);
+                        }
+
+                        @Override
+                        public void success(@Nullable final ArrayList<AbsAnime> object) {
+
+                            hydrateFeed(body, feed, listener);
+                        }
+                    });
                 }
             }
 
