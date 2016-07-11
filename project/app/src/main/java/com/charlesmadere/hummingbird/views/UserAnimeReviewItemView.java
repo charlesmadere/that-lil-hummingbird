@@ -61,6 +61,7 @@ public class UserAnimeReviewItemView extends CardView implements AdapterView<Ani
     @Override
     public void setContent(final AnimeReview content) {
         mReview = content;
+        mTitle.setText(content.getAnimeTitle());
         mRatingView.setContent(content.getRating());
         mSummary.setText(mReview.getSummary());
         mReviewHelpfulness.setText(getResources().getString(
