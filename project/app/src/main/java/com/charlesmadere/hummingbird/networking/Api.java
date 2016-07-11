@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.RetrofitUtils;
 import com.charlesmadere.hummingbird.misc.Threading;
 import com.charlesmadere.hummingbird.misc.Timber;
@@ -35,6 +36,8 @@ import com.charlesmadere.hummingbird.preferences.Preferences;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -175,6 +178,46 @@ public final class Api {
                 listener.failure(null);
             }
         });
+    }
+
+    public static void getAnime(final ArrayList<String> animeIds,
+            final ApiResponse<ArrayList<AbsAnime>> listener) {
+        final HashMap<String, AbsAnime> animeMap = new HashMap<>(animeIds.size());
+
+        for (final String animeId : animeIds) {
+            animeMap.put(animeId, null);
+        }
+
+        for (final String animeId : animeIds) {
+            getAnime(animeId, new ApiResponse<AbsAnime>() {
+                @Override
+                public void failure(@Nullable final ErrorInfo error) {
+                    animeMap.remove(animeId);
+                    proceed(error);
+                }
+
+                private void proceed(@Nullable final ErrorInfo error) {
+                    if (animeMap.isEmpty()) {
+                        listener.failure(error);
+                        return;
+                    }
+
+                    for (final Map.Entry<String, AbsAnime> entry : animeMap.entrySet()) {
+                        if (entry.getValue() == null) {
+                            return;
+                        }
+                    }
+
+                    listener.success(MiscUtils.toArrayList(animeMap.values()));
+                }
+
+                @Override
+                public void success(final AbsAnime anime) {
+                    animeMap.put(animeId, anime);
+                    proceed(null);
+                }
+            });
+        }
     }
 
     public static void getAnime(final String animeId, final ApiResponse<AbsAnime> listener) {

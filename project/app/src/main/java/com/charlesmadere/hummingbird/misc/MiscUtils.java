@@ -25,6 +25,8 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.ThatLilHummingbird;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -265,6 +267,19 @@ public final class MiscUtils {
         }
 
         openUrl(MiscUtils.getActivity(context), url);
+    }
+
+    @Nullable
+    public static <T> ArrayList<T> toArrayList(@Nullable final Collection<T> collection) {
+        if (collection == null || collection.isEmpty()) {
+            return null;
+        }
+
+        if (collection instanceof ArrayList) {
+            return (ArrayList<T>) collection;
+        } else {
+            return new ArrayList<>(collection);
+        }
     }
 
 }
