@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -88,11 +87,17 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         return create(null, libraryEntry);
     }
 
-    private static AnimeLibraryUpdateFragment create(@Nullable final AnimeDigest animeDigest,
-            @Nullable final AnimeLibraryEntry libraryEntry) {
-        final Bundle args = new Bundle(2);
-        args.putParcelable(KEY_ANIME_DIGEST, animeDigest);
-        args.putParcelable(KEY_LIBRARY_ENTRY, libraryEntry);
+    private static AnimeLibraryUpdateFragment create(final AnimeDigest animeDigest,
+            final AnimeLibraryEntry libraryEntry) {
+        final Bundle args = new Bundle(1);
+
+        if (animeDigest != null) {
+            args.putParcelable(KEY_ANIME_DIGEST, animeDigest);
+        } else if (libraryEntry != null) {
+            args.putParcelable(KEY_LIBRARY_ENTRY, libraryEntry);
+        } else {
+            throw new IllegalArgumentException("both animeDigest and libraryEntry can't be null");
+        }
 
         final AnimeLibraryUpdateFragment fragment = new AnimeLibraryUpdateFragment();
         fragment.setArguments(args);
