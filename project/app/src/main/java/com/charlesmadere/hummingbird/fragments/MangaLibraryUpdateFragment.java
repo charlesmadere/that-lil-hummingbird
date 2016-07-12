@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.models.MangaDigest;
+import com.charlesmadere.hummingbird.models.MangaLibraryEntry;
+import com.charlesmadere.hummingbird.models.MangaLibraryUpdate;
 import com.charlesmadere.hummingbird.views.ModifyPublicPrivateSpinner;
 import com.charlesmadere.hummingbird.views.ModifyReadingStatusSpinner;
 
@@ -14,8 +17,41 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         ModifyPublicPrivateSpinner.OnItemSelectedListener,
         ModifyReadingStatusSpinner.OnItemSelectedListener {
 
-    private static final String TAG = "MangaLibraryUpdateFragment";
+    public static final String TAG = "MangaLibraryUpdateFragment";
+    private static final String KEY_MANGA_DIGEST = "MangaDigest";
+    private static final String KEY_LIBRARY_ENTRY = "LibraryEntry";
+    private static final String KEY_LIBRARY_UPDATE = "LibraryUpdate";
 
+    private MangaDigest mMangaDigest;
+    private MangaLibraryEntry mLibraryEntry;
+    private MangaLibraryUpdate mLibraryUpdate;
+
+
+    public static MangaLibraryUpdateFragment create(final MangaDigest mangaDigest) {
+        return create(mangaDigest, null);
+    }
+
+    public static MangaLibraryUpdateFragment create(final MangaLibraryEntry libraryEntry) {
+        return create(null, libraryEntry);
+    }
+
+    private static MangaLibraryUpdateFragment create(final MangaDigest mangaDigest,
+            final MangaLibraryEntry libraryEntry) {
+        final Bundle args = new Bundle(1);
+
+        if (mangaDigest != null) {
+            args.putParcelable(KEY_MANGA_DIGEST, mangaDigest);
+        } else if (libraryEntry != null) {
+            args.putParcelable(KEY_LIBRARY_ENTRY, libraryEntry);
+        } else {
+            throw new IllegalArgumentException("both mangaDigest and libraryEntry can't be null");
+        }
+
+        final MangaLibraryUpdateFragment fragment = new MangaLibraryUpdateFragment();
+        fragment.setArguments(args);
+
+        return fragment;
+    }
 
     @Override
     public String getFragmentName() {
@@ -31,7 +67,22 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO
+
+        final Bundle args = getArguments();
+        mMangaDigest = args.getParcelable(KEY_MANGA_DIGEST);
+        mLibraryEntry = args.getParcelable(KEY_LIBRARY_ENTRY);
+
+        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
+            mLibraryUpdate = savedInstanceState.getParcelable(KEY_LIBRARY_UPDATE);
+        }
+
+        if (mLibraryUpdate == null) {
+            if (mLibraryEntry == null) {
+                mLibraryUpdate = new MangaLibraryUpdate(mMangaDigest);
+            } else {
+                mLibraryUpdate = new MangaLibraryUpdate(mLibraryEntry);
+            }
+        }
     }
 
     @Override
@@ -60,7 +111,10 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     @Override
     public void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
-        // TODO
+
+        if (mLibraryUpdate != null) {
+            outState.putParcelable(KEY_LIBRARY_UPDATE, mLibraryUpdate);
+        }
     }
 
     @Override
