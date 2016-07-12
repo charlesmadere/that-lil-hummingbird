@@ -86,7 +86,7 @@ public class AnimeReview implements Parcelable {
     }
 
     public String getAnimeTitle() {
-        return mAnime.getTitle();
+        return mAnime == null ? mAnimeTitle : mAnime.getTitle();
     }
 
     public CharSequence getContent() {
@@ -152,17 +152,44 @@ public class AnimeReview implements Parcelable {
     }
 
     public boolean hydrate(final AnimeDigest animeDigest) {
+        if (!animeDigest.hasUsers()) {
+            return false;
+        }
+
         compileContent();
         mAnimeTitle = animeDigest.getTitle();
 
         for (final User user : animeDigest.getUsers()) {
             if (mUserId.equalsIgnoreCase(user.getId())) {
                 mUser = user;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean hydrate(final Feed feed) {
+        if (!feed.hasAnime() || !feed.hasUsers()) {
+            return false;
+        }
+
+        compileContent();
+
+        for (final AbsAnime anime : feed.getAnime()) {
+            if (mAnimeId.equalsIgnoreCase(anime.getId())) {
+                mAnime = anime;
                 break;
             }
         }
 
-        return mUser != null;
+        for (final User user : feed.getUsers()) {
+            if (mUserId.equalsIgnoreCase(user.getId())) {
+                mUser = user;
+            }
+        }
+
+        return mAnime != null && mUser != null;
     }
 
     public boolean isLiked() {

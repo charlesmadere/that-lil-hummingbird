@@ -10,6 +10,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 public class Feed implements Parcelable {
 
@@ -62,9 +63,46 @@ public class Feed implements Parcelable {
     private Metadata mMetadata;
 
 
+    public void addAnime(@Nullable final ArrayList<AbsAnime> anime) {
+        if (anime == null || anime.isEmpty()) {
+            return;
+        }
+
+        if (hasAnime()) {
+            MiscUtils.exclusiveAdd(mAnime, anime);
+        } else {
+            mAnime = anime;
+        }
+    }
+
     @Nullable
     public ArrayList<AbsAnime> getAnime() {
         return mAnime;
+    }
+
+    @Nullable
+    public ArrayList<String> getAnimeIdsNeededForAnimeReviews() {
+        if (!hasAnimeReviews()) {
+            return null;
+        }
+
+        final ArrayList<String> animeIds = new ArrayList<>();
+
+        for (final AnimeReview animeReview : mAnimeReviews) {
+            if (animeReview.getAnime() == null) {
+                final String animeId = animeReview.getAnimeId();
+
+                if (!animeIds.contains(animeId)) {
+                    animeIds.add(animeId);
+                }
+            }
+        }
+
+        if (animeIds.isEmpty()) {
+            return null;
+        } else {
+            return animeIds;
+        }
     }
 
     @Nullable
@@ -202,6 +240,18 @@ public class Feed implements Parcelable {
             }
         }
 
+        if (hasAnimeReviews()) {
+            final Iterator<AnimeReview> iterator = mAnimeReviews.iterator();
+
+            do {
+                final AnimeReview animeReview = iterator.next();
+
+                if (!animeReview.hydrate(this)) {
+                    iterator.remove();
+                }
+            } while (iterator.hasNext());
+        }
+
         if (hasGroupMembers()) {
             for (final GroupMember groupMember : mGroupMembers) {
                 groupMember.hydrate(this);
@@ -246,13 +296,7 @@ public class Feed implements Parcelable {
             return;
         }
 
-        if (feed.hasAnime()) {
-            if (hasAnime()) {
-                MiscUtils.exclusiveAdd(mAnime, feed.getAnime());
-            } else {
-                mAnime = feed.getAnime();
-            }
-        }
+        addAnime(feed.getAnime());
 
         if (feed.hasAnimeLibraryEntries()) {
             if (hasAnimeLibraryEntries()) {

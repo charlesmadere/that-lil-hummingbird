@@ -14,6 +14,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricGradleTestRunner.class)
@@ -91,6 +93,22 @@ public class MiscUtilsTest {
 
         assertFalse(MiscUtils.integerEquals(-1, 1));
         assertFalse(MiscUtils.integerEquals(1, -1));
+    }
+
+    @Test
+    public void testToArrayList() throws Exception {
+        assertNull(MiscUtils.toArrayList(null));
+
+        LinkedList<Integer> list = new LinkedList<>();
+        assertNotNull(MiscUtils.toArrayList(list));
+        assertTrue(list.size() == MiscUtils.toArrayList(list).size());
+
+        list.add(1);
+        list.add(2);
+        assertNotNull(MiscUtils.toArrayList(list));
+        assertTrue(list.size() == 2);
+        assertTrue(list.get(0) == 1);
+        assertTrue(list.get(1) == 2);
     }
 
 }

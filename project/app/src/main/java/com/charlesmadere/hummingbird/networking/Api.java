@@ -15,7 +15,6 @@ import com.charlesmadere.hummingbird.models.AddAnimeLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
-import com.charlesmadere.hummingbird.models.AnimeReview;
 import com.charlesmadere.hummingbird.models.AppNews;
 import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.CommentPost;
@@ -834,41 +833,35 @@ public final class Api {
                 page).enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
-                Feed body = null;
-
-                if (response.isSuccessful()) {
-                    body = response.body();
-                }
+                final Feed body = response.isSuccessful() ? response.body() : null;
 
                 if (body == null) {
                     listener.failure(retrieveErrorInfo(response));
-                } else if (body.hasAnimeReviews()) {
-                    final ArrayList<AnimeReview> animeReviews = body.getAnimeReviews();
-                    final ArrayList<String> animeIds = new ArrayList<>(animeReviews.size());
+                    return;
+                } else if (!body.hasAnimeReviews()) {
+                    hydrateFeed(body, feed, listener);
+                    return;
+                }
 
-                    for (final AnimeReview animeReview : animeReviews) {
-                        animeIds.add(animeReview.getAnimeId());
+                final ArrayList<String> animeIds = body.getAnimeIdsNeededForAnimeReviews();
+
+                if (animeIds == null || animeIds.isEmpty()) {
+                    hydrateFeed(body, feed, listener);
+                    return;
+                }
+
+                getAnime(animeIds, new ApiResponse<ArrayList<AbsAnime>>() {
+                    @Override
+                    public void failure(@Nullable final ErrorInfo error) {
+                        listener.failure(error);
                     }
 
-                    // TODO
-                    // TODO
-                    // Multiple reviews for the same anime?
-                    // TODO
-                    // TODO
-
-                    getAnime(animeIds, new ApiResponse<ArrayList<AbsAnime>>() {
-                        @Override
-                        public void failure(@Nullable final ErrorInfo error) {
-                            listener.failure(error);
-                        }
-
-                        @Override
-                        public void success(@Nullable final ArrayList<AbsAnime> object) {
-
-                            hydrateFeed(body, feed, listener);
-                        }
-                    });
-                }
+                    @Override
+                    public void success(@Nullable final ArrayList<AbsAnime> anime) {
+                        body.addAnime(anime);
+                        hydrateFeed(body, feed, listener);
+                    }
+                });
             }
 
             @Override

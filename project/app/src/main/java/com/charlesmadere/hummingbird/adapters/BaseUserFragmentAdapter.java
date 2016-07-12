@@ -51,7 +51,7 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
     @Override
     public void destroyItem(final ViewGroup container, final int position, final Object object) {
         super.destroyItem(container, position, object);
-        mFragments.put(position, null);
+        mFragments.removeAt(position);
     }
 
     @Override

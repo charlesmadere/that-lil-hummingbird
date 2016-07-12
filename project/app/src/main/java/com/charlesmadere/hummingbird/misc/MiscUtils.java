@@ -271,11 +271,9 @@ public final class MiscUtils {
 
     @Nullable
     public static <T> ArrayList<T> toArrayList(@Nullable final Collection<T> collection) {
-        if (collection == null || collection.isEmpty()) {
+        if (collection == null) {
             return null;
-        }
-
-        if (collection instanceof ArrayList) {
+        } else if (collection instanceof ArrayList) {
             return (ArrayList<T>) collection;
         } else {
             return new ArrayList<>(collection);

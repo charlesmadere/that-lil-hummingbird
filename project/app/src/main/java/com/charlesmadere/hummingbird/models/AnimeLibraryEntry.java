@@ -142,7 +142,6 @@ public class AnimeLibraryEntry implements Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         ParcelableUtils.writeAbsAnimeToParcel(mAnime, dest, flags);
-        dest.writeParcelable(mAnime, flags);
         dest.writeInt(mIsFavorite ? 1 : 0);
         dest.writeInt(mIsPrivate ? 1 : 0);
         dest.writeInt(mIsRewatching ? 1 : 0);
