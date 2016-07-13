@@ -110,9 +110,7 @@ public final class SyncManager extends GcmTaskService {
 
     private void buildNotification(final ArrayList<AbsNotification> notifications) {
         final NotificationCompat.Builder builder = buildNotification();
-
-        final Context context = getContext();
-        builder.setContentText(context.getString(R.string.x_new_notifications,
+        builder.setContentText(getResources().getString(R.string.x_notifications,
                 NumberFormat.getInstance().format(notifications.size())));
 
         final NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle(builder);

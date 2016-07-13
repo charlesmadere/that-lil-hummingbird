@@ -341,7 +341,7 @@
     <string name="x_has_completed">%1$s has completed</string>
     <string name="x_has_dropped">%1$s has dropped</string>
     <string name="x_has_placed_on_hold">%1$s has placed on hold</string>
-    <string name="x_new_notifications">%1$s new notifications</string>
+    <string name="x_notifications">%1$s notifications</string>
     <string name="x_of_y">%1$s of %2$s</string>
     <string name="x_out_of_y_users_found_this_review_helpful">%1$s out of %2$s users found this review helpful.</string>
     <string name="x_plans_to_watch">%1$s plans to watch</string>
