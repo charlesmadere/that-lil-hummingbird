@@ -4,11 +4,13 @@ import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.charlesmadere.hummingbird.R;
+
 public class CommentReplyNotification extends AbsNotification implements Parcelable {
 
     @Override
     public CharSequence getText(final Resources res) {
-        return null;
+        return res.getString(R.string.x_wrote_a_reply_to_your_comment, getUser().getId());
     }
 
     @Override
