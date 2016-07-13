@@ -2,9 +2,11 @@ package com.charlesmadere.hummingbird.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -16,6 +18,7 @@ import android.widget.EditText;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
+import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.UserDigest;
@@ -29,6 +32,13 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
+
+import static com.charlesmadere.hummingbird.misc.Constants.ANIME;
+import static com.charlesmadere.hummingbird.misc.Constants.HUMMINGBIRD_URL;
+import static com.charlesmadere.hummingbird.misc.Constants.LIBRARY;
+import static com.charlesmadere.hummingbird.misc.Constants.MANGA;
+import static com.charlesmadere.hummingbird.misc.Constants.REVIEWS;
+import static com.charlesmadere.hummingbird.misc.Constants.USERS;
 
 public class LoginActivity extends BaseActivity {
 
@@ -63,6 +73,52 @@ public class LoginActivity extends BaseActivity {
         return getLaunchIntent(context).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
+    private void buildAnimeTaskStack(final TaskStackBuilder taskStack, final String[] paths) {
+        taskStack.addNextIntent(AnimeActivity.getLaunchIntent(this, paths[1]));
+
+        if (paths.length == 2) {
+            return;
+        }
+
+        // https://hummingbird.me/anime/rwby-ii/quotes
+        // https://hummingbird.me/anime/rwby-ii/reviews
+        // https://hummingbird.me/anime/rwby-ii/reviews/10090
+        // TODO
+    }
+
+    private void buildUserTaskStack(final TaskStackBuilder taskStack, final String[] paths) {
+        taskStack.addNextIntent(UserActivity.getLaunchIntent(this, paths[1]));
+
+        if (paths.length == 2) {
+            return;
+        }
+
+        // https://hummingbird.me/users/ThatLilChestnut/followers
+        // https://hummingbird.me/users/ThatLilChestnut/following
+        // https://hummingbird.me/users/ThatLilChestnut/groups
+        // https://hummingbird.me/users/ThatLilChestnut/library
+        // https://hummingbird.me/users/ThatLilChestnut/reviews
+
+        if (LIBRARY.equalsIgnoreCase(paths[2])) {
+
+            // https://hummingbird.me/users/ThatLilChestnut/library/manga
+            if (paths.length >= 4 && MANGA.equalsIgnoreCase(paths[3])) {
+                taskStack.addNextIntent(MangaLibraryActivity.getLaunchIntent(this, paths[1]));
+            }
+
+            return;
+        }
+
+        if (REVIEWS.equalsIgnoreCase(paths[2])) {
+            taskStack.addNextIntent(UserAnimeReviewsActivity.getLaunchIntent(this, paths[1]));
+
+            return;
+        }
+
+        // TODO
+
+    }
+
     @Override
     public String getActivityName() {
         return TAG;
@@ -72,8 +128,84 @@ public class LoginActivity extends BaseActivity {
         Api.getCurrentUser(new GetCurrentUserListener(this));
     }
 
-    private void goToCurrentUserActivity() {
-        startActivity(HomeActivity.getLaunchIntent(this));
+    private boolean followDeepLink() {
+        final Intent intent = getIntent();
+        if (intent == null) {
+            Timber.d(TAG, "Nothing to deep link to, Intent is null");
+            return false;
+        }
+
+        final Uri data = intent.getData();
+        if (data == null) {
+            Timber.d(TAG, "Nothing to deep link to, Intent's data is null");
+            return false;
+        }
+
+        final String uri = data.toString();
+        if (TextUtils.isEmpty(uri) || TextUtils.getTrimmedLength(uri) == 0) {
+            Timber.d(TAG, "Nothing to deep link to - Intent's URI is null, empty, or whitespace");
+            return false;
+        }
+
+        Timber.d(TAG, "Attempting to deep link to URI: \"" + uri + '"');
+
+        if (!uri.startsWith(HUMMINGBIRD_URL)) {
+            Timber.w(TAG, "Deep link URI isn't for Hummingbird");
+            return false;
+        }
+
+        final String path = uri.substring(HUMMINGBIRD_URL.length(), uri.length());
+
+        if (TextUtils.isEmpty(path)) {
+            Timber.d(TAG, "Deep link URI's path is null or empty");
+            return false;
+        }
+
+        final String[] paths = path.split("/");
+
+        if (paths.length == 0) {
+            Timber.d(TAG, "Deep link URI's path split is empty");
+            return false;
+        }
+
+        if (paths[0].equalsIgnoreCase("dashboard")) {
+            Timber.d(TAG, "Deep link URI is to the user's own dashboard");
+            return false;
+        }
+
+        final TaskStackBuilder taskStack = TaskStackBuilder.create(this);
+
+        // https://hummingbird.me/anime/rwby-ii
+        if (ANIME.equalsIgnoreCase(paths[0])) {
+            buildAnimeTaskStack(taskStack, paths);
+            taskStack.startActivities();
+            return true;
+        }
+
+        // https://hummingbird.me/users/ThatLilChestnut
+        else if (USERS.equalsIgnoreCase(paths[0])) {
+            buildUserTaskStack(taskStack, paths);
+            taskStack.startActivities();
+            return true;
+        }
+
+        // TODO comments
+        // TODO groups
+        // TODO notifications
+
+        if (taskStack.getIntentCount() >= 1) {
+            taskStack.startActivities();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void followDeepLinkOrGoToHomeActivity() {
+        if (!followDeepLink()) {
+            startActivity(HomeActivity.getLaunchIntent(this));
+        }
+
         finish();
     }
 
@@ -102,7 +234,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         if (CurrentUser.exists()) {
-            goToCurrentUserActivity();
+            followDeepLinkOrGoToHomeActivity();
         } else {
             setContentView(R.layout.activity_login);
 
@@ -223,7 +355,7 @@ public class LoginActivity extends BaseActivity {
             final LoginActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                activity.goToCurrentUserActivity();
+                activity.followDeepLinkOrGoToHomeActivity();
             }
         }
     }

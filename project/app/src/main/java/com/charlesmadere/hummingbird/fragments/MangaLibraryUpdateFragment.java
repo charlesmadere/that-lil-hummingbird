@@ -1,17 +1,25 @@
 package com.charlesmadere.hummingbird.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.MangaDigest;
 import com.charlesmadere.hummingbird.models.MangaLibraryEntry;
 import com.charlesmadere.hummingbird.models.MangaLibraryUpdate;
 import com.charlesmadere.hummingbird.views.ModifyPublicPrivateSpinner;
 import com.charlesmadere.hummingbird.views.ModifyReadingStatusSpinner;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment implements
         ModifyPublicPrivateSpinner.OnItemSelectedListener,
@@ -25,6 +33,17 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     private MangaDigest mMangaDigest;
     private MangaLibraryEntry mLibraryEntry;
     private MangaLibraryUpdate mLibraryUpdate;
+    private RemoveListener mRemoveListener;
+    private UpdateListener mUpdateListener;
+
+    @BindView(R.id.ibDelete)
+    ImageButton mDelete;
+
+    @BindView(R.id.ibSave)
+    ImageButton mSave;
+
+    @BindView(R.id.tvTitle)
+    TextView mTitle;
 
 
     public static MangaLibraryUpdateFragment create(final MangaDigest mangaDigest) {
@@ -58,10 +77,45 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         return TAG;
     }
 
+    public MangaLibraryEntry getLibraryEntry() {
+        return mLibraryEntry;
+    }
+
+    public MangaLibraryUpdate getLibraryUpdate() {
+        return mLibraryUpdate;
+    }
+
     @Override
     public void onAttach(final Context context) {
         super.onAttach(context);
-        // TODO
+
+        final Fragment fragment = getParentFragment();
+        if (fragment instanceof UpdateListener) {
+            mUpdateListener = (UpdateListener) fragment;
+
+            if (fragment instanceof RemoveListener) {
+                mRemoveListener = (RemoveListener) fragment;
+            }
+        } else {
+            final Activity activity = MiscUtils.getActivity(context);
+
+            if (activity instanceof UpdateListener) {
+                mUpdateListener = (UpdateListener) activity;
+
+                if (activity instanceof RemoveListener) {
+                    mRemoveListener = (RemoveListener) activity;
+                }
+            }
+        }
+
+        if (mUpdateListener == null && mRemoveListener == null) {
+            throw new IllegalStateException(TAG + " must have a listener attached");
+        }
+    }
+
+    @OnClick(R.id.ibClose)
+    void onCloseClick() {
+        dismiss();
     }
 
     @Override
@@ -92,6 +146,11 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         return inflater.inflate(R.layout.fragment_manga_library_update, container, false);
     }
 
+    @OnClick(R.id.ibDelete)
+    void onDeleteClick() {
+        // TODO
+    }
+
     @Override
     public void onItemSelected(final ModifyPublicPrivateSpinner v) {
         // TODO
@@ -105,7 +164,13 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     @Override
     public void onResume() {
         super.onResume();
-        // TODO
+        update();
+    }
+
+    @OnClick(R.id.ibSave)
+    void onSaveClick() {
+        mUpdateListener.onUpdateLibraryEntry();
+        dismiss();
     }
 
     @Override
@@ -120,7 +185,19 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mTitle.setText(mLibraryUpdate.getMangaTitle());
+        mSave.setEnabled(false);
+
+        if (mRemoveListener != null) {
+            mDelete.setVisibility(View.VISIBLE);
+        }
+
         // TODO
+    }
+
+    private void update() {
+        mSave.setEnabled(mLibraryUpdate.containsModifications());
     }
 
 

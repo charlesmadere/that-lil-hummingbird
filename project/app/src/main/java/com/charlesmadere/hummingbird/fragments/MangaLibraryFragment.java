@@ -15,6 +15,8 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.MangaLibraryEntriesAdapter;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
+import com.charlesmadere.hummingbird.models.MangaLibraryEntry;
+import com.charlesmadere.hummingbird.models.MangaLibraryUpdate;
 import com.charlesmadere.hummingbird.models.ReadingStatus;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
@@ -107,7 +109,8 @@ public class MangaLibraryFragment extends BaseFragment implements
 
     @Override
     public void onEditClick(final MangaLibraryEntryItemView v) {
-        // TODO
+        MangaLibraryUpdateFragment.create(v.getLibraryEntry()).show(getChildFragmentManager(),
+                MangaLibraryUpdateFragment.TAG);
     }
 
     @Override
@@ -117,6 +120,11 @@ public class MangaLibraryFragment extends BaseFragment implements
 
     @Override
     public void onRemoveLibraryEntry() {
+        final MangaLibraryUpdateFragment fragment = (MangaLibraryUpdateFragment)
+                getChildFragmentManager().findFragmentByTag(MangaLibraryUpdateFragment.TAG);
+        final MangaLibraryEntry libraryEntry = fragment.getLibraryEntry();
+
+        mRefreshLayout.setRefreshing(true);
         // TODO
     }
 
@@ -131,6 +139,11 @@ public class MangaLibraryFragment extends BaseFragment implements
 
     @Override
     public void onUpdateLibraryEntry() {
+        final MangaLibraryUpdateFragment fragment = (MangaLibraryUpdateFragment)
+                getChildFragmentManager().findFragmentByTag(MangaLibraryUpdateFragment.TAG);
+        final MangaLibraryUpdate libraryUpdate = fragment.getLibraryUpdate();
+
+        mRefreshLayout.setRefreshing(true);
         // TODO
     }
 

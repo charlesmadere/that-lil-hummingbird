@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.FeedAdapter;
-import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
@@ -105,7 +104,7 @@ public abstract class BaseFeedFragment extends BaseFragment implements FeedPostF
     public void onFeedPostSubmit() {
         final FeedPostFragment feedPostFragment = (FeedPostFragment) getChildFragmentManager()
                 .findFragmentByTag(FeedPostFragment.TAG);
-        final FeedPost feedPost = feedPostFragment.getFeedPost(CurrentUser.get().getUserId());
+        final FeedPost feedPost = feedPostFragment.getFeedPost(mUsername);
 
         if (feedPost == null) {
             return;

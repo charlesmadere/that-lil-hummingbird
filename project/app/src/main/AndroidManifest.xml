@@ -76,7 +76,15 @@
             android:launchMode="singleTop"
             android:name=".activities.LoginActivity"
             android:theme="@style/HummingbirdTheme_Login"
-            android:windowSoftInputMode="adjustPan|stateUnchanged" />
+            android:windowSoftInputMode="adjustPan|stateUnchanged">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:host="hummingbird.me" android:scheme="https" />
+                <data android:host="www.hummingbird.me" android:scheme="https" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:label="@string/log_viewer"
