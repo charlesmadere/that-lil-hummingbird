@@ -5,12 +5,10 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.charlesmadere.hummingbird.R;
+import com.crashlytics.android.Crashlytics;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
-import io.fabric.sdk.android.Fabric;
-import io.fabric.sdk.android.Logger;
 
 public final class Timber {
 
@@ -41,23 +39,29 @@ public final class Timber {
     }
 
     public static void d(final String tag, final String msg) {
-        addEntry(new DebugEntry(tag, msg));
-        getLogger().d(tag, msg);
+        d(tag, msg, null);
     }
 
     public static void d(final String tag, final String msg, @Nullable final Throwable tr) {
         addEntry(new DebugEntry(tag, msg, tr));
-        getLogger().d(tag, msg, tr);
+        Crashlytics.log(Log.DEBUG, tag, msg);
+
+        if (tr != null) {
+            Crashlytics.logException(tr);
+        }
     }
 
     public static void e(final String tag, final String msg) {
-        addEntry(new ErrorEntry(tag, msg));
-        getLogger().e(tag, msg);
+        e(tag, msg, null);
     }
 
     public static void e(final String tag, final String msg, @Nullable final Throwable tr) {
         addEntry(new ErrorEntry(tag, msg, tr));
-        getLogger().e(tag, msg, tr);
+        Crashlytics.log(Log.ERROR, tag, msg);
+
+        if (tr != null) {
+            Crashlytics.logException(tr);
+        }
     }
 
     public static synchronized ArrayList<BaseEntry> getEntries() {
@@ -66,28 +70,30 @@ public final class Timber {
         return entries;
     }
 
-    private static Logger getLogger() {
-        return Fabric.getLogger();
-    }
-
     public static void v(final String tag, final String msg) {
-        addEntry(new VerboseEntry(tag, msg));
-        getLogger().v(tag, msg);
+        v(tag, msg, null);
     }
 
     public static void v(final String tag, final String msg, @Nullable final Throwable tr) {
         addEntry(new VerboseEntry(tag, msg, tr));
-        getLogger().v(tag, msg, tr);
+        Crashlytics.log(Log.VERBOSE, tag, msg);
+
+        if (tr != null) {
+            Crashlytics.logException(tr);
+        }
     }
 
     public static void w(final String tag, final String msg) {
-        addEntry(new WarnEntry(tag, msg));
-        getLogger().w(tag, msg);
+        w(tag, msg, null);
     }
 
     public static void w(final String tag, final String msg, @Nullable final Throwable tr) {
         addEntry(new WarnEntry(tag, msg, tr));
-        getLogger().w(tag, msg, tr);
+        Crashlytics.log(Log.WARN, tag, msg);
+
+        if (tr != null) {
+            Crashlytics.logException(tr);
+        }
     }
 
 
@@ -112,8 +118,6 @@ public final class Timber {
         }
 
         public abstract int getColor();
-
-        public abstract char getLevel();
 
         public String getMessage() {
             return mMessage;
@@ -146,11 +150,6 @@ public final class Timber {
         public int getColor() {
             return R.color.debug;
         }
-
-        @Override
-        public char getLevel() {
-            return 'D';
-        }
     }
 
 
@@ -166,11 +165,6 @@ public final class Timber {
         @Override
         public int getColor() {
             return R.color.error;
-        }
-
-        @Override
-        public char getLevel() {
-            return 'E';
         }
     }
 
@@ -188,11 +182,6 @@ public final class Timber {
         public int getColor() {
             return R.color.verbose;
         }
-
-        @Override
-        public char getLevel() {
-            return 'V';
-        }
     }
 
 
@@ -208,11 +197,6 @@ public final class Timber {
         @Override
         public int getColor() {
             return android.R.color.holo_orange_dark;
-        }
-
-        @Override
-        public char getLevel() {
-            return 'W';
         }
     }
 
