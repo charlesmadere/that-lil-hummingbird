@@ -10,9 +10,13 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.MangaFragmentAdapter;
+import com.charlesmadere.hummingbird.fragments.MangaLibraryUpdateFragment;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Manga;
@@ -60,11 +64,20 @@ public class MangaActivity extends BaseDrawerActivity {
         return getLaunchIntent(context, manga.getId(), manga.getTitle());
     }
 
+    public static Intent getLaunchIntent(final Context context, final String mangaId) {
+        return getLaunchIntent(context, mangaId, null);
+    }
+
     public static Intent getLaunchIntent(final Context context, final String mangaId,
-            final String mangaName) {
-        return new Intent(context, MangaActivity.class)
-                .putExtra(EXTRA_MANGA_ID, mangaId)
-                .putExtra(EXTRA_MANGA_NAME, mangaName);
+            @Nullable final String mangaName) {
+        final Intent intent = new Intent(context, MangaActivity.class)
+                .putExtra(EXTRA_MANGA_ID, mangaId);
+
+        if (!TextUtils.isEmpty(mangaName)) {
+            intent.putExtra(EXTRA_MANGA_NAME, mangaName);
+        }
+
+        return intent;
     }
 
     private void fetchMangaDigest() {
@@ -88,8 +101,11 @@ public class MangaActivity extends BaseDrawerActivity {
         setContentView(R.layout.activity_manga);
 
         final Intent intent = getIntent();
-        setTitle(intent.getStringExtra(EXTRA_MANGA_NAME));
         mMangaId = intent.getStringExtra(EXTRA_MANGA_ID);
+
+        if (intent.hasExtra(EXTRA_MANGA_NAME)) {
+            setTitle(intent.getStringExtra(EXTRA_MANGA_NAME));
+        }
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mMangaDigest = savedInstanceState.getParcelable(KEY_MANGA_DIGEST);
@@ -100,6 +116,33 @@ public class MangaActivity extends BaseDrawerActivity {
         } else {
             showMangaDigest(mMangaDigest);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_manga, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.miAddToLibrary:
+                MangaLibraryUpdateFragment.create(mMangaDigest).show(getSupportFragmentManager(),
+                        MangaLibraryUpdateFragment.TAG);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        if (mMangaDigest != null && !mMangaDigest.hasLibraryEntry()) {
+            menu.findItem(R.id.miAddToLibrary).setVisible(true);
+        }
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -140,6 +183,10 @@ public class MangaActivity extends BaseDrawerActivity {
     private void showMangaDigest(final MangaDigest mangaDigest) {
         mMangaDigest = mangaDigest;
 
+        if (TextUtils.isEmpty(getTitle())) {
+            setTitle(mMangaDigest.getTitle());
+        }
+
         if (mangaDigest.getManga().hasCoverImage()) {
             PaletteUtils.applyParallaxColors(mangaDigest.getManga().getCoverImage(), this,
                     mAppBarLayout, mCollapsingToolbarLayout, mCoverImage, mTabLayout);
@@ -150,6 +197,7 @@ public class MangaActivity extends BaseDrawerActivity {
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);
 
+        supportInvalidateOptionsMenu();
         mSimpleProgressView.fadeOut();
     }
 

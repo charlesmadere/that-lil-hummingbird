@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -112,10 +111,9 @@ public class GalleryActivity extends BaseActivity {
     }
 
     private void updateToolbarTitle() {
-        final ActionBar actionBar = getSupportActionBar();
         final NumberFormat numberFormat = NumberFormat.getInstance();
-        actionBar.setTitle(getString(R.string.x_of_y, numberFormat.format(
-                mViewPager.getCurrentItem() + 1), numberFormat.format(mUrls.size())));
+        setTitle(getString(R.string.x_of_y, numberFormat.format(mViewPager.getCurrentItem() + 1),
+                numberFormat.format(mUrls.size())));
     }
 
 }

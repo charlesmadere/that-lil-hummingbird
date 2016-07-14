@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
@@ -99,6 +100,18 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void setContentView(@LayoutRes final int layoutResID) {
         super.setContentView(layoutResID);
         onViewsBound();
+    }
+
+    public void setSubtitle(@StringRes final int resId) {
+        setSubtitle(getText(resId));
+    }
+
+    public void setSubtitle(@Nullable final CharSequence subtitle) {
+        final ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setSubtitle(subtitle);
+        }
     }
 
 }

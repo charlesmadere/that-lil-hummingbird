@@ -47,7 +47,7 @@ public class MangaLibraryActivity extends BaseDrawerActivity {
 
         final Intent intent = getIntent();
         final String username = intent.getStringExtra(EXTRA_USERNAME);
-        getSupportActionBar().setSubtitle(username);
+        setSubtitle(username);
 
         mViewPager.setAdapter(new MangaLibraryFragmentAdapter(this, username,
                 CurrentUser.get().getUserId().equalsIgnoreCase(username)));

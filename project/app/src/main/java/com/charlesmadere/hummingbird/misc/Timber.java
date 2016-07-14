@@ -64,8 +64,13 @@ public final class Timber {
         }
     }
 
-    public static synchronized ArrayList<BaseEntry> getEntries() {
-        final ArrayList<BaseEntry> entries = new ArrayList<>(ENTRIES);
+    public static ArrayList<BaseEntry> getEntries() {
+        final ArrayList<BaseEntry> entries;
+
+        synchronized (ENTRIES) {
+            entries = new ArrayList<>(ENTRIES);
+        }
+
         Collections.reverse(entries);
         return entries;
     }
@@ -102,10 +107,6 @@ public final class Timber {
         private final String mStackTrace;
         private final String mTag;
 
-        private BaseEntry(final String tag, final String message) {
-            this(tag, message, null);
-        }
-
         private BaseEntry(final String tag, final String message, @Nullable final Throwable tr) {
             mTag = tag;
             mMessage = message;
@@ -138,10 +139,6 @@ public final class Timber {
 
 
     public static class DebugEntry extends BaseEntry {
-        private DebugEntry(final String tag, final String message) {
-            super(tag, message);
-        }
-
         private DebugEntry(final String tag, final String message, @Nullable final Throwable tr) {
             super(tag, message, tr);
         }
@@ -154,10 +151,6 @@ public final class Timber {
 
 
     public static class ErrorEntry extends BaseEntry {
-        private ErrorEntry(final String tag, final String message) {
-            super(tag, message);
-        }
-
         private ErrorEntry(final String tag, final String message, @Nullable final Throwable tr) {
             super(tag, message, tr);
         }
@@ -170,10 +163,6 @@ public final class Timber {
 
 
     public static class VerboseEntry extends BaseEntry {
-        private VerboseEntry(final String tag, final String message) {
-            super(tag, message);
-        }
-
         private VerboseEntry(final String tag, final String message, @Nullable final Throwable tr) {
             super(tag, message, tr);
         }
@@ -186,10 +175,6 @@ public final class Timber {
 
 
     public static class WarnEntry extends BaseEntry {
-        private WarnEntry(final String tag, final String message) {
-            super(tag, message);
-        }
-
         private WarnEntry(final String tag, final String message, @Nullable final Throwable tr) {
             super(tag, message, tr);
         }

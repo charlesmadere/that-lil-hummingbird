@@ -91,11 +91,10 @@ public final class SyncManager extends GcmTaskService {
     }
 
     private NotificationCompat.Builder buildNotification() {
-        final Context context = getContext();
-        return new NotificationCompat.Builder(context)
+        return new NotificationCompat.Builder(getContext())
                 .setAutoCancel(true)
                 .setCategory(NotificationCompat.CATEGORY_SOCIAL)
-                .setContentTitle(context.getString(R.string.that_lil_hummingbird))
+                .setContentTitle(getResources().getString(R.string.that_lil_hummingbird))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setSmallIcon(R.drawable.notification)
                 .setVisibility(NotificationCompat.VISIBILITY_PRIVATE);
@@ -148,29 +147,29 @@ public final class SyncManager extends GcmTaskService {
             @Override
             public void success(final Feed feed) {
                 if (!feed.hasNotifications()) {
-                    Timber.d(TAG, "No notifications");
+                    Timber.d(TAG, "Sync finished: no notifications");
                     return;
                 }
 
-                final ArrayList<AbsNotification> newNotifications = new ArrayList<>();
+                final ArrayList<AbsNotification> unSeenNotifications = new ArrayList<>();
 
                 for (final AbsNotification notification : feed.getNotifications()) {
                     if (!notification.isSeen()) {
-                        newNotifications.add(notification);
+                        unSeenNotifications.add(notification);
                     }
                 }
 
-                if (newNotifications.isEmpty()) {
-                    Timber.d(TAG, "No new notifications");
+                if (unSeenNotifications.isEmpty()) {
+                    Timber.d(TAG, "Sync finished: no notifications");
                     return;
                 }
 
-                Timber.d(TAG, "New notification(s): " + newNotifications.size());
+                Timber.d(TAG, "Sync finished: " + unSeenNotifications.size() + " notification(s)");
 
-                if (newNotifications.size() == 1) {
-                    buildNotification(newNotifications.get(0));
+                if (unSeenNotifications.size() == 1) {
+                    buildNotification(unSeenNotifications.get(0));
                 } else {
-                    buildNotification(newNotifications);
+                    buildNotification(unSeenNotifications);
                 }
             }
         });

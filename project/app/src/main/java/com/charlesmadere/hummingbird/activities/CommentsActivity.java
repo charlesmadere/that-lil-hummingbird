@@ -311,7 +311,7 @@ public class CommentsActivity extends BaseDrawerActivity implements
             final CommentsActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                if (feed.hasCursor() && feed.getSubstories().size() > mSubstoriesSize) {
+                if (feed.hasCursor() && feed.getSubstoriesSize() > mSubstoriesSize) {
                     activity.paginationComplete();
                 } else {
                     activity.paginationNoMore();

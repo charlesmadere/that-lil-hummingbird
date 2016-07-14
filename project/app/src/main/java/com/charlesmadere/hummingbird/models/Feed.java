@@ -115,6 +115,10 @@ public class Feed implements Parcelable {
         return mAnimeReviews;
     }
 
+    public int getAnimeReviewsSize() {
+        return mAnimeReviews == null ? 0 : mAnimeReviews.size();
+    }
+
     public int getCursor() {
         if (mMetadata == null || mMetadata.mCursor == null) {
             return 1;
@@ -128,9 +132,17 @@ public class Feed implements Parcelable {
         return mGroupMembers;
     }
 
+    public int getGroupMembersSize() {
+        return mGroupMembers == null ? 0 : mGroupMembers.size();
+    }
+
     @Nullable
     public ArrayList<Group> getGroups() {
         return mGroups;
+    }
+
+    public int getGroupsSize() {
+        return mGroups == null ? 0 : mGroups.size();
     }
 
     @Nullable
@@ -151,6 +163,10 @@ public class Feed implements Parcelable {
     @Nullable
     public ArrayList<AbsStory> getStories() {
         return mStories;
+    }
+
+    public int getStoriesSize() {
+        return mStories == null ? 0 : mStories.size();
     }
 
     @Nullable
@@ -180,9 +196,17 @@ public class Feed implements Parcelable {
         }
     }
 
+    public int getSubstoriesSize() {
+        return mSubstories == null ? 0 : mSubstories.size();
+    }
+
     @Nullable
     public ArrayList<User> getUsers() {
         return mUsers;
+    }
+
+    public int getUsersSize() {
+        return mUsers == null ? 0 : mUsers.size();
     }
 
     public boolean hasAnime() {

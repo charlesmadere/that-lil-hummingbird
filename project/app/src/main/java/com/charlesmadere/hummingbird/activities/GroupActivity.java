@@ -10,6 +10,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.GroupFragmentAdapter;
@@ -57,11 +58,20 @@ public class GroupActivity extends BaseDrawerActivity {
     ViewPager mViewPager;
 
 
+    public static Intent getLaunchIntent(final Context context, final String groupId) {
+        return getLaunchIntent(context, groupId, null);
+    }
+
     public static Intent getLaunchIntent(final Context context, final String groupId,
-            final String groupName) {
-        return new Intent(context, GroupActivity.class)
-                .putExtra(EXTRA_GROUP_ID, groupId)
-                .putExtra(EXTRA_GROUP_NAME, groupName);
+            @Nullable final String groupName) {
+        final Intent intent = new Intent(context, GroupActivity.class)
+                .putExtra(EXTRA_GROUP_ID, groupId);
+
+        if (!TextUtils.isEmpty(groupName)) {
+            intent.putExtra(EXTRA_GROUP_NAME, groupName);
+        }
+
+        return intent;
     }
 
     private void fetchFeed() {
@@ -85,8 +95,11 @@ public class GroupActivity extends BaseDrawerActivity {
         setContentView(R.layout.activity_group);
 
         final Intent intent = getIntent();
-        setTitle(intent.getStringExtra(EXTRA_GROUP_NAME));
         mGroupId = intent.getStringExtra(EXTRA_GROUP_ID);
+
+        if (!intent.hasExtra(EXTRA_GROUP_NAME)) {
+            setTitle(intent.getStringExtra(EXTRA_GROUP_NAME));
+        }
 
         mStartingPosition = GroupFragmentAdapter.POSITION_FEED;
 
@@ -141,6 +154,10 @@ public class GroupActivity extends BaseDrawerActivity {
     private void showGroupDigest(final GroupDigest groupDigest) {
         mGroupDigest = groupDigest;
 
+        if (TextUtils.isEmpty(getTitle())) {
+            setTitle(mGroupDigest.getName());
+        }
+
         if (groupDigest.getGroup().hasCoverImage()) {
             PaletteUtils.applyParallaxColors(groupDigest.getGroup().getCoverImageUrl(), this,
                     mAppBarLayout, mCollapsingToolbarLayout, mCoverImage, mTabLayout);
@@ -152,6 +169,7 @@ public class GroupActivity extends BaseDrawerActivity {
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);
 
+        supportInvalidateOptionsMenu();
         mSimpleProgressView.fadeOut();
     }
 

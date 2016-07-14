@@ -81,7 +81,7 @@ public class FollowersActivity extends BaseDrawerActivity implements
 
         final Intent intent = getIntent();
         mUsername = intent.getStringExtra(EXTRA_USERNAME);
-        getSupportActionBar().setSubtitle(mUsername);
+        setSubtitle(mUsername);
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mFeed = savedInstanceState.getParcelable(KEY_FEED);
@@ -195,7 +195,7 @@ public class FollowersActivity extends BaseDrawerActivity implements
 
         private PaginateFollowersListener(final FollowersActivity activity) {
             mActivityReference = new WeakReference<>(activity);
-            mUsersSize = activity.mFeed.getUsers().size();
+            mUsersSize = activity.mFeed.getUsersSize();
         }
 
         @Override
@@ -212,7 +212,7 @@ public class FollowersActivity extends BaseDrawerActivity implements
             final FollowersActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                if (feed.hasCursor() && feed.getUsers().size() > mUsersSize) {
+                if (feed.hasCursor() && feed.getUsersSize() > mUsersSize) {
                     activity.paginationComplete();
                 } else {
                     activity.paginationNoMore();

@@ -41,9 +41,8 @@ public class MangaDigest implements Parcelable {
         return mManga.getId();
     }
 
-    @Nullable
-    public ArrayList<MangaLibraryEntry> getLibraryEntries() {
-        return mLibraryEntries;
+    public MangaLibraryEntry getLibraryEntry() {
+        return mLibraryEntries.get(0);
     }
 
     public Manga getManga() {
@@ -62,8 +61,8 @@ public class MangaDigest implements Parcelable {
         return mCharacters != null && !mCharacters.isEmpty();
     }
 
-    public boolean hasLibraryEntries() {
-        return mLibraryEntries != null && !mLibraryEntries.isEmpty();
+    public boolean hasLibraryEntry() {
+        return mLibraryEntries != null && mLibraryEntries.get(0) != null;
     }
 
     @Override

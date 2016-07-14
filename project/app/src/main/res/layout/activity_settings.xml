@@ -37,6 +37,8 @@
                         <com.charlesmadere.hummingbird.views.CheckablePreferenceView
                             android:id="@+id/cpvShowNsfwContent"
                             app:checkable_type="checkbox"
+                            app:disabledDescriptionText="@string/nsfw_content_will_be_in_your_feed_but_obscured"
+                            app:enabledDescriptionText="@string/all_nsfw_content_will_be_shown"
                             app:titleText="@string/show_nsfw_content"
                             style="@style/ResponsiveWidthCardItem.Switch" />
                     </LinearLayout>

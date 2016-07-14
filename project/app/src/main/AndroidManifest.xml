@@ -20,8 +20,18 @@
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
         <activity
+            android:label="@string/anime_quotes"
+            android:name=".activities.AnimeQuotesActivity"
+            android:theme="@style/HummingbirdTheme.WithDrawer" />
+
+        <activity
             android:label="@string/anime_review"
             android:name=".activities.AnimeReviewActivity"
+            android:theme="@style/HummingbirdTheme.WithDrawer" />
+
+        <activity
+            android:label="@string/anime_reviews_title"
+            android:name=".activities.AnimeReviewsActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
         <activity
@@ -159,6 +169,11 @@
         <activity
             android:label="@string/anime_reviews_title"
             android:name=".activities.UserAnimeReviewsActivity"
+            android:theme="@style/HummingbirdTheme.WithDrawer" />
+
+        <activity
+            android:label="@string/groups"
+            android:name=".activities.UserGroupsActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
         <meta-data

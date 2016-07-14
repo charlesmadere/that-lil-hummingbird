@@ -34,9 +34,15 @@ import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 
 import static com.charlesmadere.hummingbird.misc.Constants.ANIME;
+import static com.charlesmadere.hummingbird.misc.Constants.FOLLOWERS;
+import static com.charlesmadere.hummingbird.misc.Constants.FOLLOWING;
+import static com.charlesmadere.hummingbird.misc.Constants.GROUPS;
 import static com.charlesmadere.hummingbird.misc.Constants.HUMMINGBIRD_URL;
 import static com.charlesmadere.hummingbird.misc.Constants.LIBRARY;
 import static com.charlesmadere.hummingbird.misc.Constants.MANGA;
+import static com.charlesmadere.hummingbird.misc.Constants.MEMBERS;
+import static com.charlesmadere.hummingbird.misc.Constants.NOTIFICATIONS;
+import static com.charlesmadere.hummingbird.misc.Constants.QUOTES;
 import static com.charlesmadere.hummingbird.misc.Constants.REVIEWS;
 import static com.charlesmadere.hummingbird.misc.Constants.USERS;
 
@@ -83,7 +89,38 @@ public class LoginActivity extends BaseActivity {
         // https://hummingbird.me/anime/rwby-ii/quotes
         // https://hummingbird.me/anime/rwby-ii/reviews
         // https://hummingbird.me/anime/rwby-ii/reviews/10090
-        // TODO
+
+        if (QUOTES.equalsIgnoreCase(paths[2])) {
+            taskStack.addNextIntent(AnimeQuotesActivity.getLaunchIntent(this, paths[1]));
+        } else if (REVIEWS.equalsIgnoreCase(paths[2])) {
+            taskStack.addNextIntent(AnimeReviewsActivity.getLaunchIntent(this, paths[1]));
+
+            if (paths.length >= 4) {
+                // TODO AnimeReviewActivity
+            }
+        }
+    }
+
+    private void buildGroupsTaskStack(final TaskStackBuilder taskStack, final String[] paths) {
+        taskStack.addNextIntent(GroupActivity.getLaunchIntent(this, paths[1]));
+
+        if (paths.length == 2) {
+            return;
+        }
+
+        // https://hummingbird.me/groups/sos-brigade/members
+
+        if (MEMBERS.equalsIgnoreCase(paths[2])) {
+            taskStack.addNextIntent(GroupMembersActivity.getLaunchIntent(this, paths[1]));
+        }
+    }
+
+    private void buildMangaTaskStack(final TaskStackBuilder taskStack, final String[] paths) {
+        taskStack.addNextIntent(MangaActivity.getLaunchIntent(this, paths[1]));
+    }
+
+    private void buildNotificationsTaskStack(final TaskStackBuilder taskStack) {
+        taskStack.addNextIntent(NotificationsActivity.getLaunchIntent(this));
     }
 
     private void buildUserTaskStack(final TaskStackBuilder taskStack, final String[] paths) {
@@ -99,24 +136,20 @@ public class LoginActivity extends BaseActivity {
         // https://hummingbird.me/users/ThatLilChestnut/library
         // https://hummingbird.me/users/ThatLilChestnut/reviews
 
-        if (LIBRARY.equalsIgnoreCase(paths[2])) {
-
+        if (FOLLOWERS.equalsIgnoreCase(paths[2])) {
+            taskStack.addNextIntent(FollowersActivity.getLaunchIntent(this, paths[1]));
+        } else if (FOLLOWING.equalsIgnoreCase(paths[2])) {
+            taskStack.addNextIntent(FollowingActivity.getLaunchIntent(this, paths[1]));
+        } else if (GROUPS.equalsIgnoreCase(paths[2])) {
+            taskStack.addNextIntent(UserGroupsActivity.getLaunchIntent(this, paths[1]));
+        } else if (LIBRARY.equalsIgnoreCase(paths[2])) {
             // https://hummingbird.me/users/ThatLilChestnut/library/manga
             if (paths.length >= 4 && MANGA.equalsIgnoreCase(paths[3])) {
                 taskStack.addNextIntent(MangaLibraryActivity.getLaunchIntent(this, paths[1]));
             }
-
-            return;
-        }
-
-        if (REVIEWS.equalsIgnoreCase(paths[2])) {
+        } else if (REVIEWS.equalsIgnoreCase(paths[2])) {
             taskStack.addNextIntent(UserAnimeReviewsActivity.getLaunchIntent(this, paths[1]));
-
-            return;
         }
-
-        // TODO
-
     }
 
     @Override
@@ -182,6 +215,24 @@ public class LoginActivity extends BaseActivity {
             return true;
         }
 
+        // https://hummingbird.me/groups/sos-brigade
+        else if (GROUPS.equalsIgnoreCase(paths[0])) {
+            buildGroupsTaskStack(taskStack, paths);
+            return true;
+        }
+
+        // https://hummingbird.me/manga/rwby
+        else if (MANGA.equalsIgnoreCase(paths[0])) {
+            buildMangaTaskStack(taskStack, paths);
+            return true;
+        }
+
+        // https://hummingbird.me/notifications
+        else if (NOTIFICATIONS.equalsIgnoreCase(paths[0])) {
+            buildNotificationsTaskStack(taskStack);
+            return true;
+        }
+
         // https://hummingbird.me/users/ThatLilChestnut
         else if (USERS.equalsIgnoreCase(paths[0])) {
             buildUserTaskStack(taskStack, paths);
@@ -190,8 +241,6 @@ public class LoginActivity extends BaseActivity {
         }
 
         // TODO comments
-        // TODO groups
-        // TODO notifications
 
         if (taskStack.getIntentCount() >= 1) {
             taskStack.startActivities();

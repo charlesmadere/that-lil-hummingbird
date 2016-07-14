@@ -81,7 +81,7 @@ public class UserAnimeReviewsActivity extends BaseDrawerActivity implements
 
         final Intent intent = getIntent();
         mUsername = intent.getStringExtra(EXTRA_USERNAME);
-        getSupportActionBar().setSubtitle(mUsername);
+        setSubtitle(mUsername);
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mFeed = savedInstanceState.getParcelable(KEY_FEED);
@@ -195,7 +195,7 @@ public class UserAnimeReviewsActivity extends BaseDrawerActivity implements
 
         private PaginateUserReviewsListener(final UserAnimeReviewsActivity activity) {
             mActivityReference = new WeakReference<>(activity);
-            mReviewsSize = activity.mFeed.getAnimeReviews().size();
+            mReviewsSize = activity.mFeed.getAnimeReviewsSize();
         }
 
         @Override
@@ -212,7 +212,7 @@ public class UserAnimeReviewsActivity extends BaseDrawerActivity implements
             final UserAnimeReviewsActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                if (feed.hasCursor() && feed.getAnimeReviews().size() > mReviewsSize) {
+                if (feed.hasCursor() && feed.getAnimeReviewsSize() > mReviewsSize) {
                     activity.paginationComplete();
                 } else {
                     activity.paginationNoMore();

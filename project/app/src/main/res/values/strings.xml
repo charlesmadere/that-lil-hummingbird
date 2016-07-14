@@ -14,12 +14,15 @@
     <string name="age_rating_r18">R18+</string>
     <string name="aired">Aired</string>
     <string name="all">All</string>
+    <string name="all_nsfw_content_will_be_shown">All NSFW content will be shown in your feed.</string>
     <string name="alternate_title">Alternate title</string>
     <string name="animation_">Animation…</string>
     <string name="anime">Anime</string>
     <string name="anime_breakdown">Anime Breakdown</string>
     <string name="anime_library">Anime Library</string>
     <string name="anime_library_is_empty">Anime library is empty</string>
+    <string name="anime_quotes">Anime quotes</string>
+    <string name="anime_quotes_title">Anime Quotes</string>
     <string name="anime_review">Anime Review</string>
     <string name="anime_reviews">Anime reviews</string>
     <string name="anime_reviews_title">Anime Reviews</string>
@@ -79,6 +82,8 @@
     <string name="error_editing_library_entry">Error editing library entry! Please check your network connection and try again.</string>
     <string name="error_loading_anime">Error loading anime! Please check your network connection and try again.</string>
     <string name="error_loading_anime_library">Error loading anime library</string>
+    <string name="error_loading_anime_quotes">Error loading anime quotes</string>
+    <string name="error_loading_anime_reviews">Error loading anime reviews</string>
     <string name="error_loading_app_news">Error loading app news</string>
     <string name="error_loading_comments">Error loading comments</string>
     <string name="error_loading_completed_library">Error loading completed library</string>
@@ -92,6 +97,7 @@
     <string name="error_loading_franchise">Error loading franchise</string>
     <string name="error_loading_group">Error loading group! Please check your network connection and try again.</string>
     <string name="error_loading_group_members">Error loading group members</string>
+    <string name="error_loading_groups">Error loading groups</string>
     <string name="error_loading_image">Error loading image</string>
     <string name="error_loading_manga">Error loading manga! Please check your network connection and try again.</string>
     <string name="error_loading_notifications">Error loading notifications</string>
@@ -184,6 +190,8 @@
     <string name="must_be_charging">Must be charging</string>
     <string name="must_be_on_wifi">Must be on wifi</string>
     <string name="night">Night</string>
+    <string name="no_anime_quotes">No anime quotes</string>
+    <string name="no_anime_reviews">No anime reviews</string>
     <string name="no_app_news">No app news</string>
     <string name="no_bio_available">No bio available</string>
     <string name="no_castings">No castings</string>
@@ -194,6 +202,7 @@
     <string name="no_feed_content">No feed content</string>
     <string name="no_franchise_entries">No franchise entries</string>
     <string name="no_group_members">No group members</string>
+    <string name="no_groups">No groups</string>
     <string name="no_images">No images</string>
     <string name="no_notifications">No notifications</string>
     <string name="no_one_is_following">No one is following</string>
@@ -214,6 +223,7 @@
     <string name="nsfw">NSFW</string>
     <string name="nsfw_">NSFW?</string>
     <string name="nsfw_content">NSFW content</string>
+    <string name="nsfw_content_will_be_in_your_feed_but_obscured">NSFW content will be in your feed, but obscured. You can then choose to individually reveal the content on a case-by-case basis.</string>
     <string name="of_x">of %1$s</string>
     <string name="ok">OK</string>
     <string name="ona">ONA</string>

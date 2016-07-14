@@ -200,7 +200,7 @@ public class GroupFeedFragment extends BaseFragment implements
 
         private PaginateGroupStoriesListener(final GroupFeedFragment fragment) {
             mFragmentReference = new WeakReference<>(fragment);
-            mStoriesSize = fragment.mFeed.getStories().size();
+            mStoriesSize = fragment.mFeed.getStoriesSize();
         }
 
         @Override
@@ -217,7 +217,7 @@ public class GroupFeedFragment extends BaseFragment implements
             final GroupFeedFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {
-                if (feed.hasCursor() && feed.getStories().size() > mStoriesSize) {
+                if (feed.hasCursor() && feed.getStoriesSize() > mStoriesSize) {
                     fragment.paginationComplete();
                 } else {
                     fragment.paginationNoMore();

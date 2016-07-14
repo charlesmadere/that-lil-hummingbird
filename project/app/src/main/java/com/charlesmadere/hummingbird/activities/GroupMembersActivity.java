@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -13,6 +14,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.GroupMembersAdapter;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
+import com.charlesmadere.hummingbird.models.GroupDigest;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
@@ -50,11 +52,20 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
     RefreshLayout mRefreshLayout;
 
 
+    public static Intent getLaunchIntent(final Context context, final String groupId) {
+        return getLaunchIntent(context, groupId, null);
+    }
+
     public static Intent getLaunchIntent(final Context context, final String groupId,
-            final String groupName) {
-        return new Intent(context, GroupMembersActivity.class)
-                .putExtra(EXTRA_GROUP_ID, groupId)
-                .putExtra(EXTRA_GROUP_NAME, groupName);
+            @Nullable final String groupName) {
+        final Intent intent = new Intent(context, GroupMembersActivity.class)
+                .putExtra(EXTRA_GROUP_ID, groupId);
+
+        if (!TextUtils.isEmpty(groupName)) {
+            intent.putExtra(EXTRA_GROUP_NAME, groupName);
+        }
+
+        return intent;
     }
 
     private void fetchFeed() {
@@ -83,8 +94,13 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
         setContentView(R.layout.activity_group_members);
 
         final Intent intent = getIntent();
-        getSupportActionBar().setSubtitle(intent.getStringExtra(EXTRA_GROUP_NAME));
         mGroupId = intent.getStringExtra(EXTRA_GROUP_ID);
+
+        if (intent.hasExtra(EXTRA_GROUP_NAME)) {
+            setSubtitle(intent.getStringExtra(EXTRA_GROUP_NAME));
+        } else {
+            Api.getGroup(mGroupId, new GetGroupDigestListener(this));
+        }
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mFeed = savedInstanceState.getParcelable(KEY_FEED);
@@ -162,6 +178,28 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
     }
 
 
+    private static class GetGroupDigestListener implements ApiResponse<GroupDigest> {
+        private final WeakReference<GroupMembersActivity> mActivityReference;
+
+        private GetGroupDigestListener(final GroupMembersActivity activity) {
+            mActivityReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            // intentionally empty
+        }
+
+        @Override
+        public void success(final GroupDigest groupDigest) {
+            final GroupMembersActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.setSubtitle(groupDigest.getName());
+            }
+        }
+    }
+
     private static class GetGroupMembersListener implements ApiResponse<Feed> {
         private final WeakReference<GroupMembersActivity> mActivityReference;
 
@@ -198,7 +236,7 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
 
         private PaginateGroupMembersListener(final GroupMembersActivity activity) {
             mActivityReference = new WeakReference<>(activity);
-            mGroupMembersSize = activity.mFeed.getGroupMembers().size();
+            mGroupMembersSize = activity.mFeed.getGroupMembersSize();
         }
 
         @Override
@@ -215,7 +253,7 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
             final GroupMembersActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                if (feed.hasCursor() && feed.getGroupMembers().size() > mGroupMembersSize) {
+                if (feed.hasCursor() && feed.getGroupMembersSize() > mGroupMembersSize) {
                     activity.paginationComplete();
                 } else {
                     activity.paginationNoMore();

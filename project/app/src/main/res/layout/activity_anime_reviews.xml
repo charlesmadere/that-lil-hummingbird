@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/DrawerLayout">
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+        <include
+            layout="@layout/toolbar" />
+        <com.charlesmadere.hummingbird.views.RefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            app:scrolling_child="@+id/recyclerView">
+            <FrameLayout
+                android:layout_height="match_parent"
+                android:layout_width="match_parent">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@id/recyclerView"
+                    style="@style/ListOrGrid" />
+                <LinearLayout
+                    android:id="@+id/llError"
+                    style="@style/ListMessageContainer">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:text="@string/error_loading_anime_reviews"
+                        style="@style/ListMessageTitle" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:text="@string/pull_to_refresh_to_try_again"
+                        style="@style/ListMessageSubtitle" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llEmpty"
+                    style="@style/ListMessageContainer">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:text="@string/no_anime_reviews"
+                        style="@style/ListMessageTitle" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:text="@string/pull_to_refresh_to_check_again"
+                        style="@style/ListMessageSubtitle" />
+                </LinearLayout>
+            </FrameLayout>
+        </com.charlesmadere.hummingbird.views.RefreshLayout>
+    </LinearLayout>
+    <include
+        layout="@layout/navigation_drawer" />
+</android.support.v4.widget.DrawerLayout>
