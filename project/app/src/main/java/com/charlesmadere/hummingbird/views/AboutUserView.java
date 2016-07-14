@@ -11,6 +11,7 @@ import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.activities.FollowersActivity;
 import com.charlesmadere.hummingbird.activities.FollowingActivity;
 import com.charlesmadere.hummingbird.activities.UserAnimeReviewsActivity;
+import com.charlesmadere.hummingbird.activities.UserGroupsActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.User;
@@ -86,6 +87,12 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
     void onFollowingClick() {
         final Context context = getContext();
         context.startActivity(FollowingActivity.getLaunchIntent(context, mUserDigest.getUserId()));
+    }
+
+    @OnClick(R.id.tvGroups)
+    void onGroupsClick() {
+        final Context context = getContext();
+        context.startActivity(UserGroupsActivity.getLaunchIntent(context, mUserDigest.getUserId()));
     }
 
     @OnClick(R.id.hbivWaifuOrHusbando)
