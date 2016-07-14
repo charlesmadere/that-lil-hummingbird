@@ -68,9 +68,10 @@ public class ThatLilHummingbird extends Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
-        Timber.d(TAG, "Application created (debug: " + BuildConfig.DEBUG + ')');
 
         Fabric.with(this, new Crashlytics());
+
+        Timber.d(TAG, "Application created (debug: " + BuildConfig.DEBUG + ')');
 
         final ImagePipelineConfig config = OkHttpImagePipelineConfigFactory
                 .newBuilder(this, OkHttpUtils.getOkHttpClient())
