@@ -59,6 +59,11 @@ public class UserGroupsActivity extends BaseDrawerActivity implements
     }
 
     @Override
+    protected boolean isUpNavigationEnabled() {
+        return true;
+    }
+
+    @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_groups);
