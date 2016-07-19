@@ -62,7 +62,7 @@ public class MangaDigest implements Parcelable {
     }
 
     public boolean hasLibraryEntry() {
-        return mLibraryEntries != null && mLibraryEntries.get(0) != null;
+        return mLibraryEntries != null && !mLibraryEntries.isEmpty() && mLibraryEntries.get(0) != null;
     }
 
     @Override
@@ -199,6 +199,7 @@ public class MangaDigest implements Parcelable {
 
         @SerializedName("name")
         private String mName;
+
 
         public String getId() {
             return mId;

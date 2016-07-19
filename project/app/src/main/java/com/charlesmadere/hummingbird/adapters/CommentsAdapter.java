@@ -34,7 +34,7 @@ public class CommentsAdapter extends BaseMultiPaginationAdapter {
             list.addAll(substories);
         }
 
-        set(list);
+        super.set(list);
     }
 
 }

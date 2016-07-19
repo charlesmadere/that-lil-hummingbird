@@ -20,21 +20,32 @@ import java.util.Locale;
 public class SimpleDate implements Parcelable {
 
     private static final SimpleDateFormat[] FORMATS = {
-            // this one is the "right" way according to the Android docs but is causing exceptions
-            // new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault()),
-            new SimpleDateFormat("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS", Locale.US),
-            new SimpleDateFormat("yyyy'-'MM'-'dd", Locale.US)
+            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US),
+            new SimpleDateFormat("yyyy-MM-dd", Locale.US)
     };
 
     private final Date mDate;
 
 
-    public SimpleDate(final long time) {
-        mDate = new Date(time);
+    private static String fixTimeZone(final String dateString) {
+        if (dateString.endsWith("Z")) {
+            return dateString.replace("Z", "+0000");
+        } else {
+            return dateString;
+        }
     }
 
-    private SimpleDate(final SimpleDateFormat format, final String dateString) throws ParseException {
-        mDate = format.parse(dateString);
+    public SimpleDate(final long time) {
+        this(new Date(time));
+    }
+
+    private SimpleDate(final Date date) {
+        mDate = date;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        return o instanceof SimpleDate && mDate.equals(((SimpleDate) o).getDate());
     }
 
     public Date getDate() {
@@ -48,6 +59,11 @@ public class SimpleDate implements Parcelable {
 
     public CharSequence getRelativeTimeText(final Context context) {
         return DateUtils.getRelativeTimeSpanString(context, mDate.getTime());
+    }
+
+    @Override
+    public int hashCode() {
+        return mDate.hashCode();
     }
 
     @Override
@@ -95,11 +111,11 @@ public class SimpleDate implements Parcelable {
         @Override
         public SimpleDate deserialize(final JsonElement json, final Type typeOfT,
                 final JsonDeserializationContext context) throws JsonParseException {
-            final String dateString = json.getAsString();
+            final String dateString = fixTimeZone(json.getAsString());
 
             for (final SimpleDateFormat format : FORMATS) {
                 try {
-                    return new SimpleDate(format, dateString);
+                    return new SimpleDate(format.parse(dateString));
                 } catch (final ParseException e) {
                     // this can be safely ignored
                 }

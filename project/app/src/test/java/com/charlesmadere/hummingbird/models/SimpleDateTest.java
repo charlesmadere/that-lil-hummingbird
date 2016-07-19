@@ -12,8 +12,10 @@ import org.robolectric.annotation.Config;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -28,14 +30,18 @@ public class SimpleDateTest {
     private static final String SHORT_DATE_1 = "2016-03-04";
 
     private Constructor<SimpleDate> mConstructor;
+    private Method mFixTimeZone;
     private SimpleDateFormat mExtendedFormat;
     private SimpleDateFormat mShortFormat;
 
 
     @Before
     public void setUp() throws Exception {
-        mConstructor = SimpleDate.class.getDeclaredConstructor(SimpleDateFormat.class, String.class);
+        mConstructor = SimpleDate.class.getDeclaredConstructor(Date.class);
         mConstructor.setAccessible(true);
+
+        mFixTimeZone = SimpleDate.class.getDeclaredMethod("fixTimeZone", String.class);
+        mFixTimeZone.setAccessible(true);
 
         final Field field = SimpleDate.class.getDeclaredField("FORMATS");
         field.setAccessible(true);
@@ -46,7 +52,8 @@ public class SimpleDateTest {
 
     @Test
     public void testExtendedDateConstruction() throws Exception {
-        SimpleDate sd = mConstructor.newInstance(mExtendedFormat, EXTENDED_DATE_0);
+        String dateString = (String) mFixTimeZone.invoke(null, EXTENDED_DATE_0);
+        SimpleDate sd = mConstructor.newInstance(mExtendedFormat.parse(dateString));
         assertNotNull(sd);
 
         final Calendar calendar = Calendar.getInstance();
@@ -55,7 +62,8 @@ public class SimpleDateTest {
         assertTrue(calendar.get(Calendar.MONTH) == Calendar.FEBRUARY);
         assertTrue(calendar.get(Calendar.DAY_OF_MONTH) == 20);
 
-        sd = mConstructor.newInstance(mExtendedFormat, EXTENDED_DATE_1);
+        dateString = (String) mFixTimeZone.invoke(null, EXTENDED_DATE_1);
+        sd = mConstructor.newInstance(mExtendedFormat.parse(dateString));
         assertNotNull(sd);
 
         calendar.setTime(sd.getDate());
@@ -65,8 +73,23 @@ public class SimpleDateTest {
     }
 
     @Test
+    public void testFixTimeZone() throws Exception {
+        String string = (String) mFixTimeZone.invoke(null, EXTENDED_DATE_0);
+        assertTrue(string.endsWith("+0000"));
+
+        string = (String) mFixTimeZone.invoke(null, EXTENDED_DATE_1);
+        assertTrue(string.endsWith("+0000"));
+
+        string = (String) mFixTimeZone.invoke(null, SHORT_DATE_0);
+        assertTrue(string.equals(SHORT_DATE_0));
+
+        string = (String) mFixTimeZone.invoke(null, SHORT_DATE_1);
+        assertTrue(string.equals(SHORT_DATE_1));
+    }
+
+    @Test
     public void testShortDateConstruction() throws Exception {
-        SimpleDate sd = mConstructor.newInstance(mShortFormat, SHORT_DATE_0);
+        SimpleDate sd = mConstructor.newInstance(mShortFormat.parse(SHORT_DATE_0));
         assertNotNull(sd);
 
         final Calendar calendar = Calendar.getInstance();
@@ -75,7 +98,7 @@ public class SimpleDateTest {
         assertTrue(calendar.get(Calendar.MONTH) == Calendar.JULY);
         assertTrue(calendar.get(Calendar.DAY_OF_MONTH) == 18);
 
-        sd = mConstructor.newInstance(mShortFormat, SHORT_DATE_1);
+        sd = mConstructor.newInstance(mShortFormat.parse(SHORT_DATE_1));
         assertNotNull(sd);
 
         calendar.setTime(sd.getDate());

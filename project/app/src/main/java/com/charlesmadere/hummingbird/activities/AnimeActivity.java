@@ -88,8 +88,8 @@ public class AnimeActivity extends BaseDrawerActivity implements
 
     private void addedLibraryEntry(final AddAnimeLibraryEntryResponse response) {
         mAnimeDigest.getInfo().setLibraryEntryId(response.getLibraryEntry().getId());
-        mSimpleProgressView.fadeOut();
         supportInvalidateOptionsMenu();
+        mSimpleProgressView.fadeOut();
         Toast.makeText(this, R.string.added_to_library, Toast.LENGTH_LONG).show();
     }
 

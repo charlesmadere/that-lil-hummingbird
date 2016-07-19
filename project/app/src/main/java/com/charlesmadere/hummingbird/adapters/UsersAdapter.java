@@ -18,7 +18,7 @@ public class UsersAdapter extends BasePaginationAdapter<User> {
     }
 
     public void set(final Feed feed) {
-        set(feed.getUsers());
+        super.set(feed.getUsers());
     }
 
 }

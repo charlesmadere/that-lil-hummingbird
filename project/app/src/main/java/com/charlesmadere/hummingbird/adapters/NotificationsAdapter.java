@@ -3,7 +3,6 @@ package com.charlesmadere.hummingbird.adapters;
 import android.content.Context;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.models.AbsNotification;
 import com.charlesmadere.hummingbird.models.CommentReplyNotification;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.ProfileCommentNotification;
@@ -26,10 +25,15 @@ public class NotificationsAdapter extends BaseMultiAdapter {
     }
 
     public void set(final Feed feed) {
-        final ArrayList<AbsNotification> notifications = feed.getNotifications();
-        final ArrayList<Object> list = new ArrayList<>(notifications.size());
-        list.addAll(notifications);
-        set(list);
+        final ArrayList<Object> list;
+
+        if (feed.hasNotifications()) {
+            list = new ArrayList<Object>(feed.getNotifications());
+        } else {
+            list = null;
+        }
+
+        super.set(list);
     }
 
 }

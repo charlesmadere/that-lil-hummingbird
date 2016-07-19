@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.MangaFragmentAdapter;
@@ -21,6 +22,7 @@ import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Manga;
 import com.charlesmadere.hummingbird.models.MangaDigest;
+import com.charlesmadere.hummingbird.models.MangaLibraryUpdate;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.SimpleProgressView;
@@ -30,7 +32,8 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class MangaActivity extends BaseDrawerActivity {
+public class MangaActivity extends BaseDrawerActivity implements
+        MangaLibraryUpdateFragment.UpdateListener {
 
     private static final String TAG = "MangaActivity";
     private static final String CNAME = MangaActivity.class.getCanonicalName();
@@ -78,6 +81,13 @@ public class MangaActivity extends BaseDrawerActivity {
         }
 
         return intent;
+    }
+
+    private void addedLibraryEntry() {
+        // TODO
+        supportInvalidateOptionsMenu();
+        mSimpleProgressView.fadeOut();
+        Toast.makeText(this, R.string.added_to_library, Toast.LENGTH_LONG).show();
     }
 
     private void fetchMangaDigest() {
@@ -154,6 +164,21 @@ public class MangaActivity extends BaseDrawerActivity {
         }
     }
 
+    @Override
+    public void onUpdateLibraryEntry() {
+        final MangaLibraryUpdateFragment fragment = (MangaLibraryUpdateFragment)
+                getSupportFragmentManager().findFragmentByTag(MangaLibraryUpdateFragment.TAG);
+        final MangaLibraryUpdate libraryUpdate = fragment.getLibraryUpdate();
+
+        mSimpleProgressView.fadeIn();
+        // TODO
+    }
+
+    private void showAddLibraryEntryError() {
+        mSimpleProgressView.fadeOut();
+        Toast.makeText(this, R.string.error_adding_library_entry, Toast.LENGTH_LONG).show();
+    }
+
     private void showError() {
         mSimpleProgressView.fadeOut();
 
@@ -201,6 +226,32 @@ public class MangaActivity extends BaseDrawerActivity {
         mSimpleProgressView.fadeOut();
     }
 
+
+    private static class AddLibraryEntryListener implements ApiResponse<Void> {
+        private final WeakReference<MangaActivity> mActivityReference;
+
+        private AddLibraryEntryListener(final MangaActivity activity) {
+            mActivityReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final MangaActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.showAddLibraryEntryError();
+            }
+        }
+
+        @Override
+        public void success(final Void object) {
+            final MangaActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                // TODO
+            }
+        }
+    }
 
     private static class GetMangaDigestListener implements ApiResponse<MangaDigest> {
         private final WeakReference<MangaActivity> mActivityReference;

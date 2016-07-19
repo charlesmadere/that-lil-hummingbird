@@ -18,7 +18,7 @@ public class GroupMembersAdapter extends BasePaginationAdapter<GroupMember> {
     }
 
     public void set(final Feed feed) {
-        set(feed.getGroupMembers());
+        super.set(feed.getGroupMembers());
     }
 
 }
