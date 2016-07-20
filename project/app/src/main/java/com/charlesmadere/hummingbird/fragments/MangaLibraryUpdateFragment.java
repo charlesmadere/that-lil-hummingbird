@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -15,20 +18,24 @@ import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.MangaDigest;
 import com.charlesmadere.hummingbird.models.MangaLibraryEntry;
 import com.charlesmadere.hummingbird.models.MangaLibraryUpdate;
+import com.charlesmadere.hummingbird.views.ModifyNumberView;
 import com.charlesmadere.hummingbird.views.ModifyPublicPrivateSpinner;
+import com.charlesmadere.hummingbird.views.ModifyRatingSpinner;
 import com.charlesmadere.hummingbird.views.ModifyReadingStatusSpinner;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
 public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment implements
         ModifyPublicPrivateSpinner.OnItemSelectedListener,
+        ModifyRatingSpinner.OnItemSelectedListener,
         ModifyReadingStatusSpinner.OnItemSelectedListener {
 
     public static final String TAG = "MangaLibraryUpdateFragment";
-    private static final String KEY_MANGA_DIGEST = "MangaDigest";
     private static final String KEY_LIBRARY_ENTRY = "LibraryEntry";
     private static final String KEY_LIBRARY_UPDATE = "LibraryUpdate";
+    private static final String KEY_MANGA_DIGEST = "MangaDigest";
 
     private MangaDigest mMangaDigest;
     private MangaLibraryEntry mLibraryEntry;
@@ -36,11 +43,35 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     private RemoveListener mRemoveListener;
     private UpdateListener mUpdateListener;
 
+    @BindView(R.id.cbReReading)
+    CheckBox mReReading;
+
+    @BindView(R.id.etPersonalNotes)
+    EditText mPersonalNotes;
+
     @BindView(R.id.ibDelete)
     ImageButton mDelete;
 
     @BindView(R.id.ibSave)
     ImageButton mSave;
+
+    @BindView(R.id.mnvChaptersRead)
+    ModifyNumberView mChaptersRead;
+
+    @BindView(R.id.mnvReReadCount)
+    ModifyNumberView mReReadCount;
+
+    @BindView(R.id.mnvVolumesRead)
+    ModifyNumberView mVolumesRead;
+
+    @BindView(R.id.modifyPublicPrivateSpinner)
+    ModifyPublicPrivateSpinner mModifyPublicPrivateSpinner;
+
+    @BindView(R.id.modifyRatingSpinner)
+    ModifyRatingSpinner mModifyRatingSpinner;
+
+    @BindView(R.id.modifyReadingStatusSpinner)
+    ModifyReadingStatusSpinner mModifyReadingStatusSpinner;
 
     @BindView(R.id.tvTitle)
     TextView mTitle;
@@ -153,12 +184,40 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
 
     @Override
     public void onItemSelected(final ModifyPublicPrivateSpinner v) {
-        // TODO
+        mLibraryUpdate.setPrivacy(v.getSelectedItem());
+        update();
+    }
+
+    @Override
+    public void onItemSelected(final ModifyRatingSpinner v) {
+        mLibraryUpdate.setRating(v.getSelectedItem());
+        update();
     }
 
     @Override
     public void onItemSelected(final ModifyReadingStatusSpinner v) {
-        // TODO
+        mLibraryUpdate.setReadingStatus(v.getSelectedItem());
+        update();
+    }
+
+    @OnTextChanged(R.id.etPersonalNotes)
+    void onPersonalNotesTextChanged() {
+        final CharSequence charSequence = mPersonalNotes.getText();
+        String notes = null;
+
+        if (!TextUtils.isEmpty(charSequence)) {
+            notes = charSequence.toString().trim();
+        }
+
+        mLibraryUpdate.setNotes(notes);
+        update();
+    }
+
+    @OnClick(R.id.llReReading)
+    void onReReadingClick() {
+        mReReading.toggle();
+        mLibraryUpdate.setReReading(mReReading.isChecked());
+        update();
     }
 
     @Override
@@ -176,10 +235,7 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     @Override
     public void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
-
-        if (mLibraryUpdate != null) {
-            outState.putParcelable(KEY_LIBRARY_UPDATE, mLibraryUpdate);
-        }
+        outState.putParcelable(KEY_LIBRARY_UPDATE, mLibraryUpdate);
     }
 
     @Override
@@ -193,7 +249,49 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
             mDelete.setVisibility(View.VISIBLE);
         }
 
-        // TODO
+        if (mMangaDigest == null) {
+            mChaptersRead.setForChaptersRead(mLibraryUpdate, mLibraryEntry);
+            mVolumesRead.setForVolumesRead(mLibraryUpdate, mLibraryEntry);
+        } else {
+            mChaptersRead.setForChaptersRead(mLibraryUpdate, mMangaDigest);
+            mVolumesRead.setForVolumesRead(mLibraryUpdate, mMangaDigest);
+        }
+
+        mModifyPublicPrivateSpinner.setContent(mLibraryUpdate);
+        mModifyRatingSpinner.setContent(mLibraryUpdate);
+        mModifyReadingStatusSpinner.setContent(mLibraryUpdate);
+
+        mReReading.setChecked(mLibraryUpdate.isReReading());
+        mReReadCount.setForReReadCount(mLibraryUpdate);
+        mPersonalNotes.setText(mLibraryUpdate.getNotes());
+
+        mChaptersRead.setListener(new ModifyNumberView.Listener() {
+            @Override
+            public void onNumberChanged(final ModifyNumberView v) {
+                mLibraryUpdate.setChaptersRead(v.getNumber());
+                update();
+            }
+        });
+
+        mVolumesRead.setListener(new ModifyNumberView.Listener() {
+            @Override
+            public void onNumberChanged(final ModifyNumberView v) {
+                mLibraryUpdate.setVolumesRead(v.getNumber());
+                update();
+            }
+        });
+
+        mModifyPublicPrivateSpinner.setOnItemSelectedListener(this);
+        mModifyRatingSpinner.setOnItemSelectedListener(this);
+        mModifyReadingStatusSpinner.setOnItemSelectedListener(this);
+
+        mReReadCount.setListener(new ModifyNumberView.Listener() {
+            @Override
+            public void onNumberChanged(final ModifyNumberView v) {
+                mLibraryUpdate.setReReadCount(v.getNumber());
+                update();
+            }
+        });
     }
 
     private void update() {

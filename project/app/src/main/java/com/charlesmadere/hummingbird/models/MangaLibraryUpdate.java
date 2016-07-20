@@ -130,9 +130,89 @@ public class MangaLibraryUpdate implements Parcelable {
         return mIsReReading;
     }
 
+    public void setChaptersRead(final int chaptersRead) {
+        if (chaptersRead < 0) {
+            throw new IllegalArgumentException("chaptersRead is negative: " + chaptersRead);
+        }
+
+        mChaptersRead = chaptersRead;
+    }
+
+    public void setNotes(@Nullable String notes) {
+        if (TextUtils.isEmpty(notes) || TextUtils.getTrimmedLength(notes) == 0) {
+            notes = null;
+        } else {
+            notes = notes.trim();
+        }
+
+        mNotes = notes;
+    }
+
+    public void setPrivacy(final Privacy privacy) {
+        if (Privacy.PRIVATE == privacy) {
+            mIsPrivate = true;
+        } else if (Privacy.PUBLIC == privacy) {
+            mIsPrivate = false;
+        } else {
+            throw new IllegalArgumentException("privacy is an illegal value: " + privacy);
+        }
+    }
+
+    public void setRating(@Nullable final Rating rating) {
+        mRating = rating;
+    }
+
+    public void setReadingStatus(@Nullable final ReadingStatus readingStatus) {
+        mReadingStatus = readingStatus;
+    }
+
+    public void setReReadCount(final int reReadCount) {
+        if (reReadCount < 0) {
+            throw new IllegalArgumentException("reReadCount is negative: " + reReadCount);
+        }
+
+        mReReadCount = reReadCount;
+    }
+
+    public void setReReading(final boolean reReading) {
+        mIsReReading = reReading;
+    }
+
+    public void setVolumesRead(final int volumesRead) {
+        if (volumesRead < 0) {
+            throw new IllegalArgumentException("volumesRead is negative: " + volumesRead);
+        }
+
+        mVolumesRead = volumesRead;
+    }
+
     public JsonObject toJson() {
         final JsonObject inner = new JsonObject();
-        // TODO
+        inner.addProperty("private", mIsPrivate);
+        inner.addProperty("rereading", mIsReReading);
+        inner.addProperty("chapters_read", mChaptersRead);
+        inner.addProperty("reread_count", mReReadCount);
+        inner.addProperty("volumes_read", mVolumesRead);
+
+        if (mRating == null || mRating == Rating.UNRATED) {
+            inner.add("rating", null);
+        } else {
+            inner.addProperty("rating", mRating.mValue);
+        }
+
+        if (mReadingStatus == null) {
+            inner.add("status", null);
+        } else {
+            inner.addProperty("status", mReadingStatus.getPostValue());
+        }
+
+        inner.addProperty("manga_id", mMangaId);
+
+        if (TextUtils.isEmpty(mNotes) || TextUtils.getTrimmedLength(mNotes) == 0) {
+            inner.add("notes", null);
+        } else {
+            inner.addProperty("notes", mNotes);
+        }
 
         final JsonObject outer = new JsonObject();
         outer.add("manga_library_entry", inner);

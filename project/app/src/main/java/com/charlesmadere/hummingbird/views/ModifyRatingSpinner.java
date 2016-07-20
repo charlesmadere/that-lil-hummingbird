@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 
 import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
+import com.charlesmadere.hummingbird.models.MangaLibraryUpdate;
 import com.charlesmadere.hummingbird.models.Rating;
 
 public class ModifyRatingSpinner extends AppCompatSpinner implements
@@ -62,6 +63,10 @@ public class ModifyRatingSpinner extends AppCompatSpinner implements
     }
 
     public void setContent(final AnimeLibraryUpdate libraryUpdate) {
+        setContent(libraryUpdate.getRating());
+    }
+
+    public void setContent(final MangaLibraryUpdate libraryUpdate) {
         setContent(libraryUpdate.getRating());
     }
 

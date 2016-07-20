@@ -171,7 +171,6 @@ public class AnimeLibraryUpdate implements Parcelable {
 
     public JsonObject toJson() {
         final JsonObject inner = new JsonObject();
-        inner.addProperty("anime_id", mAnimeId);
         inner.addProperty("private", mIsPrivate);
         inner.addProperty("rewatching", mIsRewatching);
         inner.addProperty("episodes_watched", mEpisodesWatched);
@@ -182,6 +181,8 @@ public class AnimeLibraryUpdate implements Parcelable {
         } else {
             inner.addProperty("rating", mRating.mValue);
         }
+
+        inner.addProperty("anime_id", mAnimeId);
 
         if (TextUtils.isEmpty(mNotes) || TextUtils.getTrimmedLength(mNotes) == 0) {
             inner.add("notes", null);

@@ -61,6 +61,12 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:orientation="vertical">
+            <include
+                android:id="@+id/mnvChaptersRead"
+                layout="@layout/modify_number_view" />
+            <include
+                android:id="@+id/mnvVolumesRead"
+                layout="@layout/modify_number_view" />
             <com.charlesmadere.hummingbird.views.ModifyReadingStatusSpinner
                 android:id="@+id/modifyReadingStatusSpinner"
                 android:layout_height="@dimen/list_item_height"
@@ -103,6 +109,9 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content" />
             </LinearLayout>
+            <include
+                android:id="@+id/mnvReReadCount"
+                layout="@layout/modify_number_view" />
             <android.support.v4.widget.Space
                 android:layout_height="@dimen/root_padding"
                 android:layout_width="match_parent" />

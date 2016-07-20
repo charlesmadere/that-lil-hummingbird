@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
+import com.charlesmadere.hummingbird.models.MangaLibraryUpdate;
 import com.charlesmadere.hummingbird.models.Privacy;
 
 public class ModifyPublicPrivateSpinner extends AppCompatSpinner implements
@@ -65,6 +66,10 @@ public class ModifyPublicPrivateSpinner extends AppCompatSpinner implements
         setContent(libraryUpdate.isPrivate() ? Privacy.PRIVATE : Privacy.PUBLIC);
     }
 
+    public void setContent(final MangaLibraryUpdate libraryUpdate) {
+        setContent(libraryUpdate.isPrivate() ? Privacy.PRIVATE : Privacy.PUBLIC);
+    }
+
     public void setContent(final Privacy privacy) {
         for (int position = 0; position < getCount(); ++position) {
             final Privacy item = getItemAtPosition(position);
@@ -79,7 +84,7 @@ public class ModifyPublicPrivateSpinner extends AppCompatSpinner implements
                 + ") doesn't exist in the list");
     }
 
-    public void setOnSelectionChangedListener(@Nullable final OnItemSelectedListener l) {
+    public void setOnItemSelectedListener(@Nullable final OnItemSelectedListener l) {
         mListener = l;
     }
 

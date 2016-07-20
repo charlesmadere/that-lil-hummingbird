@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.networking;
 
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AddAnimeLibraryEntryResponse;
+import com.charlesmadere.hummingbird.models.AddMangaLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.Feed;
@@ -45,7 +46,7 @@ public interface HummingbirdApi {
             @Header("Accept") String json, @Body JsonElement body);
 
     @POST("manga_library_entries")
-    Call<Void> addMangaLibraryEntry(@Header("Cookie") String authToken,
+    Call<AddMangaLibraryEntryResponse> addMangaLibraryEntry(@Header("Cookie") String authToken,
             @Header("Accept") String json, @Body JsonElement body);
 
     @DELETE("library_entries/{libraryEntryId}")
@@ -117,7 +118,8 @@ public interface HummingbirdApi {
             @Query("news_feed") Boolean newsFeed, @Query("page") Integer page);
 
     @GET("notifications")
-    Call<Feed> getNotifications(@Header("Cookie") String authToken, @Header("Accept") String json);
+    Call<Feed> getNotifications(@Header("Cookie") String authToken, @Header("Accept") String json,
+            @Query("page") Integer page);
 
     @GET("substories")
     Call<Feed> getSubstories(@Header("Cookie") String authToken, @Query("story_id") String storyId,

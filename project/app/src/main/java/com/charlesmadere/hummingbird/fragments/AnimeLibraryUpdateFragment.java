@@ -253,10 +253,7 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     @Override
     public void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
-
-        if (mLibraryUpdate != null) {
-            outState.putParcelable(KEY_LIBRARY_UPDATE, mLibraryUpdate);
-        }
+        outState.putParcelable(KEY_LIBRARY_UPDATE, mLibraryUpdate);
     }
 
     @Override
@@ -286,7 +283,7 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
 
         mModifyWatchCountView.setOnWatchCountChangedListener(this);
         mModifyWatchingStatusSpinner.setOnItemSelectedListener(this);
-        mModifyPublicPrivateSpinner.setOnSelectionChangedListener(this);
+        mModifyPublicPrivateSpinner.setOnItemSelectedListener(this);
         mModifyRatingSpinner.setOnItemSelectedListener(this);
         mModifyRewatchCountView.setOnRewatchCountChangedListener(this);
     }

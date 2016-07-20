@@ -31,18 +31,18 @@ public class AddAnimeLibraryEntryResponse implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(final Parcel source, final int flags) {
-        ParcelableUtils.writeAbsAnimeListToParcel(mAnime, source, flags);
-        source.writeParcelable(mLibraryEntry, flags);
+    public void writeToParcel(final Parcel dest, final int flags) {
+        ParcelableUtils.writeAbsAnimeListToParcel(mAnime, dest, flags);
+        dest.writeParcelable(mLibraryEntry, flags);
     }
 
     public static final Creator<AddAnimeLibraryEntryResponse> CREATOR = new Creator<AddAnimeLibraryEntryResponse>() {
         @Override
         public AddAnimeLibraryEntryResponse createFromParcel(final Parcel source) {
-            final AddAnimeLibraryEntryResponse aalr = new AddAnimeLibraryEntryResponse();
-            aalr.mAnime = ParcelableUtils.readAbsAnimeListFromParcel(source);
-            aalr.mLibraryEntry = source.readParcelable(AnimeLibraryEntry.class.getClassLoader());
-            return aalr;
+            final AddAnimeLibraryEntryResponse aaler = new AddAnimeLibraryEntryResponse();
+            aaler.mAnime = ParcelableUtils.readAbsAnimeListFromParcel(source);
+            aaler.mLibraryEntry = source.readParcelable(AnimeLibraryEntry.class.getClassLoader());
+            return aaler;
         }
 
         @Override

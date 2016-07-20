@@ -24,6 +24,7 @@ public enum SearchScope implements Parcelable {
     @SerializedName("users")
     USERS(R.string.users);
 
+    @StringRes
     private final int mTextResId;
 
 
@@ -49,8 +50,7 @@ public enum SearchScope implements Parcelable {
     public static final Creator<SearchScope> CREATOR = new Creator<SearchScope>() {
         @Override
         public SearchScope createFromParcel(final Parcel source) {
-            final int ordinal = source.readInt();
-            return values()[ordinal];
+            return values()[source.readInt()];
         }
 
         @Override

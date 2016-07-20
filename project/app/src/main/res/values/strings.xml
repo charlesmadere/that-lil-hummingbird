@@ -270,6 +270,7 @@
     <string name="remove">Remove</string>
     <string name="remove_from_library">Remove from Library</string>
     <string name="rereading">Rereading</string>
+    <string name="reread_times">Reread times</string>
     <string name="retry">Retry</string>
     <string name="reviews">Reviews</string>
     <string name="review_by_x">Review by %1$s</string>

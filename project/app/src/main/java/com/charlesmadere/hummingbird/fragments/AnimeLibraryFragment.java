@@ -125,7 +125,7 @@ public class AnimeLibraryFragment extends BaseFragment implements
         final AnimeLibraryEntry libraryEntry = fragment.getLibraryEntry();
 
         mRefreshLayout.setRefreshing(true);
-        Api.removeLibraryEntry(libraryEntry, new EditLibraryEntryListener(this));
+        Api.removeAnimeLibraryEntry(libraryEntry, new EditLibraryEntryListener(this));
     }
 
     @Override
@@ -145,7 +145,7 @@ public class AnimeLibraryFragment extends BaseFragment implements
         final String libraryEntryId = fragment.getLibraryEntry().getId();
 
         mRefreshLayout.setRefreshing(true);
-        Api.updateLibraryEntry(libraryEntryId, libraryUpdate, new EditLibraryEntryListener(this));
+        Api.updateAnimeLibraryEntry(libraryEntryId, libraryUpdate, new EditLibraryEntryListener(this));
     }
 
     @Override

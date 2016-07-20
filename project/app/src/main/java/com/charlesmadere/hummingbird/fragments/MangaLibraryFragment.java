@@ -125,7 +125,7 @@ public class MangaLibraryFragment extends BaseFragment implements
         final MangaLibraryEntry libraryEntry = fragment.getLibraryEntry();
 
         mRefreshLayout.setRefreshing(true);
-        // TODO
+        Api.removeMangaLibraryEntry(libraryEntry, new EditLibraryEntryListener(this));
     }
 
     @Override
@@ -142,9 +142,10 @@ public class MangaLibraryFragment extends BaseFragment implements
         final MangaLibraryUpdateFragment fragment = (MangaLibraryUpdateFragment)
                 getChildFragmentManager().findFragmentByTag(MangaLibraryUpdateFragment.TAG);
         final MangaLibraryUpdate libraryUpdate = fragment.getLibraryUpdate();
+        final String libraryEntryId = fragment.getLibraryEntry().getId();
 
         mRefreshLayout.setRefreshing(true);
-        // TODO
+        Api.updateMangaLibraryEntry(libraryEntryId, libraryUpdate, new EditLibraryEntryListener(this));
     }
 
     @Override
