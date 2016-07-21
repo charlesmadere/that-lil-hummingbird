@@ -16,8 +16,7 @@ public final class CurrentUser {
 
 
     public static boolean exists() {
-        return Preferences.Account.AuthToken.exists() && Preferences.Account.Username.exists()
-                && get() != null;
+        return Preferences.Account.Username.exists() && get() != null;
     }
 
     public static synchronized UserDigest get() {
@@ -25,13 +24,18 @@ public final class CurrentUser {
     }
 
     public static synchronized void set(final UserDigest userDigest) {
-        Timber.d(TAG, "current user set to \"" + userDigest.getUserId() + '"');
+        if (sCurrentUserDigest == null) {
+            Timber.d(TAG, "current user set to \"" + userDigest.getUserId() + '"');
+        } else {
+            Timber.w(TAG, "current user was \"" + sCurrentUserDigest.getUserId() +
+                    "\", is now being set to \"" + userDigest.getUserId() + '"');
+        }
+
         sCurrentUserDigest = userDigest;
     }
 
     public static synchronized boolean shouldBeFetched() {
-        return Preferences.Account.AuthToken.exists() && Preferences.Account.Username.exists()
-                && get() == null;
+        return Preferences.Account.Username.exists() && get() == null;
     }
 
     public static synchronized void signOut() {
