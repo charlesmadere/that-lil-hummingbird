@@ -32,8 +32,8 @@ public final class SyncManager extends GcmTaskService {
 
 
     private static boolean canEnable() {
-        return Preferences.Account.AuthToken.exists() && Preferences.Account.Username.exists()
-                && Boolean.TRUE.equals(Preferences.NotificationPolling.IsEnabled.get());
+        return Preferences.Account.Username.exists() &&
+                Boolean.TRUE.equals(Preferences.NotificationPolling.IsEnabled.get());
     }
 
     private static void disable() {

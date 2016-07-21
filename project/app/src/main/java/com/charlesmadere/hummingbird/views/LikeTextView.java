@@ -41,7 +41,7 @@ public class LikeTextView extends TypefaceTextView implements View.OnClickListen
     public void onClick(final View v) {
         if (mQuote != null) {
             mQuote.toggleFavorite();
-            Api.favoriteQuote(mQuote);
+            Api.likeQuote(mQuote);
             update();
         } else if (mStory != null) {
             mStory.toggleLiked();
