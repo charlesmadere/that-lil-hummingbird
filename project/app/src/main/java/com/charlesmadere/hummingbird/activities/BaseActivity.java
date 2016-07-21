@@ -114,4 +114,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public String toString() {
+        return getActivityName();
+    }
+
 }

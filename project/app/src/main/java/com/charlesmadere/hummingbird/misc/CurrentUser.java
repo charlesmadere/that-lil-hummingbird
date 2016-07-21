@@ -35,10 +35,10 @@ public final class CurrentUser {
     }
 
     public static synchronized void signOut() {
+        Timber.d(TAG, "current user is signing out");
         OkHttpUtils.getCookieJar().clear();
         Preferences.eraseAll();
         sCurrentUserDigest = null;
-        Timber.d(TAG, "current user signed out");
 
         final ArrayList<Activity> activities = ActivityRegister.get();
 
@@ -48,6 +48,8 @@ public final class CurrentUser {
         }
 
         final Activity activity = activities.get(0);
+        Timber.d(TAG, "restarting the app using: " + activity.toString());
+
         activity.startActivity(LoginActivity.getNewTaskLaunchIntent(activity));
 
         for (final Activity a : activities) {

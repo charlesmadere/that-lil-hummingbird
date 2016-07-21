@@ -48,4 +48,9 @@ public abstract class BaseFragment extends Fragment {
         mIsDestroyed = false;
     }
 
+    @Override
+    public String toString() {
+        return getFragmentName();
+    }
+
 }
