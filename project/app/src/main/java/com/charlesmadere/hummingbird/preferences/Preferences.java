@@ -42,11 +42,9 @@ public final class Preferences {
 
     public static final class Account {
         private static final String TAG = Preferences.TAG + ".Account";
-        public static final StringPreference AuthToken;
         public static final StringPreference Username;
 
         static {
-            AuthToken = new StringPreference(TAG, "AuthToken", null);
             Username = new StringPreference(TAG, "Username", null);
         }
     }
