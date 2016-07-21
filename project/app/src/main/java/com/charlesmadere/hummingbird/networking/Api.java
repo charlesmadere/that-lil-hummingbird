@@ -57,8 +57,8 @@ public final class Api {
 
     public static void addLibraryEntry(final AnimeLibraryUpdate libraryUpdate,
             final ApiResponse<AddAnimeLibraryEntryResponse> listener) {
-        HUMMINGBIRD.addAnimeLibraryEntry(getAuthTokenCookieString(), libraryUpdate.toJson())
-                .enqueue(new Callback<AddAnimeLibraryEntryResponse>() {
+        HUMMINGBIRD.addAnimeLibraryEntry(libraryUpdate.toJson()).enqueue(
+                new Callback<AddAnimeLibraryEntryResponse>() {
             @Override
             public void onResponse(final Call<AddAnimeLibraryEntryResponse> call,
                     final Response<AddAnimeLibraryEntryResponse> response) {
@@ -110,8 +110,7 @@ public final class Api {
 
     public static void deleteAnimeLibraryEntry(final String libraryEntryId,
             final ApiResponse<Void> listener) {
-        HUMMINGBIRD.deleteAnimeLibraryEntry(getAuthTokenCookieString(), libraryEntryId).enqueue(
-                new Callback<Void>() {
+        HUMMINGBIRD.deleteAnimeLibraryEntry(libraryEntryId).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
                 if (response.isSuccessful()) {
@@ -136,28 +135,26 @@ public final class Api {
 
     public static void deleteMangaLibraryEntry(final String libraryEntryId,
             final ApiResponse<Void> listener) {
-        HUMMINGBIRD.deleteMangaLibraryEntry(getAuthTokenCookieString(), libraryEntryId)
-                .enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(final Call<Void> call, final Response<Void> response) {
-                        if (response.isSuccessful()) {
-                            listener.success(response.body());
-                        } else {
-                            listener.failure(retrieveErrorInfo(response));
-                        }
-                    }
+        HUMMINGBIRD.deleteMangaLibraryEntry(libraryEntryId).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(final Call<Void> call, final Response<Void> response) {
+                if (response.isSuccessful()) {
+                    listener.success(response.body());
+                } else {
+                    listener.failure(retrieveErrorInfo(response));
+                }
+            }
 
-                    @Override
-                    public void onFailure(final Call<Void> call, final Throwable t) {
-                        Timber.e(TAG, "delete manga library entry (" + libraryEntryId + ") failed", t);
-                        listener.failure(null);
-                    }
-                });
+            @Override
+            public void onFailure(final Call<Void> call, final Throwable t) {
+                Timber.e(TAG, "delete manga library entry (" + libraryEntryId + ") failed", t);
+                listener.failure(null);
+            }
+        });
     }
 
     public static void deleteStory(final String storyId, final ApiResponse<Boolean> listener) {
-        HUMMINGBIRD.deleteStory(getAuthTokenCookieString(), storyId).enqueue(
-                new Callback<Boolean>() {
+        HUMMINGBIRD.deleteStory(storyId).enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(final Call<Boolean> call, final Response<Boolean> response) {
                 final Boolean body = response.isSuccessful() ? response.body() : null;
@@ -178,8 +175,7 @@ public final class Api {
     }
 
     public static void deleteSubstory(final String substoryId, final ApiResponse<Boolean> listener) {
-        HUMMINGBIRD.deleteSubstory(getAuthTokenCookieString(), substoryId).enqueue(
-                new Callback<Boolean>() {
+        HUMMINGBIRD.deleteSubstory(substoryId).enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(final Call<Boolean> call, final Response<Boolean> response) {
                 final Boolean body = response.isSuccessful() ? response.body() : null;
@@ -240,8 +236,7 @@ public final class Api {
     }
 
     public static void getAnime(final String animeId, final ApiResponse<AbsAnime> listener) {
-        HUMMINGBIRD.getAnime(getAuthTokenCookieString(), animeId).enqueue(
-                new Callback<AbsAnime>() {
+        HUMMINGBIRD.getAnime(animeId).enqueue(new Callback<AbsAnime>() {
             @Override
             public void onResponse(final Call<AbsAnime> call, final Response<AbsAnime> response) {
                 final AbsAnime anime = response.isSuccessful() ? response.body() : null;
@@ -262,8 +257,7 @@ public final class Api {
     }
 
     public static void getAnimeDigest(final String animeId, final ApiResponse<AnimeDigest> listener) {
-        HUMMINGBIRD.getAnimeDigest(getAuthTokenCookieString(), animeId).enqueue(
-                new Callback<AnimeDigest>() {
+        HUMMINGBIRD.getAnimeDigest(animeId).enqueue(new Callback<AnimeDigest>() {
             private AnimeDigest mBody;
 
             @Override
@@ -301,15 +295,16 @@ public final class Api {
     }
 
     public static void getAnimeLibraryEntries(final String username,
-            @Nullable final WatchingStatus status, final ApiResponse<Feed> listener) {
-        getAnimeLibraryEntries(username, status, null, listener);
+            @Nullable final WatchingStatus watchingStatus, final ApiResponse<Feed> listener) {
+        getAnimeLibraryEntries(username, watchingStatus, null, listener);
     }
 
     public static void getAnimeLibraryEntries(final String username,
-            @Nullable final WatchingStatus status, @Nullable final Feed feed,
+            @Nullable final WatchingStatus watchingStatus, @Nullable final Feed feed,
             final ApiResponse<Feed> listener) {
-        HUMMINGBIRD.getAnimeLibraryEntries(getAuthTokenCookieString(), username,
-                status == null ? null : status.getPostValue()).enqueue(new Callback<Feed>() {
+        final String ws = watchingStatus == null ? null : watchingStatus.getPostValue();
+
+        HUMMINGBIRD.getAnimeLibraryEntries(username, ws).enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
@@ -323,7 +318,8 @@ public final class Api {
 
             @Override
             public void onFailure(final Call<Feed> call, final Throwable t) {
-                Timber.e(TAG, "get library entries (user " + username + ") failed", t);
+                Timber.e(TAG, "get anime library entries (" + username + ") (watching status "
+                        + ws + ") failed", t);
                 listener.failure(null);
             }
         });
@@ -372,8 +368,7 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        HUMMINGBIRD.getFollowedUsers(getAuthTokenCookieString(), username, page).enqueue(
-                new Callback<Feed>() {
+        HUMMINGBIRD.getFollowedUsers(username, page).enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
@@ -401,8 +396,7 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        HUMMINGBIRD.getFollowingUsers(getAuthTokenCookieString(), username, page).enqueue(
-                new Callback<Feed>() {
+        HUMMINGBIRD.getFollowingUsers(username, page).enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
@@ -423,8 +417,7 @@ public final class Api {
     }
 
     public static void getFranchise(final String franchiseId, final ApiResponse<Franchise> listener) {
-        HUMMINGBIRD.getFranchise(getAuthTokenCookieString(), franchiseId).enqueue(
-                new Callback<Franchise>() {
+        HUMMINGBIRD.getFranchise(franchiseId).enqueue(new Callback<Franchise>() {
             @Override
             public void onResponse(final Call<Franchise> call, final Response<Franchise> response) {
                 if (response.isSuccessful()) {
@@ -443,8 +436,7 @@ public final class Api {
     }
 
     public static void getGroup(final String groupId, final ApiResponse<GroupDigest> listener) {
-        HUMMINGBIRD.getGroup(getAuthTokenCookieString(), groupId).enqueue(
-                new Callback<GroupDigest>() {
+        HUMMINGBIRD.getGroup(groupId).enqueue(new Callback<GroupDigest>() {
             private GroupDigest mGroupDigest;
 
             @Override
@@ -489,8 +481,7 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        HUMMINGBIRD.getGroupMembers(getAuthTokenCookieString(), groupId, page).enqueue(
-                new Callback<Feed>() {
+        HUMMINGBIRD.getGroupMembers(groupId, page).enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
@@ -518,8 +509,7 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        HUMMINGBIRD.getGroupStories(getAuthTokenCookieString(), groupId, page).enqueue(
-                new Callback<Feed>() {
+        HUMMINGBIRD.getGroupStories(groupId, page).enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
@@ -541,8 +531,7 @@ public final class Api {
 
     public static void getMangaDigest(final String mangaId,
             final ApiResponse<MangaDigest> listener) {
-        HUMMINGBIRD.getMangaDigest(getAuthTokenCookieString(), mangaId).enqueue(
-                new Callback<MangaDigest>() {
+        HUMMINGBIRD.getMangaDigest(mangaId).enqueue(new Callback<MangaDigest>() {
             @Override
             public void onResponse(final Call<MangaDigest> call,
                     final Response<MangaDigest> response) {
@@ -564,9 +553,16 @@ public final class Api {
     }
 
     public static void getMangaLibraryEntries(final String username,
-            @Nullable final ReadingStatus status, final ApiResponse<Feed> listener) {
-        HUMMINGBIRD.getMangaLibraryEntries(getAuthTokenCookieString(), username,
-                status == null ? null : status.getPostValue()).enqueue(new Callback<Feed>() {
+            @Nullable final ReadingStatus readingStatus, final ApiResponse<Feed> listener) {
+        getMangaLibraryEntries(username, readingStatus, null, listener);
+    }
+
+    public static void getMangaLibraryEntries(final String username,
+            @Nullable final ReadingStatus readingStatus, @Nullable final Feed feed,
+            final ApiResponse<Feed> listener) {
+        final String rs = readingStatus == null ? null : readingStatus.getPostValue();
+
+        HUMMINGBIRD.getMangaLibraryEntries(username, rs).enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
@@ -580,7 +576,8 @@ public final class Api {
 
             @Override
             public void onFailure(final Call<Feed> call, final Throwable t) {
-                Timber.e(TAG, "get manga library entries for user (" + username + ") failed", t);
+                Timber.e(TAG, "get manga library entries (" + username + ") (reading status "
+                        + rs + ") failed", t);
                 listener.failure(null);
             }
         });
@@ -593,8 +590,7 @@ public final class Api {
     public static void getNewsFeed(@Nullable final Feed feed, final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        HUMMINGBIRD.getNewsFeed(getAuthTokenCookieString(), Boolean.TRUE, page).enqueue(
-                new Callback<Feed>() {
+        HUMMINGBIRD.getNewsFeed(Boolean.TRUE, page).enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
@@ -621,8 +617,7 @@ public final class Api {
     public static void getNotifications(@Nullable final Feed feed, final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        HUMMINGBIRD.getNotifications(getAuthTokenCookieString(), page).enqueue(
-                new Callback<Feed>() {
+        HUMMINGBIRD.getNotifications(page).enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
@@ -650,8 +645,7 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        HUMMINGBIRD.getSubstories(getAuthTokenCookieString(), storyId, page).enqueue(
-                new Callback<Feed>() {
+        HUMMINGBIRD.getSubstories(storyId, page).enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
@@ -672,7 +666,7 @@ public final class Api {
     }
 
     public static void getUser(final String username, final ApiResponse<User> listener) {
-        HUMMINGBIRD.getUser(getAuthTokenCookieString(), username).enqueue(new Callback<User>() {
+        HUMMINGBIRD.getUser(username).enqueue(new Callback<User>() {
             @Override
             public void onResponse(final Call<User> call, final Response<User> response) {
                 final User body = response.isSuccessful() ? response.body() : null;
@@ -693,8 +687,7 @@ public final class Api {
     }
 
     public static void getUserDigest(final String username, final ApiResponse<UserDigest> listener) {
-        HUMMINGBIRD.getUserDigest(getAuthTokenCookieString(), username).enqueue(
-                new Callback<UserDigest>() {
+        HUMMINGBIRD.getUserDigest(username).enqueue(new Callback<UserDigest>() {
             private UserDigest mBody;
 
             private void fetchUser() {
@@ -760,8 +753,7 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        HUMMINGBIRD.getUserGroups(getAuthTokenCookieString(), userId,page).enqueue(
-                new Callback<Feed>() {
+        HUMMINGBIRD.getUserGroups(userId,page).enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
@@ -789,8 +781,7 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        HUMMINGBIRD.getUserReviews(getAuthTokenCookieString(), username, page).enqueue(
-                new Callback<Feed>() {
+        HUMMINGBIRD.getUserReviews(username, page).enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
@@ -842,8 +833,7 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        HUMMINGBIRD.getUserStories(getAuthTokenCookieString(), username, page).enqueue(
-                new Callback<Feed>() {
+        HUMMINGBIRD.getUserStories(username, page).enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
@@ -889,9 +879,8 @@ public final class Api {
         });
     }
 
-    public static void favoriteQuote(final AnimeDigest.Quote quote) {
-        HUMMINGBIRD.favoriteQuote(getAuthTokenCookieString(), quote.getId(), quote.toJson())
-                .enqueue(new Callback<Void>() {
+    public static void likeQuote(final AnimeDigest.Quote quote) {
+        HUMMINGBIRD.likeQuote(quote.getId(), quote.toJson()).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
                 // do nothing
@@ -905,8 +894,7 @@ public final class Api {
     }
 
     public static void likeStory(final CommentStory story) {
-        HUMMINGBIRD.likeStory(getAuthTokenCookieString(), story.getId(), story.getLikeJson())
-                .enqueue(new Callback<Void>() {
+        HUMMINGBIRD.likeStory(story.getId(), story.getLikeJson()).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
                 // do nothing
@@ -920,8 +908,7 @@ public final class Api {
     }
 
     public static void postComment(final CommentPost commentPost, final ApiResponse<Void> listener) {
-        HUMMINGBIRD.postComment(getAuthTokenCookieString(), commentPost.toJson()).enqueue(
-                new Callback<Void>() {
+        HUMMINGBIRD.postComment(commentPost.toJson()).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
                 if (response.isSuccessful()) {
@@ -940,8 +927,7 @@ public final class Api {
     }
 
     public static void postToFeed(final FeedPost feedPost, final ApiResponse<Void> listener) {
-        HUMMINGBIRD.postToFeed(getAuthTokenCookieString(), feedPost.toJson()).enqueue(
-                new Callback<Void>() {
+        HUMMINGBIRD.postToFeed(feedPost.toJson()).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
                 if (response.isSuccessful()) {
@@ -1008,8 +994,7 @@ public final class Api {
     }
 
     public static void toggleFollowingOfUser(final String userId) {
-        HUMMINGBIRD.toggleFollowingOfUser(getAuthTokenCookieString(), userId).enqueue(
-                new Callback<Void>() {
+        HUMMINGBIRD.toggleFollowingOfUser(userId).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
                 // do nothing
@@ -1024,8 +1009,8 @@ public final class Api {
 
     public static void updateAnimeLibraryEntry(final String libraryEntryId,
             final AnimeLibraryUpdate libraryUpdate, final ApiResponse<Void> listener) {
-        HUMMINGBIRD.updateAnimeLibraryEntry(getAuthTokenCookieString(), libraryEntryId,
-                libraryUpdate.toJson()).enqueue(new Callback<Void>() {
+        HUMMINGBIRD.updateAnimeLibraryEntry(libraryEntryId, libraryUpdate.toJson()).enqueue(
+                new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
                 if (response.isSuccessful()) {
@@ -1045,8 +1030,8 @@ public final class Api {
 
     public static void updateMangaLibraryEntry(final String libraryEntryId,
             final MangaLibraryUpdate libraryUpdate, final ApiResponse<Void> listener) {
-        HUMMINGBIRD.updateMangaLibraryEntry(getAuthTokenCookieString(), libraryEntryId,
-                libraryUpdate.toJson()).enqueue(new Callback<Void>() {
+        HUMMINGBIRD.updateMangaLibraryEntry(libraryEntryId, libraryUpdate.toJson()).enqueue(
+                new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
                 if (response.isSuccessful()) {
