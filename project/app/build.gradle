@@ -86,6 +86,9 @@ dependencies {
     // jsoup
     compile 'org.jsoup:jsoup:1.9.2'
 
+    // Persistent Cookie Jar
+    compile 'com.github.franmontiel:PersistentCookieJar:v0.9.3'
+
     // Robolectric
     testCompile 'org.robolectric:robolectric:3.1'
 

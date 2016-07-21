@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.RetrofitUtils;
@@ -55,8 +54,8 @@ public final class Api {
 
     public static void addLibraryEntry(final AnimeLibraryUpdate libraryUpdate,
             final ApiResponse<AddAnimeLibraryEntryResponse> listener) {
-        hummingbird().addLibraryEntry(getAuthTokenCookieString(), Constants.MIMETYPE_JSON,
-                libraryUpdate.toJson()).enqueue(new Callback<AddAnimeLibraryEntryResponse>() {
+        hummingbird().addAnimeLibraryEntry(getAuthTokenCookieString(), libraryUpdate.toJson())
+                .enqueue(new Callback<AddAnimeLibraryEntryResponse>() {
             @Override
             public void onResponse(final Call<AddAnimeLibraryEntryResponse> call,
                     final Response<AddAnimeLibraryEntryResponse> response) {
@@ -102,9 +101,14 @@ public final class Api {
         });
     }
 
-    public static void deleteLibraryEntry(final String libraryEntryId,
+    public static void deleteAnimeLibraryEntry(final AnimeLibraryEntry libraryEntry,
             final ApiResponse<Void> listener) {
-        hummingbird().deleteLibraryEntry(getAuthTokenCookieString(), libraryEntryId).enqueue(
+        deleteAnimeLibraryEntry(libraryEntry.getId(), listener);
+    }
+
+    public static void deleteAnimeLibraryEntry(final String libraryEntryId,
+            final ApiResponse<Void> listener) {
+        hummingbird().deleteAnimeLibraryEntry(getAuthTokenCookieString(), libraryEntryId).enqueue(
                 new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
@@ -117,10 +121,36 @@ public final class Api {
 
             @Override
             public void onFailure(final Call<Void> call, final Throwable t) {
-                Timber.e(TAG, "delete library entry (" + libraryEntryId + ") failed", t);
+                Timber.e(TAG, "delete anime library entry (" + libraryEntryId + ") failed", t);
                 listener.failure(null);
             }
         });
+    }
+
+    public static void deleteMangaLibraryEntry(final MangaLibraryEntry libraryEntry,
+            final ApiResponse<Void> listener) {
+        deleteMangaLibraryEntry(libraryEntry.getId(), listener);
+    }
+
+    public static void deleteMangaLibraryEntry(final String libraryEntryId,
+            final ApiResponse<Void> listener) {
+        hummingbird().deleteMangaLibraryEntry(getAuthTokenCookieString(), libraryEntryId)
+                .enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(final Call<Void> call, final Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            listener.success(response.body());
+                        } else {
+                            listener.failure(retrieveErrorInfo(response));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(final Call<Void> call, final Throwable t) {
+                        Timber.e(TAG, "delete manga library entry (" + libraryEntryId + ") failed", t);
+                        listener.failure(null);
+                    }
+                });
     }
 
     public static void deleteStory(final String storyId, final ApiResponse<Boolean> listener) {
@@ -208,8 +238,8 @@ public final class Api {
     }
 
     public static void getAnime(final String animeId, final ApiResponse<AbsAnime> listener) {
-        hummingbird().getAnime(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, animeId)
-                .enqueue(new Callback<AbsAnime>() {
+        hummingbird().getAnime(getAuthTokenCookieString(), animeId).enqueue(
+                new Callback<AbsAnime>() {
             @Override
             public void onResponse(final Call<AbsAnime> call, final Response<AbsAnime> response) {
                 final AbsAnime anime = response.isSuccessful() ? response.body() : null;
@@ -263,6 +293,35 @@ public final class Api {
             @Override
             public void onFailure(final Call<AnimeDigest> call, final Throwable t) {
                 Timber.e(TAG, "get anime digest (" + animeId + ") failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
+    public static void getAnimeLibraryEntries(final String username,
+            @Nullable final WatchingStatus status, final ApiResponse<Feed> listener) {
+        getAnimeLibraryEntries(username, status, null, listener);
+    }
+
+    public static void getAnimeLibraryEntries(final String username,
+            @Nullable final WatchingStatus status, @Nullable final Feed feed,
+            final ApiResponse<Feed> listener) {
+        hummingbird().getAnimeLibraryEntries(getAuthTokenCookieString(), username,
+                status == null ? null : status.getPostValue()).enqueue(new Callback<Feed>() {
+            @Override
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
+                final Feed body = response.isSuccessful() ? response.body() : null;
+
+                if (body == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    hydrateFeed(body, feed, listener);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get library entries (user " + username + ") failed", t);
                 listener.failure(null);
             }
         });
@@ -372,8 +431,8 @@ public final class Api {
     }
 
     public static void getFranchise(final String franchiseId, final ApiResponse<Franchise> listener) {
-        hummingbird().getFranchise(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, franchiseId)
-                .enqueue(new Callback<Franchise>() {
+        hummingbird().getFranchise(getAuthTokenCookieString(), franchiseId).enqueue(
+                new Callback<Franchise>() {
             @Override
             public void onResponse(final Call<Franchise> call, final Response<Franchise> response) {
                 if (response.isSuccessful()) {
@@ -392,8 +451,8 @@ public final class Api {
     }
 
     public static void getGroup(final String groupId, final ApiResponse<GroupDigest> listener) {
-        hummingbird().getGroup(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, groupId)
-                .enqueue(new Callback<GroupDigest>() {
+        hummingbird().getGroup(getAuthTokenCookieString(), groupId).enqueue(
+                new Callback<GroupDigest>() {
             private GroupDigest mGroupDigest;
 
             @Override
@@ -488,36 +547,6 @@ public final class Api {
         });
     }
 
-    public static void getLibraryEntries(final String username,
-            @Nullable final WatchingStatus status, final ApiResponse<Feed> listener) {
-        getLibraryEntries(username, status, null, listener);
-    }
-
-    public static void getLibraryEntries(final String username,
-            @Nullable final WatchingStatus status, @Nullable final Feed feed,
-            final ApiResponse<Feed> listener) {
-        hummingbird().getLibraryEntries(getAuthTokenCookieString(), Constants.MIMETYPE_JSON,
-                username, status == null ? null : status.getPostValue()).enqueue(
-                new Callback<Feed>() {
-            @Override
-            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
-                final Feed body = response.isSuccessful() ? response.body() : null;
-
-                if (body == null) {
-                    listener.failure(retrieveErrorInfo(response));
-                } else {
-                    hydrateFeed(body, feed, listener);
-                }
-            }
-
-            @Override
-            public void onFailure(final Call<Feed> call, final Throwable t) {
-                Timber.e(TAG, "get library entries (user " + username + ") failed", t);
-                listener.failure(null);
-            }
-        });
-    }
-
     public static void getMangaDigest(final String mangaId,
             final ApiResponse<MangaDigest> listener) {
         hummingbird().getMangaDigest(getAuthTokenCookieString(), mangaId).enqueue(
@@ -544,9 +573,8 @@ public final class Api {
 
     public static void getMangaLibraryEntries(final String username,
             @Nullable final ReadingStatus status, final ApiResponse<Feed> listener) {
-        hummingbird().getMangaLibraryEntries(getAuthTokenCookieString(), Constants.MIMETYPE_JSON,
-                username, status == null ? null : status.getPostValue()).enqueue(
-                new Callback<Feed>() {
+        hummingbird().getMangaLibraryEntries(getAuthTokenCookieString(), username,
+                status == null ? null : status.getPostValue()).enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
@@ -601,8 +629,8 @@ public final class Api {
     public static void getNotifications(@Nullable final Feed feed, final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        hummingbird().getNotifications(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, page)
-                .enqueue(new Callback<Feed>() {
+        hummingbird().getNotifications(getAuthTokenCookieString(), page).enqueue(
+                new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
@@ -652,8 +680,7 @@ public final class Api {
     }
 
     public static void getUser(final String username, final ApiResponse<User> listener) {
-        hummingbird().getUser(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, username)
-                .enqueue(new Callback<User>() {
+        hummingbird().getUser(getAuthTokenCookieString(), username).enqueue(new Callback<User>() {
             @Override
             public void onResponse(final Call<User> call, final Response<User> response) {
                 final User body = response.isSuccessful() ? response.body() : null;
@@ -741,8 +768,8 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        hummingbird().getUserGroups(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, userId,
-                page).enqueue(new Callback<Feed>() {
+        hummingbird().getUserGroups(getAuthTokenCookieString(), userId,page).enqueue(
+                new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
@@ -770,8 +797,8 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        hummingbird().getUserReviews(getAuthTokenCookieString(), Constants.MIMETYPE_JSON, username,
-                page).enqueue(new Callback<Feed>() {
+        hummingbird().getUserReviews(getAuthTokenCookieString(), username, page).enqueue(
+                new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
@@ -944,58 +971,6 @@ public final class Api {
         });
     }
 
-    public static void removeAnimeLibraryEntry(final AnimeLibraryEntry libraryEntry,
-            final ApiResponse<Void> listener) {
-        removeAnimeLibraryEntry(libraryEntry.getId(), listener);
-    }
-
-    public static void removeAnimeLibraryEntry(final String libraryEntryId,
-            final ApiResponse<Void> listener) {
-        hummingbird().deleteLibraryEntry(getAuthTokenCookieString(), libraryEntryId).enqueue(
-                new Callback<Void>() {
-            @Override
-            public void onResponse(final Call<Void> call, final Response<Void> response) {
-                if (response.isSuccessful()) {
-                    listener.success(response.body());
-                } else {
-                    listener.failure(retrieveErrorInfo(response));
-                }
-            }
-
-            @Override
-            public void onFailure(final Call<Void> call, final Throwable t) {
-                Timber.e(TAG, "remove library entry (" + libraryEntryId + ") failed", t);
-                listener.failure(null);
-            }
-        });
-    }
-
-    public static void removeMangaLibraryEntry(final MangaLibraryEntry libraryEntry,
-            final ApiResponse<Void> listener) {
-        removeMangaLibraryEntry(libraryEntry.getId(), listener);
-    }
-
-    public static void removeMangaLibraryEntry(final String libraryEntryId,
-            final ApiResponse<Void> listener) {
-        hummingbird().deleteMangaLibraryEntry(getAuthTokenCookieString(), libraryEntryId)
-                .enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(final Call<Void> call, final Response<Void> response) {
-                if (response.isSuccessful()) {
-                    listener.success(response.body());
-                } else {
-                    listener.failure(retrieveErrorInfo(response));
-                }
-            }
-
-            @Override
-            public void onFailure(final Call<Void> call, final Throwable t) {
-                Timber.e(TAG, "remove manga library entry (" + libraryEntryId + ") failed", t);
-                listener.failure(null);
-            }
-        });
-    }
-
     @Nullable
     private static ErrorInfo retrieveErrorInfo(@Nullable final Response response) {
         if (response == null) {
@@ -1062,8 +1037,8 @@ public final class Api {
 
     public static void updateAnimeLibraryEntry(final String libraryEntryId,
             final AnimeLibraryUpdate libraryUpdate, final ApiResponse<Void> listener) {
-        hummingbird().updateLibraryEntry(getAuthTokenCookieString(), Constants.MIMETYPE_JSON,
-                libraryEntryId, libraryUpdate.toJson()).enqueue(new Callback<Void>() {
+        hummingbird().updateAnimeLibraryEntry(getAuthTokenCookieString(), libraryEntryId,
+                libraryUpdate.toJson()).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
                 if (response.isSuccessful()) {
@@ -1083,8 +1058,8 @@ public final class Api {
 
     public static void updateMangaLibraryEntry(final String libraryEntryId,
             final MangaLibraryUpdate libraryUpdate, final ApiResponse<Void> listener) {
-        hummingbird().updateMangaLibraryEntry(getAuthTokenCookieString(), Constants.MIMETYPE_JSON,
-                libraryEntryId, libraryUpdate.toJson()).enqueue(new Callback<Void>() {
+        hummingbird().updateMangaLibraryEntry(getAuthTokenCookieString(), libraryEntryId,
+                libraryUpdate.toJson()).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
                 if (response.isSuccessful()) {

@@ -11,6 +11,7 @@ import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 
 import static org.junit.Assert.assertFalse;
@@ -98,17 +99,22 @@ public class MiscUtilsTest {
     @Test
     public void testToArrayList() throws Exception {
         assertNull(MiscUtils.toArrayList(null));
+        assertNotNull(MiscUtils.toArrayList(Collections.EMPTY_LIST));
+        assertNotNull(new ArrayList<>());
 
-        LinkedList<Integer> list = new LinkedList<>();
-        assertNotNull(MiscUtils.toArrayList(list));
-        assertTrue(list.size() == MiscUtils.toArrayList(list).size());
+        ArrayList<Object> array = new ArrayList<>();
+        assertTrue(array == MiscUtils.toArrayList(array));
 
-        list.add(1);
-        list.add(2);
-        assertNotNull(MiscUtils.toArrayList(list));
-        assertTrue(list.size() == 2);
-        assertTrue(list.get(0) == 1);
-        assertTrue(list.get(1) == 2);
+        LinkedList<Integer> linked = new LinkedList<>();
+        assertNotNull(MiscUtils.toArrayList(linked));
+        assertTrue(linked.size() == MiscUtils.toArrayList(linked).size());
+
+        linked.add(1);
+        linked.add(2);
+        assertNotNull(MiscUtils.toArrayList(linked));
+        assertTrue(linked.size() == 2);
+        assertTrue(linked.get(0) == 1);
+        assertTrue(linked.get(1) == 2);
     }
 
 }

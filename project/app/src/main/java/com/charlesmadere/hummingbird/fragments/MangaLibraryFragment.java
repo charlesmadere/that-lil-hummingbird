@@ -29,7 +29,7 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 
 public class MangaLibraryFragment extends BaseFragment implements
-        MangaLibraryEntryItemView.OnEditClickListener, MangaLibraryUpdateFragment.RemoveListener,
+        MangaLibraryEntryItemView.OnEditClickListener, MangaLibraryUpdateFragment.DeleteListener,
         MangaLibraryUpdateFragment.UpdateListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "MangaLibraryFragment";
@@ -108,6 +108,16 @@ public class MangaLibraryFragment extends BaseFragment implements
     }
 
     @Override
+    public void onDeleteLibraryEntry() {
+        final MangaLibraryUpdateFragment fragment = (MangaLibraryUpdateFragment)
+                getChildFragmentManager().findFragmentByTag(MangaLibraryUpdateFragment.TAG);
+        final MangaLibraryEntry libraryEntry = fragment.getLibraryEntry();
+
+        mRefreshLayout.setRefreshing(true);
+        Api.deleteMangaLibraryEntry(libraryEntry, new DeleteLibraryEntryListener(this));
+    }
+
+    @Override
     public void onEditClick(final MangaLibraryEntryItemView v) {
         MangaLibraryUpdateFragment.create(v.getLibraryEntry()).show(getChildFragmentManager(),
                 MangaLibraryUpdateFragment.TAG);
@@ -116,16 +126,6 @@ public class MangaLibraryFragment extends BaseFragment implements
     @Override
     public void onRefresh() {
         fetchLibraryEntries();
-    }
-
-    @Override
-    public void onRemoveLibraryEntry() {
-        final MangaLibraryUpdateFragment fragment = (MangaLibraryUpdateFragment)
-                getChildFragmentManager().findFragmentByTag(MangaLibraryUpdateFragment.TAG);
-        final MangaLibraryEntry libraryEntry = fragment.getLibraryEntry();
-
-        mRefreshLayout.setRefreshing(true);
-        Api.removeMangaLibraryEntry(libraryEntry, new EditLibraryEntryListener(this));
     }
 
     @Override
@@ -173,6 +173,11 @@ public class MangaLibraryFragment extends BaseFragment implements
         }
     }
 
+    private void showDeleteLibraryEntryError() {
+        mRefreshLayout.setRefreshing(false);
+        Toast.makeText(getContext(), R.string.error_deleting_library_entry, Toast.LENGTH_LONG).show();
+    }
+
     private void showEditLibraryEntryError() {
         mRefreshLayout.setRefreshing(false);
         Toast.makeText(getContext(), R.string.error_editing_library_entry, Toast.LENGTH_LONG).show();
@@ -201,6 +206,32 @@ public class MangaLibraryFragment extends BaseFragment implements
         mRefreshLayout.setRefreshing(false);
     }
 
+
+    private static class DeleteLibraryEntryListener implements ApiResponse<Void> {
+        private final WeakReference<MangaLibraryFragment> mFragmentReference;
+
+        private DeleteLibraryEntryListener(final MangaLibraryFragment fragment) {
+            mFragmentReference = new WeakReference<>(fragment);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final MangaLibraryFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                fragment.showDeleteLibraryEntryError();
+            }
+        }
+
+        @Override
+        public void success(@Nullable final Void object) {
+            final MangaLibraryFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                fragment.fetchLibraryEntries();
+            }
+        }
+    }
 
     private static class EditLibraryEntryListener implements ApiResponse<Void> {
         private final WeakReference<MangaLibraryFragment> mFragmentReference;

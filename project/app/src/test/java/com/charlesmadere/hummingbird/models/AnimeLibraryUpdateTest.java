@@ -26,6 +26,11 @@ public class AnimeLibraryUpdateTest {
     }
 
     @Test
+    public void testContainsModifications() throws Exception {
+        assertFalse(mLibraryUpdate.containsModifications());
+    }
+
+    @Test
     public void testSetEpisodesWatched() throws Exception {
         assertFalse(mLibraryUpdate.containsModifications());
 
@@ -43,7 +48,7 @@ public class AnimeLibraryUpdateTest {
     }
 
     @Test
-    public void testSetNotesModifications() throws Exception {
+    public void testSetNotes() throws Exception {
         assertFalse(mLibraryUpdate.containsModifications());
 
         mLibraryUpdate.setNotes(mLibraryUpdate.getNotes());
@@ -57,7 +62,7 @@ public class AnimeLibraryUpdateTest {
     }
 
     @Test
-    public void testSetPrivacyModifications() throws Exception {
+    public void testSetPrivacy() throws Exception {
         assertFalse(mLibraryUpdate.containsModifications());
 
         mLibraryUpdate.setPrivacy(mLibraryUpdate.getDefaults().isPrivate() ?

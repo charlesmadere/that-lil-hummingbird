@@ -26,6 +26,7 @@ public final class RetrofitUtils {
 
     private static synchronized EnumConverterFactory getEnumConverterFactory() {
         if (sEnumConverterFactory == null) {
+            Timber.d(TAG, "creating EnumConverterFactory instance");
             sEnumConverterFactory = new EnumConverterFactory();
         }
 
@@ -34,6 +35,7 @@ public final class RetrofitUtils {
 
     public static synchronized GsonConverterFactory getGsonConverterFactory() {
         if (sGsonConverterFactory == null) {
+            Timber.d(TAG, "creating GsonConverterFactory instance");
             sGsonConverterFactory = GsonConverterFactory.create(GsonUtils.getGson());
         }
 

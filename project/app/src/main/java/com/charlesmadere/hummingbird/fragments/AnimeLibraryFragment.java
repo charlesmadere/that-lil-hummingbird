@@ -29,7 +29,7 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 
 public class AnimeLibraryFragment extends BaseFragment implements
-        AnimeLibraryUpdateFragment.RemoveListener, AnimeLibraryUpdateFragment.UpdateListener,
+        AnimeLibraryUpdateFragment.DeleteListener, AnimeLibraryUpdateFragment.UpdateListener,
         InternalAnimeItemView.OnEditClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "AnimeLibraryFragment";
@@ -78,7 +78,7 @@ public class AnimeLibraryFragment extends BaseFragment implements
 
     private void fetchLibraryEntries() {
         mRefreshLayout.setRefreshing(true);
-        Api.getLibraryEntries(mUsername, mWatchingStatus, new GetLibraryEntriesListener(this));
+        Api.getAnimeLibraryEntries(mUsername, mWatchingStatus, new GetLibraryEntriesListener(this));
     }
 
     @Override
@@ -108,6 +108,16 @@ public class AnimeLibraryFragment extends BaseFragment implements
     }
 
     @Override
+    public void onDeleteLibraryEntry() {
+        final AnimeLibraryUpdateFragment fragment = (AnimeLibraryUpdateFragment)
+                getChildFragmentManager().findFragmentByTag(AnimeLibraryUpdateFragment.TAG);
+        final AnimeLibraryEntry libraryEntry = fragment.getLibraryEntry();
+
+        mRefreshLayout.setRefreshing(true);
+        Api.deleteAnimeLibraryEntry(libraryEntry, new DeleteLibraryEntryListener(this));
+    }
+
+    @Override
     public void onEditClick(final InternalAnimeItemView v) {
         AnimeLibraryUpdateFragment.create(v.getLibraryEntry()).show(getChildFragmentManager(),
                 AnimeLibraryUpdateFragment.TAG);
@@ -116,16 +126,6 @@ public class AnimeLibraryFragment extends BaseFragment implements
     @Override
     public void onRefresh() {
         fetchLibraryEntries();
-    }
-
-    @Override
-    public void onRemoveLibraryEntry() {
-        final AnimeLibraryUpdateFragment fragment = (AnimeLibraryUpdateFragment)
-                getChildFragmentManager().findFragmentByTag(AnimeLibraryUpdateFragment.TAG);
-        final AnimeLibraryEntry libraryEntry = fragment.getLibraryEntry();
-
-        mRefreshLayout.setRefreshing(true);
-        Api.removeAnimeLibraryEntry(libraryEntry, new EditLibraryEntryListener(this));
     }
 
     @Override
@@ -173,6 +173,11 @@ public class AnimeLibraryFragment extends BaseFragment implements
         }
     }
 
+    private void showDeleteLibraryEntryError() {
+        mRefreshLayout.setRefreshing(false);
+        Toast.makeText(getContext(), R.string.error_deleting_library_entry, Toast.LENGTH_LONG).show();
+    }
+
     private void showEditLibraryEntryError() {
         mRefreshLayout.setRefreshing(false);
         Toast.makeText(getContext(), R.string.error_editing_library_entry, Toast.LENGTH_LONG).show();
@@ -201,6 +206,32 @@ public class AnimeLibraryFragment extends BaseFragment implements
         mRefreshLayout.setRefreshing(false);
     }
 
+
+    private static class DeleteLibraryEntryListener implements ApiResponse<Void> {
+        private final WeakReference<AnimeLibraryFragment> mFragmentReference;
+
+        private DeleteLibraryEntryListener(final AnimeLibraryFragment fragment) {
+            mFragmentReference = new WeakReference<>(fragment);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final AnimeLibraryFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                fragment.showDeleteLibraryEntryError();
+            }
+        }
+
+        @Override
+        public void success(@Nullable final Void object) {
+            final AnimeLibraryFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                fragment.fetchLibraryEntries();
+            }
+        }
+    }
 
     private static class EditLibraryEntryListener implements ApiResponse<Void> {
         private final WeakReference<AnimeLibraryFragment> mFragmentReference;

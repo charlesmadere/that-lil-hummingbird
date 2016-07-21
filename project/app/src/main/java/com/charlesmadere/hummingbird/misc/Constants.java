@@ -14,7 +14,6 @@ public final class Constants {
     public static final String LIBRARY = "library";
     public static final String MANGA = "manga";
     public static final String MEMBERS = "members";
-    public static final String MIMETYPE_JSON = "application/json";
     public static final String NOTIFICATIONS = "notifications";
     public static final String PLAY_STORE_BASE_URL = "https://play.google.com/store/apps/details?id=";
     public static final String PRISCILLA_URL = "https://www.etsy.com/shop/OchaaNeko";

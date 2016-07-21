@@ -37,10 +37,10 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     private static final String KEY_LIBRARY_UPDATE = "LibraryUpdate";
     private static final String KEY_MANGA_DIGEST = "MangaDigest";
 
+    private DeleteListener mDeleteListener;
     private MangaDigest mMangaDigest;
     private MangaLibraryEntry mLibraryEntry;
     private MangaLibraryUpdate mLibraryUpdate;
-    private RemoveListener mRemoveListener;
     private UpdateListener mUpdateListener;
 
     @BindView(R.id.cbReReading)
@@ -124,8 +124,8 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         if (fragment instanceof UpdateListener) {
             mUpdateListener = (UpdateListener) fragment;
 
-            if (fragment instanceof RemoveListener) {
-                mRemoveListener = (RemoveListener) fragment;
+            if (fragment instanceof DeleteListener) {
+                mDeleteListener = (DeleteListener) fragment;
             }
         } else {
             final Activity activity = MiscUtils.getActivity(context);
@@ -133,13 +133,13 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
             if (activity instanceof UpdateListener) {
                 mUpdateListener = (UpdateListener) activity;
 
-                if (activity instanceof RemoveListener) {
-                    mRemoveListener = (RemoveListener) activity;
+                if (activity instanceof DeleteListener) {
+                    mDeleteListener = (DeleteListener) activity;
                 }
             }
         }
 
-        if (mUpdateListener == null && mRemoveListener == null) {
+        if (mUpdateListener == null && mDeleteListener == null) {
             throw new IllegalStateException(TAG + " must have a listener attached");
         }
     }
@@ -245,7 +245,7 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         mTitle.setText(mLibraryUpdate.getMangaTitle());
         mSave.setEnabled(false);
 
-        if (mRemoveListener != null) {
+        if (mDeleteListener != null) {
             mDelete.setVisibility(View.VISIBLE);
         }
 
@@ -299,8 +299,8 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     }
 
 
-    public interface RemoveListener {
-        void onRemoveLibraryEntry();
+    public interface DeleteListener {
+        void onDeleteLibraryEntry();
     }
 
     public interface UpdateListener {
