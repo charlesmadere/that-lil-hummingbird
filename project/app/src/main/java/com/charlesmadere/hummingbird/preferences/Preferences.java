@@ -36,7 +36,7 @@ public final class Preferences {
                 .clear()
                 .apply();
 
-        erase(Account.TAG, General.TAG);
+        erase(Account.TAG, General.TAG, Misc.TAG, NotificationPolling.TAG);
         Timber.d(TAG, "All preferences have been erased");
     }
 
