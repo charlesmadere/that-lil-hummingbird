@@ -84,7 +84,7 @@ public final class Api {
             public void onResponse(final Call<String> call, final Response<String> response) {
                 final String body = response.isSuccessful() ? response.body() : null;
 
-                if (TextUtils.isEmpty(body) || TextUtils.getTrimmedLength(body) == 0) {
+                if (TextUtils.isEmpty(body)) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
                     Preferences.Account.AuthToken.set(body);
