@@ -19,6 +19,8 @@ import com.google.gson.JsonElement;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -148,6 +150,10 @@ public interface HummingbirdApi {
     @GET("search.json")
     Call<SearchBundle> search(@Query("scope") SearchScope searchScope,
             @Query("depth") SearchDepth depth, @Query("query") String query);
+
+    @FormUrlEncoded
+    @POST("sign-in")
+    Call<String> signIn(@Field("username") String username, @Field("password") String password);
 
     @POST("users/{userId}/follow")
     Call<Void> toggleFollowingOfUser(@Path("userId") String userId);
