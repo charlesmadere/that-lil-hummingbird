@@ -4,7 +4,6 @@ import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AddAnimeLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.AddMangaLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
-import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.Franchise;
 import com.charlesmadere.hummingbird.models.GroupDigest;
@@ -31,15 +30,6 @@ import retrofit2.http.Query;
 public interface HummingbirdApi {
 
     String ACCEPT_JSON_MIMETYPE = "Accept: application/json";
-
-
-    /*
-     * v1
-     * https://github.com/hummingbird-me/hummingbird/wiki/API-v1-Methods
-     */
-
-    @POST("api/v1/users/authenticate")
-    Call<String> authenticate(@Body AuthInfo authInfo);
 
 
     /*
@@ -153,7 +143,7 @@ public interface HummingbirdApi {
 
     @FormUrlEncoded
     @POST("sign-in")
-    Call<String> signIn(@Field("username") String username, @Field("password") String password);
+    Call<Void> signIn(@Field("email") String username, @Field("password") String password);
 
     @POST("users/{userId}/follow")
     Call<Void> toggleFollowingOfUser(@Path("userId") String userId);

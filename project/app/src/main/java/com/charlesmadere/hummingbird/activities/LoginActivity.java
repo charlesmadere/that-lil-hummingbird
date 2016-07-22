@@ -19,7 +19,6 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.Timber;
-import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -327,7 +326,7 @@ public class LoginActivity extends BaseActivity {
         final String username = mUsernameField.getText().toString().trim();
         final String password = mPasswordField.getText().toString();
 
-        Api.authenticate(new AuthInfo(username, password), new AuthenticateListener(this));
+        Api.signIn(username, password, new SignInListener(this));
     }
 
     private void showError(@Nullable final String error) {
@@ -349,37 +348,6 @@ public class LoginActivity extends BaseActivity {
 
     private void updateLoginEnabledState() {
         mLogin.setEnabled(isLoginFormValid());
-    }
-
-
-    private static class AuthenticateListener implements ApiResponse<String> {
-        private final WeakReference<LoginActivity> mActivityReference;
-
-        private AuthenticateListener(final LoginActivity activity) {
-            mActivityReference = new WeakReference<>(activity);
-        }
-
-        @Override
-        public void failure(@Nullable final ErrorInfo error) {
-            final LoginActivity activity = mActivityReference.get();
-
-            if (activity != null && !activity.isDestroyed()) {
-                if (error == null) {
-                    activity.showError(null);
-                } else {
-                    activity.showError(error.getError());
-                }
-            }
-        }
-
-        @Override
-        public void success(final String string) {
-            final LoginActivity activity = mActivityReference.get();
-
-            if (activity != null && !activity.isDestroyed()) {
-                activity.fetchCurrentUser();
-            }
-        }
     }
 
 
@@ -405,6 +373,36 @@ public class LoginActivity extends BaseActivity {
 
             if (activity != null && !activity.isDestroyed()) {
                 activity.followDeepLinkOrGoToHomeActivity();
+            }
+        }
+    }
+
+    private static class SignInListener implements ApiResponse<Void> {
+        private final WeakReference<LoginActivity> mActivityReference;
+
+        private SignInListener(final LoginActivity activity) {
+            mActivityReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final LoginActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                if (error == null) {
+                    activity.showError(null);
+                } else {
+                    activity.showError(error.getError());
+                }
+            }
+        }
+
+        @Override
+        public void success(@Nullable final Void object) {
+            final LoginActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.fetchCurrentUser();
             }
         }
     }

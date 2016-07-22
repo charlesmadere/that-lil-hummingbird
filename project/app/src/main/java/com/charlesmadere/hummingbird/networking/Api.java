@@ -2,7 +2,6 @@ package com.charlesmadere.hummingbird.networking;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
@@ -16,7 +15,6 @@ import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
 import com.charlesmadere.hummingbird.models.AppNews;
-import com.charlesmadere.hummingbird.models.AuthInfo;
 import com.charlesmadere.hummingbird.models.CommentPost;
 import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
@@ -103,28 +101,6 @@ public final class Api {
             public void onFailure(final Call<AddMangaLibraryEntryResponse> call,
                     final Throwable t) {
                 Timber.e(TAG, "add manga library entry failed", t);
-                listener.failure(null);
-            }
-        });
-    }
-
-    public static void authenticate(final AuthInfo authInfo, final ApiResponse<String> listener) {
-        HUMMINGBIRD.authenticate(authInfo).enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(final Call<String> call, final Response<String> response) {
-                final String body = response.isSuccessful() ? response.body() : null;
-
-                if (TextUtils.isEmpty(body)) {
-                    listener.failure(retrieveErrorInfo(response));
-                } else {
-                    Preferences.Account.Username.set(authInfo.getUsername());
-                    listener.success(body);
-                }
-            }
-
-            @Override
-            public void onFailure(final Call<String> call, final Throwable t) {
-                Timber.e(TAG, "authentication failed", t);
                 listener.failure(null);
             }
         });
@@ -1015,6 +991,27 @@ public final class Api {
             @Override
             public void onFailure(final Call<SearchBundle> call, final Throwable t) {
                 Timber.e(TAG, "search (scope " + scope + ") (query " + query + ") failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
+    public static void signIn(final String username, final String password,
+            final ApiResponse<Void> listener) {
+        HUMMINGBIRD.signIn(username, password).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(final Call<Void> call, final Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Preferences.Account.Username.set(username);
+                    listener.success(response.body());
+                } else {
+                    listener.failure(retrieveErrorInfo(response));
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Void> call, final Throwable t) {
+                Timber.e(TAG, "sign in failed", t);
                 listener.failure(null);
             }
         });
