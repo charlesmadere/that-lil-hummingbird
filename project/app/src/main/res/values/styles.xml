@@ -234,7 +234,7 @@
 
     <style name="DeleteLibraryEntryView">
         <item name="android:alpha">0</item>
-        <item name="android:background">@color/overlay</item>
+        <item name="android:background">@color/overlayDark</item>
         <item name="android:id">@id/deleteLibraryEntryView</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_centerInParent">true</item>

@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:layout_centerInParent="true"
+    android:layout_gravity="center"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
     <com.charlesmadere.hummingbird.views.TypefaceTextView
         android:gravity="center"
         android:id="@+id/tvHead"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/root_padding"
+        android:layout_marginBottom="@dimen/root_padding_double"
         android:layout_width="wrap_content"
         android:text="@string/are_you_sure_you_want_to_remove_this_from_your_library"
-        android:textSize="@dimen/text_xxlarge" />
+        android:textColor="?attr/colorAccent"
+        android:textSize="@dimen/text_xxlarge"
+        app:typeface="open_sans_semibold" />
     <LinearLayout
         android:gravity="center"
         android:layout_gravity="center"
@@ -46,4 +54,4 @@
             android:textColor="?attr/colorAccent"
             app:typeface="open_sans_bold" />
     </LinearLayout>
-</merge>
+</LinearLayout>

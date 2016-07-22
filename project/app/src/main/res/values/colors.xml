@@ -10,6 +10,7 @@
     <color name="orange">#EC8660</color>
     <color name="orangeSecondary">#F7CAB9</color>
     <color name="overlay">#88000000</color>
+    <color name="overlayDark">#BB000000</color>
     <color name="placeholderGradientEnd">#BBBBBB</color>
     <color name="placeholderGradientStart">#EEEEEE</color>
     <color name="scrimInsetForeground">#4000</color>
