@@ -173,7 +173,7 @@ public class ModifyNumberView extends LinearLayout {
         mDecrease.setEnabled(mNumber >= 1);
 
         if (mMax == null) {
-            mCount.setText(mNumberFormat.format(mCount));
+            mCount.setText(mNumberFormat.format(mNumber));
             mIncrease.setEnabled(true);
         } else {
             mCount.setText(getResources().getString(R.string.progress_format,
