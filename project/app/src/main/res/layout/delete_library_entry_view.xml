@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center"
     android:layout_centerInParent="true"
     android:layout_gravity="center"
@@ -14,10 +15,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/root_padding_double"
         android:layout_width="wrap_content"
+        android:letterSpacing="-0.025"
         android:text="@string/are_you_sure_you_want_to_remove_this_from_your_library"
         android:textColor="?attr/colorAccent"
         android:textSize="@dimen/text_xxlarge"
-        app:typeface="open_sans_semibold" />
+        app:typeface="open_sans_semibold"
+        tools:ignore="UnusedAttribute" />
     <LinearLayout
         android:gravity="center"
         android:layout_gravity="center"
