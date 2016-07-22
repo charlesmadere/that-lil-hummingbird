@@ -179,7 +179,7 @@ public class AnimeActivity extends BaseDrawerActivity implements
         final AnimeLibraryUpdate libraryUpdate = fragment.getLibraryUpdate();
 
         mSimpleProgressView.fadeIn();
-        Api.addLibraryEntry(libraryUpdate, new AddLibraryEntryListener(this));
+        Api.addAnimeLibraryEntry(libraryUpdate, new AddLibraryEntryListener(this));
     }
 
     private void showAddLibraryEntryError() {

@@ -6,21 +6,25 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.GroupsAdapter;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
+import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
 public class UserGroupsActivity extends BaseDrawerActivity implements
-        SwipeRefreshLayout.OnRefreshListener {
+        RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "UserGroupsActivity";
     private static final String CNAME = UserGroupsActivity.class.getCanonicalName();
@@ -28,6 +32,8 @@ public class UserGroupsActivity extends BaseDrawerActivity implements
     private static final String KEY_FEED = "Feed";
 
     private Feed mFeed;
+    private GroupsAdapter mAdapter;
+    private RecyclerViewPaginator mPaginator;
     private String mUsername;
 
     @BindView(R.id.llEmpty)
@@ -56,6 +62,11 @@ public class UserGroupsActivity extends BaseDrawerActivity implements
     @Override
     public String getActivityName() {
         return TAG;
+    }
+
+    @Override
+    public boolean isLoading() {
+        return mRefreshLayout.isRefreshing() || mAdapter.isPaginating();
     }
 
     @Override
@@ -97,16 +108,54 @@ public class UserGroupsActivity extends BaseDrawerActivity implements
         }
     }
 
+    @Override
+    protected void onViewsBound() {
+        super.onViewsBound();
+        mRefreshLayout.setOnRefreshListener(this);
+        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding_half);
+        mAdapter = new GroupsAdapter(this);
+        mRecyclerView.setAdapter(mAdapter);
+        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
+    }
+
+    @Override
+    public void paginate() {
+        mAdapter.setPaginating(true);
+        Api.getUserGroups(mUsername, mFeed, new PaginateGroupsListener(this));
+    }
+
+    private void paginationComplete() {
+        mAdapter.set(mFeed);
+        mAdapter.setPaginating(false);
+    }
+
+    private void paginationNoMore() {
+        mPaginator.setEnabled(false);
+        mAdapter.setPaginating(false);
+    }
+
     private void showEmpty() {
-        // TODO
+        mRecyclerView.setVisibility(View.GONE);
+        mError.setVisibility(View.GONE);
+        mEmpty.setVisibility(View.VISIBLE);
+        mRefreshLayout.setRefreshing(false);
     }
 
     private void showError() {
-        // TODO
+        mRecyclerView.setVisibility(View.GONE);
+        mEmpty.setVisibility(View.GONE);
+        mError.setVisibility(View.VISIBLE);
+        mRefreshLayout.setRefreshing(false);
     }
 
     private void showUserGroups(final Feed feed) {
-        // TODO
+        mFeed = feed;
+        mAdapter.set(mFeed);
+        mEmpty.setVisibility(View.GONE);
+        mError.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mPaginator.setEnabled(feed.hasCursor());
+        mRefreshLayout.setRefreshing(false);
     }
 
 
@@ -122,7 +171,7 @@ public class UserGroupsActivity extends BaseDrawerActivity implements
             final UserGroupsActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                // TODO
+                activity.showError();
             }
         }
 
@@ -131,7 +180,43 @@ public class UserGroupsActivity extends BaseDrawerActivity implements
             final UserGroupsActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                // TODO
+                if (feed.hasGroups()) {
+                    activity.showUserGroups(feed);
+                } else {
+                    activity.showEmpty();
+                }
+            }
+        }
+    }
+
+    private static class PaginateGroupsListener implements ApiResponse<Feed> {
+        private final WeakReference<UserGroupsActivity> mActivityReference;
+        private final int mGroupsSize;
+
+        private PaginateGroupsListener(final UserGroupsActivity activity) {
+            mActivityReference = new WeakReference<>(activity);
+            mGroupsSize = activity.mFeed.getGroupsSize();
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final UserGroupsActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.paginationNoMore();
+            }
+        }
+
+        @Override
+        public void success(final Feed feed) {
+            final UserGroupsActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                if (feed.getGroupsSize() > mGroupsSize) {
+                    activity.paginationComplete();
+                } else {
+                    activity.paginationNoMore();
+                }
             }
         }
     }

@@ -19,6 +19,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.MangaFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.MangaLibraryUpdateFragment;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
+import com.charlesmadere.hummingbird.models.AddMangaLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Manga;
 import com.charlesmadere.hummingbird.models.MangaDigest;
@@ -83,8 +84,8 @@ public class MangaActivity extends BaseDrawerActivity implements
         return intent;
     }
 
-    private void addedLibraryEntry() {
-        // TODO
+    private void addedLibraryEntry(final AddMangaLibraryEntryResponse response) {
+        mMangaDigest.setLibraryEntry(response.getLibraryEntry());
         supportInvalidateOptionsMenu();
         mSimpleProgressView.fadeOut();
         Toast.makeText(this, R.string.added_to_library, Toast.LENGTH_LONG).show();
@@ -171,7 +172,7 @@ public class MangaActivity extends BaseDrawerActivity implements
         final MangaLibraryUpdate libraryUpdate = fragment.getLibraryUpdate();
 
         mSimpleProgressView.fadeIn();
-        // TODO
+        Api.addMangaLibraryEntry(libraryUpdate, new AddLibraryEntryListener(this));
     }
 
     private void showAddLibraryEntryError() {
@@ -227,7 +228,7 @@ public class MangaActivity extends BaseDrawerActivity implements
     }
 
 
-    private static class AddLibraryEntryListener implements ApiResponse<Void> {
+    private static class AddLibraryEntryListener implements ApiResponse<AddMangaLibraryEntryResponse> {
         private final WeakReference<MangaActivity> mActivityReference;
 
         private AddLibraryEntryListener(final MangaActivity activity) {
@@ -244,11 +245,11 @@ public class MangaActivity extends BaseDrawerActivity implements
         }
 
         @Override
-        public void success(final Void object) {
+        public void success(final AddMangaLibraryEntryResponse response) {
             final MangaActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                // TODO
+                activity.addedLibraryEntry(response);
             }
         }
     }

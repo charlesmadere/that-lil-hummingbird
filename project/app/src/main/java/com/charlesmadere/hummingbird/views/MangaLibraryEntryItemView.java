@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.MangaActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.Manga;
 import com.charlesmadere.hummingbird.models.MangaLibraryEntry;
@@ -71,7 +72,8 @@ public class MangaLibraryEntryItemView extends CardView implements AdapterView<M
 
     @Override
     public void onClick(final View view) {
-        // TODO
+        final Context context = getContext();
+        context.startActivity(MangaActivity.getLaunchIntent(context, mLibraryEntry.getManga()));
     }
 
     @OnClick(R.id.ibEdit)

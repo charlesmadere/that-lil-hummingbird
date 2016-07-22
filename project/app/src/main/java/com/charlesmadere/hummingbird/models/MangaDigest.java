@@ -62,7 +62,19 @@ public class MangaDigest implements Parcelable {
     }
 
     public boolean hasLibraryEntry() {
-        return mLibraryEntries != null && !mLibraryEntries.isEmpty() && mLibraryEntries.get(0) != null;
+        return mLibraryEntries != null && !mLibraryEntries.isEmpty();
+    }
+
+    public void setLibraryEntry(final MangaLibraryEntry libraryEntry) {
+        if (hasLibraryEntry()) {
+            throw new RuntimeException("MangaLibraryEntry already exists: " + getLibraryEntry());
+        }
+
+        if (mLibraryEntries == null) {
+            mLibraryEntries = new ArrayList<>(1);
+        }
+
+        mLibraryEntries.add(libraryEntry);
     }
 
     @Override

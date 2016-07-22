@@ -11,6 +11,7 @@ import com.charlesmadere.hummingbird.misc.Threading;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AddAnimeLibraryEntryResponse;
+import com.charlesmadere.hummingbird.models.AddMangaLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
@@ -55,15 +56,15 @@ public final class Api {
     private static final WebsiteApi WEBSITE = RetrofitUtils.getWebsiteApi();
 
 
-    public static void addLibraryEntry(final AnimeLibraryUpdate libraryUpdate,
+    public static void addAnimeLibraryEntry(final AnimeLibraryUpdate libraryUpdate,
             final ApiResponse<AddAnimeLibraryEntryResponse> listener) {
         HUMMINGBIRD.addAnimeLibraryEntry(libraryUpdate.toJson()).enqueue(
                 new Callback<AddAnimeLibraryEntryResponse>() {
             @Override
             public void onResponse(final Call<AddAnimeLibraryEntryResponse> call,
                     final Response<AddAnimeLibraryEntryResponse> response) {
-                final AddAnimeLibraryEntryResponse body = response.isSuccessful() ? response.body()
-                        : null;
+                final AddAnimeLibraryEntryResponse body = response.isSuccessful() ?
+                        response.body() : null;
 
                 if (body == null) {
                     listener.failure(retrieveErrorInfo(response));
@@ -75,7 +76,33 @@ public final class Api {
             @Override
             public void onFailure(final Call<AddAnimeLibraryEntryResponse> call,
                     final Throwable t) {
-                Timber.e(TAG, "add library entry failed", t);
+                Timber.e(TAG, "add anime library entry failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
+    public static void addMangaLibraryEntry(final MangaLibraryUpdate libraryUpdate,
+            final ApiResponse<AddMangaLibraryEntryResponse> listener) {
+        HUMMINGBIRD.addMangaLibraryEntry(libraryUpdate.toJson()).enqueue(
+                new Callback<AddMangaLibraryEntryResponse>() {
+            @Override
+            public void onResponse(final Call<AddMangaLibraryEntryResponse> call,
+                    final Response<AddMangaLibraryEntryResponse> response) {
+                final AddMangaLibraryEntryResponse body = response.isSuccessful() ?
+                        response.body() : null;
+
+                if (body == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    listener.success(body);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<AddMangaLibraryEntryResponse> call,
+                    final Throwable t) {
+                Timber.e(TAG, "add manga library entry failed", t);
                 listener.failure(null);
             }
         });

@@ -7,10 +7,19 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.AnimeQuotesAdapter;
+import com.charlesmadere.hummingbird.models.AnimeDigest;
+import com.charlesmadere.hummingbird.models.ErrorInfo;
+import com.charlesmadere.hummingbird.networking.Api;
+import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
+import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
+
+import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
@@ -21,8 +30,9 @@ public class AnimeQuotesActivity extends BaseDrawerActivity implements
     private static final String CNAME = AnimeQuotesActivity.class.getCanonicalName();
     private static final String EXTRA_ANIME_ID = CNAME + ".AnimeId";
     private static final String EXTRA_ANIME_TITLE = CNAME + ".AnimeTitle";
-    private static final String KEY_ANIME_QUOTES = "AnimeQuotes";
+    private static final String KEY_ANIME_DIGEST = "AnimeDigest";
 
+    private AnimeDigest mAnimeDigest;
     private String mAnimeId;
 
     @BindView(R.id.llEmpty)
@@ -54,6 +64,11 @@ public class AnimeQuotesActivity extends BaseDrawerActivity implements
         return intent;
     }
 
+    private void fetchAnimeDigest() {
+        mRefreshLayout.setRefreshing(true);
+        Api.getAnimeDigest(mAnimeId, new GetAnimeDigestListener(this));
+    }
+
     @Override
     public String getActivityName() {
         return TAG;
@@ -76,12 +91,100 @@ public class AnimeQuotesActivity extends BaseDrawerActivity implements
             setSubtitle(intent.getStringExtra(EXTRA_ANIME_TITLE));
         }
 
-        // TODO
+        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
+            mAnimeDigest = savedInstanceState.getParcelable(KEY_ANIME_DIGEST);
+        }
+
+        if (mAnimeDigest == null) {
+            fetchAnimeDigest();
+        } else if (mAnimeDigest.hasQuotes()) {
+            showQuotes(mAnimeDigest);
+        } else {
+            showEmpty(mAnimeDigest);
+        }
     }
 
     @Override
     public void onRefresh() {
-        // TODO
+        fetchAnimeDigest();
+    }
+
+    @Override
+    protected void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (mAnimeDigest != null) {
+            outState.putParcelable(KEY_ANIME_DIGEST, mAnimeDigest);
+        }
+    }
+
+    @Override
+    protected void onViewsBound() {
+        super.onViewsBound();
+        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
+    }
+
+    private void showEmpty(final AnimeDigest animeDigest) {
+        mAnimeDigest = animeDigest;
+        mError.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.GONE);
+        mEmpty.setVisibility(View.VISIBLE);
+        mRefreshLayout.setRefreshing(false);
+    }
+
+    private void showError() {
+        mEmpty.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.GONE);
+        mError.setVisibility(View.VISIBLE);
+        mRefreshLayout.setRefreshing(false);
+    }
+
+    private void showQuotes(final AnimeDigest animeDigest) {
+        mAnimeDigest = animeDigest;
+
+        if (TextUtils.isEmpty(getSubtitle())) {
+            setSubtitle(mAnimeDigest.getTitle());
+        }
+
+        final AnimeQuotesAdapter adapter = new AnimeQuotesAdapter(this);
+        adapter.set(mAnimeDigest.getQuotes());
+        mRecyclerView.setAdapter(adapter);
+
+        mEmpty.setVisibility(View.GONE);
+        mError.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mRefreshLayout.setRefreshing(false);
+    }
+
+
+    private static class GetAnimeDigestListener implements ApiResponse<AnimeDigest> {
+        private final WeakReference<AnimeQuotesActivity> mActivityReference;
+
+        private GetAnimeDigestListener(final AnimeQuotesActivity activity) {
+            mActivityReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final AnimeQuotesActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.showError();
+            }
+        }
+
+        @Override
+        public void success(final AnimeDigest animeDigest) {
+            final AnimeQuotesActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                if (animeDigest.hasQuotes()) {
+                    activity.showQuotes(animeDigest);
+                } else {
+                    activity.showEmpty(animeDigest);
+                }
+            }
+        }
     }
 
 }

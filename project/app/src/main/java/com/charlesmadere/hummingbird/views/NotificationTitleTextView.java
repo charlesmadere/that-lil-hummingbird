@@ -47,7 +47,7 @@ public class NotificationTitleTextView extends AppCompatTextView {
         final int typefaceEntryOrdinal = ta.getInt(R.styleable.View_typeface,
                 TypefaceEntry.OSWALD_BOLD.ordinal());
         final int secondaryTypefaceEntryOrdinal = ta.getInt(R.styleable.View_secondary_typeface,
-                TypefaceEntry.OSWALD_BOLD.ordinal());
+                TypefaceEntry.OPEN_SANS_REGULAR.ordinal());
         ta.recycle();
 
         mUserNameSpan = new CustomTypefaceSpan(typefaceEntryOrdinal);

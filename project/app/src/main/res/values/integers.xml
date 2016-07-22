@@ -2,6 +2,6 @@
 <resources>
 
     <integer name="color_duration">750</integer>
-    <integer name="fade_duration">400</integer>
+    <integer name="fade_duration">250</integer>
 
 </resources>

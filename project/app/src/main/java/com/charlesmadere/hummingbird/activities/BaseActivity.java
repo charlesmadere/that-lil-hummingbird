@@ -36,6 +36,17 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public abstract String getActivityName();
 
+    @Nullable
+    public CharSequence getSubtitle() {
+        final ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar == null) {
+            return null;
+        } else {
+            return actionBar.getSubtitle();
+        }
+    }
+
     /**
      * This method's code came from the Android documentation:
      * https://developer.android.com/training/implementing-navigation/ancestral.html

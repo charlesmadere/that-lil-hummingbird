@@ -18,6 +18,7 @@ import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.MangaDigest;
 import com.charlesmadere.hummingbird.models.MangaLibraryEntry;
 import com.charlesmadere.hummingbird.models.MangaLibraryUpdate;
+import com.charlesmadere.hummingbird.views.DeleteLibraryEntryView;
 import com.charlesmadere.hummingbird.views.ModifyNumberView;
 import com.charlesmadere.hummingbird.views.ModifyPublicPrivateSpinner;
 import com.charlesmadere.hummingbird.views.ModifyRatingSpinner;
@@ -45,6 +46,9 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
 
     @BindView(R.id.cbReReading)
     CheckBox mReReading;
+
+    @BindView(R.id.deleteLibraryEntryView)
+    DeleteLibraryEntryView mDeleteLibraryEntryView;
 
     @BindView(R.id.etPersonalNotes)
     EditText mPersonalNotes;
@@ -179,7 +183,7 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
 
     @OnClick(R.id.ibDelete)
     void onDeleteClick() {
-        // TODO
+        mDeleteLibraryEntryView.fadeIn();
     }
 
     @Override
@@ -247,6 +251,19 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
 
         if (mDeleteListener != null) {
             mDelete.setVisibility(View.VISIBLE);
+
+            mDeleteLibraryEntryView.setListeners(new DeleteLibraryEntryView.Listeners() {
+                @Override
+                public void onCancelClick(final DeleteLibraryEntryView v) {
+                    mDeleteLibraryEntryView.hide();
+                }
+
+                @Override
+                public void onDeleteClick(final DeleteLibraryEntryView v) {
+                    mDeleteListener.onDeleteLibraryEntry();
+                    dismiss();
+                }
+            });
         }
 
         if (mMangaDigest == null) {
@@ -292,6 +309,11 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
                 update();
             }
         });
+    }
+
+    @Override
+    protected boolean startFullyExpanded() {
+        return true;
     }
 
     private void update() {

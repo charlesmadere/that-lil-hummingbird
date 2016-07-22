@@ -2,10 +2,8 @@ package com.charlesmadere.hummingbird.fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +18,7 @@ import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
+import com.charlesmadere.hummingbird.views.DeleteLibraryEntryView;
 import com.charlesmadere.hummingbird.views.ModifyPublicPrivateSpinner;
 import com.charlesmadere.hummingbird.views.ModifyRatingSpinner;
 import com.charlesmadere.hummingbird.views.ModifyRewatchCountView;
@@ -50,6 +49,9 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
 
     @BindView(R.id.cbRewatching)
     CheckBox mRewatching;
+
+    @BindView(R.id.deleteLibraryEntryView)
+    DeleteLibraryEntryView mDeleteLibraryEntryView;
 
     @BindView(R.id.etPersonalNotes)
     EditText mPersonalNotes;
@@ -181,17 +183,7 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
 
     @OnClick(R.id.ibDelete)
     void onDeleteClick() {
-        new AlertDialog.Builder(getContext())
-                .setMessage(R.string.are_you_sure_you_want_to_remove_this_from_your_library)
-                .setNegativeButton(R.string.cancel, null)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(final DialogInterface dialog, final int which) {
-                        mDeleteListener.onDeleteLibraryEntry();
-                        dismiss();
-                    }
-                })
-                .show();
+        mDeleteLibraryEntryView.fadeIn();
     }
 
     @Override
@@ -265,6 +257,19 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
 
         if (mDeleteListener != null) {
             mDelete.setVisibility(View.VISIBLE);
+
+            mDeleteLibraryEntryView.setListeners(new DeleteLibraryEntryView.Listeners() {
+                @Override
+                public void onCancelClick(final DeleteLibraryEntryView v) {
+                    mDeleteLibraryEntryView.hide();
+                }
+
+                @Override
+                public void onDeleteClick(final DeleteLibraryEntryView v) {
+                    mDeleteListener.onDeleteLibraryEntry();
+                    dismiss();
+                }
+            });
         }
 
         if (mAnimeDigest == null) {
@@ -292,6 +297,11 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     public void onWatchCountChanged(final ModifyWatchCountView v) {
         mLibraryUpdate.setEpisodesWatched(v.getCount());
         update();
+    }
+
+    @Override
+    protected boolean startFullyExpanded() {
+        return true;
     }
 
     private void update() {

@@ -16,6 +16,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.GroupFragmentAdapter;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
+import com.charlesmadere.hummingbird.models.Group;
 import com.charlesmadere.hummingbird.models.GroupDigest;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
@@ -57,6 +58,10 @@ public class GroupActivity extends BaseDrawerActivity {
     @BindView(R.id.viewPager)
     ViewPager mViewPager;
 
+
+    public static Intent getLaunchIntent(final Context context, final Group group) {
+        return getLaunchIntent(context, group.getId(), group.getName());
+    }
 
     public static Intent getLaunchIntent(final Context context, final String groupId) {
         return getLaunchIntent(context, groupId, null);

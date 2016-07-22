@@ -11,10 +11,13 @@ import com.charlesmadere.hummingbird.fragments.MangaCharactersFragment;
 import com.charlesmadere.hummingbird.fragments.MangaDetailsFragment;
 import com.charlesmadere.hummingbird.models.MangaDigest;
 
+import java.util.ArrayList;
+
 public class MangaFragmentAdapter extends FragmentStatePagerAdapter {
 
-    private final MangaDigest mMangaDigest;
     private final Context mContext;
+    private final FragmentPage[] mFragmentPages;
+    private final MangaDigest mMangaDigest;
 
 
     public MangaFragmentAdapter(final FragmentActivity activity, final MangaDigest mangaDigest) {
@@ -26,28 +29,55 @@ public class MangaFragmentAdapter extends FragmentStatePagerAdapter {
         super(fm);
         mContext = context;
         mMangaDigest = mangaDigest;
+
+        final ArrayList<FragmentPage> fragmentPages = new ArrayList<>();
+        fragmentPages.add(new MangaDetailsFragmentPage());
+
+        if (mMangaDigest.hasCharacters()) {
+            fragmentPages.add(new MangaCharactersFragmentPage());
+        }
+
+        mFragmentPages = new FragmentPage[fragmentPages.size()];
+        fragmentPages.toArray(mFragmentPages);
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return mFragmentPages.length;
     }
 
     @Override
     public Fragment getItem(final int position) {
-        switch (position) {
-            case 0: return MangaDetailsFragment.create(mMangaDigest);
-            case 1: return MangaCharactersFragment.create(mMangaDigest.getCharacters());
-            default: throw new IllegalArgumentException("illegal position: " + position);
-        }
+        return mFragmentPages[position].getItem();
     }
 
     @Override
     public CharSequence getPageTitle(final int position) {
-        switch (position) {
-            case 0: return mContext.getText(R.string.details);
-            case 1: return mContext.getText(R.string.characters);
-            default: throw new IllegalArgumentException("illegal position: " + position);
+        return mFragmentPages[position].getPageTitle();
+    }
+
+
+    private class MangaCharactersFragmentPage implements FragmentPage {
+        @Override
+        public Fragment getItem() {
+            return MangaCharactersFragment.create(mMangaDigest.getCharacters());
+        }
+
+        @Override
+        public CharSequence getPageTitle() {
+            return mContext.getText(R.string.characters);
+        }
+    }
+
+    private class MangaDetailsFragmentPage implements FragmentPage {
+        @Override
+        public Fragment getItem() {
+            return MangaDetailsFragment.create(mMangaDigest);
+        }
+
+        @Override
+        public CharSequence getPageTitle() {
+            return mContext.getText(R.string.details);
         }
     }
 

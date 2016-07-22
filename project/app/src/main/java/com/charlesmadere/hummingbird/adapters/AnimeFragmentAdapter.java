@@ -15,13 +15,14 @@ import com.charlesmadere.hummingbird.fragments.AnimeGalleryFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeQuotesFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeReviewsFragment;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
-import com.charlesmadere.hummingbird.models.AnimeType;
+
+import java.util.ArrayList;
 
 public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
 
     private final AnimeDigest mAnimeDigest;
     private final Context mContext;
-    private final Impl mImpl;
+    private final FragmentPage[] mFragmentPages;
 
 
     public AnimeFragmentAdapter(final FragmentActivity activity, final AnimeDigest animeDigest) {
@@ -34,234 +35,134 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
         mContext = context;
         mAnimeDigest = animeDigest;
 
-        final AnimeDigest.Info info = mAnimeDigest.getInfo();
+        final ArrayList<FragmentPage> fragmentPages = new ArrayList<>();
+        fragmentPages.add(new AnimeDetailsFragmentPage());
 
-        if (info.getType() == AnimeType.MOVIE) {
-            if (info.hasFranchiseId()) {
-                mImpl = new MovieWithFranchiseImpl();
-            } else {
-                mImpl = new MovieImpl();
-            }
-        } else {
-            if (info.hasFranchiseId()) {
-                mImpl = new ShowWithFranchiseImpl();
-            } else {
-                mImpl = new ShowImpl();
-            }
+        if (mAnimeDigest.getInfo().hasScreencaps()) {
+            fragmentPages.add(new AnimeGalleryFragmentPage());
         }
-    }
 
-    private AnimeCastingsFragment getAnimeCastingsFragment() {
-        return AnimeCastingsFragment.create(mAnimeDigest.getCastings());
-    }
+        if (mAnimeDigest.hasReviews()) {
+            fragmentPages.add(new AnimeReviewsFragmentPage());
+        }
 
-    private CharSequence getAnimeCastingsTitle() {
-        return mContext.getText(R.string.casting);
-    }
+        if (mAnimeDigest.hasCastings()) {
+            fragmentPages.add(new AnimeCastingsFragmentPage());
+        }
 
-    private AnimeDetailsFragment getAnimeDetailsFragment() {
-        return AnimeDetailsFragment.create(mAnimeDigest);
-    }
+        if (mAnimeDigest.hasQuotes()) {
+            fragmentPages.add(new AnimeQuotesFragmentPage());
+        }
 
-    private CharSequence getAnimeDetailsTitle() {
-        return mContext.getText(R.string.details);
-    }
+        if (mAnimeDigest.hasEpisodes()) {
+            fragmentPages.add(new AnimeEpisodesFragmentPage());
+        }
 
-    private AnimeEpisodesFragment getAnimeEpisodesFragment() {
-        return AnimeEpisodesFragment.create(mAnimeDigest.getEpisodes());
-    }
+        if (mAnimeDigest.getInfo().hasFranchiseId()) {
+            fragmentPages.add(new AnimeFranchiseFragmentPage());
+        }
 
-    private CharSequence getAnimeEpisodesTitle() {
-        return mContext.getText(R.string.episodes);
-    }
-
-    private AnimeFranchiseFragment getAnimeFranchiseFragment() {
-        return AnimeFranchiseFragment.create(mAnimeDigest.getInfo().getFranchiseId());
-    }
-
-    private CharSequence getAnimeFranchiseTitle() {
-        return mContext.getText(R.string.franchise);
-    }
-
-    private AnimeGalleryFragment getAnimeGalleryFragment() {
-        return AnimeGalleryFragment.create(mAnimeDigest.getInfo());
-    }
-
-    private CharSequence getAnimeGalleryTitle() {
-        return mContext.getText(R.string.gallery);
-    }
-
-    private AnimeQuotesFragment getAnimeQuotesFragment() {
-        return AnimeQuotesFragment.create(mAnimeDigest.getQuotes());
-    }
-
-    private CharSequence getAnimeQuotesTitle() {
-        return mContext.getText(R.string.quotes);
-    }
-
-    private AnimeReviewsFragment getAnimeReviewsFragment() {
-        return AnimeReviewsFragment.create(mAnimeDigest.getReviews());
-    }
-
-    private CharSequence getAnimeReviewsTitle() {
-        return mContext.getText(R.string.reviews);
+        mFragmentPages = new FragmentPage[fragmentPages.size()];
+        fragmentPages.toArray(mFragmentPages);
     }
 
     @Override
     public int getCount() {
-        return mImpl.getCount();
+        return mFragmentPages.length;
     }
 
     @Override
     public Fragment getItem(final int position) {
-        return mImpl.getItem(position);
+        return mFragmentPages[position].getItem();
     }
 
     @Override
     public CharSequence getPageTitle(final int position) {
-        return mImpl.getPageTitle(position);
+        return mFragmentPages[position].getPageTitle();
     }
 
 
-    private interface Impl {
-        int getCount();
-        Fragment getItem(final int position);
-        CharSequence getPageTitle(final int position);
-    }
-
-
-    private class MovieImpl implements Impl {
+    private class AnimeCastingsFragmentPage implements FragmentPage {
         @Override
-        public int getCount() {
-            return 5;
+        public Fragment getItem() {
+            return AnimeCastingsFragment.create(mAnimeDigest.getCastings());
         }
 
         @Override
-        public Fragment getItem(final int position) {
-            switch (position) {
-                case 0: return getAnimeDetailsFragment();
-                case 1: return getAnimeGalleryFragment();
-                case 2: return getAnimeReviewsFragment();
-                case 3: return getAnimeCastingsFragment();
-                case 4: return getAnimeQuotesFragment();
-                default: throw new IllegalArgumentException("illegal position: " + position);
-            }
-        }
-
-        @Override
-        public CharSequence getPageTitle(final int position) {
-            switch (position) {
-                case 0: return getAnimeDetailsTitle();
-                case 1: return getAnimeGalleryTitle();
-                case 2: return getAnimeReviewsTitle();
-                case 3: return getAnimeCastingsTitle();
-                case 4: return getAnimeQuotesTitle();
-                default: throw new IllegalArgumentException("illegal position: " + position);
-            }
+        public CharSequence getPageTitle() {
+            return mContext.getText(R.string.casting);
         }
     }
 
-
-    private class MovieWithFranchiseImpl implements Impl {
+    private class AnimeDetailsFragmentPage implements FragmentPage {
         @Override
-        public int getCount() {
-            return 6;
+        public Fragment getItem() {
+            return AnimeDetailsFragment.create(mAnimeDigest);
         }
 
         @Override
-        public Fragment getItem(final int position) {
-            switch (position) {
-                case 0: return getAnimeDetailsFragment();
-                case 1: return getAnimeGalleryFragment();
-                case 2: return getAnimeReviewsFragment();
-                case 3: return getAnimeCastingsFragment();
-                case 4: return getAnimeQuotesFragment();
-                case 5: return getAnimeFranchiseFragment();
-                default: throw new IllegalArgumentException("illegal position: " + position);
-            }
-        }
-
-        @Override
-        public CharSequence getPageTitle(final int position) {
-            switch (position) {
-                case 0: return getAnimeDetailsTitle();
-                case 1: return getAnimeGalleryTitle();
-                case 2: return getAnimeReviewsTitle();
-                case 3: return getAnimeCastingsTitle();
-                case 4: return getAnimeQuotesTitle();
-                case 5: return getAnimeFranchiseTitle();
-                default: throw new IllegalArgumentException("illegal position: " + position);
-            }
+        public CharSequence getPageTitle() {
+            return mContext.getText(R.string.details);
         }
     }
 
-
-    private class ShowImpl implements Impl {
+    private class AnimeEpisodesFragmentPage implements FragmentPage {
         @Override
-        public int getCount() {
-            return 6;
+        public Fragment getItem() {
+            return AnimeEpisodesFragment.create(mAnimeDigest.getEpisodes());
         }
 
         @Override
-        public Fragment getItem(final int position) {
-            switch (position) {
-                case 0: return getAnimeDetailsFragment();
-                case 1: return getAnimeGalleryFragment();
-                case 2: return getAnimeReviewsFragment();
-                case 3: return getAnimeCastingsFragment();
-                case 4: return getAnimeQuotesFragment();
-                case 5: return getAnimeEpisodesFragment();
-                default: throw new IllegalArgumentException("illegal position: " + position);
-            }
-        }
-
-        @Override
-        public CharSequence getPageTitle(final int position) {
-            switch (position) {
-                case 0: return getAnimeDetailsTitle();
-                case 1: return getAnimeGalleryTitle();
-                case 2: return getAnimeReviewsTitle();
-                case 3: return getAnimeCastingsTitle();
-                case 4: return getAnimeQuotesTitle();
-                case 5: return getAnimeEpisodesTitle();
-                default: throw new IllegalArgumentException("illegal position: " + position);
-            }
+        public CharSequence getPageTitle() {
+            return mContext.getText(R.string.episodes);
         }
     }
 
-
-    private class ShowWithFranchiseImpl implements Impl {
+    private class AnimeFranchiseFragmentPage implements FragmentPage {
         @Override
-        public int getCount() {
-            return 7;
+        public Fragment getItem() {
+            return AnimeFranchiseFragment.create(mAnimeDigest.getInfo().getFranchiseId());
         }
 
         @Override
-        public Fragment getItem(final int position) {
-            switch (position) {
-                case 0: return getAnimeDetailsFragment();
-                case 1: return getAnimeGalleryFragment();
-                case 2: return getAnimeReviewsFragment();
-                case 3: return getAnimeCastingsFragment();
-                case 4: return getAnimeQuotesFragment();
-                case 5: return getAnimeEpisodesFragment();
-                case 6: return getAnimeFranchiseFragment();
-                default: throw new IllegalArgumentException("illegal position: " + position);
-            }
+        public CharSequence getPageTitle() {
+            return mContext.getText(R.string.franchise);
+        }
+    }
+
+    private class AnimeGalleryFragmentPage implements FragmentPage {
+        @Override
+        public Fragment getItem() {
+            return AnimeGalleryFragment.create(mAnimeDigest.getInfo());
         }
 
         @Override
-        public CharSequence getPageTitle(final int position) {
-            switch (position) {
-                case 0: return getAnimeDetailsTitle();
-                case 1: return getAnimeGalleryTitle();
-                case 2: return getAnimeReviewsTitle();
-                case 3: return getAnimeCastingsTitle();
-                case 4: return getAnimeQuotesTitle();
-                case 5: return getAnimeEpisodesTitle();
-                case 6: return getAnimeFranchiseTitle();
-                default: throw new IllegalArgumentException("illegal position: " + position);
-            }
+        public CharSequence getPageTitle() {
+            return mContext.getText(R.string.gallery);
+        }
+    }
+
+    private class AnimeQuotesFragmentPage implements FragmentPage {
+        @Override
+        public Fragment getItem() {
+            return AnimeQuotesFragment.create(mAnimeDigest.getQuotes());
+        }
+
+        @Override
+        public CharSequence getPageTitle() {
+            return mContext.getText(R.string.quotes);
+        }
+    }
+
+    private class AnimeReviewsFragmentPage implements FragmentPage {
+        @Override
+        public Fragment getItem() {
+            return AnimeReviewsFragment.create(mAnimeDigest.getReviews());
+        }
+
+        @Override
+        public CharSequence getPageTitle() {
+            return mContext.getText(R.string.reviews);
         }
     }
 
