@@ -78,7 +78,7 @@ public class MangaLibraryUpdate implements Parcelable {
                 mChaptersRead != mDefaults.getChaptersRead() ||
                 mReReadCount != mDefaults.getReReadCount() ||
                 mVolumesRead != mDefaults.getVolumesRead() ||
-                mRating != mDefaults.getRating() ||
+                !Rating.equals(mRating, mDefaults.getRating()) ||
                 mReadingStatus != mDefaults.getReadingStatus() ||
                 !TextUtils.equals(mNotes, mDefaults.getNotes());
     }
@@ -197,7 +197,7 @@ public class MangaLibraryUpdate implements Parcelable {
         if (mRating == null || mRating == Rating.UNRATED) {
             inner.add("rating", null);
         } else {
-            inner.addProperty("rating", mRating.mValue);
+            inner.addProperty("rating", mRating.getValue());
         }
 
         if (mReadingStatus == null) {

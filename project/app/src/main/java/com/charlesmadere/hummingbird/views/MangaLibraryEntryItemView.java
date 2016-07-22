@@ -144,7 +144,7 @@ public class MangaLibraryEntryItemView extends CardView implements AdapterView<M
 
         if (mLibraryEntry.hasRating()) {
             mRating.setText(R.string.rating, mNumberFormat.format(
-                    mLibraryEntry.getRating().mValue));
+                    mLibraryEntry.getRating().getValue()));
             mRating.setVisibility(VISIBLE);
         } else {
             mRating.setVisibility(GONE);

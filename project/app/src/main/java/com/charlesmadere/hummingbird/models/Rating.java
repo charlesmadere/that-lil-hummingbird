@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -49,13 +50,19 @@ public enum Rating implements Parcelable {
     @SerializedName("5")
     FIVE(5f);
 
-    private static final String TAG = "Rating";
+    private final float mValue;
 
-    public final float mValue;
+    public static boolean equals(@Nullable final Rating l, @Nullable final Rating r) {
+        return l == r || (l == null && r == UNRATED) || (l == UNRATED && r == null);
+    }
 
 
     Rating(final float value) {
         mValue = value;
+    }
+
+    public float getValue() {
+        return mValue;
     }
 
     @Override

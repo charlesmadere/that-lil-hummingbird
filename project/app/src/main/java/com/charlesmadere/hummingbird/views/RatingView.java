@@ -126,7 +126,7 @@ public class RatingView extends LinearLayout implements AdapterView<Rating> {
                 mNoRating.setVisibility(GONE);
             }
 
-            setContent(content.mValue);
+            setContent(content.getValue());
         }
     }
 

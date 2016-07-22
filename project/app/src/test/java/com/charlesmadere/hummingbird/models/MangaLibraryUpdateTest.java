@@ -90,7 +90,7 @@ public class MangaLibraryUpdateTest {
         mLibraryUpdate.setRating(mLibraryUpdate.getDefaults().getRating());
         assertFalse(mLibraryUpdate.containsModifications());
 
-        mLibraryUpdate.setRating(Rating.UNRATED);
+        mLibraryUpdate.setRating(Rating.THREE_POINT_FIVE);
         assertTrue(mLibraryUpdate.containsModifications());
     }
 

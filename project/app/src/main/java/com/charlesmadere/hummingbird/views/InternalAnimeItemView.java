@@ -139,8 +139,8 @@ public class InternalAnimeItemView extends LinearLayout {
         mProgress.setVisibility(VISIBLE);
 
         if (mLibraryEntry.hasRating()) {
-            mRating.setText(R.string.rating, mNumberFormat.format(
-                    mLibraryEntry.getRating().mValue));
+            mRating.setText(R.string.rating,
+                    mNumberFormat.format(mLibraryEntry.getRating().getValue()));
             mRating.setVisibility(VISIBLE);
         } else {
             mRating.setVisibility(GONE);

@@ -73,7 +73,7 @@ public class AnimeLibraryUpdate implements Parcelable {
                 mIsRewatching != mDefaults.isRewatching() ||
                 mEpisodesWatched != mDefaults.getEpisodesWatched() ||
                 mRewatchCount != mDefaults.getRewatchCount() ||
-                mRating != mDefaults.getRating() ||
+                !Rating.equals(mRating, mDefaults.getRating()) ||
                 !TextUtils.equals(mNotes, mDefaults.getNotes()) ||
                 mWatchingStatus != mDefaults.getWatchingStatus();
     }
@@ -179,7 +179,7 @@ public class AnimeLibraryUpdate implements Parcelable {
         if (mRating == null || mRating == Rating.UNRATED) {
             inner.add("rating", null);
         } else {
-            inner.addProperty("rating", mRating.mValue);
+            inner.addProperty("rating", mRating.getValue());
         }
 
         inner.addProperty("anime_id", mAnimeId);
