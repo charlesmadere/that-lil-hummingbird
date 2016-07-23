@@ -1,7 +1,6 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -56,7 +55,7 @@ public class UserResultItemView extends CardView implements AdapterView<SearchBu
     public void setContent(final SearchBundle.UserResult content) {
         mUserResult = content;
 
-        mAvatar.setImageURI(Uri.parse(content.getImage()));
+        mAvatar.setImageURI(content.getImage());
         mTitle.setText(content.getTitle());
 
         if (content.hasDescription()) {

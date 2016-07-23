@@ -1,7 +1,6 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -63,7 +62,7 @@ public class MangaResultItemView extends CardView implements AdapterView<SearchB
     public void setContent(final SearchBundle.MangaResult content) {
         mMangaResult = content;
 
-        mCover.setImageURI(Uri.parse(content.getImage()));
+        mCover.setImageURI(content.getImage());
         mTitle.setText(content.getTitle());
 
         if (content.hasDescription()) {
