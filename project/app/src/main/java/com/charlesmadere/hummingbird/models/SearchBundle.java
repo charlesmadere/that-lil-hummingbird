@@ -59,7 +59,11 @@ public class SearchBundle implements Parcelable {
             }
         }
 
-        return list;
+        if (list.isEmpty()) {
+            return null;
+        } else {
+            return list;
+        }
     }
 
     @Nullable
