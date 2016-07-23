@@ -96,6 +96,10 @@ public abstract class Preference<T> {
         }
     }
 
+    /**
+     * @return
+     * Returns true if there is an actual value written to SharedPreferences for this Preference
+     */
     protected final boolean contains() {
         return readSharedPreferences().contains(getKey());
     }
