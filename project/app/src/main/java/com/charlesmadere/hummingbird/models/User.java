@@ -18,6 +18,7 @@ import java.lang.reflect.Type;
 public class User implements Parcelable {
 
     private static final String AVATAR_TEMPLATE_STUB = "\\{size\\}";
+    private static final String AVATAR_TEMPLATE_MEDIUM = "medium";
     private static final String AVATAR_TEMPLATE_SMALL = "small";
     private static final String AVATAR_TEMPLATE_THUMB = "thumb";
     private static final String AVATAR_TEMPLATE_THUMB_SMALL = "thumb_small";
@@ -42,7 +43,12 @@ public class User implements Parcelable {
     }
 
     public String[] getAvatars() {
-        return new String[] { getAvatarThumb(), getAvatarThumbSmall(), getAvatarSmall() };
+        return new String[] { getAvatarThumb(), getAvatarThumbSmall(), getAvatarSmall(),
+                getAvatarMedium() };
+    }
+
+    public String getAvatarMedium() {
+        return mData.mAvatarTemplate.replaceFirst(AVATAR_TEMPLATE_STUB, AVATAR_TEMPLATE_MEDIUM);
     }
 
     public String getAvatarSmall() {
