@@ -11,6 +11,20 @@
         app:overlayImage="@drawable/image_overlay_bottom"
         app:placeholderImage="@drawable/image_placeholder"
         app:viewAspectRatio="3" />
+    <com.charlesmadere.hummingbird.views.TypefaceTextView
+        android:id="@+id/tvNumber"
+        android:layout_gravity="end"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/root_padding"
+        android:layout_marginTop="@dimen/root_padding_half"
+        android:layout_width="wrap_content"
+        android:shadowColor="@color/black"
+        android:shadowDy="2"
+        android:shadowRadius="4"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_xxlarge"
+        app:typeface="open_sans_light"
+        tools:text="12" />
     <LinearLayout
         android:layout_gravity="bottom"
         android:layout_height="wrap_content"
@@ -29,7 +43,7 @@
             tools:text="Naturals Election"
             style="@style/GroupTitle" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
-            android:id="@+id/tvGroupMembers"
+            android:id="@+id/tvSynopsis"
             android:maxLines="3"
             android:shadowColor="@color/black"
             android:shadowDy="2"
