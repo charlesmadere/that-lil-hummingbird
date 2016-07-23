@@ -170,11 +170,11 @@ public class Manga implements Parcelable {
     }
 
     public boolean hasPosterImage() {
-        return !TextUtils.isEmpty(mPosterImage);
+        return MiscUtils.isValidArtwork(mPosterImage);
     }
 
     public boolean hasPosterImageThumb() {
-        return !TextUtils.isEmpty(mPosterImageThumb);
+        return MiscUtils.isValidArtwork(mPosterImageThumb);
     }
 
     public boolean hasSynopsis() {

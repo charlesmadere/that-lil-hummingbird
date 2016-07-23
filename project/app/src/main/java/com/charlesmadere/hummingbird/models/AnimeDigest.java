@@ -850,12 +850,11 @@ public class AnimeDigest implements Parcelable {
         }
 
         public boolean hasPosterImage() {
-            return !TextUtils.isEmpty(mPosterImage) &&
-                    !"/assets/missing-anime-cover.jpg".equalsIgnoreCase(mPosterImage);
+            return MiscUtils.isValidArtwork(mPosterImage);
         }
 
         public boolean hasPosterImageThumb() {
-            return !TextUtils.isEmpty(mPosterImageThumb);
+            return MiscUtils.isValidArtwork(mPosterImageThumb);
         }
 
         public boolean hasReviewed() {
