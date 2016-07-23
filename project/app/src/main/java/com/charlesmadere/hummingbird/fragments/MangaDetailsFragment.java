@@ -1,7 +1,6 @@
 package com.charlesmadere.hummingbird.fragments;
 
 import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
