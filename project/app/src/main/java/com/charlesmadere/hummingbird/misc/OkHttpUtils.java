@@ -15,18 +15,8 @@ public final class OkHttpUtils {
     private static final long CACHE_MAX_SIZE = 1024L * 1024L * 8L; // 8 megabytes
 
     private static OkHttpClient sOkHttpClient;
-    private static PersistentCookieJar sCookieJar;
+    private static PersistentCookieJar sPersistentCookieJar;
 
-
-    public static synchronized PersistentCookieJar getCookieJar() {
-        if (sCookieJar == null) {
-            Timber.d(TAG, "creating PersistentCookieJar instance");
-            sCookieJar = new PersistentCookieJar(new SetCookieCache(),
-                    new SharedPrefsCookiePersistor(ThatLilHummingbird.get()));
-        }
-
-        return sCookieJar;
-    }
 
     public static synchronized OkHttpClient getOkHttpClient() {
         if (sOkHttpClient == null) {
@@ -37,12 +27,22 @@ public final class OkHttpUtils {
 
             sOkHttpClient = new OkHttpClient.Builder()
                     .cache(new Cache(ThatLilHummingbird.get().getCacheDir(), CACHE_MAX_SIZE))
-                    .cookieJar(getCookieJar())
+                    .cookieJar(getPersistentCookieJar())
                     .addInterceptor(interceptor)
                     .build();
         }
 
         return sOkHttpClient;
+    }
+
+    public static synchronized PersistentCookieJar getPersistentCookieJar() {
+        if (sPersistentCookieJar == null) {
+            Timber.d(TAG, "creating PersistentCookieJar instance");
+            sPersistentCookieJar = new PersistentCookieJar(new SetCookieCache(),
+                    new SharedPrefsCookiePersistor(ThatLilHummingbird.get()));
+        }
+
+        return sPersistentCookieJar;
     }
 
 }
