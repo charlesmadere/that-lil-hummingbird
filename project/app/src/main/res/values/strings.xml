@@ -327,6 +327,7 @@
     <string name="username">Username</string>
     <string name="users">Users</string>
     <string name="user_activity">User Activity</string>
+    <string name="user_has_no_groups">User has no groups</string>
     <string name="user_has_no_reviews">User has no reviews</string>
     <string name="user_reviews">User reviews</string>
     <string name="verdict">Verdict</string>

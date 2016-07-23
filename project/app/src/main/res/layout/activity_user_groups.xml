@@ -33,7 +33,7 @@
                     android:id="@+id/llEmpty"
                     style="@style/ListMessageContainer">
                     <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:text="@string/no_groups"
+                        android:text="@string/user_has_no_groups"
                         style="@style/ListMessageTitle" />
                     <com.charlesmadere.hummingbird.views.TypefaceTextView
                         android:text="@string/pull_to_refresh_to_check_again"
