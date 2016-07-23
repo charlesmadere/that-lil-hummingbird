@@ -23,7 +23,7 @@
         android:shadowRadius="4"
         android:textColor="@color/white"
         android:textSize="@dimen/text_xxlarge"
-        app:typeface="open_sans_light"
+        app:typeface="open_sans_extra_bold"
         tools:text="12" />
     <LinearLayout
         android:layout_gravity="bottom"
