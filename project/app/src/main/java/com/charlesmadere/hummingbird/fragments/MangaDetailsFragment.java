@@ -106,7 +106,7 @@ public class MangaDetailsFragment extends BaseFragment {
         final Manga manga = mMangaDigest.getManga();
 
         if (manga.hasPosterImage()) {
-            mCover.setImageURI(Uri.parse(manga.getPosterImage()));
+            mCover.setImageURI(manga.getPosterImage());
             mCoverContainer.setVisibility(View.VISIBLE);
         }
 

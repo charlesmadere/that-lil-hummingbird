@@ -198,7 +198,7 @@ public class AnimeDetailsFragment extends BaseFragment {
         final NumberFormat numberFormat = NumberFormat.getInstance();
 
         if (info.hasPosterImage()) {
-            mPoster.setImageURI(Uri.parse(info.getPosterImage()));
+            mPoster.setImageURI(info.getPosterImage());
             mPosterContainer.setVisibility(View.VISIBLE);
         }
 
