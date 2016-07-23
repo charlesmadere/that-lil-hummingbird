@@ -1,8 +1,11 @@
 package com.charlesmadere.hummingbird.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
+import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
@@ -15,7 +18,6 @@ import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.SimpleProgressView;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 
 import butterknife.BindView;
 
@@ -27,11 +29,22 @@ public class DeepLinkActivity extends BaseActivity {
     SimpleProgressView mSimpleProgressView;
 
 
-    private void followDeepLink() {
-        final ArrayList<Intent> activityStack = DeepLinkUtils.buildActivityStack(this,
-                getIntent());
+    private void fetchCurrentUser() {
+        mSimpleProgressView.fadeIn();
+        Api.getCurrentUser(new GetCurrentUserListener(this));
+    }
 
-        // TODO
+    private void followDeepLink() {
+        final Intent[] activityStack = DeepLinkUtils.buildActivityStack(this);
+
+        if (activityStack == null || activityStack.length == 0) {
+            Toast.makeText(this, R.string.deep_link_error, Toast.LENGTH_LONG).show();
+            startActivity(HomeActivity.getLaunchIntent(this));
+        } else {
+            startActivities(activityStack);
+        }
+
+        finish();
     }
 
     @Override
@@ -49,8 +62,7 @@ public class DeepLinkActivity extends BaseActivity {
             if (CurrentUser.exists()) {
                 followDeepLink();
             } else {
-                mSimpleProgressView.show();
-                Api.getCurrentUser(new GetCurrentUserListener(this));
+                fetchCurrentUser();
             }
         } else {
             startActivity(LoginActivity.getLaunchIntent(this));
@@ -59,7 +71,29 @@ public class DeepLinkActivity extends BaseActivity {
     }
 
     private void showError() {
-        // TODO
+        mSimpleProgressView.fadeOut();
+
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.error_loading_your_profile_check_network_connection)
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        finish();
+                    }
+                })
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(final DialogInterface dialog) {
+                        finish();
+                    }
+                })
+                .setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        fetchCurrentUser();
+                    }
+                })
+                .show();
     }
 
 

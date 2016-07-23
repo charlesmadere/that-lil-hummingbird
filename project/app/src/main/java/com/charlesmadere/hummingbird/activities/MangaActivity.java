@@ -185,15 +185,15 @@ public class MangaActivity extends BaseDrawerActivity implements
 
         new AlertDialog.Builder(this)
                 .setMessage(R.string.error_loading_manga)
-                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(final DialogInterface dialog) {
-                        finish();
-                    }
-                })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
+                        finish();
+                    }
+                })
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(final DialogInterface dialog) {
                         finish();
                     }
                 })
