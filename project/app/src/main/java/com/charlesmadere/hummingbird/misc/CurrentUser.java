@@ -40,7 +40,7 @@ public final class CurrentUser {
 
     public static synchronized void signOut() {
         Timber.d(TAG, "current user is signing out");
-        OkHttpUtils.getCookieJar().clear();
+        OkHttpUtils.getPersistentCookieJar().clear();
         Preferences.eraseAll();
         sCurrentUserDigest = null;
 
