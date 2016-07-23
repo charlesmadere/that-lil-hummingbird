@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -78,7 +79,7 @@ public class LoginActivity extends BaseActivity {
         if (activityStack == null || activityStack.length == 0) {
             startActivity(HomeActivity.getLaunchIntent(this));
         } else {
-            startActivities(activityStack);
+            ContextCompat.startActivities(this, activityStack);
         }
 
         finish();
