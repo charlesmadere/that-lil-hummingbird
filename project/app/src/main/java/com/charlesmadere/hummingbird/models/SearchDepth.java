@@ -24,8 +24,7 @@ public enum SearchDepth implements Parcelable {
     public static final Creator<SearchDepth> CREATOR = new Creator<SearchDepth>() {
         @Override
         public SearchDepth createFromParcel(final Parcel source) {
-            final int ordinal = source.readInt();
-            return values()[ordinal];
+            return values()[source.readInt()];
         }
 
         @Override

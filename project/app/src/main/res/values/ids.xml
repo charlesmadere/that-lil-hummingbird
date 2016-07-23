@@ -4,7 +4,6 @@
     <item name="appBarLayout" type="id" />
     <item name="collapsingToolbarLayout" type="id" />
     <item name="coordinatorLayout" type="id" />
-    <item name="deleteLibraryEntryView" type="id" />
     <item name="drawerLayout" type="id" />
     <item name="floatingActionButton" type="id" />
     <item name="likeTextView" type="id" />

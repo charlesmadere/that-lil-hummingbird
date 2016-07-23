@@ -97,6 +97,21 @@ public class MiscUtilsTest {
     }
 
     @Test
+    public void testIsValidArtwork() throws Exception {
+        assertFalse(MiscUtils.isValidArtwork(null));
+        assertFalse(MiscUtils.isValidArtwork(""));
+        assertFalse(MiscUtils.isValidArtwork(" "));
+        assertFalse(MiscUtils.isValidArtwork("  "));
+
+        assertTrue(MiscUtils.isValidArtwork("Hello, World!"));
+        assertTrue(MiscUtils.isValidArtwork("http://www.google.com/"));
+
+        for (final String missingArtwork : Constants.MISSING_ARTWORK) {
+            assertFalse(MiscUtils.isValidArtwork(missingArtwork));
+        }
+    }
+
+    @Test
     public void testToArrayList() throws Exception {
         assertNull(MiscUtils.toArrayList(null));
         assertNotNull(MiscUtils.toArrayList(Collections.EMPTY_LIST));

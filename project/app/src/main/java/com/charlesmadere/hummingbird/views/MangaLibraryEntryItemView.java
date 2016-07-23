@@ -99,7 +99,7 @@ public class MangaLibraryEntryItemView extends CardView implements AdapterView<M
         mLibraryEntry = content;
         final Manga manga = mLibraryEntry.getManga();
 
-        mCover.setImageURI(manga.getCoverImage());
+        mCover.setImageURI(manga.getPosterImage());
         mTitle.setText(manga.getTitle());
 
         if (manga.hasType()) {

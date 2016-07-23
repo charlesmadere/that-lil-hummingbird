@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -108,7 +109,7 @@ public class Group implements Parcelable {
     }
 
     public boolean hasAvatar() {
-        return !TextUtils.isEmpty(mAvatarUrl);
+        return MiscUtils.isValidArtwork(mAvatarUrl);
     }
 
     public boolean hasBio() {
@@ -116,7 +117,7 @@ public class Group implements Parcelable {
     }
 
     public boolean hasCoverImage() {
-        return !TextUtils.isEmpty(mCoverImageUrl);
+        return MiscUtils.isValidArtwork(mCoverImageUrl);
     }
 
     @Override

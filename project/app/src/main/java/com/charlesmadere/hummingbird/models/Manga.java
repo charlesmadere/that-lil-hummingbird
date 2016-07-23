@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
@@ -148,7 +149,7 @@ public class Manga implements Parcelable {
     }
 
     public boolean hasCoverImage() {
-        return !TextUtils.isEmpty(mCoverImage);
+        return MiscUtils.isValidArtwork(mCoverImage);
     }
 
     public boolean hasCoverImageTopOffset() {

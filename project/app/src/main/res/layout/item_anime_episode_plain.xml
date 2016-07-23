@@ -5,11 +5,7 @@
     style="@style/CardItem">
     <RelativeLayout
         android:layout_height="match_parent"
-        android:layout_width="wrap_content"
-        android:minHeight="@dimen/list_item_height">
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/sdvThumbnail"
-            style="@style/AnimePoster.Small" />
+        android:layout_width="wrap_content">
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvNumber"
             android:layout_alignParentEnd="true"
@@ -20,17 +16,14 @@
             tools:text="12" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvTitle"
+            android:layout_alignParentStart="true"
             android:layout_marginEnd="@dimen/root_padding"
-            android:layout_marginStart="@dimen/root_padding"
-            android:layout_toEndOf="@id/sdvThumbnail"
             android:layout_toStartOf="@id/tvNumber"
             tools:text="Naturals Election"
             style="@style/AnimeTitle" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvSynopsis"
             android:layout_below="@id/tvTitle"
-            android:layout_marginEnd="@dimen/root_padding"
-            android:layout_marginStart="@dimen/root_padding"
             android:layout_marginTop="@dimen/root_padding_half"
             android:layout_toEndOf="@id/sdvThumbnail"
             android:layout_toStartOf="@id/tvNumber"

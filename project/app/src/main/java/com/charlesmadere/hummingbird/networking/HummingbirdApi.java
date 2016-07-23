@@ -98,7 +98,7 @@ public interface HummingbirdApi {
             @Query("status") String readingStatusLibraryUpdateValue);
 
     @GET("stories")
-    Call<Feed> getNewsFeed(@Query("news_feed") Boolean newsFeed, @Query("page") Integer page);
+    Call<Feed> getNewsFeed(@Query("news_feed") boolean newsFeed, @Query("page") Integer page);
 
     @Headers(ACCEPT_JSON_MIMETYPE)
     @GET("notifications")

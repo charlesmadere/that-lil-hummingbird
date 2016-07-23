@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.views;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -24,8 +25,9 @@ public class AnimeEpisodeItemView extends CardView implements AdapterView<AnimeD
     private AnimeDigest.Episode mEpisode;
     private NumberFormat mNumberFormat;
 
-    @BindView(R.id.sdvThumbnail)
-    SimpleDraweeView mThumbnail;
+    @Nullable
+    @BindView(R.id.sdvBackground)
+    SimpleDraweeView mBackground;
 
     @BindView(R.id.tvNumber)
     TextView mNumber;
@@ -76,7 +78,10 @@ public class AnimeEpisodeItemView extends CardView implements AdapterView<AnimeD
     public void setContent(final AnimeDigest.Episode content) {
         mEpisode = content;
 
-        mThumbnail.setImageURI(mEpisode.hasThumbnail() ? mEpisode.getThumbnail() : null);
+        if (mBackground != null) {
+            mBackground.setImageURI(mEpisode.hasThumbnail() ? mEpisode.getThumbnail() : null);
+        }
+
         mNumber.setText(mNumberFormat.format(mEpisode.getNumber()));
         mTitle.setText(mEpisode.getTitle());
 

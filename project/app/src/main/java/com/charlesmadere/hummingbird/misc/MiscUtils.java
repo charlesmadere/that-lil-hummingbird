@@ -238,6 +238,20 @@ public final class MiscUtils {
         }
     }
 
+    public static boolean isValidArtwork(final String url) {
+        if (TextUtils.isEmpty(url) || TextUtils.getTrimmedLength(url) == 0) {
+            return false;
+        }
+
+        for (final String missingArtwork : Constants.MISSING_ARTWORK) {
+            if (missingArtwork.equalsIgnoreCase(url)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public static void openKeyboard(final Context context, final View view) {
         view.requestFocus();
         final InputMethodManager imm = (InputMethodManager) context.getSystemService(

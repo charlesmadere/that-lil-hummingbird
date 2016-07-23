@@ -50,6 +50,7 @@ public class GroupItemView extends CardView implements AdapterView<Group>, View.
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
+        setOnClickListener(this);
         mNumberFormat = NumberFormat.getInstance();
     }
 

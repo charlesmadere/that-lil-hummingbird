@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -124,7 +125,7 @@ public class User implements Parcelable {
     }
 
     public boolean hasCoverImage() {
-        return !TextUtils.isEmpty(mData.mCoverImageUrl);
+        return MiscUtils.isValidArtwork(mData.mCoverImageUrl);
     }
 
     @Override

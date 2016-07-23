@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.charlesmadere.hummingbird.views.GroupItemView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<com.charlesmadere.hummingbird.views.AnimeEpisodeItemView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/CardItem.NoPadding">
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/sdvBackground"
@@ -26,16 +26,16 @@
             android:shadowDy="2"
             android:shadowRadius="4"
             android:textColor="@color/white"
-            tools:text="SOS Brigade"
+            tools:text="Naturals Election"
             style="@style/GroupTitle" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvGroupMembers"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:maxLines="3"
             android:shadowColor="@color/black"
             android:shadowDy="2"
             android:shadowRadius="4"
             android:textColor="@color/white"
-            tools:text="319 members" />
+            tools:text="It is mid-December, and SOS Brigade chief Haruhi Suzumiya announces that the Brigade is going to hold a Christmas party in their clubroom, with Japanese hotpot for dinner."
+            style="@style/AnimeSynopsis.Limited" />
     </LinearLayout>
-</com.charlesmadere.hummingbird.views.GroupItemView>
+</com.charlesmadere.hummingbird.views.AnimeEpisodeItemView>

@@ -116,6 +116,7 @@ public class SearchBundle implements Parcelable {
         @SerializedName("title")
         private String mTitle;
 
+
         public ArrayList<Badge> getBadges() {
             return mBadges;
         }
@@ -276,6 +277,7 @@ public class SearchBundle implements Parcelable {
             @SerializedName("user")
             USER(R.string.users);
 
+            @StringRes
             private final int mTextResId;
 
             public static Type from(final String type) {
@@ -320,8 +322,7 @@ public class SearchBundle implements Parcelable {
             public static final Creator<Type> CREATOR = new Creator<Type>() {
                 @Override
                 public Type createFromParcel(final Parcel source) {
-                    final int ordinal = source.readInt();
-                    return values()[ordinal];
+                    return values()[source.readInt()];
                 }
 
                 @Override

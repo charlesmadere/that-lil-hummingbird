@@ -154,12 +154,13 @@ public class ModifyNumberView extends LinearLayout {
         mTitle.setText(R.string.volumes_read);
     }
 
-    public void setForWatched(final AnimeLibraryUpdate libraryUpdate, final AnimeDigest digest) {
+    public void setForWatchedCount(final AnimeLibraryUpdate libraryUpdate,
+            final AnimeDigest digest) {
         setContent(libraryUpdate.getEpisodesWatched(), digest.getInfo().getEpisodeCount());
         mTitle.setText(R.string.watched);
     }
 
-    public void setForWatched(final AnimeLibraryUpdate libraryUpdate,
+    public void setForWatchedCount(final AnimeLibraryUpdate libraryUpdate,
             final AnimeLibraryEntry libraryEntry) {
         setContent(libraryUpdate.getEpisodesWatched(), libraryEntry.getAnime().getEpisodeCount());
         mTitle.setText(R.string.watched);

@@ -13,7 +13,11 @@ public class AnimeEpisodesAdapter extends BaseAdapter<AnimeDigest.Episode> {
 
     @Override
     public int getItemViewType(final int position) {
-        return R.layout.item_anime_episode;
+        if (getItem(position).hasThumbnail()) {
+            return R.layout.item_anime_episode_artsy;
+        } else {
+            return R.layout.item_anime_episode_plain;
+        }
     }
 
 }

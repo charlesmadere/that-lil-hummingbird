@@ -1,143 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="wrap_content"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:orientation="vertical">
     <LinearLayout
-        android:id="@+id/llContent"
+        android:orientation="horizontal"
+        style="@style/Toolbar">
+        <ImageButton
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/close"
+            android:id="@+id/ibClose"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:paddingEnd="@dimen/root_padding"
+            android:paddingStart="@dimen/root_padding"
+            android:src="@drawable/ic_close_white_24dp" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:id="@+id/tvTitle"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/root_padding_half"
+            android:layout_marginStart="@dimen/root_padding_half"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:maxLines="1"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="@dimen/text_xxlarge"
+            app:typeface="open_sans_semibold"
+            tools:text="Squid Girl" />
+        <ImageButton
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/remove_from_library"
+            android:id="@+id/ibDelete"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:paddingEnd="@dimen/root_padding"
+            android:paddingStart="@dimen/root_padding"
+            android:src="@drawable/ic_delete_white_24dp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+        <ImageButton
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/save"
+            android:id="@+id/ibSave"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:paddingEnd="@dimen/root_padding"
+            android:paddingStart="@dimen/root_padding"
+            android:src="@drawable/ic_save" />
+    </LinearLayout>
+    <android.support.v4.widget.NestedScrollView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:orientation="vertical">
+        android:overScrollMode="never"
+        android:scrollbars="vertical">
         <LinearLayout
-            android:orientation="horizontal"
-            style="@style/Toolbar">
-            <ImageButton
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/close"
-                android:id="@+id/ibClose"
-                android:layout_height="match_parent"
-                android:layout_width="wrap_content"
-                android:paddingEnd="@dimen/root_padding"
-                android:paddingStart="@dimen/root_padding"
-                android:src="@drawable/ic_close_white_24dp" />
-            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:id="@+id/tvTitle"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/root_padding_half"
-                android:layout_marginStart="@dimen/root_padding_half"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:maxLines="1"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textSize="@dimen/text_xxlarge"
-                app:typeface="open_sans_semibold"
-                tools:text="Squid Girl" />
-            <ImageButton
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/remove_from_library"
-                android:id="@+id/ibDelete"
-                android:layout_height="match_parent"
-                android:layout_width="wrap_content"
-                android:paddingEnd="@dimen/root_padding"
-                android:paddingStart="@dimen/root_padding"
-                android:src="@drawable/ic_delete_white_24dp"
-                android:visibility="gone"
-                tools:visibility="visible" />
-            <ImageButton
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/save"
-                android:id="@+id/ibSave"
-                android:layout_height="match_parent"
-                android:layout_width="wrap_content"
-                android:paddingEnd="@dimen/root_padding"
-                android:paddingStart="@dimen/root_padding"
-                android:src="@drawable/ic_save" />
-        </LinearLayout>
-        <android.support.v4.widget.NestedScrollView
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:overScrollMode="never"
-            android:scrollbars="vertical">
+            android:orientation="vertical">
+            <include
+                android:id="@+id/mnvWatchCount"
+                layout="@layout/modify_number_view" />
+            <com.charlesmadere.hummingbird.views.ModifyWatchingStatusSpinner
+                android:id="@+id/modifyWatchingStatusSpinner"
+                android:layout_height="@dimen/list_item_height"
+                android:layout_marginEnd="@dimen/root_padding"
+                android:layout_width="match_parent"
+                tools:ignore="RtlSymmetry" />
+            <com.charlesmadere.hummingbird.views.ModifyPublicPrivateSpinner
+                android:id="@+id/modifyPublicPrivateSpinner"
+                android:layout_height="@dimen/list_item_height"
+                android:layout_marginEnd="@dimen/root_padding"
+                android:layout_width="match_parent"
+                tools:ignore="RtlSymmetry" />
+            <com.charlesmadere.hummingbird.views.ModifyRatingSpinner
+                android:id="@+id/modifyRatingSpinner"
+                android:layout_height="@dimen/list_item_height"
+                android:layout_marginEnd="@dimen/root_padding"
+                android:layout_width="match_parent"
+                tools:ignore="RtlSymmetry" />
             <LinearLayout
+                android:background="?attr/selectableItemBackground"
+                android:id="@+id/llRewatching"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:orientation="vertical">
-                <include
-                    layout="@layout/modify_watch_count_view" />
-                <com.charlesmadere.hummingbird.views.ModifyWatchingStatusSpinner
-                    android:id="@+id/modifyWatchingStatusSpinner"
-                    android:layout_height="@dimen/list_item_height"
-                    android:layout_marginEnd="@dimen/root_padding"
-                    android:layout_width="match_parent"
-                    tools:ignore="RtlSymmetry" />
-                <com.charlesmadere.hummingbird.views.ModifyPublicPrivateSpinner
-                    android:id="@+id/modifyPublicPrivateSpinner"
-                    android:layout_height="@dimen/list_item_height"
-                    android:layout_marginEnd="@dimen/root_padding"
-                    android:layout_width="match_parent"
-                    tools:ignore="RtlSymmetry" />
-                <com.charlesmadere.hummingbird.views.ModifyRatingSpinner
-                    android:id="@+id/modifyRatingSpinner"
-                    android:layout_height="@dimen/list_item_height"
-                    android:layout_marginEnd="@dimen/root_padding"
-                    android:layout_width="match_parent"
-                    tools:ignore="RtlSymmetry" />
-                <LinearLayout
-                    android:background="?attr/selectableItemBackground"
-                    android:id="@+id/llRewatching"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/root_padding_half"
+                android:paddingEnd="@dimen/root_padding"
+                android:paddingStart="@dimen/root_padding"
+                android:paddingTop="@dimen/root_padding_half">
+                <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:paddingBottom="@dimen/root_padding_half"
-                    android:paddingEnd="@dimen/root_padding"
-                    android:paddingStart="@dimen/root_padding"
-                    android:paddingTop="@dimen/root_padding_half">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:text="@string/rewatching"
-                        android:textColor="?android:attr/textColorPrimary"
-                        android:textSize="@dimen/text_large" />
-                    <CheckBox
-                        android:background="@null"
-                        android:clickable="false"
-                        android:id="@+id/cbRewatching"
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content" />
-                </LinearLayout>
-                <include
-                    layout="@layout/modify_rewatch_count_view" />
-                <android.support.v4.widget.Space
-                    android:layout_height="@dimen/root_padding"
-                    android:layout_width="match_parent" />
-                <android.support.design.widget.TextInputLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:text="@string/rewatching"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="@dimen/text_large" />
+                <CheckBox
+                    android:background="@null"
+                    android:clickable="false"
+                    android:id="@+id/cbRewatching"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/root_padding"
-                    android:layout_marginEnd="@dimen/root_padding_half"
-                    android:layout_marginStart="@dimen/root_padding_half"
-                    android:layout_width="match_parent">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextInputEditText
-                        android:hint="@string/personal_notes"
-                        android:id="@+id/etPersonalNotes"
-                        android:imeOptions="actionDone"
-                        android:inputType="textCapSentences|textMultiLine"
-                        android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
-                        android:paddingEnd="@dimen/root_padding_half"
-                        android:paddingStart="@dimen/root_padding_half"
-                        android:maxLines="5" />
-                </android.support.design.widget.TextInputLayout>
+                    android:layout_width="wrap_content" />
             </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
-    </LinearLayout>
-    <com.charlesmadere.hummingbird.views.DeleteLibraryEntryView
-        android:layout_alignBottom="@id/llContent"
-        android:layout_alignEnd="@id/llContent"
-        android:layout_alignStart="@id/llContent"
-        android:layout_alignTop="@id/llContent"
-        style="@style/DeleteLibraryEntryView" />
-</RelativeLayout>
+            <include
+                android:id="@+id/mnvRewatchCount"
+                layout="@layout/modify_number_view" />
+            <android.support.v4.widget.Space
+                android:layout_height="@dimen/root_padding"
+                android:layout_width="match_parent" />
+            <android.support.design.widget.TextInputLayout
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/root_padding"
+                android:layout_marginEnd="@dimen/root_padding_half"
+                android:layout_marginStart="@dimen/root_padding_half"
+                android:layout_width="match_parent">
+                <com.charlesmadere.hummingbird.views.TypefaceTextInputEditText
+                    android:hint="@string/personal_notes"
+                    android:id="@+id/etPersonalNotes"
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:paddingEnd="@dimen/root_padding_half"
+                    android:paddingStart="@dimen/root_padding_half"
+                    android:maxLines="5" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

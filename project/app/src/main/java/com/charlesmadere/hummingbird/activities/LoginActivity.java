@@ -210,33 +210,26 @@ public class LoginActivity extends BaseActivity {
         // https://hummingbird.me/anime/rwby-ii
         if (ANIME.equalsIgnoreCase(paths[0])) {
             buildAnimeTaskStack(taskStack, paths);
-            taskStack.startActivities();
-            return true;
         }
 
         // https://hummingbird.me/groups/sos-brigade
         else if (GROUPS.equalsIgnoreCase(paths[0])) {
             buildGroupsTaskStack(taskStack, paths);
-            return true;
         }
 
         // https://hummingbird.me/manga/rwby
         else if (MANGA.equalsIgnoreCase(paths[0])) {
             buildMangaTaskStack(taskStack, paths);
-            return true;
         }
 
         // https://hummingbird.me/notifications
         else if (NOTIFICATIONS.equalsIgnoreCase(paths[0])) {
             buildNotificationsTaskStack(taskStack);
-            return true;
         }
 
         // https://hummingbird.me/users/ThatLilChestnut
         else if (USERS.equalsIgnoreCase(paths[0])) {
             buildUserTaskStack(taskStack, paths);
-            taskStack.startActivities();
-            return true;
         }
 
         // TODO comments

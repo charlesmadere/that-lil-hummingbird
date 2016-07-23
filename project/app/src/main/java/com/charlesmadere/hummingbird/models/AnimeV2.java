@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.google.gson.annotations.SerializedName;
 
@@ -159,11 +160,11 @@ public class AnimeV2 extends AbsAnime implements Parcelable {
     }
 
     public boolean hasPosterImage() {
-        return !TextUtils.isEmpty(mPosterImage);
+        return MiscUtils.isValidArtwork(mPosterImage);
     }
 
     public boolean hasPosterImageThumb() {
-        return !TextUtils.isEmpty(mPosterImageThumb);
+        return MiscUtils.isValidArtwork(mPosterImageThumb);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.networking;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
@@ -593,7 +594,7 @@ public final class Api {
     public static void getNewsFeed(@Nullable final Feed feed, final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        HUMMINGBIRD.getNewsFeed(Boolean.TRUE, page).enqueue(new Callback<Feed>() {
+        HUMMINGBIRD.getNewsFeed(true, page).enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
@@ -965,7 +966,9 @@ public final class Api {
             final ResponseBody errorBody = response.errorBody();
             errorInfo = converter.convert(errorBody);
 
-            if (errorInfo != null) {
+            if (errorInfo == null || TextUtils.isEmpty(errorInfo.getError())) {
+                Timber.e(TAG, "retrieved error info that was null / empty");
+            } else {
                 Timber.e(TAG, "retrieved error info: \"" + errorInfo.getError() + '"');
             }
         } catch (final Exception e) {

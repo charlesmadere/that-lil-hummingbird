@@ -2,8 +2,10 @@ package com.charlesmadere.hummingbird.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +20,9 @@ import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
-import com.charlesmadere.hummingbird.views.DeleteLibraryEntryView;
+import com.charlesmadere.hummingbird.views.ModifyNumberView;
 import com.charlesmadere.hummingbird.views.ModifyPublicPrivateSpinner;
 import com.charlesmadere.hummingbird.views.ModifyRatingSpinner;
-import com.charlesmadere.hummingbird.views.ModifyRewatchCountView;
-import com.charlesmadere.hummingbird.views.ModifyWatchCountView;
 import com.charlesmadere.hummingbird.views.ModifyWatchingStatusSpinner;
 
 import butterknife.BindView;
@@ -32,8 +32,6 @@ import butterknife.OnTextChanged;
 public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment implements
         ModifyPublicPrivateSpinner.OnItemSelectedListener,
         ModifyRatingSpinner.OnItemSelectedListener,
-        ModifyRewatchCountView.OnRewatchCountChangedListener,
-        ModifyWatchCountView.OnWatchCountChangedListener,
         ModifyWatchingStatusSpinner.OnItemSelectedListener {
 
     public static final String TAG = "AnimeLibraryUpdateFragment";
@@ -50,9 +48,6 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     @BindView(R.id.cbRewatching)
     CheckBox mRewatching;
 
-    @BindView(R.id.deleteLibraryEntryView)
-    DeleteLibraryEntryView mDeleteLibraryEntryView;
-
     @BindView(R.id.etPersonalNotes)
     EditText mPersonalNotes;
 
@@ -62,17 +57,17 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     @BindView(R.id.ibSave)
     ImageButton mSave;
 
+    @BindView(R.id.mnvRewatchCount)
+    ModifyNumberView mRewatchCount;
+
+    @BindView(R.id.mnvWatchCount)
+    ModifyNumberView mWatchCount;
+
     @BindView(R.id.modifyPublicPrivateSpinner)
     ModifyPublicPrivateSpinner mModifyPublicPrivateSpinner;
 
     @BindView(R.id.modifyRatingSpinner)
     ModifyRatingSpinner mModifyRatingSpinner;
-
-    @BindView(R.id.modifyRewatchCountView)
-    ModifyRewatchCountView mModifyRewatchCountView;
-
-    @BindView(R.id.modifyWatchCountView)
-    ModifyWatchCountView mModifyWatchCountView;
 
     @BindView(R.id.modifyWatchingStatusSpinner)
     ModifyWatchingStatusSpinner mModifyWatchingStatusSpinner;
@@ -183,7 +178,17 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
 
     @OnClick(R.id.ibDelete)
     void onDeleteClick() {
-        mDeleteLibraryEntryView.fadeIn();
+        new AlertDialog.Builder(getContext())
+                .setMessage(R.string.are_you_sure_you_want_to_remove_this_from_your_library)
+                .setNegativeButton(R.string.cancel, null)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        mDeleteListener.onDeleteLibraryEntry();
+                        dismiss();
+                    }
+                })
+                .show();
     }
 
     @Override
@@ -223,12 +228,6 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         update();
     }
 
-    @Override
-    public void onRewatchCountChanged(final ModifyRewatchCountView v) {
-        mLibraryUpdate.setRewatchCount(v.getCount());
-        update();
-    }
-
     @OnClick(R.id.llRewatching)
     void onRewatchingClick() {
         mRewatching.toggle();
@@ -257,46 +256,41 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
 
         if (mDeleteListener != null) {
             mDelete.setVisibility(View.VISIBLE);
-
-            mDeleteLibraryEntryView.setListeners(new DeleteLibraryEntryView.Listeners() {
-                @Override
-                public void onCancelClick(final DeleteLibraryEntryView v) {
-                    mDeleteLibraryEntryView.hide();
-                }
-
-                @Override
-                public void onDeleteClick(final DeleteLibraryEntryView v) {
-                    mDeleteListener.onDeleteLibraryEntry();
-                    dismiss();
-                }
-            });
         }
 
         if (mAnimeDigest == null) {
-            mModifyWatchCountView.setContent(mLibraryUpdate, mLibraryEntry);
+            mWatchCount.setForWatchedCount(mLibraryUpdate, mLibraryEntry);
         } else {
-            mModifyWatchCountView.setContent(mLibraryUpdate, mAnimeDigest);
+            mWatchCount.setForWatchedCount(mLibraryUpdate, mAnimeDigest);
         }
 
         mModifyWatchingStatusSpinner.setContent(mLibraryUpdate);
         mModifyPublicPrivateSpinner.setContent(mLibraryUpdate);
         mModifyRatingSpinner.setContent(mLibraryUpdate);
-        mModifyRewatchCountView.setContent(mLibraryUpdate);
+        mRewatchCount.setForRewatchedTimes(mLibraryUpdate);
 
         mRewatching.setChecked(mLibraryUpdate.isRewatching());
         mPersonalNotes.setText(mLibraryUpdate.getNotes());
 
-        mModifyWatchCountView.setOnWatchCountChangedListener(this);
+        mWatchCount.setListener(new ModifyNumberView.Listener() {
+            @Override
+            public void onNumberChanged(final ModifyNumberView v) {
+                mLibraryUpdate.setEpisodesWatched(mWatchCount.getNumber());
+                update();
+            }
+        });
+
         mModifyWatchingStatusSpinner.setOnItemSelectedListener(this);
         mModifyPublicPrivateSpinner.setOnItemSelectedListener(this);
         mModifyRatingSpinner.setOnItemSelectedListener(this);
-        mModifyRewatchCountView.setOnRewatchCountChangedListener(this);
-    }
 
-    @Override
-    public void onWatchCountChanged(final ModifyWatchCountView v) {
-        mLibraryUpdate.setEpisodesWatched(v.getCount());
-        update();
+        mRewatchCount.setListener(new ModifyNumberView.Listener() {
+            @Override
+            public void onNumberChanged(final ModifyNumberView v) {
+                mLibraryUpdate.setRewatchCount(mRewatchCount.getNumber());
+                update();
+            }
+        });
     }
 
     @Override

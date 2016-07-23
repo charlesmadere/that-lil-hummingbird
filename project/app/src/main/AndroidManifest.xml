@@ -52,6 +52,12 @@
             android:windowSoftInputMode="adjustResize|stateUnchanged" />
 
         <activity
+            android:launchMode="singleTop"
+            android:name=".activities.DeepLinkActivity"
+            android:noHistory="true"
+            android:theme="@style/HummingbirdTheme_Splash" />
+
+        <activity
             android:label="@string/followers"
             android:name=".activities.FollowersActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer" />
@@ -85,6 +91,7 @@
         <activity
             android:launchMode="singleTop"
             android:name=".activities.LoginActivity"
+            android:noHistory="true"
             android:theme="@style/HummingbirdTheme_Login"
             android:windowSoftInputMode="adjustPan|stateUnchanged">
             <intent-filter>
