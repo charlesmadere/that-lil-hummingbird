@@ -12,9 +12,9 @@
                 <com.facebook.drawee.view.SimpleDraweeView
                     style="@style/ParallaxCoverImage" />
                 <FrameLayout
-                    android:layout_gravity="center_vertical|end"
+                    android:layout_gravity="bottom|end"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/root_padding_double"
+                    android:layout_margin="@dimen/root_padding_double"
                     android:layout_width="wrap_content"
                     app:layout_collapseMode="parallax">
                     <com.charlesmadere.hummingbird.views.AvatarView
