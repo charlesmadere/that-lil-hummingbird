@@ -85,6 +85,7 @@
     <string name="error_loading_anime">Error loading anime! Please check your network connection and try again.</string>
     <string name="error_loading_anime_library">Error loading anime library</string>
     <string name="error_loading_anime_quotes">Error loading anime quotes</string>
+    <string name="error_loading_anime_review">Error loading anime review</string>
     <string name="error_loading_anime_reviews">Error loading anime reviews</string>
     <string name="error_loading_app_news">Error loading app news</string>
     <string name="error_loading_comments">Error loading comments</string>

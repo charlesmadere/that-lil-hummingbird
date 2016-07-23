@@ -8,6 +8,7 @@ import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.activities.AnimeQuotesActivity;
+import com.charlesmadere.hummingbird.activities.AnimeReviewActivity;
 import com.charlesmadere.hummingbird.activities.AnimeReviewsActivity;
 import com.charlesmadere.hummingbird.activities.FollowersActivity;
 import com.charlesmadere.hummingbird.activities.FollowingActivity;
@@ -173,7 +174,8 @@ public final class DeepLinkUtils {
             activityStack.add(AnimeReviewsActivity.getLaunchIntent(activity, paths[1]));
             // https://hummingbird.me/anime/rwby-ii/reviews/10090
             if (paths.length >= 4) {
-                // TODO AnimeReviewActivity
+                activityStack.add(AnimeReviewActivity.getLaunchIntent(activity, paths[1],
+                        paths[3]));
             }
         }
     }
