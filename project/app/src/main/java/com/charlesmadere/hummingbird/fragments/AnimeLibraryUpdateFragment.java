@@ -293,11 +293,6 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         });
     }
 
-    @Override
-    protected boolean startFullyExpanded() {
-        return true;
-    }
-
     private void update() {
         mSave.setEnabled(mLibraryUpdate.containsModifications());
     }
