@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.activities.MangaActivity;
+import com.charlesmadere.hummingbird.activities.MediaStoryActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
@@ -98,7 +99,7 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
     @OnClick(R.id.tvShowMore)
     void onShowMoreClick() {
         final Context context = getContext();
-        // TODO
+        context.startActivity(MediaStoryActivity.getLaunchIntent(context, mMediaStory));
     }
 
     @Override
