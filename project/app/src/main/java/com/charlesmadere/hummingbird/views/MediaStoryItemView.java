@@ -12,6 +12,7 @@ import com.charlesmadere.hummingbird.activities.MangaActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
+import com.charlesmadere.hummingbird.models.Manga;
 import com.charlesmadere.hummingbird.models.MediaStory;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -35,8 +36,8 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
     @BindView(R.id.msivTwo)
     MediaSubstoryItemView mMediaTwo;
 
-    @BindView(R.id.sdvPoster)
-    SimpleDraweeView mPoster;
+    @BindView(R.id.sdvImage)
+    SimpleDraweeView mImage;
 
     @BindView(R.id.tvMediaType)
     TextView mMediaType;
@@ -110,6 +111,9 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
                 setContent((MediaStory.AnimeMedia) media);
                 break;
 
+            case MANGA:
+                setContent((MediaStory.MangaMedia) media);
+
             default:
                 throw new RuntimeException("encountered unknown " +
                         MediaStory.AbsMedia.Type.class.getName() + ": \"" + media.getType() + '"');
@@ -137,7 +141,7 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
 
     private void setContent(final MediaStory.AnimeMedia media) {
         final AbsAnime anime = media.getAnime();
-        mPoster.setImageURI(anime.getImage());
+        mImage.setImageURI(anime.getImage());
         mTitle.setText(anime.getTitle());
 
         if (anime.hasType()) {
@@ -149,6 +153,26 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
 
         if (anime.hasGenres()) {
             mGenres.setText(anime.getGenresString(getResources()));
+            mGenres.setVisibility(VISIBLE);
+        } else {
+            mGenres.setVisibility(GONE);
+        }
+    }
+
+    private void setContent(final MediaStory.MangaMedia media) {
+        final Manga manga = media.getManga();
+        mImage.setImageURI(manga.getPosterImage());
+        mTitle.setText(manga.getTitle());
+
+        if (manga.hasType()) {
+            mMediaType.setText(manga.getType().getTextResId());
+            mMediaType.setVisibility(VISIBLE);
+        } else {
+            mMediaType.setVisibility(GONE);
+        }
+
+        if (manga.hasGenres()) {
+            mGenres.setText(manga.getGenresString(getResources()));
             mGenres.setVisibility(VISIBLE);
         } else {
             mGenres.setVisibility(GONE);

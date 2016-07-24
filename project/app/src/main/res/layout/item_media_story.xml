@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:orientation="horizontal">
         <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/sdvPoster"
+            android:id="@+id/sdvImage"
             android:layout_marginEnd="@dimen/root_padding"
             style="@style/AnimePoster" />
         <LinearLayout
@@ -26,7 +26,7 @@
                 android:id="@+id/tvGenres"
                 tools:text="Comedy, Mystery, Romance"
                 tools:visibility="visible"
-                style="@style/AnimeGenres" />
+                style="@style/MediaGenres" />
             <LinearLayout
                 android:divider="?android:attr/listDivider"
                 android:layout_height="wrap_content"
