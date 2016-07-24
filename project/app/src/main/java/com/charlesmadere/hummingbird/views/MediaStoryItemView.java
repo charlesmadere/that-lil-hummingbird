@@ -1,7 +1,6 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -39,8 +38,8 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
     @BindView(R.id.sdvPoster)
     SimpleDraweeView mPoster;
 
-    @BindView(R.id.tvAnimeType)
-    TextView mAnimeType;
+    @BindView(R.id.tvMediaType)
+    TextView mMediaType;
 
     @BindView(R.id.tvGenres)
     TextView mGenres;
@@ -142,10 +141,10 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
         mTitle.setText(anime.getTitle());
 
         if (anime.hasType()) {
-            mAnimeType.setText(anime.getType().getTextResId());
-            mAnimeType.setVisibility(VISIBLE);
+            mMediaType.setText(anime.getType().getTextResId());
+            mMediaType.setVisibility(VISIBLE);
         } else {
-            mAnimeType.setVisibility(GONE);
+            mMediaType.setVisibility(GONE);
         }
 
         if (anime.hasGenres()) {

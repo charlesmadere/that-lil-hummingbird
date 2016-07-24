@@ -19,9 +19,9 @@
                 tools:text="The Disappearance of Haruhi Suzumiya"
                 style="@style/AnimeTitle" />
             <com.charlesmadere.hummingbird.views.TypefaceTextView
-                android:id="@+id/tvAnimeType"
+                android:id="@+id/tvMediaType"
                 tools:text="@string/movie"
-                style="@style/AnimeType" />
+                style="@style/MediaType" />
             <com.charlesmadere.hummingbird.views.TypefaceTextView
                 android:id="@+id/tvGenres"
                 tools:text="Comedy, Mystery, Romance"
