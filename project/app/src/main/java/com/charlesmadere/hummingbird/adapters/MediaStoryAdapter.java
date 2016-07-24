@@ -20,8 +20,8 @@ public class MediaStoryAdapter extends BaseMultiPaginationAdapter {
     protected HashMap<Class, Integer> getItemViewKeyMap() {
         final HashMap<Class, Integer> map = new HashMap<>(3);
         map.put(AbsSubstory.class, R.layout.item_media_substory_standalone);
-        map.put(CharSequence.class, R.layout.item_charsequence_plain);
         map.put(MediaStory.class, R.layout.item_media_story_header);
+        map.put(String.class, R.layout.item_charsequence_plain);
         return map;
     }
 
@@ -31,7 +31,7 @@ public class MediaStoryAdapter extends BaseMultiPaginationAdapter {
 
         final ArrayList<AbsSubstory> substories = feed.getSubstories();
         if (substories == null || substories.isEmpty()) {
-            list.add(getContext().getText(R.string.nothing_more_to_show));
+            list.add(getContext().getString(R.string.nothing_more_to_show));
         } else {
             list.addAll(substories);
         }
