@@ -6,6 +6,8 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.MediaStory;
+import com.charlesmadere.hummingbird.models.WatchedEpisodeSubstory;
+import com.charlesmadere.hummingbird.models.WatchlistStatusUpdateSubstory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,10 +20,11 @@ public class MediaStoryAdapter extends BaseMultiPaginationAdapter {
 
     @Override
     protected HashMap<Class, Integer> getItemViewKeyMap() {
-        final HashMap<Class, Integer> map = new HashMap<>(3);
-        map.put(AbsSubstory.class, R.layout.item_media_substory_standalone);
+        final HashMap<Class, Integer> map = new HashMap<>(4);
         map.put(MediaStory.class, R.layout.item_media_story_header);
         map.put(String.class, R.layout.item_charsequence_plain);
+        map.put(WatchedEpisodeSubstory.class, R.layout.item_media_substory_standalone);
+        map.put(WatchlistStatusUpdateSubstory.class, R.layout.item_media_substory_standalone);
         return map;
     }
 
