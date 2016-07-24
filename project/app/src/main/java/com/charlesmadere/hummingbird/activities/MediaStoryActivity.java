@@ -3,15 +3,21 @@ package com.charlesmadere.hummingbird.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.MediaStory;
+import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
+import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
+
+import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
@@ -25,6 +31,7 @@ public class MediaStoryActivity extends BaseDrawerActivity implements
 
     private Feed mFeed;
     private MediaStory mMediaStory;
+    private RecyclerViewPaginator mPaginator;
 
     @BindView(R.id.llError)
     LinearLayout mError;
@@ -69,7 +76,11 @@ public class MediaStoryActivity extends BaseDrawerActivity implements
             mFeed = savedInstanceState.getParcelable(KEY_FEED);
         }
 
-        // TODO
+        if (mFeed == null || !mFeed.hasSubstories()) {
+            fetchFeed();
+        } else {
+            showFeed(mFeed);
+        }
     }
 
     @Override
@@ -90,10 +101,20 @@ public class MediaStoryActivity extends BaseDrawerActivity implements
     protected void onViewsBound() {
         super.onViewsBound();
         mRefreshLayout.setOnRefreshListener(this);
+        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding_half);
+        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
     }
 
     @Override
     public void paginate() {
+        // TODO
+    }
+
+    private void paginationComplete() {
+        // TODO
+    }
+
+    private void paginationNoMore() {
         // TODO
     }
 
@@ -102,7 +123,71 @@ public class MediaStoryActivity extends BaseDrawerActivity implements
     }
 
     private void showFeed(final Feed feed) {
+        mFeed = feed;
         // TODO
+    }
+
+
+    private static class GetSubstoriesListener implements ApiResponse<Feed> {
+        private final WeakReference<MediaStoryActivity> mActivityReference;
+
+        private GetSubstoriesListener(final MediaStoryActivity activity) {
+            mActivityReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final MediaStoryActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.showError();
+            }
+        }
+
+        @Override
+        public void success(final Feed feed) {
+            final MediaStoryActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                if (feed.hasSubstories()) {
+
+                } else {
+
+                }
+            }
+        }
+    }
+
+    private static class PaginateFeedListener implements ApiResponse<Feed> {
+        private final WeakReference<MediaStoryActivity> mActivityReference;
+        private final int mSubstoriesSize;
+
+        private PaginateFeedListener(final MediaStoryActivity activity) {
+            mActivityReference = new WeakReference<>(activity);
+            mSubstoriesSize = activity.mFeed.getSubstoriesSize();
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final MediaStoryActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.paginationNoMore();
+            }
+        }
+
+        @Override
+        public void success(final Feed feed) {
+            final MediaStoryActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                if (feed.getSubstoriesSize() > mSubstoriesSize) {
+                    activity.paginationComplete();
+                } else {
+                    activity.paginationNoMore();
+                }
+            }
+        }
     }
 
 }
