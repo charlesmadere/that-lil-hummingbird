@@ -254,7 +254,7 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @OnClick(R.id.tvRewatchIntroAnimation)
     void onRewatchIntroAnimationClick() {
-        startActivity(SplashActivity.getLaunchIntent(this));
+        startActivity(SplashActivity.getRewatchLaunchIntent(this));
     }
 
     @OnClick(R.id.tvSignOut)

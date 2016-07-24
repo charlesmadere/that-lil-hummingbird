@@ -25,7 +25,7 @@ public class SplashActivity extends BaseActivity {
     ImageView mSplash;
 
 
-    public static Intent getLaunchIntent(final Context context) {
+    public static Intent getRewatchLaunchIntent(final Context context) {
         return new Intent(context, SplashActivity.class)
                 .putExtra(EXTRA_REWATCH, true);
     }
