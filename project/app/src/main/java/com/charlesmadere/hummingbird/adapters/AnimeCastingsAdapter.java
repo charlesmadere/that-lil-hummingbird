@@ -34,7 +34,7 @@ public class AnimeCastingsAdapter extends BaseMultiAdapter implements Comparator
     protected HashMap<Class, Integer> getItemViewKeyMap() {
         final HashMap<Class, Integer> map = new HashMap<>(2);
         map.put(AnimeDigest.Casting.class, R.layout.item_anime_casting);
-        map.put(CharSequence.class, R.layout.item_charsequence);
+        map.put(CharSequence.class, R.layout.item_charsequence_header);
         return map;
     }
 
