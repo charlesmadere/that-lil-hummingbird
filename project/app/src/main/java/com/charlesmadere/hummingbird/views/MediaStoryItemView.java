@@ -126,7 +126,7 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
 
     private void setContent(final MediaStory.AnimeMedia media) {
         final AbsAnime anime = media.getAnime();
-        mPoster.setImageURI(Uri.parse(anime.getImage()));
+        mPoster.setImageURI(anime.getImage());
         mTitle.setText(anime.getTitle());
 
         if (anime.hasType()) {
