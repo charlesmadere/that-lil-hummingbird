@@ -44,7 +44,7 @@
                 android:id="@+id/tvGenres"
                 tools:text="Comedy, Mystery, Romance"
                 tools:visibility="visible"
-                style="@style/AnimeGenres" />
+                style="@style/MediaGenres" />
             <com.charlesmadere.hummingbird.views.TypefaceTextView
                 android:id="@+id/tvSynopsis"
                 android:layout_marginTop="@dimen/root_padding"
