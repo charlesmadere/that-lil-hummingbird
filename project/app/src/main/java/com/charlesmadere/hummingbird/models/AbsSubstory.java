@@ -123,8 +123,7 @@ public abstract class AbsSubstory implements Parcelable {
         public static final Creator<Type> CREATOR = new Creator<Type>() {
             @Override
             public Type createFromParcel(final Parcel source) {
-                final int ordinal = source.readInt();
-                return values()[ordinal];
+                return values()[source.readInt()];
             }
 
             @Override
