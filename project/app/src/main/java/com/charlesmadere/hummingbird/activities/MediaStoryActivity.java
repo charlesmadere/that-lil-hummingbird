@@ -76,7 +76,7 @@ public class MediaStoryActivity extends BaseDrawerActivity implements
             mFeed = savedInstanceState.getParcelable(KEY_FEED);
         }
 
-        if (mFeed == null || !mFeed.hasSubstories()) {
+        if (mFeed == null) {
             fetchFeed();
         } else {
             showFeed(mFeed);
