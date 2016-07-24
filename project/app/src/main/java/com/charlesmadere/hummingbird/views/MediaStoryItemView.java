@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MediaStoryItemView extends CardView implements AdapterView<MediaStory>,
         View.OnClickListener {
@@ -43,6 +44,9 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
 
     @BindView(R.id.tvGenres)
     TextView mGenres;
+
+    @BindView(R.id.tvShowMore)
+    TextView mShowMore;
 
     @BindView(R.id.tvTitle)
     TextView mTitle;
@@ -91,6 +95,12 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
         setOnClickListener(this);
     }
 
+    @OnClick(R.id.tvShowMore)
+    void onShowMoreClick() {
+        final Context context = getContext();
+        // TODO
+    }
+
     @Override
     public void setContent(final MediaStory content) {
         mMediaStory = content;
@@ -122,6 +132,8 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
         } else {
             mMediaTwo.setVisibility(GONE);
         }
+
+        mShowMore.setVisibility(mMediaStory.getSubstoryCount() >= 4 ? VISIBLE : GONE);
     }
 
     private void setContent(final MediaStory.AnimeMedia media) {
