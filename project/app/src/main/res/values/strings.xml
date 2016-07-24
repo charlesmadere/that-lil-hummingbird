@@ -219,11 +219,12 @@
     <string name="no_synopsis_available">No synopsis available</string>
     <string name="no_timeline_content">No timeline content</string>
     <string name="none">none</string>
+    <string name="nothing_more_to_show">Nothing more to show</string>
     <string name="notification_polling_description">This feature will periodically refresh your Hummingbird notifications and let you know if there\'s anything new. Note that the poll frequency is just an estimate, it\'s not guaranteed to run at these exact intervals.</string>
     <string name="notification_polling_requires_google_play_services">Notification polling requires Google Play Services in order to function. Click here to try to resolve the issues with your Google Play services installation.</string>
     <string name="notifications">Notifications</string>
-    <string name="novel">Novel</string>
     <string name="not_yet_aired">Not Yet Aired</string>
+    <string name="novel">Novel</string>
     <string name="nsfw">NSFW</string>
     <string name="nsfw_">NSFW?</string>
     <string name="nsfw_content">NSFW content</string>

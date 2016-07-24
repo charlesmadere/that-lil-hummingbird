@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.MediaStoryAdapter;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.MediaStory;
+import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
@@ -31,6 +34,7 @@ public class MediaStoryActivity extends BaseDrawerActivity implements
 
     private Feed mFeed;
     private MediaStory mMediaStory;
+    private MediaStoryAdapter mAdapter;
     private RecyclerViewPaginator mPaginator;
 
     @BindView(R.id.llError)
@@ -50,7 +54,7 @@ public class MediaStoryActivity extends BaseDrawerActivity implements
 
     private void fetchFeed() {
         mRefreshLayout.setRefreshing(true);
-        // TODO
+        Api.getSubstories(mMediaStory.getId(), new GetSubstoriesListener(this));
     }
 
     @Override
@@ -60,8 +64,12 @@ public class MediaStoryActivity extends BaseDrawerActivity implements
 
     @Override
     public boolean isLoading() {
-        // TODO
-        return false;
+        return mRefreshLayout.isRefreshing() || mAdapter.isPaginating();
+    }
+
+    @Override
+    protected boolean isUpNavigationEnabled() {
+        return true;
     }
 
     @Override
@@ -102,29 +110,40 @@ public class MediaStoryActivity extends BaseDrawerActivity implements
         super.onViewsBound();
         mRefreshLayout.setOnRefreshListener(this);
         SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding_half);
+        mAdapter = new MediaStoryAdapter(this);
+        mRecyclerView.setAdapter(mAdapter);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
     }
 
     @Override
     public void paginate() {
-        // TODO
+        mAdapter.setPaginating(true);
+        Api.getSubstories(mMediaStory.getId(), mFeed, new PaginateFeedListener(this));
     }
 
     private void paginationComplete() {
-        // TODO
+        mAdapter.set(mMediaStory, mFeed);
+        mAdapter.setPaginating(false);
     }
 
     private void paginationNoMore() {
-        // TODO
+        mPaginator.setEnabled(false);
+        mAdapter.setPaginating(false);
     }
 
     private void showError() {
-        // TODO
+        mRecyclerView.setVisibility(View.GONE);
+        mError.setVisibility(View.VISIBLE);
+        mRefreshLayout.setRefreshing(false);
     }
 
     private void showFeed(final Feed feed) {
         mFeed = feed;
-        // TODO
+        mAdapter.set(mMediaStory, mFeed);
+        mError.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mPaginator.setEnabled(feed.hasCursor());
+        mRefreshLayout.setRefreshing(false);
     }
 
 
@@ -149,11 +168,7 @@ public class MediaStoryActivity extends BaseDrawerActivity implements
             final MediaStoryActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                if (feed.hasSubstories()) {
-
-                } else {
-
-                }
+                activity.showFeed(feed);
             }
         }
     }

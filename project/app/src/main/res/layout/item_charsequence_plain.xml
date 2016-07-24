@@ -9,4 +9,4 @@
     android:paddingStart="@dimen/root_padding_double"
     android:paddingTop="@dimen/root_padding"
     android:textSize="@dimen/text_large"
-    tools:text="Nothing more to show" />
+    tools:text="@string/nothing_more_to_show" />
