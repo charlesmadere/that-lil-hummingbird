@@ -1,9 +1,18 @@
 package com.charlesmadere.hummingbird.misc;
 
+import android.os.Build;
+
+import com.charlesmadere.hummingbird.BuildConfig;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.assertTrue;
 
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
 public class JsoupUtilsTest {
 
     private static final String CSRF_TOKEN = "jL/7itrsQB+9gAHi5ciaGSdxSQeqA5XnNvN8EGm3Fzo=";
