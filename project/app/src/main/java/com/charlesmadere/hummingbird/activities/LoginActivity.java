@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.activities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,6 +23,7 @@ import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.SimpleProgressView;
 
 import java.lang.ref.WeakReference;
@@ -67,6 +69,10 @@ public class LoginActivity extends BaseActivity {
     @Override
     public String getActivityName() {
         return TAG;
+    }
+
+    private void fetchCsrfToken() {
+        Api.getCsrfToken(new GetCsrfTokenListener(this));
     }
 
     private void fetchCurrentUser() {
@@ -117,8 +123,11 @@ public class LoginActivity extends BaseActivity {
             if (CurrentUser.shouldBeFetched()) {
                 mSimpleProgressView.show();
                 fetchCurrentUser();
-            } else {
+            } else if (Preferences.Account.CsrfToken.exists()) {
                 showForm();
+            } else {
+                mSimpleProgressView.show();
+                fetchCsrfToken();
             }
         }
     }
@@ -169,15 +178,72 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void showForm() {
+        mSimpleProgressView.fadeOut();
         mUsernameContainer.setVisibility(View.VISIBLE);
         mPasswordContainer.setVisibility(View.VISIBLE);
         mLogin.setVisibility(View.VISIBLE);
+    }
+
+    private void showServerError() {
+        mSimpleProgressView.fadeOut();
+
+        new AlertDialog.Builder(this)
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        finish();
+                    }
+                })
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(final DialogInterface dialog) {
+                        finish();
+                    }
+                })
+                .setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        mSimpleProgressView.fadeIn();
+                        fetchCsrfToken();
+                    }
+                })
+                .show();
     }
 
     private void updateLoginEnabledState() {
         mLogin.setEnabled(isLoginFormValid());
     }
 
+
+    private static class GetCsrfTokenListener implements ApiResponse<Boolean> {
+        private final WeakReference<LoginActivity> mActivityReference;
+
+        private GetCsrfTokenListener(final LoginActivity activity) {
+            mActivityReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final LoginActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.showServerError();
+            }
+        }
+
+        @Override
+        public void success(@Nullable final Boolean bool) {
+            final LoginActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                if (Boolean.TRUE.equals(bool)) {
+                    activity.showForm();
+                } else {
+                    activity.showServerError();
+                }
+            }
+        }
+    }
 
     private static class GetCurrentUserListener implements ApiResponse<UserDigest> {
         private final WeakReference<LoginActivity> mActivityReference;
