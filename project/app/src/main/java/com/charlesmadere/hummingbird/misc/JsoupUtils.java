@@ -116,13 +116,11 @@ public final class JsoupUtils {
 
         if (startOfToken < 0) {
             return null;
-        } else if (endOfToken - startOfToken <= 0) {
+        } else if (endOfToken - startOfToken < 1) {
             return null;
+        } else {
+            return signInPage.substring(startOfToken, endOfToken);
         }
-
-        final char csrfToken[] = new char[endOfToken - startOfToken];
-        signInPage.getChars(startOfToken, endOfToken, csrfToken, 0);
-        return new String(csrfToken);
     }
 
     @Nullable
