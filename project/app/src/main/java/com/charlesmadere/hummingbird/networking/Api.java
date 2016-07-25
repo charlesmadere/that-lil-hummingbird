@@ -360,19 +360,23 @@ public final class Api {
                     Threading.runOnBackground(new Runnable() {
                         @Override
                         public void run() {
+                            Timber.d(TAG, "attempting to retrieve CSRF token...");
+
                             try {
                                 mCsrfToken = JsoupUtils.getCsrfToken(response.body().string());
                             } catch (final Exception e) {
-                                Timber.e(TAG, "Exception when reading raw response body", e);
+                                Timber.e(TAG, "Exception when retrieving CSRF token", e);
                             }
 
                             Threading.runOnUi(new Runnable() {
                                 @Override
                                 public void run() {
                                     if (TextUtils.isEmpty(mCsrfToken)) {
+                                        Timber.e(TAG, "CSRF token is empty");
                                         Preferences.Account.CsrfToken.delete();
                                         listener.failure(retrieveErrorInfo(response));
                                     } else {
+                                        Timber.d(TAG, "CSRF token was retrieved");
                                         Preferences.Account.CsrfToken.set(mCsrfToken);
                                         listener.success(Boolean.TRUE);
                                     }
@@ -381,13 +385,14 @@ public final class Api {
                         }
                     });
                 } else {
+                    Timber.w(TAG, "CSRF token response is unsuccessful");
                     listener.failure(retrieveErrorInfo(response));
                 }
             }
 
             @Override
             public void onFailure(final Call<ResponseBody> call, final Throwable t) {
-                Timber.e(TAG, "get sign in page failed", t);
+                Timber.e(TAG, "get CSRF token failed", t);
                 listener.failure(null);
             }
         });
