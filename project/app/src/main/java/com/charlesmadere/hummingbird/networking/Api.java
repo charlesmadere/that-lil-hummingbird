@@ -643,23 +643,29 @@ public final class Api {
     }
 
     public static void getSignInPage(final ApiResponse<Boolean> listener) {
-        HUMMINGBIRD.getSignInPage().enqueue(new Callback<String>() {
+        HUMMINGBIRD.getSignInPage().enqueue(new Callback<ResponseBody>() {
+            private String mCsrfToken;
+
             @Override
-            public void onResponse(final Call<String> call, final Response<String> response) {
+            public void onResponse(final Call<ResponseBody> call, final Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     Threading.runOnBackground(new Runnable() {
                         @Override
                         public void run() {
-                            final String csrfToken = JsoupUtils.getCsrfToken(response.body());
+                            try {
+                                mCsrfToken = JsoupUtils.getCsrfToken(response.body().string());
+                            } catch (final Exception e) {
+                                Timber.e(TAG, "Exception when reading raw response body", e);
+                            }
 
                             Threading.runOnUi(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if (TextUtils.isEmpty(csrfToken)) {
+                                    if (TextUtils.isEmpty(mCsrfToken)) {
                                         Preferences.Account.CsrfToken.delete();
                                         listener.failure(retrieveErrorInfo(response));
                                     } else {
-                                        Preferences.Account.CsrfToken.set(csrfToken);
+                                        Preferences.Account.CsrfToken.set(mCsrfToken);
                                         listener.success(Boolean.TRUE);
                                     }
                                 }
@@ -672,7 +678,7 @@ public final class Api {
             }
 
             @Override
-            public void onFailure(final Call<String> call, final Throwable t) {
+            public void onFailure(final Call<ResponseBody> call, final Throwable t) {
                 Timber.e(TAG, "get sign in page failed", t);
                 listener.failure(null);
             }

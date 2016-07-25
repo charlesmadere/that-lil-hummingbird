@@ -86,9 +86,43 @@ public final class JsoupUtils {
             return null;
         }
 
-        // TODO
+        final int indexOf = signInPage.indexOf("name=\"csrf-token\"");
 
-        return null;
+        if (indexOf == -1) {
+            return null;
+        }
+
+        int endOfToken = -1;
+
+        for (int i = indexOf; i >= 0; --i) {
+            if (signInPage.charAt(i) == '"') {
+                endOfToken = i - 1;
+                break;
+            }
+        }
+
+        if (endOfToken < 0) {
+            return null;
+        }
+
+        int startOfToken = -1;
+
+        for (int i = endOfToken; i >= 0; --i) {
+            if (signInPage.charAt(i) == '"') {
+                startOfToken = i;
+                break;
+            }
+        }
+
+        if (startOfToken < 0) {
+            return null;
+        } else if (endOfToken - startOfToken <= 0) {
+            return null;
+        }
+
+        final char csrfToken[] = new char[endOfToken - startOfToken];
+        signInPage.getChars(startOfToken, endOfToken, csrfToken, 0);
+        return new String(csrfToken);
     }
 
     @Nullable

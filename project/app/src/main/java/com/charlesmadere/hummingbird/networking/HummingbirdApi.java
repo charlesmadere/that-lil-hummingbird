@@ -15,6 +15,7 @@ import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.google.gson.JsonElement;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -105,7 +106,7 @@ public interface HummingbirdApi {
     Call<Feed> getNotifications(@Query("page") Integer page);
 
     @GET("sign-in")
-    Call<String> getSignInPage();
+    Call<ResponseBody> getSignInPage();
 
     @GET("substories")
     Call<Feed> getSubstories(@Query("story_id") String storyId, @Query("page") Integer page);
