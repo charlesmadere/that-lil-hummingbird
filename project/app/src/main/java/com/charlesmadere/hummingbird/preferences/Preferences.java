@@ -56,11 +56,13 @@ public final class Preferences {
         public static final BooleanPreference ShowNsfwContent;
         public static final GsonPreference<NightMode> Theme;
         public static final GsonPreference<TitleType> TitleLanguage;
+        public static final IntegerPreference PreviousLaunchVersion;
 
         static {
             ShowNsfwContent = new BooleanPreference(TAG, "ShowNsfwContent", Boolean.FALSE);
             Theme = new GsonPreference<>(TAG, "NightMode", NightMode.class, NightMode.getDefault());
             TitleLanguage = new GsonPreference<>(TAG, "TitleLanguage", TitleType.class, TitleType.ENGLISH);
+            PreviousLaunchVersion = new IntegerPreference(TAG, "PreviousLaunchVersion", null);
         }
     }
 

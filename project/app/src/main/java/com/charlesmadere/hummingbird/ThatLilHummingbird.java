@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird;
 
 import android.app.Activity;
 import android.app.Application;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.charlesmadere.hummingbird.activities.HomeActivity;
@@ -9,6 +10,7 @@ import com.charlesmadere.hummingbird.misc.ActivityRegister;
 import com.charlesmadere.hummingbird.misc.OkHttpUtils;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.NightMode;
+import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
@@ -70,7 +72,6 @@ public class ThatLilHummingbird extends Application {
         sInstance = this;
 
         Fabric.with(this, new Crashlytics());
-
         Timber.d(TAG, "Application created (debug: " + BuildConfig.DEBUG + ')');
 
         final ImagePipelineConfig config = OkHttpImagePipelineConfigFactory
@@ -78,6 +79,12 @@ public class ThatLilHummingbird extends Application {
                 .build();
 
         Fresco.initialize(this, config);
+
+        final Integer previousLaunchVersion = Preferences.General.PreviousLaunchVersion.get();
+        if (previousLaunchVersion == null || previousLaunchVersion < BuildConfig.VERSION_CODE) {
+            onUpgrade(previousLaunchVersion);
+        }
+        Preferences.General.PreviousLaunchVersion.set(BuildConfig.VERSION_CODE);
     }
 
     @Override
@@ -90,6 +97,15 @@ public class ThatLilHummingbird extends Application {
         }
 
         Timber.d(TAG, "onTrimMemory(): " + level);
+    }
+
+    public void onUpgrade(@Nullable final Integer previousVersion) {
+        Timber.d(TAG, "Upgrading from app version " + previousVersion + " to " +
+                BuildConfig.VERSION_CODE);
+
+        if (previousVersion == null || previousVersion < 7) {
+            Preferences.eraseAll();
+        }
     }
 
 }
