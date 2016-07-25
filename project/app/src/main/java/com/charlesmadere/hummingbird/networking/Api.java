@@ -350,6 +350,49 @@ public final class Api {
         });
     }
 
+    public static void getCsrfToken(final ApiResponse<Boolean> listener) {
+        HUMMINGBIRD.getSignInPage().enqueue(new Callback<ResponseBody>() {
+            private String mCsrfToken;
+
+            @Override
+            public void onResponse(final Call<ResponseBody> call, final Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Threading.runOnBackground(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                mCsrfToken = JsoupUtils.getCsrfToken(response.body().string());
+                            } catch (final Exception e) {
+                                Timber.e(TAG, "Exception when reading raw response body", e);
+                            }
+
+                            Threading.runOnUi(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (TextUtils.isEmpty(mCsrfToken)) {
+                                        Preferences.Account.CsrfToken.delete();
+                                        listener.failure(retrieveErrorInfo(response));
+                                    } else {
+                                        Preferences.Account.CsrfToken.set(mCsrfToken);
+                                        listener.success(Boolean.TRUE);
+                                    }
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    listener.failure(retrieveErrorInfo(response));
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<ResponseBody> call, final Throwable t) {
+                Timber.e(TAG, "get sign in page failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
     public static void getCurrentUser(final ApiResponse<UserDigest> listener) {
         getUserDigest(Preferences.Account.Username.get(), new ApiResponse<UserDigest>() {
             @Override
@@ -637,49 +680,6 @@ public final class Api {
             @Override
             public void onFailure(final Call<Feed> call, final Throwable t) {
                 Timber.e(TAG, "get notifications (page " + page + ") failed", t);
-                listener.failure(null);
-            }
-        });
-    }
-
-    public static void getSignInPage(final ApiResponse<Boolean> listener) {
-        HUMMINGBIRD.getSignInPage().enqueue(new Callback<ResponseBody>() {
-            private String mCsrfToken;
-
-            @Override
-            public void onResponse(final Call<ResponseBody> call, final Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    Threading.runOnBackground(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                mCsrfToken = JsoupUtils.getCsrfToken(response.body().string());
-                            } catch (final Exception e) {
-                                Timber.e(TAG, "Exception when reading raw response body", e);
-                            }
-
-                            Threading.runOnUi(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (TextUtils.isEmpty(mCsrfToken)) {
-                                        Preferences.Account.CsrfToken.delete();
-                                        listener.failure(retrieveErrorInfo(response));
-                                    } else {
-                                        Preferences.Account.CsrfToken.set(mCsrfToken);
-                                        listener.success(Boolean.TRUE);
-                                    }
-                                }
-                            });
-                        }
-                    });
-                } else {
-                    listener.failure(retrieveErrorInfo(response));
-                }
-            }
-
-            @Override
-            public void onFailure(final Call<ResponseBody> call, final Throwable t) {
-                Timber.e(TAG, "get sign in page failed", t);
                 listener.failure(null);
             }
         });
