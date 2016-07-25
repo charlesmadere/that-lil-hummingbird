@@ -81,6 +81,17 @@ public final class JsoupUtils {
     }
 
     @Nullable
+    public static String getCsrfToken(@Nullable final String signInPage) {
+        if (TextUtils.isEmpty(signInPage)) {
+            return null;
+        }
+
+        // TODO
+
+        return null;
+    }
+
+    @Nullable
     public static CharSequence parse(@Nullable final CharSequence text) {
         if (TextUtils.isEmpty(text) || TextUtils.getTrimmedLength(text) == 0) {
             return text;

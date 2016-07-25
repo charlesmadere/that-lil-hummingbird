@@ -104,6 +104,9 @@ public interface HummingbirdApi {
     @GET("notifications")
     Call<Feed> getNotifications(@Query("page") Integer page);
 
+    @GET("sign-in")
+    Call<String> getSignInPage();
+
     @GET("substories")
     Call<Feed> getSubstories(@Query("story_id") String storyId, @Query("page") Integer page);
 

@@ -16,7 +16,8 @@ public final class CurrentUser {
 
 
     public static boolean exists() {
-        return Preferences.Account.Username.exists() && get() != null;
+        return Preferences.Account.CsrfToken.exists() && Preferences.Account.Username.exists()
+                && get() != null;
     }
 
     public static synchronized UserDigest get() {
@@ -35,7 +36,8 @@ public final class CurrentUser {
     }
 
     public static synchronized boolean shouldBeFetched() {
-        return Preferences.Account.Username.exists() && get() == null;
+        return Preferences.Account.CsrfToken.exists() && Preferences.Account.Username.exists()
+                && get() == null;
     }
 
     public static synchronized void signOut() {

@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.CurrentUser;
+import com.charlesmadere.hummingbird.misc.JsoupUtils;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.RetrofitUtils;
 import com.charlesmadere.hummingbird.misc.Threading;
@@ -636,6 +637,42 @@ public final class Api {
             @Override
             public void onFailure(final Call<Feed> call, final Throwable t) {
                 Timber.e(TAG, "get notifications (page " + page + ") failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
+    public static void getSignInPage(final ApiResponse<Boolean> listener) {
+        HUMMINGBIRD.getSignInPage().enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(final Call<String> call, final Response<String> response) {
+                if (response.isSuccessful()) {
+                    Threading.runOnBackground(new Runnable() {
+                        @Override
+                        public void run() {
+                            final String csrfToken = JsoupUtils.getCsrfToken(response.body());
+
+                            Threading.runOnUi(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (TextUtils.isEmpty(csrfToken)) {
+                                        listener.failure(retrieveErrorInfo(response));
+                                    } else {
+                                        Preferences.Account.CsrfToken.set(csrfToken);
+                                        listener.success(Boolean.TRUE);
+                                    }
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    listener.failure(retrieveErrorInfo(response));
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<String> call, final Throwable t) {
+                Timber.e(TAG, "get sign in page failed", t);
                 listener.failure(null);
             }
         });
