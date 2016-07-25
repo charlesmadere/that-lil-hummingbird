@@ -656,6 +656,7 @@ public final class Api {
                                 @Override
                                 public void run() {
                                     if (TextUtils.isEmpty(csrfToken)) {
+                                        Preferences.Account.CsrfToken.delete();
                                         listener.failure(retrieveErrorInfo(response));
                                     } else {
                                         Preferences.Account.CsrfToken.set(csrfToken);
