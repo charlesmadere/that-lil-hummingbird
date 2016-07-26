@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.views;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
@@ -19,6 +20,9 @@ public class AbsSubstoryStandaloneItemView extends CardView implements AdapterVi
 
     @BindView(R.id.avatarView)
     AvatarView mAvatarView;
+
+    @BindView(R.id.tvTimeAgo)
+    TextView mTimeAgo;
 
 
     public AbsSubstoryStandaloneItemView(final Context context, final AttributeSet attrs) {
@@ -39,6 +43,7 @@ public class AbsSubstoryStandaloneItemView extends CardView implements AdapterVi
     public void setContent(final AbsSubstory content, final User user) {
         mAvatarView.setContent(user);
         mAbsSubstoryTextView.setContent(content, user);
+        mTimeAgo.setText(content.getCreatedAt().getRelativeTimeText(getContext()));
     }
 
     @Override

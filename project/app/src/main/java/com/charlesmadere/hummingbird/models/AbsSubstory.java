@@ -136,7 +136,8 @@ public abstract class AbsSubstory implements Parcelable {
     public static final Comparator<AbsSubstory> COMPARATOR = new Comparator<AbsSubstory>() {
         @Override
         public int compare(final AbsSubstory lhs, final AbsSubstory rhs) {
-            return SimpleDate.CHRONOLOGICAL_ORDER.compare(lhs.getCreatedAt(), rhs.getCreatedAt());
+            return SimpleDate.REVERSE_CHRONOLOGICAL_ORDER.compare(lhs.getCreatedAt(),
+                    rhs.getCreatedAt());
         }
     };
 
