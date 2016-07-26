@@ -14,8 +14,6 @@ import butterknife.ButterKnife;
 
 public class ReplySubstoryStandaloneItemView extends CardView implements AdapterView<ReplySubstory> {
 
-    private ReplySubstory mReplySubstory;
-
     @BindView(R.id.avatarView)
     AvatarView mAvatar;
 
@@ -43,10 +41,9 @@ public class ReplySubstoryStandaloneItemView extends CardView implements Adapter
 
     @Override
     public void setContent(final ReplySubstory content) {
-        mReplySubstory = content;
-        mAvatar.setContent(mReplySubstory.getUser());
-        mReply.setContent(mReplySubstory);
-        mTimeAgo.setText(mReplySubstory.getCreatedAt().getRelativeTimeText(getContext()));
+        mAvatar.setContent(content.getUser());
+        mReply.setContent(content);
+        mTimeAgo.setText(content.getCreatedAt().getRelativeTimeText(getContext()));
     }
 
 }

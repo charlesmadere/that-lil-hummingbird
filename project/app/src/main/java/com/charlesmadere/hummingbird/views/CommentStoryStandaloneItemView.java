@@ -14,8 +14,6 @@ import butterknife.ButterKnife;
 
 public class CommentStoryStandaloneItemView extends CardView implements AdapterView<CommentStory> {
 
-    private CommentStory mCommentStory;
-
     @BindView(R.id.avatarView)
     AvatarView mAvatar;
 
@@ -49,13 +47,11 @@ public class CommentStoryStandaloneItemView extends CardView implements AdapterV
 
     @Override
     public void setContent(final CommentStory content) {
-        mCommentStory = content;
-
-        mAvatar.setContent(mCommentStory.getPoster());
-        mLikeTextView.setContent(mCommentStory);
-        mCommentTitleTextView.setContent(mCommentStory);
-        mTimeAgo.setText(mCommentStory.getCreatedAt().getRelativeTimeText(getContext()));
-        mComment.setContent(mCommentStory);
+        mAvatar.setContent(content.getPoster());
+        mLikeTextView.setContent(content);
+        mCommentTitleTextView.setContent(content);
+        mTimeAgo.setText(content.getCreatedAt().getRelativeTimeText(getContext()));
+        mComment.setContent(content);
     }
 
 }
