@@ -2,13 +2,14 @@
 <com.charlesmadere.hummingbird.views.AbsSubstoryStandaloneItemView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/CardItem">
+    style="@style/CardItem.Bare">
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="horizontal">
         <com.charlesmadere.hummingbird.views.AvatarView
             android:id="@+id/avatarView"
+            android:layout_marginEnd="@dimen/root_padding_half"
             style="@style/Avatar.Small" />
         <com.charlesmadere.hummingbird.views.AbsSubstoryTextView
             android:id="@+id/absSubstoryTextView"
