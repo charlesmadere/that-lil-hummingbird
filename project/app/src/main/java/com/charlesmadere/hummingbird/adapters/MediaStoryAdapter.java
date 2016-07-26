@@ -9,7 +9,7 @@ import com.charlesmadere.hummingbird.models.MediaStory;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.WatchedEpisodeSubstory;
 import com.charlesmadere.hummingbird.models.WatchlistStatusUpdateSubstory;
-import com.charlesmadere.hummingbird.views.AbsSubstoryItemView;
+import com.charlesmadere.hummingbird.views.AbsSubstoryStandaloneItemView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,8 +35,8 @@ public class MediaStoryAdapter extends BaseMultiPaginationAdapter {
 
     @Override
     public void onBindViewHolder(final AdapterView.ViewHolder holder, final int position) {
-        if (holder.getAdapterView() instanceof AbsSubstoryItemView) {
-            ((AbsSubstoryItemView) holder.getAdapterView()).setContent(
+        if (holder.getAdapterView() instanceof AbsSubstoryStandaloneItemView) {
+            ((AbsSubstoryStandaloneItemView) holder.getAdapterView()).setContent(
                     (AbsSubstory) getItem(position), mUser);
         } else {
             super.onBindViewHolder(holder, position);

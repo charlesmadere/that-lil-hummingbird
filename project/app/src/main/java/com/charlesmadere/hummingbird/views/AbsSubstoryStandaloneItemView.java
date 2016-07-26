@@ -5,13 +5,14 @@ import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AbsSubstoryStandaloneItemView extends CardView {
+public class AbsSubstoryStandaloneItemView extends CardView implements AdapterView<Void> {
 
     @BindView(R.id.absSubstoryTextView)
     AbsSubstoryTextView mAbsSubstoryTextView;
@@ -38,6 +39,11 @@ public class AbsSubstoryStandaloneItemView extends CardView {
     public void setContent(final AbsSubstory content, final User user) {
         mAvatarView.setContent(user);
         mAbsSubstoryTextView.setContent(content, user);
+    }
+
+    @Override
+    public void setContent(final Void content) {
+        // intentionally empty
     }
 
 }
