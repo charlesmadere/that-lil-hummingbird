@@ -29,13 +29,13 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
     private MediaStory mMediaStory;
 
     @BindView(R.id.msivZero)
-    MediaSubstoryItemView mMediaZero;
+    AbsSubstoryItemView mMediaZero;
 
     @BindView(R.id.msivOne)
-    MediaSubstoryItemView mMediaOne;
+    AbsSubstoryItemView mMediaOne;
 
     @BindView(R.id.msivTwo)
-    MediaSubstoryItemView mMediaTwo;
+    AbsSubstoryItemView mMediaTwo;
 
     @BindView(R.id.sdvImage)
     SimpleDraweeView mImage;

@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.AnimeReviewActivity;
-import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AnimeReview;
 
@@ -17,7 +16,6 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class AnimeReviewItemView extends CardView implements AdapterView<AnimeReview>,
         View.OnClickListener {
@@ -45,12 +43,6 @@ public class AnimeReviewItemView extends CardView implements AdapterView<AnimeRe
     public AnimeReviewItemView(final Context context, final AttributeSet attrs,
             final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    @OnClick(R.id.avatarView)
-    void onAvatarClick() {
-        final Context context = getContext();
-        context.startActivity(UserActivity.getLaunchIntent(context, mReview.getUser()));
     }
 
     @Override

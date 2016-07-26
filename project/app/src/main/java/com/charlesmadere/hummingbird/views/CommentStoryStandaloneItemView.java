@@ -6,13 +6,11 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.CommentStory;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class CommentStoryStandaloneItemView extends CardView implements AdapterView<CommentStory> {
 
@@ -43,20 +41,9 @@ public class CommentStoryStandaloneItemView extends CardView implements AdapterV
         super(context, attrs, defStyleAttr);
     }
 
-    @OnClick(R.id.avatarView)
-    void onAvatarClick() {
-        final Context context = getContext();
-        context.startActivity(UserActivity.getLaunchIntent(context, mCommentStory.getUser()));
-    }
-
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        if (isInEditMode()) {
-            return;
-        }
-
         ButterKnife.bind(this);
     }
 

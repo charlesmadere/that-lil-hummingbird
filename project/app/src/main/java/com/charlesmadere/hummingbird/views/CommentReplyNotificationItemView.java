@@ -16,7 +16,6 @@ import com.charlesmadere.hummingbird.models.ReplySubstory;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class CommentReplyNotificationItemView extends CardView implements
         AdapterView<CommentReplyNotification>, View.OnClickListener {
@@ -73,22 +72,6 @@ public class CommentReplyNotificationItemView extends CardView implements
         }
     }
 
-    @OnClick(R.id.avatarView)
-    void onAvatarClick() {
-        final AbsNotification.AbsSource source = mCommentReplyNotification.getSource();
-
-        switch (source.getType()) {
-            case SUBSTORY:
-                handleSubstoryAvatarClick((AbsNotification.SubstorySource) source);
-                break;
-
-            default:
-                throw new RuntimeException("encountered unknown " +
-                        AbsNotification.AbsSource.Type.class.getName() + ": \"" +
-                        source.getType() + '"');
-        }
-    }
-
     @Override
     public void onClick(final View v) {
         final AbsNotification.AbsSource source = mCommentReplyNotification.getSource();
@@ -108,11 +91,6 @@ public class CommentReplyNotificationItemView extends CardView implements
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        if (isInEditMode()) {
-            return;
-        }
-
         ButterKnife.bind(this);
         setOnClickListener(this);
     }

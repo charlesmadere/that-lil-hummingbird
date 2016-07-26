@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.CommentsActivity;
-import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.CommentStory;
@@ -22,7 +21,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class CommentStoryItemView extends CardView implements AdapterView<CommentStory>,
         View.OnClickListener {
@@ -91,12 +89,6 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
                     }
                 })
                 .show();
-    }
-
-    @OnClick(R.id.avatarView)
-    void onAvatarClick() {
-        final Context context = getContext();
-        context.startActivity(UserActivity.getLaunchIntent(context, mCommentStory.getPoster()));
     }
 
     @Override

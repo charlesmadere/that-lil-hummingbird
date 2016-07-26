@@ -6,13 +6,11 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class ReplySubstoryStandaloneItemView extends CardView implements AdapterView<ReplySubstory> {
 
@@ -35,12 +33,6 @@ public class ReplySubstoryStandaloneItemView extends CardView implements Adapter
     public ReplySubstoryStandaloneItemView(final Context context, final AttributeSet attrs,
             final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    @OnClick(R.id.avatarView)
-    void onAvatarClick() {
-        final Context context = getContext();
-        context.startActivity(UserActivity.getLaunchIntent(context, mReplySubstory.getUser()));
     }
 
     @Override

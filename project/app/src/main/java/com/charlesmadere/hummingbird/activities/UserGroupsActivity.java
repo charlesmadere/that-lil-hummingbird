@@ -112,7 +112,7 @@ public class UserGroupsActivity extends BaseDrawerActivity implements
     protected void onViewsBound() {
         super.onViewsBound();
         mRefreshLayout.setOnRefreshListener(this);
-        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding_half);
+        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
         mAdapter = new GroupsAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);

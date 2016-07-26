@@ -5,7 +5,10 @@ import android.content.Context;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.View;
 
+import com.charlesmadere.hummingbird.activities.UserActivity;
+import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.User;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.BaseControllerListener;
@@ -14,7 +17,8 @@ import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.image.ImageInfo;
 
-public class AvatarView extends SimpleDraweeView {
+public class AvatarView extends SimpleDraweeView implements AdapterView<User>,
+        View.OnClickListener {
 
     private User mUser;
 
@@ -60,6 +64,19 @@ public class AvatarView extends SimpleDraweeView {
         setController(controller);
     }
 
+    @Override
+    public void onClick(final View view) {
+        final Context context = getContext();
+        context.startActivity(UserActivity.getLaunchIntent(context, mUser));
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        setOnClickListener(this);
+    }
+
+    @Override
     public void setContent(final User content) {
         mUser = content;
 

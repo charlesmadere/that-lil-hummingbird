@@ -41,7 +41,7 @@ public abstract class BaseMultiPaginationAdapter extends BaseMultiAdapter implem
 
     @Override
     @SuppressWarnings("unchecked")
-    public final void onBindViewHolder(final AdapterView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final AdapterView.ViewHolder holder, final int position) {
         if (mIsPaginating && position == getItems().size()) {
             holder.getAdapterView().setContent(null);
         } else {

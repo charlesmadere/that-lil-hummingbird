@@ -188,6 +188,7 @@ public class LoginActivity extends BaseActivity {
         mSimpleProgressView.fadeOut();
 
         new AlertDialog.Builder(this)
+                .setMessage(R.string.error_retrieving_client_configuration)
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {

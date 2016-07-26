@@ -36,15 +36,16 @@
         android:paddingTop="@dimen/root_padding_half">
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvTitle"
+            android:maxLines="2"
             android:shadowColor="@color/black"
             android:shadowDy="2"
             android:shadowRadius="4"
             android:textColor="@color/white"
             tools:text="Naturals Election"
-            style="@style/GroupTitle" />
+            style="@style/AnimeTitle" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvSynopsis"
-            android:maxLines="3"
+            android:maxLines="2"
             android:shadowColor="@color/black"
             android:shadowDy="2"
             android:shadowRadius="4"

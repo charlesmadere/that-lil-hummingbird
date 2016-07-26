@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.AbsSubstoryStandaloneItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/CardItem">
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+        <com.charlesmadere.hummingbird.views.AvatarView
+            android:id="@+id/avatarView"
+            style="@style/Avatar.Small" />
+        <com.charlesmadere.hummingbird.views.AbsSubstoryTextView
+            android:id="@+id/absSubstoryTextView"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textSize="@dimen/text_small"
+            app:keyTextColor="?attr/colorAccent"
+            tools:text="ThatLilChestnut is currently watching." />
+    </LinearLayout>
+</com.charlesmadere.hummingbird.views.AbsSubstoryStandaloneItemView>

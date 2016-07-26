@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.charlesmadere.hummingbird.views.HeaderMediaStoryItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/CardItem">
-
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdvImage"
+            android:layout_marginEnd="@dimen/root_padding"
+            style="@style/AnimePoster" />
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvTitle"
+                tools:text="The Disappearance of Haruhi Suzumiya"
+                style="@style/AnimeTitle" />
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvMediaType"
+                tools:text="@string/movie"
+                style="@style/MediaType" />
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvGenres"
+                tools:text="Comedy, Mystery, Romance"
+                tools:visibility="visible"
+                style="@style/MediaGenres" />
+        </LinearLayout>
+    </LinearLayout>
 </com.charlesmadere.hummingbird.views.HeaderMediaStoryItemView>
