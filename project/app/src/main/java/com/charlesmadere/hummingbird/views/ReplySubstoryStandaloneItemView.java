@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.views;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
@@ -12,7 +13,7 @@ import com.charlesmadere.hummingbird.models.ReplySubstory;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ReplySubstoryStandaloneItemView extends CardView implements AdapterView<ReplySubstory> {
+public class ReplySubstoryStandaloneItemView extends CardView implements AdapterView<Void> {
 
     @BindView(R.id.avatarView)
     AvatarView mAvatar;
@@ -22,6 +23,9 @@ public class ReplySubstoryStandaloneItemView extends CardView implements Adapter
 
     @BindView(R.id.tvTimeAgo)
     TextView mTimeAgo;
+
+    @BindView(R.id.vDivider)
+    View mDivider;
 
 
     public ReplySubstoryStandaloneItemView(final Context context, final AttributeSet attrs) {
@@ -39,11 +43,16 @@ public class ReplySubstoryStandaloneItemView extends CardView implements Adapter
         ButterKnife.bind(this);
     }
 
-    @Override
-    public void setContent(final ReplySubstory content) {
+    public void setContent(final ReplySubstory content, final boolean showDivider) {
         mAvatar.setContent(content.getUser());
         mReply.setContent(content);
         mTimeAgo.setText(content.getCreatedAt().getRelativeTimeText(getContext()));
+        mDivider.setVisibility(showDivider ? VISIBLE : GONE);
+    }
+
+    @Override
+    public void setContent(final Void content) {
+        // intentionally empty
     }
 
 }

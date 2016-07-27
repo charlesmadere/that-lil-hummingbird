@@ -150,10 +150,6 @@
 
     <style name="CardItem.Bare" parent="CardItem.NoPadding">
         <item name="cardCornerRadius">0dp</item>
-        <item name="contentPaddingBottom">0dp</item>
-        <item name="contentPaddingLeft">0dp</item>
-        <item name="contentPaddingRight">0dp</item>
-        <item name="contentPaddingTop">0dp</item>
     </style>
 
     <style name="CardItem.NoPadding">
