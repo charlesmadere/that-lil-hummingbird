@@ -72,6 +72,21 @@ public final class SpaceAndDividerItemDecoration {
             mDivider = divider;
             mSpacing = spacing;
         }
+
+        @Override
+        public final void getItemOffsets(final Rect outRect, final View view,
+                final RecyclerView parent, final State state) {
+            super.getItemOffsets(outRect, view, parent, state);
+
+            final int position = parent.getChildAdapterPosition(view);
+
+            if (position != RecyclerView.NO_POSITION) {
+                getItemOffsets(outRect, view, parent, state, position);
+            }
+        }
+
+        protected abstract void getItemOffsets(final Rect outRect, final View view,
+                final RecyclerView parent, final State state, final int position);
     }
 
     private static class HorizontalImpl extends BaseImpl {
@@ -80,10 +95,8 @@ public final class SpaceAndDividerItemDecoration {
         }
 
         @Override
-        public void getItemOffsets(final Rect outRect, final View view, final RecyclerView parent,
-                final State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-
+        protected void getItemOffsets(final Rect outRect, final View view,
+                final RecyclerView parent, final State state, final int position) {
 
         }
 
@@ -101,10 +114,8 @@ public final class SpaceAndDividerItemDecoration {
         }
 
         @Override
-        public void getItemOffsets(final Rect outRect, final View view, final RecyclerView parent,
-                final State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-
+        protected void getItemOffsets(final Rect outRect, final View view,
+                final RecyclerView parent, final State state, final int position) {
 
         }
 
