@@ -92,12 +92,12 @@ public final class SpaceItemDecoration {
 
 
     private static abstract class BaseImpl extends ItemDecoration {
-        protected final boolean includeStartAndEndEdges;
-        protected final int spacing;
+        protected final boolean mIncludeStartAndEndEdges;
+        protected final int mSpacing;
 
         protected BaseImpl(final boolean includeStartAndEndEdges, final int spacing) {
-            this.includeStartAndEndEdges = includeStartAndEndEdges;
-            this.spacing = spacing;
+            mIncludeStartAndEndEdges = includeStartAndEndEdges;
+            mSpacing = spacing;
         }
 
         protected int getCount(final RecyclerView parent) {
@@ -150,26 +150,26 @@ public final class SpaceItemDecoration {
         protected void getItemOffsets(final Rect outRect, final View view,
                 final RecyclerView parent, final State state, final int position,
                 final int column) {
-            if (includeStartAndEndEdges) {
-                outRect.right = spacing;
+            if (mIncludeStartAndEndEdges) {
+                outRect.right = mSpacing;
 
                 if (column != 0) {
-                    outRect.top = spacing - column * spacing / columns;
+                    outRect.top = mSpacing - column * mSpacing / columns;
                 }
 
                 if (column + 1 != columns) {
-                    outRect.bottom = (column + 1) * spacing / columns;
+                    outRect.bottom = (column + 1) * mSpacing / columns;
                 }
 
                 if (position < columns) {
-                    outRect.left = spacing;
+                    outRect.left = mSpacing;
                 }
             } else {
-                outRect.top = column * spacing / columns;
-                outRect.bottom = spacing - (column + 1) * spacing / columns;
+                outRect.top = column * mSpacing / columns;
+                outRect.bottom = mSpacing - (column + 1) * mSpacing / columns;
 
                 if (position >= columns) {
-                    outRect.left = spacing;
+                    outRect.left = mSpacing;
                 }
             }
         }
@@ -185,26 +185,26 @@ public final class SpaceItemDecoration {
         protected void getItemOffsets(final Rect outRect, final View view,
                 final RecyclerView parent, final State state, final int position,
                 final int column) {
-            if (includeStartAndEndEdges) {
-                outRect.bottom = spacing;
+            if (mIncludeStartAndEndEdges) {
+                outRect.bottom = mSpacing;
 
                 if (column != 0) {
-                    outRect.left = spacing - column * spacing / columns;
+                    outRect.left = mSpacing - column * mSpacing / columns;
                 }
 
                 if (column + 1 != columns) {
-                    outRect.right = (column + 1) * spacing / columns;
+                    outRect.right = (column + 1) * mSpacing / columns;
                 }
 
                 if (position < columns) {
-                    outRect.top = spacing;
+                    outRect.top = mSpacing;
                 }
             } else {
-                outRect.left = column * spacing / columns;
-                outRect.right = spacing - (column + 1) * spacing / columns;
+                outRect.left = column * mSpacing / columns;
+                outRect.right = mSpacing - (column + 1) * mSpacing / columns;
 
                 if (position >= columns) {
-                    outRect.top = spacing;
+                    outRect.top = mSpacing;
                 }
             }
         }
@@ -225,14 +225,14 @@ public final class SpaceItemDecoration {
         @Override
         protected void getItemOffsets(final Rect outRect, final View view,
                 final RecyclerView parent, final State state, final int position) {
-            if (includeStartAndEndEdges) {
-                outRect.right = spacing;
+            if (mIncludeStartAndEndEdges) {
+                outRect.right = mSpacing;
 
                 if (position == 0) {
-                    outRect.left = spacing;
+                    outRect.left = mSpacing;
                 }
             } else if (position + 1 != getCount(parent)) {
-                outRect.right = spacing;
+                outRect.right = mSpacing;
             }
         }
     }
@@ -246,14 +246,14 @@ public final class SpaceItemDecoration {
         @Override
         protected void getItemOffsets(final Rect outRect, final View view,
                 final RecyclerView parent, final State state, final int position) {
-            if (includeStartAndEndEdges) {
-                outRect.bottom = spacing;
+            if (mIncludeStartAndEndEdges) {
+                outRect.bottom = mSpacing;
 
                 if (position == 0) {
-                    outRect.top = spacing;
+                    outRect.top = mSpacing;
                 }
             } else if (position + 1 != getCount(parent)) {
-                outRect.bottom = spacing;
+                outRect.bottom = mSpacing;
             }
         }
     }
@@ -266,7 +266,7 @@ public final class SpaceItemDecoration {
         @Override
         protected void getItemOffsets(final Rect outRect, final View view,
                 final RecyclerView parent, final State state, final int position) {
-            outRect.right = spacing;
+            outRect.right = mSpacing;
         }
     }
 
@@ -278,7 +278,7 @@ public final class SpaceItemDecoration {
         @Override
         protected void getItemOffsets(final Rect outRect, final View view,
                 final RecyclerView parent, final State state, final int position) {
-            outRect.bottom = spacing;
+            outRect.bottom = mSpacing;
         }
     }
 
