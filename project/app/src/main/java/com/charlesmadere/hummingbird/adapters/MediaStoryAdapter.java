@@ -36,8 +36,11 @@ public class MediaStoryAdapter extends BaseMultiPaginationAdapter {
     @Override
     public void onBindViewHolder(final AdapterView.ViewHolder holder, final int position) {
         if (holder.getAdapterView() instanceof AbsSubstoryStandaloneItemView) {
+            final boolean showDivider = isPaginating() ? position + 2 < getItemCount()
+                    : position + 1 < getItemCount();
+
             ((AbsSubstoryStandaloneItemView) holder.getAdapterView()).setContent(
-                    (AbsSubstory) getItem(position), mUser);
+                    (AbsSubstory) getItem(position), mUser, showDivider);
         } else {
             super.onBindViewHolder(holder, position);
         }

@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.views;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
@@ -24,6 +25,9 @@ public class AbsSubstoryStandaloneItemView extends CardView implements AdapterVi
     @BindView(R.id.tvTimeAgo)
     TextView mTimeAgo;
 
+    @BindView(R.id.vDivider)
+    View mDivider;
+
 
     public AbsSubstoryStandaloneItemView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
@@ -40,10 +44,11 @@ public class AbsSubstoryStandaloneItemView extends CardView implements AdapterVi
         ButterKnife.bind(this);
     }
 
-    public void setContent(final AbsSubstory content, final User user) {
+    public void setContent(final AbsSubstory content, final User user, final boolean showDivider) {
         mAvatarView.setContent(user);
         mAbsSubstoryTextView.setContent(content, user);
         mTimeAgo.setText(content.getCreatedAt().getRelativeTimeText(getContext()));
+        mDivider.setVisibility(showDivider ? VISIBLE : GONE);
     }
 
     @Override
