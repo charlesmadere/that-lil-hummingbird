@@ -73,6 +73,10 @@ public final class SpaceAndDividerItemDecoration {
             mSpacing = spacing;
         }
 
+        protected int getCount(final RecyclerView parent) {
+            return parent.getAdapter().getItemCount();
+        }
+
         @Override
         public final void getItemOffsets(final Rect outRect, final View view,
                 final RecyclerView parent, final State state) {
@@ -97,7 +101,11 @@ public final class SpaceAndDividerItemDecoration {
         @Override
         protected void getItemOffsets(final Rect outRect, final View view,
                 final RecyclerView parent, final State state, final int position) {
-
+            if (position >= 1) {
+                outRect.right = mDivider.getIntrinsicWidth();
+            } else if (position + 1 != getCount(parent)) {
+                outRect.right = mSpacing;
+            }
         }
 
         @Override
@@ -116,7 +124,11 @@ public final class SpaceAndDividerItemDecoration {
         @Override
         protected void getItemOffsets(final Rect outRect, final View view,
                 final RecyclerView parent, final State state, final int position) {
-
+            if (position >= 1) {
+                outRect.bottom = mDivider.getIntrinsicHeight();
+            } else if (position + 1 != getCount(parent)) {
+                outRect.bottom = mSpacing;
+            }
         }
 
         @Override
