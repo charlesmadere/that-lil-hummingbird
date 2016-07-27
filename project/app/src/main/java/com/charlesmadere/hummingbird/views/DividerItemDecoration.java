@@ -78,7 +78,7 @@ public final class DividerItemDecoration {
         public void getItemOffsets(final Rect outRect, final View view, final RecyclerView parent,
                 final State state) {
             super.getItemOffsets(outRect, view, parent, state);
-            outRect.set(0, 0, mDivider.getIntrinsicWidth(), 0);
+            outRect.right = mDivider.getIntrinsicWidth();
         }
 
         @Override
@@ -111,7 +111,7 @@ public final class DividerItemDecoration {
         public void getItemOffsets(final Rect outRect, final View view, final RecyclerView parent,
                 final State state) {
             super.getItemOffsets(outRect, view, parent, state);
-            outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
+            outRect.bottom = mDivider.getIntrinsicHeight();
         }
 
         @Override
