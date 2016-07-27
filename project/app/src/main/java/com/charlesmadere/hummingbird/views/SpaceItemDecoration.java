@@ -5,27 +5,28 @@ import android.support.annotation.DimenRes;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.ItemDecoration;
+import android.support.v7.widget.RecyclerView.LayoutManager;
+import android.support.v7.widget.RecyclerView.State;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 /**
- * A class that encapsulates all of the functionality necessary to add space between items in a
- * {@link RecyclerView}. You only need to worry about a single method:
- * {@link #apply(RecyclerView, boolean, int)}
+ * Use this class to add space between items in a {@link RecyclerView}.
  */
 public final class SpaceItemDecoration {
 
     /**
      * The only method that you need to worry about in this class. Automatically applies a
-     * {@link RecyclerView.ItemDecoration} class to the given {@link RecyclerView} based on
-     * its {@link RecyclerView.LayoutManager} and orientation.
+     * {@link ItemDecoration} class to the given {@link RecyclerView} based on its
+     * {@link LayoutManager} and orientation.
      *
      * @param view
-     * The {@link RecyclerView} to have the {@link RecyclerView.ItemDecoration} applied to. Note
-     * that a {@link RecyclerView.LayoutManager} MUST have already been set before you call this
-     * method, otherwise a {@link NullPointerException} will be thrown.
+     * The {@link RecyclerView} to have the {@link ItemDecoration} applied to. Note that a
+     * {@link LayoutManager} MUST have already been set before you call this method, otherwise a
+     * {@link NullPointerException} will be thrown.
      *
-     * @param includeStartEndEdge
+     * @param includeStartAndEndEdges
      * True if you want to add spacing before the first item and after the last item, in addition
      * to adding space between every item. False if you only want to add spacing between items.
      *
@@ -33,53 +34,49 @@ public final class SpaceItemDecoration {
      * the Android R.dimen.* value for the size of the spacing
      *
      * @throws IllegalArgumentException
-     * If the {@link RecyclerView}'s {@link RecyclerView.LayoutManager} is not a
-     * {@link GridLayoutManager} or a {@link LinearLayoutManager}, then this Exception will be
-     * thrown.
+     * If the {@link RecyclerView}'s {@link LayoutManager} is not a {@link GridLayoutManager},
+     * a {@link LinearLayoutManager}, or a {@link StaggeredGridLayoutManager}, then this
+     * Exception will be thrown.
      *
      * @throws NullPointerException
-     * If the {@link RecyclerView} does not have a {@link RecyclerView.LayoutManager} already set,
-     * then this Exception will be thrown.
+     * If the {@link RecyclerView} does not have a {@link LayoutManager} already set, then this
+     * Exception will be thrown.
      */
-    public static void apply(final RecyclerView view, final boolean includeStartEndEdge,
-            @DimenRes final int spacingResId) throws IllegalArgumentException {
-        final RecyclerView.LayoutManager lm = view.getLayoutManager();
+    public static void apply(final RecyclerView view,
+            final boolean includeStartAndEndEdges, @DimenRes final int spacingResId) {
+        final LayoutManager lm = view.getLayoutManager();
 
         if (lm == null) {
             throw new NullPointerException("RecyclerView must have a LayoutManager set");
         }
 
         final int spacing = view.getResources().getDimensionPixelSize(spacingResId);
-        final RecyclerView.ItemDecoration itemDecoration;
+        final ItemDecoration itemDecoration;
 
         if (lm instanceof GridLayoutManager) {
             final GridLayoutManager glm = (GridLayoutManager) lm;
             final int columns = glm.getSpanCount();
 
             if (glm.getOrientation() == GridLayoutManager.HORIZONTAL) {
-                itemDecoration = new HorizontalGridSpaceItemDecoration(includeStartEndEdge,
-                        spacing, columns);
+                itemDecoration = new HorizontalGridImpl(includeStartAndEndEdges, spacing, columns);
             } else {
-                itemDecoration = new VerticalGridSpaceItemDecoration(includeStartEndEdge,
-                        spacing, columns);
+                itemDecoration = new VerticalGridImpl(includeStartAndEndEdges, spacing, columns);
             }
         } else if (lm instanceof LinearLayoutManager) {
             final LinearLayoutManager llm = (LinearLayoutManager) lm;
 
             if (llm.getOrientation() == LinearLayoutManager.HORIZONTAL) {
-                itemDecoration = new HorizontalLinearSpaceItemDecoration(includeStartEndEdge,
-                        spacing);
+                itemDecoration = new HorizontalLinearImpl(includeStartAndEndEdges, spacing);
             } else {
-                itemDecoration = new VerticalLinearSpaceItemDecoration(includeStartEndEdge,
-                        spacing);
+                itemDecoration = new VerticalLinearImpl(includeStartAndEndEdges, spacing);
             }
         } else if (lm instanceof StaggeredGridLayoutManager) {
             final StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) lm;
 
             if (sglm.getOrientation() == StaggeredGridLayoutManager.HORIZONTAL) {
-                itemDecoration = new HorizontalStaggeredGridSpaceItemDecoration(spacing);
+                itemDecoration = new HorizontalStaggeredGridImpl(spacing);
             } else {
-                itemDecoration = new VerticalStaggeredGridSpaceItemDecoration(spacing);
+                itemDecoration = new VerticalStaggeredGridImpl(spacing);
             }
         } else {
             // Maybe we shouldn't throw an exception here, and should instead just return a no-op
@@ -94,12 +91,11 @@ public final class SpaceItemDecoration {
     }
 
 
-    protected static abstract class BaseSpaceItemDecoration extends RecyclerView.ItemDecoration {
+    private static abstract class BaseImpl extends ItemDecoration {
         protected final boolean includeStartAndEndEdges;
         protected final int spacing;
 
-        protected BaseSpaceItemDecoration(final boolean includeStartAndEndEdges,
-                final int spacing) {
+        protected BaseImpl(final boolean includeStartAndEndEdges, final int spacing) {
             this.includeStartAndEndEdges = includeStartAndEndEdges;
             this.spacing = spacing;
         }
@@ -110,7 +106,7 @@ public final class SpaceItemDecoration {
 
         @Override
         public final void getItemOffsets(final Rect outRect, final View view,
-                final RecyclerView parent, final RecyclerView.State state) {
+                final RecyclerView parent, final State state) {
             super.getItemOffsets(outRect, view, parent, state);
 
             final int position = parent.getChildAdapterPosition(view);
@@ -120,41 +116,39 @@ public final class SpaceItemDecoration {
         }
 
         protected abstract void getItemOffsets(final Rect outRect, final View view,
-                final RecyclerView parent, final RecyclerView.State state, final int position);
+                final RecyclerView parent, final State state, final int position);
     }
 
-
-    protected static abstract class GridSpaceItemDecoration extends BaseSpaceItemDecoration {
+    private static abstract class GridImpl extends BaseImpl {
         protected final int columns;
 
-        protected GridSpaceItemDecoration(final boolean includeStartAndEndEdges,
-                final int spacing, final int columns) {
+        protected GridImpl(final boolean includeStartAndEndEdges, final int spacing,
+                final int columns) {
             super(includeStartAndEndEdges, spacing);
             this.columns = columns;
         }
 
         @Override
         protected final void getItemOffsets(final Rect outRect, final View view,
-                final RecyclerView parent, final RecyclerView.State state, final int position) {
+                final RecyclerView parent, final State state, final int position) {
             final int column = position % columns;
             getItemOffsets(outRect, view, parent, state, position, column);
         }
 
         protected abstract void getItemOffsets(final Rect outRect, final View view,
-                final RecyclerView parent, final RecyclerView.State state, final int position,
+                final RecyclerView parent, final State state, final int position,
                 final int column);
     }
 
-
-    private static class HorizontalGridSpaceItemDecoration extends GridSpaceItemDecoration {
-        private HorizontalGridSpaceItemDecoration(final boolean includeStartAndEndEdges,
-                final int spacing, final int columns) {
+    private static class HorizontalGridImpl extends GridImpl {
+        private HorizontalGridImpl(final boolean includeStartAndEndEdges, final int spacing,
+                final int columns) {
             super(includeStartAndEndEdges, spacing, columns);
         }
 
         @Override
         protected void getItemOffsets(final Rect outRect, final View view,
-                final RecyclerView parent, final RecyclerView.State state, final int position,
+                final RecyclerView parent, final State state, final int position,
                 final int column) {
             if (includeStartAndEndEdges) {
                 outRect.right = spacing;
@@ -181,16 +175,15 @@ public final class SpaceItemDecoration {
         }
     }
 
-
-    private static class VerticalGridSpaceItemDecoration extends GridSpaceItemDecoration {
-        private VerticalGridSpaceItemDecoration(final boolean includeStartAndEndEdges,
-                final int spacing, final int columns) {
+    private static class VerticalGridImpl extends GridImpl {
+        private VerticalGridImpl(final boolean includeStartAndEndEdges, final int spacing,
+                final int columns) {
             super(includeStartAndEndEdges, spacing, columns);
         }
 
         @Override
         protected void getItemOffsets(final Rect outRect, final View view,
-                final RecyclerView parent, final RecyclerView.State state, final int position,
+                final RecyclerView parent, final State state, final int position,
                 final int column) {
             if (includeStartAndEndEdges) {
                 outRect.bottom = spacing;
@@ -217,24 +210,21 @@ public final class SpaceItemDecoration {
         }
     }
 
-
-    protected static abstract class LinearSpaceItemDecoration extends BaseSpaceItemDecoration {
-        protected LinearSpaceItemDecoration(final boolean includeStartAndEndEdges,
+    private static abstract class LinearImpl extends BaseImpl {
+        protected LinearImpl(final boolean includeStartAndEndEdges,
                 final int spacing) {
             super(includeStartAndEndEdges, spacing);
         }
     }
 
-
-    private static class HorizontalLinearSpaceItemDecoration extends LinearSpaceItemDecoration {
-        private HorizontalLinearSpaceItemDecoration(final boolean includeStartAndEndEdges,
-                final int spacing) {
+    private static class HorizontalLinearImpl extends LinearImpl {
+        private HorizontalLinearImpl(final boolean includeStartAndEndEdges, final int spacing) {
             super(includeStartAndEndEdges, spacing);
         }
 
         @Override
         protected void getItemOffsets(final Rect outRect, final View view,
-                final RecyclerView parent, final RecyclerView.State state, final int position) {
+                final RecyclerView parent, final State state, final int position) {
             if (includeStartAndEndEdges) {
                 outRect.right = spacing;
 
@@ -247,16 +237,15 @@ public final class SpaceItemDecoration {
         }
     }
 
-
-    private static class VerticalLinearSpaceItemDecoration extends LinearSpaceItemDecoration {
-        private VerticalLinearSpaceItemDecoration(final boolean includeStartAndEndEdges,
+    private static class VerticalLinearImpl extends LinearImpl {
+        private VerticalLinearImpl(final boolean includeStartAndEndEdges,
                 final int spacing) {
             super(includeStartAndEndEdges, spacing);
         }
 
         @Override
         protected void getItemOffsets(final Rect outRect, final View view,
-                final RecyclerView parent, final RecyclerView.State state, final int position) {
+                final RecyclerView parent, final State state, final int position) {
             if (includeStartAndEndEdges) {
                 outRect.bottom = spacing;
 
@@ -269,26 +258,26 @@ public final class SpaceItemDecoration {
         }
     }
 
-    private static class HorizontalStaggeredGridSpaceItemDecoration extends BaseSpaceItemDecoration {
-        private HorizontalStaggeredGridSpaceItemDecoration(final int spacing) {
+    private static class HorizontalStaggeredGridImpl extends BaseImpl {
+        private HorizontalStaggeredGridImpl(final int spacing) {
             super(false, spacing);
         }
 
         @Override
         protected void getItemOffsets(final Rect outRect, final View view,
-                final RecyclerView parent, final RecyclerView.State state, final int position) {
+                final RecyclerView parent, final State state, final int position) {
             outRect.right = spacing;
         }
     }
 
-    private static class VerticalStaggeredGridSpaceItemDecoration extends BaseSpaceItemDecoration {
-        private VerticalStaggeredGridSpaceItemDecoration(final int spacing) {
+    private static class VerticalStaggeredGridImpl extends BaseImpl {
+        private VerticalStaggeredGridImpl(final int spacing) {
             super(false, spacing);
         }
 
         @Override
         protected void getItemOffsets(final Rect outRect, final View view,
-                final RecyclerView parent, final RecyclerView.State state, final int position) {
+                final RecyclerView parent, final State state, final int position) {
             outRect.bottom = spacing;
         }
     }

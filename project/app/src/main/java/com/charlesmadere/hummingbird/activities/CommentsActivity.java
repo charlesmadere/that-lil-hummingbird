@@ -28,6 +28,7 @@ import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
+import com.charlesmadere.hummingbird.views.SpaceAndDividerItemDecoration;
 
 import java.lang.ref.WeakReference;
 
@@ -203,6 +204,7 @@ public class CommentsActivity extends BaseDrawerActivity implements
     protected void onViewsBound() {
         super.onViewsBound();
         mRefreshLayout.setOnRefreshListener(this);
+        SpaceAndDividerItemDecoration.apply(mRecyclerView, R.dimen.root_padding);
         mAdapter = new CommentsAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
