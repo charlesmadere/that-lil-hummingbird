@@ -90,6 +90,10 @@ public class Manga implements Parcelable {
         return mGenres;
     }
 
+    public int getGenresSize() {
+        return mGenres == null ? 0 : mGenres.size();
+    }
+
     public String getGenresString(final Resources res) {
         if (!hasGenres()) {
             return "";

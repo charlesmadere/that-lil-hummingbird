@@ -34,6 +34,10 @@
                             android:id="@+id/hbivTheme"
                             app:headText="@string/theme"
                             style="@style/ResponsiveWidthCardItem" />
+                        <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                            android:id="@+id/hbivDefaultLibrarySort"
+                            app:headText="@string/default_library_sorting"
+                            style="@style/ResponsiveWidthCardItem" />
                         <com.charlesmadere.hummingbird.views.CheckablePreferenceView
                             android:id="@+id/cpvShowNsfwContent"
                             app:checkable_type="checkbox"

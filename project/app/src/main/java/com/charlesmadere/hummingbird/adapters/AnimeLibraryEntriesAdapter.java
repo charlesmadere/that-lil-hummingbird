@@ -7,10 +7,14 @@ import android.view.ViewGroup;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 import com.charlesmadere.hummingbird.models.Feed;
+import com.charlesmadere.hummingbird.models.LibrarySort;
 import com.charlesmadere.hummingbird.views.AnimeLibraryEntryItemView;
 import com.charlesmadere.hummingbird.views.InternalAnimeItemView;
 
-public class AnimeLibraryEntriesAdapter extends BaseAdapter<AnimeLibraryEntry> {
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class AnimeLibraryEntriesAdapter extends BasePaginationAdapter<AnimeLibraryEntry> {
 
     private final InternalAnimeItemView.OnEditClickListener mEditClickListener;
 
@@ -26,7 +30,7 @@ public class AnimeLibraryEntriesAdapter extends BaseAdapter<AnimeLibraryEntry> {
     }
 
     @Override
-    public int getItemViewType(final int position) {
+    public int getItemViewTypeForPosition(final int position) {
         return R.layout.item_anime_library_entry;
     }
 
@@ -38,8 +42,29 @@ public class AnimeLibraryEntriesAdapter extends BaseAdapter<AnimeLibraryEntry> {
         return viewHolder;
     }
 
-    public void set(final Feed feed) {
-        super.set(feed.getAnimeLibraryEntries());
+    public void set(final Feed feed, final LibrarySort sort) {
+        if (!feed.hasAnimeLibraryEntries()) {
+            super.set(null);
+            return;
+        }
+
+        final ArrayList<AnimeLibraryEntry> entries = new ArrayList<>(feed.getAnimeLibraryEntries());
+
+        switch (sort) {
+            case DATE:
+                Collections.sort(entries, AnimeLibraryEntry.DATE);
+                break;
+
+            case TITLE:
+                Collections.sort(entries, AnimeLibraryEntry.TITLE);
+                break;
+
+            default:
+                throw new IllegalArgumentException("encountered illegal " +
+                        LibrarySort.class.getName() + ": \"" + sort + '"');
+        }
+
+        super.set(entries);
     }
 
 }

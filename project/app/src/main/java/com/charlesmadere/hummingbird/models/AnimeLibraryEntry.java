@@ -8,6 +8,8 @@ import android.text.TextUtils;
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Comparator;
+
 public class AnimeLibraryEntry implements Parcelable {
 
     @SerializedName("is_favorite")
@@ -179,6 +181,21 @@ public class AnimeLibraryEntry implements Parcelable {
         @Override
         public AnimeLibraryEntry[] newArray(final int size) {
             return new AnimeLibraryEntry[size];
+        }
+    };
+
+    public static final Comparator<AnimeLibraryEntry> DATE = new Comparator<AnimeLibraryEntry>() {
+        @Override
+        public int compare(final AnimeLibraryEntry lhs, final AnimeLibraryEntry rhs) {
+            return SimpleDate.REVERSE_CHRONOLOGICAL_ORDER.compare(lhs.getLastWatched(),
+                    rhs.getLastWatched());
+        }
+    };
+
+    public static final Comparator<AnimeLibraryEntry> TITLE = new Comparator<AnimeLibraryEntry>() {
+        @Override
+        public int compare(final AnimeLibraryEntry lhs, final AnimeLibraryEntry rhs) {
+            return lhs.getAnime().getTitle().compareToIgnoreCase(rhs.getAnime().getTitle());
         }
     };
 

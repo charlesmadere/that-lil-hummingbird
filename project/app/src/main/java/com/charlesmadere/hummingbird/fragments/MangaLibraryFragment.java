@@ -5,6 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -15,12 +18,15 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.MangaLibraryEntriesAdapter;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
+import com.charlesmadere.hummingbird.models.LibrarySort;
 import com.charlesmadere.hummingbird.models.MangaLibraryEntry;
 import com.charlesmadere.hummingbird.models.MangaLibraryUpdate;
 import com.charlesmadere.hummingbird.models.ReadingStatus;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.MangaLibraryEntryItemView;
+import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
@@ -30,18 +36,22 @@ import butterknife.BindView;
 
 public class MangaLibraryFragment extends BaseFragment implements
         MangaLibraryEntryItemView.OnEditClickListener, MangaLibraryUpdateFragment.DeleteListener,
-        MangaLibraryUpdateFragment.UpdateListener, SwipeRefreshLayout.OnRefreshListener {
+        MangaLibraryUpdateFragment.UpdateListener, RecyclerViewPaginator.Listeners,
+        SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "MangaLibraryFragment";
     private static final String KEY_EDITABLE_LIBRARY = "EditableLibrary";
     private static final String KEY_FEED = "Feed";
+    private static final String KEY_LIBRARY_SORT = "LibrarySort";
     private static final String KEY_READING_STATUS = "ReadingStatus";
     private static final String KEY_USERNAME = "Username";
 
     private boolean mEditableLibrary;
     private Feed mFeed;
+    private LibrarySort mLibrarySort;
     private MangaLibraryEntriesAdapter mAdapter;
     private ReadingStatus mReadingStatus;
+    private RecyclerViewPaginator mPaginator;
     private String mUsername;
 
     @BindView(R.id.llEmpty)
@@ -87,8 +97,14 @@ public class MangaLibraryFragment extends BaseFragment implements
     }
 
     @Override
+    public boolean isLoading() {
+        return mRefreshLayout.isRefreshing() || mAdapter.isPaginating();
+    }
+
+    @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
         final Bundle args = getArguments();
         mReadingStatus = args.getParcelable(KEY_READING_STATUS);
@@ -97,7 +113,18 @@ public class MangaLibraryFragment extends BaseFragment implements
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mFeed = savedInstanceState.getParcelable(KEY_FEED);
+            mLibrarySort = savedInstanceState.getParcelable(KEY_LIBRARY_SORT);
         }
+
+        if (mLibrarySort == null) {
+            mLibrarySort = Preferences.General.DefaultLibrarySort.get();
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_manga_library, menu);
     }
 
     @Override
@@ -124,6 +151,28 @@ public class MangaLibraryFragment extends BaseFragment implements
     }
 
     @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.miSortDate:
+                setLibrarySort(LibrarySort.DATE);
+                return true;
+
+            case R.id.miSortTitle:
+                setLibrarySort(LibrarySort.TITLE);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(final Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.findItem(R.id.miSortDate).setEnabled(mLibrarySort != LibrarySort.DATE);
+        menu.findItem(R.id.miSortTitle).setEnabled(mLibrarySort != LibrarySort.TITLE);
+    }
+
+    @Override
     public void onRefresh() {
         fetchLibraryEntries();
     }
@@ -135,6 +184,8 @@ public class MangaLibraryFragment extends BaseFragment implements
         if (mFeed != null && mFeed.hasMangaLibraryEntries()) {
             outState.putParcelable(KEY_FEED, mFeed);
         }
+
+        outState.putParcelable(KEY_LIBRARY_SORT, mLibrarySort);
     }
 
     @Override
@@ -162,6 +213,7 @@ public class MangaLibraryFragment extends BaseFragment implements
 
         mRecyclerView.setAdapter(mAdapter);
         SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
+        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
 
         mEmptyText.setText(mReadingStatus.getEmptyTextResId());
         mErrorText.setText(mReadingStatus.getErrorTextResId());
@@ -170,6 +222,31 @@ public class MangaLibraryFragment extends BaseFragment implements
             showLibraryEntries(mFeed);
         } else {
             fetchLibraryEntries();
+        }
+    }
+
+    @Override
+    public void paginate() {
+        mAdapter.setPaginating(true);
+        Api.getMangaLibraryEntries(mUsername, mReadingStatus, mFeed,
+                new PaginateLibraryEntriesListener(this));
+    }
+
+    private void paginationComplete() {
+        mAdapter.set(mFeed, mLibrarySort);
+        mAdapter.setPaginating(false);
+    }
+
+    private void paginationNoMore() {
+        mPaginator.setEnabled(false);
+        mAdapter.setPaginating(false);
+    }
+
+    private void setLibrarySort(final LibrarySort librarySort) {
+        mLibrarySort = librarySort;
+
+        if (mFeed != null && mFeed.hasMangaLibraryEntries()) {
+            showLibraryEntries(mFeed);
         }
     }
 
@@ -199,11 +276,12 @@ public class MangaLibraryFragment extends BaseFragment implements
 
     private void showLibraryEntries(final Feed feed) {
         mFeed = feed;
-        mAdapter.set(mFeed);
+        mAdapter.set(mFeed, mLibrarySort);
         mEmpty.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
         mRefreshLayout.setRefreshing(false);
+        mPaginator.setEnabled(feed.hasCursor());
     }
 
 
@@ -284,6 +362,38 @@ public class MangaLibraryFragment extends BaseFragment implements
                     fragment.showLibraryEntries(feed);
                 } else {
                     fragment.showEmpty();
+                }
+            }
+        }
+    }
+
+    private static class PaginateLibraryEntriesListener implements ApiResponse<Feed> {
+        private final WeakReference<MangaLibraryFragment> mFragmentReference;
+        private final int mLibraryEntriesSize;
+
+        private PaginateLibraryEntriesListener(final MangaLibraryFragment fragment) {
+            mFragmentReference = new WeakReference<>(fragment);
+            mLibraryEntriesSize = fragment.mFeed.getAnimeLibraryEntriesSize();
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final MangaLibraryFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                fragment.paginationNoMore();
+            }
+        }
+
+        @Override
+        public void success(final Feed feed) {
+            final MangaLibraryFragment fragment = mFragmentReference.get();
+
+            if (fragment != null && !fragment.isDestroyed()) {
+                if (feed.hasCursor() && feed.getAnimeLibraryEntriesSize() > mLibraryEntriesSize) {
+                    fragment.paginationComplete();
+                } else {
+                    fragment.paginationNoMore();
                 }
             }
         }

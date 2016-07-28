@@ -90,6 +90,10 @@ public class AnimeDigest implements Parcelable {
         return mProducers;
     }
 
+    public int getProducersSize() {
+        return mProducers == null ? 0 : mProducers.size();
+    }
+
     public String getProducersString(final Resources res) {
         if (!hasProducers()) {
             return "";
@@ -679,6 +683,10 @@ public class AnimeDigest implements Parcelable {
             return mGenres;
         }
 
+        public int getGenresSize() {
+            return mGenres == null ? 0 : mGenres.size();
+        }
+
         public String getGenresString(final Resources res) {
             if (!hasGenres()) {
                 return "";
@@ -694,6 +702,10 @@ public class AnimeDigest implements Parcelable {
         @Nullable
         public ArrayList<String> getLanguages() {
             return mLanguages;
+        }
+
+        public int getLanguagesSize() {
+            return mLanguages == null ? 0 : mLanguages.size();
         }
 
         public String getLanguagesString(final Resources res) {

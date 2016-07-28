@@ -35,55 +35,28 @@
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:text="@string/titles"
                     style="@style/ResponsiveWidthCardHeader" />
-                <LinearLayout
-                    style="@style/ResponsiveWidthCardItem">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvCanonicalTitle"
-                        tools:text="Kill La Kill"
-                        style="@style/ResponsiveWidthCardItemHeader" />
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:text="@string/canonical_title"
-                        style="@style/ResponsiveWidthCardItemBody" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/llAlternateTitle"
+                <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                    android:id="@+id/hbivCanonicalTitle"
+                    app:bodyText="@string/canonical_title"
+                    style="@style/ResponsiveWidthCardItem" />
+                <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                    android:id="@+id/hbivAlternateTitle"
                     android:visibility="gone"
+                    app:bodyText="@string/alternate_title"
                     tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvAlternateTitle"
-                        tools:text="Kill La Kill"
-                        style="@style/ResponsiveWidthCardItemHeader" />
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:text="@string/alternate_title"
-                        style="@style/ResponsiveWidthCardItemBody" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/llEnglishTitle"
+                    style="@style/ResponsiveWidthCardItem" />
+                <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                    android:id="@+id/hbivEnglishTitle"
                     android:visibility="gone"
+                    app:bodyText="@string/english_title"
                     tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvEnglishTitle"
-                        tools:text="Kill La Kill"
-                        style="@style/ResponsiveWidthCardItemHeader" />
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:text="@string/english_title"
-                        style="@style/ResponsiveWidthCardItemBody" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/llRomajiTitle"
+                    style="@style/ResponsiveWidthCardItem" />
+                <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                    android:id="@+id/hbivRomajiTitle"
                     android:visibility="gone"
+                    app:bodyText="@string/romaji_title"
                     tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvRomajiTitle"
-                        tools:text="Kill La Kill"
-                        style="@style/ResponsiveWidthCardItemHeader" />
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:text="@string/romaji_title"
-                        style="@style/ResponsiveWidthCardItemBody" />
-                </LinearLayout>
+                    style="@style/ResponsiveWidthCardItem" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
@@ -94,168 +67,79 @@
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:text="@string/details"
                     style="@style/ResponsiveWidthCardHeader" />
-                <LinearLayout
-                    android:id="@+id/llAnimeType"
+                <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                    android:id="@+id/hbivAnimeType"
+                    android:visibility="gone"
+                    app:bodyText="@string/type"
+                    tools:visibility="visible"
+                    style="@style/ResponsiveWidthCardItem" />
+                <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                    android:id="@+id/hbivAgeRating"
+                    android:visibility="gone"
+                    app:bodyText="@string/age_rating"
+                    tools:visibility="visible"
+                    style="@style/ResponsiveWidthCardItem" />
+                <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                    android:id="@+id/hbivGenres"
                     android:visibility="gone"
                     tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvAnimeType"
-                        tools:text="@string/movie"
-                        style="@style/ResponsiveWidthCardItemHeader" />
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:text="@string/type"
-                        style="@style/ResponsiveWidthCardItemBody" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/llAgeRating"
+                    style="@style/ResponsiveWidthCardItem" />
+                <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                    android:id="@+id/hbivLanguages"
                     android:visibility="gone"
                     tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvAgeRating"
-                        tools:text="@string/pg13"
-                        style="@style/ResponsiveWidthCardItemHeader" />
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvAgeRatingGuide"
-                        tools:text="@string/age_rating"
-                        style="@style/ResponsiveWidthCardItemBody" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/llGenres"
+                    style="@style/ResponsiveWidthCardItem" />
+                <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                    android:id="@+id/hbivEpisodeCount"
                     android:visibility="gone"
                     tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvGenresHeader"
-                        tools:text="Comedy, Mystery, Romance"
-                        style="@style/ResponsiveWidthCardItemHeader" />
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvGenresBody"
-                        tools:text="@string/genre"
-                        style="@style/ResponsiveWidthCardItemBody" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/llLanguages"
+                    style="@style/ResponsiveWidthCardItem" />
+                <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                    android:id="@+id/hbivEpisodeLength"
                     android:visibility="gone"
                     tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvLanguagesHeader"
-                        tools:text="English, Japanese, Spanish"
-                        style="@style/ResponsiveWidthCardItemHeader" />
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvLanguagesBody"
-                        tools:text="@string/languages"
-                        style="@style/ResponsiveWidthCardItemBody" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/llEpisodeCount"
+                    style="@style/ResponsiveWidthCardItem" />
+                <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                    android:id="@+id/hbivAired"
+                    android:visibility="gone"
+                    app:bodyText="@string/aired"
+                    tools:visibility="visible"
+                    style="@style/ResponsiveWidthCardItem" />
+                <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                    android:id="@+id/hbivWillAir"
+                    android:visibility="gone"
+                    app:bodyText="@string/will_air"
+                    tools:visibility="visible"
+                    style="@style/ResponsiveWidthCardItem" />
+                <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                    android:id="@+id/hbivStartedAiring"
+                    android:visibility="gone"
+                    app:bodyText="@string/started_airing"
+                    tools:visibility="visible"
+                    style="@style/ResponsiveWidthCardItem" />
+                <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                    android:id="@+id/hbivFinishedAiring"
+                    android:visibility="gone"
+                    app:bodyText="@string/finished_airing"
+                    tools:visibility="visible"
+                    style="@style/ResponsiveWidthCardItem" />
+                <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                    android:id="@+id/hbivCommunityRating"
+                    android:visibility="gone"
+                    app:bodyText="@string/community_rating"
+                    tools:visibility="visible"
+                    style="@style/ResponsiveWidthCardItem" />
+                <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                    android:id="@+id/hbivProducers"
                     android:visibility="gone"
                     tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvEpisodeCountHeader"
-                        tools:text="12"
-                        style="@style/ResponsiveWidthCardItemHeader" />
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvEpisodeCountBody"
-                        tools:text="@string/episodes"
-                        style="@style/ResponsiveWidthCardItemBody" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/llEpisodeLength"
+                    style="@style/ResponsiveWidthCardItem" />
+                <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                    android:id="@+id/hbivYouTubeLink"
                     android:visibility="gone"
+                    app:headText="@string/youtube_link"
                     tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvEpisodeLengthHeader"
-                        tools:text="24 minutes"
-                        style="@style/ResponsiveWidthCardItemHeader" />
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvEpisodeLengthBody"
-                        tools:text="@string/episode_length"
-                        style="@style/ResponsiveWidthCardItemBody" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/llAired"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvAired"
-                        tools:text="1/1/1970"
-                        style="@style/ResponsiveWidthCardItemHeader" />
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:text="@string/aired"
-                        style="@style/ResponsiveWidthCardItemBody" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/llStartedAiring"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvStartedAiring"
-                        tools:text="1/1/1970"
-                        style="@style/ResponsiveWidthCardItemHeader" />
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:text="@string/started_airing"
-                        style="@style/ResponsiveWidthCardItemBody" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/llFinishedAiring"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvFinishedAiring"
-                        tools:text="1/1/1970"
-                        style="@style/ResponsiveWidthCardItemHeader" />
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:text="@string/finished_airing"
-                        style="@style/ResponsiveWidthCardItemBody" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/llCommunityRating"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvCommunityRating"
-                        tools:text="1.2345"
-                        style="@style/ResponsiveWidthCardItemHeader" />
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:text="@string/community_rating"
-                        style="@style/ResponsiveWidthCardItemBody" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/llProducersContainer"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvProducersHeader"
-                        tools:text="1.2345"
-                        style="@style/ResponsiveWidthCardItemHeader" />
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvProducersBody"
-                        tools:text="@string/producers"
-                        style="@style/ResponsiveWidthCardItemBody" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/llYouTubeLink"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:text="@string/youtube_link"
-                        style="@style/ResponsiveWidthCardItemHeader" />
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvYouTubeLink"
-                        tools:text="https://www.youtube.com/blah"
-                        style="@style/ResponsiveWidthCardItemBody" />
-                </LinearLayout>
+                    style="@style/ResponsiveWidthCardItem" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView

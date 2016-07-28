@@ -6,12 +6,12 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.Manga;
 import com.charlesmadere.hummingbird.models.MangaDigest;
+import com.charlesmadere.hummingbird.views.HeadBodyItemView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.text.NumberFormat;
@@ -28,44 +28,23 @@ public class MangaDetailsFragment extends BaseFragment {
     @BindView(R.id.cvCover)
     CardView mCoverContainer;
 
-    @BindView(R.id.llChapters)
-    LinearLayout mChaptersContainer;
+    @BindView(R.id.hbivChapters)
+    HeadBodyItemView mChapters;
 
-    @BindView(R.id.llGenres)
-    LinearLayout mGenresContainer;
+    @BindView(R.id.hbivGenres)
+    HeadBodyItemView mGenres;
 
-    @BindView(R.id.llMangaType)
-    LinearLayout mMangaTypeContainer;
+    @BindView(R.id.hbivMangaType)
+    HeadBodyItemView mMangaType;
 
-    @BindView(R.id.llVolumes)
-    LinearLayout mVolumesContainer;
+    @BindView(R.id.hbivVolumes)
+    HeadBodyItemView mVolumes;
 
     @BindView(R.id.sdvCover)
     SimpleDraweeView mCover;
 
-    @BindView(R.id.tvChaptersBody)
-    TextView mChaptersBody;
-
-    @BindView(R.id.tvChaptersHeader)
-    TextView mChaptersHeader;
-
-    @BindView(R.id.tvGenresBody)
-    TextView mGenresBody;
-
-    @BindView(R.id.tvGenresHeader)
-    TextView mGenresHeader;
-
     @BindView(R.id.tvSynopsis)
     TextView mSynopsis;
-
-    @BindView(R.id.tvMangaType)
-    TextView mMangaType;
-
-    @BindView(R.id.tvVolumesBody)
-    TextView mVolumesBody;
-
-    @BindView(R.id.tvVolumesHeader)
-    TextView mVolumesHeader;
 
 
     public static MangaDetailsFragment create(final MangaDigest digest) {
@@ -110,32 +89,32 @@ public class MangaDetailsFragment extends BaseFragment {
         }
 
         if (manga.hasType()) {
-            mMangaType.setText(manga.getType().getTextResId());
-            mMangaTypeContainer.setVisibility(View.VISIBLE);
+            mMangaType.setHead(manga.getType().getTextResId());
+            mMangaType.setVisibility(View.VISIBLE);
         }
 
         final NumberFormat numberFormat = NumberFormat.getInstance();
         final Resources resources = getResources();
 
         if (manga.hasVolumeCount()) {
-            mVolumesHeader.setText(numberFormat.format(manga.getVolumeCount()));
-            mVolumesBody.setText(resources.getQuantityText(R.plurals.volumes,
+            mVolumes.setHead(numberFormat.format(manga.getVolumeCount()));
+            mVolumes.setBody(resources.getQuantityText(R.plurals.volumes,
                     manga.getVolumeCount()));
-            mVolumesContainer.setVisibility(View.VISIBLE);
+            mVolumes.setVisibility(View.VISIBLE);
         }
 
         if (manga.hasChapterCount()) {
-            mChaptersHeader.setText(numberFormat.format(manga.getChapterCount()));
-            mChaptersBody.setText(resources.getQuantityText(R.plurals.chapters,
+            mChapters.setHead(numberFormat.format(manga.getChapterCount()));
+            mChapters.setBody(resources.getQuantityText(R.plurals.chapters,
                     manga.getChapterCount()));
-            mChaptersContainer.setVisibility(View.VISIBLE);
+            mChapters.setVisibility(View.VISIBLE);
         }
 
         if (manga.hasGenres()) {
-            mGenresHeader.setText(manga.getGenresString(resources));
-            mGenresBody.setText(resources.getQuantityText(R.plurals.genres,
+            mGenres.setHead(manga.getGenresString(resources));
+            mGenres.setBody(resources.getQuantityText(R.plurals.genres,
                     manga.getGenres().size()));
-            mGenresContainer.setVisibility(View.VISIBLE);
+            mGenres.setVisibility(View.VISIBLE);
         }
 
         if (manga.hasSynopsis()) {

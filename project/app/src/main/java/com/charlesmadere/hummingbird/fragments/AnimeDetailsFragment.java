@@ -7,7 +7,6 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
@@ -15,6 +14,7 @@ import com.charlesmadere.hummingbird.activities.GalleryActivity;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeType;
+import com.charlesmadere.hummingbird.views.HeadBodyItemView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.text.NumberFormat;
@@ -33,122 +33,62 @@ public class AnimeDetailsFragment extends BaseFragment {
     @BindView(R.id.cvPoster)
     CardView mPosterContainer;
 
-    @BindView(R.id.llAgeRating)
-    LinearLayout mAgeRatingContainer;
+    @BindView(R.id.hbivAgeRating)
+    HeadBodyItemView mAgeRating;
 
-    @BindView(R.id.llAired)
-    LinearLayout mAiredContainer;
+    @BindView(R.id.hbivAired)
+    HeadBodyItemView mAired;
 
-    @BindView(R.id.llAlternateTitle)
-    LinearLayout mAlternateTitleContainer;
+    @BindView(R.id.hbivAlternateTitle)
+    HeadBodyItemView mAlternateTitle;
 
-    @BindView(R.id.llAnimeType)
-    LinearLayout mAnimeTypeContainer;
+    @BindView(R.id.hbivAnimeType)
+    HeadBodyItemView mAnimeType;
 
-    @BindView(R.id.llCommunityRating)
-    LinearLayout mCommunityRatingContainer;
+    @BindView(R.id.hbivCanonicalTitle)
+    HeadBodyItemView mCanonicalTitle;
 
-    @BindView(R.id.llEnglishTitle)
-    LinearLayout mEnglishTitleContainer;
+    @BindView(R.id.hbivCommunityRating)
+    HeadBodyItemView mCommunityRating;
 
-    @BindView(R.id.llEpisodeCount)
-    LinearLayout mEpisodeCountContainer;
+    @BindView(R.id.hbivEnglishTitle)
+    HeadBodyItemView mEnglishTitle;
 
-    @BindView(R.id.llEpisodeLength)
-    LinearLayout mEpisodeLengthContainer;
+    @BindView(R.id.hbivEpisodeCount)
+    HeadBodyItemView mEpisodeCount;
 
-    @BindView(R.id.llFinishedAiring)
-    LinearLayout mFinishedAiringContainer;
+    @BindView(R.id.hbivEpisodeLength)
+    HeadBodyItemView mEpisodeLength;
 
-    @BindView(R.id.llGenres)
-    LinearLayout mGenresContainer;
+    @BindView(R.id.hbivFinishedAiring)
+    HeadBodyItemView mFinishedAiring;
 
-    @BindView(R.id.llLanguages)
-    LinearLayout mLanguagesContainer;
+    @BindView(R.id.hbivGenres)
+    HeadBodyItemView mGenres;
 
-    @BindView(R.id.llProducersContainer)
-    LinearLayout mProducersContainer;
+    @BindView(R.id.hbivLanguages)
+    HeadBodyItemView mLanguages;
 
-    @BindView(R.id.llRomajiTitle)
-    LinearLayout mRomajiTitleContainer;
+    @BindView(R.id.hbivProducers)
+    HeadBodyItemView mProducers;
 
-    @BindView(R.id.llStartedAiring)
-    LinearLayout mStartedAiringContainer;
+    @BindView(R.id.hbivRomajiTitle)
+    HeadBodyItemView mRomajiTitle;
 
-    @BindView(R.id.llYouTubeLink)
-    LinearLayout mYouTubeLinkContainer;
+    @BindView(R.id.hbivStartedAiring)
+    HeadBodyItemView mStartedAiring;
+
+    @BindView(R.id.hbivWillAir)
+    HeadBodyItemView mWillAir;
+
+    @BindView(R.id.hbivYouTubeLink)
+    HeadBodyItemView mYouTubeLink;
 
     @BindView(R.id.sdvPoster)
     SimpleDraweeView mPoster;
 
-    @BindView(R.id.tvAgeRating)
-    TextView mAgeRating;
-
-    @BindView(R.id.tvAgeRatingGuide)
-    TextView mAgeRatingGuide;
-
-    @BindView(R.id.tvAired)
-    TextView mAired;
-
-    @BindView(R.id.tvAlternateTitle)
-    TextView mAlternateTitle;
-
-    @BindView(R.id.tvAnimeType)
-    TextView mAnimeType;
-
-    @BindView(R.id.tvCanonicalTitle)
-    TextView mCanonicalTitle;
-
-    @BindView(R.id.tvCommunityRating)
-    TextView mCommunityRating;
-
-    @BindView(R.id.tvEnglishTitle)
-    TextView mEnglishTitle;
-
-    @BindView(R.id.tvEpisodeCountBody)
-    TextView mEpisodeCountBody;
-
-    @BindView(R.id.tvEpisodeCountHeader)
-    TextView mEpisodeCountHeader;
-
-    @BindView(R.id.tvEpisodeLengthBody)
-    TextView mEpisodeLengthBody;
-
-    @BindView(R.id.tvEpisodeLengthHeader)
-    TextView mEpisodeLengthHeader;
-
-    @BindView(R.id.tvFinishedAiring)
-    TextView mFinishedAiring;
-
-    @BindView(R.id.tvGenresBody)
-    TextView mGenresBody;
-
-    @BindView(R.id.tvGenresHeader)
-    TextView mGenresHeader;
-
-    @BindView(R.id.tvLanguagesBody)
-    TextView mLanguagesBody;
-
-    @BindView(R.id.tvLanguagesHeader)
-    TextView mLanguagesHeader;
-
-    @BindView(R.id.tvProducersBody)
-    TextView mProducersBody;
-
-    @BindView(R.id.tvProducersHeader)
-    TextView mProducersHeader;
-
-    @BindView(R.id.tvRomajiTitle)
-    TextView mRomajiTitle;
-
-    @BindView(R.id.tvStartedAiring)
-    TextView mStartedAiring;
-
     @BindView(R.id.tvSynopsis)
     TextView mSynopsis;
-
-    @BindView(R.id.tvYouTubeLink)
-    TextView mYouTubeLinkText;
 
 
     public static AnimeDetailsFragment create(final AnimeDigest digest) {
@@ -201,104 +141,105 @@ public class AnimeDetailsFragment extends BaseFragment {
             mPosterContainer.setVisibility(View.VISIBLE);
         }
 
-        mCanonicalTitle.setText(info.getCanonicalTitle());
+        mCanonicalTitle.setHead(info.getCanonicalTitle());
 
         if (info.hasAlternateTitle()) {
-            mAlternateTitle.setText(info.getAlternateTitle());
-            mAlternateTitleContainer.setVisibility(View.VISIBLE);
+            mAlternateTitle.setHead(info.getAlternateTitle());
+            mAlternateTitle.setVisibility(View.VISIBLE);
         }
 
         if (info.hasEnglishTitle()) {
-            mEnglishTitle.setText(info.getEnglishTitle());
-            mEnglishTitleContainer.setVisibility(View.VISIBLE);
+            mEnglishTitle.setHead(info.getEnglishTitle());
+            mEnglishTitle.setVisibility(View.VISIBLE);
         }
 
         if (info.hasRomajiTitle()) {
-            mRomajiTitle.setText(info.getRomajiTitle());
-            mRomajiTitleContainer.setVisibility(View.VISIBLE);
+            mRomajiTitle.setHead(info.getRomajiTitle());
+            mRomajiTitle.setVisibility(View.VISIBLE);
         }
 
         if (info.hasType()) {
-            mAnimeType.setText(info.getType().getTextResId());
-            mAnimeTypeContainer.setVisibility(View.VISIBLE);
+            mAnimeType.setHead(info.getType().getTextResId());
+            mAnimeType.setVisibility(View.VISIBLE);
         }
 
         if (info.hasAgeRating()) {
-            mAgeRating.setText(info.getAgeRating().getTextResId());
-            mAgeRatingContainer.setVisibility(View.VISIBLE);
+            mAgeRating.setHead(info.getAgeRating().getTextResId());
 
             if (info.hasAgeRatingGuide()) {
-                mAgeRatingGuide.setText(info.getAgeRatingGuide());
-            } else {
-                mAgeRatingGuide.setText(R.string.age_rating);
+                mAgeRating.setBody(info.getAgeRatingGuide());
             }
+
+            mAgeRating.setVisibility(View.VISIBLE);
         }
 
         if (info.hasGenres()) {
-            mGenresHeader.setText(info.getGenresString(resources));
-            mGenresBody.setText(resources.getQuantityText(R.plurals.genres,
-                    info.getGenres().size()));
-            mGenresContainer.setVisibility(View.VISIBLE);
+            mGenres.setHead(info.getGenresString(resources));
+            mGenres.setBody(resources.getQuantityText(R.plurals.genres, info.getGenresSize()));
+            mGenres.setVisibility(View.VISIBLE);
         }
 
         if (info.hasLanguages()) {
-            mLanguagesHeader.setText(info.getLanguagesString(resources));
-            mLanguagesBody.setText(resources.getQuantityText(R.plurals.languages,
-                    info.getLanguages().size()));
-            mLanguagesContainer.setVisibility(View.VISIBLE);
+            mLanguages.setHead(info.getLanguagesString(resources));
+            mLanguages.setBody(resources.getQuantityText(R.plurals.languages,
+                    info.getLanguagesSize()));
+            mLanguages.setVisibility(View.VISIBLE);
         }
 
         if (info.hasEpisodeCount() && info.getType() != AnimeType.MOVIE) {
-            mEpisodeCountHeader.setText(numberFormat.format(info.getEpisodeCount()));
-            mEpisodeCountBody.setText(resources.getQuantityText(R.plurals.episodes,
+            mEpisodeCount.setHead(numberFormat.format(info.getEpisodeCount()));
+            mEpisodeCount.setBody(resources.getQuantityText(R.plurals.episodes,
                     info.getEpisodeCount()));
-            mEpisodeCountContainer.setVisibility(View.VISIBLE);
+            mEpisodeCount.setVisibility(View.VISIBLE);
         }
 
         if (info.hasEpisodeLength()) {
-            mEpisodeLengthHeader.setText(resources.getQuantityString(R.plurals.x_minutes,
+            mEpisodeLength.setHead(resources.getQuantityString(R.plurals.x_minutes,
                     info.getEpisodeLength(), numberFormat.format(info.getEpisodeLength())));
 
             if (info.getType() == AnimeType.MOVIE) {
-                mEpisodeLengthBody.setText(R.string.length);
+                mEpisodeLength.setBody(R.string.length);
             } else {
-                mEpisodeLengthBody.setText(R.string.episode_length);
+                mEpisodeLength.setBody(R.string.episode_length);
             }
 
-            mEpisodeLengthContainer.setVisibility(View.VISIBLE);
+            mEpisodeLength.setVisibility(View.VISIBLE);
         }
 
         if (info.hasStartedAiringDate()) {
             if (info.getType() == AnimeType.MOVIE) {
-                mAired.setText(info.getStartedAiringDate().getRelativeTimeText(context));
-                mAiredContainer.setVisibility(View.VISIBLE);
+                mAired.setHead(info.getStartedAiringDate().getRelativeTimeText(context));
+                mAired.setVisibility(View.VISIBLE);
+            } else if (info.getStartedAiringDate().isInTheFuture()) {
+                mWillAir.setHead(info.getStartedAiringDate().getRelativeTimeText(context));
+                mWillAir.setVisibility(View.VISIBLE);
             } else {
-                mStartedAiring.setText(info.getStartedAiringDate().getRelativeTimeText(context));
-                mStartedAiringContainer.setVisibility(View.VISIBLE);
+                mStartedAiring.setHead(info.getStartedAiringDate().getRelativeTimeText(context));
+                mStartedAiring.setVisibility(View.VISIBLE);
 
                 if (info.hasFinishedAiringDate()) {
-                    mFinishedAiring.setText(info.getFinishedAiringDate().getRelativeTimeText(context));
-                    mFinishedAiringContainer.setVisibility(View.VISIBLE);
+                    mFinishedAiring.setHead(info.getFinishedAiringDate().getRelativeTimeText(context));
+                    mFinishedAiring.setVisibility(View.VISIBLE);
                 }
             }
         }
 
         if (info.hasBayesianRating()) {
-            mCommunityRating.setText(String.format(Locale.getDefault(), "%.4f",
+            mCommunityRating.setHead(String.format(Locale.getDefault(), "%.4f",
                     info.getBayesianRating()));
-            mCommunityRatingContainer.setVisibility(View.VISIBLE);
+            mCommunityRating.setVisibility(View.VISIBLE);
         }
 
         if (mAnimeDigest.hasProducers()) {
-            mProducersHeader.setText(mAnimeDigest.getProducersString(resources));
-            mProducersBody.setText(resources.getQuantityText(R.plurals.producers,
-                    mAnimeDigest.getProducers().size()));
-            mProducersContainer.setVisibility(View.VISIBLE);
+            mProducers.setHead(mAnimeDigest.getProducersString(resources));
+            mProducers.setBody(resources.getQuantityText(R.plurals.producers,
+                    mAnimeDigest.getProducersSize()));
+            mProducers.setVisibility(View.VISIBLE);
         }
 
         if (info.hasYouTubeVideoId()) {
-            mYouTubeLinkText.setText(info.getYouTubeVideoUrl());
-            mYouTubeLinkContainer.setVisibility(View.VISIBLE);
+            mYouTubeLink.setBody(info.getYouTubeVideoUrl());
+            mYouTubeLink.setVisibility(View.VISIBLE);
         }
 
         if (info.hasSynopsis()) {
@@ -308,7 +249,7 @@ public class AnimeDetailsFragment extends BaseFragment {
         }
     }
 
-    @OnClick(R.id.llYouTubeLink)
+    @OnClick(R.id.hbivYouTubeLink)
     void onYouTubeLinkClick() {
         MiscUtils.openUrl(getActivity(), mAnimeDigest.getInfo().getYouTubeVideoUrl());
     }

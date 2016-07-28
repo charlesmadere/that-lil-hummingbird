@@ -8,6 +8,7 @@ import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.AppNewsStatus;
 import com.charlesmadere.hummingbird.models.NightMode;
 import com.charlesmadere.hummingbird.models.PollFrequency;
+import com.charlesmadere.hummingbird.models.LibrarySort;
 import com.charlesmadere.hummingbird.models.TitleType;
 
 public final class Preferences {
@@ -55,12 +56,14 @@ public final class Preferences {
         private static final String TAG = Preferences.TAG + ".General";
         public static final BooleanPreference ShowNsfwContent;
         public static final GsonPreference<NightMode> Theme;
+        public static final GsonPreference<LibrarySort> DefaultLibrarySort;
         public static final GsonPreference<TitleType> TitleLanguage;
         public static final IntegerPreference PreviousLaunchVersion;
 
         static {
             ShowNsfwContent = new BooleanPreference(TAG, "ShowNsfwContent", Boolean.FALSE);
             Theme = new GsonPreference<>(TAG, "NightMode", NightMode.class, NightMode.getDefault());
+            DefaultLibrarySort = new GsonPreference<>(TAG, "DefaultLibrarySort", LibrarySort.class, LibrarySort.DATE);
             TitleLanguage = new GsonPreference<>(TAG, "TitleLanguage", TitleType.class, TitleType.ENGLISH);
             PreviousLaunchVersion = new IntegerPreference(TAG, "PreviousLaunchVersion", null);
         }

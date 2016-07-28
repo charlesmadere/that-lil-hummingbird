@@ -6,10 +6,14 @@ import android.view.ViewGroup;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.Feed;
+import com.charlesmadere.hummingbird.models.LibrarySort;
 import com.charlesmadere.hummingbird.models.MangaLibraryEntry;
 import com.charlesmadere.hummingbird.views.MangaLibraryEntryItemView;
 
-public class MangaLibraryEntriesAdapter extends BaseAdapter<MangaLibraryEntry> {
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class MangaLibraryEntriesAdapter extends BasePaginationAdapter<MangaLibraryEntry> {
 
     private final MangaLibraryEntryItemView.OnEditClickListener mEditClickListener;
 
@@ -18,14 +22,14 @@ public class MangaLibraryEntriesAdapter extends BaseAdapter<MangaLibraryEntry> {
         this(context, null);
     }
 
-    public MangaLibraryEntriesAdapter(final Context context, final
-            @Nullable MangaLibraryEntryItemView.OnEditClickListener editClickListener) {
+    public MangaLibraryEntriesAdapter(final Context context,
+            @Nullable final MangaLibraryEntryItemView.OnEditClickListener editClickListener) {
         super(context);
         mEditClickListener = editClickListener;
     }
 
     @Override
-    public int getItemViewType(final int position) {
+    public int getItemViewTypeForPosition(final int position) {
         return R.layout.item_manga_library_entry;
     }
 
@@ -37,8 +41,29 @@ public class MangaLibraryEntriesAdapter extends BaseAdapter<MangaLibraryEntry> {
         return viewHolder;
     }
 
-    public void set(final Feed feed) {
-        super.set(feed.getMangaLibraryEntries());
+    public void set(final Feed feed, final LibrarySort sort) {
+        if (!feed.hasMangaLibraryEntries()) {
+            super.set(null);
+            return;
+        }
+
+        final ArrayList<MangaLibraryEntry> entries = new ArrayList<>(feed.getMangaLibraryEntries());
+
+        switch (sort) {
+            case DATE:
+                Collections.sort(entries, MangaLibraryEntry.DATE);
+                break;
+
+            case TITLE:
+                Collections.sort(entries, MangaLibraryEntry.TITLE);
+                break;
+
+            default:
+                throw new IllegalArgumentException("encountered illegal " +
+                        LibrarySort.class.getName() + ": \"" + sort + '"');
+        }
+
+        super.set(entries);
     }
 
 }

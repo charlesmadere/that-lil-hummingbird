@@ -60,7 +60,7 @@ public class CommentTitleTextView extends AppCompatTextView implements AdapterVi
         mSecondaryNameSpan = new CustomTypefaceSpan(typefaceEntryOrdinal);
         mSecondaryColorSpan = new ForegroundColorSpan(MiscUtils.getAttrColor(context,
                 android.R.attr.textColorSecondary));
-        mSecondarySizeSpan = new RelativeSizeSpan(0.75f);
+        mSecondarySizeSpan = new RelativeSizeSpan(0.85f);
         mSecondaryTypefaceSpan = new CustomTypefaceSpan(secondaryTypefaceEntryOrdinal);
 
         final Drawable iconDrawable = ContextCompat.getDrawable(context, R.drawable.ic_arrow_end_18dp);

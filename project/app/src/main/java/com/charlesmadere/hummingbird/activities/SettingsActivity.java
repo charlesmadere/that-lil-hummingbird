@@ -20,6 +20,7 @@ import com.charlesmadere.hummingbird.misc.SyncManager;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.NightMode;
 import com.charlesmadere.hummingbird.models.PollFrequency;
+import com.charlesmadere.hummingbird.models.LibrarySort;
 import com.charlesmadere.hummingbird.models.TitleType;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.CheckablePreferenceView;
@@ -67,6 +68,9 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @BindView(R.id.cpvWifiRequired)
     CheckablePreferenceView mWifiRequired;
+
+    @BindView(R.id.hbivDefaultLibrarySort)
+    HeadBodyItemView mDefaultLibrarySort;
 
     @BindView(R.id.hbivLastPoll)
     HeadBodyItemView mLastPoll;
@@ -117,18 +121,17 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @OnClick(R.id.hbivTitleLanguage)
     void onAnimeTitleLanguageClick() {
-        final TitleType[] values = TitleType.values();
-        CharSequence items[] = new CharSequence[values.length];
+        CharSequence[] items = new CharSequence[TitleType.values().length];
 
         for (int i = 0; i < items.length; ++i) {
-            items[i] = getText(values[i].getTextResId());
+            items[i] = getText(TitleType.values()[i].getTextResId());
         }
 
         new AlertDialog.Builder(this)
                 .setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
-                        Preferences.General.TitleLanguage.set(values[which]);
+                        Preferences.General.TitleLanguage.set(TitleType.values()[which]);
                         refresh();
                     }
                 })
@@ -145,6 +148,26 @@ public class SettingsActivity extends BaseDrawerActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+    }
+
+    @OnClick(R.id.hbivDefaultLibrarySort)
+    void onDefaultSortClick() {
+        CharSequence items[] = new CharSequence[LibrarySort.values().length];
+
+        for (int i = 0; i < items.length; ++i) {
+            items[i] = getText(LibrarySort.values()[i].getTextResId());
+        }
+
+        new AlertDialog.Builder(this)
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        Preferences.General.DefaultLibrarySort.set(LibrarySort.values()[which]);
+                        refresh();
+                    }
+                })
+                .setTitle(R.string.default_library_sorting)
+                .show();
     }
 
     @OnClick(R.id.kvtvGetHummingbirdPro)
@@ -202,11 +225,10 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @OnClick(R.id.hbivPollFrequency)
     void onPollFrequencyClick() {
-        final PollFrequency[] values = PollFrequency.values();
-        CharSequence items[] = new CharSequence[values.length];
+        CharSequence[] items = new CharSequence[PollFrequency.values().length];
 
         for (int i = 0; i < items.length; ++i) {
-            items[i] = getText(values[i].getTextResId());
+            items[i] = getText(PollFrequency.values()[i].getTextResId());
         }
 
         new AlertDialog.Builder(this)
@@ -214,7 +236,7 @@ public class SettingsActivity extends BaseDrawerActivity {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
                         final PollFrequency pollFrequency = Preferences.NotificationPolling.Frequency.get();
-                        final PollFrequency newPollFrequency = values[which];
+                        final PollFrequency newPollFrequency = PollFrequency.values()[which];
 
                         if (pollFrequency != null && pollFrequency.equals(newPollFrequency)) {
                             return;
@@ -274,11 +296,10 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @OnClick(R.id.hbivTheme)
     void onThemeClick() {
-        final NightMode[] values = NightMode.values();
-        CharSequence items[] = new CharSequence[values.length];
+        CharSequence[] items = new CharSequence[NightMode.values().length];
 
         for (int i = 0; i < items.length; ++i) {
-            items[i] = getText(values[i].getTextResId());
+            items[i] = getText(NightMode.values()[i].getTextResId());
         }
 
         new AlertDialog.Builder(this)
@@ -286,7 +307,7 @@ public class SettingsActivity extends BaseDrawerActivity {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
                         final NightMode nightMode = Preferences.General.Theme.get();
-                        final NightMode newNightMode = values[which];
+                        final NightMode newNightMode = NightMode.values()[which];
 
                         if (nightMode != null && nightMode.equals(newNightMode)) {
                             return;
@@ -332,6 +353,7 @@ public class SettingsActivity extends BaseDrawerActivity {
     private void refresh() {
         mTitleLanguage.setBody(Preferences.General.TitleLanguage.get().getTextResId());
         mTheme.setBody(Preferences.General.Theme.get().getTextResId());
+        mDefaultLibrarySort.setBody(Preferences.General.DefaultLibrarySort.get().getTextResId());
         mShowNsfwContent.refresh();
 
         mUseNotificationPolling.refresh();

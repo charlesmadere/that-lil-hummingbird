@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CardItem.Bare" parent="CardItem.NoPadding">
+        <item name="cardCornerRadius">0dp</item>
+    </style>
+
+</resources>

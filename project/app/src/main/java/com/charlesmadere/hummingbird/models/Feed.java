@@ -110,6 +110,10 @@ public class Feed implements Parcelable {
         return mAnimeLibraryEntries;
     }
 
+    public int getAnimeLibraryEntriesSize() {
+        return mAnimeLibraryEntries == null ? 0 : mAnimeLibraryEntries.size();
+    }
+
     @Nullable
     public ArrayList<AnimeReview> getAnimeReviews() {
         return mAnimeReviews;
@@ -153,6 +157,10 @@ public class Feed implements Parcelable {
     @Nullable
     public ArrayList<MangaLibraryEntry> getMangaLibraryEntries() {
         return mMangaLibraryEntries;
+    }
+
+    public int getMangaLibraryEntriesSize() {
+        return mMangaLibraryEntries == null ? 0 : mMangaLibraryEntries.size();
     }
 
     @Nullable

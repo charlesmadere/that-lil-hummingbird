@@ -6,7 +6,7 @@
     <string name="add_to_library">Add to Library</string>
     <string name="added_to_library">Added to library</string>
     <string name="admin">Admin</string>
-    <string name="age_rating">Age Rating</string>
+    <string name="age_rating">Age rating</string>
     <string name="age_rating_g">G</string>
     <string name="age_rating_pg">PG</string>
     <string name="age_rating_pg13">PG-13</string>
@@ -62,9 +62,11 @@
     <string name="currently_reading_library_is_empty">Currently reading library is empty</string>
     <string name="currently_watching">Currently Watching</string>
     <string name="currently_watching_library_is_empty">Currently watching library is empty</string>
+    <string name="date">Date</string>
     <string name="day">Day</string>
     <string name="daily">Daily</string>
     <string name="decrease">Decrease</string>
+    <string name="default_library_sorting">Default library sorting</string>
     <string name="deep_link_error">Sorry, but a deep link error occurred!</string>
     <string name="delete">Delete</string>
     <string name="delimiter">,\u0020</string>
@@ -175,6 +177,7 @@
     <string name="leave_a_comment_">Leave a comment…</string>
     <string name="length">Length</string>
     <string name="library">Library</string>
+    <string name="library_sorting">Library sorting</string>
     <string name="library_updates">Library Updates</string>
     <string name="life_spent_on_anime">Life spent on anime</string>
     <string name="lives_in">Lives in</string>
@@ -249,9 +252,9 @@
     <string name="plans_to_read">plans to read</string>
     <string name="plans_to_watch">plans to watch</string>
     <string name="poll_frequency">Poll frequency</string>
-    <string name="posted_to">posted to</string>
     <string name="post">Post</string>
     <string name="post_comment">Post Comment</string>
+    <string name="posted_to">posted to</string>
     <string name="preferred_title_language">Preferred title language</string>
     <string name="priscilla_zhou">Priscilla Zhou</string>
     <string name="privacy">Privacy</string>
@@ -304,6 +307,7 @@
     <string name="sign_out">Sign out</string>
     <string name="sign_out_confirm">Are you sure that you want to sign out?</string>
     <string name="sound_">Sound…</string>
+    <string name="sort">Sort</string>
     <string name="special">Special</string>
     <string name="started_airing">Started airing</string>
     <string name="started_airing_x">Started airing %1$s</string>
@@ -347,6 +351,7 @@
     <string name="website">Website</string>
     <string name="weekly">Weekly</string>
     <string name="whats_trending">What\'s Trending</string>
+    <string name="will_air">Will air</string>
     <string name="will_only_poll_if_connected_to_wifi">Will only poll if connected to wifi</string>
     <string name="will_only_poll_if_plugged_in">Will only poll if plugged in</string>
     <string name="will_poll_on_any_data_connection">Will poll on any data connection</string>

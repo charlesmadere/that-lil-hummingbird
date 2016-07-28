@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
@@ -99,6 +100,9 @@ public class JsoupUtilsTest {
 
     @Test
     public void testGetCsrfToken() throws Exception {
+        assertNull(JsoupUtils.getCsrfToken(null));
+        assertNull(JsoupUtils.getCsrfToken("BLAH"));
+        assertNull(JsoupUtils.getCsrfToken("Hello, World!"));
         assertTrue(CSRF_TOKEN.equals(JsoupUtils.getCsrfToken(SIGN_IN_PAGE)));
     }
 
