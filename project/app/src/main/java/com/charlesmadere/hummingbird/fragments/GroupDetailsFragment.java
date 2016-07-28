@@ -10,6 +10,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.GroupMembersActivity;
 import com.charlesmadere.hummingbird.models.Group;
 import com.charlesmadere.hummingbird.models.GroupDigest;
+import com.charlesmadere.hummingbird.views.HeadBodyItemView;
 
 import java.text.NumberFormat;
 
@@ -23,6 +24,9 @@ public class GroupDetailsFragment extends BaseFragment {
 
     private GroupDigest mGroupDigest;
 
+    @BindView(R.id.hbivGroupMembers)
+    HeadBodyItemView mGroupMembers;
+
     @BindView(R.id.tvAboutBody)
     TextView mAboutBody;
 
@@ -34,12 +38,6 @@ public class GroupDetailsFragment extends BaseFragment {
 
     @BindView(R.id.tvBioTitle)
     TextView mBioTitle;
-
-    @BindView(R.id.tvMembersBody)
-    TextView mMembersBody;
-
-    @BindView(R.id.tvMembersHeader)
-    TextView mMembersHeader;
 
     @BindView(R.id.tvNoBio)
     TextView mNoBio;
@@ -60,12 +58,6 @@ public class GroupDetailsFragment extends BaseFragment {
         return TAG;
     }
 
-    @OnClick(R.id.llMembers)
-    void onMembersClick() {
-        startActivity(GroupMembersActivity.getLaunchIntent(getContext(), mGroupDigest.getId(),
-                mGroupDigest.getName()));
-    }
-
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +73,12 @@ public class GroupDetailsFragment extends BaseFragment {
         return inflater.inflate(R.layout.fragment_group_details, container, false);
     }
 
+    @OnClick(R.id.hbivGroupMembers)
+    void onGroupMembersClick() {
+        startActivity(GroupMembersActivity.getLaunchIntent(getContext(), mGroupDigest.getId(),
+                mGroupDigest.getName()));
+    }
+
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -94,8 +92,8 @@ public class GroupDetailsFragment extends BaseFragment {
         }
 
         final NumberFormat numberFormat = NumberFormat.getNumberInstance();
-        mMembersHeader.setText(numberFormat.format(group.getMemberCount()));
-        mMembersBody.setText(getResources().getQuantityText(R.plurals.group_members,
+        mGroupMembers.setHead(numberFormat.format(group.getMemberCount()));
+        mGroupMembers.setBody(getResources().getQuantityText(R.plurals.group_members,
                 group.getMemberCount()));
 
         mBioTitle.setText(getString(R.string.bio_for_x, group.getName()));

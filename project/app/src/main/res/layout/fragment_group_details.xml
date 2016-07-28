@@ -25,18 +25,9 @@
                     tools:text="Hello, World!"
                     tools:visibility="visible"
                     style="@style/ResponsiveWidthCardItemBody.Standalone" />
-                <LinearLayout
-                    android:id="@+id/llMembers"
-                    style="@style/ResponsiveWidthCardItem">
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvMembersHeader"
-                        tools:text="100"
-                        style="@style/ResponsiveWidthCardItemHeader" />
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:id="@+id/tvMembersBody"
-                        tools:text="@string/group_members"
-                        style="@style/ResponsiveWidthCardItemBody" />
-                </LinearLayout>
+                <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                    android:id="@+id/hbivGroupMembers"
+                    style="@style/ResponsiveWidthCardItem" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
