@@ -161,6 +161,11 @@ public class Anime implements Parcelable {
         return mStartedAiring;
     }
 
+    @Nullable
+    public String getSynopsis() {
+        return mSynopsis;
+    }
+
     public String getTitle() {
         final TitleType titleType = Preferences.General.TitleLanguage.get();
 
@@ -239,6 +244,10 @@ public class Anime implements Parcelable {
 
     public boolean hasStartedAiringDate() {
         return mStartedAiringDateKnown && mStartedAiring != null;
+    }
+
+    public boolean hasSynopsis() {
+        return !TextUtils.isEmpty(mSynopsis);
     }
 
     public boolean hasType() {

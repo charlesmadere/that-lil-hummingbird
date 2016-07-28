@@ -6,9 +6,9 @@ import android.preference.PreferenceManager;
 import com.charlesmadere.hummingbird.ThatLilHummingbird;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.AppNewsStatus;
+import com.charlesmadere.hummingbird.models.LibrarySort;
 import com.charlesmadere.hummingbird.models.NightMode;
 import com.charlesmadere.hummingbird.models.PollFrequency;
-import com.charlesmadere.hummingbird.models.LibrarySort;
 import com.charlesmadere.hummingbird.models.TitleType;
 
 public final class Preferences {

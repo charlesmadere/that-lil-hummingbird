@@ -8,14 +8,14 @@ import android.view.View;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
-import com.charlesmadere.hummingbird.models.AbsAnime;
+import com.charlesmadere.hummingbird.models.Anime;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AnimeItemView extends CardView implements AdapterView<AbsAnime>, View.OnClickListener {
+public class AnimeItemView extends CardView implements AdapterView<Anime>, View.OnClickListener {
 
-    private AbsAnime mAnime;
+    private Anime mAnime;
 
     @BindView(R.id.animeView)
     InternalAnimeItemView mAnimeView;
@@ -29,7 +29,7 @@ public class AnimeItemView extends CardView implements AdapterView<AbsAnime>, Vi
         super(context, attrs, defStyleAttr);
     }
 
-    public AbsAnime getAnime() {
+    public Anime getAnime() {
         return mAnime;
     }
 
@@ -42,17 +42,12 @@ public class AnimeItemView extends CardView implements AdapterView<AbsAnime>, Vi
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        if (isInEditMode()) {
-            return;
-        }
-
         ButterKnife.bind(this);
         setOnClickListener(this);
     }
 
     @Override
-    public void setContent(final AbsAnime content) {
+    public void setContent(final Anime content) {
         mAnime = content;
         mAnimeView.setContent(content);
     }

@@ -1,8 +1,8 @@
 package com.charlesmadere.hummingbird.networking;
 
-import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AddAnimeLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.AddMangaLibraryEntryResponse;
+import com.charlesmadere.hummingbird.models.Anime;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.Franchise;
@@ -59,7 +59,7 @@ public interface HummingbirdApi {
 
     @Headers(ACCEPT_JSON_MIMETYPE)
     @GET("anime/{animeId}")
-    Call<AbsAnime> getAnime(@Path("animeId") String animeId);
+    Call<Anime> getAnime(@Path("animeId") String animeId);
 
     @GET("full_anime/{animeId}")
     Call<AnimeDigest> getAnimeDigest(@Path("animeId") String animeId);

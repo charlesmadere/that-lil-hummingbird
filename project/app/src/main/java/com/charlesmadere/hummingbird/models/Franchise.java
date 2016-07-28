@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
-import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -13,14 +12,14 @@ public class Franchise implements Parcelable {
 
     @Nullable
     @SerializedName("anime")
-    private ArrayList<AbsAnime> mAnime;
+    private ArrayList<Anime> mAnime;
 
     @SerializedName("franchise")
     private Data mData;
 
 
     @Nullable
-    public ArrayList<AbsAnime> getAnime() {
+    public ArrayList<Anime> getAnime() {
         return mAnime;
     }
 
@@ -44,7 +43,7 @@ public class Franchise implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        ParcelableUtils.writeAbsAnimeListToParcel(mAnime, dest, flags);
+        dest.writeTypedList(mAnime);
         dest.writeParcelable(mData, flags);
     }
 
@@ -52,7 +51,7 @@ public class Franchise implements Parcelable {
         @Override
         public Franchise createFromParcel(final Parcel source) {
             final Franchise f = new Franchise();
-            f.mAnime = ParcelableUtils.readAbsAnimeListFromParcel(source);
+            f.mAnime = source.readParcelable(Anime.class.getClassLoader());
             f.mData = source.readParcelable(Data.class.getClassLoader());
             return f;
         }

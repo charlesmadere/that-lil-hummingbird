@@ -5,7 +5,6 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Comparator;
@@ -51,7 +50,7 @@ public class AnimeLibraryEntry implements Parcelable {
     private WatchingStatus mStatus;
 
     // hydrated fields
-    private AbsAnime mAnime;
+    private Anime mAnime;
 
 
     @Override
@@ -59,7 +58,7 @@ public class AnimeLibraryEntry implements Parcelable {
         return o instanceof AnimeLibraryEntry && mId.equalsIgnoreCase(((AnimeLibraryEntry) o).getId());
     }
 
-    public AbsAnime getAnime() {
+    public Anime getAnime() {
         return mAnime;
     }
 
@@ -111,7 +110,7 @@ public class AnimeLibraryEntry implements Parcelable {
     }
 
     public void hydrate(final Feed feed) {
-        for (final AbsAnime anime : feed.getAnime()) {
+        for (final Anime anime : feed.getAnime()) {
             if (mAnimeId.equalsIgnoreCase(anime.getId())) {
                 mAnime = anime;
                 return;
@@ -143,7 +142,6 @@ public class AnimeLibraryEntry implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        ParcelableUtils.writeAbsAnimeToParcel(mAnime, dest, flags);
         dest.writeInt(mIsFavorite ? 1 : 0);
         dest.writeInt(mIsPrivate ? 1 : 0);
         dest.writeInt(mIsRewatching ? 1 : 0);
@@ -156,26 +154,27 @@ public class AnimeLibraryEntry implements Parcelable {
         dest.writeString(mId);
         dest.writeString(mNotes);
         dest.writeParcelable(mStatus, flags);
+        dest.writeParcelable(mAnime, flags);
     }
 
     public static final Creator<AnimeLibraryEntry> CREATOR = new Creator<AnimeLibraryEntry>() {
         @Override
         public AnimeLibraryEntry createFromParcel(final Parcel source) {
-            final AnimeLibraryEntry le = new AnimeLibraryEntry();
-            le.mAnime = ParcelableUtils.readAbsAnimeFromParcel(source);
-            le.mIsFavorite = source.readInt() != 0;
-            le.mIsPrivate = source.readInt() != 0;
-            le.mIsRewatching = source.readInt() != 0;
-            le.mNotesPresent = source.readInt() != 0;
-            le.mEpisodesWatched = source.readInt();
-            le.mRewatchCount = source.readInt();
-            le.mRating = source.readParcelable(Rating.class.getClassLoader());
-            le.mLastWatched = source.readParcelable(SimpleDate.class.getClassLoader());
-            le.mAnimeId = source.readString();
-            le.mId = source.readString();
-            le.mNotes = source.readString();
-            le.mStatus = source.readParcelable(WatchingStatus.class.getClassLoader());
-            return le;
+            final AnimeLibraryEntry ale = new AnimeLibraryEntry();
+            ale.mIsFavorite = source.readInt() != 0;
+            ale.mIsPrivate = source.readInt() != 0;
+            ale.mIsRewatching = source.readInt() != 0;
+            ale.mNotesPresent = source.readInt() != 0;
+            ale.mEpisodesWatched = source.readInt();
+            ale.mRewatchCount = source.readInt();
+            ale.mRating = source.readParcelable(Rating.class.getClassLoader());
+            ale.mLastWatched = source.readParcelable(SimpleDate.class.getClassLoader());
+            ale.mAnimeId = source.readString();
+            ale.mId = source.readString();
+            ale.mNotes = source.readString();
+            ale.mStatus = source.readParcelable(WatchingStatus.class.getClassLoader());
+            ale.mAnime = source.readParcelable(Anime.class.getClassLoader());
+            return ale;
         }
 
         @Override

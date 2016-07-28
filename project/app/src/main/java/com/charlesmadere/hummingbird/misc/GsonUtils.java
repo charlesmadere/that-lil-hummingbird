@@ -1,6 +1,5 @@
 package com.charlesmadere.hummingbird.misc;
 
-import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AbsNotification;
 import com.charlesmadere.hummingbird.models.AbsStory;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
@@ -26,7 +25,6 @@ public final class GsonUtils {
         if (sGson == null) {
             Timber.d(TAG, "creating Gson instance");
             sGson = new GsonBuilder()
-                    .registerTypeAdapter(AbsAnime.class, AbsAnime.JSON_DESERIALIZER)
                     .registerTypeAdapter(AbsNotification.class, AbsNotification.JSON_DESERIALIZER)
                     .registerTypeAdapter(AbsNotification.AbsSource.class, AbsNotification.AbsSource.JSON_DESERIALIZER)
                     .registerTypeAdapter(AbsStory.class, AbsStory.JSON_DESERIALIZER)

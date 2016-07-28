@@ -11,8 +11,8 @@ import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.activities.MangaActivity;
 import com.charlesmadere.hummingbird.activities.MediaStoryActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
-import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
+import com.charlesmadere.hummingbird.models.Anime;
 import com.charlesmadere.hummingbird.models.Manga;
 import com.charlesmadere.hummingbird.models.MediaStory;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -141,8 +141,8 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
     }
 
     private void setContent(final MediaStory.AnimeMedia media) {
-        final AbsAnime anime = media.getAnime();
-        mImage.setImageURI(anime.getImage());
+        final Anime anime = media.getAnime();
+        mImage.setImageURI(anime.getPosterImage());
         mTitle.setText(anime.getTitle());
 
         if (anime.hasType()) {

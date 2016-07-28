@@ -20,8 +20,8 @@ import com.charlesmadere.hummingbird.adapters.AnimeFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.AnimeEpisodeFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeLibraryUpdateFragment;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
-import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AddAnimeLibraryEntryResponse;
+import com.charlesmadere.hummingbird.models.Anime;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
@@ -66,7 +66,7 @@ public class AnimeActivity extends BaseDrawerActivity implements
     ViewPager mViewPager;
 
 
-    public static Intent getLaunchIntent(final Context context, final AbsAnime anime) {
+    public static Intent getLaunchIntent(final Context context, final Anime anime) {
         return getLaunchIntent(context, anime.getId(), anime.getTitle());
     }
 

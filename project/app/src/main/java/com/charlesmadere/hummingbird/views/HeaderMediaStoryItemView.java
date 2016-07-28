@@ -10,7 +10,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.activities.MangaActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
-import com.charlesmadere.hummingbird.models.AbsAnime;
+import com.charlesmadere.hummingbird.models.Anime;
 import com.charlesmadere.hummingbird.models.Manga;
 import com.charlesmadere.hummingbird.models.MediaStory;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -94,8 +94,8 @@ public class HeaderMediaStoryItemView extends CardView implements AdapterView<Me
     }
 
     private void setContent(final MediaStory.AnimeMedia media) {
-        final AbsAnime anime = media.getAnime();
-        mImage.setImageURI(anime.getImage());
+        final Anime anime = media.getAnime();
+        mImage.setImageURI(anime.getPosterImage());
         mTitle.setText(anime.getTitle());
 
         if (anime.hasType()) {

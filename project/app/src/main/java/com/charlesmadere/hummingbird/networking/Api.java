@@ -10,9 +10,9 @@ import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.RetrofitUtils;
 import com.charlesmadere.hummingbird.misc.Threading;
 import com.charlesmadere.hummingbird.misc.Timber;
-import com.charlesmadere.hummingbird.models.AbsAnime;
 import com.charlesmadere.hummingbird.models.AddAnimeLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.AddMangaLibraryEntryResponse;
+import com.charlesmadere.hummingbird.models.Anime;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
@@ -201,15 +201,15 @@ public final class Api {
     }
 
     public static void getAnime(final ArrayList<String> animeIds,
-            final ApiResponse<ArrayList<AbsAnime>> listener) {
-        final HashMap<String, AbsAnime> animeMap = new HashMap<>(animeIds.size());
+            final ApiResponse<ArrayList<Anime>> listener) {
+        final HashMap<String, Anime> animeMap = new HashMap<>(animeIds.size());
 
         for (final String animeId : animeIds) {
             animeMap.put(animeId, null);
         }
 
         for (final String animeId : animeIds) {
-            getAnime(animeId, new ApiResponse<AbsAnime>() {
+            getAnime(animeId, new ApiResponse<Anime>() {
                 @Override
                 public void failure(@Nullable final ErrorInfo error) {
                     animeMap.remove(animeId);
@@ -222,7 +222,7 @@ public final class Api {
                         return;
                     }
 
-                    for (final Map.Entry<String, AbsAnime> entry : animeMap.entrySet()) {
+                    for (final Map.Entry<String, Anime> entry : animeMap.entrySet()) {
                         if (entry.getValue() == null) {
                             return;
                         }
@@ -232,7 +232,7 @@ public final class Api {
                 }
 
                 @Override
-                public void success(final AbsAnime anime) {
+                public void success(final Anime anime) {
                     animeMap.put(animeId, anime);
                     proceed(null);
                 }
@@ -240,11 +240,11 @@ public final class Api {
         }
     }
 
-    public static void getAnime(final String animeId, final ApiResponse<AbsAnime> listener) {
-        HUMMINGBIRD.getAnime(animeId).enqueue(new Callback<AbsAnime>() {
+    public static void getAnime(final String animeId, final ApiResponse<Anime> listener) {
+        HUMMINGBIRD.getAnime(animeId).enqueue(new Callback<Anime>() {
             @Override
-            public void onResponse(final Call<AbsAnime> call, final Response<AbsAnime> response) {
-                final AbsAnime anime = response.isSuccessful() ? response.body() : null;
+            public void onResponse(final Call<Anime> call, final Response<Anime> response) {
+                final Anime anime = response.isSuccessful() ? response.body() : null;
 
                 if (anime == null) {
                     listener.failure(retrieveErrorInfo(response));
@@ -254,7 +254,7 @@ public final class Api {
             }
 
             @Override
-            public void onFailure(final Call<AbsAnime> call, final Throwable t) {
+            public void onFailure(final Call<Anime> call, final Throwable t) {
                 Timber.e(TAG, "get anime (" + animeId + ") failed", t);
                 listener.failure(null);
             }
@@ -856,14 +856,14 @@ public final class Api {
                     return;
                 }
 
-                getAnime(animeIds, new ApiResponse<ArrayList<AbsAnime>>() {
+                getAnime(animeIds, new ApiResponse<ArrayList<Anime>>() {
                     @Override
                     public void failure(@Nullable final ErrorInfo error) {
                         listener.failure(error);
                     }
 
                     @Override
-                    public void success(@Nullable final ArrayList<AbsAnime> anime) {
+                    public void success(@Nullable final ArrayList<Anime> anime) {
                         body.addAnime(anime);
                         hydrateFeed(body, feed, listener);
                     }

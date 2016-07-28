@@ -22,7 +22,7 @@ public class UserDigest implements Parcelable {
 
     @Nullable
     @SerializedName("anime")
-    private ArrayList<AbsAnime> mAnime;
+    private ArrayList<Anime> mAnime;
 
     @Nullable
     @SerializedName("favorites")
@@ -40,7 +40,7 @@ public class UserDigest implements Parcelable {
 
 
     @Nullable
-    public ArrayList<AbsAnime> getAnime() {
+    public ArrayList<Anime> getAnime() {
         return mAnime;
     }
 
@@ -118,7 +118,7 @@ public class UserDigest implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        ParcelableUtils.writeAbsAnimeListToParcel(mAnime, dest, flags);
+        dest.writeTypedList(mAnime);
         dest.writeTypedList(mUsers);
         dest.writeTypedList(mFavorites);
         dest.writeTypedList(mManga);
@@ -129,7 +129,7 @@ public class UserDigest implements Parcelable {
         @Override
         public UserDigest createFromParcel(final Parcel source) {
             final UserDigest ud = new UserDigest();
-            ud.mAnime = ParcelableUtils.readAbsAnimeListFromParcel(source);
+            ud.mAnime = source.readParcelable(Anime.class.getClassLoader());
             ud.mUsers = source.createTypedArrayList(User.CREATOR);
             ud.mFavorites = source.createTypedArrayList(Favorite.CREATOR);
             ud.mManga = source.createTypedArrayList(Manga.CREATOR);
@@ -322,9 +322,9 @@ public class UserDigest implements Parcelable {
 
         public static class AnimeItem extends AbsItem implements Parcelable {
             // hydrated fields
-            private AbsAnime mAnime;
+            private Anime mAnime;
 
-            public AbsAnime getAnime() {
+            public Anime getAnime() {
                 return mAnime;
             }
 
@@ -335,7 +335,7 @@ public class UserDigest implements Parcelable {
 
             @Override
             public void hydrate(final UserDigest userDigest) {
-                for (final AbsAnime anime : userDigest.getAnime()) {
+                for (final Anime anime : userDigest.getAnime()) {
                     if (getId().equalsIgnoreCase(anime.getId())) {
                         mAnime = anime;
                         break;
@@ -346,13 +346,13 @@ public class UserDigest implements Parcelable {
             @Override
             protected void readFromParcel(final Parcel source) {
                 super.readFromParcel(source);
-                mAnime = ParcelableUtils.readAbsAnimeFromParcel(source);
+                mAnime = source.readParcelable(Anime.class.getClassLoader());
             }
 
             @Override
             public void writeToParcel(final Parcel dest, final int flags) {
                 super.writeToParcel(dest, flags);
-                ParcelableUtils.writeAbsAnimeToParcel(mAnime, dest, flags);
+                dest.writeParcelable(mAnime, flags);
             }
 
             public static final Creator<AnimeItem> CREATOR = new Creator<AnimeItem>() {

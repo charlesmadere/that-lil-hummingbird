@@ -16,7 +16,7 @@ public class Feed implements Parcelable {
 
     @Nullable
     @SerializedName("anime")
-    private ArrayList<AbsAnime> mAnime;
+    private ArrayList<Anime> mAnime;
 
     @Nullable
     @SerializedName("notifications")
@@ -63,7 +63,7 @@ public class Feed implements Parcelable {
     private Metadata mMetadata;
 
 
-    public void addAnime(@Nullable final ArrayList<AbsAnime> anime) {
+    public void addAnime(@Nullable final ArrayList<Anime> anime) {
         if (anime == null || anime.isEmpty()) {
             return;
         }
@@ -76,7 +76,7 @@ public class Feed implements Parcelable {
     }
 
     @Nullable
-    public ArrayList<AbsAnime> getAnime() {
+    public ArrayList<Anime> getAnime() {
         return mAnime;
     }
 
@@ -420,7 +420,7 @@ public class Feed implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        ParcelableUtils.writeAbsAnimeListToParcel(mAnime, dest, flags);
+        dest.writeTypedList(mAnime);
         ParcelableUtils.writeAbsNotificationListToParcel(mNotifications, dest, flags);
         ParcelableUtils.writeAbsStoryListToParcel(mStories, dest, flags);
         ParcelableUtils.writeAbsSubstoryListToParcel(mSubstories, dest, flags);
@@ -438,7 +438,7 @@ public class Feed implements Parcelable {
         @Override
         public Feed createFromParcel(final Parcel source) {
             final Feed f = new Feed();
-            f.mAnime = ParcelableUtils.readAbsAnimeListFromParcel(source);
+            f.mAnime = source.createTypedArrayList(Anime.CREATOR);
             f.mNotifications = ParcelableUtils.readAbsNotificationListFromParcel(source);
             f.mStories = ParcelableUtils.readAbsStoryListFromParcel(source);
             f.mSubstories = ParcelableUtils.readAbsSubstoryListFromParcel(source);

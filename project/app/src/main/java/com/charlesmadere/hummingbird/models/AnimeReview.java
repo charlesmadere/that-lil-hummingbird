@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.JsoupUtils;
-import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
 public class AnimeReview implements Parcelable {
@@ -58,7 +57,7 @@ public class AnimeReview implements Parcelable {
 
     // hydrated fields
     @Nullable
-    private AbsAnime mAnime;
+    private Anime mAnime;
     private CharSequence mCompiledContent;
     private String mAnimeTitle;
     private User mUser;
@@ -77,7 +76,7 @@ public class AnimeReview implements Parcelable {
     }
 
     @Nullable
-    public AbsAnime getAnime() {
+    public Anime getAnime() {
         return mAnime;
     }
 
@@ -146,7 +145,7 @@ public class AnimeReview implements Parcelable {
         return mId.hashCode();
     }
 
-    public void hydrate(final AbsAnime anime) {
+    public void hydrate(final Anime anime) {
         compileContent();
         mAnime = anime;
     }
@@ -176,7 +175,7 @@ public class AnimeReview implements Parcelable {
 
         compileContent();
 
-        for (final AbsAnime anime : feed.getAnime()) {
+        for (final Anime anime : feed.getAnime()) {
             if (mAnimeId.equalsIgnoreCase(anime.getId())) {
                 mAnime = anime;
                 break;
@@ -218,7 +217,7 @@ public class AnimeReview implements Parcelable {
         dest.writeString(mId);
         dest.writeString(mSummary);
         dest.writeString(mUserId);
-        ParcelableUtils.writeAbsAnimeToParcel(mAnime, dest, flags);
+        dest.writeParcelable(mAnime, flags);
         TextUtils.writeToParcel(mCompiledContent, dest, flags);
         dest.writeString(mAnimeTitle);
         dest.writeParcelable(mUser, flags);
@@ -243,7 +242,7 @@ public class AnimeReview implements Parcelable {
             ar.mId = source.readString();
             ar.mSummary = source.readString();
             ar.mUserId = source.readString();
-            ar.mAnime = ParcelableUtils.readAbsAnimeFromParcel(source);
+            ar.mAnime = source.readParcelable(Anime.class.getClassLoader());
             ar.mCompiledContent = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
             ar.mAnimeTitle = source.readString();
             ar.mUser = source.readParcelable(User.class.getClassLoader());

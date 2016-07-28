@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
-import com.charlesmadere.hummingbird.models.AbsAnime;
+import com.charlesmadere.hummingbird.models.Anime;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -153,7 +153,7 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
     private void setPosterView(final SimpleDraweeView view,
             final ArrayList<UserDigest.Favorite.AnimeItem> anime, final int index) {
         if (anime.size() >= index) {
-            view.setImageURI(anime.get(index - 1).getAnime().getImage());
+            view.setImageURI(anime.get(index - 1).getAnime().getPosterImage());
             view.setVisibility(VISIBLE);
         } else {
             view.setVisibility(INVISIBLE);
@@ -162,7 +162,7 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
 
     private void startAnimeActivity(final int index) {
         final Context context = getContext();
-        final AbsAnime anime = mAnime.get(index).getAnime();
+        final Anime anime = mAnime.get(index).getAnime();
         context.startActivity(AnimeActivity.getLaunchIntent(context, anime));
     }
 

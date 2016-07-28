@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.models.AbsAnime;
+import com.charlesmadere.hummingbird.models.Anime;
 import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -23,7 +23,7 @@ import butterknife.OnClick;
 
 public class InternalAnimeItemView extends LinearLayout {
 
-    private AbsAnime mAnime;
+    private Anime mAnime;
     private AnimeLibraryEntry mLibraryEntry;
     private NumberFormat mNumberFormat;
     private OnEditClickListener mListener;
@@ -68,7 +68,7 @@ public class InternalAnimeItemView extends LinearLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public AbsAnime getAnime() {
+    public Anime getAnime() {
         return mAnime;
     }
 
@@ -93,11 +93,11 @@ public class InternalAnimeItemView extends LinearLayout {
         mNumberFormat = NumberFormat.getInstance();
     }
 
-    public void setContent(final AbsAnime content) {
+    public void setContent(final Anime content) {
         mAnime = content;
         mLibraryEntry = null;
 
-        mPoster.setImageURI(mAnime.getImage());
+        mPoster.setImageURI(mAnime.getPosterImage());
         mTitle.setText(mAnime.getTitle());
 
         if (mAnime.hasType()) {

@@ -41,11 +41,6 @@ public class AnimeLibraryEntryItemView extends CardView implements AdapterView<A
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        if (isInEditMode()) {
-            return;
-        }
-
         ButterKnife.bind(this);
         setOnClickListener(this);
     }
