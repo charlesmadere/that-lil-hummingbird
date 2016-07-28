@@ -248,6 +248,8 @@ public class AnimeLibraryFragment extends BaseFragment implements
         if (mFeed != null && mFeed.hasAnimeLibraryEntries()) {
             showLibraryEntries(mFeed);
         }
+
+        invalidateOptionsMenu();
     }
 
     private void showDeleteLibraryEntryError() {

@@ -248,6 +248,8 @@ public class MangaLibraryFragment extends BaseFragment implements
         if (mFeed != null && mFeed.hasMangaLibraryEntries()) {
             showLibraryEntries(mFeed);
         }
+
+        invalidateOptionsMenu();
     }
 
     private void showDeleteLibraryEntryError() {
