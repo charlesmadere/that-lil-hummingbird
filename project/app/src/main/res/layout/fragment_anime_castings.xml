@@ -7,7 +7,7 @@
         android:id="@+id/recyclerView"
         android:visibility="gone"
         tools:visibility="visible"
-        style="@style/ListOrGrid" />
+        style="@style/List" />
     <com.charlesmadere.hummingbird.views.TypefaceTextView
         android:id="@+id/tvEmpty"
         android:text="@string/no_castings"

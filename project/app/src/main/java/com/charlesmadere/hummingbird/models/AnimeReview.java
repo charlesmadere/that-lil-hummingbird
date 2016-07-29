@@ -185,6 +185,7 @@ public class AnimeReview implements Parcelable {
         for (final User user : feed.getUsers()) {
             if (mUserId.equalsIgnoreCase(user.getId())) {
                 mUser = user;
+                break;
             }
         }
 

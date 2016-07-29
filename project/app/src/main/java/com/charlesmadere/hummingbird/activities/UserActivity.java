@@ -19,15 +19,18 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.BaseUserFragmentAdapter;
 import com.charlesmadere.hummingbird.adapters.UserFragmentAdapter;
+import com.charlesmadere.hummingbird.fragments.AnimeLibraryFragment;
 import com.charlesmadere.hummingbird.fragments.BaseFeedFragment;
 import com.charlesmadere.hummingbird.fragments.UserFeedFragment;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
+import com.charlesmadere.hummingbird.models.LibrarySort;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.AvatarView;
 import com.charlesmadere.hummingbird.views.SimpleProgressView;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -38,17 +41,21 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
 
-public class UserActivity extends BaseDrawerActivity implements BaseFeedFragment.Listener {
+public class UserActivity extends BaseDrawerActivity implements AnimeLibraryFragment.Listener,
+        BaseFeedFragment.Listener {
 
     private static final String TAG = "UserActivity";
     private static final String CNAME = UserActivity.class.getCanonicalName();
     private static final String EXTRA_USERNAME = CNAME + ".Username";
+    private static final String KEY_LIBRARY_SORT = "LibrarySort";
     private static final String KEY_STARTING_POSITION = "StartingPosition";
     private static final String KEY_USER_DIGEST = "User";
 
     private int mStartingPosition;
+    private LibrarySort mLibrarySort;
     private String mUsername;
     private UserDigest mUserDigest;
+    private UserFragmentAdapter mAdapter;
 
     @BindView(R.id.appBarLayout)
     AppBarLayout mAppBarLayout;
@@ -102,6 +109,11 @@ public class UserActivity extends BaseDrawerActivity implements BaseFeedFragment
     }
 
     @Override
+    public LibrarySort getLibrarySort() {
+        return mLibrarySort;
+    }
+
+    @Override
     protected boolean isUpNavigationEnabled() {
         return true;
     }
@@ -121,6 +133,11 @@ public class UserActivity extends BaseDrawerActivity implements BaseFeedFragment
             mUserDigest = savedInstanceState.getParcelable(KEY_USER_DIGEST);
             mStartingPosition = savedInstanceState.getInt(KEY_STARTING_POSITION,
                     mStartingPosition);
+            mLibrarySort = savedInstanceState.getParcelable(KEY_LIBRARY_SORT);
+        }
+
+        if (mLibrarySort == null) {
+            mLibrarySort = Preferences.General.DefaultLibrarySort.get();
         }
 
         if (mUserDigest == null) {
@@ -157,6 +174,14 @@ public class UserActivity extends BaseDrawerActivity implements BaseFeedFragment
             case R.id.miMangaLibrary:
                 startActivity(MangaLibraryActivity.getLaunchIntent(this, mUsername));
                 return true;
+
+            case R.id.miSortDate:
+                setLibrarySort(LibrarySort.DATE);
+                return true;
+
+            case R.id.miSortTitle:
+                setLibrarySort(LibrarySort.TITLE);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -164,8 +189,7 @@ public class UserActivity extends BaseDrawerActivity implements BaseFeedFragment
 
     @OnClick(R.id.floatingActionButton)
     void onPostToFeedClick() {
-        final UserFragmentAdapter adapter = (UserFragmentAdapter) mViewPager.getAdapter();
-        final UserFeedFragment fragment = adapter.getFeedFragment();
+        final UserFeedFragment fragment = mAdapter.getFeedFragment();
 
         if (fragment != null) {
             fragment.showFeedPostFragment();
@@ -182,6 +206,9 @@ public class UserActivity extends BaseDrawerActivity implements BaseFeedFragment
             }
         }
 
+        menu.findItem(R.id.miSortDate).setEnabled(mLibrarySort != LibrarySort.DATE);
+        menu.findItem(R.id.miSortTitle).setEnabled(mLibrarySort != LibrarySort.TITLE);
+
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -189,6 +216,7 @@ public class UserActivity extends BaseDrawerActivity implements BaseFeedFragment
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_STARTING_POSITION, mViewPager.getCurrentItem());
+        outState.putParcelable(KEY_LIBRARY_SORT, mLibrarySort);
 
         if (mUserDigest != null) {
             outState.putParcelable(KEY_USER_DIGEST, mUserDigest);
@@ -198,6 +226,16 @@ public class UserActivity extends BaseDrawerActivity implements BaseFeedFragment
     @OnPageChange(R.id.viewPager)
     void onViewPagerPageChange() {
         updatePostToFeedVisibility();
+    }
+
+    private void setLibrarySort(final LibrarySort librarySort) {
+        mLibrarySort = librarySort;
+
+        if (mAdapter != null) {
+            mAdapter.updateLibrarySort();
+        }
+
+        supportInvalidateOptionsMenu();
     }
 
     private void showError() {
@@ -242,7 +280,8 @@ public class UserActivity extends BaseDrawerActivity implements BaseFeedFragment
             mProBadge.setVisibility(View.VISIBLE);
         }
 
-        mViewPager.setAdapter(new UserFragmentAdapter(this, mUserDigest));
+        mAdapter = new UserFragmentAdapter(this, mUserDigest);
+        mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(mStartingPosition, false);
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);

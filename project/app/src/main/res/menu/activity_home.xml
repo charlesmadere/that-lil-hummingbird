@@ -6,4 +6,17 @@
         android:title="@string/manga_library"
         android:titleCondensed="@string/manga"
         compat:showAsAction="ifRoom|withText" />
+    <item
+        android:icon="@drawable/ic_sort_white_24dp"
+        android:title="@string/sort"
+        compat:showAsAction="ifRoom|withText">
+        <menu>
+            <item
+                android:id="@+id/miSortDate"
+                android:title="@string/sort_by_date" />
+            <item
+                android:id="@+id/miSortTitle"
+                android:title="@string/sort_by_title" />
+        </menu>
+    </item>
 </menu>

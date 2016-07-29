@@ -10,6 +10,12 @@ public class FeedAdapter extends BasePaginationAdapter<AbsStory> {
 
     public FeedAdapter(final Context context) {
         super(context);
+        setHasStableIds(true);
+    }
+
+    @Override
+    public long getItemId(final int position) {
+        return getItem(position).hashCode();
     }
 
     @Override

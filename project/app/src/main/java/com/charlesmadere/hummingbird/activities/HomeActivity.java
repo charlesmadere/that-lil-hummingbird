@@ -13,20 +13,28 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.BaseUserFragmentAdapter;
 import com.charlesmadere.hummingbird.adapters.HomeFragmentAdapter;
 import com.charlesmadere.hummingbird.adapters.UserFragmentAdapter;
+import com.charlesmadere.hummingbird.fragments.AnimeLibraryFragment;
 import com.charlesmadere.hummingbird.fragments.BaseFeedFragment;
 import com.charlesmadere.hummingbird.fragments.HomeFeedFragment;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.SyncManager;
+import com.charlesmadere.hummingbird.models.LibrarySort;
+import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
 
-public class HomeActivity extends BaseDrawerActivity implements BaseFeedFragment.Listener {
+public class HomeActivity extends BaseDrawerActivity implements AnimeLibraryFragment.Listener,
+        BaseFeedFragment.Listener {
 
     private static final String TAG = "HomeActivity";
+    private static final String KEY_LIBRARY_SORT = "LibrarySort";
     private static final String KEY_STARTING_POSITION = "StartingPosition";
+
+    private HomeFragmentAdapter mAdapter;
+    private LibrarySort mLibrarySort;
 
     @BindView(R.id.floatingActionButton)
     FloatingActionButton mPostToFeed;
@@ -58,6 +66,11 @@ public class HomeActivity extends BaseDrawerActivity implements BaseFeedFragment
     }
 
     @Override
+    public LibrarySort getLibrarySort() {
+        return mLibrarySort;
+    }
+
+    @Override
     protected NavigationDrawerItemView.Entry getSelectedNavigationDrawerItemViewEntry() {
         return NavigationDrawerItemView.Entry.HOME;
     }
@@ -71,9 +84,15 @@ public class HomeActivity extends BaseDrawerActivity implements BaseFeedFragment
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             startingPosition = savedInstanceState.getInt(KEY_STARTING_POSITION, startingPosition);
+            mLibrarySort = savedInstanceState.getParcelable(KEY_LIBRARY_SORT);
         }
 
-        mViewPager.setAdapter(new HomeFragmentAdapter(this));
+        if (mLibrarySort == null) {
+            mLibrarySort = Preferences.General.DefaultLibrarySort.get();
+        }
+
+        mAdapter = new HomeFragmentAdapter(this);
+        mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(startingPosition, false);
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);
@@ -104,6 +123,14 @@ public class HomeActivity extends BaseDrawerActivity implements BaseFeedFragment
             case R.id.miMangaLibrary:
                 startActivity(MangaLibraryActivity.getLaunchIntent(this, CurrentUser.get().getUserId()));
                 return true;
+
+            case R.id.miSortDate:
+                setLibrarySort(LibrarySort.DATE);
+                return true;
+
+            case R.id.miSortTitle:
+                setLibrarySort(LibrarySort.TITLE);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -120,14 +147,32 @@ public class HomeActivity extends BaseDrawerActivity implements BaseFeedFragment
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        menu.findItem(R.id.miSortDate).setEnabled(mLibrarySort != LibrarySort.DATE);
+        menu.findItem(R.id.miSortTitle).setEnabled(mLibrarySort != LibrarySort.TITLE);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_STARTING_POSITION, mViewPager.getCurrentItem());
+        outState.putParcelable(KEY_LIBRARY_SORT, mLibrarySort);
     }
 
     @OnPageChange(R.id.viewPager)
     void onViewPagerPageChange() {
         updatePostToFeedVisibility();
+    }
+
+    private void setLibrarySort(final LibrarySort librarySort) {
+        mLibrarySort = librarySort;
+
+        if (mAdapter != null) {
+            mAdapter.updateLibrarySort();
+        }
+
+        supportInvalidateOptionsMenu();
     }
 
     private void updatePostToFeedVisibility() {

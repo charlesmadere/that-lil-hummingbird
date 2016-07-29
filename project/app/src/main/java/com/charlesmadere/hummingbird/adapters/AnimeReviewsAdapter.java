@@ -9,6 +9,12 @@ public class AnimeReviewsAdapter extends BaseAdapter<AnimeReview> {
 
     public AnimeReviewsAdapter(final Context context) {
         super(context);
+        setHasStableIds(true);
+    }
+
+    @Override
+    public long getItemId(final int position) {
+        return getItem(position).hashCode();
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.charlesmadere.hummingbird.misc.JsoupUtils;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -26,6 +27,9 @@ public class User implements Parcelable {
     @SerializedName("user")
     private Data mData;
 
+    // hydrated fields
+    private CharSequence mAbout;
+
 
     @Override
     public boolean equals(final Object o) {
@@ -33,13 +37,8 @@ public class User implements Parcelable {
     }
 
     @Nullable
-    public String getAbout() {
-        return mData.mAbout;
-    }
-
-    @Nullable
-    public String getAboutFormatted() {
-        return mData.mAboutFormatted;
+    public CharSequence getAbout() {
+        return mAbout;
     }
 
     public String[] getAvatars() {
@@ -119,11 +118,7 @@ public class User implements Parcelable {
     }
 
     public boolean hasAbout() {
-        return !TextUtils.isEmpty(mData.mAbout);
-    }
-
-    public boolean hasAboutFormatted() {
-        return !TextUtils.isEmpty(mData.mAboutFormatted);
+        return !TextUtils.isEmpty(mAbout);
     }
 
     public boolean hasBio() {
@@ -158,6 +153,14 @@ public class User implements Parcelable {
 
     public boolean hasWebsite() {
         return !TextUtils.isEmpty(mData.mWebsite);
+    }
+
+    public void hydrate() {
+        if (!TextUtils.isEmpty(mData.mAboutFormatted)) {
+            mAbout = JsoupUtils.parse(mData.mAboutFormatted);
+        } else if (!TextUtils.isEmpty(mData.mAbout)) {
+            mAbout = JsoupUtils.parse(mData.mAbout);
+        }
     }
 
     public boolean isAdmin() {

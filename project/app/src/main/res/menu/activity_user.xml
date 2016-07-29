@@ -8,6 +8,14 @@
         android:titleCondensed="@string/manga"
         compat:showAsAction="ifRoom|withText" />
     <item
+        android:id="@+id/miSortDate"
+        android:title="@string/sort_by_date"
+        compat:showAsAction="never" />
+    <item
+        android:id="@+id/miSortTitle"
+        android:title="@string/sort_by_title"
+        compat:showAsAction="never" />
+    <item
         android:id="@+id/miFollow"
         android:title="@string/follow"
         android:visible="false"
@@ -17,5 +25,6 @@
         android:id="@+id/miUnfollow"
         android:title="@string/unfollow"
         android:visible="false"
-        compat:showAsAction="never" />
+        compat:showAsAction="never"
+        tools:visible="true" />
 </menu>

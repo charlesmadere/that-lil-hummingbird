@@ -4,14 +4,14 @@
     <item
         android:icon="@drawable/ic_sort_white_24dp"
         android:title="@string/sort"
-        compat:showAsAction="ifRoom">
+        compat:showAsAction="ifRoom|withText">
         <menu>
             <item
                 android:id="@+id/miSortDate"
-                android:title="@string/date" />
+                android:title="@string/sort_by_date" />
             <item
                 android:id="@+id/miSortTitle"
-                android:title="@string/title" />
+                android:title="@string/sort_by_title" />
         </menu>
     </item>
 </menu>

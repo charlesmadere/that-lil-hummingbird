@@ -16,6 +16,7 @@ import com.charlesmadere.hummingbird.models.Anime;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
+import com.charlesmadere.hummingbird.models.AnimeWrapper;
 import com.charlesmadere.hummingbird.models.AppNews;
 import com.charlesmadere.hummingbird.models.CommentPost;
 import com.charlesmadere.hummingbird.models.CommentStory;
@@ -241,20 +242,20 @@ public final class Api {
     }
 
     public static void getAnime(final String animeId, final ApiResponse<Anime> listener) {
-        HUMMINGBIRD.getAnime(animeId).enqueue(new Callback<Anime>() {
+        HUMMINGBIRD.getAnime(animeId).enqueue(new Callback<AnimeWrapper>() {
             @Override
-            public void onResponse(final Call<Anime> call, final Response<Anime> response) {
-                final Anime anime = response.isSuccessful() ? response.body() : null;
+            public void onResponse(final Call<AnimeWrapper> call, final Response<AnimeWrapper> response) {
+                final AnimeWrapper aw = response.isSuccessful() ? response.body() : null;
 
-                if (anime == null) {
+                if (aw == null) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
-                    listener.success(anime);
+                    listener.success(aw.getAnime());
                 }
             }
 
             @Override
-            public void onFailure(final Call<Anime> call, final Throwable t) {
+            public void onFailure(final Call<AnimeWrapper> call, final Throwable t) {
                 Timber.e(TAG, "get anime (" + animeId + ") failed", t);
                 listener.failure(null);
             }

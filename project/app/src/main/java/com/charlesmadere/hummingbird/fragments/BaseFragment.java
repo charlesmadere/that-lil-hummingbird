@@ -48,10 +48,6 @@ public abstract class BaseFragment extends Fragment {
         mIsDestroyed = false;
     }
 
-    protected void invalidateOptionsMenu() {
-        getActivity().supportInvalidateOptionsMenu();
-    }
-
     @Override
     public String toString() {
         return getFragmentName();

@@ -127,4 +127,18 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
         return fragment;
     }
 
+    public void updateLibrarySort() {
+        for (int i = 0; i < mFragments.size(); ++i) {
+            final WeakReference<BaseFragment> fragmentReference = mFragments.get(i);
+
+            if (fragmentReference != null) {
+                final BaseFragment fragment = fragmentReference.get();
+
+                if (fragment instanceof AnimeLibraryFragment && !fragment.isDestroyed()) {
+                    ((AnimeLibraryFragment) fragment).updateLibrarySort();
+                }
+            }
+        }
+    }
+
 }
