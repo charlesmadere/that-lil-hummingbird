@@ -7,6 +7,7 @@ public final class Constants {
 
     public static final String ANIME = "anime";
     public static final String CHARLES_TWITTER_URL = "https://twitter.com/charlesmadere";
+    public static final String DEBUG = "debug";
     public static final String FOLLOWERS = "followers";
     public static final String FOLLOWING = "following";
     public static final String GITHUB_URL = "https://github.com/charlesmadere/that-lil-hummingbird";

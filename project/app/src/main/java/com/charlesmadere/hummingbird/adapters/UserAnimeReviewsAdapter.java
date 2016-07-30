@@ -10,12 +10,6 @@ public class UserAnimeReviewsAdapter extends BasePaginationAdapter<AnimeReview> 
 
     public UserAnimeReviewsAdapter(final Context context) {
         super(context);
-        setHasStableIds(true);
-    }
-
-    @Override
-    public long getItemId(final int position) {
-        return getItem(position).hashCode();
     }
 
     @Override

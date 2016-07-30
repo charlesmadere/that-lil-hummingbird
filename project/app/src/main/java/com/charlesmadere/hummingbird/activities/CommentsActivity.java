@@ -203,6 +203,7 @@ public class CommentsActivity extends BaseDrawerActivity implements
     protected void onViewsBound() {
         super.onViewsBound();
         mRefreshLayout.setOnRefreshListener(this);
+        mRecyclerView.setHasFixedSize(true);
         mAdapter = new CommentsAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);

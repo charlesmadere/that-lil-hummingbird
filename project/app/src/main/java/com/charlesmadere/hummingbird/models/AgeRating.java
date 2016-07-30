@@ -50,8 +50,7 @@ public enum AgeRating implements Parcelable {
     public static final Creator<AgeRating> CREATOR = new Creator<AgeRating>() {
         @Override
         public AgeRating createFromParcel(final Parcel source) {
-            final int ordinal = source.readInt();
-            return values()[ordinal];
+            return values()[source.readInt()];
         }
 
         @Override

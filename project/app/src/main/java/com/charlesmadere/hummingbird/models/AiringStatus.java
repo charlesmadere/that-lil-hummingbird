@@ -44,8 +44,7 @@ public enum AiringStatus implements Parcelable {
     public static final Creator<AiringStatus> CREATOR = new Creator<AiringStatus>() {
         @Override
         public AiringStatus createFromParcel(final Parcel source) {
-            final int ordinal = source.readInt();
-            return values()[ordinal];
+            return values()[source.readInt()];
         }
 
         @Override

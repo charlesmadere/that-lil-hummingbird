@@ -194,8 +194,9 @@ public class MangaLibraryFragment extends BaseFragment implements
             mAdapter = new MangaLibraryEntriesAdapter(getContext());
         }
 
+        mRecyclerView.setHasFixedSize(true);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding);
         mRecyclerView.setAdapter(mAdapter);
-        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
 
         mEmptyText.setText(mReadingStatus.getEmptyTextResId());
@@ -358,7 +359,7 @@ public class MangaLibraryFragment extends BaseFragment implements
 
         private PaginateLibraryEntriesListener(final MangaLibraryFragment fragment) {
             mFragmentReference = new WeakReference<>(fragment);
-            mLibraryEntriesSize = fragment.mFeed.getAnimeLibraryEntriesSize();
+            mLibraryEntriesSize = fragment.mFeed.getMangaLibraryEntriesSize();
         }
 
         @Override
@@ -375,7 +376,7 @@ public class MangaLibraryFragment extends BaseFragment implements
             final MangaLibraryFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {
-                if (feed.hasCursor() && feed.getAnimeLibraryEntriesSize() > mLibraryEntriesSize) {
+                if (feed.hasCursor() && feed.getMangaLibraryEntriesSize() > mLibraryEntriesSize) {
                     fragment.paginationComplete();
                 } else {
                     fragment.paginationNoMore();

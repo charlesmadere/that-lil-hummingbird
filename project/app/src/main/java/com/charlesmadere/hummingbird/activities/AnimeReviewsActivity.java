@@ -121,7 +121,7 @@ public class AnimeReviewsActivity extends BaseDrawerActivity implements
     @Override
     protected void onViewsBound() {
         super.onViewsBound();
-        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding);
     }
 
     private void showEmpty(final AnimeDigest animeDigest) {

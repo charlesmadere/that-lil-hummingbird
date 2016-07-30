@@ -104,7 +104,8 @@ public class AnimeFranchiseFragment extends BaseFragment implements
         super.onViewCreated(view, savedInstanceState);
 
         mRefreshLayout.setOnRefreshListener(this);
-        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
+        mRecyclerView.setHasFixedSize(true);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding);
         mAdapter = new AnimeAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
 

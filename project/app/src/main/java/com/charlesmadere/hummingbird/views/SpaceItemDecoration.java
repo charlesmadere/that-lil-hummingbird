@@ -74,9 +74,9 @@ public final class SpaceItemDecoration {
             final StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) lm;
 
             if (sglm.getOrientation() == StaggeredGridLayoutManager.HORIZONTAL) {
-                itemDecoration = new HorizontalStaggeredGridImpl(spacing);
+                itemDecoration = new HorizontalStaggeredGridImpl(includeStartAndEndEdges, spacing);
             } else {
-                itemDecoration = new VerticalStaggeredGridImpl(spacing);
+                itemDecoration = new VerticalStaggeredGridImpl(includeStartAndEndEdges, spacing);
             }
         } else {
             // Maybe we shouldn't throw an exception here, and should instead just return a no-op
@@ -259,26 +259,44 @@ public final class SpaceItemDecoration {
     }
 
     private static class HorizontalStaggeredGridImpl extends BaseImpl {
-        private HorizontalStaggeredGridImpl(final int spacing) {
-            super(false, spacing);
+        private HorizontalStaggeredGridImpl(final boolean includeStartAndEndEdges,
+                final int spacing) {
+            super(includeStartAndEndEdges, spacing);
         }
 
         @Override
         protected void getItemOffsets(final Rect outRect, final View view,
                 final RecyclerView parent, final State state, final int position) {
-            outRect.right = mSpacing;
+            if (mIncludeStartAndEndEdges) {
+                outRect.right = mSpacing;
+
+                if (position == 0) {
+                    outRect.left = mSpacing;
+                }
+            } else if (position + 1 != getCount(parent)) {
+                outRect.right = mSpacing;
+            }
         }
     }
 
     private static class VerticalStaggeredGridImpl extends BaseImpl {
-        private VerticalStaggeredGridImpl(final int spacing) {
-            super(false, spacing);
+        private VerticalStaggeredGridImpl(final boolean includeStartAndEndEdges,
+                final int spacing) {
+            super(includeStartAndEndEdges, spacing);
         }
 
         @Override
         protected void getItemOffsets(final Rect outRect, final View view,
                 final RecyclerView parent, final State state, final int position) {
-            outRect.bottom = mSpacing;
+            if (mIncludeStartAndEndEdges) {
+                outRect.bottom = mSpacing;
+
+                if (position == 0) {
+                    outRect.top = mSpacing;
+                }
+            } else if (position + 1 != getCount(parent)) {
+                outRect.bottom = mSpacing;
+            }
         }
     }
 

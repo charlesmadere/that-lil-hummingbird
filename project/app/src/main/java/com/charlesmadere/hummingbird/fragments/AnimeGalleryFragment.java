@@ -69,6 +69,7 @@ public class AnimeGalleryFragment extends BaseFragment implements GalleryItemVie
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mRecyclerView.setHasFixedSize(true);
         SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding_half);
 
         if (mAnimeInfo.hasScreencaps()) {

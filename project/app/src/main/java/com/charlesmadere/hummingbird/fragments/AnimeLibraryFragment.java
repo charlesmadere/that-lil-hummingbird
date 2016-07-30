@@ -194,8 +194,9 @@ public class AnimeLibraryFragment extends BaseFragment implements
             mAdapter = new AnimeLibraryEntriesAdapter(getContext());
         }
 
+        mRecyclerView.setHasFixedSize(true);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding);
         mRecyclerView.setAdapter(mAdapter);
-        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
 
         mEmptyText.setText(mWatchingStatus.getEmptyTextResId());

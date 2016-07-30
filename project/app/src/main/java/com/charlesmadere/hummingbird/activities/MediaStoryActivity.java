@@ -108,6 +108,7 @@ public class MediaStoryActivity extends BaseDrawerActivity implements
     protected void onViewsBound() {
         super.onViewsBound();
         mRefreshLayout.setOnRefreshListener(this);
+        mRecyclerView.setHasFixedSize(true);
         mAdapter = new MediaStoryAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
@@ -194,7 +195,7 @@ public class MediaStoryActivity extends BaseDrawerActivity implements
             final MediaStoryActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                if (feed.getSubstoriesSize() > mSubstoriesSize) {
+                if (feed.hasCursor() && feed.getSubstoriesSize() > mSubstoriesSize) {
                     activity.paginationComplete();
                 } else {
                     activity.paginationNoMore();

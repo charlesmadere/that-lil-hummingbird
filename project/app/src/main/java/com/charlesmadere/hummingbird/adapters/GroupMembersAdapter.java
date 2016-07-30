@@ -10,12 +10,6 @@ public class GroupMembersAdapter extends BasePaginationAdapter<GroupMember> {
 
     public GroupMembersAdapter(final Context context) {
         super(context);
-        setHasStableIds(true);
-    }
-
-    @Override
-    public long getItemId(final int position) {
-        return getItem(position).hashCode();
     }
 
     @Override

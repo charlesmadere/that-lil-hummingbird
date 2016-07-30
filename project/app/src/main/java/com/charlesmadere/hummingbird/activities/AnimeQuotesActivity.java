@@ -121,7 +121,8 @@ public class AnimeQuotesActivity extends BaseDrawerActivity implements
     @Override
     protected void onViewsBound() {
         super.onViewsBound();
-        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
+        mRecyclerView.setHasFixedSize(true);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding);
     }
 
     private void showEmpty(final AnimeDigest animeDigest) {

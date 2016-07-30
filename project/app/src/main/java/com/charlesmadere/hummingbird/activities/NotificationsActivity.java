@@ -17,6 +17,7 @@ import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
+import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
@@ -25,13 +26,14 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 
 public class NotificationsActivity extends BaseDrawerActivity implements
-        SwipeRefreshLayout.OnRefreshListener {
+        RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "NotificationsActivity";
     private static final String KEY_FEED = "Feed";
 
     private Feed mFeed;
     private NotificationsAdapter mAdapter;
+    private RecyclerViewPaginator mPaginator;
 
     @BindView(R.id.llEmpty)
     LinearLayout mEmpty;
@@ -64,6 +66,11 @@ public class NotificationsActivity extends BaseDrawerActivity implements
     @Override
     protected NavigationDrawerItemView.Entry getSelectedNavigationDrawerItemViewEntry() {
         return NavigationDrawerItemView.Entry.NOTIFICATIONS;
+    }
+
+    @Override
+    public boolean isLoading() {
+        return mRefreshLayout.isRefreshing() || mAdapter.isPaginating();
     }
 
     @Override
@@ -106,9 +113,27 @@ public class NotificationsActivity extends BaseDrawerActivity implements
     protected void onViewsBound() {
         super.onViewsBound();
         mRefreshLayout.setOnRefreshListener(this);
-        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding_half);
+        mRecyclerView.setHasFixedSize(true);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding);
         mAdapter = new NotificationsAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
+        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
+    }
+
+    @Override
+    public void paginate() {
+        mAdapter.setPaginating(true);
+        Api.getNotifications(mFeed, new PaginateNotificationsListener(this));
+    }
+
+    protected void paginationComplete() {
+        mAdapter.set(mFeed);
+        mAdapter.setPaginating(false);
+    }
+
+    protected void paginationNoMore() {
+        mPaginator.setEnabled(false);
+        mAdapter.setPaginating(false);
     }
 
     private void showEmpty() {
@@ -132,6 +157,7 @@ public class NotificationsActivity extends BaseDrawerActivity implements
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
         mRefreshLayout.setRefreshing(false);
+        mPaginator.setEnabled(mFeed.hasCursor());
     }
 
 
@@ -160,6 +186,38 @@ public class NotificationsActivity extends BaseDrawerActivity implements
                     activity.showFeed(feed);
                 } else {
                     activity.showEmpty();
+                }
+            }
+        }
+    }
+
+    private static class PaginateNotificationsListener implements ApiResponse<Feed> {
+        private final WeakReference<NotificationsActivity> mActivityReference;
+        private final int mNotificationsSize;
+
+        private PaginateNotificationsListener(final NotificationsActivity activity) {
+            mActivityReference = new WeakReference<>(activity);
+            mNotificationsSize = activity.mFeed.getNotificationsSize();
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final NotificationsActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.paginationNoMore();
+            }
+        }
+
+        @Override
+        public void success(final Feed feed) {
+            final NotificationsActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                if (feed.hasCursor() && feed.getNotificationsSize() > mNotificationsSize) {
+                    activity.paginationComplete();
+                } else {
+                    activity.paginationNoMore();
                 }
             }
         }

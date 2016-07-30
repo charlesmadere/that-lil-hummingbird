@@ -133,7 +133,8 @@ public abstract class BaseFeedFragment extends BaseFragment implements FeedPostF
         super.onViewCreated(view, savedInstanceState);
 
         mRefreshLayout.setOnRefreshListener(this);
-        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
+        mRecyclerView.setHasFixedSize(true);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding);
         mAdapter = new FeedAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
@@ -190,6 +191,11 @@ public abstract class BaseFeedFragment extends BaseFragment implements FeedPostF
         FeedPostFragment.create().show(getChildFragmentManager(), FeedPostFragment.TAG);
     }
 
+
+    public interface Listener {
+        void onFeedBeganLoading();
+        void onFeedFinishedLoading();
+    }
 
     private static class FeedPostListener implements ApiResponse<Void> {
         private final WeakReference<BaseFeedFragment> mFragmentReference;
@@ -277,11 +283,6 @@ public abstract class BaseFeedFragment extends BaseFragment implements FeedPostF
                 }
             }
         }
-    }
-
-    public interface Listener {
-        void onFeedBeganLoading();
-        void onFeedFinishedLoading();
     }
 
 }

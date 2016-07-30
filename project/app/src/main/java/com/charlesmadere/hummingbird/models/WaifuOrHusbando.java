@@ -51,8 +51,7 @@ public enum WaifuOrHusbando implements Parcelable {
     public static final Creator<WaifuOrHusbando> CREATOR = new Creator<WaifuOrHusbando>() {
         @Override
         public WaifuOrHusbando createFromParcel(final Parcel source) {
-            final int ordinal = source.readInt();
-            return values()[ordinal];
+            return values()[source.readInt()];
         }
 
         @Override

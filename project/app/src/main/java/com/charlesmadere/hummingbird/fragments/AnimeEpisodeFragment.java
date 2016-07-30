@@ -1,6 +1,5 @@
 package com.charlesmadere.hummingbird.fragments;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -86,7 +85,7 @@ public class AnimeEpisodeFragment extends BaseBottomSheetDialogFragment {
         mNumber.setText(NumberFormat.getInstance().format(mEpisode.getNumber()));
 
         if (mEpisode.hasThumbnail()) {
-            mThumbnail.setImageURI(Uri.parse(mEpisode.getThumbnail()));
+            mThumbnail.setImageURI(mEpisode.getThumbnail());
         }
 
         if (mEpisode.hasSynopsis()) {

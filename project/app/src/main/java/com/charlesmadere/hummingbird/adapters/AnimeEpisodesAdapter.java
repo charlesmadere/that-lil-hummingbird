@@ -9,6 +9,12 @@ public class AnimeEpisodesAdapter extends BaseAdapter<AnimeDigest.Episode> {
 
     public AnimeEpisodesAdapter(final Context context) {
         super(context);
+        setHasStableIds(true);
+    }
+
+    @Override
+    public long getItemId(final int position) {
+        return getItem(position).hashCode();
     }
 
     @Override

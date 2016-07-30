@@ -1,7 +1,6 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.widget.TextView;
@@ -40,7 +39,7 @@ public class MangaCharacterItemView extends CardView implements AdapterView<Mang
 
     @Override
     public void setContent(final MangaDigest.Character content) {
-        mCharacterPhoto.setImageURI(Uri.parse(content.getImage()));
+        mCharacterPhoto.setImageURI(content.getImage());
         mTitle.setText(content.getName());
     }
 

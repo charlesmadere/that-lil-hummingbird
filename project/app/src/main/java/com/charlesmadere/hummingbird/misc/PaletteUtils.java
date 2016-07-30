@@ -41,7 +41,7 @@ public final class PaletteUtils {
         if (MiscUtils.isLowRamDevice()) {
             simpleDraweeView.setImageURI(uri);
         } else {
-            final ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(url))
+            final ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
                     .setPostprocessor(new PalettePostprocessor(activity, appBarLayout,
                             collapsingToolbarLayout, tabLayout))
                     .build();

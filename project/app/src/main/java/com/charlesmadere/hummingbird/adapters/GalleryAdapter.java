@@ -20,6 +20,12 @@ public class GalleryAdapter extends BaseAdapter<String> {
             @Nullable final GalleryItemView.OnClickListener onClickListener) {
         super(context);
         mOnClickListener = onClickListener;
+        setHasStableIds(true);
+    }
+
+    @Override
+    public long getItemId(final int position) {
+        return getItem(position).hashCode();
     }
 
     @Override

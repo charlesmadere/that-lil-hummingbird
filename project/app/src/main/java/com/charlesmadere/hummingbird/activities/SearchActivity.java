@@ -150,10 +150,11 @@ public class SearchActivity extends BaseDrawerActivity implements
     @Override
     protected void onViewsBound() {
         super.onViewsBound();
-        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
-        mSearchScope.setOnItemSelectedListener(this);
+        mRecyclerView.setHasFixedSize(true);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding);
         mAdapter = new SearchResultsAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
+        mSearchScope.setOnItemSelectedListener(this);
     }
 
     private void showEmpty() {

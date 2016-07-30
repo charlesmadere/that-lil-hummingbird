@@ -28,7 +28,7 @@ public class User implements Parcelable {
     private Data mData;
 
     // hydrated fields
-    private CharSequence mAbout;
+    private CharSequence mCompiledAbout;
 
 
     @Override
@@ -38,7 +38,7 @@ public class User implements Parcelable {
 
     @Nullable
     public CharSequence getAbout() {
-        return mAbout;
+        return mCompiledAbout;
     }
 
     public String[] getAvatars() {
@@ -118,7 +118,7 @@ public class User implements Parcelable {
     }
 
     public boolean hasAbout() {
-        return !TextUtils.isEmpty(mAbout);
+        return !TextUtils.isEmpty(mCompiledAbout);
     }
 
     public boolean hasBio() {
@@ -157,9 +157,9 @@ public class User implements Parcelable {
 
     public void hydrate() {
         if (!TextUtils.isEmpty(mData.mAboutFormatted)) {
-            mAbout = JsoupUtils.parse(mData.mAboutFormatted);
+            mCompiledAbout = JsoupUtils.parse(mData.mAboutFormatted);
         } else if (!TextUtils.isEmpty(mData.mAbout)) {
-            mAbout = JsoupUtils.parse(mData.mAbout);
+            mCompiledAbout = JsoupUtils.parse(mData.mAbout);
         }
     }
 

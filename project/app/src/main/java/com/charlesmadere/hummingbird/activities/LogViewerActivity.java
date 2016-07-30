@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.TimberEntriesAdapter;
 import com.charlesmadere.hummingbird.misc.Timber;
+import com.charlesmadere.hummingbird.views.DividerItemDecoration;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
 
 import butterknife.BindView;
@@ -106,6 +107,8 @@ public class LogViewerActivity extends BaseDrawerActivity implements
     protected void onViewsBound() {
         super.onViewsBound();
         mRefreshLayout.setOnRefreshListener(this);
+        mRecyclerView.setHasFixedSize(true);
+        DividerItemDecoration.apply(mRecyclerView);
         mAdapter = new TimberEntriesAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
     }

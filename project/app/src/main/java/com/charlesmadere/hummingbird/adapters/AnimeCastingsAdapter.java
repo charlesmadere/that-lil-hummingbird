@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.adapters;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
@@ -38,7 +39,12 @@ public class AnimeCastingsAdapter extends BaseMultiAdapter implements Comparator
         return map;
     }
 
-    public void set(final ArrayList<AnimeDigest.Casting> castings) {
+    public void set(@Nullable final ArrayList<AnimeDigest.Casting> castings) {
+        if (castings == null || castings.isEmpty()) {
+            super.set(null);
+            return;
+        }
+
         final TreeMap<String, ArrayList<AnimeDigest.Casting>> map = new TreeMap<>(this);
 
         for (final AnimeDigest.Casting casting : castings) {

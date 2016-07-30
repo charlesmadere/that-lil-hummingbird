@@ -10,7 +10,7 @@ import com.charlesmadere.hummingbird.models.ProfileCommentNotification;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class NotificationsAdapter extends BaseMultiAdapter {
+public class NotificationsAdapter extends BaseMultiPaginationAdapter {
 
     public NotificationsAdapter(final Context context) {
         super(context);
@@ -25,15 +25,12 @@ public class NotificationsAdapter extends BaseMultiAdapter {
     }
 
     public void set(final Feed feed) {
-        final ArrayList<Object> list;
-
-        if (feed.hasNotifications()) {
-            list = new ArrayList<Object>(feed.getNotifications());
-        } else {
-            list = null;
+        if (!feed.hasNotifications()) {
+            super.set(null);
+            return;
         }
 
-        super.set(list);
+        super.set(new ArrayList<Object>(feed.getNotifications()));
     }
 
 }

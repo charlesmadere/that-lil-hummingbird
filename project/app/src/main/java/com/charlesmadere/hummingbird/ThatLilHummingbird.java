@@ -2,11 +2,13 @@ package com.charlesmadere.hummingbird;
 
 import android.app.Activity;
 import android.app.Application;
+import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.charlesmadere.hummingbird.activities.HomeActivity;
 import com.charlesmadere.hummingbird.misc.ActivityRegister;
+import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.OkHttpUtils;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.NightMode;
@@ -72,10 +74,13 @@ public class ThatLilHummingbird extends Application {
         sInstance = this;
 
         Fabric.with(this, new Crashlytics());
-        Timber.d(TAG, "Application created (debug: " + BuildConfig.DEBUG + ')');
+
+        Timber.d(TAG, "Application created");
+        Crashlytics.setBool(Constants.DEBUG, BuildConfig.DEBUG);
 
         final ImagePipelineConfig config = OkHttpImagePipelineConfigFactory
                 .newBuilder(this, OkHttpUtils.getOkHttpClient())
+                .setBitmapsConfig(Bitmap.Config.RGB_565)
                 .build();
 
         Fresco.initialize(this, config);

@@ -168,6 +168,10 @@ public class Feed implements Parcelable {
         return mNotifications;
     }
 
+    public int getNotificationsSize() {
+        return mNotifications == null ? 0 : mNotifications.size();
+    }
+
     @Nullable
     public ArrayList<AbsStory> getStories() {
         return mStories;

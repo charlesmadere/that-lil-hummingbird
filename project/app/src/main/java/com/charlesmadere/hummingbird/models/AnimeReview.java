@@ -58,6 +58,7 @@ public class AnimeReview implements Parcelable {
     // hydrated fields
     @Nullable
     private Anime mAnime;
+
     private CharSequence mCompiledContent;
     private String mAnimeTitle;
     private User mUser;

@@ -112,7 +112,8 @@ public class UserGroupsActivity extends BaseDrawerActivity implements
     protected void onViewsBound() {
         super.onViewsBound();
         mRefreshLayout.setOnRefreshListener(this);
-        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
+        mRecyclerView.setHasFixedSize(true);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding);
         mAdapter = new GroupsAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
@@ -212,7 +213,7 @@ public class UserGroupsActivity extends BaseDrawerActivity implements
             final UserGroupsActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                if (feed.getGroupsSize() > mGroupsSize) {
+                if (feed.hasCursor() && feed.getGroupsSize() > mGroupsSize) {
                     activity.paginationComplete();
                 } else {
                     activity.paginationNoMore();

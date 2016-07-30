@@ -64,6 +64,7 @@ public class AnimeCastingsFragment extends BaseFragment {
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mRecyclerView.setHasFixedSize(true);
         SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
 
         if (mCastings == null || mCastings.isEmpty()) {

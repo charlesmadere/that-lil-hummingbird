@@ -133,6 +133,11 @@ public class MangaDigest implements Parcelable {
         private String mRole;
 
 
+        @Override
+        public boolean equals(final Object o) {
+            return o instanceof Casting && mId.equalsIgnoreCase(((Casting) o).getId());
+        }
+
         public String getCharacterId() {
             return mCharacterId;
         }
@@ -154,6 +159,11 @@ public class MangaDigest implements Parcelable {
         @Nullable
         public String getRole() {
             return mRole;
+        }
+
+        @Override
+        public int hashCode() {
+            return mId.hashCode();
         }
 
         public boolean hasLanguage() {
@@ -213,6 +223,11 @@ public class MangaDigest implements Parcelable {
         private String mName;
 
 
+        @Override
+        public boolean equals(final Object o) {
+            return o instanceof Character && mId.equalsIgnoreCase(((Character) o).getId());
+        }
+
         public String getId() {
             return mId;
         }
@@ -223,6 +238,11 @@ public class MangaDigest implements Parcelable {
 
         public String getName() {
             return mName;
+        }
+
+        @Override
+        public int hashCode() {
+            return mId.hashCode();
         }
 
         @Override

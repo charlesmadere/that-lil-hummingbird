@@ -158,6 +158,11 @@ public class UserDigest implements Parcelable {
         private String mUserId;
 
 
+        @Override
+        public boolean equals(final Object o) {
+            return o instanceof Favorite && mId.equalsIgnoreCase(((Favorite) o).getId());
+        }
+
         public int getFavoriteRank() {
             return mFavoriteRank;
         }
@@ -172,6 +177,11 @@ public class UserDigest implements Parcelable {
 
         public String getUserId() {
             return mUserId;
+        }
+
+        @Override
+        public int hashCode() {
+            return mId.hashCode();
         }
 
         public void hydrate(final UserDigest userDigest) {
@@ -219,11 +229,21 @@ public class UserDigest implements Parcelable {
             @SerializedName("id")
             private String mId;
 
+            @Override
+            public boolean equals(final Object o) {
+                return o instanceof AbsItem && mId.equalsIgnoreCase(((AbsItem) o).getId());
+            }
+
             public String getId() {
                 return mId;
             }
 
             public abstract Type getType();
+
+            @Override
+            public int hashCode() {
+                return mId.hashCode();
+            }
 
             public abstract void hydrate(final UserDigest userDigest);
 
@@ -280,8 +300,7 @@ public class UserDigest implements Parcelable {
                 public static final Creator<Type> CREATOR = new Creator<Type>() {
                     @Override
                     public Type createFromParcel(final Parcel source) {
-                        final int ordinal = source.readInt();
-                        return values()[ordinal];
+                        return values()[source.readInt()];
                     }
 
                     @Override
@@ -338,9 +357,11 @@ public class UserDigest implements Parcelable {
                 for (final Anime anime : userDigest.getAnime()) {
                     if (getId().equalsIgnoreCase(anime.getId())) {
                         mAnime = anime;
-                        break;
+                        return;
                     }
                 }
+
+                throw new RuntimeException("couldn't find Anime with ID \"" + getId() + '"');
             }
 
             @Override
@@ -388,9 +409,11 @@ public class UserDigest implements Parcelable {
                 for (final Manga manga : userDigest.getManga()) {
                     if (getId().equalsIgnoreCase(manga.getId())) {
                         mManga = manga;
-                        break;
+                        return;
                     }
                 }
+
+                throw new RuntimeException("couldn't find Manga with ID \"" + getId() + '"');
             }
 
             @Override
@@ -591,6 +614,11 @@ public class UserDigest implements Parcelable {
                 @SerializedName("slug")
                 private String mSlug;
 
+                @Override
+                public boolean equals(final Object o) {
+                    return o instanceof Data && mId.equalsIgnoreCase(((Data) o).getId());
+                }
+
                 @Nullable
                 public SimpleDate getCreatedAt() {
                     return mCreatedAt;
@@ -620,6 +648,11 @@ public class UserDigest implements Parcelable {
 
                 public boolean hasDescription() {
                     return !TextUtils.isEmpty(mDescription);
+                }
+
+                @Override
+                public int hashCode() {
+                    return mId.hashCode();
                 }
 
                 @Override

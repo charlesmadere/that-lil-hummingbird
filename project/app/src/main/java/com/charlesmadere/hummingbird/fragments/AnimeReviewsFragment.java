@@ -64,7 +64,8 @@ public class AnimeReviewsFragment extends BaseFragment {
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
+        mRecyclerView.setHasFixedSize(true);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding);
 
         if (mReviews == null || mReviews.isEmpty()) {
             mEmpty.setVisibility(View.VISIBLE);

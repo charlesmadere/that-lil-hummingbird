@@ -440,6 +440,11 @@ public class AnimeDigest implements Parcelable {
         private String mTitle;
 
 
+        @Override
+        public boolean equals(final Object o) {
+            return o instanceof Episode && mId.equalsIgnoreCase(((Episode) o).getId());
+        }
+
         public String getId() {
             return mId;
         }
@@ -460,6 +465,11 @@ public class AnimeDigest implements Parcelable {
 
         public String getTitle() {
             return mTitle;
+        }
+
+        @Override
+        public int hashCode() {
+            return mId.hashCode();
         }
 
         public boolean hasSynopsis() {
@@ -1121,6 +1131,11 @@ public class AnimeDigest implements Parcelable {
         private String mUsername;
 
 
+        @Override
+        public boolean equals(final Object o) {
+            return o instanceof Quote && mId.equalsIgnoreCase(((Quote) o).getId());
+        }
+
         public String getAnimeId() {
             return mAnimeId;
         }
@@ -1148,6 +1163,11 @@ public class AnimeDigest implements Parcelable {
 
         public boolean hasCharacterName() {
             return !TextUtils.isEmpty(mCharacterName);
+        }
+
+        @Override
+        public int hashCode() {
+            return mId.hashCode();
         }
 
         public boolean isFavorite() {

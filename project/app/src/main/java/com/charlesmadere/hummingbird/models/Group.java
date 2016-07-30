@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.charlesmadere.hummingbird.misc.JsoupUtils;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.google.gson.annotations.SerializedName;
 
@@ -48,6 +49,9 @@ public class Group implements Parcelable {
     @Nullable
     private ArrayList<GroupMember> mGroupMembers;
 
+    @Nullable
+    private CharSequence mCompiledAbout;
+
 
     @Override
     public boolean equals(final Object o) {
@@ -55,13 +59,8 @@ public class Group implements Parcelable {
     }
 
     @Nullable
-    public String getAbout() {
-        return mAbout;
-    }
-
-    @Nullable
-    public String getAboutFormatted() {
-        return mAboutFormatted;
+    public CharSequence getAbout() {
+        return mCompiledAbout;
     }
 
     @Nullable
@@ -101,11 +100,7 @@ public class Group implements Parcelable {
     }
 
     public boolean hasAbout() {
-        return !TextUtils.isEmpty(mAbout);
-    }
-
-    public boolean hasAboutFormatted() {
-        return !TextUtils.isEmpty(mAboutFormatted);
+        return !TextUtils.isEmpty(mCompiledAbout);
     }
 
     public boolean hasAvatar() {
@@ -139,6 +134,12 @@ public class Group implements Parcelable {
         }
 
         mGroupMembers.trimToSize();
+
+        if (!TextUtils.isEmpty(mAboutFormatted)) {
+            mCompiledAbout = JsoupUtils.parse(mAboutFormatted);
+        } else if (!TextUtils.isEmpty(mAbout)) {
+            mCompiledAbout = JsoupUtils.parse(mAbout);
+        }
     }
 
     public void hydrate(final Feed feed) {
@@ -171,6 +172,7 @@ public class Group implements Parcelable {
         dest.writeString(mId);
         dest.writeString(mName);
         dest.writeTypedList(mGroupMembers);
+        TextUtils.writeToParcel(mCompiledAbout, dest, flags);
     }
 
     public static final Creator<Group> CREATOR = new Creator<Group>() {
@@ -187,6 +189,7 @@ public class Group implements Parcelable {
             g.mId = source.readString();
             g.mName = source.readString();
             g.mGroupMembers = source.createTypedArrayList(GroupMember.CREATOR);
+            g.mCompiledAbout = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
             return g;
         }
 

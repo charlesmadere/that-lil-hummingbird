@@ -115,7 +115,7 @@ public enum ReadingStatus implements Parcelable {
                 }
             }
 
-            throw new RuntimeException("unknown " + WatchingStatus.class.getName() +
+            throw new RuntimeException("unknown " + ReadingStatus.class.getName() +
                     " value: \"" + jsonValue + '"');
         }
     };
