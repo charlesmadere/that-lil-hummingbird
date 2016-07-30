@@ -2,8 +2,10 @@ package com.charlesmadere.hummingbird.misc;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -20,6 +22,7 @@ import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.ThatLilHummingbird;
@@ -31,6 +34,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public final class MiscUtils {
+
+    private static final String TAG = "MiscUtils";
 
     private static final long MINUTE_IN_SECONDS = TimeUnit.MINUTES.toSeconds(1L);
     private static final long HOUR_IN_SECONDS = TimeUnit.HOURS.toSeconds(1L);
@@ -268,11 +273,29 @@ public final class MiscUtils {
             return;
         }
 
-        final CustomTabsIntent intent = new CustomTabsIntent.Builder()
-                .setToolbarColor(MiscUtils.getAttrColor(activity, R.attr.colorPrimary))
-                .build();
+        try {
+            final CustomTabsIntent intent = new CustomTabsIntent.Builder()
+                    .setToolbarColor(MiscUtils.getAttrColor(activity, R.attr.colorPrimary))
+                    .build();
 
-        intent.launchUrl(activity, Uri.parse(url));
+            intent.launchUrl(activity, Uri.parse(url));
+            return;
+        } catch (final ActivityNotFoundException e) {
+            Timber.w(TAG, "Unable to open Chrome Custom Tab to URL: \"" + url + '"', e);
+        }
+
+        try {
+            final Intent intent = new Intent()
+                    .setAction(Intent.ACTION_VIEW)
+                    .setData(Uri.parse(url));
+
+            activity.startActivity(intent);
+            return;
+        } catch (final ActivityNotFoundException e) {
+            Timber.e(TAG, "Unable to open browser to URL: \"" + url + '"', e);
+        }
+
+        Toast.makeText(activity, R.string.unable_to_open_link, Toast.LENGTH_LONG).show();
     }
 
     public static void openUrl(final Context context, final String url) {
