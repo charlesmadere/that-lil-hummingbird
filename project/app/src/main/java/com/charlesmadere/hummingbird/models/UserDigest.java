@@ -129,7 +129,7 @@ public class UserDigest implements Parcelable {
         @Override
         public UserDigest createFromParcel(final Parcel source) {
             final UserDigest ud = new UserDigest();
-            ud.mAnime = source.readParcelable(Anime.class.getClassLoader());
+            ud.mAnime = source.createTypedArrayList(Anime.CREATOR);
             ud.mUsers = source.createTypedArrayList(User.CREATOR);
             ud.mFavorites = source.createTypedArrayList(Favorite.CREATOR);
             ud.mManga = source.createTypedArrayList(Manga.CREATOR);
