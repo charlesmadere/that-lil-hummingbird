@@ -16,6 +16,7 @@ public final class Constants {
     public static final String HUMMINGBIRD_URL_PRO = HUMMINGBIRD_URL + "pro";
     public static final String HUMMINGBIRD_URL_RELATIVE = "//hummingbird.me/";
     public static final String LIBRARY = "library";
+    public static final String LOW_RAM_DEVICE = "low_ram_device";
     public static final String MANGA = "manga";
     public static final String MEMBERS = "members";
     public static final String NOTIFICATIONS = "notifications";

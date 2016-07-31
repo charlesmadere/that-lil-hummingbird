@@ -10,6 +10,7 @@ import com.charlesmadere.hummingbird.activities.HomeActivity;
 import com.charlesmadere.hummingbird.misc.ActivityRegister;
 import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.FeedCache;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.OkHttpUtils;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.NightMode;
@@ -78,6 +79,7 @@ public class ThatLilHummingbird extends Application {
 
         Timber.d(TAG, "Application created");
         Crashlytics.setBool(Constants.DEBUG, BuildConfig.DEBUG);
+        Crashlytics.setBool(Constants.LOW_RAM_DEVICE, MiscUtils.isLowRamDevice());
 
         final ImagePipelineConfig config = OkHttpImagePipelineConfigFactory
                 .newBuilder(this, OkHttpUtils.getOkHttpClient())
