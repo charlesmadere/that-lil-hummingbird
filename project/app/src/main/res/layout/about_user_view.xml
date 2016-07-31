@@ -10,7 +10,7 @@
             android:id="@+id/tvTitle"
             tools:text="About thelithlord"
             style="@style/ResponsiveWidthCardHeader" />
-        <com.charlesmadere.hummingbird.views.TypefaceTextView
+        <com.charlesmadere.hummingbird.views.LinkTextView
             android:id="@+id/tvAbout"
             tools:text="Bacon ipsum dolor amet boudin short ribs sausage ground round cow."
             style="@style/UserBio.WithMargins" />
