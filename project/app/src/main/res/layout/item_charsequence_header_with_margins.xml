@@ -2,4 +2,4 @@
 <com.charlesmadere.hummingbird.views.CharSequenceItemView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:text="Season 5"
-    style="@style/SectionHeader" />
+    style="@style/SectionHeader.WithMargins" />

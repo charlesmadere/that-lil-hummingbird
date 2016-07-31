@@ -589,6 +589,10 @@
         <item name="typeface">open_sans_extra_bold</item>
     </style>
 
+    <style name="SectionHeader.WithMargins">
+        <item name="android:layout_marginBottom">@dimen/root_padding_half</item>
+    </style>
+
     <style name="Switch">
         <item name="android:background">@null</item>
         <item name="android:clickable">false</item>
