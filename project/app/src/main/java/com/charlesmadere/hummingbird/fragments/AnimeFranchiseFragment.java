@@ -31,7 +31,6 @@ public class AnimeFranchiseFragment extends BaseFragment implements
         SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "AnimeFranchiseFragment";
-    private static final String KEY_FRANCHISE = "Franchise";
 
     private AnimeAdapter mAdapter;
     private AnimeDigestProvider mProvider;
@@ -86,15 +85,6 @@ public class AnimeFranchiseFragment extends BaseFragment implements
     }
 
     @Override
-    public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mFranchise = savedInstanceState.getParcelable(KEY_FRANCHISE);
-        }
-    }
-
-    @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -104,15 +94,6 @@ public class AnimeFranchiseFragment extends BaseFragment implements
     @Override
     public void onRefresh() {
         fetchFranchise();
-    }
-
-    @Override
-    public void onSaveInstanceState(final Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        if (mFranchise != null) {
-            outState.putParcelable(KEY_FRANCHISE, mFranchise);
-        }
     }
 
     @Override
