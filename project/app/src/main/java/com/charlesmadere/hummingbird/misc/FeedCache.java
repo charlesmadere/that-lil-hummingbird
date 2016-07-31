@@ -24,8 +24,15 @@ public final class FeedCache {
         return TextUtils.join("|", keys);
     }
 
-    public static synchronized void clear() {
-        CACHE.evictAll();
+    public static void clear() {
+        final int oldSize;
+
+        synchronized (CACHE) {
+            oldSize = CACHE.size();
+            CACHE.evictAll();
+        }
+
+        Timber.d(TAG, "cleaned, size was " + oldSize);
     }
 
     @Nullable
@@ -60,18 +67,31 @@ public final class FeedCache {
         }
 
         final String key = buildKey(keys);
+        final int oldSize, newSize;
 
         synchronized (CACHE) {
+            oldSize = CACHE.size();
             CACHE.put(key, feed);
+            newSize = CACHE.size();
         }
 
-        Timber.d(TAG, "new size: " + CACHE.size());
+        if (newSize != oldSize) {
+            Timber.d(TAG, "new size: " + CACHE.size());
+        }
     }
 
-    public static synchronized void trim() {
-        final int size = CACHE.size();
-        CACHE.trimToSize(CACHE.maxSize() / 2);
-        Timber.d(TAG, "trimmed from " + size + " to " + CACHE.size());
+    public static void trim() {
+        final int oldSize, newSize;
+
+        synchronized (CACHE) {
+            oldSize = CACHE.size();
+            CACHE.trimToSize(CACHE.maxSize() / 2);
+            newSize = CACHE.size();
+        }
+
+        if (newSize != oldSize) {
+            Timber.d(TAG, "trimmed from " + oldSize + " to " + newSize);
+        }
     }
 
     public interface KeyProvider {

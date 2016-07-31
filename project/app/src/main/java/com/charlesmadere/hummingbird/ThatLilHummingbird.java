@@ -100,9 +100,9 @@ public class ThatLilHummingbird extends Application {
         super.onTrimMemory(level);
 
         if (level >= TRIM_MEMORY_BACKGROUND) {
+            Timber.clearEntries();
             Fresco.getImagePipeline().clearMemoryCaches();
             FeedCache.clear();
-            Timber.clearEntries();
         } else if (level >= TRIM_MEMORY_UI_HIDDEN) {
             FeedCache.trim();
         }
