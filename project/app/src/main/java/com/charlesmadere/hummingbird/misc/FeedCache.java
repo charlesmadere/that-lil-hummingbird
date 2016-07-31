@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.misc;
 
 import android.support.annotation.Nullable;
 import android.support.v4.util.LruCache;
+import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.models.Feed;
 
@@ -19,18 +20,7 @@ public final class FeedCache {
     }
 
     private static String buildKey(final String... keys) {
-        if (keys == null || keys.length == 0) {
-            throw new IllegalArgumentException("keys parameter can't be null / empty");
-        }
-
-        final StringBuilder builder = new StringBuilder();
-
-        for (final String key : keys) {
-            builder.append('|');
-            builder.append(key);
-        }
-
-        return builder.toString();
+        return TextUtils.join("|", keys);
     }
 
     public static synchronized void clear() {
