@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.FeedAdapter;
+import com.charlesmadere.hummingbird.misc.FeedCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -23,11 +24,10 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class GroupFeedFragment extends BaseFragment implements
+public class GroupFeedFragment extends BaseFragment implements FeedCache.KeyProvider,
         RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "GroupFeedFragment";
-    private static final String KEY_FEED = "Feed";
     private static final String KEY_GROUP_ID = "GroupId";
 
     private Feed mFeed;
@@ -64,6 +64,11 @@ public class GroupFeedFragment extends BaseFragment implements
     }
 
     @Override
+    public String[] getFeedCacheKeys() {
+        return new String[0];
+    }
+
+    @Override
     public String getFragmentName() {
         return TAG;
     }
@@ -80,9 +85,7 @@ public class GroupFeedFragment extends BaseFragment implements
         final Bundle args = getArguments();
         mGroupId = args.getString(KEY_GROUP_ID);
 
-        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mFeed = savedInstanceState.getParcelable(KEY_FEED);
-        }
+        mFeed = FeedCache.get(this);
     }
 
     @Override
@@ -101,8 +104,8 @@ public class GroupFeedFragment extends BaseFragment implements
     public void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if (mFeed != null) {
-            outState.putParcelable(KEY_FEED, mFeed);
+        if (mFeed != null && mFeed.hasGroupMembers()) {
+            FeedCache.put(mFeed, this);
         }
     }
 

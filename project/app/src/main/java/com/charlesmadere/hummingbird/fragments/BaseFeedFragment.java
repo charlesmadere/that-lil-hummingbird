@@ -28,10 +28,10 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public abstract class BaseFeedFragment extends BaseFragment implements FeedPostFragment.Listener,
-        RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
+public abstract class BaseFeedFragment extends BaseFragment implements FeedCache.KeyProvider,
+        FeedPostFragment.Listener, RecyclerViewPaginator.Listeners,
+        SwipeRefreshLayout.OnRefreshListener {
 
-    protected static final String KEY_FEED = "Feed";
     protected static final String KEY_USERNAME = "Username";
 
     protected boolean mFetchingFeed;
@@ -67,6 +67,11 @@ public abstract class BaseFeedFragment extends BaseFragment implements FeedPostF
         mListener.onFeedBeganLoading();
     }
 
+    @Override
+    public String[] getFeedCacheKeys() {
+        return new String[] { getFragmentName(), mUsername };
+    }
+
     public boolean isFetchingFeed() {
         return mFetchingFeed;
     }
@@ -89,7 +94,7 @@ public abstract class BaseFeedFragment extends BaseFragment implements FeedPostF
         final Bundle args = getArguments();
         mUsername = args.getString(KEY_USERNAME);
 
-        mFeed = FeedCache.get(getFragmentName(), mUsername);
+        mFeed = FeedCache.get(this);
     }
 
     @Override
@@ -123,7 +128,7 @@ public abstract class BaseFeedFragment extends BaseFragment implements FeedPostF
         super.onSaveInstanceState(outState);
 
         if (mFeed != null && mFeed.hasStories()) {
-            FeedCache.put(mFeed, getFragmentName(), mUsername);
+            FeedCache.put(mFeed, this);
         }
     }
 

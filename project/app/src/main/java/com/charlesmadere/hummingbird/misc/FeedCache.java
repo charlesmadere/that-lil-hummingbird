@@ -13,9 +13,9 @@ public final class FeedCache {
 
     static {
         if (MiscUtils.isLowRamDevice()) {
-            CACHE = new LruCache<>(10);
+            CACHE = new LruCache<>(8);
         } else {
-            CACHE = new LruCache<>(16);
+            CACHE = new LruCache<>(12);
         }
     }
 
@@ -33,7 +33,7 @@ public final class FeedCache {
             throw new IllegalArgumentException("keyProvider parameter can't be null");
         }
 
-        return get(keyProvider.getCacheFeedKeys());
+        return get(keyProvider.getFeedCacheKeys());
     }
 
     @Nullable
@@ -50,7 +50,7 @@ public final class FeedCache {
             throw new IllegalArgumentException("keyProvider parameter can't be null");
         }
 
-        put(feed, keyProvider.getCacheFeedKeys());
+        put(feed, keyProvider.getFeedCacheKeys());
     }
 
     public static void put(final Feed feed, final String... keys) {
@@ -62,7 +62,7 @@ public final class FeedCache {
     }
 
     public interface KeyProvider {
-        String[] getCacheFeedKeys();
+        String[] getFeedCacheKeys();
     }
 
 }

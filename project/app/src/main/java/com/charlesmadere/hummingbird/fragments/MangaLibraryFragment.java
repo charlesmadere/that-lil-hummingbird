@@ -35,7 +35,7 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class MangaLibraryFragment extends BaseFragment implements
+public class MangaLibraryFragment extends BaseFragment implements FeedCache.KeyProvider,
         MangaLibraryEntryItemView.OnEditClickListener, MangaLibraryUpdateFragment.DeleteListener,
         MangaLibraryUpdateFragment.UpdateListener, RecyclerViewPaginator.Listeners,
         SwipeRefreshLayout.OnRefreshListener {
@@ -91,6 +91,11 @@ public class MangaLibraryFragment extends BaseFragment implements
     }
 
     @Override
+    public String[] getFeedCacheKeys() {
+        return new String[] { getFragmentName(), mUsername, mReadingStatus.name() };
+    }
+
+    @Override
     public String getFragmentName() {
         return TAG;
     }
@@ -129,7 +134,7 @@ public class MangaLibraryFragment extends BaseFragment implements
         mUsername = args.getString(KEY_USERNAME);
         mEditableLibrary = args.getBoolean(KEY_EDITABLE_LIBRARY);
 
-        mFeed = FeedCache.get(getFragmentName(), mUsername, mReadingStatus.name());
+        mFeed = FeedCache.get(this);
     }
 
     @Override
@@ -165,7 +170,7 @@ public class MangaLibraryFragment extends BaseFragment implements
         super.onSaveInstanceState(outState);
 
         if (mFeed != null && mFeed.hasMangaLibraryEntries()) {
-            FeedCache.put(mFeed, getFragmentName(), mUsername, mReadingStatus.name());
+            FeedCache.put(mFeed, this);
         }
     }
 

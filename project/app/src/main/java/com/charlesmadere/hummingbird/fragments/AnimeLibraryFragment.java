@@ -37,8 +37,8 @@ import butterknife.BindView;
 
 public class AnimeLibraryFragment extends BaseFragment implements
         AnimeLibraryUpdateFragment.DeleteListener, AnimeLibraryUpdateFragment.UpdateListener,
-        InternalAnimeItemView.OnEditClickListener, RecyclerViewPaginator.Listeners,
-        SwipeRefreshLayout.OnRefreshListener {
+        FeedCache.KeyProvider, InternalAnimeItemView.OnEditClickListener,
+        RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "AnimeLibraryFragment";
     private static final String KEY_EDITABLE_LIBRARY = "EditableLibrary";
@@ -96,6 +96,11 @@ public class AnimeLibraryFragment extends BaseFragment implements
     }
 
     @Override
+    public String[] getFeedCacheKeys() {
+        return new String[] { getFragmentName(), mUsername, mWatchingStatus.name() };
+    }
+
+    @Override
     public boolean isLoading() {
         return mRefreshLayout.isRefreshing() || mAdapter.isPaginating();
     }
@@ -129,7 +134,7 @@ public class AnimeLibraryFragment extends BaseFragment implements
         mWatchingStatus = args.getParcelable(KEY_WATCHING_STATUS);
         mEditableLibrary = args.getBoolean(KEY_EDITABLE_LIBRARY);
 
-        mFeed = FeedCache.get(getFragmentName(), mUsername, mWatchingStatus.name());
+        mFeed = FeedCache.get(this);
     }
 
     @Override
@@ -165,7 +170,7 @@ public class AnimeLibraryFragment extends BaseFragment implements
         super.onSaveInstanceState(outState);
 
         if (mFeed != null && mFeed.hasAnimeLibraryEntries()) {
-            FeedCache.put(mFeed, getFragmentName(), mUsername, mWatchingStatus.name());
+            FeedCache.put(mFeed, this);
         }
     }
 
