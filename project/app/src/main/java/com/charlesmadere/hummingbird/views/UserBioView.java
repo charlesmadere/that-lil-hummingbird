@@ -36,11 +36,6 @@ public class UserBioView extends CardView implements AdapterView<UserDigest> {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        if (isInEditMode()) {
-            return;
-        }
-
         ButterKnife.bind(this);
     }
 
