@@ -8,6 +8,7 @@ import com.charlesmadere.hummingbird.models.Feed;
 
 public final class FeedCache {
 
+    private static final String TAG = "FeedCache";
     private static final LruCache<String, Feed> CACHE;
 
 
@@ -63,10 +64,14 @@ public final class FeedCache {
         synchronized (CACHE) {
             CACHE.put(key, feed);
         }
+
+        Timber.d(TAG, "new size: " + CACHE.size());
     }
 
     public static synchronized void trim() {
+        final int size = CACHE.size();
         CACHE.trimToSize(CACHE.maxSize() / 2);
+        Timber.d(TAG, "trimmed from " + size + " to " + CACHE.size());
     }
 
     public interface KeyProvider {
