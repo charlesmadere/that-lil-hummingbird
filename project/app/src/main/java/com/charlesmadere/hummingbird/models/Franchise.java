@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class Franchise implements Parcelable {
+public class Franchise {
 
     @Nullable
     @SerializedName("anime")
@@ -35,32 +35,6 @@ public class Franchise implements Parcelable {
     public String toString() {
         return getData().toString();
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeTypedList(mAnime);
-        dest.writeParcelable(mData, flags);
-    }
-
-    public static final Creator<Franchise> CREATOR = new Creator<Franchise>() {
-        @Override
-        public Franchise createFromParcel(final Parcel source) {
-            final Franchise f = new Franchise();
-            f.mAnime = source.readParcelable(Anime.class.getClassLoader());
-            f.mData = source.readParcelable(Data.class.getClassLoader());
-            return f;
-        }
-
-        @Override
-        public Franchise[] newArray(final int size) {
-            return new Franchise[size];
-        }
-    };
 
 
     public static class Data implements Parcelable {
