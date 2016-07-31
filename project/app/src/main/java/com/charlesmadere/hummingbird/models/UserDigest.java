@@ -79,6 +79,10 @@ public class UserDigest implements Parcelable {
     }
 
     public void hydrate() {
+        for (final User user : mUsers) {
+            user.hydrate();
+        }
+
         if (hasFavorites()) {
             for (final Favorite favorite : mFavorites) {
                 favorite.hydrate(this);
