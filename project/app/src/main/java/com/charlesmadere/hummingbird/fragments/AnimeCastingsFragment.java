@@ -15,7 +15,6 @@ import com.charlesmadere.hummingbird.adapters.AnimeCastingsAdapter;
 import com.charlesmadere.hummingbird.misc.AnimeDigestProvider;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
-import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import butterknife.BindView;
 
@@ -73,7 +72,6 @@ public class AnimeCastingsFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         mRecyclerView.setHasFixedSize(true);
-        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
 
         final AnimeDigest animeDigest = mProvider.getAnimeDigest();
 

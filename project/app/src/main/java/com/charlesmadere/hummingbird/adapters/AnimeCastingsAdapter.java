@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
+import com.charlesmadere.hummingbird.views.AnimeCastingItemView;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -37,6 +38,17 @@ public class AnimeCastingsAdapter extends BaseMultiAdapter implements Comparator
         map.put(AnimeDigest.Casting.class, R.layout.item_anime_casting);
         map.put(String.class, R.layout.item_charsequence_header);
         return map;
+    }
+
+    @Override
+    public void onBindViewHolder(final AdapterView.ViewHolder holder, final int position) {
+        if (holder.getAdapterView() instanceof AnimeCastingItemView) {
+            final boolean showDivider = position + 1 < getItemCount();
+            ((AnimeCastingItemView) holder.getAdapterView()).setContent(
+                    (AnimeDigest.Casting) getItem(position), showDivider);
+        } else {
+            super.onBindViewHolder(holder, position);
+        }
     }
 
     public void set(@Nullable final ArrayList<AnimeDigest.Casting> castings) {

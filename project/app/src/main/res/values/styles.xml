@@ -104,8 +104,8 @@
     </style>
 
     <style name="BaseCardItem">
-        <item name="android:layout_marginEnd">@dimen/root_padding_half</item>
-        <item name="android:layout_marginStart">@dimen/root_padding_half</item>
+        <item name="android:layout_marginEnd">@dimen/root_padding</item>
+        <item name="android:layout_marginStart">@dimen/root_padding</item>
         <item name="android:theme">@style/CardView</item>
     </style>
 
@@ -142,10 +142,10 @@
         <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="contentPaddingBottom">@dimen/root_padding_half</item>
-        <item name="contentPaddingLeft">@dimen/root_padding</item>
-        <item name="contentPaddingRight">@dimen/root_padding</item>
-        <item name="contentPaddingTop">@dimen/root_padding_half</item>
+        <item name="contentPaddingBottom">@dimen/card_padding_bottom</item>
+        <item name="contentPaddingLeft">@dimen/card_padding_start</item>
+        <item name="contentPaddingRight">@dimen/card_padding_end</item>
+        <item name="contentPaddingTop">@dimen/card_padding_top</item>
     </style>
 
     <style name="CardItem.Bare" parent="CardItem.NoPadding">
@@ -211,6 +211,13 @@
         <item name="android:fitsSystemWindows">true</item>
         <item name="android:id">@id/coordinatorLayout</item>
         <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:background">?android:attr/listDivider</item>
+        <item name="android:id">@id/divider</item>
+        <item name="android:layout_height">1dp</item>
         <item name="android:layout_width">match_parent</item>
     </style>
 
@@ -420,12 +427,9 @@
         <item name="android:visibility">gone</item>
     </style>
 
-    <style name="NavigationDrawerDividerView">
-        <item name="android:background">?android:attr/listDivider</item>
-        <item name="android:layout_height">1dp</item>
+    <style name="NavigationDrawerDividerView" parent="Divider">
         <item name="android:layout_marginBottom">@dimen/root_padding_half</item>
         <item name="android:layout_marginTop">@dimen/root_padding_half</item>
-        <item name="android:layout_width">match_parent</item>
     </style>
 
     <style name="NavigationDrawerItemView">

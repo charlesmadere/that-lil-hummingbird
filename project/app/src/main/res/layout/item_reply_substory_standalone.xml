@@ -9,10 +9,10 @@
         <RelativeLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:paddingBottom="@dimen/root_padding_half"
-            android:paddingEnd="@dimen/root_padding"
-            android:paddingStart="@dimen/root_padding"
-            android:paddingTop="@dimen/root_padding_half">
+            android:paddingBottom="@dimen/card_padding_bottom"
+            android:paddingEnd="@dimen/card_padding_end"
+            android:paddingStart="@dimen/card_padding_start"
+            android:paddingTop="@dimen/card_padding_top">
             <com.charlesmadere.hummingbird.views.AvatarView
                 android:id="@+id/avatarView"
                 android:layout_marginEnd="@dimen/root_padding_half"
@@ -30,9 +30,6 @@
                 style="@style/TimeOrDate" />
         </RelativeLayout>
         <View
-            android:background="?android:attr/listDivider"
-            android:id="@+id/vDivider"
-            android:layout_height="1dp"
-            android:layout_width="match_parent" />
+            style="@style/Divider" />
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.ReplySubstoryStandaloneItemView>

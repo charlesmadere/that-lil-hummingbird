@@ -34,9 +34,6 @@
                 style="@style/TimeOrDate" />
         </RelativeLayout>
         <View
-            android:background="?android:attr/listDivider"
-            android:id="@+id/vDivider"
-            android:layout_height="1dp"
-            android:layout_width="match_parent" />
+            style="@style/Divider" />
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.AbsSubstoryStandaloneItemView>

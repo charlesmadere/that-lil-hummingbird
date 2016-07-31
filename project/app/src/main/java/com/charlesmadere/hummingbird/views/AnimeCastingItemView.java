@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.views;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.view.View;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
@@ -12,7 +13,9 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AnimeCastingItemView extends CardView implements AdapterView<AnimeDigest.Casting> {
+public class AnimeCastingItemView extends CardView implements AdapterView<Void> {
+
+    private int mBottomMargin;
 
     @BindView(R.id.kvtvTitle)
     KeyValueTextView mTitle;
@@ -22,6 +25,9 @@ public class AnimeCastingItemView extends CardView implements AdapterView<AnimeD
 
     @BindView(R.id.sdvCharacterPhoto)
     SimpleDraweeView mCharacterPhoto;
+
+    @BindView(R.id.divider)
+    View mDivider;
 
 
     public AnimeCastingItemView(final Context context, final AttributeSet attrs) {
@@ -37,21 +43,32 @@ public class AnimeCastingItemView extends CardView implements AdapterView<AnimeD
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
+        mBottomMargin = getResources().getDimensionPixelSize(R.dimen.root_padding);
+    }
+
+    public void setContent(final AnimeDigest.Casting casting, final boolean showDivider) {
+        mCastPhoto.setImageURI(casting.getPerson().getImage());
+
+        if (casting.hasCharacter()) {
+            mCharacterPhoto.setImageURI(casting.getCharacter().getImage());
+            mCharacterPhoto.setVisibility(VISIBLE);
+            mTitle.setText(casting.getPerson().getName(), getResources().getString(R.string.as_x,
+                    casting.getCharacter().getName()));
+        } else {
+            mCharacterPhoto.setVisibility(GONE);
+            mTitle.setText(casting.getPerson().getName(), (CharSequence) null);
+        }
+
+        mDivider.setVisibility(showDivider ? VISIBLE : GONE);
+
+        final MarginLayoutParams params = (MarginLayoutParams) getLayoutParams();
+        params.bottomMargin = showDivider ? mBottomMargin : 0;
+        setLayoutParams(params);
     }
 
     @Override
-    public void setContent(final AnimeDigest.Casting content) {
-        mCastPhoto.setImageURI(content.getPerson().getImage());
-
-        if (content.hasCharacter()) {
-            mCharacterPhoto.setImageURI(content.getCharacter().getImage());
-            mCharacterPhoto.setVisibility(VISIBLE);
-            mTitle.setText(content.getPerson().getName(), getResources().getString(R.string.as_x,
-                    content.getCharacter().getName()));
-        } else {
-            mCharacterPhoto.setVisibility(GONE);
-            mTitle.setText(content.getPerson().getName(), (CharSequence) null);
-        }
+    public void setContent(final Void content) {
+        // TODO
     }
 
 }

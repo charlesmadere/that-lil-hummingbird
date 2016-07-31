@@ -26,7 +26,7 @@ public class ReplySubstoryStandaloneItemView extends CardView implements Adapter
     @BindView(R.id.tvTimeAgo)
     TextView mTimeAgo;
 
-    @BindView(R.id.vDivider)
+    @BindView(R.id.divider)
     View mDivider;
 
 
