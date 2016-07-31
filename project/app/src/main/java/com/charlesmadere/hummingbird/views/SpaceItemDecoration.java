@@ -276,7 +276,7 @@ public final class SpaceItemDecoration {
             if (mIncludeStartAndEndEdges) {
                 outRect.right = mSpacing;
 
-                if (position == 0) {
+                if (position < mColumns) {
                     outRect.left = mSpacing;
                 }
             } else if (position + 1 != getCount(parent)) {
@@ -297,7 +297,7 @@ public final class SpaceItemDecoration {
             if (mIncludeStartAndEndEdges) {
                 outRect.bottom = mSpacing;
 
-                if (position == 0) {
+                if (position < mColumns) {
                     outRect.top = mSpacing;
                 }
             } else if (position + 1 != getCount(parent)) {
