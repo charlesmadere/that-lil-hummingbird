@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatDelegate;
 import com.charlesmadere.hummingbird.activities.HomeActivity;
 import com.charlesmadere.hummingbird.misc.ActivityRegister;
 import com.charlesmadere.hummingbird.misc.Constants;
+import com.charlesmadere.hummingbird.misc.FeedCache;
 import com.charlesmadere.hummingbird.misc.OkHttpUtils;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.NightMode;
@@ -98,6 +99,7 @@ public class ThatLilHummingbird extends Application {
 
         if (level >= TRIM_MEMORY_BACKGROUND) {
             Fresco.getImagePipeline().clearMemoryCaches();
+            FeedCache.clear();
             Timber.clearEntries();
         }
 
