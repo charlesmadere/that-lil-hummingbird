@@ -1056,6 +1056,10 @@ public final class Api {
 
     public static void signIn(final String username, final String password,
             final ApiResponse<Void> listener) {
+        if (!Preferences.Account.CsrfToken.exists()) {
+            throw new RuntimeException("CSRF token must exist before attempting sign in");
+        }
+
         HUMMINGBIRD.signIn(username, password).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
