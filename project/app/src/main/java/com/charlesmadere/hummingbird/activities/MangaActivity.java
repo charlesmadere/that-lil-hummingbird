@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.MangaFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.MangaLibraryUpdateFragment;
+import com.charlesmadere.hummingbird.misc.MangaDigestProvider;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.AddMangaLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
@@ -33,7 +34,7 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class MangaActivity extends BaseDrawerActivity implements
+public class MangaActivity extends BaseDrawerActivity implements MangaDigestProvider,
         MangaLibraryUpdateFragment.UpdateListener {
 
     private static final String TAG = "MangaActivity";
@@ -99,6 +100,11 @@ public class MangaActivity extends BaseDrawerActivity implements
     @Override
     public String getActivityName() {
         return TAG;
+    }
+
+    @Override
+    public MangaDigest getMangaDigest() {
+        return mMangaDigest;
     }
 
     @Override

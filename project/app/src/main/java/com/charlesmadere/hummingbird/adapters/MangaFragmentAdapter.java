@@ -60,7 +60,7 @@ public class MangaFragmentAdapter extends FragmentStatePagerAdapter {
     private class MangaCharactersFragmentPage implements FragmentPage {
         @Override
         public Fragment getItem() {
-            return MangaCharactersFragment.create(mMangaDigest.getCharacters());
+            return MangaCharactersFragment.create();
         }
 
         @Override
@@ -72,7 +72,7 @@ public class MangaFragmentAdapter extends FragmentStatePagerAdapter {
     private class MangaDetailsFragmentPage implements FragmentPage {
         @Override
         public Fragment getItem() {
-            return MangaDetailsFragment.create(mMangaDigest);
+            return MangaDetailsFragment.create();
         }
 
         @Override

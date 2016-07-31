@@ -17,9 +17,9 @@ import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeFragmentAdapter;
-import com.charlesmadere.hummingbird.misc.AnimeDigestProvider;
 import com.charlesmadere.hummingbird.fragments.AnimeEpisodeFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeLibraryUpdateFragment;
+import com.charlesmadere.hummingbird.misc.AnimeDigestProvider;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.AddAnimeLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.Anime;
