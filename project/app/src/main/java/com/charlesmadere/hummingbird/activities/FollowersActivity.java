@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.UsersAdapter;
+import com.charlesmadere.hummingbird.misc.FeedCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -23,13 +24,12 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class FollowersActivity extends BaseDrawerActivity implements
+public class FollowersActivity extends BaseDrawerActivity implements FeedCache.KeyProvider,
         RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "FollowersActivity";
     private static final String CNAME = FollowersActivity.class.getCanonicalName();
     private static final String EXTRA_USERNAME = CNAME + ".Username";
-    private static final String KEY_FEED = "Feed";
 
     private Feed mFeed;
     private RecyclerViewPaginator mPaginator;
@@ -65,6 +65,11 @@ public class FollowersActivity extends BaseDrawerActivity implements
     }
 
     @Override
+    public String[] getFeedCacheKeys() {
+        return new String[] { getActivityName(), mUsername };
+    }
+
+    @Override
     public boolean isLoading() {
         return mRefreshLayout.isRefreshing() || mAdapter.isPaginating();
     }
@@ -83,9 +88,7 @@ public class FollowersActivity extends BaseDrawerActivity implements
         mUsername = intent.getStringExtra(EXTRA_USERNAME);
         setSubtitle(mUsername);
 
-        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mFeed = savedInstanceState.getParcelable(KEY_FEED);
-        }
+        mFeed = FeedCache.get(this);
 
         if (mFeed == null) {
             fetchFollowers();
@@ -103,8 +106,8 @@ public class FollowersActivity extends BaseDrawerActivity implements
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if (mFeed != null) {
-            outState.putParcelable(KEY_FEED, mFeed);
+        if (mFeed != null && mFeed.hasUsers()) {
+            FeedCache.put(mFeed, this);
         }
     }
 

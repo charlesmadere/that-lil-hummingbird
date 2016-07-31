@@ -65,7 +65,7 @@ public class GroupFeedFragment extends BaseFragment implements FeedCache.KeyProv
 
     @Override
     public String[] getFeedCacheKeys() {
-        return new String[0];
+        return new String[] { getFragmentName(), mGroupId };
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.NotificationsAdapter;
+import com.charlesmadere.hummingbird.misc.FeedCache;
 import com.charlesmadere.hummingbird.misc.NotificationManager;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
@@ -25,11 +26,10 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class NotificationsActivity extends BaseDrawerActivity implements
+public class NotificationsActivity extends BaseDrawerActivity implements FeedCache.KeyProvider,
         RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "NotificationsActivity";
-    private static final String KEY_FEED = "Feed";
 
     private Feed mFeed;
     private NotificationsAdapter mAdapter;
@@ -64,6 +64,11 @@ public class NotificationsActivity extends BaseDrawerActivity implements
     }
 
     @Override
+    public String[] getFeedCacheKeys() {
+        return new String[] { getActivityName() };
+    }
+
+    @Override
     protected NavigationDrawerItemView.Entry getSelectedNavigationDrawerItemViewEntry() {
         return NavigationDrawerItemView.Entry.NOTIFICATIONS;
     }
@@ -78,9 +83,7 @@ public class NotificationsActivity extends BaseDrawerActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notifications);
 
-        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mFeed = savedInstanceState.getParcelable(KEY_FEED);
-        }
+        mFeed = FeedCache.get(this);
 
         if (mFeed == null) {
             fetchNotifications();
@@ -104,8 +107,8 @@ public class NotificationsActivity extends BaseDrawerActivity implements
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if (mFeed != null) {
-            outState.putParcelable(KEY_FEED, mFeed);
+        if (mFeed != null && mFeed.hasNotifications()) {
+            FeedCache.put(mFeed, this);
         }
     }
 

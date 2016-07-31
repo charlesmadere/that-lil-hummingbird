@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.GroupMembersAdapter;
+import com.charlesmadere.hummingbird.misc.FeedCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.GroupDigest;
@@ -25,14 +26,13 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class GroupMembersActivity extends BaseDrawerActivity implements
+public class GroupMembersActivity extends BaseDrawerActivity implements FeedCache.KeyProvider,
         RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "GroupMembersActivity";
     private static final String CNAME = GroupMembersActivity.class.getCanonicalName();
     private static final String EXTRA_GROUP_ID = CNAME + ".GroupId";
     private static final String EXTRA_GROUP_NAME = CNAME + ".GroupName";
-    private static final String KEY_FEED = "Feed";
 
     private Feed mFeed;
     private GroupMembersAdapter mAdapter;
@@ -79,6 +79,11 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
     }
 
     @Override
+    public String[] getFeedCacheKeys() {
+        return new String[] { getActivityName(), mGroupId };
+    }
+
+    @Override
     public boolean isLoading() {
         return mRefreshLayout.isRefreshing() || mAdapter.isPaginating();
     }
@@ -102,9 +107,7 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
             Api.getGroup(mGroupId, new GetGroupDigestListener(this));
         }
 
-        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mFeed = savedInstanceState.getParcelable(KEY_FEED);
-        }
+        mFeed = FeedCache.get(this);
 
         if (mFeed == null || !mFeed.hasGroupMembers()) {
             fetchFeed();
@@ -123,7 +126,7 @@ public class GroupMembersActivity extends BaseDrawerActivity implements
         super.onSaveInstanceState(outState);
 
         if (mFeed != null && mFeed.hasGroupMembers()) {
-            outState.putParcelable(KEY_FEED, mFeed);
+            FeedCache.put(mFeed, this);
         }
     }
 

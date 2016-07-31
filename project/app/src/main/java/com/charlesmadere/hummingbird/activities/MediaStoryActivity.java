@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.MediaStoryAdapter;
+import com.charlesmadere.hummingbird.misc.FeedCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.MediaStory;
@@ -23,13 +24,12 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class MediaStoryActivity extends BaseDrawerActivity implements
+public class MediaStoryActivity extends BaseDrawerActivity implements FeedCache.KeyProvider,
         RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "MediaStoryActivity";
     private static final String CNAME = MediaStoryActivity.class.getCanonicalName();
     private static final String EXTRA_MEDIA_STORY = CNAME + ".MediaStory";
-    private static final String KEY_FEED = "Feed";
 
     private Feed mFeed;
     private MediaStory mMediaStory;
@@ -62,6 +62,11 @@ public class MediaStoryActivity extends BaseDrawerActivity implements
     }
 
     @Override
+    public String[] getFeedCacheKeys() {
+        return new String[] { getActivityName(), mMediaStory.getId() };
+    }
+
+    @Override
     public boolean isLoading() {
         return mRefreshLayout.isRefreshing() || mAdapter.isPaginating();
     }
@@ -79,9 +84,7 @@ public class MediaStoryActivity extends BaseDrawerActivity implements
         final Intent intent = getIntent();
         mMediaStory = intent.getParcelableExtra(EXTRA_MEDIA_STORY);
 
-        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mFeed = savedInstanceState.getParcelable(KEY_FEED);
-        }
+        mFeed = FeedCache.get(this);
 
         if (mFeed == null) {
             fetchFeed();
@@ -100,7 +103,7 @@ public class MediaStoryActivity extends BaseDrawerActivity implements
         super.onSaveInstanceState(outState);
 
         if (mFeed != null && mFeed.hasSubstories()) {
-            outState.putParcelable(KEY_FEED, mFeed);
+            FeedCache.put(mFeed, this);
         }
     }
 
