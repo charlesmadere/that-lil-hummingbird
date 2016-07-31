@@ -378,6 +378,7 @@ public class SettingsActivity extends BaseDrawerActivity {
         mTitleLanguage.setBody(Preferences.General.TitleLanguage.get().getTextResId());
         mTheme.setBody(Preferences.General.Theme.get().getTextResId());
         mDefaultLibrarySort.setBody(Preferences.General.DefaultLibrarySort.get().getTextResId());
+        mDefaultLaunchScreen.setBody(Preferences.General.DefaultLaunchScreen.get().getTextResId());
         mShowNsfwContent.refresh();
 
         mUseNotificationPolling.refresh();
