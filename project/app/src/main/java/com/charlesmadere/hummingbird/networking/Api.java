@@ -4,9 +4,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.JsoupUtils;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
+import com.charlesmadere.hummingbird.misc.OkHttpUtils;
 import com.charlesmadere.hummingbird.misc.RetrofitUtils;
 import com.charlesmadere.hummingbird.misc.Threading;
 import com.charlesmadere.hummingbird.misc.Timber;
@@ -40,8 +42,11 @@ import com.charlesmadere.hummingbird.preferences.Preferences;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import okhttp3.Cookie;
+import okhttp3.HttpUrl;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -1054,12 +1059,35 @@ public final class Api {
         HUMMINGBIRD.signIn(username, password).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
-                if (response.isSuccessful()) {
-                    Preferences.Account.Username.set(username);
-                    listener.success(response.body());
-                } else {
+                if (!response.isSuccessful()) {
                     listener.failure(retrieveErrorInfo(response));
+                    return;
                 }
+
+                final HttpUrl url = new HttpUrl.Builder()
+                        .scheme(Constants.HTTPS)
+                        .host(Constants.HUMMINGBIRD_HOST)
+                        .build();
+
+                final List<Cookie> cookies = OkHttpUtils.getPersistentCookieJar()
+                        .loadForRequest(url);
+
+                if (cookies == null || cookies.isEmpty()) {
+                    Timber.w(TAG, "successfully signed in but cookies are empty");
+                    listener.failure(null);
+                    return;
+                }
+
+                for (final Cookie cookie : cookies) {
+                    if (Constants.TOKEN.equalsIgnoreCase(cookie.name())) {
+                        Preferences.Account.Username.set(username);
+                        listener.success(response.body());
+                        return;
+                    }
+                }
+
+                Timber.w(TAG, "failed logging in because no token cookie was found");
+                listener.failure(null);
             }
 
             @Override

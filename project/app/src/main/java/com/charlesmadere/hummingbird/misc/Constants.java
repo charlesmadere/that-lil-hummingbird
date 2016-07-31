@@ -12,7 +12,9 @@ public final class Constants {
     public static final String FOLLOWING = "following";
     public static final String GITHUB_URL = "https://github.com/charlesmadere/that-lil-hummingbird";
     public static final String GROUPS = "groups";
-    public static final String HUMMINGBIRD_URL = "https://hummingbird.me/";
+    public static final String HTTPS = "https";
+    public static final String HUMMINGBIRD_HOST = "hummingbird.me";
+    public static final String HUMMINGBIRD_URL = "https://" + HUMMINGBIRD_HOST + "/";
     public static final String HUMMINGBIRD_URL_PRO = HUMMINGBIRD_URL + "pro";
     public static final String HUMMINGBIRD_URL_RELATIVE = "//hummingbird.me/";
     public static final String LIBRARY = "library";
@@ -24,6 +26,7 @@ public final class Constants {
     public static final String PRISCILLA_URL = "https://www.etsy.com/shop/OchaaNeko";
     public static final String QUOTES = "quotes";
     public static final String REVIEWS = "reviews";
+    public static final String TOKEN = "token";
     public static final String USERS = "users";
     public static final String WEBSITE_URL = "https://charlesmadere.github.io/that-lil-hummingbird-website/";
     public static final String YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v=";
