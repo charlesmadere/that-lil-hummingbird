@@ -62,7 +62,7 @@ public class AnimeCastingItemView extends CardView implements AdapterView<Void> 
         mDivider.setVisibility(showDivider ? VISIBLE : GONE);
 
         final MarginLayoutParams params = (MarginLayoutParams) getLayoutParams();
-        params.bottomMargin = showDivider ? mBottomMargin : 0;
+        params.bottomMargin = showDivider ? 0 : mBottomMargin;
         setLayoutParams(params);
     }
 
