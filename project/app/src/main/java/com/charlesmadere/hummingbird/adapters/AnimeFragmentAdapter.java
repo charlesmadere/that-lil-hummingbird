@@ -15,6 +15,7 @@ import com.charlesmadere.hummingbird.fragments.AnimeGalleryFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeQuotesFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeReviewsFragment;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
+import com.charlesmadere.hummingbird.models.AnimeType;
 
 import java.util.ArrayList;
 
@@ -38,7 +39,9 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
         final ArrayList<FragmentPage> fragmentPages = new ArrayList<>();
         fragmentPages.add(new AnimeDetailsFragmentPage());
 
-        if (mAnimeDigest.getInfo().hasScreencaps()) {
+        final AnimeDigest.Info info = mAnimeDigest.getInfo();
+
+        if (info.hasScreencaps()) {
             fragmentPages.add(new AnimeGalleryFragmentPage());
         }
 
@@ -54,11 +57,11 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
             fragmentPages.add(new AnimeQuotesFragmentPage());
         }
 
-        if (mAnimeDigest.hasEpisodes()) {
+        if (mAnimeDigest.hasEpisodes() && info.getType() != AnimeType.MOVIE) {
             fragmentPages.add(new AnimeEpisodesFragmentPage());
         }
 
-        if (mAnimeDigest.getInfo().hasFranchiseId()) {
+        if (info.hasFranchiseId()) {
             fragmentPages.add(new AnimeFranchiseFragmentPage());
         }
 
