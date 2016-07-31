@@ -17,8 +17,8 @@ import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.CommentsAdapter;
-import com.charlesmadere.hummingbird.misc.FeedCache;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
+import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.CommentPost;
 import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
@@ -36,7 +36,7 @@ import butterknife.BindView;
 import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 
-public class CommentsActivity extends BaseDrawerActivity implements FeedCache.KeyProvider,
+public class CommentsActivity extends BaseDrawerActivity implements ObjectCache.KeyProvider,
         RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "CommentsActivity";
@@ -77,7 +77,7 @@ public class CommentsActivity extends BaseDrawerActivity implements FeedCache.Ke
     }
 
     @Override
-    public String[] getFeedCacheKeys() {
+    public String[] getObjectCacheKeys() {
         return new String[] { getActivityName(), mCommentStory.getId() };
     }
 
@@ -118,7 +118,7 @@ public class CommentsActivity extends BaseDrawerActivity implements FeedCache.Ke
         final Intent intent = getIntent();
         mCommentStory = intent.getParcelableExtra(EXTRA_COMMENT_STORY);
 
-        mFeed = FeedCache.get(this);
+        mFeed = ObjectCache.get(this);
 
         if (mFeed == null) {
             fetchSubstories();
@@ -198,7 +198,7 @@ public class CommentsActivity extends BaseDrawerActivity implements FeedCache.Ke
         super.onSaveInstanceState(outState);
 
         if (mFeed != null) {
-            FeedCache.put(mFeed, this);
+            ObjectCache.put(mFeed, this);
         }
     }
 

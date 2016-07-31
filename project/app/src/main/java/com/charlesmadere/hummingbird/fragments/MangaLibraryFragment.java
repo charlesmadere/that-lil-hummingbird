@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.MangaLibraryEntriesAdapter;
-import com.charlesmadere.hummingbird.misc.FeedCache;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
+import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.LibrarySort;
@@ -35,10 +35,10 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class MangaLibraryFragment extends BaseFragment implements FeedCache.KeyProvider,
+public class MangaLibraryFragment extends BaseFragment implements
         MangaLibraryEntryItemView.OnEditClickListener, MangaLibraryUpdateFragment.DeleteListener,
-        MangaLibraryUpdateFragment.UpdateListener, RecyclerViewPaginator.Listeners,
-        SwipeRefreshLayout.OnRefreshListener {
+        MangaLibraryUpdateFragment.UpdateListener, ObjectCache.KeyProvider,
+        RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "MangaLibraryFragment";
     private static final String KEY_EDITABLE_LIBRARY = "EditableLibrary";
@@ -91,13 +91,13 @@ public class MangaLibraryFragment extends BaseFragment implements FeedCache.KeyP
     }
 
     @Override
-    public String[] getFeedCacheKeys() {
-        return new String[] { getFragmentName(), mUsername, mReadingStatus.name() };
+    public String getFragmentName() {
+        return TAG;
     }
 
     @Override
-    public String getFragmentName() {
-        return TAG;
+    public String[] getObjectCacheKeys() {
+        return new String[] { getFragmentName(), mUsername, mReadingStatus.name() };
     }
 
     @Override
@@ -134,7 +134,7 @@ public class MangaLibraryFragment extends BaseFragment implements FeedCache.KeyP
         mUsername = args.getString(KEY_USERNAME);
         mEditableLibrary = args.getBoolean(KEY_EDITABLE_LIBRARY);
 
-        mFeed = FeedCache.get(this);
+        mFeed = ObjectCache.get(this);
     }
 
     @Override
@@ -169,8 +169,8 @@ public class MangaLibraryFragment extends BaseFragment implements FeedCache.KeyP
     public void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if (mFeed != null && mFeed.hasMangaLibraryEntries()) {
-            FeedCache.put(mFeed, this);
+        if (mFeed != null) {
+            ObjectCache.put(mFeed, this);
         }
     }
 

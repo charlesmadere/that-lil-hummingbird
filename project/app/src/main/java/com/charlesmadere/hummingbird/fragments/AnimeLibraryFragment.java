@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeLibraryEntriesAdapter;
-import com.charlesmadere.hummingbird.misc.FeedCache;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
+import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
@@ -37,7 +37,7 @@ import butterknife.BindView;
 
 public class AnimeLibraryFragment extends BaseFragment implements
         AnimeLibraryUpdateFragment.DeleteListener, AnimeLibraryUpdateFragment.UpdateListener,
-        FeedCache.KeyProvider, InternalAnimeItemView.OnEditClickListener,
+        InternalAnimeItemView.OnEditClickListener, ObjectCache.KeyProvider,
         RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "AnimeLibraryFragment";
@@ -96,7 +96,7 @@ public class AnimeLibraryFragment extends BaseFragment implements
     }
 
     @Override
-    public String[] getFeedCacheKeys() {
+    public String[] getObjectCacheKeys() {
         return new String[] { getFragmentName(), mUsername, mWatchingStatus.name() };
     }
 
@@ -134,7 +134,7 @@ public class AnimeLibraryFragment extends BaseFragment implements
         mWatchingStatus = args.getParcelable(KEY_WATCHING_STATUS);
         mEditableLibrary = args.getBoolean(KEY_EDITABLE_LIBRARY);
 
-        mFeed = FeedCache.get(this);
+        mFeed = ObjectCache.get(this);
     }
 
     @Override
@@ -169,8 +169,8 @@ public class AnimeLibraryFragment extends BaseFragment implements
     public void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if (mFeed != null && mFeed.hasAnimeLibraryEntries()) {
-            FeedCache.put(mFeed, this);
+        if (mFeed != null) {
+            ObjectCache.put(mFeed, this);
         }
     }
 

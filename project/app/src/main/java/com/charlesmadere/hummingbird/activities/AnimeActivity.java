@@ -20,6 +20,7 @@ import com.charlesmadere.hummingbird.adapters.AnimeFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.AnimeEpisodeFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeLibraryUpdateFragment;
 import com.charlesmadere.hummingbird.misc.AnimeDigestProvider;
+import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.AddAnimeLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.Anime;
@@ -37,13 +38,13 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 
 public class AnimeActivity extends BaseDrawerActivity implements AnimeDigestProvider,
-        AnimeEpisodeItemView.OnClickListener, AnimeLibraryUpdateFragment.UpdateListener {
+        AnimeEpisodeItemView.OnClickListener, AnimeLibraryUpdateFragment.UpdateListener,
+        ObjectCache.KeyProvider {
 
     private static final String TAG = "AnimeActivity";
     private static final String CNAME = AnimeActivity.class.getCanonicalName();
     private static final String EXTRA_ANIME_ID = CNAME + ".AnimeId";
     private static final String EXTRA_ANIME_NAME = CNAME + ".AnimeName";
-    private static final String KEY_ANIME_DIGEST = "AnimeDigest";
 
     private AnimeDigest mAnimeDigest;
     private String mAnimeId;
@@ -110,6 +111,11 @@ public class AnimeActivity extends BaseDrawerActivity implements AnimeDigestProv
     }
 
     @Override
+    public String[] getObjectCacheKeys() {
+        return new String[] { getActivityName(), mAnimeId };
+    }
+
+    @Override
     protected boolean isUpNavigationEnabled() {
         return true;
     }
@@ -131,9 +137,7 @@ public class AnimeActivity extends BaseDrawerActivity implements AnimeDigestProv
             setTitle(intent.getStringExtra(EXTRA_ANIME_NAME));
         }
 
-        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mAnimeDigest = savedInstanceState.getParcelable(KEY_ANIME_DIGEST);
-        }
+        mAnimeDigest = ObjectCache.get(this);
 
         if (mAnimeDigest == null) {
             fetchAnimeDigest();
@@ -174,7 +178,7 @@ public class AnimeActivity extends BaseDrawerActivity implements AnimeDigestProv
         super.onSaveInstanceState(outState);
 
         if (mAnimeDigest != null) {
-            outState.putParcelable(KEY_ANIME_DIGEST, mAnimeDigest);
+            ObjectCache.put(mAnimeDigest, this);
         }
     }
 

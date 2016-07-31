@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.GroupMembersAdapter;
-import com.charlesmadere.hummingbird.misc.FeedCache;
+import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.GroupDigest;
@@ -26,7 +26,7 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class GroupMembersActivity extends BaseDrawerActivity implements FeedCache.KeyProvider,
+public class GroupMembersActivity extends BaseDrawerActivity implements ObjectCache.KeyProvider,
         RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "GroupMembersActivity";
@@ -79,7 +79,7 @@ public class GroupMembersActivity extends BaseDrawerActivity implements FeedCach
     }
 
     @Override
-    public String[] getFeedCacheKeys() {
+    public String[] getObjectCacheKeys() {
         return new String[] { getActivityName(), mGroupId };
     }
 
@@ -107,7 +107,7 @@ public class GroupMembersActivity extends BaseDrawerActivity implements FeedCach
             Api.getGroup(mGroupId, new GetGroupDigestListener(this));
         }
 
-        mFeed = FeedCache.get(this);
+        mFeed = ObjectCache.get(this);
 
         if (mFeed == null || !mFeed.hasGroupMembers()) {
             fetchFeed();
@@ -125,8 +125,8 @@ public class GroupMembersActivity extends BaseDrawerActivity implements FeedCach
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if (mFeed != null && mFeed.hasGroupMembers()) {
-            FeedCache.put(mFeed, this);
+        if (mFeed != null) {
+            ObjectCache.put(mFeed, this);
         }
     }
 

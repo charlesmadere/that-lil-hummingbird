@@ -4,44 +4,37 @@ import android.support.annotation.Nullable;
 import android.support.v4.util.LruCache;
 import android.text.TextUtils;
 
-public final class ObjectCache<T> {
+public final class ObjectCache {
 
-    public static final ObjectCache<Object> INSTANCE;
-
-    private final LruCache<String, T> mCache;
-    private final String mTag;
+    private static final String TAG = "ObjectCache";
+    private static final LruCache<String, Object> CACHE;
 
 
     static {
         if (MiscUtils.isLowRamDevice()) {
-            INSTANCE = new ObjectCache<>(6, "ObjectCache");
+            CACHE = new LruCache<>(6);
         } else {
-            INSTANCE = new ObjectCache<>(10, "ObjectCache");
+            CACHE = new LruCache<>(10);
         }
-    }
-
-    public ObjectCache(final int maxSize, final String tag) {
-        mCache = new LruCache<>(maxSize);
-        mTag = tag;
     }
 
     private static String buildKey(final String... keys) {
         return TextUtils.join("|", keys);
     }
 
-    public void clear() {
+    public static void clear() {
         final int oldSize;
 
-        synchronized (mCache) {
-            oldSize = mCache.size();
-            mCache.evictAll();
+        synchronized (CACHE) {
+            oldSize = CACHE.size();
+            CACHE.evictAll();
         }
 
-        Timber.d(mTag, "cleared, size was " + oldSize);
+        Timber.d(TAG, "cleared, size was " + oldSize);
     }
 
     @Nullable
-    public T get(final KeyProvider keyProvider) {
+    public static <T> T get(final KeyProvider keyProvider) {
         if (keyProvider == null) {
             throw new IllegalArgumentException("keyProvider parameter can't be null");
         }
@@ -50,15 +43,16 @@ public final class ObjectCache<T> {
     }
 
     @Nullable
-    public T get(final String... keys) {
+    @SuppressWarnings("unchecked")
+    public static <T> T get(final String... keys) {
         final String key = buildKey(keys);
 
-        synchronized (mCache) {
-            return mCache.get(key);
+        synchronized (CACHE) {
+            return (T) CACHE.get(key);
         }
     }
 
-    public void put(final T object, final KeyProvider keyProvider) {
+    public static void put(final Object object, final KeyProvider keyProvider) {
         if (keyProvider == null) {
             throw new IllegalArgumentException("keyProvider parameter can't be null");
         }
@@ -66,38 +60,38 @@ public final class ObjectCache<T> {
         put(object, keyProvider.getObjectCacheKeys());
     }
 
-    public void put(final T object, final String... keys) {
+    public static void put(final Object object, final String... keys) {
         final String key = buildKey(keys);
         final int oldSize, newSize;
 
-        synchronized (mCache) {
-            oldSize = mCache.size();
+        synchronized (CACHE) {
+            oldSize = CACHE.size();
 
             if (object == null) {
-                mCache.remove(key);
+                CACHE.remove(key);
             } else {
-                mCache.put(key, object);
+                CACHE.put(key, object);
             }
 
-            newSize = mCache.size();
+            newSize = CACHE.size();
         }
 
         if (newSize != oldSize) {
-            Timber.d(mTag, "new size: " + mCache.size());
+            Timber.d(TAG, "new size: " + newSize);
         }
     }
 
-    public void trim() {
+    public static void trim() {
         final int oldSize, newSize;
 
-        synchronized (mCache) {
-            oldSize = mCache.size();
-            mCache.trimToSize(mCache.maxSize() / 2);
-            newSize = mCache.size();
+        synchronized (CACHE) {
+            oldSize = CACHE.size();
+            CACHE.trimToSize(CACHE.maxSize() / 2);
+            newSize = CACHE.size();
         }
 
         if (newSize != oldSize) {
-            Timber.d(mTag, "trimmed from " + oldSize + " to " + newSize);
+            Timber.d(TAG, "trimmed from " + oldSize + " to " + newSize);
         }
     }
 

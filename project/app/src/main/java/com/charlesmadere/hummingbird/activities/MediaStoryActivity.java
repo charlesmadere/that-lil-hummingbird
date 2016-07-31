@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.MediaStoryAdapter;
-import com.charlesmadere.hummingbird.misc.FeedCache;
+import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.MediaStory;
@@ -24,7 +24,7 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class MediaStoryActivity extends BaseDrawerActivity implements FeedCache.KeyProvider,
+public class MediaStoryActivity extends BaseDrawerActivity implements ObjectCache.KeyProvider,
         RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "MediaStoryActivity";
@@ -62,7 +62,7 @@ public class MediaStoryActivity extends BaseDrawerActivity implements FeedCache.
     }
 
     @Override
-    public String[] getFeedCacheKeys() {
+    public String[] getObjectCacheKeys() {
         return new String[] { getActivityName(), mMediaStory.getId() };
     }
 
@@ -84,7 +84,7 @@ public class MediaStoryActivity extends BaseDrawerActivity implements FeedCache.
         final Intent intent = getIntent();
         mMediaStory = intent.getParcelableExtra(EXTRA_MEDIA_STORY);
 
-        mFeed = FeedCache.get(this);
+        mFeed = ObjectCache.get(this);
 
         if (mFeed == null) {
             fetchFeed();
@@ -103,7 +103,7 @@ public class MediaStoryActivity extends BaseDrawerActivity implements FeedCache.
         super.onSaveInstanceState(outState);
 
         if (mFeed != null && mFeed.hasSubstories()) {
-            FeedCache.put(mFeed, this);
+            ObjectCache.put(mFeed, this);
         }
     }
 

@@ -13,8 +13,8 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.FeedAdapter;
-import com.charlesmadere.hummingbird.misc.FeedCache;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
+import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.FeedPost;
@@ -28,8 +28,8 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public abstract class BaseFeedFragment extends BaseFragment implements FeedCache.KeyProvider,
-        FeedPostFragment.Listener, RecyclerViewPaginator.Listeners,
+public abstract class BaseFeedFragment extends BaseFragment implements FeedPostFragment.Listener,
+        ObjectCache.KeyProvider, RecyclerViewPaginator.Listeners,
         SwipeRefreshLayout.OnRefreshListener {
 
     protected static final String KEY_USERNAME = "Username";
@@ -68,7 +68,7 @@ public abstract class BaseFeedFragment extends BaseFragment implements FeedCache
     }
 
     @Override
-    public String[] getFeedCacheKeys() {
+    public String[] getObjectCacheKeys() {
         return new String[] { getFragmentName(), mUsername };
     }
 
@@ -94,7 +94,7 @@ public abstract class BaseFeedFragment extends BaseFragment implements FeedCache
         final Bundle args = getArguments();
         mUsername = args.getString(KEY_USERNAME);
 
-        mFeed = FeedCache.get(this);
+        mFeed = ObjectCache.get(this);
     }
 
     @Override
@@ -127,8 +127,8 @@ public abstract class BaseFeedFragment extends BaseFragment implements FeedCache
     public void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if (mFeed != null && mFeed.hasStories()) {
-            FeedCache.put(mFeed, this);
+        if (mFeed != null) {
+            ObjectCache.put(mFeed, this);
         }
     }
 

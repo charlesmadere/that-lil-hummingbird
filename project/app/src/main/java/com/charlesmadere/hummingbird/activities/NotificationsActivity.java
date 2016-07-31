@@ -11,8 +11,8 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.NotificationsAdapter;
-import com.charlesmadere.hummingbird.misc.FeedCache;
 import com.charlesmadere.hummingbird.misc.NotificationManager;
+import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -26,7 +26,7 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class NotificationsActivity extends BaseDrawerActivity implements FeedCache.KeyProvider,
+public class NotificationsActivity extends BaseDrawerActivity implements ObjectCache.KeyProvider,
         RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "NotificationsActivity";
@@ -64,7 +64,7 @@ public class NotificationsActivity extends BaseDrawerActivity implements FeedCac
     }
 
     @Override
-    public String[] getFeedCacheKeys() {
+    public String[] getObjectCacheKeys() {
         return new String[] { getActivityName() };
     }
 
@@ -83,7 +83,7 @@ public class NotificationsActivity extends BaseDrawerActivity implements FeedCac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notifications);
 
-        mFeed = FeedCache.get(this);
+        mFeed = ObjectCache.get(this);
 
         if (mFeed == null) {
             fetchNotifications();
@@ -107,8 +107,8 @@ public class NotificationsActivity extends BaseDrawerActivity implements FeedCac
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if (mFeed != null && mFeed.hasNotifications()) {
-            FeedCache.put(mFeed, this);
+        if (mFeed != null) {
+            ObjectCache.put(mFeed, this);
         }
     }
 

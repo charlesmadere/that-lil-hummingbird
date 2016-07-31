@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.FeedAdapter;
-import com.charlesmadere.hummingbird.misc.FeedCache;
+import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -24,7 +24,7 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class GroupFeedFragment extends BaseFragment implements FeedCache.KeyProvider,
+public class GroupFeedFragment extends BaseFragment implements ObjectCache.KeyProvider,
         RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "GroupFeedFragment";
@@ -64,7 +64,7 @@ public class GroupFeedFragment extends BaseFragment implements FeedCache.KeyProv
     }
 
     @Override
-    public String[] getFeedCacheKeys() {
+    public String[] getObjectCacheKeys() {
         return new String[] { getFragmentName(), mGroupId };
     }
 
@@ -85,7 +85,7 @@ public class GroupFeedFragment extends BaseFragment implements FeedCache.KeyProv
         final Bundle args = getArguments();
         mGroupId = args.getString(KEY_GROUP_ID);
 
-        mFeed = FeedCache.get(this);
+        mFeed = ObjectCache.get(this);
     }
 
     @Override
@@ -104,8 +104,8 @@ public class GroupFeedFragment extends BaseFragment implements FeedCache.KeyProv
     public void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if (mFeed != null && mFeed.hasGroupMembers()) {
-            FeedCache.put(mFeed, this);
+        if (mFeed != null) {
+            ObjectCache.put(mFeed, this);
         }
     }
 
