@@ -12,9 +12,9 @@ public final class ObjectCache {
 
     static {
         if (MiscUtils.isLowRamDevice()) {
-            CACHE = new LruCache<>(6);
+            CACHE = new LruCache<>(8);
         } else {
-            CACHE = new LruCache<>(10);
+            CACHE = new LruCache<>(12);
         }
     }
 
