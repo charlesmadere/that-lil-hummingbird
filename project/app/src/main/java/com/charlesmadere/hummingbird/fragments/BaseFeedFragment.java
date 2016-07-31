@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.FeedAdapter;
+import com.charlesmadere.hummingbird.misc.FeedCache;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
@@ -88,9 +89,7 @@ public abstract class BaseFeedFragment extends BaseFragment implements FeedPostF
         final Bundle args = getArguments();
         mUsername = args.getString(KEY_USERNAME);
 
-        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mFeed = savedInstanceState.getParcelable(KEY_FEED);
-        }
+        mFeed = FeedCache.get(getFragmentName(), mUsername);
     }
 
     @Override
@@ -123,8 +122,8 @@ public abstract class BaseFeedFragment extends BaseFragment implements FeedPostF
     public void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if (mFeed != null) {
-            outState.putParcelable(KEY_FEED, mFeed);
+        if (mFeed != null && mFeed.hasStories()) {
+            FeedCache.put(mFeed, getFragmentName(), mUsername);
         }
     }
 

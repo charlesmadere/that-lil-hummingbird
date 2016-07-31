@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeLibraryEntriesAdapter;
+import com.charlesmadere.hummingbird.misc.FeedCache;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
@@ -41,7 +42,6 @@ public class AnimeLibraryFragment extends BaseFragment implements
 
     private static final String TAG = "AnimeLibraryFragment";
     private static final String KEY_EDITABLE_LIBRARY = "EditableLibrary";
-    private static final String KEY_FEED = "Feed";
     private static final String KEY_USERNAME = "Username";
     private static final String KEY_WATCHING_STATUS = "WatchingStatus";
 
@@ -129,9 +129,7 @@ public class AnimeLibraryFragment extends BaseFragment implements
         mWatchingStatus = args.getParcelable(KEY_WATCHING_STATUS);
         mEditableLibrary = args.getBoolean(KEY_EDITABLE_LIBRARY);
 
-        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mFeed = savedInstanceState.getParcelable(KEY_FEED);
-        }
+        mFeed = FeedCache.get(getFragmentName(), mUsername, mWatchingStatus.name());
     }
 
     @Override
@@ -167,7 +165,7 @@ public class AnimeLibraryFragment extends BaseFragment implements
         super.onSaveInstanceState(outState);
 
         if (mFeed != null && mFeed.hasAnimeLibraryEntries()) {
-            outState.putParcelable(KEY_FEED, mFeed);
+            FeedCache.put(mFeed, getFragmentName(), mUsername, mWatchingStatus.name());
         }
     }
 
