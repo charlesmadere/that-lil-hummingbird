@@ -36,7 +36,7 @@ public final class ObjectCache<T> {
             throw new IllegalArgumentException("keyProvider parameter can't be null");
         }
 
-        return get(keyProvider.getFeedCacheKeys());
+        return get(keyProvider.getObjectCacheKeys());
     }
 
     @Nullable
@@ -53,7 +53,7 @@ public final class ObjectCache<T> {
             throw new IllegalArgumentException("keyProvider parameter can't be null");
         }
 
-        put(object, keyProvider.getFeedCacheKeys());
+        put(object, keyProvider.getObjectCacheKeys());
     }
 
     public void put(final T object, final String... keys) {
@@ -92,7 +92,7 @@ public final class ObjectCache<T> {
     }
 
     public interface KeyProvider {
-        String[] getFeedCacheKeys();
+        String[] getObjectCacheKeys();
     }
 
 }
