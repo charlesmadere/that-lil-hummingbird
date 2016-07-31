@@ -12,7 +12,7 @@ public final class FeedCache {
 
     static {
         if (MiscUtils.isLowRamDevice()) {
-            CACHE = new LruCache<>(11);
+            CACHE = new LruCache<>(10);
         } else {
             CACHE = new LruCache<>(16);
         }
