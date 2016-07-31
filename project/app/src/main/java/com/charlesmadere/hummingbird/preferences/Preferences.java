@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import com.charlesmadere.hummingbird.ThatLilHummingbird;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.AppNewsStatus;
+import com.charlesmadere.hummingbird.models.LaunchScreen;
 import com.charlesmadere.hummingbird.models.LibrarySort;
 import com.charlesmadere.hummingbird.models.NightMode;
 import com.charlesmadere.hummingbird.models.PollFrequency;
@@ -55,15 +56,17 @@ public final class Preferences {
     public static final class General {
         private static final String TAG = Preferences.TAG + ".General";
         public static final BooleanPreference ShowNsfwContent;
-        public static final GsonPreference<NightMode> Theme;
+        public static final GsonPreference<LaunchScreen> DefaultLaunchScreen;
         public static final GsonPreference<LibrarySort> DefaultLibrarySort;
+        public static final GsonPreference<NightMode> Theme;
         public static final GsonPreference<TitleType> TitleLanguage;
         public static final IntegerPreference PreviousLaunchVersion;
 
         static {
             ShowNsfwContent = new BooleanPreference(TAG, "ShowNsfwContent", Boolean.FALSE);
-            Theme = new GsonPreference<>(TAG, "NightMode", NightMode.class, NightMode.getDefault());
+            DefaultLaunchScreen = new GsonPreference<>(TAG, "DefaultLaunchScreen", LaunchScreen.class, LaunchScreen.FEED);
             DefaultLibrarySort = new GsonPreference<>(TAG, "DefaultLibrarySort", LibrarySort.class, LibrarySort.DATE);
+            Theme = new GsonPreference<>(TAG, "NightMode", NightMode.class, NightMode.getDefault());
             TitleLanguage = new GsonPreference<>(TAG, "TitleLanguage", TitleType.class, TitleType.ENGLISH);
             PreviousLaunchVersion = new IntegerPreference(TAG, "PreviousLaunchVersion", null);
         }
