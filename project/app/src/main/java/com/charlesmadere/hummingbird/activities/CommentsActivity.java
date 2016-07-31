@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.CommentsAdapter;
+import com.charlesmadere.hummingbird.misc.FeedCache;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.CommentPost;
 import com.charlesmadere.hummingbird.models.CommentStory;
@@ -35,13 +36,12 @@ import butterknife.BindView;
 import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 
-public class CommentsActivity extends BaseDrawerActivity implements
+public class CommentsActivity extends BaseDrawerActivity implements FeedCache.KeyProvider,
         RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "CommentsActivity";
     private static final String CNAME = CommentsActivity.class.getCanonicalName();
     private static final String EXTRA_COMMENT_STORY = CNAME + ".CommentStory";
-    private static final String KEY_FEED = "Feed";
 
     private CommentsAdapter mAdapter;
     private CommentStory mCommentStory;
@@ -74,6 +74,11 @@ public class CommentsActivity extends BaseDrawerActivity implements
     @Override
     public String getActivityName() {
         return TAG;
+    }
+
+    @Override
+    public String[] getFeedCacheKeys() {
+        return new String[] { getActivityName(), mCommentStory.getId() };
     }
 
     private boolean isCommentFormValid() {
@@ -113,9 +118,7 @@ public class CommentsActivity extends BaseDrawerActivity implements
         final Intent intent = getIntent();
         mCommentStory = intent.getParcelableExtra(EXTRA_COMMENT_STORY);
 
-        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mFeed = savedInstanceState.getParcelable(KEY_FEED);
-        }
+        mFeed = FeedCache.get(this);
 
         if (mFeed == null) {
             fetchSubstories();
@@ -195,7 +198,7 @@ public class CommentsActivity extends BaseDrawerActivity implements
         super.onSaveInstanceState(outState);
 
         if (mFeed != null) {
-            outState.putParcelable(KEY_FEED, mFeed);
+            FeedCache.put(mFeed, this);
         }
     }
 
