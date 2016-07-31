@@ -18,6 +18,7 @@ import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.SyncManager;
 import com.charlesmadere.hummingbird.misc.Timber;
+import com.charlesmadere.hummingbird.models.LaunchScreen;
 import com.charlesmadere.hummingbird.models.LibrarySort;
 import com.charlesmadere.hummingbird.models.NightMode;
 import com.charlesmadere.hummingbird.models.PollFrequency;
@@ -68,6 +69,9 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @BindView(R.id.cpvWifiRequired)
     CheckablePreferenceView mWifiRequired;
+
+    @BindView(R.id.hbivDefaultLaunchScreen)
+    HeadBodyItemView mDefaultLaunchScreen;
 
     @BindView(R.id.hbivDefaultLibrarySort)
     HeadBodyItemView mDefaultLibrarySort;
@@ -148,6 +152,26 @@ public class SettingsActivity extends BaseDrawerActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+    }
+
+    @OnClick(R.id.hbivDefaultLaunchScreen)
+    void onDefaultLaunchScreenClick() {
+        CharSequence items[] = new CharSequence[LaunchScreen.values().length];
+
+        for (int i = 0; i < items.length; ++i) {
+            items[i] = getText(LaunchScreen.values()[i].getTextResId());
+        }
+
+        new AlertDialog.Builder(this)
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        Preferences.General.DefaultLaunchScreen.set(LaunchScreen.values()[which]);
+                        refresh();
+                    }
+                })
+                .setTitle(R.string.default_launch_screen)
+                .show();
     }
 
     @OnClick(R.id.hbivDefaultLibrarySort)

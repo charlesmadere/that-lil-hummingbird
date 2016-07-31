@@ -66,6 +66,7 @@
     <string name="day">Day</string>
     <string name="daily">Daily</string>
     <string name="decrease">Decrease</string>
+    <string name="default_launch_screen">Default launch screen</string>
     <string name="default_library_sorting">Default library sorting</string>
     <string name="deep_link_error">Sorry, but a deep link error occurred!</string>
     <string name="delete">Delete</string>
