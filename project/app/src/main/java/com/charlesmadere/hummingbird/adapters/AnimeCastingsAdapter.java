@@ -43,7 +43,8 @@ public class AnimeCastingsAdapter extends BaseMultiAdapter implements Comparator
     @Override
     public void onBindViewHolder(final AdapterView.ViewHolder holder, final int position) {
         if (holder.getAdapterView() instanceof AnimeCastingItemView) {
-            final boolean showDivider = position + 1 < getItemCount();
+            final boolean showDivider = position + 1 < getItemCount() &&
+                    getItem(position + 1) instanceof AnimeDigest.Casting;
             ((AnimeCastingItemView) holder.getAdapterView()).setContent(
                     (AnimeDigest.Casting) getItem(position), showDivider);
         } else {
