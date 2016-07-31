@@ -6,7 +6,7 @@ import android.text.TextUtils;
 
 public final class ObjectCache<T> {
 
-    public static final ObjectCache<Object> CACHE;
+    public static final ObjectCache<Object> INSTANCE;
 
     private final LruCache<String, T> mCache;
     private final String mTag;
@@ -14,9 +14,9 @@ public final class ObjectCache<T> {
 
     static {
         if (MiscUtils.isLowRamDevice()) {
-            CACHE = new ObjectCache<>(6, "ObjectCache");
+            INSTANCE = new ObjectCache<>(6, "ObjectCache");
         } else {
-            CACHE = new ObjectCache<>(10, "ObjectCache");
+            INSTANCE = new ObjectCache<>(10, "ObjectCache");
         }
     }
 
