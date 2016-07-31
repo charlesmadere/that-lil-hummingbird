@@ -1,6 +1,9 @@
 package com.charlesmadere.hummingbird.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,19 +12,18 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeCastingsAdapter;
+import com.charlesmadere.hummingbird.misc.AnimeDigestProvider;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 
 public class AnimeCastingsFragment extends BaseFragment {
 
     private static final String TAG = "AnimeCastingsFragment";
-    private static final String KEY_CASTINGS = "Castings";
 
-    private ArrayList<AnimeDigest.Casting> mCastings;
+    private AnimeDigestProvider mProvider;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -30,14 +32,8 @@ public class AnimeCastingsFragment extends BaseFragment {
     TextView mEmpty;
 
 
-    public static AnimeCastingsFragment create(final ArrayList<AnimeDigest.Casting> castings) {
-        final Bundle args = new Bundle(1);
-        args.putParcelableArrayList(KEY_CASTINGS, castings);
-
-        final AnimeCastingsFragment fragment = new AnimeCastingsFragment();
-        fragment.setArguments(args);
-
-        return fragment;
+    public static AnimeCastingsFragment create() {
+        return new AnimeCastingsFragment();
     }
 
     @Override
@@ -46,11 +42,23 @@ public class AnimeCastingsFragment extends BaseFragment {
     }
 
     @Override
-    public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onAttach(final Context context) {
+        super.onAttach(context);
 
-        final Bundle args = getArguments();
-        mCastings = args.getParcelableArrayList(KEY_CASTINGS);
+        final Fragment fragment = getParentFragment();
+        if (fragment instanceof AnimeDigestProvider) {
+            mProvider = (AnimeDigestProvider) fragment;
+        } else {
+            final Activity activity = MiscUtils.getActivity(context);
+
+            if (activity instanceof AnimeDigestProvider) {
+                mProvider = (AnimeDigestProvider) activity;
+            }
+        }
+
+        if (mProvider == null) {
+            throw new IllegalStateException(TAG + " must have a Listener");
+        }
     }
 
     @Override
@@ -67,13 +75,15 @@ public class AnimeCastingsFragment extends BaseFragment {
         mRecyclerView.setHasFixedSize(true);
         SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
 
-        if (mCastings == null || mCastings.isEmpty()) {
-            mEmpty.setVisibility(View.VISIBLE);
-        } else {
+        final AnimeDigest animeDigest = mProvider.getAnimeDigest();
+
+        if (animeDigest.hasCastings()) {
             final AnimeCastingsAdapter adapter = new AnimeCastingsAdapter(getContext());
-            adapter.set(mCastings);
+            adapter.set(animeDigest.getCastings());
             mRecyclerView.setAdapter(adapter);
             mRecyclerView.setVisibility(View.VISIBLE);
+        } else {
+            mEmpty.setVisibility(View.VISIBLE);
         }
     }
 

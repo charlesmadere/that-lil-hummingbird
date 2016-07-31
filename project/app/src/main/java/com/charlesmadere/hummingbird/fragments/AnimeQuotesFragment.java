@@ -1,6 +1,9 @@
 package com.charlesmadere.hummingbird.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,19 +12,18 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeQuotesAdapter;
+import com.charlesmadere.hummingbird.misc.AnimeDigestProvider;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 
 public class AnimeQuotesFragment extends BaseFragment {
 
     private static final String TAG = "AnimeQuotesFragment";
-    private static final String KEY_QUOTES = "Quotes";
 
-    private ArrayList<AnimeDigest.Quote> mQuotes;
+    private AnimeDigestProvider mProvider;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -30,14 +32,8 @@ public class AnimeQuotesFragment extends BaseFragment {
     TextView mEmpty;
 
 
-    public static AnimeQuotesFragment create(final ArrayList<AnimeDigest.Quote> quotes) {
-        final Bundle args = new Bundle(1);
-        args.putParcelableArrayList(KEY_QUOTES, quotes);
-
-        final AnimeQuotesFragment fragment = new AnimeQuotesFragment();
-        fragment.setArguments(args);
-
-        return fragment;
+    public static AnimeQuotesFragment create() {
+        return new AnimeQuotesFragment();
     }
 
     @Override
@@ -46,11 +42,23 @@ public class AnimeQuotesFragment extends BaseFragment {
     }
 
     @Override
-    public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onAttach(final Context context) {
+        super.onAttach(context);
 
-        final Bundle args = getArguments();
-        mQuotes = args.getParcelableArrayList(KEY_QUOTES);
+        final Fragment fragment = getParentFragment();
+        if (fragment instanceof AnimeDigestProvider) {
+            mProvider = (AnimeDigestProvider) fragment;
+        } else {
+            final Activity activity = MiscUtils.getActivity(context);
+
+            if (activity instanceof AnimeDigestProvider) {
+                mProvider = (AnimeDigestProvider) activity;
+            }
+        }
+
+        if (mProvider == null) {
+            throw new IllegalStateException(TAG + " must have a Listener");
+        }
     }
 
     @Override
@@ -67,13 +75,15 @@ public class AnimeQuotesFragment extends BaseFragment {
         mRecyclerView.setHasFixedSize(true);
         SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding);
 
-        if (mQuotes == null || mQuotes.isEmpty()) {
-            mEmpty.setVisibility(View.VISIBLE);
-        } else {
+        final AnimeDigest animeDigest = mProvider.getAnimeDigest();
+
+        if (animeDigest.hasQuotes()) {
             final AnimeQuotesAdapter adapter = new AnimeQuotesAdapter(getContext());
-            adapter.set(mQuotes);
+            adapter.set(animeDigest.getQuotes());
             mRecyclerView.setAdapter(adapter);
             mRecyclerView.setVisibility(View.VISIBLE);
+        } else {
+            mEmpty.setVisibility(View.VISIBLE);
         }
     }
 

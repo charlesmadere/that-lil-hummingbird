@@ -88,7 +88,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     private class AnimeCastingsFragmentPage implements FragmentPage {
         @Override
         public Fragment getItem() {
-            return AnimeCastingsFragment.create(mAnimeDigest.getCastings());
+            return AnimeCastingsFragment.create();
         }
 
         @Override
@@ -100,7 +100,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     private class AnimeDetailsFragmentPage implements FragmentPage {
         @Override
         public Fragment getItem() {
-            return AnimeDetailsFragment.create(mAnimeDigest);
+            return AnimeDetailsFragment.create();
         }
 
         @Override
@@ -112,7 +112,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     private class AnimeEpisodesFragmentPage implements FragmentPage {
         @Override
         public Fragment getItem() {
-            return AnimeEpisodesFragment.create(mAnimeDigest.getEpisodes());
+            return AnimeEpisodesFragment.create();
         }
 
         @Override
@@ -124,7 +124,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     private class AnimeFranchiseFragmentPage implements FragmentPage {
         @Override
         public Fragment getItem() {
-            return AnimeFranchiseFragment.create(mAnimeDigest.getInfo().getFranchiseId());
+            return AnimeFranchiseFragment.create();
         }
 
         @Override
@@ -136,7 +136,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     private class AnimeGalleryFragmentPage implements FragmentPage {
         @Override
         public Fragment getItem() {
-            return AnimeGalleryFragment.create(mAnimeDigest.getInfo());
+            return AnimeGalleryFragment.create();
         }
 
         @Override
@@ -148,7 +148,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     private class AnimeQuotesFragmentPage implements FragmentPage {
         @Override
         public Fragment getItem() {
-            return AnimeQuotesFragment.create(mAnimeDigest.getQuotes());
+            return AnimeQuotesFragment.create();
         }
 
         @Override
@@ -160,7 +160,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     private class AnimeReviewsFragmentPage implements FragmentPage {
         @Override
         public Fragment getItem() {
-            return AnimeReviewsFragment.create(mAnimeDigest.getReviews());
+            return AnimeReviewsFragment.create();
         }
 
         @Override

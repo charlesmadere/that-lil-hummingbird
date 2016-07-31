@@ -1,6 +1,9 @@
 package com.charlesmadere.hummingbird.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +13,8 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.GalleryActivity;
 import com.charlesmadere.hummingbird.adapters.GalleryAdapter;
+import com.charlesmadere.hummingbird.misc.AnimeDigestProvider;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.views.GalleryItemView;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
@@ -19,9 +24,8 @@ import butterknife.BindView;
 public class AnimeGalleryFragment extends BaseFragment implements GalleryItemView.OnClickListener {
 
     private static final String TAG = "AnimeGalleryFragment";
-    private static final String KEY_ANIME_INFO = "Anime";
 
-    private AnimeDigest.Info mAnimeInfo;
+    private AnimeDigestProvider mProvider;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -30,14 +34,8 @@ public class AnimeGalleryFragment extends BaseFragment implements GalleryItemVie
     TextView mEmpty;
 
 
-    public static AnimeGalleryFragment create(final AnimeDigest.Info info) {
-        final Bundle args = new Bundle(1);
-        args.putParcelable(KEY_ANIME_INFO, info);
-
-        final AnimeGalleryFragment fragment = new AnimeGalleryFragment();
-        fragment.setArguments(args);
-
-        return fragment;
+    public static AnimeGalleryFragment create() {
+        return new AnimeGalleryFragment();
     }
 
     @Override
@@ -46,16 +44,29 @@ public class AnimeGalleryFragment extends BaseFragment implements GalleryItemVie
     }
 
     @Override
-    public void onClick(final GalleryItemView v) {
-        startActivity(GalleryActivity.getLaunchIntent(getContext(), mAnimeInfo, v.getUrl()));
+    public void onAttach(final Context context) {
+        super.onAttach(context);
+
+        final Fragment fragment = getParentFragment();
+        if (fragment instanceof AnimeDigestProvider) {
+            mProvider = (AnimeDigestProvider) fragment;
+        } else {
+            final Activity activity = MiscUtils.getActivity(context);
+
+            if (activity instanceof AnimeDigestProvider) {
+                mProvider = (AnimeDigestProvider) activity;
+            }
+        }
+
+        if (mProvider == null) {
+            throw new IllegalStateException(TAG + " must have a Listener");
+        }
     }
 
     @Override
-    public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        final Bundle args = getArguments();
-        mAnimeInfo = args.getParcelable(KEY_ANIME_INFO);
+    public void onClick(final GalleryItemView v) {
+        startActivity(GalleryActivity.getLaunchIntent(getContext(),
+                mProvider.getAnimeDigest().getInfo(), v.getUrl()));
     }
 
     @Override
@@ -72,9 +83,11 @@ public class AnimeGalleryFragment extends BaseFragment implements GalleryItemVie
         mRecyclerView.setHasFixedSize(true);
         SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding_half);
 
-        if (mAnimeInfo.hasScreencaps()) {
+        final AnimeDigest animeDigest = mProvider.getAnimeDigest();
+
+        if (animeDigest.getInfo().hasScreencaps()) {
             final GalleryAdapter adapter = new GalleryAdapter(getContext(), this);
-            adapter.set(mAnimeInfo.getScreencaps());
+            adapter.set(animeDigest.getInfo().getScreencaps());
             mRecyclerView.setAdapter(adapter);
             mRecyclerView.setVisibility(View.VISIBLE);
         } else {

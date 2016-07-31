@@ -1,8 +1,10 @@
 package com.charlesmadere.hummingbird.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.GalleryActivity;
+import com.charlesmadere.hummingbird.misc.AnimeDigestProvider;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeType;
@@ -26,9 +29,8 @@ import butterknife.OnClick;
 public class AnimeDetailsFragment extends BaseFragment {
 
     private static final String TAG = "AnimeDetailsFragment";
-    private static final String KEY_ANIME_DIGEST = "AnimeDigest";
 
-    private AnimeDigest mAnimeDigest;
+    private AnimeDigestProvider mProvider;
 
     @BindView(R.id.cvPoster)
     CardView mPosterContainer;
@@ -91,14 +93,8 @@ public class AnimeDetailsFragment extends BaseFragment {
     TextView mSynopsis;
 
 
-    public static AnimeDetailsFragment create(final AnimeDigest digest) {
-        final Bundle args = new Bundle(1);
-        args.putParcelable(KEY_ANIME_DIGEST, digest);
-
-        final AnimeDetailsFragment fragment = new AnimeDetailsFragment();
-        fragment.setArguments(args);
-
-        return fragment;
+    public static AnimeDetailsFragment create() {
+        return new AnimeDetailsFragment();
     }
 
     @Override
@@ -107,11 +103,23 @@ public class AnimeDetailsFragment extends BaseFragment {
     }
 
     @Override
-    public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onAttach(final Context context) {
+        super.onAttach(context);
 
-        final Bundle args = getArguments();
-        mAnimeDigest = args.getParcelable(KEY_ANIME_DIGEST);
+        final Fragment fragment = getParentFragment();
+        if (fragment instanceof AnimeDigestProvider) {
+            mProvider = (AnimeDigestProvider) fragment;
+        } else {
+            final Activity activity = MiscUtils.getActivity(context);
+
+            if (activity instanceof AnimeDigestProvider) {
+                mProvider = (AnimeDigestProvider) activity;
+            }
+        }
+
+        if (mProvider == null) {
+            throw new IllegalStateException(TAG + " must have a Listener");
+        }
     }
 
     @Override
@@ -123,15 +131,17 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     @OnClick(R.id.cvPoster)
     void onPosterClick() {
-        startActivity(GalleryActivity.getLaunchIntent(getContext(), mAnimeDigest.getInfo(),
-                mAnimeDigest.getInfo().getPosterImage()));
+        final AnimeDigest animeDigest = mProvider.getAnimeDigest();
+        startActivity(GalleryActivity.getLaunchIntent(getContext(), animeDigest.getInfo(),
+                animeDigest.getInfo().getPosterImage()));
     }
 
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final AnimeDigest.Info info = mAnimeDigest.getInfo();
+        final AnimeDigest animeDigest = mProvider.getAnimeDigest();
+        final AnimeDigest.Info info = animeDigest.getInfo();
         final Context context = getContext();
         final Resources resources = getResources();
         final NumberFormat numberFormat = NumberFormat.getInstance();
@@ -230,10 +240,10 @@ public class AnimeDetailsFragment extends BaseFragment {
             mCommunityRating.setVisibility(View.VISIBLE);
         }
 
-        if (mAnimeDigest.hasProducers()) {
-            mProducers.setHead(mAnimeDigest.getProducersString(resources));
+        if (animeDigest.hasProducers()) {
+            mProducers.setHead(animeDigest.getProducersString(resources));
             mProducers.setBody(resources.getQuantityText(R.plurals.producers,
-                    mAnimeDigest.getProducersSize()));
+                    animeDigest.getProducersSize()));
             mProducers.setVisibility(View.VISIBLE);
         }
 
@@ -251,7 +261,7 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     @OnClick(R.id.hbivYouTubeLink)
     void onYouTubeLinkClick() {
-        MiscUtils.openUrl(getActivity(), mAnimeDigest.getInfo().getYouTubeVideoUrl());
+        MiscUtils.openUrl(getActivity(), mProvider.getAnimeDigest().getInfo().getYouTubeVideoUrl());
     }
 
 }

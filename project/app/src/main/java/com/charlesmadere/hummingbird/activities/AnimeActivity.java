@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeFragmentAdapter;
+import com.charlesmadere.hummingbird.misc.AnimeDigestProvider;
 import com.charlesmadere.hummingbird.fragments.AnimeEpisodeFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeLibraryUpdateFragment;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
@@ -35,7 +36,7 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class AnimeActivity extends BaseDrawerActivity implements
+public class AnimeActivity extends BaseDrawerActivity implements AnimeDigestProvider,
         AnimeEpisodeItemView.OnClickListener, AnimeLibraryUpdateFragment.UpdateListener {
 
     private static final String TAG = "AnimeActivity";
@@ -101,6 +102,11 @@ public class AnimeActivity extends BaseDrawerActivity implements
     @Override
     public String getActivityName() {
         return TAG;
+    }
+
+    @Override
+    public AnimeDigest getAnimeDigest() {
+        return mAnimeDigest;
     }
 
     @Override

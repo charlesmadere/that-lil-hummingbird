@@ -1,7 +1,10 @@
 package com.charlesmadere.hummingbird.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +14,8 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeAdapter;
+import com.charlesmadere.hummingbird.misc.AnimeDigestProvider;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Franchise;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -27,11 +32,10 @@ public class AnimeFranchiseFragment extends BaseFragment implements
 
     private static final String TAG = "AnimeFranchiseFragment";
     private static final String KEY_FRANCHISE = "Franchise";
-    private static final String KEY_FRANCHISE_ID = "FranchiseId";
 
     private AnimeAdapter mAdapter;
+    private AnimeDigestProvider mProvider;
     private Franchise mFranchise;
-    private String mFranchiseId;
 
     @BindView(R.id.llEmpty)
     LinearLayout mEmpty;
@@ -46,19 +50,14 @@ public class AnimeFranchiseFragment extends BaseFragment implements
     RefreshLayout mRefreshLayout;
 
 
-    public static AnimeFranchiseFragment create(final String franchiseId) {
-        final Bundle args = new Bundle(1);
-        args.putString(KEY_FRANCHISE_ID, franchiseId);
-
-        final AnimeFranchiseFragment fragment = new AnimeFranchiseFragment();
-        fragment.setArguments(args);
-
-        return fragment;
+    public static AnimeFranchiseFragment create() {
+        return new AnimeFranchiseFragment();
     }
 
     private void fetchFranchise() {
         mRefreshLayout.setRefreshing(true);
-        Api.getFranchise(mFranchiseId, new GetFranchiseListener(this));
+        Api.getFranchise(mProvider.getAnimeDigest().getInfo().getFranchiseId(),
+                new GetFranchiseListener(this));
     }
 
     @Override
@@ -67,11 +66,28 @@ public class AnimeFranchiseFragment extends BaseFragment implements
     }
 
     @Override
+    public void onAttach(final Context context) {
+        super.onAttach(context);
+
+        final Fragment fragment = getParentFragment();
+        if (fragment instanceof AnimeDigestProvider) {
+            mProvider = (AnimeDigestProvider) fragment;
+        } else {
+            final Activity activity = MiscUtils.getActivity(context);
+
+            if (activity instanceof AnimeDigestProvider) {
+                mProvider = (AnimeDigestProvider) activity;
+            }
+        }
+
+        if (mProvider == null) {
+            throw new IllegalStateException(TAG + " must have a Listener");
+        }
+    }
+
+    @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        final Bundle args = getArguments();
-        mFranchiseId = args.getString(KEY_FRANCHISE_ID);
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mFranchise = savedInstanceState.getParcelable(KEY_FRANCHISE);
