@@ -16,6 +16,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeAdapter;
 import com.charlesmadere.hummingbird.misc.AnimeDigestProvider;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
+import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Franchise;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -27,7 +28,7 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class AnimeFranchiseFragment extends BaseFragment implements
+public class AnimeFranchiseFragment extends BaseFragment implements ObjectCache.KeyProvider,
         SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "AnimeFranchiseFragment";
@@ -55,13 +56,21 @@ public class AnimeFranchiseFragment extends BaseFragment implements
 
     private void fetchFranchise() {
         mRefreshLayout.setRefreshing(true);
-        Api.getFranchise(mProvider.getAnimeDigest().getInfo().getFranchiseId(),
-                new GetFranchiseListener(this));
+        Api.getFranchise(getFranchiseId(), new GetFranchiseListener(this));
+    }
+
+    private String getFranchiseId() {
+        return mProvider.getAnimeDigest().getInfo().getFranchiseId();
     }
 
     @Override
     public String getFragmentName() {
         return TAG;
+    }
+
+    @Override
+    public String[] getObjectCacheKeys() {
+        return new String[] { getFragmentName(), getFranchiseId() };
     }
 
     @Override
@@ -94,6 +103,15 @@ public class AnimeFranchiseFragment extends BaseFragment implements
     @Override
     public void onRefresh() {
         fetchFranchise();
+    }
+
+    @Override
+    public void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (mFranchise != null) {
+            ObjectCache.put(mFranchise, this);
+        }
     }
 
     @Override
