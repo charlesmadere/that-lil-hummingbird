@@ -22,6 +22,9 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:orientation="vertical">
+                <android.support.v4.widget.Space
+                    android:layout_height="@dimen/root_padding"
+                    android:layout_width="match_parent" />
                 <include
                     layout="@layout/about_user_view" />
                 <android.support.v4.widget.Space
@@ -45,6 +48,9 @@
                     android:layout_width="match_parent" />
                 <include
                     layout="@layout/favorite_manga_view" />
+                <android.support.v4.widget.Space
+                    android:layout_height="@dimen/root_padding"
+                    android:layout_width="match_parent" />
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
         <LinearLayout
