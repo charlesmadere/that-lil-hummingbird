@@ -61,6 +61,10 @@ public final class FeedCache {
         }
     }
 
+    public static synchronized void trim() {
+        CACHE.trimToSize(CACHE.maxSize() / 2);
+    }
+
     public interface KeyProvider {
         String[] getFeedCacheKeys();
     }
