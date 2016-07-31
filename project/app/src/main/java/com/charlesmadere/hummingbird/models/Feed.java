@@ -325,6 +325,12 @@ public class Feed implements Parcelable {
                 story.hydrate(this);
             }
         }
+
+        if (hasUsers()) {
+            for (final User user : mUsers) {
+                user.hydrate();
+            }
+        }
     }
 
     public void merge(@Nullable final Feed feed) {
