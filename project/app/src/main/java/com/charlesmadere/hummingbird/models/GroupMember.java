@@ -71,14 +71,6 @@ public class GroupMember implements Parcelable {
         return mPending;
     }
 
-    public boolean isRankAdmin() {
-        return mRank == Rank.ADMIN;
-    }
-
-    public boolean isRankPleb() {
-        return mRank == Rank.PLEB;
-    }
-
     @Override
     public String toString() {
         return mUserId;
@@ -122,6 +114,9 @@ public class GroupMember implements Parcelable {
     public enum Rank implements Parcelable {
         @SerializedName("admin")
         ADMIN(R.string.admin),
+
+        @SerializedName("mod")
+        MOD(R.string.mod),
 
         @SerializedName("pleb")
         PLEB(R.string.member);
