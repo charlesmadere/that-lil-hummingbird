@@ -28,6 +28,15 @@ public final class FeedCache {
     }
 
     @Nullable
+    public static Feed get(final KeyProvider keyProvider) {
+        if (keyProvider == null) {
+            throw new IllegalArgumentException("keyProvider parameter can't be null");
+        }
+
+        return get(keyProvider.getCacheFeedKeys());
+    }
+
+    @Nullable
     public static Feed get(final String... keys) {
         final String key = buildKey(keys);
 
@@ -36,12 +45,24 @@ public final class FeedCache {
         }
     }
 
+    public static void put(final Feed feed, final KeyProvider keyProvider) {
+        if (keyProvider == null) {
+            throw new IllegalArgumentException("keyProvider parameter can't be null");
+        }
+
+        put(feed, keyProvider.getCacheFeedKeys());
+    }
+
     public static void put(final Feed feed, final String... keys) {
         final String key = buildKey(keys);
 
         synchronized (CACHE) {
             CACHE.put(key, feed);
         }
+    }
+
+    public interface KeyProvider {
+        String[] getCacheFeedKeys();
     }
 
 }
