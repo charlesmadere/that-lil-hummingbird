@@ -54,6 +54,10 @@ public final class FeedCache {
     }
 
     public static void put(final Feed feed, final String... keys) {
+        if (feed == null) {
+            throw new IllegalArgumentException("feed parameter can't be null");
+        }
+
         final String key = buildKey(keys);
 
         synchronized (CACHE) {
