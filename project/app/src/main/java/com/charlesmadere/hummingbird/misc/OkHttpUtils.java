@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.misc;
 
 import com.charlesmadere.hummingbird.ThatLilHummingbird;
 import com.charlesmadere.hummingbird.preferences.Preferences;
+import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
@@ -9,7 +10,6 @@ import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersisto
 import java.io.IOException;
 
 import okhttp3.Cache;
-import okhttp3.CookieJar;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -21,13 +21,13 @@ public final class OkHttpUtils {
     private static final String TAG = "OkHttpUtils";
     private static final long CACHE_MAX_SIZE = 1024L * 1024L * 8L; // 8 megabytes
 
-    private static CookieJar sCookieJar;
+    private static ClearableCookieJar sCookieJar;
     private static HttpLoggingInterceptor sHttpLoggingInterceptor;
     private static Interceptor sCsrfTokenInterceptor;
     private static OkHttpClient sOkHttpClient;
 
 
-    public static synchronized CookieJar getCookieJar() {
+    public static synchronized ClearableCookieJar getCookieJar() {
         if (sCookieJar == null) {
             Timber.d(TAG, "creating CookieJar instance");
             sCookieJar = new PersistentCookieJar(new SetCookieCache(),
