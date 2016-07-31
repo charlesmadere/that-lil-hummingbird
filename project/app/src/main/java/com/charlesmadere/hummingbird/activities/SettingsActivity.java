@@ -151,7 +151,7 @@ public class SettingsActivity extends BaseDrawerActivity {
     }
 
     @OnClick(R.id.hbivDefaultLibrarySort)
-    void onDefaultSortClick() {
+    void onDefaultLibrarySortClick() {
         CharSequence items[] = new CharSequence[LibrarySort.values().length];
 
         for (int i = 0; i < items.length; ++i) {
