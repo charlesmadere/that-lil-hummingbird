@@ -27,7 +27,7 @@ public final class ObjectCache<T> {
             mCache.evictAll();
         }
 
-        Timber.d(mTag, "cleaned, size was " + oldSize);
+        Timber.d(mTag, "cleared, size was " + oldSize);
     }
 
     @Nullable
