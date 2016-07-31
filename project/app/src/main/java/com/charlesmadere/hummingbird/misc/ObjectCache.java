@@ -6,9 +6,19 @@ import android.text.TextUtils;
 
 public final class ObjectCache<T> {
 
+    public static final ObjectCache<Object> CACHE;
+
     private final LruCache<String, T> mCache;
     private final String mTag;
 
+
+    static {
+        if (MiscUtils.isLowRamDevice()) {
+            CACHE = new ObjectCache<>(6, "ObjectCache");
+        } else {
+            CACHE = new ObjectCache<>(10, "ObjectCache");
+        }
+    }
 
     public ObjectCache(final int maxSize, final String tag) {
         mCache = new LruCache<>(maxSize);
