@@ -39,6 +39,9 @@
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:orientation="vertical">
+                        <android.support.v4.widget.Space
+                            android:layout_height="@dimen/root_padding"
+                            android:layout_width="match_parent" />
                         <include
                             android:id="@+id/userItemView"
                             layout="@layout/item_user" />
@@ -57,6 +60,9 @@
                         </android.support.v7.widget.CardView>
                         <include
                             layout="@layout/anime_review_verdict_view" />
+                        <android.support.v4.widget.Space
+                            android:layout_height="@dimen/root_padding"
+                            android:layout_width="match_parent" />
                     </LinearLayout>
                 </ScrollView>
             </FrameLayout>

@@ -15,6 +15,8 @@ import butterknife.ButterKnife;
 
 public class ReplySubstoryStandaloneItemView extends CardView implements AdapterView<Void> {
 
+    private int mBottomMargin;
+
     @BindView(R.id.avatarView)
     AvatarView mAvatar;
 
@@ -41,6 +43,7 @@ public class ReplySubstoryStandaloneItemView extends CardView implements Adapter
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
+        mBottomMargin = getResources().getDimensionPixelSize(R.dimen.root_padding);
     }
 
     public void setContent(final ReplySubstory content, final boolean showDivider) {
@@ -48,6 +51,10 @@ public class ReplySubstoryStandaloneItemView extends CardView implements Adapter
         mReply.setContent(content);
         mTimeAgo.setText(content.getCreatedAt().getRelativeTimeText(getContext()));
         mDivider.setVisibility(showDivider ? VISIBLE : GONE);
+
+        final MarginLayoutParams params = (MarginLayoutParams) getLayoutParams();
+        params.bottomMargin = showDivider ? mBottomMargin : 0;
+        setLayoutParams(params);
     }
 
     @Override
