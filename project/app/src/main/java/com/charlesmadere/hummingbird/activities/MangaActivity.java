@@ -19,6 +19,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.MangaFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.MangaLibraryUpdateFragment;
 import com.charlesmadere.hummingbird.misc.MangaDigestProvider;
+import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.AddMangaLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
@@ -35,13 +36,12 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 
 public class MangaActivity extends BaseDrawerActivity implements MangaDigestProvider,
-        MangaLibraryUpdateFragment.UpdateListener {
+        MangaLibraryUpdateFragment.UpdateListener, ObjectCache.KeyProvider {
 
     private static final String TAG = "MangaActivity";
     private static final String CNAME = MangaActivity.class.getCanonicalName();
     private static final String EXTRA_MANGA_ID = CNAME + ".MangaId";
     private static final String EXTRA_MANGA_NAME = CNAME + ".MangaName";
-    private static final String KEY_MANGA_DIGEST = "MangaDigest";
 
     private MangaDigest mMangaDigest;
     private String mMangaId;
@@ -108,6 +108,11 @@ public class MangaActivity extends BaseDrawerActivity implements MangaDigestProv
     }
 
     @Override
+    public String[] getObjectCacheKeys() {
+        return new String[] { getActivityName(), mMangaId };
+    }
+
+    @Override
     protected boolean isUpNavigationEnabled() {
         return true;
     }
@@ -124,9 +129,7 @@ public class MangaActivity extends BaseDrawerActivity implements MangaDigestProv
             setTitle(intent.getStringExtra(EXTRA_MANGA_NAME));
         }
 
-        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mMangaDigest = savedInstanceState.getParcelable(KEY_MANGA_DIGEST);
-        }
+        mMangaDigest = ObjectCache.get(this);
 
         if (mMangaDigest == null) {
             fetchMangaDigest();
@@ -167,7 +170,7 @@ public class MangaActivity extends BaseDrawerActivity implements MangaDigestProv
         super.onSaveInstanceState(outState);
 
         if (mMangaDigest != null) {
-            outState.putParcelable(KEY_MANGA_DIGEST, mMangaDigest);
+            ObjectCache.put(mMangaDigest, this);
         }
     }
 

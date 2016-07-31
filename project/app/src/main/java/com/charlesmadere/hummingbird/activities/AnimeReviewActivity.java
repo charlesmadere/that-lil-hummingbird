@@ -11,6 +11,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeReview;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
@@ -24,7 +25,7 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class AnimeReviewActivity extends BaseDrawerActivity implements
+public class AnimeReviewActivity extends BaseDrawerActivity implements ObjectCache.KeyProvider,
         SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "AnimeReviewActivity";
@@ -32,7 +33,6 @@ public class AnimeReviewActivity extends BaseDrawerActivity implements
     private static final String EXTRA_ANIME_ID = CNAME + ".AnimeId";
     private static final String EXTRA_ANIME_REVIEW_ID = CNAME + ".AnimeReviewId";
     private static final String EXTRA_ANIME_REVIEW = CNAME + ".AnimeReview";
-    private static final String KEY_ANIME_DIGEST = "AnimeDigest";
 
     private AnimeDigest mAnimeDigest;
     private AnimeReview mAnimeReview;
@@ -81,6 +81,11 @@ public class AnimeReviewActivity extends BaseDrawerActivity implements
     }
 
     @Override
+    public String[] getObjectCacheKeys() {
+        return new String[] { getActivityName(), mAnimeId, mAnimeReviewId };
+    }
+
+    @Override
     protected boolean isUpNavigationEnabled() {
         return true;
     }
@@ -96,8 +101,8 @@ public class AnimeReviewActivity extends BaseDrawerActivity implements
 
         if (intent.hasExtra(EXTRA_ANIME_REVIEW)) {
             mAnimeReview = intent.getParcelableExtra(EXTRA_ANIME_REVIEW);
-        } else if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mAnimeDigest = savedInstanceState.getParcelable(KEY_ANIME_DIGEST);
+        } else {
+            mAnimeDigest = ObjectCache.get(this);
         }
 
         if (mAnimeReview != null) {
@@ -119,7 +124,7 @@ public class AnimeReviewActivity extends BaseDrawerActivity implements
         super.onSaveInstanceState(outState);
 
         if (mAnimeDigest != null) {
-            outState.putParcelable(KEY_ANIME_DIGEST, mAnimeDigest);
+            ObjectCache.put(mAnimeDigest, this);
         }
     }
 

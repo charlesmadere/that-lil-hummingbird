@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeReviewsAdapter;
+import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -23,14 +24,13 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class AnimeReviewsActivity extends BaseDrawerActivity implements
+public class AnimeReviewsActivity extends BaseDrawerActivity implements ObjectCache.KeyProvider,
         SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "AnimeReviewsActivity";
     private static final String CNAME = AnimeReviewsActivity.class.getCanonicalName();
     private static final String EXTRA_ANIME_ID = CNAME + ".AnimeId";
     private static final String EXTRA_ANIME_TITLE = CNAME + ".AnimeTitle";
-    private static final String KEY_ANIME_DIGEST = "AnimeDigest";
 
     private AnimeDigest mAnimeDigest;
     private String mAnimeId;
@@ -75,6 +75,11 @@ public class AnimeReviewsActivity extends BaseDrawerActivity implements
     }
 
     @Override
+    public String[] getObjectCacheKeys() {
+        return new String[] { getActivityName(), mAnimeId };
+    }
+
+    @Override
     protected boolean isUpNavigationEnabled() {
         return true;
     }
@@ -91,9 +96,7 @@ public class AnimeReviewsActivity extends BaseDrawerActivity implements
             setSubtitle(intent.getStringExtra(EXTRA_ANIME_TITLE));
         }
 
-        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mAnimeDigest = savedInstanceState.getParcelable(KEY_ANIME_DIGEST);
-        }
+        mAnimeDigest = ObjectCache.get(this);
 
         if (mAnimeDigest == null) {
             fetchAnimeDigest();
@@ -114,7 +117,7 @@ public class AnimeReviewsActivity extends BaseDrawerActivity implements
         super.onSaveInstanceState(outState);
 
         if (mAnimeDigest != null) {
-            outState.putParcelable(KEY_ANIME_DIGEST, mAnimeDigest);
+            ObjectCache.put(mAnimeDigest, this);
         }
     }
 

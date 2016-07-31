@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AppNewsAdapter;
 import com.charlesmadere.hummingbird.fragments.AppNewsFragment;
+import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.AppNews;
 import com.charlesmadere.hummingbird.models.AppNewsStatus;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
@@ -29,10 +30,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 
 public class AppNewsActivity extends BaseDrawerActivity implements AppNewsItemView.OnClickListener,
-        SwipeRefreshLayout.OnRefreshListener {
+        ObjectCache.KeyProvider, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "AppNewsActivity";
-    private static final String KEY_APP_NEWS = "AppNews";
 
     private AppNewsAdapter mAdapter;
     private ArrayList<AppNews> mAppNews;
@@ -65,6 +65,11 @@ public class AppNewsActivity extends BaseDrawerActivity implements AppNewsItemVi
     }
 
     @Override
+    public String[] getObjectCacheKeys() {
+        return new String[] { getActivityName() };
+    }
+
+    @Override
     protected NavigationDrawerItemView.Entry getSelectedNavigationDrawerItemViewEntry() {
         return NavigationDrawerItemView.Entry.APP_NEWS;
     }
@@ -80,9 +85,7 @@ public class AppNewsActivity extends BaseDrawerActivity implements AppNewsItemVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_news);
 
-        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mAppNews = savedInstanceState.getParcelableArrayList(KEY_APP_NEWS);
-        }
+        mAppNews = ObjectCache.get(this);
 
         if (mAppNews == null || mAppNews.isEmpty()) {
             fetchAppNews();
@@ -100,8 +103,8 @@ public class AppNewsActivity extends BaseDrawerActivity implements AppNewsItemVi
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if (mAppNews != null && !mAppNews.isEmpty()) {
-            outState.putParcelableArrayList(KEY_APP_NEWS, mAppNews);
+        if (mAppNews != null) {
+            ObjectCache.put(mAppNews, this);
         }
     }
 

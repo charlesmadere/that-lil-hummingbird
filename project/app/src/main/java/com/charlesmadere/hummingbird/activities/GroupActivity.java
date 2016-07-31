@@ -14,6 +14,7 @@ import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.GroupFragmentAdapter;
+import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Group;
@@ -27,13 +28,12 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class GroupActivity extends BaseDrawerActivity {
+public class GroupActivity extends BaseDrawerActivity implements ObjectCache.KeyProvider {
 
     private static final String TAG = "GroupActivity";
     private static final String CNAME = GroupActivity.class.getCanonicalName();
     private static final String EXTRA_GROUP_ID = CNAME + ".GroupId";
     private static final String EXTRA_GROUP_NAME = CNAME + ".GroupName";
-    private static final String KEY_GROUP_DIGEST = "GroupDigest";
     private static final String KEY_STARTING_POSITION = "StartingPosition";
 
     private GroupDigest mGroupDigest;
@@ -90,6 +90,11 @@ public class GroupActivity extends BaseDrawerActivity {
     }
 
     @Override
+    public String[] getObjectCacheKeys() {
+        return new String[] { getActivityName(), mGroupId };
+    }
+
+    @Override
     protected boolean isUpNavigationEnabled() {
         return true;
     }
@@ -109,9 +114,10 @@ public class GroupActivity extends BaseDrawerActivity {
         mStartingPosition = GroupFragmentAdapter.POSITION_FEED;
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mGroupDigest = savedInstanceState.getParcelable(KEY_GROUP_DIGEST);
             mStartingPosition = savedInstanceState.getInt(KEY_STARTING_POSITION, mStartingPosition);
         }
+
+        mGroupDigest = ObjectCache.get(this);
 
         if (mGroupDigest == null) {
             fetchFeed();
@@ -126,7 +132,7 @@ public class GroupActivity extends BaseDrawerActivity {
         outState.putInt(KEY_STARTING_POSITION, mViewPager.getCurrentItem());
 
         if (mGroupDigest != null) {
-            outState.putParcelable(KEY_GROUP_DIGEST, mGroupDigest);
+            ObjectCache.put(mGroupDigest, this);
         }
     }
 
