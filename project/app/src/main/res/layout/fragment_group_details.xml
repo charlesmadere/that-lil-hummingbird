@@ -40,7 +40,7 @@
                     android:id="@+id/tvBioTitle"
                     tools:text="Bio for SOS Brigade"
                     style="@style/ResponsiveWidthCardHeader" />
-                <com.charlesmadere.hummingbird.views.TypefaceTextView
+                <com.charlesmadere.hummingbird.views.LinkTextView
                     android:id="@+id/tvBioBody"
                     android:visibility="gone"
                     tools:text="Bacon ipsum dolor amet boudin short ribs sausage ground round cow."

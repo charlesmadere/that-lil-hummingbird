@@ -11,7 +11,7 @@
             android:id="@+id/tvTitle"
             tools:text="Bio for ThatLilChestnut"
             style="@style/ResponsiveWidthCardHeader" />
-        <com.charlesmadere.hummingbird.views.TypefaceTextView
+        <com.charlesmadere.hummingbird.views.LinkTextView
             android:id="@+id/tvBio"
             android:visibility="gone"
             tools:text="Bacon ipsum dolor amet boudin short ribs sausage ground round cow."

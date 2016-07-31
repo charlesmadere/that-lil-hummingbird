@@ -651,6 +651,7 @@
         <item name="android:layout_marginEnd">@dimen/root_padding</item>
         <item name="android:layout_marginStart">@dimen/root_padding</item>
         <item name="android:layout_marginTop">@dimen/root_padding_half</item>
+        <item name="android:textColorLink">?android:attr/textColorPrimary</item>
     </style>
 
     <style name="UserTitle">
