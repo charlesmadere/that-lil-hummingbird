@@ -9,6 +9,7 @@ import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersisto
 import java.io.IOException;
 
 import okhttp3.Cache;
+import okhttp3.CookieJar;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -20,11 +21,21 @@ public final class OkHttpUtils {
     private static final String TAG = "OkHttpUtils";
     private static final long CACHE_MAX_SIZE = 1024L * 1024L * 8L; // 8 megabytes
 
+    private static CookieJar sCookieJar;
     private static HttpLoggingInterceptor sHttpLoggingInterceptor;
     private static Interceptor sCsrfTokenInterceptor;
     private static OkHttpClient sOkHttpClient;
-    private static PersistentCookieJar sPersistentCookieJar;
 
+
+    public static synchronized CookieJar getCookieJar() {
+        if (sCookieJar == null) {
+            Timber.d(TAG, "creating CookieJar instance");
+            sCookieJar = new PersistentCookieJar(new SetCookieCache(),
+                    new SharedPrefsCookiePersistor(ThatLilHummingbird.get()));
+        }
+
+        return sCookieJar;
+    }
 
     private static synchronized Interceptor getCsrfTokenInterceptor() {
         if (sCsrfTokenInterceptor == null) {
@@ -64,23 +75,13 @@ public final class OkHttpUtils {
 
             sOkHttpClient = new OkHttpClient.Builder()
                     .cache(new Cache(ThatLilHummingbird.get().getCacheDir(), CACHE_MAX_SIZE))
-                    .cookieJar(getPersistentCookieJar())
+                    .cookieJar(getCookieJar())
                     .addInterceptor(getHttpLoggingInterceptor())
                     .addInterceptor(getCsrfTokenInterceptor())
                     .build();
         }
 
         return sOkHttpClient;
-    }
-
-    public static synchronized PersistentCookieJar getPersistentCookieJar() {
-        if (sPersistentCookieJar == null) {
-            Timber.d(TAG, "creating PersistentCookieJar instance");
-            sPersistentCookieJar = new PersistentCookieJar(new SetCookieCache(),
-                    new SharedPrefsCookiePersistor(ThatLilHummingbird.get()));
-        }
-
-        return sPersistentCookieJar;
     }
 
 }

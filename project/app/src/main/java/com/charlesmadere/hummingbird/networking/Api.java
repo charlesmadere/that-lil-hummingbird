@@ -1073,8 +1073,7 @@ public final class Api {
                         .host(Constants.HUMMINGBIRD_HOST)
                         .build();
 
-                final List<Cookie> cookies = OkHttpUtils.getPersistentCookieJar()
-                        .loadForRequest(url);
+                final List<Cookie> cookies = OkHttpUtils.getCookieJar().loadForRequest(url);
 
                 if (cookies == null || cookies.isEmpty()) {
                     Timber.w(TAG, "successfully signed in but cookies are empty");
