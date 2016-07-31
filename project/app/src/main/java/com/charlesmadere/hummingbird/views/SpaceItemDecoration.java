@@ -72,11 +72,14 @@ public final class SpaceItemDecoration {
             }
         } else if (lm instanceof StaggeredGridLayoutManager) {
             final StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) lm;
+            final int columns = sglm.getSpanCount();
 
             if (sglm.getOrientation() == StaggeredGridLayoutManager.HORIZONTAL) {
-                itemDecoration = new HorizontalStaggeredGridImpl(includeStartAndEndEdges, spacing);
+                itemDecoration = new HorizontalStaggeredGridImpl(includeStartAndEndEdges, spacing,
+                        columns);
             } else {
-                itemDecoration = new VerticalStaggeredGridImpl(includeStartAndEndEdges, spacing);
+                itemDecoration = new VerticalStaggeredGridImpl(includeStartAndEndEdges, spacing,
+                        columns);
             }
         } else {
             // Maybe we shouldn't throw an exception here, and should instead just return a no-op
@@ -95,7 +98,7 @@ public final class SpaceItemDecoration {
         protected final boolean mIncludeStartAndEndEdges;
         protected final int mSpacing;
 
-        protected BaseImpl(final boolean includeStartAndEndEdges, final int spacing) {
+        private BaseImpl(final boolean includeStartAndEndEdges, final int spacing) {
             mIncludeStartAndEndEdges = includeStartAndEndEdges;
             mSpacing = spacing;
         }
@@ -120,18 +123,18 @@ public final class SpaceItemDecoration {
     }
 
     private static abstract class GridImpl extends BaseImpl {
-        protected final int columns;
+        protected final int mColumns;
 
-        protected GridImpl(final boolean includeStartAndEndEdges, final int spacing,
+        private GridImpl(final boolean includeStartAndEndEdges, final int spacing,
                 final int columns) {
             super(includeStartAndEndEdges, spacing);
-            this.columns = columns;
+            this.mColumns = columns;
         }
 
         @Override
         protected final void getItemOffsets(final Rect outRect, final View view,
                 final RecyclerView parent, final State state, final int position) {
-            final int column = position % columns;
+            final int column = position % mColumns;
             getItemOffsets(outRect, view, parent, state, position, column);
         }
 
@@ -154,21 +157,21 @@ public final class SpaceItemDecoration {
                 outRect.right = mSpacing;
 
                 if (column != 0) {
-                    outRect.top = mSpacing - column * mSpacing / columns;
+                    outRect.top = mSpacing - column * mSpacing / mColumns;
                 }
 
-                if (column + 1 != columns) {
-                    outRect.bottom = (column + 1) * mSpacing / columns;
+                if (column + 1 != mColumns) {
+                    outRect.bottom = (column + 1) * mSpacing / mColumns;
                 }
 
-                if (position < columns) {
+                if (position < mColumns) {
                     outRect.left = mSpacing;
                 }
             } else {
-                outRect.top = column * mSpacing / columns;
-                outRect.bottom = mSpacing - (column + 1) * mSpacing / columns;
+                outRect.top = column * mSpacing / mColumns;
+                outRect.bottom = mSpacing - (column + 1) * mSpacing / mColumns;
 
-                if (position >= columns) {
+                if (position >= mColumns) {
                     outRect.left = mSpacing;
                 }
             }
@@ -189,35 +192,28 @@ public final class SpaceItemDecoration {
                 outRect.bottom = mSpacing;
 
                 if (column != 0) {
-                    outRect.left = mSpacing - column * mSpacing / columns;
+                    outRect.left = mSpacing - column * mSpacing / mColumns;
                 }
 
-                if (column + 1 != columns) {
-                    outRect.right = (column + 1) * mSpacing / columns;
+                if (column + 1 != mColumns) {
+                    outRect.right = (column + 1) * mSpacing / mColumns;
                 }
 
-                if (position < columns) {
+                if (position < mColumns) {
                     outRect.top = mSpacing;
                 }
             } else {
-                outRect.left = column * mSpacing / columns;
-                outRect.right = mSpacing - (column + 1) * mSpacing / columns;
+                outRect.left = column * mSpacing / mColumns;
+                outRect.right = mSpacing - (column + 1) * mSpacing / mColumns;
 
-                if (position >= columns) {
+                if (position >= mColumns) {
                     outRect.top = mSpacing;
                 }
             }
         }
     }
 
-    private static abstract class LinearImpl extends BaseImpl {
-        protected LinearImpl(final boolean includeStartAndEndEdges,
-                final int spacing) {
-            super(includeStartAndEndEdges, spacing);
-        }
-    }
-
-    private static class HorizontalLinearImpl extends LinearImpl {
+    private static class HorizontalLinearImpl extends BaseImpl {
         private HorizontalLinearImpl(final boolean includeStartAndEndEdges, final int spacing) {
             super(includeStartAndEndEdges, spacing);
         }
@@ -237,7 +233,7 @@ public final class SpaceItemDecoration {
         }
     }
 
-    private static class VerticalLinearImpl extends LinearImpl {
+    private static class VerticalLinearImpl extends BaseImpl {
         private VerticalLinearImpl(final boolean includeStartAndEndEdges,
                 final int spacing) {
             super(includeStartAndEndEdges, spacing);
@@ -258,10 +254,20 @@ public final class SpaceItemDecoration {
         }
     }
 
-    private static class HorizontalStaggeredGridImpl extends BaseImpl {
-        private HorizontalStaggeredGridImpl(final boolean includeStartAndEndEdges,
-                final int spacing) {
+    private static abstract class StaggeredGridImpl extends BaseImpl {
+        protected final int mColumns;
+
+        private StaggeredGridImpl(final boolean includeStartAndEndEdges, final int spacing,
+                final int columns) {
             super(includeStartAndEndEdges, spacing);
+            mColumns = columns;
+        }
+    }
+
+    private static class HorizontalStaggeredGridImpl extends StaggeredGridImpl {
+        private HorizontalStaggeredGridImpl(final boolean includeStartAndEndEdges,
+                final int spacing, final int columns) {
+            super(includeStartAndEndEdges, spacing, columns);
         }
 
         @Override
@@ -279,10 +285,10 @@ public final class SpaceItemDecoration {
         }
     }
 
-    private static class VerticalStaggeredGridImpl extends BaseImpl {
+    private static class VerticalStaggeredGridImpl extends StaggeredGridImpl {
         private VerticalStaggeredGridImpl(final boolean includeStartAndEndEdges,
-                final int spacing) {
-            super(includeStartAndEndEdges, spacing);
+                final int spacing, final int columns) {
+            super(includeStartAndEndEdges, spacing, columns);
         }
 
         @Override
