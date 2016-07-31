@@ -16,6 +16,8 @@ import butterknife.ButterKnife;
 
 public class AbsSubstoryStandaloneItemView extends CardView implements AdapterView<Void> {
 
+    private int mBottomMargin;
+
     @BindView(R.id.absSubstoryTextView)
     AbsSubstoryTextView mAbsSubstoryTextView;
 
@@ -42,6 +44,7 @@ public class AbsSubstoryStandaloneItemView extends CardView implements AdapterVi
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
+        mBottomMargin = getResources().getDimensionPixelSize(R.dimen.root_padding);
     }
 
     public void setContent(final AbsSubstory content, final User user, final boolean showDivider) {
@@ -49,6 +52,12 @@ public class AbsSubstoryStandaloneItemView extends CardView implements AdapterVi
         mAbsSubstoryTextView.setContent(content, user);
         mTimeAgo.setText(content.getCreatedAt().getRelativeTimeText(getContext()));
         mDivider.setVisibility(showDivider ? VISIBLE : GONE);
+
+        mDivider.setVisibility(showDivider ? VISIBLE : GONE);
+
+        final MarginLayoutParams params = (MarginLayoutParams) getLayoutParams();
+        params.bottomMargin = showDivider ? mBottomMargin : 0;
+        setLayoutParams(params);
     }
 
     @Override
