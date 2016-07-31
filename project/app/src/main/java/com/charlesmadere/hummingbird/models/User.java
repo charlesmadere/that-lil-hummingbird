@@ -134,16 +134,8 @@ public class User implements Parcelable {
         return getId().hashCode();
     }
 
-    public boolean hasHusbando() {
-        return hasWaifuOrHusbando() && mData.mWaifuOrHusbando == WaifuOrHusbando.HUSBANDO;
-    }
-
     public boolean hasLocation() {
         return !TextUtils.isEmpty(mData.mLocation);
-    }
-
-    public boolean hasWaifu() {
-        return hasWaifuOrHusbando() && mData.mWaifuOrHusbando == WaifuOrHusbando.WAIFU;
     }
 
     public boolean hasWaifuOrHusbando() {
