@@ -146,6 +146,11 @@
         <item name="cardElevation">0dp</item>
     </style>
 
+    <style name="CardItem.NoMargins">
+        <item name="android:layout_marginEnd">0dp</item>
+        <item name="android:layout_marginStart">0dp</item>
+    </style>
+
     <style name="CardItem.NoPadding">
         <item name="contentPaddingBottom">0dp</item>
         <item name="contentPaddingLeft">0dp</item>
