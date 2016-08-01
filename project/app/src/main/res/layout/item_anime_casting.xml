@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.charlesmadere.hummingbird.views.AnimeCastingItemView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/CardItem.Bare">
+    style="@style/CardItem.NoPadding.NothingSpecial">
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -17,13 +17,13 @@
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/sdvCastPhoto"
                 android:layout_marginEnd="@dimen/root_padding_half"
-                style="@style/Avatar.Medium" />
+                style="@style/Avatar.Small" />
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/sdvCharacterPhoto"
                 android:layout_marginEnd="@dimen/root_padding_half"
                 android:visibility="gone"
                 tools:visibility="visible"
-                style="@style/Avatar.Medium" />
+                style="@style/Avatar.Small" />
             <com.charlesmadere.hummingbird.views.KeyValueTextView
                 android:id="@+id/kvtvTitle"
                 android:layout_gravity="center_vertical"
