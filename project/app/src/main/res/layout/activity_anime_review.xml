@@ -40,16 +40,16 @@
                         android:layout_width="match_parent"
                         android:orientation="vertical">
                         <android.support.v4.widget.Space
-                            android:layout_height="@dimen/root_padding"
+                            android:layout_height="@dimen/root_padding_half"
                             android:layout_width="match_parent" />
                         <include
                             android:id="@+id/userItemView"
                             layout="@layout/item_user" />
                         <android.support.v4.widget.Space
-                            android:layout_height="@dimen/root_padding"
+                            android:layout_height="@dimen/root_padding_half"
                             android:layout_width="match_parent" />
                         <android.support.v7.widget.CardView
-                            android:layout_marginBottom="@dimen/root_padding"
+                            android:layout_marginBottom="@dimen/root_padding_half"
                             style="@style/ResponsiveWidthCard.WithPadding">
                             <com.charlesmadere.hummingbird.views.LinkTextView
                                 android:id="@+id/tvContent"
@@ -61,7 +61,7 @@
                         <include
                             layout="@layout/anime_review_verdict_view" />
                         <android.support.v4.widget.Space
-                            android:layout_height="@dimen/root_padding"
+                            android:layout_height="@dimen/root_padding_half"
                             android:layout_width="match_parent" />
                     </LinearLayout>
                 </ScrollView>
