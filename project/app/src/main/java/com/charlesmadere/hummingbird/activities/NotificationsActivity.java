@@ -117,7 +117,7 @@ public class NotificationsActivity extends BaseDrawerActivity implements ObjectC
         super.onViewsBound();
         mRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.setHasFixedSize(true);
-        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
         mAdapter = new NotificationsAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);

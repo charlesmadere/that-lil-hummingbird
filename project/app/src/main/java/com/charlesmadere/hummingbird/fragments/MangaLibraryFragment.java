@@ -198,7 +198,7 @@ public class MangaLibraryFragment extends BaseFragment implements
         }
 
         mRecyclerView.setHasFixedSize(true);
-        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
         mRecyclerView.setAdapter(mAdapter);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
 

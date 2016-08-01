@@ -20,9 +20,9 @@ import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.AppNewsItemView;
+import com.charlesmadere.hummingbird.views.DividerItemDecoration;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
-import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -112,7 +112,7 @@ public class AppNewsActivity extends BaseDrawerActivity implements AppNewsItemVi
     protected void onViewsBound() {
         super.onViewsBound();
         mRefreshLayout.setOnRefreshListener(this);
-        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding);
+        DividerItemDecoration.apply(mRecyclerView);
         mAdapter = new AppNewsAdapter(this, this);
         mRecyclerView.setAdapter(mAdapter);
     }

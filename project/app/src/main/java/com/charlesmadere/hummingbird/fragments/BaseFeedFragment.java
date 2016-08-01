@@ -138,7 +138,7 @@ public abstract class BaseFeedFragment extends BaseFragment implements FeedPostF
 
         mRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.setHasFixedSize(true);
-        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
         mAdapter = new FeedAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);

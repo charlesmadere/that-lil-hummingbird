@@ -26,7 +26,7 @@ public class MediaStoryAdapter extends BaseMultiPaginationAdapter {
     @Override
     protected HashMap<Class, Integer> getItemViewKeyMap() {
         final HashMap<Class, Integer> map = new HashMap<>(4);
-        map.put(MediaStory.class, R.layout.item_media_story_header);
+        map.put(MediaStory.class, R.layout.item_media_story_standalone);
         map.put(String.class, R.layout.item_charsequence_plain);
         map.put(WatchedEpisodeSubstory.class, R.layout.item_abs_substory_standalone);
         map.put(WatchlistStatusUpdateSubstory.class, R.layout.item_abs_substory_standalone);

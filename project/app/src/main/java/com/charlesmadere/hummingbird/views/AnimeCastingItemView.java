@@ -43,7 +43,7 @@ public class AnimeCastingItemView extends CardView implements AdapterView<Void> 
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
-        mBottomMargin = getResources().getDimensionPixelSize(R.dimen.root_padding);
+        mBottomMargin = getResources().getDimensionPixelSize(R.dimen.root_padding_half);
     }
 
     public void setContent(final AnimeDigest.Casting casting, final boolean showDivider) {

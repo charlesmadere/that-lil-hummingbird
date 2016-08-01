@@ -73,7 +73,7 @@ public class AnimeEpisodesFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         mRecyclerView.setHasFixedSize(true);
-        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
 
         final AnimeDigest animeDigest = mProvider.getAnimeDigest();
 

@@ -43,7 +43,7 @@ public class ReplySubstoryStandaloneItemView extends CardView implements Adapter
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
-        mBottomMargin = getResources().getDimensionPixelSize(R.dimen.root_padding);
+        mBottomMargin = getResources().getDimensionPixelSize(R.dimen.root_padding_half);
     }
 
     public void setContent(final ReplySubstory content, final boolean showDivider) {

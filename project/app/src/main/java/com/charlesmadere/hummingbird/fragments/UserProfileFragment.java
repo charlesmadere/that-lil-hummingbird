@@ -123,7 +123,7 @@ public class UserProfileFragment extends BaseFragment implements
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_user_digest, container, false);
+        return inflater.inflate(R.layout.fragment_user_profile, container, false);
     }
 
     @Override

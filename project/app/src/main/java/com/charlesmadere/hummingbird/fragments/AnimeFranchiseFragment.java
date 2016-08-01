@@ -120,7 +120,7 @@ public class AnimeFranchiseFragment extends BaseFragment implements ObjectCache.
 
         mRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.setHasFixedSize(true);
-        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
         mAdapter = new AnimeAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
 

@@ -237,11 +237,6 @@ public class SettingsActivity extends BaseDrawerActivity {
         }
     }
 
-    @OnClick(R.id.tvHummingbirdOnTheWeb)
-    void onHummingbirdWebClick() {
-        MiscUtils.openUrl(this, Constants.HUMMINGBIRD_URL);
-    }
-
     @OnClick(R.id.tvLogViewer)
     void onLogViewerClick() {
         startActivity(LogViewerActivity.getLaunchIntent(this));

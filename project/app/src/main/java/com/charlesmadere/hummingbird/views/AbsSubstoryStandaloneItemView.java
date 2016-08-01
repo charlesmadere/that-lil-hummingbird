@@ -44,7 +44,7 @@ public class AbsSubstoryStandaloneItemView extends CardView implements AdapterVi
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
-        mBottomMargin = getResources().getDimensionPixelSize(R.dimen.root_padding);
+        mBottomMargin = getResources().getDimensionPixelSize(R.dimen.root_padding_half);
     }
 
     public void setContent(final AbsSubstory content, final User user, final boolean showDivider) {

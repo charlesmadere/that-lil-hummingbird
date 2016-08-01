@@ -73,7 +73,7 @@ public class MangaCharactersFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         mRecyclerView.setHasFixedSize(true);
-        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding);
+        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding_half);
 
         final MangaDigest mangaDigest = mProvider.getMangaDigest();
 
