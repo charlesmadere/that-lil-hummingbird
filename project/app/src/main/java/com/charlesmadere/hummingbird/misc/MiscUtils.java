@@ -6,7 +6,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.net.Uri;
@@ -18,8 +17,6 @@ import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.ActivityManagerCompat;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
-import android.view.KeyCharacterMap;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -76,7 +73,7 @@ public final class MiscUtils {
 
     public static Activity getActivity(final Context context) {
         if (context == null) {
-            throw new IllegalArgumentException("context can't be null");
+            throw new IllegalArgumentException("context parameter can't be null");
         }
 
         if (context instanceof Activity) {
@@ -194,37 +191,6 @@ public final class MiscUtils {
         return string;
     }
 
-    public static int getNavigationBarHeight(final Resources res) {
-        if (KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK) &&
-                !Build.FINGERPRINT.contains("generic")) {
-            return 0;
-        }
-
-        int resourceId;
-
-        if (res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            resourceId = res.getIdentifier("navigation_bar_height_landscape", "dimen", "android");
-        } else {
-            resourceId = res.getIdentifier("navigation_bar_height", "dimen", "android");
-        }
-
-        if (resourceId == 0) {
-            resourceId = R.dimen.navigation_bar_height;
-        }
-
-        return res.getDimensionPixelSize(resourceId);
-    }
-
-    public static int getStatusBarHeight(final Resources res) {
-        int resourceId = res.getIdentifier("status_bar_height", "dimen", "android");
-
-        if (resourceId == 0) {
-            resourceId = R.dimen.status_bar_height;
-        }
-
-        return res.getDimensionPixelSize(resourceId);
-    }
-
     public static int integerCompare(final int lhs, final int rhs) {
         return lhs < rhs ? -1 : (lhs == rhs ? 0 : 1);
     }
@@ -266,7 +232,7 @@ public final class MiscUtils {
 
     public static void openUrl(final Activity activity, final String url) {
         if (activity == null) {
-            throw new IllegalArgumentException("activity can't be null");
+            throw new IllegalArgumentException("activity parameter can't be null");
         }
 
         if (TextUtils.isEmpty(url) || TextUtils.getTrimmedLength(url) == 0) {
@@ -281,7 +247,7 @@ public final class MiscUtils {
             intent.launchUrl(activity, Uri.parse(url));
             return;
         } catch (final ActivityNotFoundException e) {
-            Timber.w(TAG, "Unable to open Chrome Custom Tab to URL: \"" + url + '"', e);
+            Timber.e(TAG, "Unable to open Chrome Custom Tab to URL: \"" + url + '"', e);
         }
 
         try {

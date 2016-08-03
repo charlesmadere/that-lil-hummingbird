@@ -116,7 +116,7 @@
     <string name="error_loading_user">Error loading user</string>
     <string name="error_loading_user_check_network_connection">Error loading user! Please check your network connection and try again.</string>
     <string name="error_loading_your_profile_check_network_connection">Error loading your profile! Please check your network connection and try again.</string>
-    <string name="error_logging_in">Error logging in! Please check your credentials and network connection and then try again.</string>
+    <string name="error_logging_in">Error logging in! Please check your network connection, login credentials, and then try again.</string>
     <string name="error_posting_comment">Error posting comment! Please check your network connection and try again.</string>
     <string name="error_posting_to_feed">Error posting to feed! Please check your network connection and try again.</string>
     <string name="error_retrieving_client_configuration">Error retrieving client configuration from Hummingbird! Please check your network connection and try again.</string>
@@ -199,6 +199,8 @@
     <string name="music">Music</string>
     <string name="must_be_charging">Must be charging</string>
     <string name="must_be_on_wifi">Must be on wifi</string>
+    <string name="my_anime_library">My Anime Library</string>
+    <string name="my_manga_library">My Manga Library</string>
     <string name="night">Night</string>
     <string name="no_anime_quotes">No anime quotes</string>
     <string name="no_anime_reviews">No anime reviews</string>

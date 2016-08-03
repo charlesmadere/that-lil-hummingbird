@@ -1,10 +1,8 @@
 package com.charlesmadere.hummingbird.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +11,6 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.GalleryActivity;
-import com.charlesmadere.hummingbird.misc.AnimeDigestProvider;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeType;
@@ -26,11 +23,9 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class AnimeDetailsFragment extends BaseFragment {
+public class AnimeDetailsFragment extends BaseAnimeFragment {
 
     private static final String TAG = "AnimeDetailsFragment";
-
-    private AnimeDigestProvider mProvider;
 
     @BindView(R.id.cvPoster)
     CardView mPosterContainer;
@@ -103,26 +98,6 @@ public class AnimeDetailsFragment extends BaseFragment {
     }
 
     @Override
-    public void onAttach(final Context context) {
-        super.onAttach(context);
-
-        final Fragment fragment = getParentFragment();
-        if (fragment instanceof AnimeDigestProvider) {
-            mProvider = (AnimeDigestProvider) fragment;
-        } else {
-            final Activity activity = MiscUtils.getActivity(context);
-
-            if (activity instanceof AnimeDigestProvider) {
-                mProvider = (AnimeDigestProvider) activity;
-            }
-        }
-
-        if (mProvider == null) {
-            throw new IllegalStateException(TAG + " must have a Listener");
-        }
-    }
-
-    @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -131,7 +106,7 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     @OnClick(R.id.cvPoster)
     void onPosterClick() {
-        final AnimeDigest animeDigest = mProvider.getAnimeDigest();
+        final AnimeDigest animeDigest = getAnimeDigest();
         startActivity(GalleryActivity.getLaunchIntent(getContext(), animeDigest.getInfo(),
                 animeDigest.getInfo().getPosterImage()));
     }
@@ -140,7 +115,7 @@ public class AnimeDetailsFragment extends BaseFragment {
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final AnimeDigest animeDigest = mProvider.getAnimeDigest();
+        final AnimeDigest animeDigest = getAnimeDigest();
         final AnimeDigest.Info info = animeDigest.getInfo();
         final Context context = getContext();
         final Resources resources = getResources();
@@ -261,7 +236,7 @@ public class AnimeDetailsFragment extends BaseFragment {
 
     @OnClick(R.id.hbivYouTubeLink)
     void onYouTubeLinkClick() {
-        MiscUtils.openUrl(getActivity(), mProvider.getAnimeDigest().getInfo().getYouTubeVideoUrl());
+        MiscUtils.openUrl(getActivity(), getAnimeDigest().getInfo().getYouTubeVideoUrl());
     }
 
 }

@@ -68,7 +68,7 @@ public class AnimeCastingItemView extends CardView implements AdapterView<Void> 
 
     @Override
     public void setContent(final Void content) {
-        // TODO
+        // intentionally empty
     }
 
 }

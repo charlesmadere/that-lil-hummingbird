@@ -6,27 +6,20 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
 import com.charlesmadere.hummingbird.fragments.UserFeedFragment;
-import com.charlesmadere.hummingbird.models.UserDigest;
 
 public class UserFragmentAdapter extends BaseUserFragmentAdapter {
 
-    public UserFragmentAdapter(final FragmentActivity activity, final UserDigest digest) {
-        super(activity, digest);
+    public UserFragmentAdapter(final FragmentActivity activity) {
+        super(activity);
     }
 
-    public UserFragmentAdapter(final Context context, final FragmentManager fm,
-            final UserDigest digest) {
-        super(context, fm, digest);
-    }
-
-    @Override
-    protected boolean areLibrariesEditable() {
-        return false;
+    public UserFragmentAdapter(final Context context, final FragmentManager fm) {
+        super(context, fm);
     }
 
     @Override
-    protected UserFeedFragment createFeedFragment() {
-        return UserFeedFragment.create(getUserDigest().getUserId());
+    protected UserFeedFragment createUserFeedFragment() {
+        return UserFeedFragment.create();
     }
 
     @Nullable

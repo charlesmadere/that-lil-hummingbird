@@ -62,13 +62,23 @@
                 </FrameLayout>
             </com.charlesmadere.hummingbird.views.RatioRelativeLayout>
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
-                android:id="@+id/ndivHome"
+                android:id="@+id/ndivFeed"
                 android:layout_below="@id/rrlHeader"
-                app:entry="home"
+                app:entry="feed"
+                style="@style/NavigationDrawerItemView" />
+            <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
+                android:id="@+id/ndivAnimeLibrary"
+                android:layout_below="@id/ndivFeed"
+                app:entry="anime_library"
+                style="@style/NavigationDrawerItemView" />
+            <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
+                android:id="@+id/ndivMangaLibrary"
+                android:layout_below="@id/ndivAnimeLibrary"
+                app:entry="manga_library"
                 style="@style/NavigationDrawerItemView" />
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
                 android:id="@+id/ndivNotifications"
-                android:layout_below="@id/ndivHome"
+                android:layout_below="@id/ndivMangaLibrary"
                 app:entry="notifications"
                 style="@style/NavigationDrawerItemView" />
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView

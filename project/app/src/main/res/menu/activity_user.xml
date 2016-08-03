@@ -3,18 +3,17 @@
     xmlns:compat="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <item
+        android:icon="@drawable/ic_library_books_white_24dp"
+        android:id="@+id/miAnimeLibrary"
+        android:title="@string/anime_library"
+        android:titleCondensed="@string/anime"
+        compat:showAsAction="ifRoom|withText" />
+    <item
+        android:icon="@drawable/ic_library_books_white_24dp"
         android:id="@+id/miMangaLibrary"
         android:title="@string/manga_library"
         android:titleCondensed="@string/manga"
         compat:showAsAction="ifRoom|withText" />
-    <item
-        android:id="@+id/miSortDate"
-        android:title="@string/sort_by_date"
-        compat:showAsAction="never" />
-    <item
-        android:id="@+id/miSortTitle"
-        android:title="@string/sort_by_title"
-        compat:showAsAction="never" />
     <item
         android:id="@+id/miFollow"
         android:title="@string/follow"

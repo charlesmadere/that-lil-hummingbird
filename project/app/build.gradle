@@ -31,8 +31,8 @@ android {
         applicationId 'com.charlesmadere.hummingbird'
         minSdkVersion 17
         targetSdkVersion 24
-        versionCode 12
-        versionName '0.7.5'
+        versionCode 14
+        versionName '0.7.9'
     }
 
     buildTypes {
@@ -81,7 +81,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
 
     // Google Play Services
-    compile 'com.google.android.gms:play-services-gcm:9.2.1'
+    compile 'com.google.android.gms:play-services-gcm:9.4.0'
 
     // jsoup
     compile 'org.jsoup:jsoup:1.9.2'

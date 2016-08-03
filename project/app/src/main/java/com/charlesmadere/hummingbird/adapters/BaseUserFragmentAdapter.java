@@ -9,12 +9,9 @@ import android.support.v4.util.SparseArrayCompat;
 import android.view.ViewGroup;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.fragments.AnimeLibraryFragment;
-import com.charlesmadere.hummingbird.fragments.BaseFeedFragment;
+import com.charlesmadere.hummingbird.fragments.BaseUserFeedFragment;
 import com.charlesmadere.hummingbird.fragments.BaseFragment;
 import com.charlesmadere.hummingbird.fragments.UserProfileFragment;
-import com.charlesmadere.hummingbird.models.UserDigest;
-import com.charlesmadere.hummingbird.models.WatchingStatus;
 
 import java.lang.ref.WeakReference;
 
@@ -23,30 +20,21 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
     public static final int POSITION_PROFILE = 0;
     public static final int POSITION_FEED = 1;
 
-    private static final WatchingStatus[] WATCHING_STATUSES = { WatchingStatus.CURRENTLY_WATCHING,
-            WatchingStatus.COMPLETED, WatchingStatus.PLAN_TO_WATCH, WatchingStatus.ON_HOLD,
-            WatchingStatus.DROPPED };
-
     private final Context mContext;
     private final SparseArrayCompat<WeakReference<BaseFragment>> mFragments;
-    private final UserDigest mUserDigest;
 
 
-    public BaseUserFragmentAdapter(final FragmentActivity activity, final UserDigest digest) {
-        this(activity, activity.getSupportFragmentManager(), digest);
+    public BaseUserFragmentAdapter(final FragmentActivity activity) {
+        this(activity, activity.getSupportFragmentManager());
     }
 
-    public BaseUserFragmentAdapter(final Context context, final FragmentManager fm,
-            final UserDigest digest) {
+    public BaseUserFragmentAdapter(final Context context, final FragmentManager fm) {
         super(fm);
         mContext = context;
-        mUserDigest = digest;
         mFragments = new SparseArrayCompat<>(getCount());
     }
 
-    protected abstract boolean areLibrariesEditable();
-
-    protected abstract BaseFeedFragment createFeedFragment();
+    protected abstract BaseUserFeedFragment createUserFeedFragment();
 
     @Override
     public void destroyItem(final ViewGroup container, final int position, final Object object) {
@@ -56,17 +44,17 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
 
     @Override
     public int getCount() {
-        return WATCHING_STATUSES.length + 2;
+        return 2;
     }
 
     @Nullable
-    public BaseFeedFragment getFeedFragment() {
+    public BaseUserFeedFragment getFeedFragment() {
         final WeakReference<BaseFragment> fragmentReference = mFragments.get(POSITION_FEED);
 
         if (fragmentReference == null) {
             return null;
         } else {
-            return (BaseFeedFragment) fragmentReference.get();
+            return (BaseUserFeedFragment) fragmentReference.get();
         }
     }
 
@@ -75,19 +63,9 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
         final BaseFragment fragment;
 
         switch (position) {
-            case POSITION_PROFILE:
-                fragment = UserProfileFragment.create(mUserDigest);
-                break;
-
-            case POSITION_FEED:
-                fragment = createFeedFragment();
-                break;
-
-            default:
-                final WatchingStatus watchingStatus = WATCHING_STATUSES[position - 2];
-                fragment = AnimeLibraryFragment.create(mUserDigest.getUserId(), watchingStatus,
-                        areLibrariesEditable());
-                break;
+            case POSITION_PROFILE: fragment = UserProfileFragment.create(); break;
+            case POSITION_FEED: fragment = createUserFeedFragment(); break;
+            default: throw new IllegalArgumentException("invalid position: " + position);
         }
 
         mFragments.put(position, new WeakReference<>(fragment));
@@ -96,28 +74,11 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
 
     @Override
     public CharSequence getPageTitle(final int position) {
-        final int pageTitleResId;
-
         switch (position) {
-            case POSITION_PROFILE:
-                pageTitleResId = R.string.profile;
-                break;
-
-            case POSITION_FEED:
-                pageTitleResId = R.string.feed;
-                break;
-
-            default:
-                final WatchingStatus watchingStatus = WATCHING_STATUSES[position - 2];
-                pageTitleResId = watchingStatus.getTextResId();
-                break;
+            case POSITION_PROFILE: return mContext.getText(R.string.profile);
+            case POSITION_FEED: return mContext.getText(R.string.feed);
+            default: throw new IllegalArgumentException("invalid position: " + position);
         }
-
-        return mContext.getText(pageTitleResId);
-    }
-
-    public UserDigest getUserDigest() {
-        return mUserDigest;
     }
 
     @Override
@@ -125,20 +86,6 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
         final BaseFragment fragment = (BaseFragment) super.instantiateItem(container, position);
         mFragments.put(position, new WeakReference<>(fragment));
         return fragment;
-    }
-
-    public void updateLibrarySort() {
-        for (int i = 0; i < mFragments.size(); ++i) {
-            final WeakReference<BaseFragment> fragmentReference = mFragments.get(i);
-
-            if (fragmentReference != null) {
-                final BaseFragment fragment = fragmentReference.get();
-
-                if (fragment instanceof AnimeLibraryFragment && !fragment.isDestroyed()) {
-                    ((AnimeLibraryFragment) fragment).updateLibrarySort();
-                }
-            }
-        }
     }
 
 }

@@ -174,7 +174,7 @@ public class GroupActivity extends BaseDrawerActivity implements ObjectCache.Key
                     mAppBarLayout, mCollapsingToolbarLayout, mCoverImage, mTabLayout);
         }
 
-        mViewPager.setAdapter(new GroupFragmentAdapter(this, mGroupDigest));
+        mViewPager.setAdapter(new GroupFragmentAdapter(this));
         mViewPager.setCurrentItem(mStartingPosition, false);
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);

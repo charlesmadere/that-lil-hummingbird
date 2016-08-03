@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.GroupMembersActivity;
 import com.charlesmadere.hummingbird.models.Group;
-import com.charlesmadere.hummingbird.models.GroupDigest;
 import com.charlesmadere.hummingbird.views.HeadBodyItemView;
 
 import java.text.NumberFormat;
@@ -17,12 +16,9 @@ import java.text.NumberFormat;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class GroupDetailsFragment extends BaseFragment {
+public class GroupDetailsFragment extends BaseGroupFragment {
 
     private static final String TAG = "GroupDetailsFragment";
-    private static final String KEY_GROUP_DIGEST = "GroupDigest";
-
-    private GroupDigest mGroupDigest;
 
     @BindView(R.id.hbivGroupMembers)
     HeadBodyItemView mGroupMembers;
@@ -43,27 +39,13 @@ public class GroupDetailsFragment extends BaseFragment {
     TextView mNoBio;
 
 
-    public static GroupDetailsFragment create(final GroupDigest digest) {
-        final Bundle args = new Bundle(1);
-        args.putParcelable(KEY_GROUP_DIGEST, digest);
-
-        final GroupDetailsFragment fragment = new GroupDetailsFragment();
-        fragment.setArguments(args);
-
-        return fragment;
+    public static GroupDetailsFragment create() {
+        return new GroupDetailsFragment();
     }
 
     @Override
     public String getFragmentName() {
         return TAG;
-    }
-
-    @Override
-    public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        final Bundle args = getArguments();
-        mGroupDigest = args.getParcelable(KEY_GROUP_DIGEST);
     }
 
     @Override
@@ -75,15 +57,15 @@ public class GroupDetailsFragment extends BaseFragment {
 
     @OnClick(R.id.hbivGroupMembers)
     void onGroupMembersClick() {
-        startActivity(GroupMembersActivity.getLaunchIntent(getContext(), mGroupDigest.getId(),
-                mGroupDigest.getName()));
+        startActivity(GroupMembersActivity.getLaunchIntent(getContext(), getGroupDigest().getId(),
+                getGroupDigest().getName()));
     }
 
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final Group group = mGroupDigest.getGroup();
+        final Group group = getGroupDigest().getGroup();
         mAboutTitle.setText(getString(R.string.about_x, group.getName()));
 
         if (group.hasAbout()) {

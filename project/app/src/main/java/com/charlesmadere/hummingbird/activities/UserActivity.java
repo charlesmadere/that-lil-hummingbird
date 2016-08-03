@@ -7,9 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,20 +14,15 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.adapters.BaseUserFragmentAdapter;
 import com.charlesmadere.hummingbird.adapters.UserFragmentAdapter;
-import com.charlesmadere.hummingbird.fragments.AnimeLibraryFragment;
-import com.charlesmadere.hummingbird.fragments.BaseFeedFragment;
-import com.charlesmadere.hummingbird.fragments.UserFeedFragment;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
+import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
-import com.charlesmadere.hummingbird.models.LibrarySort;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
-import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.AvatarView;
 import com.charlesmadere.hummingbird.views.SimpleProgressView;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -38,24 +30,15 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
-import butterknife.OnClick;
-import butterknife.OnPageChange;
 
-public class UserActivity extends BaseDrawerActivity implements AnimeLibraryFragment.Listener,
-        BaseFeedFragment.Listener {
+public class UserActivity extends BaseUserActivity implements ObjectCache.KeyProvider {
 
     private static final String TAG = "UserActivity";
     private static final String CNAME = UserActivity.class.getCanonicalName();
     private static final String EXTRA_USERNAME = CNAME + ".Username";
-    private static final String KEY_LIBRARY_SORT = "LibrarySort";
-    private static final String KEY_STARTING_POSITION = "StartingPosition";
-    private static final String KEY_USER_DIGEST = "User";
 
-    private int mStartingPosition;
-    private LibrarySort mLibrarySort;
     private String mUsername;
     private UserDigest mUserDigest;
-    private UserFragmentAdapter mAdapter;
 
     @BindView(R.id.appBarLayout)
     AppBarLayout mAppBarLayout;
@@ -66,23 +49,14 @@ public class UserActivity extends BaseDrawerActivity implements AnimeLibraryFrag
     @BindView(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout mCollapsingToolbarLayout;
 
-    @BindView(R.id.floatingActionButton)
-    FloatingActionButton mPostToFeed;
-
     @BindView(R.id.parallaxCoverImage)
     SimpleDraweeView mCoverImage;
 
     @BindView(R.id.simpleProgressView)
     SimpleProgressView mSimpleProgressView;
 
-    @BindView(R.id.tabLayout)
-    TabLayout mTabLayout;
-
     @BindView(R.id.proBadge)
     TextView mProBadge;
-
-    @BindView(R.id.viewPager)
-    ViewPager mViewPager;
 
 
     public static Intent getLaunchIntent(final Context context, final User user) {
@@ -91,7 +65,7 @@ public class UserActivity extends BaseDrawerActivity implements AnimeLibraryFrag
 
     public static Intent getLaunchIntent(final Context context, final String username) {
         if (username.equalsIgnoreCase(CurrentUser.get().getUserId())) {
-            return HomeActivity.getLaunchIntent(context);
+            return FeedActivity.getLaunchIntent(context);
         } else {
             return new Intent(context, UserActivity.class)
                     .putExtra(EXTRA_USERNAME, username);
@@ -109,8 +83,18 @@ public class UserActivity extends BaseDrawerActivity implements AnimeLibraryFrag
     }
 
     @Override
-    public LibrarySort getLibrarySort() {
-        return mLibrarySort;
+    protected int getContentView() {
+        return R.layout.activity_user;
+    }
+
+    @Override
+    public String[] getObjectCacheKeys() {
+        return new String[] { getActivityName(), mUsername };
+    }
+
+    @Override
+    public UserDigest getUserDigest() {
+        return mUserDigest;
     }
 
     @Override
@@ -121,7 +105,6 @@ public class UserActivity extends BaseDrawerActivity implements AnimeLibraryFrag
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user);
 
         final Intent intent = getIntent();
         mUsername = intent.getStringExtra(EXTRA_USERNAME);
@@ -130,15 +113,11 @@ public class UserActivity extends BaseDrawerActivity implements AnimeLibraryFrag
         mStartingPosition = UserFragmentAdapter.POSITION_FEED;
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mUserDigest = savedInstanceState.getParcelable(KEY_USER_DIGEST);
             mStartingPosition = savedInstanceState.getInt(KEY_STARTING_POSITION,
                     mStartingPosition);
-            mLibrarySort = savedInstanceState.getParcelable(KEY_LIBRARY_SORT);
         }
 
-        if (mLibrarySort == null) {
-            mLibrarySort = Preferences.General.DefaultLibrarySort.get();
-        }
+        mUserDigest = ObjectCache.get(this);
 
         if (mUserDigest == null) {
             fetchUserDigest();
@@ -154,13 +133,8 @@ public class UserActivity extends BaseDrawerActivity implements AnimeLibraryFrag
     }
 
     @Override
-    public void onFeedBeganLoading() {
-        updatePostToFeedVisibility();
-    }
-
-    @Override
-    public void onFeedFinishedLoading() {
-        updatePostToFeedVisibility();
+    public void onFeedPostSubmit() {
+        // TODO
     }
 
     @Override
@@ -171,29 +145,16 @@ public class UserActivity extends BaseDrawerActivity implements AnimeLibraryFrag
                 toggleFollowingOfUser();
                 return true;
 
+            case R.id.miAnimeLibrary:
+                startActivity(AnimeLibraryActivity.getLaunchIntent(this, mUsername));
+                return true;
+
             case R.id.miMangaLibrary:
                 startActivity(MangaLibraryActivity.getLaunchIntent(this, mUsername));
-                return true;
-
-            case R.id.miSortDate:
-                setLibrarySort(LibrarySort.DATE);
-                return true;
-
-            case R.id.miSortTitle:
-                setLibrarySort(LibrarySort.TITLE);
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @OnClick(R.id.floatingActionButton)
-    void onPostToFeedClick() {
-        final UserFeedFragment fragment = mAdapter.getFeedFragment();
-
-        if (fragment != null) {
-            fragment.showFeedPostFragment();
-        }
     }
 
     @Override
@@ -206,9 +167,6 @@ public class UserActivity extends BaseDrawerActivity implements AnimeLibraryFrag
             }
         }
 
-        menu.findItem(R.id.miSortDate).setEnabled(mLibrarySort != LibrarySort.DATE);
-        menu.findItem(R.id.miSortTitle).setEnabled(mLibrarySort != LibrarySort.TITLE);
-
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -216,26 +174,10 @@ public class UserActivity extends BaseDrawerActivity implements AnimeLibraryFrag
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_STARTING_POSITION, mViewPager.getCurrentItem());
-        outState.putParcelable(KEY_LIBRARY_SORT, mLibrarySort);
 
         if (mUserDigest != null) {
-            outState.putParcelable(KEY_USER_DIGEST, mUserDigest);
+            ObjectCache.put(mUserDigest, this);
         }
-    }
-
-    @OnPageChange(R.id.viewPager)
-    void onViewPagerPageChange() {
-        updatePostToFeedVisibility();
-    }
-
-    private void setLibrarySort(final LibrarySort librarySort) {
-        mLibrarySort = librarySort;
-
-        if (mAdapter != null) {
-            mAdapter.updateLibrarySort();
-        }
-
-        supportInvalidateOptionsMenu();
     }
 
     private void showError() {
@@ -280,14 +222,7 @@ public class UserActivity extends BaseDrawerActivity implements AnimeLibraryFrag
             mProBadge.setVisibility(View.VISIBLE);
         }
 
-        mAdapter = new UserFragmentAdapter(this, mUserDigest);
-        mViewPager.setAdapter(mAdapter);
-        mViewPager.setCurrentItem(mStartingPosition, false);
-        mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
-        mViewPager.setOffscreenPageLimit(3);
-        mTabLayout.setupWithViewPager(mViewPager);
-
-        updatePostToFeedVisibility();
+        setAdapter(new UserFragmentAdapter(this));
         supportInvalidateOptionsMenu();
         mSimpleProgressView.fadeOut();
     }
@@ -296,21 +231,6 @@ public class UserActivity extends BaseDrawerActivity implements AnimeLibraryFrag
         mUserDigest.getUser().toggleFollowed();
         Api.toggleFollowingOfUser(mUsername);
         supportInvalidateOptionsMenu();
-    }
-
-    private void updatePostToFeedVisibility() {
-        if (mViewPager.getCurrentItem() == UserFragmentAdapter.POSITION_FEED) {
-            final BaseFeedFragment fragment = ((BaseUserFragmentAdapter) mViewPager.getAdapter())
-                    .getFeedFragment();
-
-            if (fragment == null || fragment.isFetchingFeed()) {
-                mPostToFeed.hide();
-            } else {
-                mPostToFeed.show();
-            }
-        } else {
-            mPostToFeed.hide();
-        }
     }
 
 

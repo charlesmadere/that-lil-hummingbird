@@ -1,10 +1,7 @@
 package com.charlesmadere.hummingbird.fragments;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,8 +11,6 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeAdapter;
-import com.charlesmadere.hummingbird.misc.AnimeDigestProvider;
-import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Franchise;
@@ -28,13 +23,12 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class AnimeFranchiseFragment extends BaseFragment implements ObjectCache.KeyProvider,
+public class AnimeFranchiseFragment extends BaseAnimeFragment implements ObjectCache.KeyProvider,
         SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "AnimeFranchiseFragment";
 
     private AnimeAdapter mAdapter;
-    private AnimeDigestProvider mProvider;
     private Franchise mFranchise;
 
     @BindView(R.id.llEmpty)
@@ -60,7 +54,7 @@ public class AnimeFranchiseFragment extends BaseFragment implements ObjectCache.
     }
 
     private String getFranchiseId() {
-        return mProvider.getAnimeDigest().getInfo().getFranchiseId();
+        return getAnimeDigest().getInfo().getFranchiseId();
     }
 
     @Override
@@ -71,26 +65,6 @@ public class AnimeFranchiseFragment extends BaseFragment implements ObjectCache.
     @Override
     public String[] getObjectCacheKeys() {
         return new String[] { getFragmentName(), getFranchiseId() };
-    }
-
-    @Override
-    public void onAttach(final Context context) {
-        super.onAttach(context);
-
-        final Fragment fragment = getParentFragment();
-        if (fragment instanceof AnimeDigestProvider) {
-            mProvider = (AnimeDigestProvider) fragment;
-        } else {
-            final Activity activity = MiscUtils.getActivity(context);
-
-            if (activity instanceof AnimeDigestProvider) {
-                mProvider = (AnimeDigestProvider) activity;
-            }
-        }
-
-        if (mProvider == null) {
-            throw new IllegalStateException(TAG + " must have a Listener");
-        }
     }
 
     @Override

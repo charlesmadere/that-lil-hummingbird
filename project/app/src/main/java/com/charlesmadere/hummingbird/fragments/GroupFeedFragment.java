@@ -24,16 +24,14 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class GroupFeedFragment extends BaseFragment implements ObjectCache.KeyProvider,
+public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.KeyProvider,
         RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "GroupFeedFragment";
-    private static final String KEY_GROUP_ID = "GroupId";
 
     private Feed mFeed;
     private FeedAdapter mAdapter;
     private RecyclerViewPaginator mPaginator;
-    private String mGroupId;
 
     @BindView(R.id.llEmpty)
     LinearLayout mEmpty;
@@ -48,24 +46,18 @@ public class GroupFeedFragment extends BaseFragment implements ObjectCache.KeyPr
     RefreshLayout mRefreshLayout;
 
 
-    public static GroupFeedFragment create(final String groupId) {
-        final Bundle args = new Bundle(1);
-        args.putString(KEY_GROUP_ID, groupId);
-
-        final GroupFeedFragment fragment = new GroupFeedFragment();
-        fragment.setArguments(args);
-
-        return fragment;
+    public static GroupFeedFragment create() {
+        return new GroupFeedFragment();
     }
 
     private void fetchGroupStories() {
         mRefreshLayout.setRefreshing(true);
-        Api.getGroupStories(mGroupId, new GetGroupStoriesListener(this));
+        Api.getGroupStories(getGroupDigest().getId(), new GetGroupStoriesListener(this));
     }
 
     @Override
     public String[] getObjectCacheKeys() {
-        return new String[] { getFragmentName(), mGroupId };
+        return new String[] { getFragmentName(), getGroupDigest().getId() };
     }
 
     @Override
@@ -82,9 +74,6 @@ public class GroupFeedFragment extends BaseFragment implements ObjectCache.KeyPr
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final Bundle args = getArguments();
-        mGroupId = args.getString(KEY_GROUP_ID);
-
         mFeed = ObjectCache.get(this);
     }
 
@@ -92,7 +81,7 @@ public class GroupFeedFragment extends BaseFragment implements ObjectCache.KeyPr
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_feed, container, false);
+        return inflater.inflate(R.layout.fragment_user_feed, container, false);
     }
 
     @Override
@@ -130,7 +119,8 @@ public class GroupFeedFragment extends BaseFragment implements ObjectCache.KeyPr
     @Override
     public void paginate() {
         mAdapter.setPaginating(true);
-        Api.getGroupStories(mGroupId, mFeed, new PaginateGroupStoriesListener(this));
+        Api.getGroupStories(getGroupDigest().getId(), mFeed,
+                new PaginateGroupStoriesListener(this));
     }
 
     protected void paginationComplete() {

@@ -14,7 +14,7 @@ public final class Constants {
     public static final String GROUPS = "groups";
     public static final String HTTPS = "https";
     public static final String HUMMINGBIRD_HOST = "hummingbird.me";
-    public static final String HUMMINGBIRD_URL = "https://" + HUMMINGBIRD_HOST + "/";
+    public static final String HUMMINGBIRD_URL = HTTPS + "://" + HUMMINGBIRD_HOST + "/";
     public static final String HUMMINGBIRD_URL_PRO = HUMMINGBIRD_URL + "pro";
     public static final String HUMMINGBIRD_URL_RELATIVE = "//hummingbird.me/";
     public static final String LIBRARY = "library";

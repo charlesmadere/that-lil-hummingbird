@@ -1,28 +1,20 @@
 package com.charlesmadere.hummingbird.fragments;
 
-import android.os.Bundle;
-
 import com.charlesmadere.hummingbird.networking.Api;
 
-public class UserFeedFragment extends BaseFeedFragment {
+public class UserFeedFragment extends BaseUserFeedFragment {
 
     private static final String TAG = "UserFeedFragment";
 
 
-    public static UserFeedFragment create(final String username) {
-        final Bundle args = new Bundle(1);
-        args.putString(KEY_USERNAME, username);
-
-        final UserFeedFragment fragment = new UserFeedFragment();
-        fragment.setArguments(args);
-
-        return fragment;
+    public static UserFeedFragment create() {
+        return new UserFeedFragment();
     }
 
     @Override
     protected void fetchFeed() {
         super.fetchFeed();
-        Api.getUserStories(mUsername, new GetFeedListener(this));
+        Api.getUserStories(getUserDigest().getUserId(), new GetFeedListener(this));
     }
 
     @Override
@@ -33,7 +25,7 @@ public class UserFeedFragment extends BaseFeedFragment {
     @Override
     public void paginate() {
         super.paginate();
-        Api.getUserStories(mUsername, mFeed, new PaginateFeedListener(this));
+        Api.getUserStories(getUserDigest().getUserId(), mFeed, new PaginateFeedListener(this));
     }
 
 }

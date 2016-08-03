@@ -43,7 +43,7 @@ public class AnimeLibraryEntriesAdapter extends BasePaginationAdapter<AnimeLibra
     }
 
     public void set(final Feed feed, final LibrarySort sort) {
-        if (!feed.hasAnimeLibraryEntries()) {
+        if (feed == null || !feed.hasAnimeLibraryEntries()) {
             super.set(null);
             return;
         }

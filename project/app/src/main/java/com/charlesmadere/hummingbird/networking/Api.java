@@ -39,12 +39,16 @@ import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 
+import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import bolts.Continuation;
+import bolts.Task;
+import bolts.TaskCompletionSource;
 import okhttp3.Cookie;
 import okhttp3.HttpUrl;
 import okhttp3.ResponseBody;
@@ -53,6 +57,8 @@ import retrofit2.Callback;
 import retrofit2.Converter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
+import static com.charlesmadere.hummingbird.misc.Constants.TOKEN;
 
 public final class Api {
 
@@ -351,54 +357,6 @@ public final class Api {
             @Override
             public void onFailure(final Call<ArrayList<AppNews>> call, final Throwable t) {
                 Timber.e(TAG, "get app news failed", t);
-                listener.failure(null);
-            }
-        });
-    }
-
-    public static void getCsrfToken(final ApiResponse<Boolean> listener) {
-        HUMMINGBIRD.getSignInPage().enqueue(new Callback<ResponseBody>() {
-            private String mCsrfToken;
-
-            @Override
-            public void onResponse(final Call<ResponseBody> call, final Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    Threading.runOnBackground(new Runnable() {
-                        @Override
-                        public void run() {
-                            Timber.d(TAG, "attempting to retrieve CSRF token...");
-
-                            try {
-                                mCsrfToken = JsoupUtils.getCsrfToken(response.body().string());
-                            } catch (final Exception e) {
-                                Timber.e(TAG, "Exception when retrieving CSRF token", e);
-                            }
-
-                            Threading.runOnUi(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (TextUtils.isEmpty(mCsrfToken)) {
-                                        Timber.e(TAG, "CSRF token is empty");
-                                        Preferences.Account.CsrfToken.delete();
-                                        listener.failure(retrieveErrorInfo(response));
-                                    } else {
-                                        Timber.d(TAG, "CSRF token was retrieved");
-                                        Preferences.Account.CsrfToken.set(mCsrfToken);
-                                        listener.success(Boolean.TRUE);
-                                    }
-                                }
-                            });
-                        }
-                    });
-                } else {
-                    Timber.w(TAG, "CSRF token response is unsuccessful");
-                    listener.failure(retrieveErrorInfo(response));
-                }
-            }
-
-            @Override
-            public void onFailure(final Call<ResponseBody> call, final Throwable t) {
-                Timber.e(TAG, "get CSRF token failed", t);
                 listener.failure(null);
             }
         });
@@ -1056,16 +1014,76 @@ public final class Api {
 
     public static void signIn(final String username, final String password,
             final ApiResponse<Void> listener) {
-        if (!Preferences.Account.CsrfToken.exists()) {
-            throw new RuntimeException("CSRF token must exist before attempting sign in");
-        }
+        TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
+        tcs.getTask().continueWithTask(new Continuation<Void, Task<String>>() {
+           @Override
+           public Task<String> then(final Task<Void> task) throws Exception {
+               Timber.d(TAG, "attempting to retrieve sign in page...");
+               Response<ResponseBody> response;
 
-        HUMMINGBIRD.signIn(username, password).enqueue(new Callback<Void>() {
+               try {
+                   response = HUMMINGBIRD.getSignInPage().execute();
+               } catch (final IOException e) {
+                   Timber.e(TAG, "Exception when retrieving sign in page", e);
+                   response = null;
+               }
+
+               if (response != null && response.isSuccessful()) {
+                   return Task.forResult(response.body().string());
+               } else {
+                   Timber.e(TAG, "failed to retrieve sign in page");
+                   return null;
+               }
+           }
+        }, Task.BACKGROUND_EXECUTOR).onSuccessTask(new Continuation<String, Task<Void>>() {
             @Override
-            public void onResponse(final Call<Void> call, final Response<Void> response) {
+            public Task<Void> then(final Task<String> task) throws Exception {
+                final String signInPage = task.getResult();
+                final String csrfToken = JsoupUtils.getCsrfToken(signInPage);
+
+                if (TextUtils.isEmpty(csrfToken)) {
+                    Timber.e(TAG, "CSRF token was not retrieved");
+                    OkHttpUtils.getCookieJar().clear();
+                    return null;
+                } else {
+                    Timber.d(TAG, "CSRF token was retrieved");
+                    Preferences.Account.CsrfToken.set(csrfToken);
+                    return Task.forResult(null);
+                }
+            }
+        }, Task.BACKGROUND_EXECUTOR).onSuccessTask(new Continuation<Void, Task<Boolean>>() {
+            @Override
+            public Task<Boolean> then(final Task<Void> task) throws Exception {
+                Timber.d(TAG, "attempting sign in...");
+                return HUMMINGBIRD.signIn(username, password).execute();
+            }
+        }, Task.BACKGROUND_EXECUTOR).onSuccess(new Continuation<Response<Void>, Boolean>() {
+            @Override
+            public Boolean then(final Task<Response<Void>> task) throws Exception {
+                if (task.isCancelled() || task.isFaulted()) {
+                    Timber.e(TAG, "sign in task is cancelled or faulted", task.getError());
+                    OkHttpUtils.getCookieJar().clear();
+                    Preferences.Account.CsrfToken.delete();
+                    listener.failure(null);
+                    return null;
+                }
+
+                final Response<Void> response = task.getResult();
+
+                if (response == null) {
+                    Timber.e(TAG, "sign in response is null");
+                    OkHttpUtils.getCookieJar().clear();
+                    Preferences.Account.CsrfToken.delete();
+                    listener.failure(null);
+                    return null;
+                }
+
                 if (!response.isSuccessful()) {
+                    Timber.e(TAG, "sign in response is unsuccessful");
+                    OkHttpUtils.getCookieJar().clear();
+                    Preferences.Account.CsrfToken.delete();
                     listener.failure(retrieveErrorInfo(response));
-                    return;
+                    return null;
                 }
 
                 final HttpUrl url = new HttpUrl.Builder()
@@ -1076,29 +1094,38 @@ public final class Api {
                 final List<Cookie> cookies = OkHttpUtils.getCookieJar().loadForRequest(url);
 
                 if (cookies == null || cookies.isEmpty()) {
-                    Timber.w(TAG, "successfully signed in but cookies are empty");
-                    listener.failure(null);
-                    return;
+                    Timber.e(TAG, "sign in was successful but no cookies were set");
+                    OkHttpUtils.getCookieJar().clear();
+                    Preferences.Account.CsrfToken.delete();
+                    listener.failure(retrieveErrorInfo(response));
+                    return null;
                 }
 
                 for (final Cookie cookie : cookies) {
-                    if (Constants.TOKEN.equalsIgnoreCase(cookie.name())) {
+                    if (TOKEN.equalsIgnoreCase(cookie.name())) {
+                        Timber.d(TAG, "sign in was successful");
                         Preferences.Account.Username.set(username);
                         listener.success(response.body());
-                        return;
+                        return null;
                     }
                 }
 
-                Timber.w(TAG, "failed logging in because no token cookie was found");
-                listener.failure(null);
-            }
+                Timber.e(TAG, "sign in failed because no \"" + TOKEN + "\" cookie was found");
+                OkHttpUtils.getCookieJar().clear();
+                Preferences.Account.CsrfToken.delete();
+                listener.failure(retrieveErrorInfo(response));
 
-            @Override
-            public void onFailure(final Call<Void> call, final Throwable t) {
-                Timber.e(TAG, "sign in failed", t);
-                listener.failure(null);
+                return null;
             }
-        });
+        }, Task.BACKGROUND_EXECUTOR).continueWith(new Continuation<Boolean, Void>() {
+            @Override
+            public Void then(final Task<Boolean> task) throws Exception {
+                // TODO
+                return null;
+            }
+        }, Task.UI_THREAD_EXECUTOR);
+
+        tcs.setResult(null);
     }
 
     public static void toggleFollowingOfUser(final String userId) {

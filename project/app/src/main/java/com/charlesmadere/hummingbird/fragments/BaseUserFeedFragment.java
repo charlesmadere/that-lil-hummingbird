@@ -1,8 +1,10 @@
 package com.charlesmadere.hummingbird.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -17,8 +19,7 @@ import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
-import com.charlesmadere.hummingbird.models.FeedPost;
-import com.charlesmadere.hummingbird.networking.Api;
+import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
@@ -28,18 +29,14 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public abstract class BaseFeedFragment extends BaseFragment implements FeedPostFragment.Listener,
-        ObjectCache.KeyProvider, RecyclerViewPaginator.Listeners,
-        SwipeRefreshLayout.OnRefreshListener {
-
-    protected static final String KEY_USERNAME = "Username";
+public abstract class BaseUserFeedFragment extends BaseFragment implements ObjectCache.KeyProvider,
+        RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     protected boolean mFetchingFeed;
     protected Feed mFeed;
     protected FeedAdapter mAdapter;
     protected Listener mListener;
     protected RecyclerViewPaginator mPaginator;
-    protected String mUsername;
 
     @BindView(R.id.llEmpty)
     protected LinearLayout mEmpty;
@@ -69,7 +66,11 @@ public abstract class BaseFeedFragment extends BaseFragment implements FeedPostF
 
     @Override
     public String[] getObjectCacheKeys() {
-        return new String[] { getFragmentName(), mUsername };
+        return new String[] { getFragmentName(), getUserDigest().getUserId() };
+    }
+
+    protected UserDigest getUserDigest() {
+        return mListener.getUserDigest();
     }
 
     public boolean isFetchingFeed() {
@@ -84,38 +85,28 @@ public abstract class BaseFeedFragment extends BaseFragment implements FeedPostF
     @Override
     public void onAttach(final Context context) {
         super.onAttach(context);
-        mListener = (Listener) MiscUtils.getActivity(context);
-    }
 
-    @Override
-    public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        final Fragment fragment = getParentFragment();
+        if (fragment instanceof Listener) {
+            mListener = (Listener) fragment;
+        } else {
+            final Activity activity = MiscUtils.getActivity(context);
 
-        final Bundle args = getArguments();
-        mUsername = args.getString(KEY_USERNAME);
+            if (activity instanceof Listener) {
+                mListener = (Listener) activity;
+            }
+        }
 
-        mFeed = ObjectCache.get(this);
+        if (mListener == null) {
+            throw new IllegalStateException(getFragmentName() + " must have a Listener");
+        }
     }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_feed, container, false);
-    }
-
-    @Override
-    public void onFeedPostSubmit() {
-        final FeedPostFragment feedPostFragment = (FeedPostFragment) getChildFragmentManager()
-                .findFragmentByTag(FeedPostFragment.TAG);
-        final FeedPost feedPost = feedPostFragment.getFeedPost(mUsername);
-
-        if (feedPost == null) {
-            return;
-        }
-
-        mRefreshLayout.setRefreshing(true);
-        Api.postToFeed(feedPost, new FeedPostListener(this));
+        return inflater.inflate(R.layout.fragment_user_feed, container, false);
     }
 
     @Override
@@ -191,26 +182,23 @@ public abstract class BaseFeedFragment extends BaseFragment implements FeedPostF
         mListener.onFeedFinishedLoading();
     }
 
-    public void showFeedPostFragment() {
-        FeedPostFragment.create().show(getChildFragmentManager(), FeedPostFragment.TAG);
-    }
-
 
     public interface Listener {
+        UserDigest getUserDigest();
         void onFeedBeganLoading();
         void onFeedFinishedLoading();
     }
 
     private static class FeedPostListener implements ApiResponse<Void> {
-        private final WeakReference<BaseFeedFragment> mFragmentReference;
+        private final WeakReference<BaseUserFeedFragment> mFragmentReference;
 
-        private FeedPostListener(final BaseFeedFragment fragment) {
+        private FeedPostListener(final BaseUserFeedFragment fragment) {
             mFragmentReference = new WeakReference<>(fragment);
         }
 
         @Override
         public void failure(@Nullable final ErrorInfo error) {
-            final BaseFeedFragment fragment = mFragmentReference.get();
+            final BaseUserFeedFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {
                 fragment.feedPostFailure();
@@ -219,7 +207,7 @@ public abstract class BaseFeedFragment extends BaseFragment implements FeedPostF
 
         @Override
         public void success(@Nullable final Void v) {
-            final BaseFeedFragment fragment = mFragmentReference.get();
+            final BaseUserFeedFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {
                 fragment.fetchFeed();
@@ -228,15 +216,15 @@ public abstract class BaseFeedFragment extends BaseFragment implements FeedPostF
     }
 
     protected static class GetFeedListener implements ApiResponse<Feed> {
-        private final WeakReference<BaseFeedFragment> mFragmentReference;
+        private final WeakReference<BaseUserFeedFragment> mFragmentReference;
 
-        protected GetFeedListener(final BaseFeedFragment fragment) {
+        protected GetFeedListener(final BaseUserFeedFragment fragment) {
             mFragmentReference = new WeakReference<>(fragment);
         }
 
         @Override
         public void failure(@Nullable final ErrorInfo error) {
-            final BaseFeedFragment fragment = mFragmentReference.get();
+            final BaseUserFeedFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {
                 fragment.showError();
@@ -245,7 +233,7 @@ public abstract class BaseFeedFragment extends BaseFragment implements FeedPostF
 
         @Override
         public void success(final Feed feed) {
-            final BaseFeedFragment fragment = mFragmentReference.get();
+            final BaseUserFeedFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {
                 if (feed.hasStories()) {
@@ -258,17 +246,17 @@ public abstract class BaseFeedFragment extends BaseFragment implements FeedPostF
     }
 
     protected static class PaginateFeedListener implements ApiResponse<Feed> {
-        private final WeakReference<BaseFeedFragment> mFragmentReference;
+        private final WeakReference<BaseUserFeedFragment> mFragmentReference;
         private final int mStoriesSize;
 
-        protected PaginateFeedListener(final BaseFeedFragment fragment) {
+        protected PaginateFeedListener(final BaseUserFeedFragment fragment) {
             mFragmentReference = new WeakReference<>(fragment);
             mStoriesSize = fragment.mFeed.getStoriesSize();
         }
 
         @Override
         public void failure(@Nullable final ErrorInfo error) {
-            final BaseFeedFragment fragment = mFragmentReference.get();
+            final BaseUserFeedFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {
                 fragment.paginationNoMore();
@@ -277,7 +265,7 @@ public abstract class BaseFeedFragment extends BaseFragment implements FeedPostF
 
         @Override
         public void success(final Feed feed) {
-            final BaseFeedFragment fragment = mFragmentReference.get();
+            final BaseUserFeedFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {
                 if (feed.hasCursor() && feed.getStoriesSize() > mStoriesSize) {

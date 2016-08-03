@@ -1,7 +1,6 @@
 package com.charlesmadere.hummingbird.activities;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +19,7 @@ import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.DeepLinkUtils;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
+import com.charlesmadere.hummingbird.models.LaunchScreen;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
@@ -71,10 +71,6 @@ public class LoginActivity extends BaseActivity {
         return TAG;
     }
 
-    private void fetchCsrfToken() {
-        Api.getCsrfToken(new GetCsrfTokenListener(this));
-    }
-
     private void fetchCurrentUser() {
         Api.getCurrentUser(new GetCurrentUserListener(this));
     }
@@ -83,7 +79,8 @@ public class LoginActivity extends BaseActivity {
         final Intent[] activityStack = DeepLinkUtils.buildActivityStack(this);
 
         if (activityStack == null || activityStack.length == 0) {
-            startActivity(HomeActivity.getLaunchIntent(this));
+            final LaunchScreen launchScreen = Preferences.General.DefaultLaunchScreen.get();
+            startActivity(launchScreen.getLaunchIntent(this));
         } else {
             ContextCompat.startActivities(this, activityStack);
         }
@@ -123,11 +120,8 @@ public class LoginActivity extends BaseActivity {
             if (CurrentUser.shouldBeFetched()) {
                 mSimpleProgressView.show();
                 fetchCurrentUser();
-            } else if (Preferences.Account.CsrfToken.exists()) {
-                showForm();
             } else {
-                mSimpleProgressView.show();
-                fetchCsrfToken();
+                showForm();
             }
         }
     }
@@ -184,67 +178,10 @@ public class LoginActivity extends BaseActivity {
         mLogin.setVisibility(View.VISIBLE);
     }
 
-    private void showServerError() {
-        mSimpleProgressView.fadeOut();
-
-        new AlertDialog.Builder(this)
-                .setMessage(R.string.error_retrieving_client_configuration)
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(final DialogInterface dialog, final int which) {
-                        finish();
-                    }
-                })
-                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(final DialogInterface dialog) {
-                        finish();
-                    }
-                })
-                .setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(final DialogInterface dialog, final int which) {
-                        mSimpleProgressView.fadeIn();
-                        fetchCsrfToken();
-                    }
-                })
-                .show();
-    }
-
     private void updateLoginEnabledState() {
         mLogin.setEnabled(isLoginFormValid());
     }
 
-
-    private static class GetCsrfTokenListener implements ApiResponse<Boolean> {
-        private final WeakReference<LoginActivity> mActivityReference;
-
-        private GetCsrfTokenListener(final LoginActivity activity) {
-            mActivityReference = new WeakReference<>(activity);
-        }
-
-        @Override
-        public void failure(@Nullable final ErrorInfo error) {
-            final LoginActivity activity = mActivityReference.get();
-
-            if (activity != null && !activity.isDestroyed()) {
-                activity.showServerError();
-            }
-        }
-
-        @Override
-        public void success(@Nullable final Boolean bool) {
-            final LoginActivity activity = mActivityReference.get();
-
-            if (activity != null && !activity.isDestroyed()) {
-                if (Boolean.TRUE.equals(bool)) {
-                    activity.showForm();
-                } else {
-                    activity.showServerError();
-                }
-            }
-        }
-    }
 
     private static class GetCurrentUserListener implements ApiResponse<UserDigest> {
         private final WeakReference<LoginActivity> mActivityReference;
