@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
+import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -27,12 +28,11 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class UserProfileFragment extends BaseFragment implements
+public class UserProfileFragment extends BaseFragment implements ObjectCache.KeyProvider,
         SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "UserDigestFragment";
     private static final String KEY_USERNAME = "Username";
-    private static final String KEY_USER_DIGEST = "UserDigest";
 
     private String mUsername;
     private UserDigest mUserDigest;
@@ -66,27 +66,11 @@ public class UserProfileFragment extends BaseFragment implements
 
 
     public static UserProfileFragment create() {
-        return create(CurrentUser.get().getUserId());
+        return new UserProfileFragment();
     }
 
     public static UserProfileFragment create(final String username) {
-        return create(username, null);
-    }
-
-    public static UserProfileFragment create(final UserDigest userDigest) {
-        return create(userDigest.getUserId(), userDigest);
-    }
-
-    private static UserProfileFragment create(final String username, final UserDigest digest) {
-        final Bundle args;
-
-        if (digest == null) {
-            args = new Bundle(1);
-        } else {
-            args = new Bundle(2);
-            args.putParcelable(KEY_USER_DIGEST, digest);
-        }
-
+        final Bundle args = new Bundle(1);
         args.putString(KEY_USERNAME, username);
 
         final UserProfileFragment fragment = new UserProfileFragment();
@@ -106,16 +90,21 @@ public class UserProfileFragment extends BaseFragment implements
     }
 
     @Override
+    public String[] getObjectCacheKeys() {
+        return new String[] { getFragmentName(), mUsername };
+    }
+
+    @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         final Bundle args = getArguments();
-        mUsername = args.getString(KEY_USERNAME);
-
-        if (args.containsKey(KEY_USER_DIGEST)) {
-            mUserDigest = args.getParcelable(KEY_USER_DIGEST);
-        } else if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mUserDigest = savedInstanceState.getParcelable(KEY_USER_DIGEST);
+        if (args == null || args.isEmpty()) {
+            mUsername = CurrentUser.get().getUserId();
+            mUserDigest = CurrentUser.get();
+        } else {
+            mUsername = args.getString(KEY_USERNAME);
+            mUserDigest = ObjectCache.get(this);
         }
     }
 
@@ -136,7 +125,7 @@ public class UserProfileFragment extends BaseFragment implements
         super.onSaveInstanceState(outState);
 
         if (mUserDigest != null) {
-            outState.putParcelable(KEY_USER_DIGEST, mUserDigest);
+            ObjectCache.put(mUserDigest, this);
         }
     }
 
@@ -160,6 +149,11 @@ public class UserProfileFragment extends BaseFragment implements
 
     private void showUserDigest(final UserDigest userDigest) {
         mUserDigest = userDigest;
+
+        if (userDigest.equals(CurrentUser.get())) {
+            CurrentUser.set(userDigest);
+        }
+
         mAboutUserView.setContent(userDigest);
 
         if (userDigest.getInfo().hasTopGenres()) {

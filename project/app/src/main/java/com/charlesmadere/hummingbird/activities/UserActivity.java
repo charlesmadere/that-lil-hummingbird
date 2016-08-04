@@ -221,7 +221,7 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
             mProBadge.setVisibility(View.VISIBLE);
         }
 
-        setAdapter(new UserFragmentAdapter(this));
+        setAdapter(new UserFragmentAdapter(this, mUsername));
         supportInvalidateOptionsMenu();
         mSimpleProgressView.fadeOut();
     }

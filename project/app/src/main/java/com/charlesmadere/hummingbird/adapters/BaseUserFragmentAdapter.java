@@ -36,6 +36,8 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
 
     protected abstract BaseUserFeedFragment createUserFeedFragment();
 
+    protected abstract UserProfileFragment createUserProfileFragment();
+
     @Override
     public void destroyItem(final ViewGroup container, final int position, final Object object) {
         super.destroyItem(container, position, object);
@@ -63,7 +65,7 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
         final BaseFragment fragment;
 
         switch (position) {
-            case POSITION_PROFILE: fragment = UserProfileFragment.create(); break;
+            case POSITION_PROFILE: fragment = createUserProfileFragment(); break;
             case POSITION_FEED: fragment = createUserFeedFragment(); break;
             default: throw new IllegalArgumentException("invalid position: " + position);
         }

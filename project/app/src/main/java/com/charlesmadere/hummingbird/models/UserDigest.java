@@ -39,6 +39,11 @@ public class UserDigest implements Parcelable {
     private Info mInfo;
 
 
+    @Override
+    public boolean equals(final Object o) {
+        return o instanceof UserDigest && getUserId().equalsIgnoreCase(((UserDigest) o).getUserId());
+    }
+
     @Nullable
     public ArrayList<Anime> getAnime() {
         return mAnime;
@@ -72,6 +77,11 @@ public class UserDigest implements Parcelable {
 
     public boolean hasFavorites() {
         return mFavorites != null && !mFavorites.isEmpty();
+    }
+
+    @Override
+    public int hashCode() {
+        return getUserId().hashCode();
     }
 
     public boolean hasManga() {
