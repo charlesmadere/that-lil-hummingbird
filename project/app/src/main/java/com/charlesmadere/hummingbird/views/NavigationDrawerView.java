@@ -36,11 +36,11 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout implements
     @BindView(R.id.sdvCoverImage)
     SimpleDraweeView mCoverImage;
 
-    @BindView(R.id.proBadge)
-    TextView mProBadge;
-
     @BindView(R.id.tvUsername)
     TextView mUsername;
+
+    @BindView(R.id.proBadge)
+    View mProBadge;
 
 
     public NavigationDrawerView(final Context context, final AttributeSet attrs) {

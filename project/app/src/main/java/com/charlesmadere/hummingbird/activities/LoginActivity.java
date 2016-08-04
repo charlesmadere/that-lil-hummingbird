@@ -166,7 +166,8 @@ public class LoginActivity extends BaseActivity {
         updateLoginEnabledState();
 
         new AlertDialog.Builder(this)
-                .setMessage(TextUtils.isEmpty(error) ? getText(R.string.error_logging_in) : error)
+                .setMessage(TextUtils.isEmpty(error) ? getText(R.string.error_logging_in_generic)
+                        : error)
                 .setNeutralButton(R.string.ok, null)
                 .show();
     }

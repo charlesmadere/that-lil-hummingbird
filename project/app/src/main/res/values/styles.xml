@@ -103,6 +103,31 @@
         <item name="android:layout_width">@dimen/avatar_small</item>
     </style>
 
+    <style name="Badge">
+        <item name="android:elevation" tools:ignore="NewApi">@dimen/root_padding_quarter</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">bottom|center_horizontal</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="Badge.GroupMember">
+        <item name="android:background">@drawable/bg_group_member_badge</item>
+        <item name="android:id">@id/groupMemberBadge</item>
+        <item name="typeface">open_sans_semibold</item>
+    </style>
+
+    <style name="Badge.Pro">
+        <item name="android:background">@drawable/bg_pro_badge</item>
+        <item name="android:id">@id/proBadge</item>
+        <item name="android:text">@string/pro</item>
+        <item name="typeface">open_sans_bold</item>
+    </style>
+
     <style name="BaseCardItem">
         <item name="android:layout_marginEnd">@dimen/root_padding_half</item>
         <item name="android:layout_marginStart">@dimen/root_padding_half</item>
@@ -272,17 +297,6 @@
 
     <style name="GroupLogo.Small">
         <item name="android:layout_width">72dp</item>
-    </style>
-
-    <style name="GroupMemberBadge">
-        <item name="android:background">@drawable/bg_group_member_badge</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/text_small</item>
-        <item name="typeface">open_sans_semibold</item>
     </style>
 
     <style name="GroupTitle">
@@ -463,21 +477,6 @@
         <item name="layout_collapseMode">parallax</item>
         <item name="overlayImage">@drawable/image_overlay_bottom</item>
         <item name="placeholderImageScaleType">centerCrop</item>
-    </style>
-
-    <style name="ProBadge">
-        <item name="android:background">@drawable/bg_pro_badge</item>
-        <item name="android:elevation" tools:ignore="NewApi">@dimen/root_padding_quarter</item>
-        <item name="android:gravity">center</item>
-        <item name="android:id">@id/proBadge</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:text">@string/pro</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/text_small</item>
-        <item name="android:visibility">gone</item>
-        <item name="typeface">open_sans_bold</item>
     </style>
 
     <style name="ResponsiveWidthCard" parent="BaseResponsiveWidthCard">

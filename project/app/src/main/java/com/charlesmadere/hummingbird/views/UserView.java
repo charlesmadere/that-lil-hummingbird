@@ -14,7 +14,7 @@ import com.charlesmadere.hummingbird.models.User;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class UserItemView extends CardView implements AdapterView<User>, View.OnClickListener {
+public class UserView extends CardView implements AdapterView<User>, View.OnClickListener {
 
     private User mUser;
 
@@ -27,12 +27,15 @@ public class UserItemView extends CardView implements AdapterView<User>, View.On
     @BindView(R.id.tvTitle)
     TextView mTitle;
 
+    @BindView(R.id.proBadge)
+    View mProBadge;
 
-    public UserItemView(final Context context, final AttributeSet attrs) {
+
+    public UserView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public UserItemView(final Context context, final AttributeSet attrs, final int defStyleAttr) {
+    public UserView(final Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -54,6 +57,7 @@ public class UserItemView extends CardView implements AdapterView<User>, View.On
         mUser = content;
 
         mAvatar.setContent(mUser);
+        mProBadge.setVisibility(mUser.isPro() ? VISIBLE : GONE);
         mTitle.setText(mUser.getId());
 
         if (mUser.hasBio()) {

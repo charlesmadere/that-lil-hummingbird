@@ -11,7 +11,6 @@
         <RelativeLayout
             android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:orientation="vertical"
             tools:ignore="ScrollViewSize">
             <com.charlesmadere.hummingbird.views.RatioRelativeLayout
                 android:id="@+id/rrlHeader"
@@ -56,9 +55,8 @@
                         app:roundAsCircle="true"
                         style="@style/Avatar.Medium" />
                     <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:layout_gravity="bottom|center_horizontal"
                         tools:visibility="visible"
-                        style="@style/ProBadge" />
+                        style="@style/Badge.Pro" />
                 </FrameLayout>
             </com.charlesmadere.hummingbird.views.RatioRelativeLayout>
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView

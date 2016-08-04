@@ -11,7 +11,6 @@ import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.UserFragmentAdapter;
@@ -56,7 +55,7 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
     SimpleProgressView mSimpleProgressView;
 
     @BindView(R.id.proBadge)
-    TextView mProBadge;
+    View mProBadge;
 
 
     public static Intent getLaunchIntent(final Context context, final User user) {

@@ -51,6 +51,10 @@ public final class Preferences {
             CsrfToken = new StringPreference(TAG, "CsrfToken", null);
             Username = new StringPreference(TAG, "Username", null);
         }
+
+        public static void eraseAll() {
+            erase(TAG);
+        }
     }
 
     public static final class General {

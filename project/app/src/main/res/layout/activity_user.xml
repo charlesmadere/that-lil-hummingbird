@@ -23,9 +23,8 @@
                         app:roundAsCircle="true"
                         style="@style/Avatar.Medium" />
                     <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        android:layout_gravity="bottom|center_horizontal"
                         tools:visibility="visible"
-                        style="@style/ProBadge" />
+                        style="@style/Badge.Pro" />
                 </FrameLayout>
                 <com.charlesmadere.hummingbird.views.TypefaceToolbar
                     style="@style/Toolbar.Parallax" />

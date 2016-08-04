@@ -7,6 +7,7 @@
     <item name="divider" type="id" />
     <item name="drawerLayout" type="id" />
     <item name="floatingActionButton" type="id" />
+    <item name="groupMemberBadge" type="id" />
     <item name="likeTextView" type="id" />
     <item name="navigationDrawerView" type="id" />
     <item name="parallaxCoverImage" type="id" />

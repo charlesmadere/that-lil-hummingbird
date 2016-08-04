@@ -59,7 +59,7 @@ public abstract class BaseUserActivity extends BaseDrawerActivity implements
 
     @OnClick(R.id.floatingActionButton)
     protected void onPostToFeedClick() {
-        // TODO
+        FeedPostFragment.create().show(getSupportFragmentManager(), FeedPostFragment.TAG);
     }
 
     @Override

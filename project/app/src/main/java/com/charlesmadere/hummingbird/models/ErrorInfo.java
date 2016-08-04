@@ -11,6 +11,14 @@ public class ErrorInfo implements Parcelable {
     private String mError;
 
 
+    public ErrorInfo() {
+
+    }
+
+    public ErrorInfo(final String error) {
+        mError = error;
+    }
+
     public String getError() {
         return mError;
     }

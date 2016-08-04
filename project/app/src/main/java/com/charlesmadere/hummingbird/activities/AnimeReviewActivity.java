@@ -19,7 +19,7 @@ import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.AnimeReviewVerdictView;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
-import com.charlesmadere.hummingbird.views.UserItemView;
+import com.charlesmadere.hummingbird.views.UserView;
 
 import java.lang.ref.WeakReference;
 
@@ -54,8 +54,8 @@ public class AnimeReviewActivity extends BaseDrawerActivity implements ObjectCac
     @BindView(R.id.tvContent)
     TextView mContent;
 
-    @BindView(R.id.userItemView)
-    UserItemView mUserItemView;
+    @BindView(R.id.userView)
+    UserView mUserView;
 
 
     public static Intent getLaunchIntent(final Context context, final AnimeReview review) {
@@ -155,7 +155,7 @@ public class AnimeReviewActivity extends BaseDrawerActivity implements ObjectCac
     private void showAnimeReview(final AnimeReview animeReview) {
         mAnimeReview = animeReview;
         setSubtitle(mAnimeReview.getAnimeTitle());
-        mUserItemView.setContent(mAnimeReview.getUser());
+        mUserView.setContent(mAnimeReview.getUser());
         mContent.setText(mAnimeReview.getContent());
         mAnimeReviewVerdictView.setContent(mAnimeReview);
 

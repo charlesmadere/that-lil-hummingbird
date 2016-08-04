@@ -43,8 +43,8 @@
                             android:layout_height="@dimen/root_padding_half"
                             android:layout_width="match_parent" />
                         <include
-                            android:id="@+id/userItemView"
-                            layout="@layout/item_user" />
+                            android:id="@+id/userView"
+                            layout="@layout/user_view" />
                         <android.support.v4.widget.Space
                             android:layout_height="@dimen/root_padding_half"
                             android:layout_width="match_parent" />
