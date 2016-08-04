@@ -3,7 +3,7 @@
     xmlns:compat="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <item
-        android:icon="@drawable/ic_library_books_white_24dp"
+        android:icon="@drawable/ic_video_library_white_24dp"
         android:id="@+id/miAnimeLibrary"
         android:title="@string/anime_library"
         android:titleCondensed="@string/anime"
