@@ -14,6 +14,7 @@ import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.GroupFragmentAdapter;
+import com.charlesmadere.hummingbird.fragments.BaseGroupFragment;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
@@ -28,7 +29,8 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class GroupActivity extends BaseDrawerActivity implements ObjectCache.KeyProvider {
+public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragment.Listener,
+        ObjectCache.KeyProvider {
 
     private static final String TAG = "GroupActivity";
     private static final String CNAME = GroupActivity.class.getCanonicalName();
@@ -87,6 +89,11 @@ public class GroupActivity extends BaseDrawerActivity implements ObjectCache.Key
     @Override
     public String getActivityName() {
         return TAG;
+    }
+
+    @Override
+    public GroupDigest getGroupDigest() {
+        return mGroupDigest;
     }
 
     @Override
