@@ -17,8 +17,8 @@ import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.views.DividerItemDecoration;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
-import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import java.lang.ref.WeakReference;
 
@@ -124,7 +124,7 @@ public class AnimeReviewsActivity extends BaseDrawerActivity implements ObjectCa
     @Override
     protected void onViewsBound() {
         super.onViewsBound();
-        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
+        DividerItemDecoration.apply(mRecyclerView);
     }
 
     private void showEmpty(final AnimeDigest animeDigest) {

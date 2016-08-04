@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.charlesmadere.hummingbird.views.UserAnimeReviewItemView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/CardItem">
+    style="@style/DividerCardItem">
     <RelativeLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
