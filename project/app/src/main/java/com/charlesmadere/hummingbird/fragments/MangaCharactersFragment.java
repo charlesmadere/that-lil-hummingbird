@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.MangaCharactersAdapter;
 import com.charlesmadere.hummingbird.models.MangaDigest;
-import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
+import com.charlesmadere.hummingbird.views.DividerItemDecoration;
 
 import butterknife.BindView;
 
@@ -46,7 +46,7 @@ public class MangaCharactersFragment extends BaseMangaFragment {
         super.onViewCreated(view, savedInstanceState);
 
         mRecyclerView.setHasFixedSize(true);
-        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding_half);
+        DividerItemDecoration.apply(mRecyclerView);
 
         final MangaDigest mangaDigest = getMangaDigest();
 
