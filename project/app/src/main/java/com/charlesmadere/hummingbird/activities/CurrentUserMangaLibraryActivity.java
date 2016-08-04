@@ -5,6 +5,8 @@ import android.content.Intent;
 
 import com.charlesmadere.hummingbird.adapters.MangaLibraryFragmentAdapter;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
+import com.charlesmadere.hummingbird.models.LaunchScreen;
+import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 
 public class CurrentUserMangaLibraryActivity extends BaseMangaLibraryActivity {
@@ -13,7 +15,14 @@ public class CurrentUserMangaLibraryActivity extends BaseMangaLibraryActivity {
 
 
     public static Intent getLaunchIntent(final Context context) {
-        return createDrawerActivityIntent(context, CurrentUserMangaLibraryActivity.class);
+        final Intent intent = createDrawerActivityIntent(context, CurrentUserMangaLibraryActivity.class);
+
+        if (Preferences.General.DefaultLaunchScreen.get() == LaunchScreen.MANGA_LIBRARY) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
+
+        return intent;
     }
 
     @Override

@@ -7,7 +7,9 @@ import android.os.Bundle;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.FeedFragmentAdapter;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
+import com.charlesmadere.hummingbird.models.LaunchScreen;
 import com.charlesmadere.hummingbird.models.UserDigest;
+import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 
 public class FeedActivity extends BaseUserActivity {
@@ -16,7 +18,14 @@ public class FeedActivity extends BaseUserActivity {
 
 
     public static Intent getLaunchIntent(final Context context) {
-        return createDrawerActivityIntent(context, FeedActivity.class);
+        final Intent intent = createDrawerActivityIntent(context, FeedActivity.class);
+
+        if (Preferences.General.DefaultLaunchScreen.get() == LaunchScreen.FEED) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
+
+        return intent;
     }
 
     @Override
