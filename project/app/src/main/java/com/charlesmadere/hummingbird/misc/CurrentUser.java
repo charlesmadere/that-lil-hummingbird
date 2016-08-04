@@ -25,8 +25,14 @@ public final class CurrentUser {
     }
 
     public static synchronized void set(final UserDigest userDigest) {
+        if (userDigest == null) {
+            throw new IllegalArgumentException("userDigest parameter can't be null");
+        }
+
         if (sCurrentUserDigest == null) {
             Timber.d(TAG, "current user set to \"" + userDigest.getUserId() + '"');
+        } else if (sCurrentUserDigest.equals(userDigest)) {
+            Timber.d(TAG, "current user (" + userDigest.getUserId() + ") refreshed");
         } else {
             Timber.w(TAG, "current user was \"" + sCurrentUserDigest.getUserId() +
                     "\", is now being set to \"" + userDigest.getUserId() + '"');
