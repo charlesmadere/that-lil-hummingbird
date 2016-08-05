@@ -107,4 +107,9 @@ public class SplashActivity extends BaseActivity {
         super.onDestroy();
     }
 
+    @Override
+    protected boolean showSearchIcon() {
+        return false;
+    }
+
 }

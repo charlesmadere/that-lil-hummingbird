@@ -29,6 +29,9 @@ public class AnimeResultItemView extends CardView implements AdapterView<SearchB
     @BindView(R.id.tvTitle)
     TextView mTitle;
 
+    @BindView(R.id.divider)
+    View mDivider;
+
 
     public AnimeResultItemView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
@@ -49,11 +52,6 @@ public class AnimeResultItemView extends CardView implements AdapterView<SearchB
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        if (isInEditMode()) {
-            return;
-        }
-
         ButterKnife.bind(this);
         setOnClickListener(this);
     }

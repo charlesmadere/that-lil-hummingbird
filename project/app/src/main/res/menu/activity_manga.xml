@@ -7,6 +7,6 @@
         android:id="@+id/miAddToLibrary"
         android:title="@string/add_to_library"
         android:visible="false"
-        compat:showAsAction="ifRoom|withText"
+        compat:showAsAction="ifRoom"
         tools:visible="true"/>
 </menu>

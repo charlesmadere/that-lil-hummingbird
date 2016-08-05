@@ -4,7 +4,7 @@
     <item
         android:icon="@drawable/ic_sort_white_24dp"
         android:title="@string/sort"
-        compat:showAsAction="ifRoom|withText">
+        compat:showAsAction="ifRoom">
         <menu>
             <item
                 android:id="@+id/miSortDate"

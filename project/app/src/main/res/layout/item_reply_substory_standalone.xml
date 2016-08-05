@@ -9,10 +9,7 @@
         <RelativeLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:paddingBottom="@dimen/card_padding_bottom"
-            android:paddingEnd="@dimen/card_padding_end"
-            android:paddingStart="@dimen/card_padding_start"
-            android:paddingTop="@dimen/card_padding_top">
+            android:padding="@dimen/root_padding_half">
             <com.charlesmadere.hummingbird.views.AvatarView
                 android:id="@+id/avatarView"
                 android:layout_marginEnd="@dimen/root_padding_half"

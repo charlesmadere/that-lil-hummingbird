@@ -130,6 +130,7 @@ public class SearchBundle implements Parcelable {
             return mDescription;
         }
 
+        @Nullable
         public String getImage() {
             return mImage;
         }
@@ -441,9 +442,33 @@ public class SearchBundle implements Parcelable {
 
 
     public static class UserResult extends AbsResult implements Parcelable {
+        private String[] mImages;
+
+
+        @Nullable
+        public String[] getImages() {
+            if (mImages == null && getImage() != null) {
+                mImages = User.getAvatars(getImage());
+            }
+
+            return mImages;
+        }
+
         @Override
         public Type getType() {
             return Type.USER;
+        }
+
+        @Override
+        protected void readFromParcel(final Parcel source) {
+            super.readFromParcel(source);
+            mImages = source.createStringArray();
+        }
+
+        @Override
+        public void writeToParcel(final Parcel dest, final int flags) {
+            super.writeToParcel(dest, flags);
+            dest.writeStringArray(mImages);
         }
 
         public static final Creator<UserResult> CREATOR = new Creator<UserResult>() {

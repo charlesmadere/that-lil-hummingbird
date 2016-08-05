@@ -11,6 +11,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.charlesmadere.hummingbird.R;
@@ -76,6 +77,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        if (showSearchIcon()) {
+            getMenuInflater().inflate(R.menu.search, menu);
+        }
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     protected void onDestroy() {
         ActivityRegister.detach(this);
         super.onDestroy();
@@ -86,6 +96,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 navigateUp();
+                return true;
+
+            case R.id.miSearch:
+                startActivity(SearchActivity.getLaunchIntent(this));
                 return true;
         }
 
@@ -123,6 +137,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setSubtitle(subtitle);
         }
+    }
+
+    protected boolean showSearchIcon() {
+        return true;
     }
 
     @Override

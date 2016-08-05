@@ -179,6 +179,11 @@ public class LoginActivity extends BaseActivity {
         mLogin.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    protected boolean showSearchIcon() {
+        return false;
+    }
+
     private void updateLoginEnabledState() {
         mLogin.setEnabled(isLoginFormValid());
     }

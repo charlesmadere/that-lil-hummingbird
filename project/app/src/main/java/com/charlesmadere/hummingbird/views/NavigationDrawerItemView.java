@@ -109,7 +109,6 @@ public class NavigationDrawerItemView extends AppCompatTextView {
         FEED(R.drawable.ic_feed, R.string.feed),
         MANGA_LIBRARY(R.drawable.ic_manga_library, R.string.manga_library),
         NOTIFICATIONS(R.drawable.ic_notifications, R.string.notifications),
-        SEARCH(R.drawable.ic_search, R.string.search),
         SETTINGS(R.drawable.ic_settings, R.string.settings);
 
         @DrawableRes

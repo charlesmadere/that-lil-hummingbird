@@ -46,8 +46,7 @@
             <enum name="feed" value="2" />
             <enum name="manga_library" value="3" />
             <enum name="notifications" value="4" />
-            <enum name="search" value="5" />
-            <enum name="settings" value="6" />
+            <enum name="settings" value="5" />
         </attr>
     </declare-styleable>
 

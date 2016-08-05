@@ -31,6 +31,31 @@ public class User implements Parcelable {
     private CharSequence mCompiledAbout;
 
 
+    @Nullable
+    public static String[] getAvatars(@Nullable final String avatar) {
+        if (TextUtils.isEmpty(avatar)) {
+            return null;
+        }
+
+        final String replace;
+        if (avatar.contains('/' + AVATAR_TEMPLATE_MEDIUM + '/')) {
+            replace = '/' + AVATAR_TEMPLATE_MEDIUM + '/';
+        } else if (avatar.contains('/' + AVATAR_TEMPLATE_SMALL + '/')) {
+            replace = '/' + AVATAR_TEMPLATE_SMALL + '/';
+        } else if (avatar.contains('/' + AVATAR_TEMPLATE_THUMB + '/')) {
+            replace = '/' + AVATAR_TEMPLATE_THUMB + '/';
+        } else if (avatar.contains('/' + AVATAR_TEMPLATE_THUMB_SMALL + '/')) {
+            replace = '/' + AVATAR_TEMPLATE_THUMB_SMALL + '/';
+        } else {
+            return null;
+        }
+
+        return new String[] { avatar.replaceFirst(replace, '/' + AVATAR_TEMPLATE_THUMB + '/'),
+                avatar.replaceFirst(replace, '/' + AVATAR_TEMPLATE_THUMB_SMALL + '/'),
+                avatar.replaceFirst(replace, '/' + AVATAR_TEMPLATE_SMALL + '/'),
+                avatar.replaceFirst(replace, '/' + AVATAR_TEMPLATE_MEDIUM + '/') };
+    }
+
     @Override
     public boolean equals(final Object o) {
         return o instanceof User && getId().equalsIgnoreCase(((User) o).getId());

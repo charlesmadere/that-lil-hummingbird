@@ -7,7 +7,7 @@
     android:orientation="vertical">
     <LinearLayout
         android:orientation="horizontal"
-        style="@style/Toolbar">
+        style="@style/Toolbar.LessElevation">
         <ImageButton
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/close"

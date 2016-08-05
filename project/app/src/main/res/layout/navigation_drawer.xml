@@ -80,13 +80,8 @@
                 app:entry="notifications"
                 style="@style/NavigationDrawerItemView" />
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
-                android:id="@+id/ndivSearch"
-                android:layout_below="@id/ndivNotifications"
-                app:entry="search"
-                style="@style/NavigationDrawerItemView" />
-            <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
                 android:id="@+id/ndivSettings"
-                android:layout_below="@id/ndivSearch"
+                android:layout_below="@id/ndivNotifications"
                 app:entry="settings"
                 style="@style/NavigationDrawerItemView" />
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView

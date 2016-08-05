@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical">
     <RelativeLayout
-        style="@style/Toolbar">
+        style="@style/Toolbar.LessElevation">
         <ImageButton
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/close"

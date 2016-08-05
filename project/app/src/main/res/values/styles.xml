@@ -160,10 +160,10 @@
         <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="contentPaddingBottom">@dimen/card_padding_bottom</item>
-        <item name="contentPaddingLeft">@dimen/card_padding_start</item>
-        <item name="contentPaddingRight">@dimen/card_padding_end</item>
-        <item name="contentPaddingTop">@dimen/card_padding_top</item>
+        <item name="contentPaddingBottom">@dimen/root_padding</item>
+        <item name="contentPaddingLeft">@dimen/root_padding</item>
+        <item name="contentPaddingRight">@dimen/root_padding</item>
+        <item name="contentPaddingTop">@dimen/root_padding</item>
     </style>
 
     <style name="CardItem.NoPadding">
@@ -242,6 +242,13 @@
         <item name="android:layout_marginStart">0dp</item>
         <item name="cardElevation">0dp</item>
         <item name="cardCornerRadius">0dp</item>
+    </style>
+
+    <style name="DividerCardItem.LessPadding">
+        <item name="contentPaddingBottom">@dimen/root_padding_half</item>
+        <item name="contentPaddingLeft">@dimen/root_padding_half</item>
+        <item name="contentPaddingRight">@dimen/root_padding_half</item>
+        <item name="contentPaddingTop">@dimen/root_padding_half</item>
     </style>
 
     <style name="DrawerLayout">
@@ -628,6 +635,10 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:minHeight">?attr/actionBarSize</item>
         <item name="android:theme">@style/ToolbarTheme</item>
+    </style>
+
+    <style name="Toolbar.LessElevation">
+        <item name="android:elevation" tools:targetApi="lollipop">@dimen/root_padding_quarter</item>
     </style>
 
     <style name="Toolbar.Transparent">

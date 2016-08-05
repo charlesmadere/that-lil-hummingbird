@@ -6,9 +6,12 @@ import android.os.Bundle;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.FeedFragmentAdapter;
+import com.charlesmadere.hummingbird.fragments.FeedPostFragment;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
+import com.charlesmadere.hummingbird.models.FeedPost;
 import com.charlesmadere.hummingbird.models.LaunchScreen;
 import com.charlesmadere.hummingbird.models.UserDigest;
+import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 
@@ -56,7 +59,15 @@ public class FeedActivity extends BaseUserActivity {
 
     @Override
     public void onFeedPostSubmit() {
-        // TODO
+        final FeedPostFragment fragment = (FeedPostFragment) getSupportFragmentManager()
+                .findFragmentByTag(FeedPostFragment.TAG);
+        final FeedPost post = fragment.getFeedPost(CurrentUser.get().getUserId());
+
+        if (post == null) {
+            return;
+        }
+
+        Api.postToFeed(post, new FeedPostListener(this));
     }
 
 }

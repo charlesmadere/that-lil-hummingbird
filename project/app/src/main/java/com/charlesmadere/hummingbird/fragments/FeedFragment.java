@@ -12,7 +12,7 @@ public class FeedFragment extends BaseUserFeedFragment {
     }
 
     @Override
-    protected void fetchFeed() {
+    public void fetchFeed() {
         super.fetchFeed();
         Api.getNewsFeed(new GetFeedListener(this));
     }

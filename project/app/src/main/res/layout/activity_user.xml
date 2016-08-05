@@ -30,6 +30,7 @@
                     style="@style/Toolbar.Parallax" />
             </com.charlesmadere.hummingbird.views.CollapsingTypefaceToolbarLayout>
             <com.charlesmadere.hummingbird.views.TypefaceTabLayout
+                app:tabMode="fixed"
                 style="@style/TabLayout.Parallax" />
         </android.support.design.widget.AppBarLayout>
         <android.support.v4.view.ViewPager

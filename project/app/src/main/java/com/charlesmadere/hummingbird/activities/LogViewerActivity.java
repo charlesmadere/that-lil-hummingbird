@@ -113,4 +113,9 @@ public class LogViewerActivity extends BaseDrawerActivity implements
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    @Override
+    protected boolean showSearchIcon() {
+        return false;
+    }
+
 }

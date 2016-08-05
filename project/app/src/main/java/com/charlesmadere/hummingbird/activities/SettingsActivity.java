@@ -436,4 +436,9 @@ public class SettingsActivity extends BaseDrawerActivity {
                 .show();
     }
 
+    @Override
+    protected boolean showSearchIcon() {
+        return false;
+    }
+
 }

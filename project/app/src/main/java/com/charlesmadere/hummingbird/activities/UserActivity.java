@@ -14,10 +14,12 @@ import android.view.View;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.UserFragmentAdapter;
+import com.charlesmadere.hummingbird.fragments.FeedPostFragment;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
+import com.charlesmadere.hummingbird.models.FeedPost;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -133,7 +135,15 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
 
     @Override
     public void onFeedPostSubmit() {
-        // TODO
+        final FeedPostFragment fragment = (FeedPostFragment) getSupportFragmentManager()
+                .findFragmentByTag(FeedPostFragment.TAG);
+        final FeedPost post = fragment.getFeedPost(mUsername);
+
+        if (post == null) {
+            return;
+        }
+
+        Api.postToFeed(post, new FeedPostListener(this));
     }
 
     @Override

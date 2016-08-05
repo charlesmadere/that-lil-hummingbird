@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeQuotesAdapter;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
-import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
+import com.charlesmadere.hummingbird.views.DividerItemDecoration;
 
 import butterknife.BindView;
 
@@ -46,7 +46,7 @@ public class AnimeQuotesFragment extends BaseAnimeFragment {
         super.onViewCreated(view, savedInstanceState);
 
         mRecyclerView.setHasFixedSize(true);
-        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
+        DividerItemDecoration.apply(mRecyclerView);
 
         final AnimeDigest animeDigest = getAnimeDigest();
 
