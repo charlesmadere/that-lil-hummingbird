@@ -156,6 +156,11 @@ public class SearchActivity extends BaseDrawerActivity implements
         mSearchScope.setOnItemSelectedListener(this);
     }
 
+    @Override
+    protected boolean showSearchIcon() {
+        return false;
+    }
+
     private void showEmpty() {
         mProgressBar.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.GONE);
