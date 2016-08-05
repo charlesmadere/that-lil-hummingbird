@@ -106,7 +106,7 @@ public final class MiscUtils {
 
     @Nullable
     public static String[] getAvatars(@Nullable final String avatar) {
-        if (!isValidArtwork(avatar)) {
+        if (TextUtils.isEmpty(avatar)) {
             return null;
         }
 
