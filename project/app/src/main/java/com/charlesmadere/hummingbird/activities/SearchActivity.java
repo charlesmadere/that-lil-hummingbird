@@ -23,7 +23,6 @@ import com.charlesmadere.hummingbird.models.SearchScope;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.SearchScopeSpinner;
-import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import java.lang.ref.WeakReference;
 
@@ -150,7 +149,6 @@ public class SearchActivity extends BaseDrawerActivity implements
     protected void onViewsBound() {
         super.onViewsBound();
         mRecyclerView.setHasFixedSize(true);
-        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
         mAdapter = new SearchResultsAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         mSearchScope.setOnItemSelectedListener(this);
