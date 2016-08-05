@@ -16,72 +16,52 @@ public class SearchResultsAdapter extends BaseMultiAdapter {
     }
 
     private void buildSectionedList(final SearchBundle searchBundle) {
-        final ArrayList<Object> animeList = new ArrayList<>();
-        final ArrayList<SearchBundle.AnimeResult> anime = searchBundle.getAnimeResults();
-        if (anime != null && !anime.isEmpty()) {
-            animeList.add(SearchBundle.AbsResult.Type.ANIME);
-            animeList.addAll(anime);
-        }
-
-        final ArrayList<Object> groupsList = new ArrayList<>();
-        final ArrayList<SearchBundle.GroupResult> groups = searchBundle.getGroupResults();
-        if (groups != null && !groups.isEmpty()) {
-            groupsList.add(SearchBundle.AbsResult.Type.GROUP);
-            groupsList.addAll(groups);
-        }
-
-        final ArrayList<Object> mangaList = new ArrayList<>();
-        final ArrayList<SearchBundle.MangaResult> manga = searchBundle.getMangaResults();
-        if (manga != null && !manga.isEmpty()) {
-            mangaList.add(SearchBundle.AbsResult.Type.MANGA);
-            mangaList.addAll(manga);
-        }
-
-        final ArrayList<Object> usersList = new ArrayList<>();
-        final ArrayList<SearchBundle.UserResult> users = searchBundle.getUserResults();
-        if (users != null && !users.isEmpty()) {
-            usersList.add(SearchBundle.AbsResult.Type.USER);
-            usersList.addAll(users);
+        if (searchBundle == null || !searchBundle.hasResults()) {
+            super.set(null);
+            return;
         }
 
         final ArrayList<Object> list = new ArrayList<>();
 
-        if (!animeList.isEmpty()) {
-            list.addAll(animeList);
+        final ArrayList<SearchBundle.AnimeResult> anime = searchBundle.getAnimeResults();
+        if (anime != null && !anime.isEmpty()) {
+            list.add(getContext().getString(SearchBundle.AbsResult.Type.ANIME.getTextResId()));
+            list.addAll(anime);
         }
 
-        if (groupsList.isEmpty()) {
-            list.addAll(groupsList);
+        final ArrayList<SearchBundle.GroupResult> groups = searchBundle.getGroupResults();
+        if (groups != null && !groups.isEmpty()) {
+            list.add(getContext().getString(SearchBundle.AbsResult.Type.GROUP.getTextResId()));
+            list.addAll(groups);
         }
 
-        if (!mangaList.isEmpty()) {
-            list.addAll(mangaList);
+        final ArrayList<SearchBundle.MangaResult> manga = searchBundle.getMangaResults();
+        if (manga != null && !manga.isEmpty()) {
+            list.add(getContext().getString(SearchBundle.AbsResult.Type.MANGA.getTextResId()));
+            list.addAll(manga);
         }
 
-        if (!usersList.isEmpty()) {
-            list.addAll(usersList);
+        final ArrayList<SearchBundle.UserResult> users = searchBundle.getUserResults();
+        if (users != null && !users.isEmpty()) {
+            list.add(getContext().getString(SearchBundle.AbsResult.Type.USER.getTextResId()));
+            list.addAll(users);
         }
 
-        list.trimToSize();
         super.set(list);
     }
 
     private void buildUnsectionedList(final SearchBundle searchBundle) {
-        final ArrayList<Object> list;
-
-        if (searchBundle.hasResults()) {
-            list = new ArrayList<Object>(searchBundle.getResults());
+        if (searchBundle == null || !searchBundle.hasResults()) {
+            super.set(null);
         } else {
-            list = null;
+            super.set(new ArrayList<Object>(searchBundle.getResults()));
         }
-
-        super.set(list);
     }
 
     @Override
     protected HashMap<Class, Integer> getItemViewKeyMap() {
         final HashMap<Class, Integer> map = new HashMap<>(5);
-        map.put(SearchBundle.AbsResult.Type.class, R.layout.item_search_result_type);
+        map.put(String.class, R.layout.item_charsequence_card);
         map.put(SearchBundle.AnimeResult.class, R.layout.item_anime_result);
         map.put(SearchBundle.GroupResult.class, R.layout.item_group_result);
         map.put(SearchBundle.MangaResult.class, R.layout.item_manga_result);
