@@ -1,28 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.charlesmadere.hummingbird.views.MangaResultItemView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/CardItem">
+    style="@style/CardItem.NoPadding.NothingSpecial">
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:orientation="horizontal">
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/sdvCover"
-            android:layout_marginEnd="@dimen/root_padding"
-            style="@style/MangaCover.Small" />
+        android:orientation="vertical">
         <LinearLayout
-            android:layout_gravity="center_vertical"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:orientation="vertical">
-            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                android:id="@+id/tvTitle"
-                tools:text="Scott Pilgrim vs the World"
-                style="@style/MangaTitle.Small" />
-            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                android:id="@+id/tvSynopsis"
-                tools:text="Seven deadly exes"
-                style="@style/MangaSynopsis.Limited" />
+            android:orientation="horizontal"
+            android:padding="@dimen/root_padding_half">
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdvCover"
+                android:layout_marginEnd="@dimen/root_padding"
+                style="@style/MangaCover.Small" />
+            <LinearLayout
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
+                <com.charlesmadere.hummingbird.views.TypefaceTextView
+                    android:id="@+id/tvTitle"
+                    tools:text="Scott Pilgrim vs the World"
+                    style="@style/MangaTitle.Small" />
+                <com.charlesmadere.hummingbird.views.TypefaceTextView
+                    android:id="@+id/tvSynopsis"
+                    tools:text="Seven deadly exes"
+                    style="@style/MangaSynopsis.Limited" />
+            </LinearLayout>
         </LinearLayout>
+        <View
+            style="@style/Divider" />
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.MangaResultItemView>

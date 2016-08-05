@@ -29,6 +29,9 @@ public class MangaResultItemView extends CardView implements AdapterView<SearchB
     @BindView(R.id.tvTitle)
     TextView mTitle;
 
+    @BindView(R.id.divider)
+    View mDivider;
+
 
     public MangaResultItemView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
