@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.adapters.SearchResultsAdapter;
 import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.BaseControllerListener;
@@ -19,8 +20,8 @@ import com.facebook.imagepipeline.image.ImageInfo;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class UserResultItemView extends CardView implements AdapterView<SearchBundle.UserResult>,
-        View.OnClickListener {
+public class UserResultItemView extends CardView implements AdapterView<Void>,
+        SearchResultsAdapter.SearchResultHandler, View.OnClickListener {
 
     private SearchBundle.UserResult mUserResult;
 
@@ -84,24 +85,35 @@ public class UserResultItemView extends CardView implements AdapterView<SearchBu
     }
 
     @Override
-    public void setContent(final SearchBundle.UserResult content) {
-        mUserResult = content;
+    public void setContent(final SearchBundle.AbsResult result, final boolean showDivider) {
+        setContent((SearchBundle.UserResult) result, showDivider);
+    }
 
-        final String[] images = content.getImages();
+    public void setContent(final SearchBundle.UserResult result, final boolean showDivider) {
+        mUserResult = result;
+
+        final String[] images = result.getImages();
         if (images == null || images.length == 0) {
             mImage.setImageURI((String) null);
         } else {
             fetchImages(mUserResult, images, 0);
         }
 
-        mTitle.setText(content.getTitle());
+        mTitle.setText(result.getTitle());
 
-        if (content.hasDescription()) {
-            mBio.setText(content.getDescription());
+        if (result.hasDescription()) {
+            mBio.setText(result.getDescription());
             mBio.setVisibility(VISIBLE);
         } else {
             mBio.setVisibility(GONE);
         }
+
+        mDivider.setVisibility(showDivider ? VISIBLE : GONE);
+    }
+
+    @Override
+    public void setContent(final Void content) {
+        // intentionally empty
     }
 
 }

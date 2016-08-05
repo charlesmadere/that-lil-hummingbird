@@ -9,14 +9,15 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.adapters.SearchResultsAdapter;
 import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AnimeResultItemView extends CardView implements AdapterView<SearchBundle.AnimeResult>,
-        View.OnClickListener {
+public class AnimeResultItemView extends CardView implements AdapterView<Void>,
+        SearchResultsAdapter.SearchResultHandler, View.OnClickListener {
 
     private SearchBundle.AnimeResult mAnimeResult;
 
@@ -57,8 +58,12 @@ public class AnimeResultItemView extends CardView implements AdapterView<SearchB
     }
 
     @Override
-    public void setContent(final SearchBundle.AnimeResult content) {
-        mAnimeResult = content;
+    public void setContent(final SearchBundle.AbsResult result, final boolean showDivider) {
+        setContent((SearchBundle.AnimeResult) result, showDivider);
+    }
+
+    public void setContent(final SearchBundle.AnimeResult result, final boolean showDivider) {
+        mAnimeResult = result;
 
         mPoster.setImageURI(mAnimeResult.getImage());
         mTitle.setText(mAnimeResult.getTitle());
@@ -69,6 +74,13 @@ public class AnimeResultItemView extends CardView implements AdapterView<SearchB
         } else {
             mSynopsis.setVisibility(GONE);
         }
+
+        mDivider.setVisibility(showDivider ? VISIBLE : GONE);
+    }
+
+    @Override
+    public void setContent(final Void content) {
+        // intentionally empty
     }
 
 }

@@ -69,12 +69,29 @@ public class SearchResultsAdapter extends BaseMultiAdapter {
         return map;
     }
 
+    @Override
+    public void onBindViewHolder(final AdapterView.ViewHolder holder, final int position) {
+        if (holder.getAdapterView() instanceof SearchResultHandler) {
+            final boolean showDivider = position + 1 < getItemCount() &&
+                    getItem(position + 1) instanceof SearchBundle.AbsResult;
+            ((SearchResultHandler) holder.getAdapterView()).setContent(
+                    (SearchBundle.AbsResult) getItem(position), showDivider);
+        } else {
+            super.onBindViewHolder(holder, position);
+        }
+    }
+
     public void set(final SearchBundle searchBundle, final SearchScope searchScope) {
         if (searchScope == SearchScope.ALL) {
             buildSectionedList(searchBundle);
         } else {
             buildUnsectionedList(searchBundle);
         }
+    }
+
+
+    public interface SearchResultHandler {
+        void setContent(final SearchBundle.AbsResult result, final boolean showDivider);
     }
 
 }

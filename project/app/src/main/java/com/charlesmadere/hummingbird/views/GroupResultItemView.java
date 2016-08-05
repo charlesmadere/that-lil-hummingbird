@@ -9,14 +9,15 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.GroupActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.adapters.SearchResultsAdapter;
 import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class GroupResultItemView extends CardView implements AdapterView<SearchBundle.GroupResult>,
-        View.OnClickListener {
+public class GroupResultItemView extends CardView implements AdapterView<Void>,
+        SearchResultsAdapter.SearchResultHandler, View.OnClickListener {
 
     private SearchBundle.GroupResult mGroupResult;
 
@@ -57,7 +58,11 @@ public class GroupResultItemView extends CardView implements AdapterView<SearchB
     }
 
     @Override
-    public void setContent(final SearchBundle.GroupResult content) {
+    public void setContent(final SearchBundle.AbsResult result, final boolean showDivider) {
+        setContent((SearchBundle.GroupResult) result, showDivider);
+    }
+
+    public void setContent(final SearchBundle.GroupResult content, final boolean showDivider) {
         mGroupResult = content;
 
         mLogo.setImageURI(content.getImage());
@@ -69,6 +74,13 @@ public class GroupResultItemView extends CardView implements AdapterView<SearchB
         } else {
             mDescription.setVisibility(GONE);
         }
+
+        mDivider.setVisibility(showDivider ? VISIBLE : GONE);
+    }
+
+    @Override
+    public void setContent(final Void content) {
+        // intentionally empty
     }
 
 }

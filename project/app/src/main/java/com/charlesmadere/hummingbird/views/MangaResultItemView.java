@@ -9,14 +9,15 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.MangaActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.adapters.SearchResultsAdapter;
 import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MangaResultItemView extends CardView implements AdapterView<SearchBundle.MangaResult>,
-        View.OnClickListener {
+public class MangaResultItemView extends CardView implements AdapterView<Void>,
+        SearchResultsAdapter.SearchResultHandler, View.OnClickListener {
 
     private SearchBundle.MangaResult mMangaResult;
 
@@ -52,28 +53,34 @@ public class MangaResultItemView extends CardView implements AdapterView<SearchB
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        if (isInEditMode()) {
-            return;
-        }
-
         ButterKnife.bind(this);
         setOnClickListener(this);
     }
 
     @Override
-    public void setContent(final SearchBundle.MangaResult content) {
-        mMangaResult = content;
+    public void setContent(final SearchBundle.AbsResult result, final boolean showDivider) {
+        setContent((SearchBundle.MangaResult) result, showDivider);
+    }
 
-        mCover.setImageURI(content.getImage());
-        mTitle.setText(content.getTitle());
+    public void setContent(final SearchBundle.MangaResult result, final boolean showDivider) {
+        mMangaResult = result;
 
-        if (content.hasDescription()) {
-            mSynopsis.setText(content.getDescription());
+        mCover.setImageURI(result.getImage());
+        mTitle.setText(result.getTitle());
+
+        if (result.hasDescription()) {
+            mSynopsis.setText(result.getDescription());
             mSynopsis.setVisibility(VISIBLE);
         } else {
             mSynopsis.setVisibility(GONE);
         }
+
+        mDivider.setVisibility(showDivider ? VISIBLE : GONE);
+    }
+
+    @Override
+    public void setContent(final Void content) {
+        // intentionally empty
     }
 
 }
