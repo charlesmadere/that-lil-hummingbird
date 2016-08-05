@@ -106,7 +106,7 @@ public final class MiscUtils {
 
     @Nullable
     public static String[] getAvatars(@Nullable final String avatar) {
-        if (TextUtils.isEmpty(avatar)) {
+        if (!isValidArtwork(avatar)) {
             return null;
         }
 
@@ -120,7 +120,7 @@ public final class MiscUtils {
         } else if (avatar.contains('/' + Constants.AVATAR_TEMPLATE_THUMB_SMALL + '/')) {
             replace = '/' + Constants.AVATAR_TEMPLATE_THUMB_SMALL + '/';
         } else {
-            return null;
+            return new String[] { avatar };
         }
 
         return new String[] { avatar.replaceFirst(replace, '/' + Constants.AVATAR_TEMPLATE_THUMB + '/'),

@@ -96,11 +96,6 @@ public class MiscUtilsTest {
     public void testGetAvatars() throws Exception {
         assertNull(MiscUtils.getAvatars(null));
         assertNull(MiscUtils.getAvatars(""));
-        assertNull(MiscUtils.getAvatars("Hello, World!"));
-        assertNull(MiscUtils.getAvatars("https://www.google.com/"));
-        assertNull(MiscUtils.getAvatars(URL6));
-        assertNull(MiscUtils.getAvatars(URL7));
-        assertNull(MiscUtils.getAvatars(URL8));
 
         assertNotNull(MiscUtils.getAvatars(URL0));
         assertNotNull(MiscUtils.getAvatars(URL1));
@@ -108,6 +103,9 @@ public class MiscUtilsTest {
         assertNotNull(MiscUtils.getAvatars(URL3));
         assertNotNull(MiscUtils.getAvatars(URL4));
         assertNotNull(MiscUtils.getAvatars(URL5));
+        assertNotNull(MiscUtils.getAvatars(URL6));
+        assertNotNull(MiscUtils.getAvatars(URL7));
+        assertNotNull(MiscUtils.getAvatars(URL8));
     }
 
     @Test
