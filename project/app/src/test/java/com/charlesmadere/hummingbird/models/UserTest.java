@@ -23,6 +23,8 @@ public class UserTest {
     private static final String URL4 = "https://static.hummingbird.me/users/avatars/000/067/566/thumb_small/Darth_Vader_riding_Charizard_colored.jpg?1416027708";
     private static final String URL5 = "https://static.hummingbird.me/users/avatars/000/079/485/small/sdpu3.jpg?1456852979";
     private static final String URL6 = "https://static.hummingbird.me/users/avatars/000/042/603.jpg";
+    private static final String URL7 = "https://static.hummingbird.me/users/avatars/000/042/medium.jpg";
+    private static final String URL8 = "https://static.hummingbird.me/users/avatars/000/042/medium-128.jpg";
 
 
     @Test
@@ -32,6 +34,8 @@ public class UserTest {
         assertNull(User.getAvatars("Hello, World!"));
         assertNull(User.getAvatars("https://www.google.com/"));
         assertNull(User.getAvatars(URL6));
+        assertNull(User.getAvatars(URL7));
+        assertNull(User.getAvatars(URL8));
 
         assertNotNull(User.getAvatars(URL0));
         assertNotNull(User.getAvatars(URL1));
