@@ -96,7 +96,7 @@ public class UserResultItemView extends CardView implements AdapterView<Void>,
         if (images == null || images.length == 0) {
             mImage.setImageURI((String) null);
         } else {
-            fetchImages(mUserResult, images, 0);
+            fetchImages(result, images, 0);
         }
 
         mTitle.setText(result.getTitle());

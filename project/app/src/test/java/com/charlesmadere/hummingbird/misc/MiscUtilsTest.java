@@ -23,6 +23,17 @@ import static org.junit.Assert.assertTrue;
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
 public class MiscUtilsTest {
 
+    private static final String URL0 = "https://static.hummingbird.me/users/avatars/000/042/603/thumb_small/wopian_2x.jpg?1466028564";
+    private static final String URL1 = "https://static.hummingbird.me/users/avatars/000/077/547/thumb/ryuuko_square3.jpg?1470293290";
+    private static final String URL2 = "https://static.hummingbird.me/users/avatars/000/090/096/thumb/Yoko_La_Yoko.jpg?1441097436";
+    private static final String URL3 = "https://static.hummingbird.me/users/avatars/000/077/547/medium/ryuuko_square3.jpg?1470293290";
+    private static final String URL4 = "https://static.hummingbird.me/users/avatars/000/067/566/thumb_small/Darth_Vader_riding_Charizard_colored.jpg?1416027708";
+    private static final String URL5 = "https://static.hummingbird.me/users/avatars/000/079/485/small/sdpu3.jpg?1456852979";
+    private static final String URL6 = "https://static.hummingbird.me/users/avatars/000/042/603.jpg";
+    private static final String URL7 = "https://static.hummingbird.me/users/avatars/000/042/medium.jpg";
+    private static final String URL8 = "https://static.hummingbird.me/users/avatars/000/042/medium-128.jpg";
+
+
     @Test
     public void testBooleanEquals() throws Exception {
         assertTrue(MiscUtils.booleanEquals(null, null));
@@ -79,6 +90,24 @@ public class MiscUtilsTest {
 
         MiscUtils.exclusiveAdd(list, new LinkedList<Integer>());
         assertTrue(list.size() == 7);
+    }
+
+    @Test
+    public void testGetAvatars() throws Exception {
+        assertNull(MiscUtils.getAvatars(null));
+        assertNull(MiscUtils.getAvatars(""));
+        assertNull(MiscUtils.getAvatars("Hello, World!"));
+        assertNull(MiscUtils.getAvatars("https://www.google.com/"));
+        assertNull(MiscUtils.getAvatars(URL6));
+        assertNull(MiscUtils.getAvatars(URL7));
+        assertNull(MiscUtils.getAvatars(URL8));
+
+        assertNotNull(MiscUtils.getAvatars(URL0));
+        assertNotNull(MiscUtils.getAvatars(URL1));
+        assertNotNull(MiscUtils.getAvatars(URL2));
+        assertNotNull(MiscUtils.getAvatars(URL3));
+        assertNotNull(MiscUtils.getAvatars(URL4));
+        assertNotNull(MiscUtils.getAvatars(URL5));
     }
 
     @Test

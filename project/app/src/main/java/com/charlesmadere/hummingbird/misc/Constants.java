@@ -6,6 +6,11 @@ public final class Constants {
             "/cover_images/original/missing.png", "/thumbnails/original/missing.png" };
 
     public static final String ANIME = "anime";
+    public static final String AVATAR_TEMPLATE_STUB = "\\{size\\}";
+    public static final String AVATAR_TEMPLATE_MEDIUM = "medium";
+    public static final String AVATAR_TEMPLATE_SMALL = "small";
+    public static final String AVATAR_TEMPLATE_THUMB = "thumb";
+    public static final String AVATAR_TEMPLATE_THUMB_SMALL = "thumb_small";
     public static final String CHARLES_TWITTER_URL = "https://twitter.com/charlesmadere";
     public static final String DEBUG = "debug";
     public static final String FOLLOWERS = "followers";

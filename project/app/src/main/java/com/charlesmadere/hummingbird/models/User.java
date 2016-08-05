@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.JsoupUtils;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.google.gson.JsonDeserializationContext;
@@ -18,43 +19,12 @@ import java.lang.reflect.Type;
 
 public class User implements Parcelable {
 
-    private static final String AVATAR_TEMPLATE_STUB = "\\{size\\}";
-    private static final String AVATAR_TEMPLATE_MEDIUM = "medium";
-    private static final String AVATAR_TEMPLATE_SMALL = "small";
-    private static final String AVATAR_TEMPLATE_THUMB = "thumb";
-    private static final String AVATAR_TEMPLATE_THUMB_SMALL = "thumb_small";
-
     @SerializedName("user")
     private Data mData;
 
     // hydrated fields
     private CharSequence mCompiledAbout;
 
-
-    @Nullable
-    public static String[] getAvatars(@Nullable final String avatar) {
-        if (TextUtils.isEmpty(avatar)) {
-            return null;
-        }
-
-        final String replace;
-        if (avatar.contains('/' + AVATAR_TEMPLATE_MEDIUM + '/')) {
-            replace = '/' + AVATAR_TEMPLATE_MEDIUM + '/';
-        } else if (avatar.contains('/' + AVATAR_TEMPLATE_SMALL + '/')) {
-            replace = '/' + AVATAR_TEMPLATE_SMALL + '/';
-        } else if (avatar.contains('/' + AVATAR_TEMPLATE_THUMB + '/')) {
-            replace = '/' + AVATAR_TEMPLATE_THUMB + '/';
-        } else if (avatar.contains('/' + AVATAR_TEMPLATE_THUMB_SMALL + '/')) {
-            replace = '/' + AVATAR_TEMPLATE_THUMB_SMALL + '/';
-        } else {
-            return null;
-        }
-
-        return new String[] { avatar.replaceFirst(replace, '/' + AVATAR_TEMPLATE_THUMB + '/'),
-                avatar.replaceFirst(replace, '/' + AVATAR_TEMPLATE_THUMB_SMALL + '/'),
-                avatar.replaceFirst(replace, '/' + AVATAR_TEMPLATE_SMALL + '/'),
-                avatar.replaceFirst(replace, '/' + AVATAR_TEMPLATE_MEDIUM + '/') };
-    }
 
     @Override
     public boolean equals(final Object o) {
@@ -72,19 +42,23 @@ public class User implements Parcelable {
     }
 
     public String getAvatarMedium() {
-        return mData.mAvatarTemplate.replaceFirst(AVATAR_TEMPLATE_STUB, AVATAR_TEMPLATE_MEDIUM);
+        return mData.mAvatarTemplate.replaceFirst(Constants.AVATAR_TEMPLATE_STUB,
+                Constants.AVATAR_TEMPLATE_MEDIUM);
     }
 
     public String getAvatarSmall() {
-        return mData.mAvatarTemplate.replaceFirst(AVATAR_TEMPLATE_STUB, AVATAR_TEMPLATE_SMALL);
+        return mData.mAvatarTemplate.replaceFirst(Constants.AVATAR_TEMPLATE_STUB,
+                Constants.AVATAR_TEMPLATE_SMALL);
     }
 
     public String getAvatarThumb() {
-        return mData.mAvatarTemplate.replaceFirst(AVATAR_TEMPLATE_STUB, AVATAR_TEMPLATE_THUMB);
+        return mData.mAvatarTemplate.replaceFirst(Constants.AVATAR_TEMPLATE_STUB,
+                Constants.AVATAR_TEMPLATE_THUMB);
     }
 
     public String getAvatarThumbSmall() {
-        return mData.mAvatarTemplate.replaceFirst(AVATAR_TEMPLATE_STUB, AVATAR_TEMPLATE_THUMB_SMALL);
+        return mData.mAvatarTemplate.replaceFirst(Constants.AVATAR_TEMPLATE_STUB,
+                Constants.AVATAR_TEMPLATE_THUMB_SMALL);
     }
 
     @Nullable

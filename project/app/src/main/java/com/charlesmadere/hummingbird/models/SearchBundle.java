@@ -7,6 +7,7 @@ import android.support.annotation.StringRes;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -398,9 +399,33 @@ public class SearchBundle implements Parcelable {
 
 
     public static class GroupResult extends AbsResult implements Parcelable {
+        private String[] mImages;
+
+
+        @Nullable
+        public String[] getImages() {
+            if (mImages == null && getImage() != null) {
+                mImages = MiscUtils.getAvatars(getImage());
+            }
+
+            return mImages;
+        }
+
         @Override
         public Type getType() {
             return Type.GROUP;
+        }
+
+        @Override
+        protected void readFromParcel(final Parcel source) {
+            super.readFromParcel(source);
+            mImages = source.createStringArray();
+        }
+
+        @Override
+        public void writeToParcel(final Parcel dest, final int flags) {
+            super.writeToParcel(dest, flags);
+            dest.writeStringArray(mImages);
         }
 
         public static final Creator<GroupResult> CREATOR = new Creator<GroupResult>() {
@@ -448,7 +473,7 @@ public class SearchBundle implements Parcelable {
         @Nullable
         public String[] getImages() {
             if (mImages == null && getImage() != null) {
-                mImages = User.getAvatars(getImage());
+                mImages = MiscUtils.getAvatars(getImage());
             }
 
             return mImages;
