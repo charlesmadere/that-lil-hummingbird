@@ -265,6 +265,11 @@ public class CommentsActivity extends BaseDrawerActivity implements ObjectCache.
         mRefreshLayout.setRefreshing(false);
     }
 
+    @Override
+    protected boolean showSearchIcon() {
+        return false;
+    }
+
 
     private static class GetSubstoriesListener implements ApiResponse<Feed> {
         private final WeakReference<CommentsActivity> mActivityReference;
