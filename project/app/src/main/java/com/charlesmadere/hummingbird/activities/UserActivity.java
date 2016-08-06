@@ -169,6 +169,9 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
     @Override
     public boolean onPrepareOptionsMenu(final Menu menu) {
         if (mUserDigest != null) {
+            menu.findItem(R.id.miAnimeLibrary).setVisible(true);
+            menu.findItem(R.id.miMangaLibrary).setVisible(true);
+
             if (mUserDigest.getUser().isFollowed()) {
                 menu.findItem(R.id.miUnfollow).setVisible(true);
             } else {

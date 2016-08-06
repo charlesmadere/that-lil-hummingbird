@@ -7,13 +7,15 @@
         android:id="@+id/miAnimeLibrary"
         android:title="@string/anime_library"
         android:titleCondensed="@string/anime"
-        compat:showAsAction="ifRoom|withText" />
+        android:visible="false"
+        compat:showAsAction="ifRoom" />
     <item
         android:icon="@drawable/ic_library_books_white_24dp"
         android:id="@+id/miMangaLibrary"
         android:title="@string/manga_library"
         android:titleCondensed="@string/manga"
-        compat:showAsAction="ifRoom|withText" />
+        android:visible="false"
+        compat:showAsAction="ifRoom" />
     <item
         android:id="@+id/miFollow"
         android:title="@string/follow"
