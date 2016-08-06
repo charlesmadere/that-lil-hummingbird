@@ -14,7 +14,10 @@ public final class Constants {
     public static final String GITHUB_URL = "https://github.com/charlesmadere/that-lil-hummingbird";
     public static final String GROUPS = "groups";
     public static final String HTTPS = "https";
+    public static final String HUMMINGBIRD_ANIME_URL = "https://hummingbird.me/anime/";
+    public static final String HUMMINGBIRD_GROUP_URL = "https://hummingbird.me/groups/";
     public static final String HUMMINGBIRD_HOST = "hummingbird.me";
+    public static final String HUMMINGBIRD_MANGA_URL = "https://hummingbird.me/manga/";
     public static final String HUMMINGBIRD_URL = HTTPS + "://" + HUMMINGBIRD_HOST + "/";
     public static final String HUMMINGBIRD_URL_PRO = HUMMINGBIRD_URL + "pro";
     public static final String HUMMINGBIRD_URL_RELATIVE = "//hummingbird.me/";
@@ -27,6 +30,7 @@ public final class Constants {
     public static final String LOW_RAM_DEVICE = "low_ram_device";
     public static final String MANGA = "manga";
     public static final String MEMBERS = "members";
+    public static final String MIMETYPE_TEXT_PLAIN = "text/plain";
     public static final String NOTIFICATIONS = "notifications";
     public static final String PLAY_STORE_BASE_URL = "https://play.google.com/store/apps/details?id=";
     public static final String PRISCILLA_URL = "https://www.etsy.com/shop/OchaaNeko";

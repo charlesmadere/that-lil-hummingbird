@@ -11,12 +11,15 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.GroupFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.BaseGroupFragment;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
+import com.charlesmadere.hummingbird.misc.ShareUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Group;
 import com.charlesmadere.hummingbird.models.GroupDigest;
@@ -131,6 +134,32 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
         } else {
             showGroupDigest(mGroupDigest);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_group, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.miShare:
+                ShareUtils.shareGroup(this, mGroupDigest);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        if (mGroupDigest != null) {
+            menu.findItem(R.id.miShare).setVisible(true);
+        }
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
