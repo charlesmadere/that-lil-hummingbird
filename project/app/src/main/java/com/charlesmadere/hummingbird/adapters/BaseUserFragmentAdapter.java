@@ -9,8 +9,8 @@ import android.support.v4.util.SparseArrayCompat;
 import android.view.ViewGroup;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.fragments.BaseUserFeedFragment;
 import com.charlesmadere.hummingbird.fragments.BaseFragment;
+import com.charlesmadere.hummingbird.fragments.BaseUserFeedFragment;
 import com.charlesmadere.hummingbird.fragments.UserProfileFragment;
 
 import java.lang.ref.WeakReference;
