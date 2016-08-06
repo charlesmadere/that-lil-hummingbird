@@ -11,6 +11,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.BaseLibraryFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.BaseLibraryFragment;
 import com.charlesmadere.hummingbird.models.LibrarySort;
+import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 
 import butterknife.BindView;
@@ -19,11 +20,13 @@ public abstract class BaseLibraryActivity extends BaseDrawerActivity implements
         BaseLibraryFragment.Listener {
 
     private static final String CNAME = BaseLibraryActivity.class.getCanonicalName();
+    protected static final String EXTRA_UI_COLOR_SET = CNAME + ".UiColorSet";
     protected static final String EXTRA_USERNAME = CNAME + ".Username";
     protected static final String KEY_LIBRARY_SORT = "LibrarySort";
 
     protected LibrarySort mLibrarySort;
     protected String mUsername;
+    protected UiColorSet mUiColorSet;
 
     @BindView(R.id.tabLayout)
     protected TabLayout mTabLayout;
@@ -45,9 +48,15 @@ public abstract class BaseLibraryActivity extends BaseDrawerActivity implements
         setContentView(R.layout.activity_library);
 
         final Intent intent = getIntent();
-        if (intent != null && intent.hasExtra(EXTRA_USERNAME)) {
-            mUsername = intent.getStringExtra(EXTRA_USERNAME);
-            setSubtitle(mUsername);
+        if (intent != null) {
+            if (intent.hasExtra(EXTRA_USERNAME)) {
+                mUsername = intent.getStringExtra(EXTRA_USERNAME);
+                setSubtitle(mUsername);
+            }
+
+            if (intent.hasExtra(EXTRA_UI_COLOR_SET)) {
+                mUiColorSet = intent.getParcelableExtra(EXTRA_UI_COLOR_SET);
+            }
         }
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {

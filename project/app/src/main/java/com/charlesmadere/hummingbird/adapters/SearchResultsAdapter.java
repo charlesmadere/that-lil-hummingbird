@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.SearchBundle;
-import com.charlesmadere.hummingbird.models.SearchScope;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +14,30 @@ public class SearchResultsAdapter extends BaseMultiAdapter {
         super(context);
     }
 
-    private void buildSectionedList(final SearchBundle searchBundle) {
+    @Override
+    protected HashMap<Class, Integer> getItemViewKeyMap() {
+        final HashMap<Class, Integer> map = new HashMap<>(5);
+        map.put(String.class, R.layout.item_charsequence_card);
+        map.put(SearchBundle.AnimeResult.class, R.layout.item_anime_result);
+        map.put(SearchBundle.GroupResult.class, R.layout.item_group_result);
+        map.put(SearchBundle.MangaResult.class, R.layout.item_manga_result);
+        map.put(SearchBundle.UserResult.class, R.layout.item_user_result);
+        return map;
+    }
+
+    @Override
+    public void onBindViewHolder(final AdapterView.ViewHolder holder, final int position) {
+        if (holder.getAdapterView() instanceof Handler) {
+            final boolean showDivider = position + 1 < getItemCount() &&
+                    getItem(position + 1) instanceof SearchBundle.AbsResult;
+            ((Handler) holder.getAdapterView()).setContent(
+                    (SearchBundle.AbsResult) getItem(position), showDivider);
+        } else {
+            super.onBindViewHolder(holder, position);
+        }
+    }
+
+    public void set(final SearchBundle searchBundle) {
         if (searchBundle == null || !searchBundle.hasResults()) {
             super.set(null);
             return;
@@ -50,47 +72,8 @@ public class SearchResultsAdapter extends BaseMultiAdapter {
         super.set(list);
     }
 
-    private void buildUnsectionedList(final SearchBundle searchBundle) {
-        if (searchBundle == null || !searchBundle.hasResults()) {
-            super.set(null);
-        } else {
-            super.set(new ArrayList<Object>(searchBundle.getResults()));
-        }
-    }
 
-    @Override
-    protected HashMap<Class, Integer> getItemViewKeyMap() {
-        final HashMap<Class, Integer> map = new HashMap<>(5);
-        map.put(String.class, R.layout.item_charsequence_card);
-        map.put(SearchBundle.AnimeResult.class, R.layout.item_anime_result);
-        map.put(SearchBundle.GroupResult.class, R.layout.item_group_result);
-        map.put(SearchBundle.MangaResult.class, R.layout.item_manga_result);
-        map.put(SearchBundle.UserResult.class, R.layout.item_user_result);
-        return map;
-    }
-
-    @Override
-    public void onBindViewHolder(final AdapterView.ViewHolder holder, final int position) {
-        if (holder.getAdapterView() instanceof SearchResultHandler) {
-            final boolean showDivider = position + 1 < getItemCount() &&
-                    getItem(position + 1) instanceof SearchBundle.AbsResult;
-            ((SearchResultHandler) holder.getAdapterView()).setContent(
-                    (SearchBundle.AbsResult) getItem(position), showDivider);
-        } else {
-            super.onBindViewHolder(holder, position);
-        }
-    }
-
-    public void set(final SearchBundle searchBundle, final SearchScope searchScope) {
-        if (searchScope == SearchScope.ALL) {
-            buildSectionedList(searchBundle);
-        } else {
-            buildUnsectionedList(searchBundle);
-        }
-    }
-
-
-    public interface SearchResultHandler {
+    public interface Handler {
         void setContent(final SearchBundle.AbsResult result, final boolean showDivider);
     }
 

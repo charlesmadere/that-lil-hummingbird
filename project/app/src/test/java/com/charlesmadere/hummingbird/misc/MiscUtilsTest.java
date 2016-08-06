@@ -94,18 +94,18 @@ public class MiscUtilsTest {
 
     @Test
     public void testGetAvatars() throws Exception {
-        assertNull(MiscUtils.getAvatars(null));
-        assertNull(MiscUtils.getAvatars(""));
+        assertNull(MiscUtils.getUserAvatars(null));
+        assertNull(MiscUtils.getUserAvatars(""));
 
-        assertNotNull(MiscUtils.getAvatars(URL0));
-        assertNotNull(MiscUtils.getAvatars(URL1));
-        assertNotNull(MiscUtils.getAvatars(URL2));
-        assertNotNull(MiscUtils.getAvatars(URL3));
-        assertNotNull(MiscUtils.getAvatars(URL4));
-        assertNotNull(MiscUtils.getAvatars(URL5));
-        assertNotNull(MiscUtils.getAvatars(URL6));
-        assertNotNull(MiscUtils.getAvatars(URL7));
-        assertNotNull(MiscUtils.getAvatars(URL8));
+        assertNotNull(MiscUtils.getUserAvatars(URL0));
+        assertNotNull(MiscUtils.getUserAvatars(URL1));
+        assertNotNull(MiscUtils.getUserAvatars(URL2));
+        assertNotNull(MiscUtils.getUserAvatars(URL3));
+        assertNotNull(MiscUtils.getUserAvatars(URL4));
+        assertNotNull(MiscUtils.getUserAvatars(URL5));
+        assertNotNull(MiscUtils.getUserAvatars(URL6));
+        assertNotNull(MiscUtils.getUserAvatars(URL7));
+        assertNotNull(MiscUtils.getUserAvatars(URL8));
     }
 
     @Test

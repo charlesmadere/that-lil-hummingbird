@@ -20,6 +20,7 @@ import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.FeedPost;
+import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -37,8 +38,10 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
     private static final String TAG = "UserActivity";
     private static final String CNAME = UserActivity.class.getCanonicalName();
     private static final String EXTRA_USERNAME = CNAME + ".Username";
+    private static final String KEY_UI_COLOR_SET = "UiColorSet";
 
     private String mUsername;
+    private UiColorSet mUiColorSet;
     private UserDigest mUserDigest;
 
     @BindView(R.id.appBarLayout)
@@ -111,11 +114,8 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
         mUsername = intent.getStringExtra(EXTRA_USERNAME);
         setTitle(mUsername);
 
-        mStartingPosition = UserFragmentAdapter.POSITION_FEED;
-
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mStartingPosition = savedInstanceState.getInt(KEY_STARTING_POSITION,
-                    mStartingPosition);
+            mUiColorSet = savedInstanceState.getParcelable(KEY_UI_COLOR_SET);
         }
 
         mUserDigest = ObjectCache.get(this);
@@ -182,7 +182,10 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
     @Override
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(KEY_STARTING_POSITION, mViewPager.getCurrentItem());
+
+        if (mUiColorSet != null) {
+            outState.putParcelable(KEY_UI_COLOR_SET, mUiColorSet);
+        }
 
         if (mUserDigest != null) {
             ObjectCache.put(mUserDigest, this);

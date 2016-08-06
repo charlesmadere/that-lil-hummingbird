@@ -9,7 +9,6 @@ import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 
 public class Feed {
@@ -313,8 +312,6 @@ public class Feed {
         }
 
         if (hasSubstories()) {
-            Collections.sort(mSubstories, AbsSubstory.COMPARATOR);
-
             for (final AbsSubstory substory : mSubstories) {
                 substory.hydrate(this);
             }

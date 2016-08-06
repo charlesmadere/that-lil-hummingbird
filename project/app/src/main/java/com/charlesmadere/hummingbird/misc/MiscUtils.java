@@ -104,31 +104,6 @@ public final class MiscUtils {
         }
     }
 
-    @Nullable
-    public static String[] getAvatars(@Nullable final String avatar) {
-        if (!isValidArtwork(avatar)) {
-            return null;
-        }
-
-        final String replace;
-        if (avatar.contains('/' + Constants.AVATAR_TEMPLATE_MEDIUM + '/')) {
-            replace = '/' + Constants.AVATAR_TEMPLATE_MEDIUM + '/';
-        } else if (avatar.contains('/' + Constants.AVATAR_TEMPLATE_SMALL + '/')) {
-            replace = '/' + Constants.AVATAR_TEMPLATE_SMALL + '/';
-        } else if (avatar.contains('/' + Constants.AVATAR_TEMPLATE_THUMB + '/')) {
-            replace = '/' + Constants.AVATAR_TEMPLATE_THUMB + '/';
-        } else if (avatar.contains('/' + Constants.AVATAR_TEMPLATE_THUMB_SMALL + '/')) {
-            replace = '/' + Constants.AVATAR_TEMPLATE_THUMB_SMALL + '/';
-        } else {
-            return new String[] { avatar };
-        }
-
-        return new String[] { avatar.replaceFirst(replace, '/' + Constants.AVATAR_TEMPLATE_THUMB + '/'),
-                avatar.replaceFirst(replace, '/' + Constants.AVATAR_TEMPLATE_THUMB_SMALL + '/'),
-                avatar.replaceFirst(replace, '/' + Constants.AVATAR_TEMPLATE_SMALL + '/'),
-                avatar.replaceFirst(replace, '/' + Constants.AVATAR_TEMPLATE_MEDIUM + '/') };
-    }
-
     public static CharSequence getElapsedTime(final Resources res, long seconds) {
         if (seconds <= 0L) {
             return res.getText(R.string.none);
@@ -214,6 +189,42 @@ public final class MiscUtils {
         }
 
         return string;
+    }
+
+    @Nullable
+    public static String[] getGroupLogos(@Nullable final String logo) {
+        if (!isValidArtwork(logo)) {
+            return null;
+        }
+
+        // TODO
+
+        return null;
+    }
+
+    @Nullable
+    public static String[] getUserAvatars(@Nullable final String avatar) {
+        if (!isValidArtwork(avatar)) {
+            return null;
+        }
+
+        final String replace;
+        if (avatar.contains('/' + Constants.AVATAR_TEMPLATE_MEDIUM + '/')) {
+            replace = '/' + Constants.AVATAR_TEMPLATE_MEDIUM + '/';
+        } else if (avatar.contains('/' + Constants.AVATAR_TEMPLATE_SMALL + '/')) {
+            replace = '/' + Constants.AVATAR_TEMPLATE_SMALL + '/';
+        } else if (avatar.contains('/' + Constants.AVATAR_TEMPLATE_THUMB + '/')) {
+            replace = '/' + Constants.AVATAR_TEMPLATE_THUMB + '/';
+        } else if (avatar.contains('/' + Constants.AVATAR_TEMPLATE_THUMB_SMALL + '/')) {
+            replace = '/' + Constants.AVATAR_TEMPLATE_THUMB_SMALL + '/';
+        } else {
+            return new String[] { avatar };
+        }
+
+        return new String[] { avatar.replaceFirst(replace, '/' + Constants.AVATAR_TEMPLATE_THUMB + '/'),
+                avatar.replaceFirst(replace, '/' + Constants.AVATAR_TEMPLATE_THUMB_SMALL + '/'),
+                avatar.replaceFirst(replace, '/' + Constants.AVATAR_TEMPLATE_SMALL + '/'),
+                avatar.replaceFirst(replace, '/' + Constants.AVATAR_TEMPLATE_MEDIUM + '/') };
     }
 
     public static int integerCompare(final int lhs, final int rhs) {

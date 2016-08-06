@@ -27,7 +27,6 @@ import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.CheckablePreferenceView;
 import com.charlesmadere.hummingbird.views.CheckablePreferenceView.OnPreferenceChangeListener;
 import com.charlesmadere.hummingbird.views.HeadBodyItemView;
-import com.charlesmadere.hummingbird.views.KeyValueTextView;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -87,9 +86,6 @@ public class SettingsActivity extends BaseDrawerActivity {
 
     @BindView(R.id.hbivTitleLanguage)
     HeadBodyItemView mTitleLanguage;
-
-    @BindView(R.id.kvtvGetHummingbirdPro)
-    KeyValueTextView mGetHummingbirdPro;
 
     @BindView(R.id.tvGooglePlayServicesError)
     TextView mGooglePlayServicesError;
@@ -192,11 +188,6 @@ public class SettingsActivity extends BaseDrawerActivity {
                 })
                 .setTitle(R.string.default_library_sorting)
                 .show();
-    }
-
-    @OnClick(R.id.kvtvGetHummingbirdPro)
-    void onGetHummingbirdProClick() {
-        MiscUtils.openUrl(this, Constants.HUMMINGBIRD_URL_PRO);
     }
 
     @OnClick(R.id.tvGitHub)
@@ -414,12 +405,6 @@ public class SettingsActivity extends BaseDrawerActivity {
             mPowerRequired.setEnabled(false);
             mWifiRequired.setEnabled(false);
             mLastPoll.setVisibility(View.GONE);
-        }
-
-        if (CurrentUser.get().getUser().isPro()) {
-            mGetHummingbirdPro.setVisibility(View.GONE);
-        } else {
-            mGetHummingbirdPro.setVisibility(View.VISIBLE);
         }
     }
 

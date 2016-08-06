@@ -37,9 +37,6 @@
                     android:layout_width="match_parent"
                     android:lines="1"
                     android:maxLines="1"
-                    android:shadowColor="@color/black"
-                    android:shadowDy="2"
-                    android:shadowRadius="4"
                     android:textColor="@color/white"
                     app:typeface="open_sans_bold"
                     tools:text="Ryuko Matoi" />

@@ -21,6 +21,7 @@ import com.charlesmadere.hummingbird.fragments.BaseMangaFragment;
 import com.charlesmadere.hummingbird.fragments.MangaLibraryUpdateFragment;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
+import com.charlesmadere.hummingbird.misc.ShareUtils;
 import com.charlesmadere.hummingbird.models.AddMangaLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Manga;
@@ -151,6 +152,10 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
                 MangaLibraryUpdateFragment.create(mMangaDigest).show(getSupportFragmentManager(),
                         MangaLibraryUpdateFragment.TAG);
                 return true;
+
+            case R.id.miShare:
+                ShareUtils.shareManga(this, mMangaDigest);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -158,8 +163,12 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
 
     @Override
     public boolean onPrepareOptionsMenu(final Menu menu) {
-        if (mMangaDigest != null && !mMangaDigest.hasLibraryEntry()) {
-            menu.findItem(R.id.miAddToLibrary).setVisible(true);
+        if (mMangaDigest != null) {
+            menu.findItem(R.id.miShare).setVisible(true);
+
+            if (!mMangaDigest.hasLibraryEntry()) {
+                menu.findItem(R.id.miAddToLibrary).setVisible(true);
+            }
         }
 
         return super.onPrepareOptionsMenu(menu);

@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MangaResultItemView extends CardView implements AdapterView<Void>,
-        SearchResultsAdapter.SearchResultHandler, View.OnClickListener {
+        SearchResultsAdapter.Handler, View.OnClickListener {
 
     private SearchBundle.MangaResult mMangaResult;
 

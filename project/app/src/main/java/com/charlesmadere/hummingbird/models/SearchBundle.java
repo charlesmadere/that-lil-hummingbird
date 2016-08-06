@@ -405,7 +405,7 @@ public class SearchBundle implements Parcelable {
         @Nullable
         public String[] getImages() {
             if (mImages == null && getImage() != null) {
-                mImages = MiscUtils.getAvatars(getImage());
+                mImages = MiscUtils.getGroupLogos(getImage());
             }
 
             return mImages;
@@ -473,7 +473,7 @@ public class SearchBundle implements Parcelable {
         @Nullable
         public String[] getImages() {
             if (mImages == null && getImage() != null) {
-                mImages = MiscUtils.getAvatars(getImage());
+                mImages = MiscUtils.getUserAvatars(getImage());
             }
 
             return mImages;

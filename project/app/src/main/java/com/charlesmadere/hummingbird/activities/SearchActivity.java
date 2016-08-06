@@ -181,7 +181,7 @@ public class SearchActivity extends BaseDrawerActivity implements
     }
 
     private void showSearchResults(final SearchBundle searchBundle) {
-        mAdapter.set(searchBundle, mSearchScope.getSelectedItem());
+        mAdapter.set(searchBundle);
         mProgressBar.setVisibility(View.GONE);
         mInitialMessage.setVisibility(View.GONE);
         mEmpty.setVisibility(View.GONE);

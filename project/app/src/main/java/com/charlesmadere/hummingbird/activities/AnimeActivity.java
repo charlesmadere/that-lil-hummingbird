@@ -22,6 +22,7 @@ import com.charlesmadere.hummingbird.fragments.AnimeLibraryUpdateFragment;
 import com.charlesmadere.hummingbird.fragments.BaseAnimeFragment;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
+import com.charlesmadere.hummingbird.misc.ShareUtils;
 import com.charlesmadere.hummingbird.models.AddAnimeLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.Anime;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
@@ -159,6 +160,10 @@ public class AnimeActivity extends BaseDrawerActivity implements
                 AnimeLibraryUpdateFragment.create(mAnimeDigest).show(getSupportFragmentManager(),
                         AnimeLibraryUpdateFragment.TAG);
                 return true;
+
+            case R.id.miShare:
+                ShareUtils.shareAnime(this, mAnimeDigest);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -166,8 +171,12 @@ public class AnimeActivity extends BaseDrawerActivity implements
 
     @Override
     public boolean onPrepareOptionsMenu(final Menu menu) {
-        if (mAnimeDigest != null && !mAnimeDigest.getInfo().hasLibraryEntryId()) {
-            menu.findItem(R.id.miAddToLibrary).setVisible(true);
+        if (mAnimeDigest != null) {
+            menu.findItem(R.id.miShare).setVisible(true);
+
+            if (!mAnimeDigest.getInfo().hasLibraryEntryId()) {
+                menu.findItem(R.id.miAddToLibrary).setVisible(true);
+            }
         }
 
         return super.onPrepareOptionsMenu(menu);

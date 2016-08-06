@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class GroupResultItemView extends CardView implements AdapterView<Void>,
-        SearchResultsAdapter.SearchResultHandler, View.OnClickListener {
+        SearchResultsAdapter.Handler, View.OnClickListener {
 
     private SearchBundle.GroupResult mGroupResult;
 
