@@ -7,15 +7,23 @@ import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
+import com.charlesmadere.hummingbird.models.SimpleDate;
 import com.charlesmadere.hummingbird.views.ReplySubstoryStandaloneItemView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
-public class CommentsAdapter extends BaseMultiPaginationAdapter {
+public class CommentsAdapter extends BaseMultiPaginationAdapter implements Comparator<AbsSubstory> {
 
     public CommentsAdapter(final Context context) {
         super(context);
+    }
+
+    @Override
+    public int compare(final AbsSubstory o1, final AbsSubstory o2) {
+        return SimpleDate.CHRONOLOGICAL_ORDER.compare(o1.getCreatedAt(), o2.getCreatedAt());
     }
 
     @Override
@@ -45,6 +53,7 @@ public class CommentsAdapter extends BaseMultiPaginationAdapter {
 
         final ArrayList<AbsSubstory> substories = feed.getSubstories(AbsSubstory.Type.REPLY);
         if (substories != null && !substories.isEmpty()) {
+            Collections.sort(substories, this);
             list.addAll(substories);
         }
 
