@@ -42,23 +42,23 @@ public class User implements Parcelable {
     }
 
     public String getAvatarMedium() {
-        return mData.mAvatarTemplate.replaceFirst(Constants.AVATAR_TEMPLATE_STUB,
-                Constants.AVATAR_TEMPLATE_MEDIUM);
+        return mData.mAvatarTemplate.replaceFirst(Constants.IMAGE_TEMPLATE_STUB,
+                Constants.IMAGE_TEMPLATE_MEDIUM);
     }
 
     public String getAvatarSmall() {
-        return mData.mAvatarTemplate.replaceFirst(Constants.AVATAR_TEMPLATE_STUB,
-                Constants.AVATAR_TEMPLATE_SMALL);
+        return mData.mAvatarTemplate.replaceFirst(Constants.IMAGE_TEMPLATE_STUB,
+                Constants.IMAGE_TEMPLATE_SMALL);
     }
 
     public String getAvatarThumb() {
-        return mData.mAvatarTemplate.replaceFirst(Constants.AVATAR_TEMPLATE_STUB,
-                Constants.AVATAR_TEMPLATE_THUMB);
+        return mData.mAvatarTemplate.replaceFirst(Constants.IMAGE_TEMPLATE_STUB,
+                Constants.IMAGE_TEMPLATE_THUMB);
     }
 
     public String getAvatarThumbSmall() {
-        return mData.mAvatarTemplate.replaceFirst(Constants.AVATAR_TEMPLATE_STUB,
-                Constants.AVATAR_TEMPLATE_THUMB_SMALL);
+        return mData.mAvatarTemplate.replaceFirst(Constants.IMAGE_TEMPLATE_STUB,
+                Constants.IMAGE_TEMPLATE_THUMB_SMALL);
     }
 
     @Nullable

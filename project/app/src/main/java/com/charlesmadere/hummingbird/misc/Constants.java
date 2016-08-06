@@ -7,11 +7,6 @@ public final class Constants {
             "/thumbnails/original/missing.png" };
 
     public static final String ANIME = "anime";
-    public static final String AVATAR_TEMPLATE_STUB = "\\{size\\}";
-    public static final String AVATAR_TEMPLATE_MEDIUM = "medium";
-    public static final String AVATAR_TEMPLATE_SMALL = "small";
-    public static final String AVATAR_TEMPLATE_THUMB = "thumb";
-    public static final String AVATAR_TEMPLATE_THUMB_SMALL = "thumb_small";
     public static final String CHARLES_TWITTER_URL = "https://twitter.com/charlesmadere";
     public static final String DEBUG = "debug";
     public static final String FOLLOWERS = "followers";
@@ -23,6 +18,11 @@ public final class Constants {
     public static final String HUMMINGBIRD_URL = HTTPS + "://" + HUMMINGBIRD_HOST + "/";
     public static final String HUMMINGBIRD_URL_PRO = HUMMINGBIRD_URL + "pro";
     public static final String HUMMINGBIRD_URL_RELATIVE = "//hummingbird.me/";
+    public static final String IMAGE_TEMPLATE_STUB = "\\{size\\}";
+    public static final String IMAGE_TEMPLATE_MEDIUM = "medium";
+    public static final String IMAGE_TEMPLATE_SMALL = "small";
+    public static final String IMAGE_TEMPLATE_THUMB = "thumb";
+    public static final String IMAGE_TEMPLATE_THUMB_SMALL = "thumb_small";
     public static final String LIBRARY = "library";
     public static final String LOW_RAM_DEVICE = "low_ram_device";
     public static final String MANGA = "manga";

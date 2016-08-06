@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -23,15 +24,23 @@ import static org.junit.Assert.assertTrue;
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
 public class MiscUtilsTest {
 
-    private static final String URL0 = "https://static.hummingbird.me/users/avatars/000/042/603/thumb_small/wopian_2x.jpg?1466028564";
-    private static final String URL1 = "https://static.hummingbird.me/users/avatars/000/077/547/thumb/ryuuko_square3.jpg?1470293290";
-    private static final String URL2 = "https://static.hummingbird.me/users/avatars/000/090/096/thumb/Yoko_La_Yoko.jpg?1441097436";
-    private static final String URL3 = "https://static.hummingbird.me/users/avatars/000/077/547/medium/ryuuko_square3.jpg?1470293290";
-    private static final String URL4 = "https://static.hummingbird.me/users/avatars/000/067/566/thumb_small/Darth_Vader_riding_Charizard_colored.jpg?1416027708";
-    private static final String URL5 = "https://static.hummingbird.me/users/avatars/000/079/485/small/sdpu3.jpg?1456852979";
-    private static final String URL6 = "https://static.hummingbird.me/users/avatars/000/042/603.jpg";
-    private static final String URL7 = "https://static.hummingbird.me/users/avatars/000/042/medium.jpg";
-    private static final String URL8 = "https://static.hummingbird.me/users/avatars/000/042/medium-128.jpg";
+    private static final String AVATAR0 = "https://static.hummingbird.me/users/avatars/000/042/603/thumb_small/wopian_2x.jpg?1466028564";
+    private static final String AVATAR1 = "https://static.hummingbird.me/users/avatars/000/077/547/thumb/ryuuko_square3.jpg?1470293290";
+    private static final String AVATAR2 = "https://static.hummingbird.me/users/avatars/000/090/096/thumb/Yoko_La_Yoko.jpg?1441097436";
+    private static final String AVATAR3 = "https://static.hummingbird.me/users/avatars/000/077/547/medium/ryuuko_square3.jpg?1470293290";
+    private static final String AVATAR4 = "https://static.hummingbird.me/users/avatars/000/067/566/thumb_small/Darth_Vader_riding_Charizard_colored.jpg?1416027708";
+    private static final String AVATAR5 = "https://static.hummingbird.me/users/avatars/000/079/485/small/sdpu3.jpg?1456852979";
+    private static final String AVATAR6 = "https://static.hummingbird.me/users/avatars/000/042/603.jpg";
+    private static final String AVATAR7 = "https://static.hummingbird.me/users/avatars/000/042/medium.jpg";
+    private static final String AVATAR8 = "https://static.hummingbird.me/users/avatars/000/042/medium-128.jpg";
+
+    private static final String LOGO0 = "https://static.hummingbird.me/groups/avatars/1200/thumb.jpeg?1440447123";
+    private static final String LOGO1 = "https://static.hummingbird.me/groups/avatars/1200/small.jpeg?1440447123";
+    private static final String LOGO2 = "https://static.hummingbird.me/groups/avatars/668/thumb.jpeg?1428543638";
+    private static final String LOGO3 = "https://static.hummingbird.me/groups/avatars/668/thumb.jpeg?1428543638";
+    private static final String LOGO4 = "https://static.hummingbird.me/groups/avatars/56/medium.jpeg?1424233941";
+    private static final String LOGO5 = "https://static.hummingbird.me/groups/avatars/79/thumb.jpeg?1424314747";
+    private static final String LOGO6 = "https://static.hummingbird.me/groups/cover_images/79/thumb.jpg?1424314826";
 
 
     @Test
@@ -93,19 +102,33 @@ public class MiscUtilsTest {
     }
 
     @Test
-    public void testGetAvatars() throws Exception {
+    public void testGetGroupLogos() throws Exception {
+        assertNull(MiscUtils.getGroupLogos(null));
+        assertNull(MiscUtils.getGroupLogos(""));
+
+        assertNotNull(MiscUtils.getGroupLogos(LOGO0));
+        assertNotNull(MiscUtils.getGroupLogos(LOGO1));
+        assertNotNull(MiscUtils.getGroupLogos(LOGO2));
+        assertNotNull(MiscUtils.getGroupLogos(LOGO3));
+        assertNotNull(MiscUtils.getGroupLogos(LOGO4));
+        assertNotNull(MiscUtils.getGroupLogos(LOGO5));
+        assertNotNull(MiscUtils.getGroupLogos(LOGO6));
+    }
+
+    @Test
+    public void testGetUserAvatars() throws Exception {
         assertNull(MiscUtils.getUserAvatars(null));
         assertNull(MiscUtils.getUserAvatars(""));
 
-        assertNotNull(MiscUtils.getUserAvatars(URL0));
-        assertNotNull(MiscUtils.getUserAvatars(URL1));
-        assertNotNull(MiscUtils.getUserAvatars(URL2));
-        assertNotNull(MiscUtils.getUserAvatars(URL3));
-        assertNotNull(MiscUtils.getUserAvatars(URL4));
-        assertNotNull(MiscUtils.getUserAvatars(URL5));
-        assertNotNull(MiscUtils.getUserAvatars(URL6));
-        assertNotNull(MiscUtils.getUserAvatars(URL7));
-        assertNotNull(MiscUtils.getUserAvatars(URL8));
+        assertNotNull(MiscUtils.getUserAvatars(AVATAR0));
+        assertNotNull(MiscUtils.getUserAvatars(AVATAR1));
+        assertNotNull(MiscUtils.getUserAvatars(AVATAR2));
+        assertNotNull(MiscUtils.getUserAvatars(AVATAR3));
+        assertNotNull(MiscUtils.getUserAvatars(AVATAR4));
+        assertNotNull(MiscUtils.getUserAvatars(AVATAR5));
+        assertNotNull(MiscUtils.getUserAvatars(AVATAR6));
+        assertNotNull(MiscUtils.getUserAvatars(AVATAR7));
+        assertNotNull(MiscUtils.getUserAvatars(AVATAR8));
     }
 
     @Test
@@ -149,7 +172,7 @@ public class MiscUtilsTest {
 
         LinkedList<Integer> linked = new LinkedList<>();
         assertNotNull(MiscUtils.toArrayList(linked));
-        assertTrue(linked.size() == MiscUtils.toArrayList(linked).size());
+        assertEquals(linked.size(), MiscUtils.toArrayList(linked).size());
 
         linked.add(1);
         linked.add(2);

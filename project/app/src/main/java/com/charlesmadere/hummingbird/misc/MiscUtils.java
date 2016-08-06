@@ -197,9 +197,23 @@ public final class MiscUtils {
             return null;
         }
 
-        // TODO
+        final String replace;
+        if (logo.contains('/' + Constants.IMAGE_TEMPLATE_MEDIUM + '.')) {
+            replace = '/' + Constants.IMAGE_TEMPLATE_MEDIUM + '.';
+        } else if (logo.contains('/' + Constants.IMAGE_TEMPLATE_SMALL + '.')) {
+            replace = '/' + Constants.IMAGE_TEMPLATE_SMALL + '.';
+        } else if (logo.contains('/' + Constants.IMAGE_TEMPLATE_THUMB + '.')) {
+            replace = '/' + Constants.IMAGE_TEMPLATE_THUMB + '.';
+        } else if (logo.contains('/' + Constants.IMAGE_TEMPLATE_THUMB_SMALL + '.')) {
+            replace = '/' + Constants.IMAGE_TEMPLATE_THUMB_SMALL + '.';
+        } else {
+            return new String[] { logo };
+        }
 
-        return null;
+        return new String[] { logo.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_THUMB + '.'),
+                logo.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_THUMB_SMALL + '.'),
+                logo.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_SMALL + '.'),
+                logo.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_MEDIUM + '.') };
     }
 
     @Nullable
@@ -209,22 +223,22 @@ public final class MiscUtils {
         }
 
         final String replace;
-        if (avatar.contains('/' + Constants.AVATAR_TEMPLATE_MEDIUM + '/')) {
-            replace = '/' + Constants.AVATAR_TEMPLATE_MEDIUM + '/';
-        } else if (avatar.contains('/' + Constants.AVATAR_TEMPLATE_SMALL + '/')) {
-            replace = '/' + Constants.AVATAR_TEMPLATE_SMALL + '/';
-        } else if (avatar.contains('/' + Constants.AVATAR_TEMPLATE_THUMB + '/')) {
-            replace = '/' + Constants.AVATAR_TEMPLATE_THUMB + '/';
-        } else if (avatar.contains('/' + Constants.AVATAR_TEMPLATE_THUMB_SMALL + '/')) {
-            replace = '/' + Constants.AVATAR_TEMPLATE_THUMB_SMALL + '/';
+        if (avatar.contains('/' + Constants.IMAGE_TEMPLATE_MEDIUM + '/')) {
+            replace = '/' + Constants.IMAGE_TEMPLATE_MEDIUM + '/';
+        } else if (avatar.contains('/' + Constants.IMAGE_TEMPLATE_SMALL + '/')) {
+            replace = '/' + Constants.IMAGE_TEMPLATE_SMALL + '/';
+        } else if (avatar.contains('/' + Constants.IMAGE_TEMPLATE_THUMB + '/')) {
+            replace = '/' + Constants.IMAGE_TEMPLATE_THUMB + '/';
+        } else if (avatar.contains('/' + Constants.IMAGE_TEMPLATE_THUMB_SMALL + '/')) {
+            replace = '/' + Constants.IMAGE_TEMPLATE_THUMB_SMALL + '/';
         } else {
             return new String[] { avatar };
         }
 
-        return new String[] { avatar.replaceFirst(replace, '/' + Constants.AVATAR_TEMPLATE_THUMB + '/'),
-                avatar.replaceFirst(replace, '/' + Constants.AVATAR_TEMPLATE_THUMB_SMALL + '/'),
-                avatar.replaceFirst(replace, '/' + Constants.AVATAR_TEMPLATE_SMALL + '/'),
-                avatar.replaceFirst(replace, '/' + Constants.AVATAR_TEMPLATE_MEDIUM + '/') };
+        return new String[] { avatar.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_THUMB + '/'),
+                avatar.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_THUMB_SMALL + '/'),
+                avatar.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_SMALL + '/'),
+                avatar.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_MEDIUM + '/') };
     }
 
     public static int integerCompare(final int lhs, final int rhs) {
