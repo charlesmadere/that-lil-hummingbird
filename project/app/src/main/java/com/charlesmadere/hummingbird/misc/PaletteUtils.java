@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -19,7 +20,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.Palette;
 import android.text.TextUtils;
-import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.charlesmadere.hummingbird.R;
@@ -69,15 +69,6 @@ public final class PaletteUtils {
         }
     }
 
-    @ColorInt
-    private static int getDrawableColor(final View view, @Nullable final Drawable drawable) {
-        if (drawable instanceof ColorDrawable) {
-            return ((ColorDrawable) drawable).getColor();
-        } else {
-            return ContextCompat.getColor(view.getContext(), R.color.transparent);
-        }
-    }
-
 
     public interface Listener {
         void onUiColorsBuilt(final UiColorSet uiColorSet);
@@ -109,24 +100,24 @@ public final class PaletteUtils {
             ArgbEvaluator argbEvaluator = new ArgbEvaluator();
 
             ValueAnimator appBarAnimator = ValueAnimator.ofObject(argbEvaluator,
-                    getDrawableColor(appBarLayout, appBarLayout.getBackground()), darkVibrantColor);
-            appBarAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    MiscUtils.getDrawableColor(appBarLayout, appBarLayout.getBackground()),
+                    darkVibrantColor);
+            appBarAnimator.addUpdateListener(new AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(final ValueAnimator animation) {
                     appBarLayout.setBackgroundColor((int) animation.getAnimatedValue());
                 }
             });
 
-            int statusBarScrimColor = getDrawableColor(collapsingToolbarLayout,
-                    collapsingToolbarLayout.getStatusBarScrim());
-            final ColorDrawable statusBarScrim = new ColorDrawable(statusBarScrimColor);
+            final ColorDrawable statusBarScrim = new ColorDrawable(MiscUtils.getDrawableColor(
+                    collapsingToolbarLayout, collapsingToolbarLayout.getStatusBarScrim()));
             collapsingToolbarLayout.setStatusBarScrim(new LayerDrawable(new Drawable[] {
                     statusBarScrim, new ColorDrawable(ContextCompat.getColor(
                     collapsingToolbarLayout.getContext(), R.color.translucent)) } ));
 
             ValueAnimator collapsingToolbarStatusBarAnimator = ValueAnimator.ofObject(argbEvaluator,
-                    statusBarScrimColor, darkVibrantColor);
-            collapsingToolbarStatusBarAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    statusBarScrim.getColor(), darkVibrantColor);
+            collapsingToolbarStatusBarAnimator.addUpdateListener(new AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(final ValueAnimator animation) {
                     statusBarScrim.setColor((int) animation.getAnimatedValue());
@@ -134,9 +125,9 @@ public final class PaletteUtils {
             });
 
             ValueAnimator collapsingToolbarContentAnimator = ValueAnimator.ofObject(argbEvaluator,
-                    getDrawableColor(collapsingToolbarLayout, collapsingToolbarLayout.getContentScrim()),
-                    darkVibrantColor);
-            collapsingToolbarContentAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    MiscUtils.getDrawableColor(collapsingToolbarLayout,
+                            collapsingToolbarLayout.getContentScrim()), darkVibrantColor);
+            collapsingToolbarContentAnimator.addUpdateListener(new AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(final ValueAnimator animation) {
                     collapsingToolbarLayout.setContentScrimColor((int) animation.getAnimatedValue());

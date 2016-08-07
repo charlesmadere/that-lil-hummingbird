@@ -8,6 +8,9 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.AttrRes;
@@ -15,6 +18,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.ActivityManagerCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.view.View;
@@ -102,6 +106,20 @@ public final class MiscUtils {
         } else {
             throw new RuntimeException("unable to find colorResId: " + colorResId);
         }
+    }
+
+    @ColorInt
+    public static int getDrawableColor(final Context context, @Nullable final Drawable drawable) {
+        if (drawable instanceof ColorDrawable) {
+            return ((ColorDrawable) drawable).getColor();
+        } else {
+            return ContextCompat.getColor(context, R.color.transparent);
+        }
+    }
+
+    @ColorInt
+    public static int getDrawableColor(final View view, @Nullable final Drawable drawable) {
+        return getDrawableColor(view.getContext(), drawable);
     }
 
     public static CharSequence getElapsedTime(final Resources res, long seconds) {
@@ -214,6 +232,13 @@ public final class MiscUtils {
                 logo.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_THUMB_SMALL + '.'),
                 logo.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_SMALL + '.'),
                 logo.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_MEDIUM + '.') };
+    }
+
+    public static LayerDrawable getStatusBarScrim(final Context context,
+            @Nullable final Drawable statusBarBackground) {
+        final int statusBarScrimColor = getDrawableColor(context, statusBarBackground);
+        return new LayerDrawable(new Drawable[] { new ColorDrawable(statusBarScrimColor),
+                new ColorDrawable(ContextCompat.getColor(context, R.color.translucent)) } );
     }
 
     @Nullable

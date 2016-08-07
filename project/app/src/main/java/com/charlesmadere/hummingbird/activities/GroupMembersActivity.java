@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.GroupMembersAdapter;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
@@ -81,6 +83,8 @@ public class GroupMembersActivity extends BaseDrawerActivity implements ObjectCa
     }
 
     private void applyUiColorSet() {
+        mDrawerLayout.setStatusBarBackground(MiscUtils.getStatusBarScrim(this,
+                new ColorDrawable(mUiColorSet.getDarkVibrantColor())));
         mToolbar.setBackgroundColor(mUiColorSet.getDarkVibrantColor());
     }
 
