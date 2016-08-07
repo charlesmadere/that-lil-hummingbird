@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -10,6 +11,8 @@ import android.view.View;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.AppNewsChecker;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
+import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 import com.charlesmadere.hummingbird.views.NavigationDrawerView;
 
@@ -26,6 +29,15 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
     @BindView(R.id.navigationDrawerView)
     protected NavigationDrawerView mNavigationDrawerView;
 
+
+    protected void applyUiColorSet(final UiColorSet uiColorSet) {
+        mDrawerLayout.setStatusBarBackground(MiscUtils.getStatusBarScrim(this,
+                new ColorDrawable(uiColorSet.getDarkVibrantColor())));
+
+        if (mToolbar != null) {
+            mToolbar.setBackgroundColor(uiColorSet.getDarkVibrantColor());
+        }
+    }
 
     public void closeDrawer() {
         mDrawerLayout.closeDrawer(mNavigationDrawerView);

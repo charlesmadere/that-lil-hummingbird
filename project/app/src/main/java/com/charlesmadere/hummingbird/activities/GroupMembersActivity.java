@@ -2,7 +2,6 @@ package com.charlesmadere.hummingbird.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,7 +12,6 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.GroupMembersAdapter;
-import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
@@ -42,7 +40,6 @@ public class GroupMembersActivity extends BaseDrawerActivity implements ObjectCa
     private GroupMembersAdapter mAdapter;
     private RecyclerViewPaginator mPaginator;
     private String mGroupId;
-    private UiColorSet mUiColorSet;
 
     @BindView(R.id.llEmpty)
     LinearLayout mEmpty;
@@ -80,12 +77,6 @@ public class GroupMembersActivity extends BaseDrawerActivity implements ObjectCa
         }
 
         return intent;
-    }
-
-    private void applyUiColorSet() {
-        mDrawerLayout.setStatusBarBackground(MiscUtils.getStatusBarScrim(this,
-                new ColorDrawable(mUiColorSet.getDarkVibrantColor())));
-        mToolbar.setBackgroundColor(mUiColorSet.getDarkVibrantColor());
     }
 
     private void fetchFeed() {
@@ -128,8 +119,8 @@ public class GroupMembersActivity extends BaseDrawerActivity implements ObjectCa
         }
 
         if (intent.hasExtra(EXTRA_UI_COLOR_SET)) {
-            mUiColorSet = intent.getParcelableExtra(EXTRA_UI_COLOR_SET);
-            applyUiColorSet();
+            final UiColorSet uiColorSet = intent.getParcelableExtra(EXTRA_UI_COLOR_SET);
+            applyUiColorSet(uiColorSet);
         }
 
         mFeed = ObjectCache.get(this);

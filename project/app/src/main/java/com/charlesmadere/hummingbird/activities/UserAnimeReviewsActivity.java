@@ -14,6 +14,7 @@ import com.charlesmadere.hummingbird.adapters.UserAnimeReviewsAdapter;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
+import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.DividerItemDecoration;
@@ -29,6 +30,7 @@ public class UserAnimeReviewsActivity extends BaseDrawerActivity implements Obje
 
     private static final String TAG = "UserAnimeReviewsActivity";
     private static final String CNAME = UserAnimeReviewsActivity.class.getCanonicalName();
+    private static final String EXTRA_UI_COLOR_SET = CNAME + ".UiColorSet";
     private static final String EXTRA_USERNAME = CNAME + ".Username";
 
     private Feed mFeed;
@@ -50,8 +52,19 @@ public class UserAnimeReviewsActivity extends BaseDrawerActivity implements Obje
 
 
     public static Intent getLaunchIntent(final Context context, final String username) {
-        return new Intent(context, UserAnimeReviewsActivity.class)
+        return getLaunchIntent(context, username, null);
+    }
+
+    public static Intent getLaunchIntent(final Context context, final String username,
+            @Nullable final UiColorSet uiColorSet) {
+        final Intent intent = new Intent(context, UserAnimeReviewsActivity.class)
                 .putExtra(EXTRA_USERNAME, username);
+
+        if (uiColorSet != null) {
+            intent.putExtra(EXTRA_UI_COLOR_SET, uiColorSet);
+        }
+
+        return intent;
     }
 
     private void fetchReviews() {
@@ -87,6 +100,11 @@ public class UserAnimeReviewsActivity extends BaseDrawerActivity implements Obje
         final Intent intent = getIntent();
         mUsername = intent.getStringExtra(EXTRA_USERNAME);
         setSubtitle(mUsername);
+
+        if (intent.hasExtra(EXTRA_UI_COLOR_SET)) {
+            final UiColorSet uiColorSet = intent.getParcelableExtra(EXTRA_UI_COLOR_SET);
+            applyUiColorSet(uiColorSet);
+        }
 
         mFeed = ObjectCache.get(this);
 
