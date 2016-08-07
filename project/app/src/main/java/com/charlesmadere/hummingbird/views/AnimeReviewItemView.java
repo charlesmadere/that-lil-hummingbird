@@ -54,6 +54,7 @@ public class AnimeReviewItemView extends CardView implements AdapterView<AnimeRe
         final Activity activity = MiscUtils.getActivity(getContext());
         final UiColorSet uiColorSet = activity instanceof PaletteUtils.Listener ?
                 ((PaletteUtils.Listener) activity).getUiColorSet() : null;
+
         activity.startActivity(AnimeReviewActivity.getLaunchIntent(activity, mReview, uiColorSet));
     }
 
