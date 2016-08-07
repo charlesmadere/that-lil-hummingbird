@@ -40,6 +40,7 @@ public class GroupMembersActivity extends BaseDrawerActivity implements ObjectCa
     private GroupMembersAdapter mAdapter;
     private RecyclerViewPaginator mPaginator;
     private String mGroupId;
+    private UiColorSet mUiColorSet;
 
     @BindView(R.id.llEmpty)
     LinearLayout mEmpty;
@@ -79,6 +80,10 @@ public class GroupMembersActivity extends BaseDrawerActivity implements ObjectCa
         return intent;
     }
 
+    private void applyUiColorSet() {
+        mToolbar.setBackgroundColor(mUiColorSet.getDarkVibrantColor());
+    }
+
     private void fetchFeed() {
         mRefreshLayout.setRefreshing(true);
         Api.getGroupMembers(mGroupId, new GetGroupMembersListener(this));
@@ -116,6 +121,11 @@ public class GroupMembersActivity extends BaseDrawerActivity implements ObjectCa
             setSubtitle(intent.getStringExtra(EXTRA_GROUP_NAME));
         } else {
             Api.getGroup(mGroupId, new GetGroupDigestListener(this));
+        }
+
+        if (intent.hasExtra(EXTRA_UI_COLOR_SET)) {
+            mUiColorSet = intent.getParcelableExtra(EXTRA_UI_COLOR_SET);
+            applyUiColorSet();
         }
 
         mFeed = ObjectCache.get(this);
