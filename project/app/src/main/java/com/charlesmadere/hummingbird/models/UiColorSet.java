@@ -13,7 +13,7 @@ public class UiColorSet implements Parcelable {
     private final int mVibrantColor;
 
 
-    public UiColorSet(@ColorInt final int darkVibrantColor, final int vibrantColor) {
+    public UiColorSet(@ColorInt final int darkVibrantColor, @ColorInt final int vibrantColor) {
         mDarkVibrantColor = darkVibrantColor;
         mVibrantColor = vibrantColor;
     }
