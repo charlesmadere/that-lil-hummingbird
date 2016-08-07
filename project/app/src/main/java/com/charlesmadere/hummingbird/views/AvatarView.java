@@ -66,8 +66,10 @@ public class AvatarView extends SimpleDraweeView implements AdapterView<User>,
 
     @Override
     public void onClick(final View view) {
-        final Context context = getContext();
-        context.startActivity(UserActivity.getLaunchIntent(context, mUser));
+        if (mUser != null) {
+            final Context context = getContext();
+            context.startActivity(UserActivity.getLaunchIntent(context, mUser));
+        }
     }
 
     @Override
