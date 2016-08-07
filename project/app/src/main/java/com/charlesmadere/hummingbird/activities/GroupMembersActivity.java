@@ -16,6 +16,7 @@ import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.GroupDigest;
+import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.DividerItemDecoration;
@@ -33,6 +34,7 @@ public class GroupMembersActivity extends BaseDrawerActivity implements ObjectCa
     private static final String CNAME = GroupMembersActivity.class.getCanonicalName();
     private static final String EXTRA_GROUP_ID = CNAME + ".GroupId";
     private static final String EXTRA_GROUP_NAME = CNAME + ".GroupName";
+    private static final String EXTRA_UI_COLOR_SET = CNAME + ".UiColorSet";
 
     private Feed mFeed;
     private GroupMembersAdapter mAdapter;
@@ -58,11 +60,20 @@ public class GroupMembersActivity extends BaseDrawerActivity implements ObjectCa
 
     public static Intent getLaunchIntent(final Context context, final String groupId,
             @Nullable final String groupName) {
+        return getLaunchIntent(context, groupId, groupName, null);
+    }
+
+    public static Intent getLaunchIntent(final Context context, final String groupId,
+            @Nullable final String groupName, @Nullable final UiColorSet uiColorSet) {
         final Intent intent = new Intent(context, GroupMembersActivity.class)
                 .putExtra(EXTRA_GROUP_ID, groupId);
 
         if (!TextUtils.isEmpty(groupName)) {
             intent.putExtra(EXTRA_GROUP_NAME, groupName);
+        }
+
+        if (uiColorSet != null) {
+            intent.putExtra(EXTRA_UI_COLOR_SET, uiColorSet);
         }
 
         return intent;

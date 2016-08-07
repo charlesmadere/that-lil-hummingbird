@@ -1,6 +1,10 @@
 package com.charlesmadere.hummingbird.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +12,9 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.GroupMembersActivity;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.Group;
+import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.views.HeadBodyItemView;
 
 import java.text.NumberFormat;
@@ -19,6 +25,8 @@ import butterknife.OnClick;
 public class GroupDetailsFragment extends BaseGroupFragment {
 
     private static final String TAG = "GroupDetailsFragment";
+
+    private Listener mListener;
 
     @BindView(R.id.hbivGroupMembers)
     HeadBodyItemView mGroupMembers;
@@ -49,6 +57,26 @@ public class GroupDetailsFragment extends BaseGroupFragment {
     }
 
     @Override
+    public void onAttach(final Context context) {
+        super.onAttach(context);
+
+        final Fragment fragment = getParentFragment();
+        if (fragment instanceof Listener) {
+            mListener = (Listener) fragment;
+        } else {
+            final Activity activity = MiscUtils.getActivity(context);
+
+            if (activity instanceof Listener) {
+                mListener = (Listener) activity;
+            }
+        }
+
+        if (mListener == null) {
+            throw new IllegalStateException(getFragmentName() + " must have a Listener");
+        }
+    }
+
+    @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -58,7 +86,7 @@ public class GroupDetailsFragment extends BaseGroupFragment {
     @OnClick(R.id.hbivGroupMembers)
     void onGroupMembersClick() {
         startActivity(GroupMembersActivity.getLaunchIntent(getContext(), getGroupDigest().getId(),
-                getGroupDigest().getName()));
+                getGroupDigest().getName(), mListener.getUiColorSet()));
     }
 
     @Override
@@ -86,6 +114,12 @@ public class GroupDetailsFragment extends BaseGroupFragment {
         } else {
             mNoBio.setVisibility(View.VISIBLE);
         }
+    }
+
+
+    public interface Listener {
+        @Nullable
+        UiColorSet getUiColorSet();
     }
 
 }

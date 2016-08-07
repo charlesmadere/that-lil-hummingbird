@@ -156,11 +156,11 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
                 return true;
 
             case R.id.miAnimeLibrary:
-                startActivity(AnimeLibraryActivity.getLaunchIntent(this, mUsername));
+                startActivity(AnimeLibraryActivity.getLaunchIntent(this, mUsername, mUiColorSet));
                 return true;
 
             case R.id.miMangaLibrary:
-                startActivity(MangaLibraryActivity.getLaunchIntent(this, mUsername));
+                startActivity(MangaLibraryActivity.getLaunchIntent(this, mUsername, mUiColorSet));
                 return true;
         }
 
