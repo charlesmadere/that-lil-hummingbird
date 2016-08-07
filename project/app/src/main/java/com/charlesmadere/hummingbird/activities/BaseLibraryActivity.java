@@ -20,7 +20,6 @@ public abstract class BaseLibraryActivity extends BaseDrawerActivity implements
         BaseLibraryFragment.Listener {
 
     private static final String CNAME = BaseLibraryActivity.class.getCanonicalName();
-    protected static final String EXTRA_UI_COLOR_SET = CNAME + ".UiColorSet";
     protected static final String EXTRA_USERNAME = CNAME + ".Username";
     protected static final String KEY_LIBRARY_SORT = "LibrarySort";
 
@@ -58,11 +57,6 @@ public abstract class BaseLibraryActivity extends BaseDrawerActivity implements
             if (intent.hasExtra(EXTRA_USERNAME)) {
                 mUsername = intent.getStringExtra(EXTRA_USERNAME);
                 setSubtitle(mUsername);
-            }
-
-            if (intent.hasExtra(EXTRA_UI_COLOR_SET)) {
-                final UiColorSet uiColorSet = intent.getParcelableExtra(EXTRA_UI_COLOR_SET);
-                applyUiColorSet(uiColorSet);
             }
         }
 

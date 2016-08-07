@@ -28,6 +28,7 @@ import com.charlesmadere.hummingbird.models.Anime;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
+import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.AnimeEpisodeItemView;
@@ -40,7 +41,7 @@ import butterknife.BindView;
 
 public class AnimeActivity extends BaseDrawerActivity implements
         AnimeEpisodeItemView.OnClickListener, AnimeLibraryUpdateFragment.UpdateListener,
-        BaseAnimeFragment.Listener, ObjectCache.KeyProvider {
+        BaseAnimeFragment.Listener, ObjectCache.KeyProvider, PaletteUtils.Listener {
 
     private static final String TAG = "AnimeActivity";
     private static final String CNAME = AnimeActivity.class.getCanonicalName();
@@ -49,6 +50,7 @@ public class AnimeActivity extends BaseDrawerActivity implements
 
     private AnimeDigest mAnimeDigest;
     private String mAnimeId;
+    private UiColorSet mUiColorSet;
 
     @BindView(R.id.appBarLayout)
     AppBarLayout mAppBarLayout;
@@ -114,6 +116,12 @@ public class AnimeActivity extends BaseDrawerActivity implements
     @Override
     public String[] getObjectCacheKeys() {
         return new String[] { getActivityName(), mAnimeId };
+    }
+
+    @Nullable
+    @Override
+    public UiColorSet getUiColorSet() {
+        return mUiColorSet;
     }
 
     @Override
@@ -189,6 +197,11 @@ public class AnimeActivity extends BaseDrawerActivity implements
         if (mAnimeDigest != null) {
             ObjectCache.put(mAnimeDigest, this);
         }
+    }
+
+    @Override
+    public void onUiColorsBuilt(final UiColorSet uiColorSet) {
+        mUiColorSet = uiColorSet;
     }
 
     @Override

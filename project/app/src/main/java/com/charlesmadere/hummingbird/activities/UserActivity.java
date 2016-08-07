@@ -97,6 +97,12 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
         return new String[] { getActivityName(), mUsername };
     }
 
+    @Nullable
+    @Override
+    public UiColorSet getUiColorSet() {
+        return mUiColorSet;
+    }
+
     @Override
     public UserDigest getUserDigest() {
         return mUserDigest;

@@ -1,5 +1,6 @@
 package com.charlesmadere.hummingbird.views;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
@@ -9,7 +10,10 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.AnimeReviewActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
+import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.AnimeReview;
+import com.charlesmadere.hummingbird.models.UiColorSet;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -47,8 +51,10 @@ public class AnimeReviewItemView extends CardView implements AdapterView<AnimeRe
 
     @Override
     public void onClick(final View v) {
-        final Context context = getContext();
-        context.startActivity(AnimeReviewActivity.getLaunchIntent(context, mReview));
+        final Activity activity = MiscUtils.getActivity(getContext());
+        final UiColorSet uiColorSet = activity instanceof PaletteUtils.Listener ?
+                ((PaletteUtils.Listener) activity).getUiColorSet() : null;
+        activity.startActivity(AnimeReviewActivity.getLaunchIntent(activity, mReview, uiColorSet));
     }
 
     @Override

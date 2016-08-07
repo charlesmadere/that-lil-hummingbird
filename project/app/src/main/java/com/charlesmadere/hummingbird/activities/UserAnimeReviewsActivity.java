@@ -30,7 +30,6 @@ public class UserAnimeReviewsActivity extends BaseDrawerActivity implements Obje
 
     private static final String TAG = "UserAnimeReviewsActivity";
     private static final String CNAME = UserAnimeReviewsActivity.class.getCanonicalName();
-    private static final String EXTRA_UI_COLOR_SET = CNAME + ".UiColorSet";
     private static final String EXTRA_USERNAME = CNAME + ".Username";
 
     private Feed mFeed;
@@ -100,11 +99,6 @@ public class UserAnimeReviewsActivity extends BaseDrawerActivity implements Obje
         final Intent intent = getIntent();
         mUsername = intent.getStringExtra(EXTRA_USERNAME);
         setSubtitle(mUsername);
-
-        if (intent.hasExtra(EXTRA_UI_COLOR_SET)) {
-            final UiColorSet uiColorSet = intent.getParcelableExtra(EXTRA_UI_COLOR_SET);
-            applyUiColorSet(uiColorSet);
-        }
 
         mFeed = ObjectCache.get(this);
 

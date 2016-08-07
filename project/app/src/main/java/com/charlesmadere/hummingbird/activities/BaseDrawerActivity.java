@@ -21,6 +21,9 @@ import butterknife.BindView;
 public abstract class BaseDrawerActivity extends BaseActivity implements
         NavigationDrawerItemView.OnClickListener {
 
+    private static final String CNAME = BaseDrawerActivity.class.getCanonicalName();
+    protected static final String EXTRA_UI_COLOR_SET = CNAME + ".UiColorSet";
+
     protected ActionBarDrawerToggle mDrawerToggle;
 
     @BindView(R.id.drawerLayout)
@@ -141,6 +144,12 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
         super.onViewsBound();
         prepareDrawerLayout();
         prepareNavigationView();
+
+        final Intent intent = getIntent();
+        if (intent != null && intent.hasExtra(EXTRA_UI_COLOR_SET)) {
+            final UiColorSet uiColorSet = intent.getParcelableExtra(EXTRA_UI_COLOR_SET);
+            applyUiColorSet(uiColorSet);
+        }
     }
 
     private void prepareDrawerLayout() {

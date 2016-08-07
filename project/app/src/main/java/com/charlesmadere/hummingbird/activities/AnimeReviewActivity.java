@@ -15,6 +15,7 @@ import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeReview;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
+import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.AnimeReviewVerdictView;
@@ -59,8 +60,19 @@ public class AnimeReviewActivity extends BaseDrawerActivity implements ObjectCac
 
 
     public static Intent getLaunchIntent(final Context context, final AnimeReview review) {
-        return new Intent(context, AnimeReviewActivity.class)
+        return getLaunchIntent(context, review, null);
+    }
+
+    public static Intent getLaunchIntent(final Context context, final AnimeReview review,
+            @Nullable final UiColorSet uiColorSet) {
+        final Intent intent = new Intent(context, AnimeReviewActivity.class)
                 .putExtra(EXTRA_ANIME_REVIEW, review);
+
+        if (uiColorSet != null) {
+            intent.putExtra(EXTRA_UI_COLOR_SET, uiColorSet);
+        }
+
+        return intent;
     }
 
     public static Intent getLaunchIntent(final Context context, final String animeId,

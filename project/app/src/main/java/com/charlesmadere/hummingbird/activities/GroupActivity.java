@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.GroupFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.BaseGroupFragment;
-import com.charlesmadere.hummingbird.fragments.GroupDetailsFragment;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.misc.ShareUtils;
@@ -35,7 +34,7 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 
 public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragment.Listener,
-        GroupDetailsFragment.Listener, ObjectCache.KeyProvider, PaletteUtils.Listener {
+        ObjectCache.KeyProvider, PaletteUtils.Listener {
 
     private static final String TAG = "GroupActivity";
     private static final String CNAME = GroupActivity.class.getCanonicalName();

@@ -71,6 +71,9 @@ public final class PaletteUtils {
 
 
     public interface Listener {
+        @Nullable
+        UiColorSet getUiColorSet();
+
         void onUiColorsBuilt(final UiColorSet uiColorSet);
     }
 

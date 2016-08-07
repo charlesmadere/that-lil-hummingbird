@@ -34,7 +34,6 @@ public class GroupMembersActivity extends BaseDrawerActivity implements ObjectCa
     private static final String CNAME = GroupMembersActivity.class.getCanonicalName();
     private static final String EXTRA_GROUP_ID = CNAME + ".GroupId";
     private static final String EXTRA_GROUP_NAME = CNAME + ".GroupName";
-    private static final String EXTRA_UI_COLOR_SET = CNAME + ".UiColorSet";
 
     private Feed mFeed;
     private GroupMembersAdapter mAdapter;
@@ -116,11 +115,6 @@ public class GroupMembersActivity extends BaseDrawerActivity implements ObjectCa
             setSubtitle(intent.getStringExtra(EXTRA_GROUP_NAME));
         } else {
             Api.getGroup(mGroupId, new GetGroupDigestListener(this));
-        }
-
-        if (intent.hasExtra(EXTRA_UI_COLOR_SET)) {
-            final UiColorSet uiColorSet = intent.getParcelableExtra(EXTRA_UI_COLOR_SET);
-            applyUiColorSet(uiColorSet);
         }
 
         mFeed = ObjectCache.get(this);
