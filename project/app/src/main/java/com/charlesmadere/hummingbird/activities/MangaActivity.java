@@ -233,7 +233,7 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
 
         if (mangaDigest.getManga().hasCoverImage()) {
             PaletteUtils.applyParallaxColors(mangaDigest.getManga().getCoverImage(), this,
-                    mAppBarLayout, mCollapsingToolbarLayout, mCoverImage, mTabLayout);
+                    mCoverImage, mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
         }
 
         mViewPager.setAdapter(new MangaFragmentAdapter(this, mMangaDigest));

@@ -18,10 +18,12 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.Palette;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.AbstractDraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -34,16 +36,28 @@ import java.lang.ref.WeakReference;
 public final class PaletteUtils {
 
     public static void applyParallaxColors(final String url, final Activity activity,
-            final AppBarLayout appBarLayout, final CollapsingToolbarLayout collapsingToolbarLayout,
-            final SimpleDraweeView simpleDraweeView, final TabLayout tabLayout) {
+            final SimpleDraweeView simpleDraweeView, final AppBarLayout appBar,
+            final CollapsingToolbarLayout collapsingToolbar, final TabLayout tabLayout) {
+        applyParallaxColors(url, activity, null, simpleDraweeView, appBar, collapsingToolbar,
+                tabLayout);
+    }
+
+    public static void applyParallaxColors(final String url, final Activity activity,
+            @Nullable final Listener listener, final SimpleDraweeView simpleDraweeView,
+            final AppBarLayout appBar, final CollapsingToolbarLayout collapsingToolbar,
+            final TabLayout tabLayout) {
+        if (TextUtils.isEmpty(url)) {
+            throw new IllegalArgumentException("url parameter can't be null / empty");
+        }
+
         final Uri uri = Uri.parse(url);
 
         if (MiscUtils.isLowRamDevice()) {
             simpleDraweeView.setImageURI(uri);
         } else {
             final ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
-                    .setPostprocessor(new PalettePostprocessor(activity, appBarLayout,
-                            collapsingToolbarLayout, tabLayout))
+                    .setPostprocessor(new PalettePostprocessor(activity, listener, appBar,
+                            collapsingToolbar, tabLayout))
                     .build();
 
             final AbstractDraweeController controller = Fresco.newDraweeControllerBuilder()
@@ -56,7 +70,7 @@ public final class PaletteUtils {
     }
 
     @ColorInt
-    private static int getDrawableColor(final View view, @Nullable Drawable drawable) {
+    private static int getDrawableColor(final View view, @Nullable final Drawable drawable) {
         if (drawable instanceof ColorDrawable) {
             return ((ColorDrawable) drawable).getColor();
         } else {
@@ -65,20 +79,27 @@ public final class PaletteUtils {
     }
 
 
+    public interface Listener {
+        void onUiColorsBuilt(final UiColorSet uiColorSet);
+    }
+
     private static final class PalettePostprocessor extends BasePostprocessor implements
             Palette.PaletteAsyncListener {
 
         private final WeakReference<Activity> mActivity;
-        private final WeakReference<AppBarLayout> mAppBarLayout;
-        private final WeakReference<CollapsingToolbarLayout> mCollapsingToolbarLayout;
+        private final WeakReference<AppBarLayout> mAppBar;
+        private final WeakReference<CollapsingToolbarLayout> mCollapsingToolbar;
+        private final WeakReference<Listener> mListener;
         private final WeakReference<TabLayout> mTabLayout;
 
 
-        private PalettePostprocessor(final Activity activity, final AppBarLayout appBarLayout,
-                final CollapsingToolbarLayout collapsingToolbarLayout, final TabLayout tabLayout) {
+        private PalettePostprocessor(final Activity activity, @Nullable final Listener listener,
+                final AppBarLayout appBar, final CollapsingToolbarLayout collapsingToolbar,
+                final TabLayout tabLayout) {
             mActivity = new WeakReference<>(activity);
-            mAppBarLayout = new WeakReference<>(appBarLayout);
-            mCollapsingToolbarLayout = new WeakReference<>(collapsingToolbarLayout);
+            mAppBar = new WeakReference<>(appBar);
+            mCollapsingToolbar = new WeakReference<>(collapsingToolbar);
+            mListener = new WeakReference<>(listener);
             mTabLayout = new WeakReference<>(tabLayout);
         }
 
@@ -139,8 +160,8 @@ public final class PaletteUtils {
 
         private boolean isAlive() {
             final Activity activity = mActivity.get();
-            return activity != null && !activity.isDestroyed() && mAppBarLayout.get() != null &&
-                    mCollapsingToolbarLayout.get() != null && mTabLayout.get() != null;
+            return activity != null && !activity.isDestroyed() && mAppBar.get() != null &&
+                    mCollapsingToolbar.get() != null && mTabLayout.get() != null;
         }
 
         @Override
@@ -149,8 +170,8 @@ public final class PaletteUtils {
                 return;
             }
 
-            final AppBarLayout appBarLayout = mAppBarLayout.get();
-            final CollapsingToolbarLayout collapsingToolbarLayout = mCollapsingToolbarLayout.get();
+            final AppBarLayout appBarLayout = mAppBar.get();
+            final CollapsingToolbarLayout collapsingToolbarLayout = mCollapsingToolbar.get();
             final TabLayout tabLayout = mTabLayout.get();
 
             if (appBarLayout == null || collapsingToolbarLayout == null || tabLayout == null) {
@@ -162,6 +183,11 @@ public final class PaletteUtils {
                     R.attr.colorPrimary));
             final int vibrantColor = palette.getVibrantColor(MiscUtils.getAttrColor(context,
                     R.attr.colorAccent));
+
+            final Listener listener = mListener.get();
+            if (listener != null) {
+                listener.onUiColorsBuilt(new UiColorSet(darkVibrantColor, vibrantColor));
+            }
 
             applyColorsWithAnimation(appBarLayout, collapsingToolbarLayout, tabLayout,
                     darkVibrantColor, vibrantColor);

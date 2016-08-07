@@ -33,7 +33,8 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class UserActivity extends BaseUserActivity implements ObjectCache.KeyProvider {
+public class UserActivity extends BaseUserActivity implements ObjectCache.KeyProvider,
+        PaletteUtils.Listener {
 
     private static final String TAG = "UserActivity";
     private static final String CNAME = UserActivity.class.getCanonicalName();
@@ -195,6 +196,11 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
         }
     }
 
+    @Override
+    public void onUiColorsBuilt(final UiColorSet uiColorSet) {
+        mUiColorSet = uiColorSet;
+    }
+
     private void showError() {
         mSimpleProgressView.fadeOut();
 
@@ -227,8 +233,8 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
         final User user = mUserDigest.getUser();
 
         if (user.hasCoverImage()) {
-            PaletteUtils.applyParallaxColors(user.getCoverImage(), this, mAppBarLayout,
-                    mCollapsingToolbarLayout, mCoverImage, mTabLayout);
+            PaletteUtils.applyParallaxColors(user.getCoverImage(), this, this, mCoverImage,
+                    mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
         }
 
         mAvatar.setContent(user);

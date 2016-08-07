@@ -23,6 +23,7 @@ import com.charlesmadere.hummingbird.misc.ShareUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Group;
 import com.charlesmadere.hummingbird.models.GroupDigest;
+import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.SimpleProgressView;
@@ -33,17 +34,19 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 
 public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragment.Listener,
-        ObjectCache.KeyProvider {
+        ObjectCache.KeyProvider, PaletteUtils.Listener {
 
     private static final String TAG = "GroupActivity";
     private static final String CNAME = GroupActivity.class.getCanonicalName();
     private static final String EXTRA_GROUP_ID = CNAME + ".GroupId";
     private static final String EXTRA_GROUP_NAME = CNAME + ".GroupName";
     private static final String KEY_STARTING_POSITION = "StartingPosition";
+    private static final String KEY_UI_COLOR_SET = "UiColorSet";
 
     private GroupDigest mGroupDigest;
     private int mStartingPosition;
     private String mGroupId;
+    private UiColorSet mUiColorSet;
 
     @BindView(R.id.appBarLayout)
     AppBarLayout mAppBarLayout;
@@ -125,6 +128,7 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mStartingPosition = savedInstanceState.getInt(KEY_STARTING_POSITION, mStartingPosition);
+            mUiColorSet = savedInstanceState.getParcelable(KEY_UI_COLOR_SET);
         }
 
         mGroupDigest = ObjectCache.get(this);
@@ -167,9 +171,18 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_STARTING_POSITION, mViewPager.getCurrentItem());
 
+        if (mUiColorSet != null) {
+            outState.putParcelable(KEY_UI_COLOR_SET, mUiColorSet);
+        }
+
         if (mGroupDigest != null) {
             ObjectCache.put(mGroupDigest, this);
         }
+    }
+
+    @Override
+    public void onUiColorsBuilt(final UiColorSet uiColorSet) {
+        mUiColorSet = uiColorSet;
     }
 
     private void showError() {
@@ -207,7 +220,7 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
 
         if (groupDigest.getGroup().hasCoverImage()) {
             PaletteUtils.applyParallaxColors(groupDigest.getGroup().getCoverImageUrl(), this,
-                    mAppBarLayout, mCollapsingToolbarLayout, mCoverImage, mTabLayout);
+                    this, mCoverImage, mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
         }
 
         mViewPager.setAdapter(new GroupFragmentAdapter(this));
