@@ -228,7 +228,7 @@ public class AnimeActivity extends BaseDrawerActivity implements
 
         if (animeDigest.getInfo().hasCoverImage()) {
             PaletteUtils.applyParallaxColors(animeDigest.getInfo().getCoverImage(), this,
-                    mCoverImage, mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
+                    this, mCoverImage, mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
         }
 
         mViewPager.setAdapter(new AnimeFragmentAdapter(this, mAnimeDigest));
