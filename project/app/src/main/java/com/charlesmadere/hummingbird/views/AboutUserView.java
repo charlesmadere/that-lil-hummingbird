@@ -1,5 +1,6 @@
 package com.charlesmadere.hummingbird.views;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.CardView;
@@ -14,6 +15,8 @@ import com.charlesmadere.hummingbird.activities.UserAnimeReviewsActivity;
 import com.charlesmadere.hummingbird.activities.UserGroupsActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
+import com.charlesmadere.hummingbird.misc.PaletteUtils;
+import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.UserDigest;
 
@@ -79,20 +82,32 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
 
     @OnClick(R.id.hbivFollowers)
     void onFollowersClick() {
-        final Context context = getContext();
-        context.startActivity(FollowersActivity.getLaunchIntent(context, mUserDigest.getUserId()));
+        final Activity activity = MiscUtils.getActivity(getContext());
+        final UiColorSet uiColorSet = activity instanceof PaletteUtils.Listener ?
+                ((PaletteUtils.Listener) activity).getUiColorSet() : null;
+
+        activity.startActivity(FollowersActivity.getLaunchIntent(activity, mUserDigest.getUserId(),
+                uiColorSet));
     }
 
     @OnClick(R.id.hbivFollowing)
     void onFollowingClick() {
-        final Context context = getContext();
-        context.startActivity(FollowingActivity.getLaunchIntent(context, mUserDigest.getUserId()));
+        final Activity activity = MiscUtils.getActivity(getContext());
+        final UiColorSet uiColorSet = activity instanceof PaletteUtils.Listener ?
+                ((PaletteUtils.Listener) activity).getUiColorSet() : null;
+
+        activity.startActivity(FollowingActivity.getLaunchIntent(activity,
+                mUserDigest.getUserId(), uiColorSet));
     }
 
     @OnClick(R.id.tvGroups)
     void onGroupsClick() {
-        final Context context = getContext();
-        context.startActivity(UserGroupsActivity.getLaunchIntent(context, mUserDigest.getUserId()));
+        final Activity activity = MiscUtils.getActivity(getContext());
+        final UiColorSet uiColorSet = activity instanceof PaletteUtils.Listener ?
+                ((PaletteUtils.Listener) activity).getUiColorSet() : null;
+
+        activity.startActivity(UserGroupsActivity.getLaunchIntent(activity,
+                mUserDigest.getUserId(), uiColorSet));
     }
 
     @OnClick(R.id.hbivWaifuOrHusbando)

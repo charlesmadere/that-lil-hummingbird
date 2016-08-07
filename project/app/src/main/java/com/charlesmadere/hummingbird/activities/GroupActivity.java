@@ -41,7 +41,6 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
     private static final String EXTRA_GROUP_ID = CNAME + ".GroupId";
     private static final String EXTRA_GROUP_NAME = CNAME + ".GroupName";
     private static final String KEY_STARTING_POSITION = "StartingPosition";
-    private static final String KEY_UI_COLOR_SET = "UiColorSet";
 
     private GroupDigest mGroupDigest;
     private int mStartingPosition;
@@ -134,7 +133,6 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mStartingPosition = savedInstanceState.getInt(KEY_STARTING_POSITION, mStartingPosition);
-            mUiColorSet = savedInstanceState.getParcelable(KEY_UI_COLOR_SET);
         }
 
         mGroupDigest = ObjectCache.get(this);
@@ -176,10 +174,6 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_STARTING_POSITION, mViewPager.getCurrentItem());
-
-        if (mUiColorSet != null) {
-            outState.putParcelable(KEY_UI_COLOR_SET, mUiColorSet);
-        }
 
         if (mGroupDigest != null) {
             ObjectCache.put(mGroupDigest, this);

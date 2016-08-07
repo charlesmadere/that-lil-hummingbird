@@ -39,7 +39,6 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
     private static final String TAG = "UserActivity";
     private static final String CNAME = UserActivity.class.getCanonicalName();
     private static final String EXTRA_USERNAME = CNAME + ".Username";
-    private static final String KEY_UI_COLOR_SET = "UiColorSet";
 
     private String mUsername;
     private UiColorSet mUiColorSet;
@@ -121,10 +120,6 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
         mUsername = intent.getStringExtra(EXTRA_USERNAME);
         setTitle(mUsername);
 
-        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mUiColorSet = savedInstanceState.getParcelable(KEY_UI_COLOR_SET);
-        }
-
         mUserDigest = ObjectCache.get(this);
 
         if (mUserDigest == null) {
@@ -192,10 +187,6 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
     @Override
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
-
-        if (mUiColorSet != null) {
-            outState.putParcelable(KEY_UI_COLOR_SET, mUiColorSet);
-        }
 
         if (mUserDigest != null) {
             ObjectCache.put(mUserDigest, this);

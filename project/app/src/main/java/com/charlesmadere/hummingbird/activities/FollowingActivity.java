@@ -14,6 +14,7 @@ import com.charlesmadere.hummingbird.adapters.UsersAdapter;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
+import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.DividerItemDecoration;
@@ -50,8 +51,19 @@ public class FollowingActivity extends BaseDrawerActivity implements ObjectCache
 
 
     public static Intent getLaunchIntent(final Context context, final String username) {
-        return new Intent(context, FollowingActivity.class)
+        return getLaunchIntent(context, username, null);
+    }
+
+    public static Intent getLaunchIntent(final Context context, final String username,
+            @Nullable final UiColorSet uiColorSet) {
+        final Intent intent = new Intent(context, FollowingActivity.class)
                 .putExtra(EXTRA_USERNAME, username);
+
+        if (uiColorSet != null) {
+            intent.putExtra(EXTRA_UI_COLOR_SET, uiColorSet);
+        }
+
+        return intent;
     }
 
     private void fetchFollowing() {
