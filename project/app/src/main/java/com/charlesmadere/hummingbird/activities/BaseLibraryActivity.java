@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.activities;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.BaseLibraryFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.BaseLibraryFragment;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.LibrarySort;
 import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.preferences.Preferences;
@@ -35,6 +37,14 @@ public abstract class BaseLibraryActivity extends BaseDrawerActivity implements
     protected ViewPager mViewPager;
 
 
+    private void applyUiColorSet() {
+        mDrawerLayout.setStatusBarBackground(MiscUtils.getStatusBarScrim(this,
+                new ColorDrawable(mUiColorSet.getDarkVibrantColor())));
+        mToolbar.setBackgroundColor(mUiColorSet.getDarkVibrantColor());
+        mTabLayout.setBackgroundColor(mUiColorSet.getDarkVibrantColor());
+        mTabLayout.setSelectedTabIndicatorColor(mUiColorSet.getVibrantColor());
+    }
+
     protected abstract BaseLibraryFragmentAdapter getAdapter();
 
     @Override
@@ -56,6 +66,7 @@ public abstract class BaseLibraryActivity extends BaseDrawerActivity implements
 
             if (intent.hasExtra(EXTRA_UI_COLOR_SET)) {
                 mUiColorSet = intent.getParcelableExtra(EXTRA_UI_COLOR_SET);
+                applyUiColorSet();
             }
         }
 
