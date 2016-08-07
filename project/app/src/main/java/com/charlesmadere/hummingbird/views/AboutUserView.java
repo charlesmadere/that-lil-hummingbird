@@ -63,9 +63,12 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
 
     @OnClick(R.id.tvAnimeReviews)
     void onAnimeReviewsClick() {
-        final Context context = getContext();
-        context.startActivity(UserAnimeReviewsActivity.getLaunchIntent(context,
-                mUserDigest.getUserId()));
+        final Activity activity = MiscUtils.getActivity(getContext());
+        final UiColorSet uiColorSet = activity instanceof PaletteUtils.Listener ?
+                ((PaletteUtils.Listener) activity).getUiColorSet() : null;
+
+        activity.startActivity(UserAnimeReviewsActivity.getLaunchIntent(activity,
+                mUserDigest.getUserId(), uiColorSet));
     }
 
     @Override
