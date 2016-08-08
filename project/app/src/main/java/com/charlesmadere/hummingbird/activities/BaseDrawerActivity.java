@@ -21,9 +21,6 @@ import butterknife.BindView;
 public abstract class BaseDrawerActivity extends BaseActivity implements
         NavigationDrawerItemView.OnClickListener {
 
-    private static final String CNAME = BaseDrawerActivity.class.getCanonicalName();
-    protected static final String EXTRA_UI_COLOR_SET = CNAME + ".UiColorSet";
-
     protected ActionBarDrawerToggle mDrawerToggle;
 
     @BindView(R.id.drawerLayout)
@@ -33,13 +30,11 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
     protected NavigationDrawerView mNavigationDrawerView;
 
 
+    @Override
     protected void applyUiColorSet(final UiColorSet uiColorSet) {
+        super.applyUiColorSet(uiColorSet);
         mDrawerLayout.setStatusBarBackground(MiscUtils.getStatusBarScrim(this,
                 new ColorDrawable(uiColorSet.getDarkVibrantColor())));
-
-        if (mToolbar != null) {
-            mToolbar.setBackgroundColor(uiColorSet.getDarkVibrantColor());
-        }
     }
 
     public void closeDrawer() {

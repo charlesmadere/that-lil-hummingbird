@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.ActivityRegister;
 import com.charlesmadere.hummingbird.misc.Timber;
+import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 
 import butterknife.BindView;
@@ -25,6 +26,8 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private static final String TAG = "BaseActivity";
+    private static final String CNAME = BaseActivity.class.getCanonicalName();
+    protected static final String EXTRA_UI_COLOR_SET = CNAME + ".UiColorSet";
 
     @Nullable
     @BindView(R.id.toolbar)
@@ -33,6 +36,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected static Intent createDrawerActivityIntent(final Context context, final Class c) {
         return new Intent(context, c).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+    }
+
+    protected void applyUiColorSet(final UiColorSet uiColorSet) {
+        if (mToolbar != null) {
+            mToolbar.setBackgroundColor(uiColorSet.getDarkVibrantColor());
+        }
     }
 
     public abstract String getActivityName();
@@ -111,6 +120,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         if (mToolbar != null) {
             prepareToolbar();
+        }
+
+        final Intent intent = getIntent();
+        if (intent != null && intent.hasExtra(EXTRA_UI_COLOR_SET)) {
+            final UiColorSet uiColorSet = intent.getParcelableExtra(EXTRA_UI_COLOR_SET);
+            applyUiColorSet(uiColorSet);
         }
     }
 
