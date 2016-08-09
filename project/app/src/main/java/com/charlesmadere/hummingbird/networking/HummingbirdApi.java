@@ -113,6 +113,7 @@ public interface HummingbirdApi {
     @GET("stories/{storyId}")
     Call<Feed> getStory(@Path("storyId") String storyId);
 
+    @Headers(ACCEPT_JSON_MIMETYPE)
     @GET("notifications/{notificationId}")
     Call<Feed> getStoryFromNotification(@Path("notificationId") String notificationId);
 
