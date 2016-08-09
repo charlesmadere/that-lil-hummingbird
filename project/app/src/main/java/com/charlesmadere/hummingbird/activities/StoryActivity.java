@@ -161,7 +161,7 @@ public class StoryActivity extends BaseDrawerActivity implements ObjectCache.Key
             final StoryActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                if (feed.hasStory()) {
+                if (feed.hasStories() || feed.hasStory()) {
                     activity.showFeed(feed);
                 } else {
                     activity.showError();
