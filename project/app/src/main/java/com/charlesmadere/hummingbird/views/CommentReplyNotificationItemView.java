@@ -7,12 +7,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.activities.UserActivity;
+import com.charlesmadere.hummingbird.activities.StoryActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
-import com.charlesmadere.hummingbird.models.AbsNotification;
-import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.CommentReplyNotification;
-import com.charlesmadere.hummingbird.models.ReplySubstory;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,51 +38,11 @@ public class CommentReplyNotificationItemView extends CardView implements
         super(context, attrs, defStyleAttr);
     }
 
-    private void handleSubstoryAvatarClick(final AbsNotification.SubstorySource source) {
-        final AbsSubstory story = source.getSubstory();
-        final Context context = getContext();
-
-        switch (story.getType()) {
-            case REPLY:
-                context.startActivity(UserActivity.getLaunchIntent(context,
-                        ((ReplySubstory) story).getUser()));
-                break;
-
-            default:
-                throw new RuntimeException("encountered unknown " +
-                        AbsSubstory.Type.class.getName() + ": \"" + story.getType() + '"');
-        }
-    }
-
-    private void handleSubstoryClick(final AbsNotification.SubstorySource source) {
-        final AbsSubstory story = source.getSubstory();
-        final Context context = getContext();
-
-        switch (story.getType()) {
-            case REPLY:
-                // TODO open CommentsActivity
-                break;
-
-            default:
-                throw new RuntimeException("encountered unknown " +
-                        AbsSubstory.Type.class.getName() + ": \"" + story.getType() + '"');
-        }
-    }
-
     @Override
     public void onClick(final View v) {
-        final AbsNotification.AbsSource source = mCommentReplyNotification.getSource();
-
-        switch (source.getType()) {
-            case SUBSTORY:
-                handleSubstoryClick((AbsNotification.SubstorySource) source);
-                break;
-
-            default:
-                throw new RuntimeException("encountered unknown " +
-                        AbsNotification.AbsSource.Type.class.getName() + ": \"" +
-                        source.getType() + '"');
-        }
+        final Context context = getContext();
+        context.startActivity(StoryActivity.getNotificationIdLaunchIntent(context,
+                mCommentReplyNotification.getId()));
     }
 
     @Override

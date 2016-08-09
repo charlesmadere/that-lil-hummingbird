@@ -214,7 +214,7 @@ public final class DeepLinkUtils {
 
     private static void buildStoriesActivityStack(final Activity activity, final String[] paths,
             final ArrayList<Intent> activityStack) {
-        activityStack.add(StoryActivity.getLaunchIntent(activity, paths[1]));
+        activityStack.add(StoryActivity.getStoryIdLaunchIntent(activity, paths[1]));
     }
 
     private static void buildUserActivityStack(final Activity activity, final String[] paths,

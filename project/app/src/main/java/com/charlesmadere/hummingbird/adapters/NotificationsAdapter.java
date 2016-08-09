@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.adapters;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.CommentReplyNotification;
@@ -24,8 +25,8 @@ public class NotificationsAdapter extends BaseMultiPaginationAdapter {
         return map;
     }
 
-    public void set(final Feed feed) {
-        if (!feed.hasNotifications()) {
+    public void set(@Nullable final Feed feed) {
+        if (feed == null || !feed.hasNotifications()) {
             super.set(null);
             return;
         }

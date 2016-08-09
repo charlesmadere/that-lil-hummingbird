@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -28,10 +29,12 @@ public class StoryActivity extends BaseDrawerActivity implements ObjectCache.Key
 
     private static final String TAG = "StoryActivity";
     private static final String CNAME = StoryActivity.class.getCanonicalName();
+    private static final String EXTRA_NOTIFICATION_ID = CNAME + ".NotificationId";
     private static final String EXTRA_STORY_ID = CNAME + ".StoryId";
 
     private Feed mFeed;
     private FeedAdapter mAdapter;
+    private String mNotificationId;
     private String mStoryId;
 
     @BindView(R.id.llError)
@@ -44,14 +47,25 @@ public class StoryActivity extends BaseDrawerActivity implements ObjectCache.Key
     RefreshLayout mRefreshLayout;
 
 
-    public static Intent getLaunchIntent(final Context context, final String storyId) {
+    public static Intent getNotificationIdLaunchIntent(final Context context,
+            final String notificationId) {
+        return new Intent(context, StoryActivity.class)
+                .putExtra(EXTRA_NOTIFICATION_ID, notificationId);
+    }
+
+    public static Intent getStoryIdLaunchIntent(final Context context, final String storyId) {
         return new Intent(context, StoryActivity.class)
                 .putExtra(EXTRA_STORY_ID, storyId);
     }
 
     private void fetchFeed() {
         mRefreshLayout.setRefreshing(true);
-        Api.getStory(mStoryId, new GetStoryListener(this));
+
+        if (TextUtils.isEmpty(mStoryId)) {
+            Api.getStoryFromNotification(mNotificationId, new GetStoryListener(this));
+        } else {
+            Api.getStory(mStoryId, new GetStoryListener(this));
+        }
     }
 
     @Override
@@ -75,6 +89,7 @@ public class StoryActivity extends BaseDrawerActivity implements ObjectCache.Key
         setContentView(R.layout.activity_story);
 
         final Intent intent = getIntent();
+        mNotificationId = intent.getStringExtra(EXTRA_NOTIFICATION_ID);
         mStoryId = intent.getStringExtra(EXTRA_STORY_ID);
 
         mFeed = ObjectCache.get(this);

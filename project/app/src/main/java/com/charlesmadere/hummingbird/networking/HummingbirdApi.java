@@ -113,7 +113,7 @@ public interface HummingbirdApi {
     @GET("stories/{storyId}")
     Call<Feed> getStory(@Path("storyId") String storyId);
 
-    @GET("notifications/{notificationId")
+    @GET("notifications/{notificationId}")
     Call<Feed> getStoryFromNotification(@Path("notificationId") String notificationId);
 
     @GET("substories")
