@@ -30,12 +30,14 @@ public final class Constants {
     public static final String LOW_RAM_DEVICE = "low_ram_device";
     public static final String MANGA = "manga";
     public static final String MEMBERS = "members";
-    public static final String MIMETYPE_TEXT_PLAIN = "text/plain";
+    public static final String MIMETYPE_JSON = "application/json";
+    public static final String MIMETYPE_TEXT = "text/plain";
     public static final String NOTIFICATIONS = "notifications";
     public static final String PLAY_STORE_BASE_URL = "https://play.google.com/store/apps/details?id=";
     public static final String PRISCILLA_URL = "https://www.etsy.com/shop/OchaaNeko";
     public static final String QUOTES = "quotes";
     public static final String REVIEWS = "reviews";
+    public static final String STORIES = "stories";
     public static final String TOKEN = "token";
     public static final String USERS = "users";
     public static final String WEBSITE_URL = "https://charlesmadere.github.io/that-lil-hummingbird-website/";

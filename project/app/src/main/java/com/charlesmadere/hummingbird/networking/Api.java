@@ -655,6 +655,34 @@ public final class Api {
         });
     }
 
+    public static void getStory(final String storyId, final ApiResponse<Feed> listener) {
+        getStory(storyId, null, listener);
+    }
+
+    public static void getStory(final String storyId, @Nullable final Feed feed,
+            final ApiResponse<Feed> listener) {
+        final int page = feed == null ? 1 : feed.getCursor();
+
+        HUMMINGBIRD.getStory(storyId, page).enqueue(new Callback<Feed>() {
+            @Override
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
+                final Feed body = response.isSuccessful() ? response.body() : null;
+
+                if (body == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    hydrateFeed(body, feed, listener);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get story (" + storyId + ") (page " + page + ") failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
     public static void getSubstories(final String storyId, final ApiResponse<Feed> listener) {
         getSubstories(storyId, null, listener);
     }

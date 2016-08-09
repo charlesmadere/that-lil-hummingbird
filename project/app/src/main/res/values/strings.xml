@@ -112,6 +112,7 @@
     <string name="error_loading_plan_to_watch_library">Error loading plan to watch library</string>
     <string name="error_loading_reviews">Error loading reviews</string>
     <string name="error_loading_search_results">Error loading search results</string>
+    <string name="error_loading_story">Error loading story</string>
     <string name="error_loading_timeline">Error loading timeline</string>
     <string name="error_loading_user">Error loading user</string>
     <string name="error_loading_user_check_network_connection">Error loading user! Please check your network connection and try again.</string>

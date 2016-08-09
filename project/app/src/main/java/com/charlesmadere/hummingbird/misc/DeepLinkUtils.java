@@ -17,6 +17,7 @@ import com.charlesmadere.hummingbird.activities.GroupMembersActivity;
 import com.charlesmadere.hummingbird.activities.MangaActivity;
 import com.charlesmadere.hummingbird.activities.MangaLibraryActivity;
 import com.charlesmadere.hummingbird.activities.NotificationsActivity;
+import com.charlesmadere.hummingbird.activities.StoryActivity;
 import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.activities.UserAnimeReviewsActivity;
 import com.charlesmadere.hummingbird.activities.UserGroupsActivity;
@@ -34,6 +35,7 @@ import static com.charlesmadere.hummingbird.misc.Constants.MEMBERS;
 import static com.charlesmadere.hummingbird.misc.Constants.NOTIFICATIONS;
 import static com.charlesmadere.hummingbird.misc.Constants.QUOTES;
 import static com.charlesmadere.hummingbird.misc.Constants.REVIEWS;
+import static com.charlesmadere.hummingbird.misc.Constants.STORIES;
 import static com.charlesmadere.hummingbird.misc.Constants.USERS;
 
 public final class DeepLinkUtils {
@@ -125,6 +127,11 @@ public final class DeepLinkUtils {
             buildNotificationsActivityStack(activity, activityStack);
         }
 
+        // https://hummingbird.me/stories/8032021
+        else if (STORIES.equalsIgnoreCase(paths[0])) {
+            buildStoriesActivityStack(activity, paths, activityStack);
+        }
+
         // https://hummingbird.me/users/ThatLilChestnut
         else if (USERS.equalsIgnoreCase(paths[0])) {
             buildUserActivityStack(activity, paths, activityStack);
@@ -203,6 +210,11 @@ public final class DeepLinkUtils {
     private static void buildNotificationsActivityStack(final Activity activity,
             final ArrayList<Intent> activityStack) {
         activityStack.add(NotificationsActivity.getLaunchIntent(activity));
+    }
+
+    private static void buildStoriesActivityStack(final Activity activity, final String[] paths,
+            final ArrayList<Intent> activityStack) {
+        activityStack.add(StoryActivity.getLaunchIntent(activity, paths[1]));
     }
 
     private static void buildUserActivityStack(final Activity activity, final String[] paths,

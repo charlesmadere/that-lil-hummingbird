@@ -166,6 +166,11 @@
 
         <activity
             android:label=""
+            android:name=".activities.StoryActivity"
+            android:theme="@style/HummingbirdTheme.WithDrawer" />
+
+        <activity
+            android:label=""
             android:name=".activities.UserActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 

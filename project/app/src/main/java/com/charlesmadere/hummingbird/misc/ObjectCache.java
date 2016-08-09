@@ -19,6 +19,10 @@ public final class ObjectCache {
     }
 
     private static String buildKey(final String... keys) {
+        if (keys == null || keys.length == 0) {
+            throw new IllegalArgumentException("keys parameter must not be null / empty");
+        }
+
         return TextUtils.join("|", keys);
     }
 

@@ -1,5 +1,6 @@
 package com.charlesmadere.hummingbird.networking;
 
+import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.models.AddAnimeLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.AddMangaLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
@@ -30,7 +31,7 @@ import retrofit2.http.Query;
 
 public interface HummingbirdApi {
 
-    String ACCEPT_JSON_MIMETYPE = "Accept: application/json";
+    String ACCEPT_JSON_MIMETYPE = "Accept: " + Constants.MIMETYPE_JSON;
 
 
     /*
@@ -107,6 +108,13 @@ public interface HummingbirdApi {
 
     @GET("sign-in")
     Call<ResponseBody> getSignInPage();
+
+    @Headers(ACCEPT_JSON_MIMETYPE)
+    @GET("stories/{storyId}")
+    Call<Feed> getStory(@Path("storyId") String storyId);
+
+    @GET("notifications/{notificationId")
+    Call<Feed> getStoryFromNotification(@Path("notificationId") String notificationId);
 
     @GET("substories")
     Call<Feed> getSubstories(@Query("story_id") String storyId, @Query("page") Integer page);
