@@ -676,6 +676,28 @@ public final class Api {
         });
     }
 
+    public static void getStoryFromNotification(final String notificationId,
+            final ApiResponse<Feed> listener) {
+        HUMMINGBIRD.getStoryFromNotification(notificationId).enqueue(new Callback<Feed>() {
+            @Override
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
+                final Feed body = response.isSuccessful() ? response.body() : null;
+
+                if (body == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    hydrateFeed(body, null, listener);
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get story from notification (" + notificationId + ") failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
     public static void getSubstories(final String storyId, final ApiResponse<Feed> listener) {
         getSubstories(storyId, null, listener);
     }
