@@ -20,7 +20,7 @@ public final class ShareUtils {
         ShareCompat.IntentBuilder.from(activity)
                 .setChooserTitle(activity.getString(R.string.share_x, anime.getTitle()))
                 .setText(Constants.HUMMINGBIRD_ANIME_URL + anime.getId())
-                .setType(Constants.MIMETYPE_TEXT_PLAIN)
+                .setType(Constants.MIMETYPE_TEXT)
                 .startChooser();
     }
 
@@ -34,7 +34,7 @@ public final class ShareUtils {
         ShareCompat.IntentBuilder.from(activity)
                 .setChooserTitle(activity.getString(R.string.share_x, group.getName()))
                 .setText(Constants.HUMMINGBIRD_GROUP_URL + group.getId())
-                .setType(Constants.MIMETYPE_TEXT_PLAIN)
+                .setType(Constants.MIMETYPE_TEXT)
                 .startChooser();
     }
 
@@ -48,7 +48,7 @@ public final class ShareUtils {
         ShareCompat.IntentBuilder.from(activity)
                 .setChooserTitle(activity.getString(R.string.share_x, manga.getTitle()))
                 .setText(Constants.HUMMINGBIRD_MANGA_URL + manga.getId())
-                .setType(Constants.MIMETYPE_TEXT_PLAIN)
+                .setType(Constants.MIMETYPE_TEXT)
                 .startChooser();
     }
 
