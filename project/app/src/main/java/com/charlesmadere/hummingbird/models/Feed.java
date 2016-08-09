@@ -61,6 +61,10 @@ public class Feed {
     @SerializedName("meta")
     private Metadata mMetadata;
 
+    @Nullable
+    @SerializedName("story")
+    private AbsStory mStory;
+
 
     public void addAnime(@Nullable final ArrayList<Anime> anime) {
         if (anime == null || anime.isEmpty()) {
@@ -181,6 +185,11 @@ public class Feed {
     }
 
     @Nullable
+    public AbsStory getStory() {
+        return mStory;
+    }
+
+    @Nullable
     public ArrayList<AbsSubstory> getSubstories() {
         return mSubstories;
     }
@@ -260,6 +269,10 @@ public class Feed {
         return mStories != null && !mStories.isEmpty();
     }
 
+    public boolean hasStory() {
+        return mStory != null;
+    }
+
     public boolean hasSubstories() {
         return mSubstories != null && !mSubstories.isEmpty();
     }
@@ -321,6 +334,10 @@ public class Feed {
             for (final AbsStory story : mStories) {
                 story.hydrate(this);
             }
+        }
+
+        if (hasStory()) {
+            mStory.hydrate(this);
         }
 
         if (hasUsers()) {

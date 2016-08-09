@@ -1,10 +1,13 @@
 package com.charlesmadere.hummingbird.adapters;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.AbsStory;
 import com.charlesmadere.hummingbird.models.Feed;
+
+import java.util.ArrayList;
 
 public class FeedAdapter extends BasePaginationAdapter<AbsStory> {
 
@@ -30,8 +33,16 @@ public class FeedAdapter extends BasePaginationAdapter<AbsStory> {
         }
     }
 
-    public void set(final Feed feed) {
-        super.set(feed.getStories());
+    public void set(@Nullable final Feed feed) {
+        if (feed != null && feed.hasStories()) {
+            super.set(feed.getStories());
+        } else if (feed != null && feed.hasStory()) {
+            final ArrayList<AbsStory> story = new ArrayList<>(1);
+            story.add(feed.getStory());
+            super.set(story);
+        } else {
+            super.set(null);
+        }
     }
 
 }
