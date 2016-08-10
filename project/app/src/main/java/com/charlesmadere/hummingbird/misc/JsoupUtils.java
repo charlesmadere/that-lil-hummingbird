@@ -139,7 +139,7 @@ public final class JsoupUtils {
         }
 
         text = text.trim();
-        final Document document = Jsoup.parse(text, Constants.HUMMINGBIRD_URL);
+        final Document document = Jsoup.parse(text, Constants.HUMMINGBIRD_URL_HTTPS);
 
         fixA(document);
         fixIframe(document);

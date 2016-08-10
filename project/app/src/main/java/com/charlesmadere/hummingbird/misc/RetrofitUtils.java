@@ -59,7 +59,7 @@ public final class RetrofitUtils {
                     .client(OkHttpUtils.getOkHttpClient())
                     .addConverterFactory(getGsonConverterFactory())
                     .addConverterFactory(getEnumConverterFactory())
-                    .baseUrl(Constants.HUMMINGBIRD_URL)
+                    .baseUrl(Constants.HUMMINGBIRD_URL_HTTPS)
                     .build();
         }
 
