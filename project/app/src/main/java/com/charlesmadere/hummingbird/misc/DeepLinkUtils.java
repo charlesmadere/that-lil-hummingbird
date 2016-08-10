@@ -25,18 +25,23 @@ import com.charlesmadere.hummingbird.activities.UserGroupsActivity;
 import java.util.ArrayList;
 
 import static com.charlesmadere.hummingbird.misc.Constants.ANIME;
+import static com.charlesmadere.hummingbird.misc.Constants.ANIME_SHORT;
 import static com.charlesmadere.hummingbird.misc.Constants.FOLLOWERS;
 import static com.charlesmadere.hummingbird.misc.Constants.FOLLOWING;
 import static com.charlesmadere.hummingbird.misc.Constants.GROUPS;
-import static com.charlesmadere.hummingbird.misc.Constants.HUMMINGBIRD_URL;
+import static com.charlesmadere.hummingbird.misc.Constants.GROUPS_SHORT;
+import static com.charlesmadere.hummingbird.misc.Constants.HUMMINGBIRD_URL_HTTP;
+import static com.charlesmadere.hummingbird.misc.Constants.HUMMINGBIRD_URL_HTTPS;
 import static com.charlesmadere.hummingbird.misc.Constants.LIBRARY;
 import static com.charlesmadere.hummingbird.misc.Constants.MANGA;
+import static com.charlesmadere.hummingbird.misc.Constants.MANGA_SHORT;
 import static com.charlesmadere.hummingbird.misc.Constants.MEMBERS;
 import static com.charlesmadere.hummingbird.misc.Constants.NOTIFICATIONS;
 import static com.charlesmadere.hummingbird.misc.Constants.QUOTES;
 import static com.charlesmadere.hummingbird.misc.Constants.REVIEWS;
 import static com.charlesmadere.hummingbird.misc.Constants.STORIES;
 import static com.charlesmadere.hummingbird.misc.Constants.USERS;
+import static com.charlesmadere.hummingbird.misc.Constants.USERS_SHORT;
 
 public final class DeepLinkUtils {
 
@@ -81,12 +86,16 @@ public final class DeepLinkUtils {
 
         Timber.d(TAG, "Attempting to deep link to URI: \"" + uri + '"');
 
-        if (!uri.startsWith(HUMMINGBIRD_URL)) {
+        final String path;
+
+        if (uri.startsWith(HUMMINGBIRD_URL_HTTP)) {
+            path = uri.substring(HUMMINGBIRD_URL_HTTP.length(), uri.length());
+        } else if (uri.startsWith(HUMMINGBIRD_URL_HTTPS)) {
+            path = uri.substring(HUMMINGBIRD_URL_HTTPS.length(), uri.length());
+        } else {
             Timber.w(TAG, "Deep link URI isn't for Hummingbird");
             return null;
         }
-
-        final String path = uri.substring(HUMMINGBIRD_URL.length(), uri.length());
 
         if (TextUtils.isEmpty(path)) {
             Timber.d(TAG, "Deep link URI's path is null or empty");
@@ -100,7 +109,9 @@ public final class DeepLinkUtils {
             return null;
         }
 
-        if (paths[0].equalsIgnoreCase("dashboard")) {
+        final String pageIdentifier = paths[0];
+
+        if (pageIdentifier.equalsIgnoreCase("dashboard")) {
             Timber.d(TAG, "Deep link URI is to the user's own dashboard");
             return null;
         }
@@ -108,32 +119,32 @@ public final class DeepLinkUtils {
         final ArrayList<Intent> activityStack = new ArrayList<>();
 
         // https://hummingbird.me/anime/rwby-ii
-        if (ANIME.equalsIgnoreCase(paths[0])) {
+        if (ANIME.equalsIgnoreCase(pageIdentifier) || ANIME_SHORT.equalsIgnoreCase(pageIdentifier)) {
             buildAnimeActivityStack(activity, paths, activityStack);
         }
 
         // https://hummingbird.me/groups/sos-brigade
-        else if (GROUPS.equalsIgnoreCase(paths[0])) {
+        else if (GROUPS.equalsIgnoreCase(pageIdentifier) || GROUPS_SHORT.equalsIgnoreCase(pageIdentifier)) {
             buildGroupsActivityStack(activity, paths, activityStack);
         }
 
         // https://hummingbird.me/manga/rwby
-        else if (MANGA.equalsIgnoreCase(paths[0])) {
+        else if (MANGA.equalsIgnoreCase(pageIdentifier) || MANGA_SHORT.equalsIgnoreCase(pageIdentifier)) {
             buildMangaActivityStack(activity, paths, activityStack);
         }
 
         // https://hummingbird.me/notifications
-        else if (NOTIFICATIONS.equalsIgnoreCase(paths[0])) {
+        else if (NOTIFICATIONS.equalsIgnoreCase(pageIdentifier)) {
             buildNotificationsActivityStack(activity, activityStack);
         }
 
         // https://hummingbird.me/stories/8032021
-        else if (STORIES.equalsIgnoreCase(paths[0])) {
+        else if (STORIES.equalsIgnoreCase(pageIdentifier)) {
             buildStoriesActivityStack(activity, paths, activityStack);
         }
 
         // https://hummingbird.me/users/ThatLilChestnut
-        else if (USERS.equalsIgnoreCase(paths[0])) {
+        else if (USERS.equalsIgnoreCase(pageIdentifier) || USERS_SHORT.equalsIgnoreCase(pageIdentifier)) {
             buildUserActivityStack(activity, paths, activityStack);
         }
 
