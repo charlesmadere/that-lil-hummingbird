@@ -102,6 +102,7 @@ public abstract class BaseLibraryActivity extends BaseDrawerActivity implements
     @Override
     public boolean onPrepareOptionsMenu(final Menu menu) {
         menu.findItem(R.id.miSortDate).setEnabled(mLibrarySort != LibrarySort.DATE);
+        menu.findItem(R.id.miSortRating).setEnabled(mLibrarySort != LibrarySort.RATING);
         menu.findItem(R.id.miSortTitle).setEnabled(mLibrarySort != LibrarySort.TITLE);
         return super.onPrepareOptionsMenu(menu);
     }
