@@ -87,6 +87,10 @@ public abstract class BaseLibraryActivity extends BaseDrawerActivity implements
                 setLibrarySort(LibrarySort.DATE);
                 return true;
 
+            case R.id.miSortRating:
+                setLibrarySort(LibrarySort.RATING);
+                return true;
+
             case R.id.miSortTitle:
                 setLibrarySort(LibrarySort.TITLE);
                 return true;

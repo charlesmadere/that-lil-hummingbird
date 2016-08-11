@@ -3,13 +3,12 @@ package com.charlesmadere.hummingbird.views;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.facebook.drawee.view.SimpleDraweeView;
-
-import butterknife.ButterKnife;
 
 public class GalleryItemView extends SimpleDraweeView implements AdapterView<String> {
 
@@ -36,23 +35,12 @@ public class GalleryItemView extends SimpleDraweeView implements AdapterView<Str
     }
 
     @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-
-        if (isInEditMode()) {
-            return;
-        }
-
-        ButterKnife.bind(this);
-    }
-
-    @Override
     public void setContent(final String content) {
         mUrl = content;
         setImageURI(mUrl);
     }
 
-    public void setOnClickListener(final OnClickListener l) {
+    public void setOnClickListener(@Nullable final OnClickListener l) {
         if (l == null) {
             setClickable(false);
         } else {

@@ -14,48 +14,54 @@ import java.lang.reflect.Type;
 
 public enum Rating implements Parcelable {
 
-    @SerializedName("unrated")
-    UNRATED(Float.MIN_VALUE),
-
-    @SerializedName("0")
-    ZERO(0f),
-
-    @SerializedName("0.5")
-    ZERO_POINT_FIVE(0.5f),
-
-    @SerializedName("1")
-    ONE(1f),
-
-    @SerializedName("1.5")
-    ONE_POINT_FIVE(1.5f),
-
-    @SerializedName("2")
-    TWO(2f),
-
-    @SerializedName("2.5")
-    TWO_POINT_FIVE(2.5f),
-
-    @SerializedName("3")
-    THREE(3f),
-
-    @SerializedName("3.5")
-    THREE_POINT_FIVE(3.5f),
-
-    @SerializedName("4")
-    FOUR(4f),
+    @SerializedName("5")
+    FIVE(5f),
 
     @SerializedName("4.5")
     FOUR_POINT_FIVE(4.5f),
 
-    @SerializedName("5")
-    FIVE(5f);
+    @SerializedName("4")
+    FOUR(4f),
+
+    @SerializedName("3.5")
+    THREE_POINT_FIVE(3.5f),
+
+    @SerializedName("3")
+    THREE(3f),
+
+    @SerializedName("2.5")
+    TWO_POINT_FIVE(2.5f),
+
+    @SerializedName("2")
+    TWO(2f),
+
+    @SerializedName("1.5")
+    ONE_POINT_FIVE(1.5f),
+
+    @SerializedName("1")
+    ONE(1f),
+
+    @SerializedName("0.5")
+    ZERO_POINT_FIVE(0.5f),
+
+    @SerializedName("0")
+    ZERO(0f),
+
+    @SerializedName("unrated")
+    UNRATED(Float.MIN_VALUE);
 
     private final float mValue;
+
+
+    public static int compare(@Nullable final Rating l, @Nullable final Rating r) {
+        final int lOrdinal = l == null ? UNRATED.ordinal() : l.ordinal();
+        final int rOrdinal = r == null ? UNRATED.ordinal() : r.ordinal();
+        return lOrdinal - rOrdinal;
+    }
 
     public static boolean equals(@Nullable final Rating l, @Nullable final Rating r) {
         return l == r || (l == null && r == UNRATED) || (l == UNRATED && r == null);
     }
-
 
     Rating(final float value) {
         mValue = value;

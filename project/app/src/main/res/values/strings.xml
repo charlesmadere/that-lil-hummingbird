@@ -316,6 +316,7 @@
     <string name="sound_">Sound…</string>
     <string name="sort">Sort</string>
     <string name="sort_by_date">Sort by Date</string>
+    <string name="sort_by_rating">Sort by Rating</string>
     <string name="sort_by_title">Sort by Title</string>
     <string name="special">Special</string>
     <string name="started_airing">Started airing</string>

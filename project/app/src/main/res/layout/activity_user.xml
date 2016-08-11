@@ -11,21 +11,6 @@
                 style="@style/CollapsingToolbarLayout">
                 <com.facebook.drawee.view.SimpleDraweeView
                     style="@style/ParallaxCoverImage" />
-                <FrameLayout
-                    android:layout_gravity="bottom|end"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/root_padding_double"
-                    android:layout_width="wrap_content"
-                    app:layout_collapseMode="parallax">
-                    <com.charlesmadere.hummingbird.views.AvatarView
-                        android:id="@+id/avatarView"
-                        app:placeholderImage="@null"
-                        app:roundAsCircle="true"
-                        style="@style/Avatar.Medium" />
-                    <com.charlesmadere.hummingbird.views.TypefaceTextView
-                        tools:visibility="visible"
-                        style="@style/Badge.Pro" />
-                </FrameLayout>
                 <com.charlesmadere.hummingbird.views.TypefaceToolbar
                     style="@style/Toolbar.Parallax" />
             </com.charlesmadere.hummingbird.views.CollapsingTypefaceToolbarLayout>
@@ -37,6 +22,21 @@
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        <FrameLayout
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/root_padding_double"
+            android:layout_width="wrap_content"
+            app:layout_anchor="@id/tabLayout"
+            app:layout_anchorGravity="bottom|end">
+            <com.charlesmadere.hummingbird.views.AvatarView
+                android:id="@+id/avatarView"
+                app:placeholderImage="@null"
+                app:roundAsCircle="true"
+                style="@style/Avatar.Medium" />
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                tools:visibility="visible"
+                style="@style/Badge.Pro" />
+        </FrameLayout>
         <android.support.design.widget.FloatingActionButton
             android:src="@drawable/ic_comment_white_24dp"
             android:visibility="gone"

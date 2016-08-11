@@ -12,6 +12,9 @@ public enum LibrarySort implements Parcelable {
     @SerializedName("date")
     DATE(R.string.date),
 
+    @SerializedName("rating")
+    RATING(R.string.rating),
+
     @SerializedName("title")
     TITLE(R.string.title);
 

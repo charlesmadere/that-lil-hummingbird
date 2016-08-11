@@ -195,6 +195,13 @@ public class MangaLibraryEntry implements Parcelable {
         }
     };
 
+    public static final Comparator<MangaLibraryEntry> RATING = new Comparator<MangaLibraryEntry>() {
+        @Override
+        public int compare(final MangaLibraryEntry lhs, final MangaLibraryEntry rhs) {
+            return Rating.compare(lhs.getRating(), rhs.getRating());
+        }
+    };
+
     public static final Comparator<MangaLibraryEntry> TITLE = new Comparator<MangaLibraryEntry>() {
         @Override
         public int compare(final MangaLibraryEntry lhs, final MangaLibraryEntry rhs) {

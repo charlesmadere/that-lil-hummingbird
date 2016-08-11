@@ -119,26 +119,6 @@ public class SettingsActivity extends BaseDrawerActivity {
         }
     }
 
-    @OnClick(R.id.hbivTitleLanguage)
-    void onAnimeTitleLanguageClick() {
-        CharSequence[] items = new CharSequence[TitleType.values().length];
-
-        for (int i = 0; i < items.length; ++i) {
-            items[i] = getText(TitleType.values()[i].getTextResId());
-        }
-
-        new AlertDialog.Builder(this)
-                .setItems(items, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(final DialogInterface dialog, final int which) {
-                        Preferences.General.TitleLanguage.set(TitleType.values()[which]);
-                        refresh();
-                    }
-                })
-                .setTitle(R.string.preferred_title_language)
-                .show();
-    }
-
     @OnClick(R.id.kvtvAuthor)
     void onAuthorClick() {
         MiscUtils.openUrl(this, Constants.CHARLES_TWITTER_URL);
@@ -158,10 +138,16 @@ public class SettingsActivity extends BaseDrawerActivity {
             items[i] = getText(LaunchScreen.values()[i].getTextResId());
         }
 
+        int checkedItem = -1;
+        if (Preferences.General.DefaultLaunchScreen.exists()) {
+            checkedItem = Preferences.General.DefaultLaunchScreen.get().ordinal();
+        }
+
         new AlertDialog.Builder(this)
-                .setItems(items, new DialogInterface.OnClickListener() {
+                .setSingleChoiceItems(items, checkedItem, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
+                        dialog.dismiss();
                         Preferences.General.DefaultLaunchScreen.set(LaunchScreen.values()[which]);
                         refresh();
                     }
@@ -178,10 +164,16 @@ public class SettingsActivity extends BaseDrawerActivity {
             items[i] = getText(LibrarySort.values()[i].getTextResId());
         }
 
+        int checkedItem = -1;
+        if (Preferences.General.DefaultLibrarySort.exists()) {
+            checkedItem = Preferences.General.DefaultLibrarySort.get().ordinal();
+        }
+
         new AlertDialog.Builder(this)
-                .setItems(items, new DialogInterface.OnClickListener() {
+                .setSingleChoiceItems(items, checkedItem, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
+                        dialog.dismiss();
                         Preferences.General.DefaultLibrarySort.set(LibrarySort.values()[which]);
                         refresh();
                     }
@@ -241,10 +233,17 @@ public class SettingsActivity extends BaseDrawerActivity {
             items[i] = getText(PollFrequency.values()[i].getTextResId());
         }
 
+        int checkedItem = -1;
+        if (Preferences.NotificationPolling.Frequency.exists()) {
+            checkedItem = Preferences.NotificationPolling.Frequency.get().ordinal();
+        }
+
         new AlertDialog.Builder(this)
-                .setItems(items, new DialogInterface.OnClickListener() {
+                .setSingleChoiceItems(items, checkedItem, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
+                        dialog.dismiss();
+
                         final PollFrequency pollFrequency = Preferences.NotificationPolling.Frequency.get();
                         final PollFrequency newPollFrequency = PollFrequency.values()[which];
 
@@ -312,10 +311,17 @@ public class SettingsActivity extends BaseDrawerActivity {
             items[i] = getText(NightMode.values()[i].getTextResId());
         }
 
+        int checkedItem = -1;
+        if (Preferences.General.Theme.exists()) {
+            checkedItem = Preferences.General.Theme.get().ordinal();
+        }
+
         new AlertDialog.Builder(this)
-                .setItems(items, new DialogInterface.OnClickListener() {
+                .setSingleChoiceItems(items, checkedItem, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
+                        dialog.dismiss();
+
                         final NightMode nightMode = Preferences.General.Theme.get();
                         final NightMode newNightMode = NightMode.values()[which];
 
@@ -339,6 +345,32 @@ public class SettingsActivity extends BaseDrawerActivity {
                     }
                 })
                 .setTitle(R.string.theme)
+                .show();
+    }
+
+    @OnClick(R.id.hbivTitleLanguage)
+    void onTitleLanguageClick() {
+        CharSequence[] items = new CharSequence[TitleType.values().length];
+
+        for (int i = 0; i < items.length; ++i) {
+            items[i] = getText(TitleType.values()[i].getTextResId());
+        }
+
+        int checkedItem = -1;
+        if (Preferences.General.TitleLanguage.exists()) {
+            checkedItem = Preferences.General.TitleLanguage.get().ordinal();
+        }
+
+        new AlertDialog.Builder(this)
+                .setSingleChoiceItems(items, checkedItem, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        dialog.dismiss();
+                        Preferences.General.TitleLanguage.set(TitleType.values()[which]);
+                        refresh();
+                    }
+                })
+                .setTitle(R.string.preferred_title_language)
                 .show();
     }
 

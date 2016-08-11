@@ -3,6 +3,8 @@ package com.charlesmadere.hummingbird.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.FeedFragmentAdapter;
@@ -58,6 +60,12 @@ public class FeedActivity extends BaseUserActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_feed, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public void onFeedPostSubmit() {
         final FeedPostFragment fragment = (FeedPostFragment) getSupportFragmentManager()
                 .findFragmentByTag(FeedPostFragment.TAG);
@@ -68,6 +76,21 @@ public class FeedActivity extends BaseUserActivity {
         }
 
         Api.postToFeed(post, new FeedPostListener(this));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.miAnimeLibrary:
+                startActivity(CurrentUserAnimeLibraryActivity.getLaunchIntent(this));
+                break;
+
+            case R.id.miMangaLibrary:
+                startActivity(CurrentUserMangaLibraryActivity.getLaunchIntent(this));
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

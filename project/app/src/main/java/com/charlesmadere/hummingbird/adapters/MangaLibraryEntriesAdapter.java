@@ -54,6 +54,10 @@ public class MangaLibraryEntriesAdapter extends BasePaginationAdapter<MangaLibra
                 Collections.sort(entries, MangaLibraryEntry.DATE);
                 break;
 
+            case RATING:
+                Collections.sort(entries, MangaLibraryEntry.RATING);
+                break;
+
             case TITLE:
                 Collections.sort(entries, MangaLibraryEntry.TITLE);
                 break;
