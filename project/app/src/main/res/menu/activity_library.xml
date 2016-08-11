@@ -10,11 +10,11 @@
                 android:id="@+id/miSortDate"
                 android:title="@string/sort_by_date" />
             <item
-                android:id="@+id/miSortTitle"
-                android:title="@string/sort_by_title" />
-            <item
                 android:id="@+id/miSortRating"
                 android:title="@string/sort_by_rating" />
+            <item
+                android:id="@+id/miSortTitle"
+                android:title="@string/sort_by_title" />
         </menu>
     </item>
 </menu>
