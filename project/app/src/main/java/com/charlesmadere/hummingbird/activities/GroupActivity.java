@@ -123,7 +123,7 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
     }
 
     private void leaveGroup() {
-        Api.leaveGroup(mGroupId);
+        Api.leaveGroup(mGroupDigest.getGroup().getCurrentMemberId());
         mGroupDigest.getGroup().setCurrentMemberId(null);
         supportInvalidateOptionsMenu();
     }

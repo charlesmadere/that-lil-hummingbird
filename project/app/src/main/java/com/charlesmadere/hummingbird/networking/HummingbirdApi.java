@@ -138,9 +138,11 @@ public interface HummingbirdApi {
     @GET("stories")
     Call<Feed> getUserStories(@Query("user_id") String username, @Query("page") Integer page);
 
+    @Headers(ACCEPT_JSON_MIMETYPE)
     @POST("group_members")
     Call<Void> joinGroup(@Body JsonElement body);
 
+    @Headers(ACCEPT_JSON_MIMETYPE)
     @DELETE("group_members/{groupId}")
     Call<Void> leaveGroup(@Path("groupId") String groupId);
 

@@ -962,8 +962,8 @@ public final class Api {
         });
     }
 
-    public static void leaveGroup(final String groupId) {
-        HUMMINGBIRD.leaveGroup(groupId).enqueue(new Callback<Void>() {
+    public static void leaveGroup(final String currentGroupMemberId) {
+        HUMMINGBIRD.leaveGroup(currentGroupMemberId).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(final Call<Void> call, final Response<Void> response) {
                 // do nothing
@@ -971,7 +971,7 @@ public final class Api {
 
             @Override
             public void onFailure(final Call<Void> call, final Throwable t) {
-                Timber.e(TAG, "leave group (" + groupId + ") failed", t);
+                Timber.e(TAG, "leave group failed", t);
             }
         });
     }
