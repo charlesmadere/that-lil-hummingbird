@@ -36,6 +36,7 @@ public class Group implements Parcelable {
     @SerializedName("cover_image_url")
     private String mCoverImageUrl;
 
+    @Nullable
     @SerializedName("current_member_id")
     private String mCurrentMemberId;
 
@@ -78,6 +79,7 @@ public class Group implements Parcelable {
         return mCoverImageUrl;
     }
 
+    @Nullable
     public String getCurrentMemberId() {
         return mCurrentMemberId;
     }
@@ -115,6 +117,10 @@ public class Group implements Parcelable {
         return MiscUtils.isValidArtwork(mCoverImageUrl);
     }
 
+    public boolean hasCurrentMemberId() {
+        return !TextUtils.isEmpty(mCurrentMemberId);
+    }
+
     @Override
     public int hashCode() {
         return mId.hashCode();
@@ -148,6 +154,10 @@ public class Group implements Parcelable {
 
     public void hydrate(final GroupDigest groupDigest) {
         hydrate(groupDigest.getGroupMembers());
+    }
+
+    public void setCurrentMemberId(@Nullable final String currentMemberId) {
+        mCurrentMemberId = currentMemberId;
     }
 
     @Override

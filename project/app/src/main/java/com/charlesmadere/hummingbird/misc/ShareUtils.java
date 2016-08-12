@@ -7,6 +7,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.GroupDigest;
 import com.charlesmadere.hummingbird.models.MangaDigest;
+import com.charlesmadere.hummingbird.models.UserDigest;
 
 public final class ShareUtils {
 
@@ -48,6 +49,20 @@ public final class ShareUtils {
         ShareCompat.IntentBuilder.from(activity)
                 .setChooserTitle(activity.getString(R.string.share_x, manga.getTitle()))
                 .setText(Constants.HUMMINGBIRD_MANGA_URL + manga.getId())
+                .setType(Constants.MIMETYPE_TEXT)
+                .startChooser();
+    }
+
+    public static void shareUser(final Activity activity, final UserDigest user) {
+        if (activity == null) {
+            throw new IllegalArgumentException("activity parameter can't be null");
+        } else if (user == null) {
+            throw new IllegalArgumentException("user parameter can't be null");
+        }
+
+        ShareCompat.IntentBuilder.from(activity)
+                .setChooserTitle(activity.getString(R.string.share_x, user.getUserId()))
+                .setText(Constants.HUMMINGBIRD_USER_URL + user.getUserId())
                 .setType(Constants.MIMETYPE_TEXT)
                 .startChooser();
     }

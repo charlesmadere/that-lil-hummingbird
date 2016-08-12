@@ -138,6 +138,7 @@
                     android:id="@+id/hbivYouTubeLink"
                     android:visibility="gone"
                     app:headText="@string/youtube_link"
+                    app:iconDrawable="@drawable/ic_ondemand_video_24dp"
                     tools:visibility="visible"
                     style="@style/ResponsiveWidthCardItem" />
             </LinearLayout>

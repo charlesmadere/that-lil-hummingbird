@@ -173,11 +173,13 @@
     <string name="initial_search_message">Once you begin typing, search results will be displayed here.</string>
     <string name="is_currently_watching">is currently watching</string>
     <string name="japanese">Japanese</string>
+    <string name="join_group">Join group</string>
     <string name="language">Language</string>
     <string name="languages">Languages</string>
     <string name="last_check">Last check</string>
     <string name="last_update">Last update</string>
     <string name="leave_a_comment_">Leave a comment…</string>
+    <string name="leave_group">Leave group</string>
     <string name="length">Length</string>
     <string name="library">Library</string>
     <string name="library_sorting">Library sorting</string>

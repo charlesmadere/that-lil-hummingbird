@@ -100,6 +100,15 @@ public abstract class BaseLibraryFragment extends BaseFragment implements Object
     }
 
     @Override
+    public void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (mFeed != null) {
+            ObjectCache.put(mFeed, this);
+        }
+    }
+
+    @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -107,6 +116,8 @@ public abstract class BaseLibraryFragment extends BaseFragment implements Object
         mRecyclerView.setHasFixedSize(true);
         SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
+
+        mFeed = ObjectCache.get(this);
     }
 
     @Override

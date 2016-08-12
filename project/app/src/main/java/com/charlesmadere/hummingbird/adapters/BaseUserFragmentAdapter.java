@@ -17,8 +17,8 @@ import java.lang.ref.WeakReference;
 
 public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter {
 
-    public static final int POSITION_PROFILE = 0;
-    public static final int POSITION_FEED = 1;
+    public static final int POSITION_FEED = 0;
+    public static final int POSITION_PROFILE = 1;
 
     private final Context mContext;
     private final SparseArrayCompat<WeakReference<BaseFragment>> mFragments;
@@ -65,8 +65,8 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
         final BaseFragment fragment;
 
         switch (position) {
-            case POSITION_PROFILE: fragment = createUserProfileFragment(); break;
             case POSITION_FEED: fragment = createUserFeedFragment(); break;
+            case POSITION_PROFILE: fragment = createUserProfileFragment(); break;
             default: throw new IllegalArgumentException("invalid position: " + position);
         }
 
@@ -77,8 +77,8 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
     @Override
     public CharSequence getPageTitle(final int position) {
         switch (position) {
-            case POSITION_PROFILE: return mContext.getText(R.string.profile);
             case POSITION_FEED: return mContext.getText(R.string.feed);
+            case POSITION_PROFILE: return mContext.getText(R.string.profile);
             default: throw new IllegalArgumentException("invalid position: " + position);
         }
     }

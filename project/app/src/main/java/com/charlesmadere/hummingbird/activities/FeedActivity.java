@@ -39,11 +39,6 @@ public class FeedActivity extends BaseUserActivity {
     }
 
     @Override
-    protected int getContentView() {
-        return R.layout.activity_feed;
-    }
-
-    @Override
     protected NavigationDrawerItemView.Entry getSelectedNavigationDrawerItemViewEntry() {
         return NavigationDrawerItemView.Entry.FEED;
     }
@@ -56,6 +51,7 @@ public class FeedActivity extends BaseUserActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_feed);
         setAdapter(new FeedFragmentAdapter(this));
     }
 

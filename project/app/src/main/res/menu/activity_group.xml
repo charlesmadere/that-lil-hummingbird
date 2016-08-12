@@ -8,5 +8,17 @@
         android:title="@string/share"
         android:visible="false"
         compat:showAsAction="ifRoom"
-        tools:visible="true"/>
+        tools:visible="true" />
+    <item
+        android:id="@+id/miJoinGroup"
+        android:title="@string/join_group"
+        android:visible="false"
+        compat:showAsAction="never"
+        tools:visible="true" />
+    <item
+        android:id="@+id/miLeaveGroup"
+        android:title="@string/leave_group"
+        android:visible="false"
+        compat:showAsAction="never"
+        tools:visible="true" />
 </menu>

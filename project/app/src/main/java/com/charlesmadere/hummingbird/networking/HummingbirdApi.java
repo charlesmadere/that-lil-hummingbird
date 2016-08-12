@@ -138,6 +138,12 @@ public interface HummingbirdApi {
     @GET("stories")
     Call<Feed> getUserStories(@Query("user_id") String username, @Query("page") Integer page);
 
+    @POST("group_members")
+    Call<Void> joinGroup(@Body JsonElement body);
+
+    @DELETE("group_members/{groupId}")
+    Call<Void> leaveGroup(@Path("groupId") String groupId);
+
     @PUT("quotes/{quoteId}")
     Call<Void> likeQuote(@Path("quoteId") String quoteId, @Body JsonElement body);
 

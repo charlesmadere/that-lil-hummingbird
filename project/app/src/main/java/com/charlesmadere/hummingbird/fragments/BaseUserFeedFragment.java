@@ -134,6 +134,8 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
         mRecyclerView.setAdapter(mAdapter);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
 
+        mFeed = ObjectCache.get(this);
+
         if (mFeed == null) {
             fetchFeed();
         } else {
@@ -187,32 +189,6 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
         UserDigest getUserDigest();
         void onFeedBeganLoading();
         void onFeedFinishedLoading();
-    }
-
-    private static class FeedPostListener implements ApiResponse<Void> {
-        private final WeakReference<BaseUserFeedFragment> mFragmentReference;
-
-        private FeedPostListener(final BaseUserFeedFragment fragment) {
-            mFragmentReference = new WeakReference<>(fragment);
-        }
-
-        @Override
-        public void failure(@Nullable final ErrorInfo error) {
-            final BaseUserFeedFragment fragment = mFragmentReference.get();
-
-            if (fragment != null && !fragment.isDestroyed()) {
-                fragment.feedPostFailure();
-            }
-        }
-
-        @Override
-        public void success(@Nullable final Void v) {
-            final BaseUserFeedFragment fragment = mFragmentReference.get();
-
-            if (fragment != null && !fragment.isDestroyed()) {
-                fragment.fetchFeed();
-            }
-        }
     }
 
     protected static class GetFeedListener implements ApiResponse<Feed> {

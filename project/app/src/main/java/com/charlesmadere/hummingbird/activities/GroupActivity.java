@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.GroupFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.BaseGroupFragment;
+import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.misc.ShareUtils;
@@ -40,10 +41,8 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
     private static final String CNAME = GroupActivity.class.getCanonicalName();
     private static final String EXTRA_GROUP_ID = CNAME + ".GroupId";
     private static final String EXTRA_GROUP_NAME = CNAME + ".GroupName";
-    private static final String KEY_STARTING_POSITION = "StartingPosition";
 
     private GroupDigest mGroupDigest;
-    private int mStartingPosition;
     private String mGroupId;
     private UiColorSet mUiColorSet;
 
@@ -117,6 +116,18 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
         return true;
     }
 
+    private void joinGroup() {
+        Api.joinGroup(mGroupId);
+        mGroupDigest.getGroup().setCurrentMemberId(CurrentUser.get().getUserId());
+        supportInvalidateOptionsMenu();
+    }
+
+    private void leaveGroup() {
+        Api.leaveGroup(mGroupId);
+        mGroupDigest.getGroup().setCurrentMemberId(null);
+        supportInvalidateOptionsMenu();
+    }
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,12 +138,6 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
 
         if (!intent.hasExtra(EXTRA_GROUP_NAME)) {
             setTitle(intent.getStringExtra(EXTRA_GROUP_NAME));
-        }
-
-        mStartingPosition = GroupFragmentAdapter.POSITION_FEED;
-
-        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mStartingPosition = savedInstanceState.getInt(KEY_STARTING_POSITION, mStartingPosition);
         }
 
         mGroupDigest = ObjectCache.get(this);
@@ -153,6 +158,14 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.miJoinGroup:
+                joinGroup();
+                return true;
+
+            case R.id.miLeaveGroup:
+                leaveGroup();
+                return true;
+
             case R.id.miShare:
                 ShareUtils.shareGroup(this, mGroupDigest);
                 return true;
@@ -165,6 +178,12 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
     public boolean onPrepareOptionsMenu(final Menu menu) {
         if (mGroupDigest != null) {
             menu.findItem(R.id.miShare).setVisible(true);
+
+            if (mGroupDigest.getGroup().hasCurrentMemberId()) {
+                menu.findItem(R.id.miLeaveGroup).setVisible(true);
+            } else {
+                menu.findItem(R.id.miJoinGroup).setVisible(true);
+            }
         }
 
         return super.onPrepareOptionsMenu(menu);
@@ -173,7 +192,6 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
     @Override
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(KEY_STARTING_POSITION, mViewPager.getCurrentItem());
 
         if (mGroupDigest != null) {
             ObjectCache.put(mGroupDigest, this);
@@ -224,7 +242,6 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
         }
 
         mViewPager.setAdapter(new GroupFragmentAdapter(this));
-        mViewPager.setCurrentItem(mStartingPosition, false);
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);

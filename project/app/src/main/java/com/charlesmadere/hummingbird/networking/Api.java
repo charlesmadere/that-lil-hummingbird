@@ -42,6 +42,7 @@ import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.charlesmadere.hummingbird.preferences.Preferences;
+import com.google.gson.JsonObject;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -936,6 +937,41 @@ public final class Api {
                         }
                     }
                 });
+            }
+        });
+    }
+
+    public static void joinGroup(final String groupId) {
+        JsonObject groupMember = new JsonObject();
+        groupMember.addProperty("group_id", groupId);
+        groupMember.addProperty("user_id", CurrentUser.get().getUserId());
+
+        JsonObject body = new JsonObject();
+        body.add("group_member", groupMember);
+
+        HUMMINGBIRD.joinGroup(body).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(final Call<Void> call, final Response<Void> response) {
+                // do nothing
+            }
+
+            @Override
+            public void onFailure(final Call<Void> call, final Throwable t) {
+                Timber.e(TAG, "join group (" + groupId + ") failed", t);
+            }
+        });
+    }
+
+    public static void leaveGroup(final String groupId) {
+        HUMMINGBIRD.leaveGroup(groupId).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(final Call<Void> call, final Response<Void> response) {
+                // do nothing
+            }
+
+            @Override
+            public void onFailure(final Call<Void> call, final Throwable t) {
+                Timber.e(TAG, "leave group (" + groupId + ") failed", t);
             }
         });
     }

@@ -1,7 +1,5 @@
 package com.charlesmadere.hummingbird.activities;
 
-import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -23,10 +21,6 @@ import butterknife.OnPageChange;
 
 public abstract class BaseUserActivity extends BaseDrawerActivity implements
         BaseUserFeedFragment.Listener, FeedPostFragment.Listener {
-
-    protected static final String KEY_STARTING_POSITION = "StartingPosition";
-
-    protected int mStartingPosition;
 
     @BindView(R.id.floatingActionButton)
     protected FloatingActionButton mPostToFeed;
@@ -54,21 +48,6 @@ public abstract class BaseUserActivity extends BaseDrawerActivity implements
         }
     }
 
-    @LayoutRes
-    protected abstract int getContentView();
-
-    @Override
-    protected void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(getContentView());
-
-        mStartingPosition = BaseUserFragmentAdapter.POSITION_FEED;
-
-        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mStartingPosition = savedInstanceState.getInt(KEY_STARTING_POSITION, mStartingPosition);
-        }
-    }
-
     @Override
     public void onFeedBeganLoading() {
         updatePostToFeedVisibility();
@@ -84,12 +63,6 @@ public abstract class BaseUserActivity extends BaseDrawerActivity implements
         FeedPostFragment.create().show(getSupportFragmentManager(), FeedPostFragment.TAG);
     }
 
-    @Override
-    protected void onSaveInstanceState(final Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(KEY_STARTING_POSITION, mViewPager.getCurrentItem());
-    }
-
     @OnPageChange(R.id.viewPager)
     protected void onViewPagerPageChange() {
         updatePostToFeedVisibility();
@@ -97,7 +70,6 @@ public abstract class BaseUserActivity extends BaseDrawerActivity implements
 
     protected void setAdapter(final BaseUserFragmentAdapter adapter) {
         mViewPager.setAdapter(adapter);
-        mViewPager.setCurrentItem(mStartingPosition);
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mTabLayout.setupWithViewPager(mViewPager);
         updatePostToFeedVisibility();

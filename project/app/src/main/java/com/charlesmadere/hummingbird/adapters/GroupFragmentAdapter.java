@@ -12,9 +12,6 @@ import com.charlesmadere.hummingbird.fragments.GroupFeedFragment;
 
 public class GroupFragmentAdapter extends FragmentStatePagerAdapter {
 
-    public static final int POSITION_DETAILS = 0;
-    public static final int POSITION_FEED = 1;
-
     private final Context mContext;
 
 
@@ -35,8 +32,8 @@ public class GroupFragmentAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(final int position) {
         switch (position) {
-            case POSITION_DETAILS: return GroupDetailsFragment.create();
-            case POSITION_FEED: return GroupFeedFragment.create();
+            case 0: return GroupFeedFragment.create();
+            case 1: return GroupDetailsFragment.create();
             default: throw new IllegalArgumentException("illegal position: " + position);
         }
     }
@@ -44,8 +41,8 @@ public class GroupFragmentAdapter extends FragmentStatePagerAdapter {
     @Override
     public CharSequence getPageTitle(final int position) {
         switch (position) {
-            case POSITION_DETAILS: return mContext.getText(R.string.details);
-            case POSITION_FEED: return mContext.getText(R.string.feed);
+            case 0: return mContext.getText(R.string.feed);
+            case 1: return mContext.getText(R.string.details);
             default: throw new IllegalArgumentException("illegal position: " + position);
         }
     }

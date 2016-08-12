@@ -18,6 +18,7 @@ import com.charlesmadere.hummingbird.fragments.FeedPostFragment;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
+import com.charlesmadere.hummingbird.misc.ShareUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.FeedPost;
 import com.charlesmadere.hummingbird.models.UiColorSet;
@@ -87,11 +88,6 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
     }
 
     @Override
-    protected int getContentView() {
-        return R.layout.activity_user;
-    }
-
-    @Override
     public String[] getObjectCacheKeys() {
         return new String[] { getActivityName(), mUsername };
     }
@@ -115,6 +111,7 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_user);
 
         final Intent intent = getIntent();
         mUsername = intent.getStringExtra(EXTRA_USERNAME);
@@ -163,6 +160,10 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
             case R.id.miMangaLibrary:
                 startActivity(MangaLibraryActivity.getLaunchIntent(this, mUsername, mUiColorSet));
                 return true;
+
+            case R.id.miShare:
+                ShareUtils.shareUser(this, mUserDigest);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -173,6 +174,7 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
         if (mUserDigest != null) {
             menu.findItem(R.id.miAnimeLibrary).setVisible(true);
             menu.findItem(R.id.miMangaLibrary).setVisible(true);
+            menu.findItem(R.id.miShare).setVisible(true);
 
             if (mUserDigest.getUser().isFollowed()) {
                 menu.findItem(R.id.miUnfollow).setVisible(true);
