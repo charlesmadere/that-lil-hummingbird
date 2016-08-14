@@ -9,11 +9,20 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.models.CommentStory;
+import com.charlesmadere.hummingbird.networking.Api;
+
+import java.text.NumberFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class LikesFeedButton extends FrameLayout implements View.OnClickListener {
+public class LikesFeedButton extends FrameLayout implements AdapterView<CommentStory>,
+        View.OnClickListener {
+
+    private CommentStory mCommentStory;
+    private NumberFormat mNumberFormat;
 
     @BindView(R.id.tvLikesFeedButton)
     TextView mLabel;
@@ -35,8 +44,18 @@ public class LikesFeedButton extends FrameLayout implements View.OnClickListener
     }
 
     @Override
-    public void onClick(final View view) {
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        update();
+    }
 
+    @Override
+    public void onClick(final View view) {
+        if (mCommentStory != null) {
+            mCommentStory.toggleLiked();
+            Api.likeStory(mCommentStory);
+            update();
+        }
     }
 
     @Override
@@ -44,6 +63,30 @@ public class LikesFeedButton extends FrameLayout implements View.OnClickListener
         super.onFinishInflate();
         ButterKnife.bind(this);
         setOnClickListener(this);
+        mNumberFormat = NumberFormat.getInstance();
+    }
+
+    @Override
+    public void setContent(final CommentStory content) {
+        mCommentStory = content;
+        update();
+    }
+
+    private void update() {
+        final boolean liked;
+        final int count;
+
+        if (mCommentStory != null) {
+            liked = mCommentStory.isLiked();
+            count = mCommentStory.getTotalVotes();
+        } else {
+            liked = false;
+            count = 0;
+        }
+
+        mLabel.setCompoundDrawablesRelativeWithIntrinsicBounds(liked ?
+                R.drawable.ic_favorite_orange_18dp : R.drawable.ic_favorite_border_18dp, 0, 0, 0);
+        mLabel.setText(mNumberFormat.format(count));
     }
 
 }
