@@ -32,6 +32,9 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
     @BindView(R.id.msivOne)
     AbsSubstoryItemView mMediaOne;
 
+    @BindView(R.id.shareFeedButton)
+    ShareFeedButton mShareFeedButton;
+
     @BindView(R.id.showMoreFeedButton)
     ShowMoreFeedButton mShowMoreFeedButton;
 
@@ -46,9 +49,6 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
 
     @BindView(R.id.tvTitle)
     TextView mTitle;
-
-    @BindView(R.id.feedButtons)
-    View mFeedButtons;
 
 
     public MediaStoryItemView(final Context context, final AttributeSet attrs) {
@@ -117,12 +117,14 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
             mMediaOne.setVisibility(GONE);
         }
 
+        mShareFeedButton.setContent(mMediaStory);
+
         if (mMediaStory.getSubstoryCount() >= 3) {
-            mFeedButtons.setVisibility(VISIBLE);
             mShowMoreFeedButton.setContent(mMediaStory);
+            mShowMoreFeedButton.setVisibility(VISIBLE);
         } else {
-            mFeedButtons.setVisibility(GONE);
             mShowMoreFeedButton.setContent(null);
+            mShowMoreFeedButton.setVisibility(INVISIBLE);
         }
     }
 
