@@ -30,11 +30,17 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
     @BindView(R.id.avatarView)
     AvatarView mAvatar;
 
+    @BindView(R.id.commentsFeedButton)
+    CommentsFeedButton mCommentsFeedButton;
+
     @BindView(R.id.commentTextView)
     CommentTextView mComment;
 
     @BindView(R.id.commentTitleTextView)
     CommentTitleTextView mTitle;
+
+    @BindView(R.id.likesFeedButton)
+    LikesFeedButton mLikesFeedButton;
 
     @BindView(R.id.llReplies)
     LinearLayout mReplies;
@@ -44,6 +50,9 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
 
     @BindView(R.id.rsivOne)
     ReplySubstoryItemView mReplyOne;
+
+    @BindView(R.id.shareFeedButton)
+    ShareFeedButton mShareFeedButton;
 
     @BindView(R.id.tvNsfwContent)
     TextView mNsfwContent;

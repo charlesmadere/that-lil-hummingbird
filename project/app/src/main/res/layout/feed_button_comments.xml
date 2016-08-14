@@ -5,7 +5,7 @@
     style="@style/FeedButtonContainer">
     <com.charlesmadere.hummingbird.views.TypefaceTextView
         android:drawableStart="@drawable/ic_insert_comment_18dp"
-        android:id="@+id/tvComments"
+        android:id="@+id/tvCommentsFeedButton"
         tools:text="32 comments"
         style="@style/FeedButton" />
 </com.charlesmadere.hummingbird.views.CommentsFeedButton>

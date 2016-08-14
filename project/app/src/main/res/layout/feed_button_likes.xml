@@ -5,7 +5,7 @@
     style="@style/FeedButtonContainer">
     <com.charlesmadere.hummingbird.views.TypefaceTextView
         android:drawableStart="@drawable/ic_favorite_border_18dp"
-        android:id="@+id/tvLikes"
+        android:id="@+id/tvLikesFeedButton"
         tools:text="50 likes"
         style="@style/FeedButton" />
 </com.charlesmadere.hummingbird.views.LikesFeedButton>
