@@ -2,11 +2,14 @@ package com.charlesmadere.hummingbird.views;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.User;
@@ -25,20 +28,24 @@ public class AvatarView extends SimpleDraweeView implements AdapterView<User>,
 
     public AvatarView(final Context context, final GenericDraweeHierarchy hierarchy) {
         super(context, hierarchy);
+        parseAttributes(null);
     }
 
     public AvatarView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
+        parseAttributes(attrs);
     }
 
     public AvatarView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
+        parseAttributes(attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public AvatarView(final Context context, final AttributeSet attrs, final int defStyleAttr,
             final int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        parseAttributes(attrs);
     }
 
     private void fetchAvatars(final User user, final String[] avatars, final int index) {
@@ -72,10 +79,20 @@ public class AvatarView extends SimpleDraweeView implements AdapterView<User>,
         }
     }
 
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        setOnClickListener(this);
+    private void parseAttributes(@Nullable final AttributeSet attrs) {
+        final boolean enableClickListener;
+
+        if (attrs == null) {
+            enableClickListener = true;
+        } else {
+            final TypedArray ta = getContext().obtainStyledAttributes(R.styleable.AvatarView);
+            enableClickListener = ta.getBoolean(R.styleable.AvatarView_enableClickListener, true);
+            ta.recycle();
+        }
+
+        if (enableClickListener) {
+            setOnClickListener(this);
+        }
     }
 
     @Override

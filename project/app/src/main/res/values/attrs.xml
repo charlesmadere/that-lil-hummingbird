@@ -11,6 +11,10 @@
         <attr name="textSize" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="AvatarView">
+        <attr name="enableClickListener" format="boolean" />
+    </declare-styleable>
+
     <declare-styleable name="CheckablePreferenceView">
         <attr name="disabledDescriptionText" format="string" />
         <attr name="enabledDescriptionText" format="string" />
