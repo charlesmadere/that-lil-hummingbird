@@ -140,6 +140,7 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
         }
 
         mCommentsFeedButton.setContent(mCommentStory);
+        mLikesFeedButton.setContent(mCommentStory);
     }
 
     private void setReplyView(final ReplySubstoryItemView view,
