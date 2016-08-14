@@ -47,9 +47,7 @@
                     android:id="@+id/kvtvProgress"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:visibility="gone"
-                    tools:text="Progress 3 / 12"
-                    tools:visibility="visible" />
+                    tools:text="Progress 3 / 12" />
                 <com.charlesmadere.hummingbird.views.KeyValueTextView
                     android:id="@+id/kvtvRating"
                     android:layout_height="wrap_content"
