@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.DeleteFeedButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/deleteFeedButton"
+    style="@style/FeedButtonContainer">
+    <com.charlesmadere.hummingbird.views.TypefaceTextView
+        android:drawableStart="@drawable/ic_delete_18dp"
+        android:text="@string/delete"
+        style="@style/FeedButton" />
+</com.charlesmadere.hummingbird.views.DeleteFeedButton>

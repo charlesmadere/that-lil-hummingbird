@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.EditFeedButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/editFeedButton"
+    style="@style/FeedButtonContainer">
+    <com.charlesmadere.hummingbird.views.TypefaceTextView
+        android:drawableStart="@drawable/ic_mode_edit_18dp"
+        android:text="@string/edit"
+        style="@style/FeedButton" />
+</com.charlesmadere.hummingbird.views.EditFeedButton>
