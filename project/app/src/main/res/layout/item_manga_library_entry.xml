@@ -1,75 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.charlesmadere.hummingbird.views.MangaLibraryEntryItemView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/CardItem">
+    style="@style/FeedCardItem">
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:orientation="horizontal">
-        <LinearLayout
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/root_padding"
-            android:layout_width="wrap_content"
-            android:orientation="vertical">
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/sdvCover"
-                android:layout_marginBottom="@dimen/root_padding"
-                style="@style/MangaCover" />
-            <ImageButton
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/edit"
-                android:id="@+id/ibEdit"
-                android:layout_gravity="center_horizontal"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:padding="@dimen/root_padding_half"
-                android:src="@drawable/ic_mode_edit_24dp"
-                android:visibility="gone"
-                tools:visibility="visible" />
-        </LinearLayout>
+        android:orientation="vertical">
         <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:orientation="vertical">
-            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                android:id="@+id/tvTitle"
-                tools:text="The Devil is a Part-Timer, Highschool!"
-                style="@style/AnimeTitle" />
-            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                android:id="@+id/tvMangaType"
-                tools:text="@string/manga"
-                tools:visibility="visible"
-                style="@style/MediaType" />
-            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                android:id="@+id/tvGenres"
-                tools:text="Comedy, Mystery, Romance"
-                tools:visibility="visible"
-                style="@style/MediaGenres" />
-            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                android:id="@+id/tvSynopsis"
-                android:layout_marginTop="@dimen/root_padding"
-                tools:text="It is mid-December, and SOS Brigade chief Haruhi Suzumiya announces that the Brigade is going to hold a Christmas party in their clubroom, with Japanese hotpot for dinner."
-                style="@style/AnimeSynopsis.Limited" />
+            android:orientation="horizontal"
+            android:paddingEnd="@dimen/root_padding"
+            android:paddingStart="@dimen/root_padding"
+            android:paddingTop="@dimen/root_padding">
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdvCover"
+                android:layout_marginBottom="@dimen/root_padding"
+                android:layout_marginEnd="@dimen/root_padding"
+                style="@style/MangaCover" />
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
+                <com.charlesmadere.hummingbird.views.TypefaceTextView
+                    android:id="@+id/tvTitle"
+                    tools:text="The Devil is a Part-Timer, Highschool!"
+                    style="@style/AnimeTitle" />
+                <com.charlesmadere.hummingbird.views.TypefaceTextView
+                    android:id="@+id/tvMangaType"
+                    tools:text="@string/manga"
+                    tools:visibility="visible"
+                    style="@style/MediaType" />
+                <com.charlesmadere.hummingbird.views.TypefaceTextView
+                    android:id="@+id/tvGenres"
+                    tools:text="Comedy, Mystery, Romance"
+                    tools:visibility="visible"
+                    style="@style/MediaGenres" />
+                <com.charlesmadere.hummingbird.views.TypefaceTextView
+                    android:id="@+id/tvSynopsis"
+                    android:layout_marginTop="@dimen/root_padding"
+                    tools:text="It is mid-December, and SOS Brigade chief Haruhi Suzumiya announces that the Brigade is going to hold a Christmas party in their clubroom, with Japanese hotpot for dinner."
+                    style="@style/AnimeSynopsis.Limited" />
+                <android.support.v4.widget.Space
+                    android:layout_height="@dimen/root_padding_half"
+                    android:layout_width="match_parent" />
+                <com.charlesmadere.hummingbird.views.KeyValueTextView
+                    android:id="@+id/kvtvChapters"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    tools:text="Chapters 3 / 12" />
+                <com.charlesmadere.hummingbird.views.KeyValueTextView
+                    android:id="@+id/kvtvVolumes"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    tools:text="Volumes 2 / 3" />
+                <com.charlesmadere.hummingbird.views.KeyValueTextView
+                    android:id="@+id/kvtvRating"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:visibility="gone"
+                    tools:text="Rating 2.5"
+                    tools:visibility="visible" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/FeedButtons">
             <android.support.v4.widget.Space
-                android:layout_height="@dimen/root_padding_half"
-                android:layout_width="match_parent" />
-            <com.charlesmadere.hummingbird.views.KeyValueTextView
-                android:id="@+id/kvtvChapters"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                tools:text="Chapters 3 / 12" />
-            <com.charlesmadere.hummingbird.views.KeyValueTextView
-                android:id="@+id/kvtvVolumes"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                tools:text="Volumes 2 / 3" />
-            <com.charlesmadere.hummingbird.views.KeyValueTextView
-                android:id="@+id/kvtvRating"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:visibility="gone"
-                tools:text="Rating 2.5"
-                tools:visibility="visible" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_width="0dp" />
+            <include
+                layout="@layout/feed_button_delete" />
+            <include
+                layout="@layout/feed_button_edit" />
         </LinearLayout>
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.MangaLibraryEntryItemView>

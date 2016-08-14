@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
@@ -20,17 +19,18 @@ import java.text.NumberFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class MangaLibraryEntryItemView extends CardView implements AdapterView<MangaLibraryEntry>,
         View.OnClickListener {
 
     private MangaLibraryEntry mLibraryEntry;
     private NumberFormat mNumberFormat;
-    private OnEditClickListener mListener;
 
-    @BindView(R.id.ibEdit)
-    ImageButton mEdit;
+    @BindView(R.id.deleteFeedButton)
+    DeleteFeedButton mDeleteFeedButton;
+
+    @BindView(R.id.editFeedButton)
+    EditFeedButton mEditFeedButton;
 
     @BindView(R.id.kvtvChapters)
     KeyValueTextView mChapters;
@@ -76,11 +76,6 @@ public class MangaLibraryEntryItemView extends CardView implements AdapterView<M
         context.startActivity(MangaActivity.getLaunchIntent(context, mLibraryEntry.getManga()));
     }
 
-    @OnClick(R.id.ibEdit)
-    void onEditClick() {
-        mListener.onEditClick(this);
-    }
-
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -120,8 +115,9 @@ public class MangaLibraryEntryItemView extends CardView implements AdapterView<M
 
         if (manga.hasSynopsis()) {
             mSynopsis.setText(manga.getSynopsis());
+            mSynopsis.setVisibility(VISIBLE);
         } else {
-            mSynopsis.setText(R.string.no_synopsis_available);
+            mSynopsis.setVisibility(GONE);
         }
 
         if (manga.hasChapterCount()) {
@@ -149,15 +145,38 @@ public class MangaLibraryEntryItemView extends CardView implements AdapterView<M
         } else {
             mRating.setVisibility(GONE);
         }
+    }
 
-        mEdit.setVisibility(mListener == null ? GONE : VISIBLE);
+    public void setOnDeleteClickListener(@Nullable final OnDeleteClickListener l) {
+        if (l == null) {
+            mDeleteFeedButton.setOnClickListener(null);
+        } else {
+            mDeleteFeedButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(final View view) {
+                    l.onDeleteClick(MangaLibraryEntryItemView.this);
+                }
+            });
+        }
     }
 
     public void setOnEditClickListener(@Nullable final OnEditClickListener l) {
-        mListener = l;
-        mEdit.setVisibility(mListener == null ? GONE : VISIBLE);
+        if (l == null) {
+            mEditFeedButton.setOnClickListener(null);
+        } else {
+            mEditFeedButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(final View view) {
+                    l.onEditClick(MangaLibraryEntryItemView.this);
+                }
+            });
+        }
     }
 
+
+    public interface OnDeleteClickListener {
+        void onDeleteClick(final MangaLibraryEntryItemView v);
+    }
 
     public interface OnEditClickListener {
         void onEditClick(final MangaLibraryEntryItemView v);
