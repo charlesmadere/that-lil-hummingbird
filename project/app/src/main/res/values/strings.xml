@@ -458,6 +458,11 @@
         <item quantity="other">Volumes</item>
     </plurals>
 
+    <plurals name="x_comments">
+        <item quantity="one">%1$s comment</item>
+        <item quantity="other">%1$s comments</item>
+    </plurals>
+
     <plurals name="x_episodes">
         <item quantity="one">%1$s episode</item>
         <item quantity="other">%1$s episodes</item>
@@ -471,6 +476,11 @@
     <plurals name="x_hours">
         <item quantity="one">%1$s hour</item>
         <item quantity="other">%1$s hours</item>
+    </plurals>
+
+    <plurals name="x_likes">
+        <item quantity="one">%1$s like</item>
+        <item quantity="other">%1$s likes</item>
     </plurals>
 
     <plurals name="x_links">

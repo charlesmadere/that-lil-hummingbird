@@ -67,10 +67,23 @@
                 layout="@layout/item_reply_substory" />
         </LinearLayout>
         <LinearLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:orientation="horizontal">
-
+            style="@style/FeedRowContainer">
+            <android.support.v4.widget.Space
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_width="0dp" />
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:drawableStart="@drawable/ic_insert_comment_18dp"
+                android:id="@+id/tvMoreComments"
+                android:visibility="gone"
+                tools:text="32 comments"
+                tools:visibility="visible"
+                style="@style/FeedRowButton" />
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:drawableStart="@drawable/ic_favorite_border_18dp"
+                android:id="@+id/tvLike"
+                tools:text="50 likes"
+                style="@style/FeedRowButton" />
         </LinearLayout>
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.CommentStoryItemView>
