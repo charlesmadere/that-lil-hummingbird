@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.adapters;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.Feed;
@@ -17,8 +18,12 @@ public class GroupsAdapter extends BasePaginationAdapter<Group> {
         return R.layout.item_group;
     }
 
-    public void set(final Feed feed) {
-        super.set(feed.getGroups());
+    public void set(@Nullable final Feed feed) {
+        if (feed == null) {
+            super.set(null);
+        } else {
+            super.set(feed.getGroups());
+        }
     }
 
 }
