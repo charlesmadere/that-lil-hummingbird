@@ -2,10 +2,8 @@ package com.charlesmadere.hummingbird.fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +40,6 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     private AnimeDigest mAnimeDigest;
     private AnimeLibraryEntry mLibraryEntry;
     private AnimeLibraryUpdate mLibraryUpdate;
-    private DeleteListener mDeleteListener;
     private UpdateListener mUpdateListener;
 
     @BindView(R.id.cbRewatching)
@@ -50,9 +47,6 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
 
     @BindView(R.id.etPersonalNotes)
     EditText mPersonalNotes;
-
-    @BindView(R.id.ibDelete)
-    ImageButton mDelete;
 
     @BindView(R.id.ibSave)
     ImageButton mSave;
@@ -122,23 +116,15 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         final Fragment fragment = getParentFragment();
         if (fragment instanceof UpdateListener) {
             mUpdateListener = (UpdateListener) fragment;
-
-            if (fragment instanceof DeleteListener) {
-                mDeleteListener = (DeleteListener) fragment;
-            }
         } else {
             final Activity activity = MiscUtils.getActivity(context);
 
             if (activity instanceof UpdateListener) {
                 mUpdateListener = (UpdateListener) activity;
-
-                if (activity instanceof DeleteListener) {
-                    mDeleteListener = (DeleteListener) activity;
-                }
             }
         }
 
-        if (mUpdateListener == null && mDeleteListener == null) {
+        if (mUpdateListener == null) {
             throw new IllegalStateException(TAG + " must have a listener attached");
         }
     }
@@ -174,21 +160,6 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         return inflater.inflate(R.layout.fragment_anime_library_update, container, false);
-    }
-
-    @OnClick(R.id.ibDelete)
-    void onDeleteClick() {
-        new AlertDialog.Builder(getContext())
-                .setMessage(R.string.are_you_sure_you_want_to_remove_this_from_your_library)
-                .setNegativeButton(R.string.cancel, null)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(final DialogInterface dialog, final int which) {
-                        mDeleteListener.onDeleteLibraryEntry();
-                        dismiss();
-                    }
-                })
-                .show();
     }
 
     @Override
@@ -254,10 +225,6 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         mTitle.setText(mLibraryUpdate.getAnimeTitle());
         mSave.setEnabled(false);
 
-        if (mDeleteListener != null) {
-            mDelete.setVisibility(View.VISIBLE);
-        }
-
         if (mAnimeDigest == null) {
             mWatchCount.setForWatchedCount(mLibraryUpdate, mLibraryEntry);
         } else {
@@ -297,10 +264,6 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         mSave.setEnabled(mLibraryUpdate.containsModifications());
     }
 
-
-    public interface DeleteListener {
-        void onDeleteLibraryEntry();
-    }
 
     public interface UpdateListener {
         void onUpdateLibraryEntry();
