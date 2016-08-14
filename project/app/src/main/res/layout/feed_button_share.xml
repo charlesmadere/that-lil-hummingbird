@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.charlesmadere.hummingbird.views.CommentsFeedButton xmlns:android="http://schemas.android.com/apk/res/android"
+<com.charlesmadere.hummingbird.views.ShareFeedButton xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/shareFeedButton"
     style="@style/FeedButtonContainer">
     <com.charlesmadere.hummingbird.views.TypefaceTextView
@@ -7,4 +7,4 @@
         android:id="@+id/tvShareFeedButton"
         android:text="@string/share"
         style="@style/FeedButton" />
-</com.charlesmadere.hummingbird.views.CommentsFeedButton>
+</com.charlesmadere.hummingbird.views.ShareFeedButton>
