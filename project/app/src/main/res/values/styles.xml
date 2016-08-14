@@ -275,6 +275,11 @@
         <item name="android:layout_width">match_parent</item>
     </style>
 
+    <style name="FeedCardItem.Standalone">
+        <item name="android:layout_marginBottom">@dimen/root_padding_half</item>
+        <item name="android:layout_marginTop">@dimen/root_padding_half</item>
+    </style>
+
     <style name="FeedButtons">
         <item name="android:id">@id/feedButtons</item>
         <item name="android:layout_height">@dimen/root_padding_double</item>

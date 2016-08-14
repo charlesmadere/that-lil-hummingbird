@@ -23,8 +23,8 @@ public class CommentStoryStandaloneItemView extends CardView implements AdapterV
     @BindView(R.id.commentTitleTextView)
     CommentTitleTextView mCommentTitleTextView;
 
-    @BindView(R.id.likeTextView)
-    LikeTextView mLikeTextView;
+    @BindView(R.id.likesFeedButton)
+    LikesFeedButton mLikesFeedButton;
 
     @BindView(R.id.tvTimeAgo)
     TextView mTimeAgo;
@@ -48,10 +48,10 @@ public class CommentStoryStandaloneItemView extends CardView implements AdapterV
     @Override
     public void setContent(final CommentStory content) {
         mAvatar.setContent(content.getPoster());
-        mLikeTextView.setContent(content);
         mCommentTitleTextView.setContent(content);
         mTimeAgo.setText(content.getCreatedAt().getRelativeTimeText(getContext()));
         mComment.setContent(content);
+        mLikesFeedButton.setContent(content);
     }
 
 }
