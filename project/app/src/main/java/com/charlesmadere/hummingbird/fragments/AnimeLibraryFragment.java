@@ -1,7 +1,9 @@
 package com.charlesmadere.hummingbird.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +23,9 @@ import com.charlesmadere.hummingbird.views.AnimeLibraryEntryItemView;
 import java.lang.ref.WeakReference;
 
 public class AnimeLibraryFragment extends BaseLibraryFragment implements
-        AnimeLibraryEntryItemView.OnDeleteClickListener, AnimeLibraryEntryItemView.OnEditClickListener,
-        AnimeLibraryUpdateFragment.DeleteListener, AnimeLibraryUpdateFragment.UpdateListener {
+        AnimeLibraryEntryItemView.OnDeleteClickListener,
+        AnimeLibraryEntryItemView.OnEditClickListener,
+        AnimeLibraryUpdateFragment.UpdateListener {
 
     private static final String TAG = "AnimeLibraryFragment";
     private static final String KEY_WATCHING_STATUS = "WatchingStatus";
@@ -84,17 +87,20 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
 
     @Override
     public void onDeleteClick(final AnimeLibraryEntryItemView v) {
-        // TODO
-    }
+        final AnimeLibraryEntry libraryEntry = v.getLibraryEntry();
 
-    @Override
-    public void onDeleteLibraryEntry() {
-        final AnimeLibraryUpdateFragment fragment = (AnimeLibraryUpdateFragment)
-                getChildFragmentManager().findFragmentByTag(AnimeLibraryUpdateFragment.TAG);
-        final AnimeLibraryEntry libraryEntry = fragment.getLibraryEntry();
-
-        mRefreshLayout.setRefreshing(true);
-        Api.deleteAnimeLibraryEntry(libraryEntry, new DeleteLibraryEntryListener(this));
+        new AlertDialog.Builder(getContext())
+                .setMessage(R.string.are_you_sure_you_want_to_remove_this_from_your_library)
+                .setNegativeButton(R.string.cancel, null)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        mRefreshLayout.setRefreshing(true);
+                        Api.deleteAnimeLibraryEntry(libraryEntry, new DeleteLibraryEntryListener(
+                                AnimeLibraryFragment.this));
+                    }
+                })
+                .show();
     }
 
     @Override
