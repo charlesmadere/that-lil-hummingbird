@@ -3,7 +3,7 @@
     android:id="@+id/shareFeedButton"
     style="@style/FeedButtonContainer">
     <com.charlesmadere.hummingbird.views.TypefaceTextView
-        android:drawableStart="@drawable/ic_insert_comment_18dp"
+        android:drawableStart="@drawable/ic_share_18dp"
         android:id="@+id/tvShare"
         android:text="@string/share"
         style="@style/FeedButton" />
