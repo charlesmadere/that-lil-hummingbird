@@ -19,6 +19,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<AdapterView.Vi
 
     public BaseAdapter(final Context context) {
         mItems = new ArrayList<>();
+
+        if (context == null) {
+            throw new IllegalArgumentException("context parameter can't be null");
+        }
+
         mContext = context;
     }
 
