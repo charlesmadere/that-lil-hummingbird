@@ -9,7 +9,10 @@
         <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingEnd="@dimen/root_padding"
+            android:paddingStart="@dimen/root_padding"
+            android:paddingTop="@dimen/root_padding">
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/sdvPoster"
                 android:layout_marginEnd="@dimen/root_padding"
