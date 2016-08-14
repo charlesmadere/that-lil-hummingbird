@@ -9,11 +9,19 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.models.CommentStory;
+
+import java.text.NumberFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CommentsFeedButton extends FrameLayout implements View.OnClickListener {
+public class CommentsFeedButton extends FrameLayout implements AdapterView<CommentStory>,
+        View.OnClickListener {
+
+    private CommentStory mCommentStory;
+    private NumberFormat mNumberFormat;
 
     @BindView(R.id.tvCommentsFeedButton)
     TextView mLabel;
@@ -44,6 +52,15 @@ public class CommentsFeedButton extends FrameLayout implements View.OnClickListe
         super.onFinishInflate();
         ButterKnife.bind(this);
         setOnClickListener(this);
+        mNumberFormat = NumberFormat.getInstance();
+    }
+
+    @Override
+    public void setContent(final CommentStory content) {
+        mCommentStory = content;
+        mLabel.setText(getResources().getQuantityString(R.plurals.x_comments,
+                mCommentStory.getSubstoryCount(), mNumberFormat.format(
+                        mCommentStory.getSubstoryCount())));
     }
 
 }

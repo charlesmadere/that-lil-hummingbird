@@ -138,6 +138,8 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
                 mReplies.setVisibility(GONE);
             }
         }
+
+        mCommentsFeedButton.setContent(mCommentStory);
     }
 
     private void setReplyView(final ReplySubstoryItemView view,
