@@ -75,6 +75,7 @@ public class CommentField extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
+        mPostComment.setEnabled(isValid());
     }
 
     @OnClick(R.id.ibPostComment)
