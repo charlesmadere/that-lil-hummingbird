@@ -16,13 +16,13 @@ import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.WatchingStatus;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
-import com.charlesmadere.hummingbird.views.InternalAnimeItemView;
+import com.charlesmadere.hummingbird.views.AnimeLibraryEntryItemView;
 
 import java.lang.ref.WeakReference;
 
 public class AnimeLibraryFragment extends BaseLibraryFragment implements
-        AnimeLibraryUpdateFragment.DeleteListener, AnimeLibraryUpdateFragment.UpdateListener,
-        InternalAnimeItemView.OnEditClickListener {
+        AnimeLibraryEntryItemView.OnDeleteClickListener, AnimeLibraryEntryItemView.OnEditClickListener,
+        AnimeLibraryUpdateFragment.DeleteListener, AnimeLibraryUpdateFragment.UpdateListener {
 
     private static final String TAG = "AnimeLibraryFragment";
     private static final String KEY_WATCHING_STATUS = "WatchingStatus";
@@ -83,6 +83,11 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
     }
 
     @Override
+    public void onDeleteClick(final AnimeLibraryEntryItemView v) {
+        // TODO
+    }
+
+    @Override
     public void onDeleteLibraryEntry() {
         final AnimeLibraryUpdateFragment fragment = (AnimeLibraryUpdateFragment)
                 getChildFragmentManager().findFragmentByTag(AnimeLibraryUpdateFragment.TAG);
@@ -93,7 +98,7 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
     }
 
     @Override
-    public void onEditClick(final InternalAnimeItemView v) {
+    public void onEditClick(final AnimeLibraryEntryItemView v) {
         AnimeLibraryUpdateFragment.create(v.getLibraryEntry()).show(getChildFragmentManager(),
                 AnimeLibraryUpdateFragment.TAG);
     }
@@ -114,7 +119,7 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
         super.onViewCreated(view, savedInstanceState);
 
         if (mEditableLibrary) {
-            mAdapter = new AnimeLibraryEntriesAdapter(getContext(), this);
+            mAdapter = new AnimeLibraryEntriesAdapter(getContext(), this, this);
         } else {
             mAdapter = new AnimeLibraryEntriesAdapter(getContext());
         }

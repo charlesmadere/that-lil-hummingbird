@@ -4,11 +4,15 @@ import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.Anime;
+import com.facebook.drawee.view.SimpleDraweeView;
+
+import java.text.NumberFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,9 +20,28 @@ import butterknife.ButterKnife;
 public class AnimeItemView extends CardView implements AdapterView<Anime>, View.OnClickListener {
 
     private Anime mAnime;
+    private NumberFormat mNumberFormat;
 
-    @BindView(R.id.animeView)
-    InternalAnimeItemView mAnimeView;
+    @BindView(R.id.kvtvProgress)
+    KeyValueTextView mProgress;
+
+    @BindView(R.id.kvtvRating)
+    KeyValueTextView mRating;
+
+    @BindView(R.id.sdvPoster)
+    SimpleDraweeView mPoster;
+
+    @BindView(R.id.tvGenres)
+    TextView mGenres;
+
+    @BindView(R.id.tvSynopsis)
+    TextView mSynopsis;
+
+    @BindView(R.id.tvAnimeType)
+    TextView mType;
+
+    @BindView(R.id.tvTitle)
+    TextView mTitle;
 
 
     public AnimeItemView(final Context context, final AttributeSet attrs) {
@@ -44,12 +67,14 @@ public class AnimeItemView extends CardView implements AdapterView<Anime>, View.
         super.onFinishInflate();
         ButterKnife.bind(this);
         setOnClickListener(this);
+        mNumberFormat = NumberFormat.getInstance();
     }
 
     @Override
     public void setContent(final Anime content) {
         mAnime = content;
-        mAnimeView.setContent(content);
+
+
     }
 
 }

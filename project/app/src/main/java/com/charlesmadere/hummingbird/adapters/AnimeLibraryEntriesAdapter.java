@@ -9,23 +9,25 @@ import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.LibrarySort;
 import com.charlesmadere.hummingbird.views.AnimeLibraryEntryItemView;
-import com.charlesmadere.hummingbird.views.InternalAnimeItemView;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class AnimeLibraryEntriesAdapter extends BasePaginationAdapter<AnimeLibraryEntry> {
 
-    private final InternalAnimeItemView.OnEditClickListener mEditClickListener;
+    private final AnimeLibraryEntryItemView.OnDeleteClickListener mDeleteClickListener;
+    private final AnimeLibraryEntryItemView.OnEditClickListener mEditClickListener;
 
 
     public AnimeLibraryEntriesAdapter(final Context context) {
-        this(context, null);
+        this(context, null, null);
     }
 
     public AnimeLibraryEntriesAdapter(final Context context,
-            @Nullable final InternalAnimeItemView.OnEditClickListener editClickListener) {
+            @Nullable final AnimeLibraryEntryItemView.OnDeleteClickListener deleteClickListener,
+            @Nullable final AnimeLibraryEntryItemView.OnEditClickListener editClickListener) {
         super(context);
+        mDeleteClickListener = deleteClickListener;
         mEditClickListener = editClickListener;
     }
 
@@ -38,6 +40,7 @@ public class AnimeLibraryEntriesAdapter extends BasePaginationAdapter<AnimeLibra
     public AdapterView.ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         final AdapterView.ViewHolder viewHolder = super.onCreateViewHolder(parent, viewType);
         final AnimeLibraryEntryItemView view = (AnimeLibraryEntryItemView) viewHolder.itemView;
+        view.setOnDeleteClickListener(mDeleteClickListener);
         view.setOnEditClickListener(mEditClickListener);
         return viewHolder;
     }
