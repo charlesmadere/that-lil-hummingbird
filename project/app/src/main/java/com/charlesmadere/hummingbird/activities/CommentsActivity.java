@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.CommentsAdapter;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
+import com.charlesmadere.hummingbird.misc.ShareUtils;
 import com.charlesmadere.hummingbird.models.CommentPost;
 import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
@@ -33,6 +35,7 @@ import com.charlesmadere.hummingbird.views.RefreshLayout;
 import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 
@@ -50,6 +53,9 @@ public class CommentsActivity extends BaseDrawerActivity implements ObjectCache.
 
     @BindView(R.id.etComment)
     EditText mCommentField;
+
+    @BindView(R.id.ibPostComment)
+    ImageButton mPostComment;
 
     @BindView(R.id.llError)
     LinearLayout mError;
@@ -107,7 +113,7 @@ public class CommentsActivity extends BaseDrawerActivity implements ObjectCache.
 
     @OnTextChanged(R.id.etComment)
     void onCommentFieldTextChanged() {
-        supportInvalidateOptionsMenu();
+        mPostComment.setEnabled(isCommentFormValid());
     }
 
     @Override
@@ -159,8 +165,8 @@ public class CommentsActivity extends BaseDrawerActivity implements ObjectCache.
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.miPostComment:
-                postComment();
+            case R.id.miShare:
+                ShareUtils.shareStory(this, mCommentStory);
                 return true;
 
             case R.id.miViewGroup:
@@ -182,10 +188,9 @@ public class CommentsActivity extends BaseDrawerActivity implements ObjectCache.
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(final Menu menu) {
-        menu.findItem(R.id.miPostComment).setEnabled(isCommentFormValid());
-        return super.onPrepareOptionsMenu(menu);
+    @OnClick(R.id.ibPostComment)
+    void onPostCommentClick() {
+        postComment();
     }
 
     @Override

@@ -2,10 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:compat="http://schemas.android.com/apk/res-auto">
     <item
-        android:enabled="false"
-        android:icon="@drawable/ic_send"
-        android:id="@+id/miPostComment"
-        android:title="@string/post_comment"
+        android:icon="@drawable/ic_share_white_24dp"
+        android:id="@+id/miShare"
+        android:title="@string/share"
         compat:showAsAction="ifRoom" />
     <item
         android:id="@+id/miViewPoster"

@@ -15,23 +15,35 @@
             android:layout_width="match_parent"
             android:orientation="vertical">
             <View
-                android:background="?android:attr/listDivider"
-                android:layout_height="1dp"
-                android:layout_width="match_parent" />
-            <com.charlesmadere.hummingbird.views.TypefaceEditText
+                style="@style/Divider" />
+            <LinearLayout
                 android:background="@color/commentFieldBg"
-                android:enabled="false"
-                android:hint="@string/leave_a_comment_"
-                android:id="@+id/etComment"
-                android:imeOptions="actionSend"
-                android:inputType="textCapSentences|textMultiLine"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:maxLines="3"
-                android:paddingBottom="@dimen/root_padding_half"
-                android:paddingEnd="@dimen/root_padding"
-                android:paddingStart="@dimen/root_padding"
-                android:paddingTop="@dimen/root_padding_half" />
+                android:orientation="horizontal">
+                <com.charlesmadere.hummingbird.views.TypefaceEditText
+                    android:background="@null"
+                    android:enabled="false"
+                    android:hint="@string/leave_a_comment_"
+                    android:id="@+id/etComment"
+                    android:imeOptions="actionSend"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:maxLines="3"
+                    android:paddingBottom="@dimen/root_padding_half"
+                    android:paddingEnd="@dimen/root_padding"
+                    android:paddingStart="@dimen/root_padding"
+                    android:paddingTop="@dimen/root_padding_half" />
+                <ImageButton
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/post_comment"
+                    android:id="@+id/ibPostComment"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/ic_send" />
+            </LinearLayout>
         </LinearLayout>
         <com.charlesmadere.hummingbird.views.RefreshLayout
             android:id="@+id/refreshLayout"
