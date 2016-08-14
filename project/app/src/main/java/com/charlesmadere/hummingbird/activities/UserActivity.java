@@ -98,6 +98,10 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
         return mUiColorSet;
     }
 
+    public String getUsername() {
+        return mUsername;
+    }
+
     @Override
     public UserDigest getUserDigest() {
         return mUserDigest;

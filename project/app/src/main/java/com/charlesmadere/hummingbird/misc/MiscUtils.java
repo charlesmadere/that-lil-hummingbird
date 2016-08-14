@@ -78,15 +78,14 @@ public final class MiscUtils {
     public static Activity getActivity(final Context context) {
         if (context == null) {
             throw new IllegalArgumentException("context parameter can't be null");
-        }
-
-        if (context instanceof Activity) {
-            return (Activity) context;
-        } else if (context instanceof ContextWrapper) {
-            final ContextWrapper contextWrapper = (ContextWrapper) context;
-            return getActivity(contextWrapper.getBaseContext());
         } else {
-            throw new RuntimeException("context isn't connected to an Activity");
+            final Activity activity = optActivity(context);
+
+            if (activity == null) {
+                throw new RuntimeException("context isn't connected to an Activity");
+            }
+
+            return activity;
         }
     }
 
@@ -345,6 +344,18 @@ public final class MiscUtils {
         }
 
         openUrl(MiscUtils.getActivity(context), url);
+    }
+
+    @Nullable
+    public static Activity optActivity(@Nullable final Context context) {
+        if (context instanceof Activity) {
+            return (Activity) context;
+        } else if (context instanceof ContextWrapper) {
+            final ContextWrapper contextWrapper = (ContextWrapper) context;
+            return optActivity(contextWrapper.getBaseContext());
+        } else {
+            return null;
+        }
     }
 
     @Nullable

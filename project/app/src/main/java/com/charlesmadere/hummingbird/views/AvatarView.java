@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
@@ -12,6 +13,7 @@ import android.view.View;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.User;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.BaseControllerListener;
@@ -73,10 +75,19 @@ public class AvatarView extends SimpleDraweeView implements AdapterView<User>,
 
     @Override
     public void onClick(final View view) {
-        if (mUser != null) {
-            final Context context = getContext();
-            context.startActivity(UserActivity.getLaunchIntent(context, mUser));
+        if (mUser == null) {
+            return;
         }
+
+        final Context context = getContext();
+        final Activity activity = MiscUtils.optActivity(context);
+
+        if (activity instanceof UserActivity && mUser.getId().equalsIgnoreCase(
+                ((UserActivity) activity).getUsername())) {
+            return;
+        }
+
+        context.startActivity(UserActivity.getLaunchIntent(context, mUser));
     }
 
     private void parseAttributes(@Nullable final AttributeSet attrs) {
@@ -85,7 +96,7 @@ public class AvatarView extends SimpleDraweeView implements AdapterView<User>,
         if (attrs == null) {
             enableClickListener = true;
         } else {
-            final TypedArray ta = getContext().obtainStyledAttributes(R.styleable.AvatarView);
+            final TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.AvatarView);
             enableClickListener = ta.getBoolean(R.styleable.AvatarView_enableClickListener, true);
             ta.recycle();
         }
