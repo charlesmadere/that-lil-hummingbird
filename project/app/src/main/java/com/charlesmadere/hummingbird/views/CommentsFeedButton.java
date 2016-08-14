@@ -38,6 +38,7 @@ public class CommentsFeedButton extends FrameLayout implements View.OnClickListe
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
+        setOnClickListener(this);
     }
 
 }

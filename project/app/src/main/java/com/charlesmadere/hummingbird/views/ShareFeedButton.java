@@ -38,6 +38,7 @@ public class ShareFeedButton extends FrameLayout implements View.OnClickListener
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
+        setOnClickListener(this);
     }
 
 }

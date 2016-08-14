@@ -284,6 +284,7 @@
 
     <style name="FeedButton">
         <item name="android:drawablePadding">@dimen/root_padding_half</item>
+        <item name="android:duplicateParentState">true</item>
         <item name="android:ellipsize">end</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
@@ -294,7 +295,8 @@
     </style>
 
     <style name="FeedButtonContainer">
-        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:duplicateParentState">false</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_height">match_parent</item>
