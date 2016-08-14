@@ -48,9 +48,6 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
     @BindView(R.id.rsivOne)
     ReplySubstoryItemView mReplyOne;
 
-    @BindView(R.id.rsivTwo)
-    ReplySubstoryItemView mReplyTwo;
-
     @BindView(R.id.tvNsfwContent)
     TextView mNsfwContent;
 
@@ -130,7 +127,6 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
                 final ArrayList<AbsSubstory> substories = mCommentStory.getSubstories();
                 setReplyView(mReplyZero, substories, 1);
                 setReplyView(mReplyOne, substories, 2);
-                setReplyView(mReplyTwo, substories, 3);
 
                 mReplies.setVisibility(VISIBLE);
             } else {

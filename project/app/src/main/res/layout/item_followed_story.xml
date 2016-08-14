@@ -38,9 +38,6 @@
             <include
                 android:id="@+id/fsivOne"
                 layout="@layout/item_followed_substory" />
-            <include
-                android:id="@+id/fsivTwo"
-                layout="@layout/item_followed_substory" />
         </LinearLayout>
     </RelativeLayout>
 </com.charlesmadere.hummingbird.views.FollowedStoryItemView>

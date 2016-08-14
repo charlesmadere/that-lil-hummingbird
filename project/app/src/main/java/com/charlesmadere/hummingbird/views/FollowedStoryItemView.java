@@ -31,9 +31,6 @@ public class FollowedStoryItemView extends CardView implements AdapterView<Follo
     @BindView(R.id.fsivOne)
     FollowedSubstoryItemView mFollowedOne;
 
-    @BindView(R.id.fsivTwo)
-    FollowedSubstoryItemView mFollowedTwo;
-
     @BindView(R.id.tvTimeAgo)
     TextView mTimeAgo;
 
@@ -73,13 +70,6 @@ public class FollowedStoryItemView extends CardView implements AdapterView<Follo
             mFollowedOne.setVisibility(VISIBLE);
         } else {
             mFollowedOne.setVisibility(GONE);
-        }
-
-        if (substories.size() >= 3) {
-            mFollowedTwo.setContent((FollowedSubstory) substories.get(2));
-            mFollowedTwo.setVisibility(VISIBLE);
-        } else {
-            mFollowedTwo.setVisibility(GONE);
         }
     }
 

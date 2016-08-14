@@ -34,9 +34,6 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
     @BindView(R.id.msivOne)
     AbsSubstoryItemView mMediaOne;
 
-    @BindView(R.id.msivTwo)
-    AbsSubstoryItemView mMediaTwo;
-
     @BindView(R.id.sdvImage)
     SimpleDraweeView mImage;
 
@@ -87,11 +84,6 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        if (isInEditMode()) {
-            return;
-        }
-
         ButterKnife.bind(this);
         setOnClickListener(this);
     }
@@ -128,13 +120,6 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
             mMediaOne.setVisibility(VISIBLE);
         } else {
             mMediaOne.setVisibility(GONE);
-        }
-
-        if (substories.size() >= 3) {
-            mMediaTwo.setContent(substories.get(2), mMediaStory.getUser());
-            mMediaTwo.setVisibility(VISIBLE);
-        } else {
-            mMediaTwo.setVisibility(GONE);
         }
 
         mShowMore.setVisibility(mMediaStory.getSubstoryCount() >= 4 ? VISIBLE : GONE);

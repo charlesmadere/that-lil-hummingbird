@@ -40,9 +40,6 @@
                 <include
                     android:id="@+id/msivOne"
                     layout="@layout/item_media_substory" />
-                <include
-                    android:id="@+id/msivTwo"
-                    layout="@layout/item_media_substory" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:background="?attr/selectableItemBackground"
                     android:gravity="center"

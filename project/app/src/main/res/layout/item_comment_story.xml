@@ -64,9 +64,6 @@
             <include
                 android:id="@+id/rsivOne"
                 layout="@layout/item_reply_substory" />
-            <include
-                android:id="@+id/rsivTwo"
-                layout="@layout/item_reply_substory" />
         </LinearLayout>
     </RelativeLayout>
 </com.charlesmadere.hummingbird.views.CommentStoryItemView>
