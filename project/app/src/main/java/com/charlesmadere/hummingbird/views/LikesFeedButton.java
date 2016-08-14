@@ -4,11 +4,12 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import butterknife.ButterKnife;
 
-public class LikesFeedButton extends FrameLayout {
+public class LikesFeedButton extends FrameLayout implements View.OnClickListener {
 
 
 
@@ -26,6 +27,11 @@ public class LikesFeedButton extends FrameLayout {
     public LikesFeedButton(final Context context, final AttributeSet attrs,
             final int defStyleAttr, final int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+    @Override
+    public void onClick(final View view) {
+
     }
 
     @Override

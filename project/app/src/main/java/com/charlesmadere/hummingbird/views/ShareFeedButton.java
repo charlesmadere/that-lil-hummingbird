@@ -4,11 +4,13 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import butterknife.ButterKnife;
 
-public class ShareFeedButton extends FrameLayout {
+public class ShareFeedButton extends FrameLayout implements View.OnClickListener {
+
 
 
 
@@ -22,9 +24,14 @@ public class ShareFeedButton extends FrameLayout {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ShareFeedButton(final Context context, final AttributeSet attrs, final int defStyleAttr,
-            final int defStyleRes) {
+    public ShareFeedButton(final Context context, final AttributeSet attrs,
+            final int defStyleAttr, final int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+    @Override
+    public void onClick(final View view) {
+
     }
 
     @Override
