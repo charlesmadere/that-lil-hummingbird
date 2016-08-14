@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -12,21 +13,12 @@ import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.Anime;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import java.text.NumberFormat;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AnimeItemView extends CardView implements AdapterView<Anime>, View.OnClickListener {
 
     private Anime mAnime;
-    private NumberFormat mNumberFormat;
-
-    @BindView(R.id.kvtvProgress)
-    KeyValueTextView mProgress;
-
-    @BindView(R.id.kvtvRating)
-    KeyValueTextView mRating;
 
     @BindView(R.id.sdvPoster)
     SimpleDraweeView mPoster;
@@ -67,14 +59,37 @@ public class AnimeItemView extends CardView implements AdapterView<Anime>, View.
         super.onFinishInflate();
         ButterKnife.bind(this);
         setOnClickListener(this);
-        mNumberFormat = NumberFormat.getInstance();
     }
 
     @Override
     public void setContent(final Anime content) {
         mAnime = content;
 
+        mPoster.setImageURI(mAnime.getPosterImage());
+        mTitle.setText(mAnime.getTitle());
 
+        if (mAnime.hasType()) {
+            mType.setText(mAnime.getType().getTextResId());
+            mType.setVisibility(VISIBLE);
+        } else {
+            mType.setVisibility(GONE);
+        }
+
+        final Resources res = getResources();
+
+        if (mAnime.hasGenres()) {
+            mGenres.setText(mAnime.getGenresString(res));
+            mGenres.setVisibility(VISIBLE);
+        } else {
+            mGenres.setVisibility(GONE);
+        }
+
+        if (mAnime.hasSynopsis()) {
+            mSynopsis.setText(mAnime.getSynopsis());
+            mSynopsis.setVisibility(VISIBLE);
+        } else {
+            mSynopsis.setVisibility(GONE);
+        }
     }
 
 }
