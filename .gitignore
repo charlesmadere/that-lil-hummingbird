@@ -6,7 +6,7 @@
 *.apk
 *.ap_
 
-# Files for the Dalvik VM
+# Files for the ART/Dalvik VM
 *.dex
 
 # Java class files
@@ -38,6 +38,8 @@ captures/
 
 # Intellij
 *.iml
+.idea/workspace.xml
+.idea/libraries
 
 # Keystore files
 *.jks
@@ -203,13 +205,6 @@ fabric.properties
 
 
 #################
-## Misc
-#################
-
-sh.exe.stackdump
-
-
-#################
 ## Notepad++
 #################
 
@@ -285,7 +280,10 @@ GitHub.sublime-settings
 ## Visual Studio Code
 #################
 
-.vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
 
 
 #################
@@ -310,3 +308,5 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+sh.exe.stackdump

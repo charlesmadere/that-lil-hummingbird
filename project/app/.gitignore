@@ -6,7 +6,7 @@
 *.apk
 *.ap_
 
-# Files for the Dalvik VM
+# Files for the ART/Dalvik VM
 *.dex
 
 # Java class files
@@ -38,6 +38,8 @@ captures/
 
 # Intellij
 *.iml
+.idea/workspace.xml
+.idea/libraries
 
 # Keystore files
 *.jks
@@ -213,7 +215,7 @@ fabric.properties
 ## OSX
 #################
 
-.DS_Store
+*.DS_Store
 .AppleDouble
 .LSOverride
 
@@ -231,6 +233,7 @@ Icon
 .TemporaryItems
 .Trashes
 .VolumeIcon.icns
+.com.apple.timemachine.donotpresent
 
 # Directories potentially created on remote AFP share
 .AppleDB
@@ -259,12 +262,28 @@ Temporary Items
 # sftp configuration file
 sftp-config.json
 
+# Package control specific files
+Package Control.last-run
+Package Control.ca-list
+Package Control.ca-bundle
+Package Control.system-ca-bundle
+Package Control.cache/
+Package Control.ca-certs/
+bh_unicode_properties.cache
+
+# Sublime-github package stores a github token in this file
+# https://packagecontrol.io/packages/sublime-github
+GitHub.sublime-settings
+
 
 #################
 ## Visual Studio Code
 #################
 
-.vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
 
 
 #################
@@ -289,3 +308,5 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+sh.exe.stackdump
