@@ -6,13 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -29,18 +25,17 @@ import com.charlesmadere.hummingbird.models.Group;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.views.CommentField;
 import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
 
 import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
-import butterknife.OnClick;
-import butterknife.OnEditorAction;
-import butterknife.OnTextChanged;
 
-public class CommentsActivity extends BaseDrawerActivity implements ObjectCache.KeyProvider,
-        RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
+public class CommentsActivity extends BaseDrawerActivity implements CommentField.Listener,
+        ObjectCache.KeyProvider, RecyclerViewPaginator.Listeners,
+        SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "CommentsActivity";
     private static final String CNAME = CommentsActivity.class.getCanonicalName();
@@ -51,11 +46,8 @@ public class CommentsActivity extends BaseDrawerActivity implements ObjectCache.
     private Feed mFeed;
     private RecyclerViewPaginator mPaginator;
 
-    @BindView(R.id.etComment)
-    EditText mCommentField;
-
-    @BindView(R.id.ibPostComment)
-    ImageButton mPostComment;
+    @BindView(R.id.commentField)
+    CommentField mCommentField;
 
     @BindView(R.id.llError)
     LinearLayout mError;
@@ -87,11 +79,6 @@ public class CommentsActivity extends BaseDrawerActivity implements ObjectCache.
         return new String[] { getActivityName(), mCommentStory.getId() };
     }
 
-    private boolean isCommentFormValid() {
-        final CharSequence text = mCommentField.getText();
-        return !TextUtils.isEmpty(text) && TextUtils.getTrimmedLength(text) >= 1;
-    }
-
     @Override
     public boolean isLoading() {
         return mRefreshLayout.isRefreshing() || mAdapter.isPaginating();
@@ -102,18 +89,15 @@ public class CommentsActivity extends BaseDrawerActivity implements ObjectCache.
         return true;
     }
 
-    @OnEditorAction(R.id.etComment)
-    boolean onCommentFieldEditorAction(final int actionId) {
-        if (actionId == EditorInfo.IME_ACTION_SEND) {
-            postComment();
-        }
+    @Override
+    public void onCommentPosted() {
+        MiscUtils.closeKeyboard(this);
+        mRefreshLayout.setRefreshing(true);
+        mCommentField.setEnabled(false);
 
-        return false;
-    }
-
-    @OnTextChanged(R.id.etComment)
-    void onCommentFieldTextChanged() {
-        mPostComment.setEnabled(isCommentFormValid());
+        final String comment = mCommentField.getComment();
+        final CommentPost commentPost = new CommentPost(comment, mCommentStory.getId());
+        Api.postComment(commentPost, new PostCommentListener(this));
     }
 
     @Override
@@ -188,11 +172,6 @@ public class CommentsActivity extends BaseDrawerActivity implements ObjectCache.
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick(R.id.ibPostComment)
-    void onPostCommentClick() {
-        postComment();
-    }
-
     @Override
     public void onRefresh() {
         fetchSubstories();
@@ -215,7 +194,7 @@ public class CommentsActivity extends BaseDrawerActivity implements ObjectCache.
         mAdapter = new CommentsAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
-        mPostComment.setEnabled(false);
+        mCommentField.setListener(this);
     }
 
     @Override
@@ -232,21 +211,6 @@ public class CommentsActivity extends BaseDrawerActivity implements ObjectCache.
     protected void paginationNoMore() {
         mPaginator.setEnabled(false);
         mAdapter.setPaginating(false);
-    }
-
-    private void postComment() {
-        if (!isCommentFormValid()) {
-            return;
-        }
-
-        MiscUtils.closeKeyboard(this);
-        mRefreshLayout.setRefreshing(true);
-        mCommentField.setEnabled(false);
-        mPostComment.setEnabled(false);
-
-        final String comment = mCommentField.getText().toString().trim();
-        final CommentPost commentPost = new CommentPost(comment, mCommentStory.getId());
-        Api.postComment(commentPost, new PostCommentListener(this));
     }
 
     private void showCommentError() {
@@ -268,7 +232,6 @@ public class CommentsActivity extends BaseDrawerActivity implements ObjectCache.
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
         mCommentField.setEnabled(true);
-        mPostComment.setEnabled(isCommentFormValid());
         mPaginator.setEnabled(feed.hasCursor());
         mRefreshLayout.setRefreshing(false);
     }
@@ -358,7 +321,7 @@ public class CommentsActivity extends BaseDrawerActivity implements ObjectCache.
             final CommentsActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                activity.mCommentField.setText("");
+                activity.mCommentField.clear();
                 activity.fetchSubstories();
             }
         }
