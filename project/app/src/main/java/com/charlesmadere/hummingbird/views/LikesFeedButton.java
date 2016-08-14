@@ -74,19 +74,20 @@ public class LikesFeedButton extends FrameLayout implements AdapterView<CommentS
 
     private void update() {
         final boolean liked;
-        final int count;
+        final int likes;
 
         if (mCommentStory != null) {
             liked = mCommentStory.isLiked();
-            count = mCommentStory.getTotalVotes();
+            likes = mCommentStory.getTotalVotes();
         } else {
             liked = false;
-            count = 0;
+            likes = 0;
         }
 
         mLabel.setCompoundDrawablesRelativeWithIntrinsicBounds(liked ?
                 R.drawable.ic_favorite_orange_18dp : R.drawable.ic_favorite_border_18dp, 0, 0, 0);
-        mLabel.setText(mNumberFormat.format(count));
+        mLabel.setText(getResources().getQuantityString(R.plurals.x_likes, likes,
+                mNumberFormat.format(likes)));
     }
 
 }
