@@ -72,18 +72,26 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_width="0dp" />
-            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                android:drawableStart="@drawable/ic_insert_comment_18dp"
-                android:id="@+id/tvMoreComments"
-                android:visibility="gone"
-                tools:text="32 comments"
-                tools:visibility="visible"
-                style="@style/FeedRowButton" />
-            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                android:drawableStart="@drawable/ic_favorite_border_18dp"
-                android:id="@+id/tvLike"
-                tools:text="50 likes"
-                style="@style/FeedRowButton" />
+            <FrameLayout
+                android:id="@+id/flMoreComments"
+                style="@style/FeedRowButtonContainer">
+                <com.charlesmadere.hummingbird.views.TypefaceTextView
+                    android:drawableStart="@drawable/ic_insert_comment_18dp"
+                    android:id="@+id/tvMoreComments"
+                    android:visibility="gone"
+                    tools:text="32 comments"
+                    tools:visibility="visible"
+                    style="@style/FeedRowButton" />
+            </FrameLayout>
+            <FrameLayout
+                android:id="@+id/flLikes"
+                style="@style/FeedRowButtonContainer">
+                <com.charlesmadere.hummingbird.views.TypefaceTextView
+                    android:drawableStart="@drawable/ic_favorite_border_18dp"
+                    android:id="@+id/tvLikes"
+                    tools:text="50 likes"
+                    style="@style/FeedRowButton" />
+            </FrameLayout>
         </LinearLayout>
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.CommentStoryItemView>
