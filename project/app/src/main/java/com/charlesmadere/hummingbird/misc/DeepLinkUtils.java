@@ -148,8 +148,6 @@ public final class DeepLinkUtils {
             buildUserActivityStack(activity, paths, activityStack);
         }
 
-        // TODO comments
-
         if (activityStack.isEmpty()) {
             return null;
         } else {
