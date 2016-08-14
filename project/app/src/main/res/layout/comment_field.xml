@@ -34,6 +34,6 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:padding="@dimen/root_padding_half"
-            android:src="@drawable/ic_send" />
+            android:src="@drawable/ic_send_white" />
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.CommentField>

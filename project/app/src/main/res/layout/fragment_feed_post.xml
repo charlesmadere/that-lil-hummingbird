@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:paddingEnd="@dimen/root_padding"
             android:paddingStart="@dimen/root_padding"
-            android:src="@drawable/ic_send" />
+            android:src="@drawable/ic_send_white" />
         <LinearLayout
             android:background="?attr/selectableItemBackgroundBorderless"
             android:id="@+id/llNsfw"
