@@ -92,7 +92,7 @@ public class AnimeBreakdownPieView extends View {
         final Resources resources = getResources();
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.AnimeBreakdownPieView);
-        final float mBarThickness = ta.getDimension(R.styleable.AnimeBreakdownPieView_barThickness,
+        final float barThickness = ta.getDimension(R.styleable.AnimeBreakdownPieView_barThickness,
                 resources.getDimension(R.dimen.anime_breakdown_pie_view_bar_thickness));
         final int primaryColor = ta.getColor(R.styleable.AnimeBreakdownPieView_primaryColor,
                 MiscUtils.getAttrColor(context, R.attr.colorAccent));
@@ -112,13 +112,13 @@ public class AnimeBreakdownPieView extends View {
         mPrimaryPaint = new Paint();
         mPrimaryPaint.setAntiAlias(true);
         mPrimaryPaint.setColor(primaryColor);
-        mPrimaryPaint.setStrokeWidth(mBarThickness);
+        mPrimaryPaint.setStrokeWidth(barThickness);
         mPrimaryPaint.setStyle(Paint.Style.STROKE);
 
         mSecondaryPaint = new Paint();
         mSecondaryPaint.setAntiAlias(true);
         mSecondaryPaint.setColor(secondaryColor);
-        mSecondaryPaint.setStrokeWidth(mBarThickness);
+        mSecondaryPaint.setStrokeWidth(barThickness);
         mSecondaryPaint.setStyle(Paint.Style.STROKE);
 
         mTextPaint = new Paint();
