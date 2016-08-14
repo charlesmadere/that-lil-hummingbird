@@ -6,12 +6,17 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
+import com.charlesmadere.hummingbird.R;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ShareFeedButton extends FrameLayout implements View.OnClickListener {
 
-
+    @BindView(R.id.tvShareFeedButton)
+    TextView mLabel;
 
 
     public ShareFeedButton(final Context context, final AttributeSet attrs) {
