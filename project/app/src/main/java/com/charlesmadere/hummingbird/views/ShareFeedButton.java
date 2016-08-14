@@ -9,11 +9,18 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
+import com.charlesmadere.hummingbird.misc.ShareUtils;
+import com.charlesmadere.hummingbird.models.AbsStory;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ShareFeedButton extends FrameLayout implements View.OnClickListener {
+public class ShareFeedButton extends FrameLayout implements AdapterView<AbsStory>,
+        View.OnClickListener {
+
+    private AbsStory mAbsStory;
 
     @BindView(R.id.tvShareFeedButton)
     TextView mLabel;
@@ -36,7 +43,9 @@ public class ShareFeedButton extends FrameLayout implements View.OnClickListener
 
     @Override
     public void onClick(final View view) {
-
+        if (mAbsStory != null) {
+            ShareUtils.shareStory(MiscUtils.getActivity(getContext()), mAbsStory);
+        }
     }
 
     @Override
@@ -44,6 +53,11 @@ public class ShareFeedButton extends FrameLayout implements View.OnClickListener
         super.onFinishInflate();
         ButterKnife.bind(this);
         setOnClickListener(this);
+    }
+
+    @Override
+    public void setContent(final AbsStory content) {
+        mAbsStory = content;
     }
 
 }

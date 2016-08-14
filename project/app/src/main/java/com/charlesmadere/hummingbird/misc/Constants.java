@@ -20,6 +20,7 @@ public final class Constants {
     public static final String HUMMINGBIRD_GROUP_URL = "https://hummingbird.me/groups/";
     public static final String HUMMINGBIRD_HOST = "hummingbird.me";
     public static final String HUMMINGBIRD_MANGA_URL = "https://hummingbird.me/manga/";
+    public static final String HUMMINGBIRD_STORY_URL = "https://hummingbird.me/stories/";
     public static final String HUMMINGBIRD_URL_HTTP = "http://hummingbird.me/";
     public static final String HUMMINGBIRD_URL_HTTPS = "https://hummingbird.me/";
     public static final String HUMMINGBIRD_URL_RELATIVE = "//hummingbird.me/";

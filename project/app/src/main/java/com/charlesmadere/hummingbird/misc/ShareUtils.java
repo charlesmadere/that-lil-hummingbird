@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.v4.app.ShareCompat;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.models.AbsStory;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.GroupDigest;
 import com.charlesmadere.hummingbird.models.MangaDigest;
@@ -49,6 +50,20 @@ public final class ShareUtils {
         ShareCompat.IntentBuilder.from(activity)
                 .setChooserTitle(activity.getString(R.string.share_x, manga.getTitle()))
                 .setText(Constants.HUMMINGBIRD_MANGA_URL + manga.getId())
+                .setType(Constants.MIMETYPE_TEXT)
+                .startChooser();
+    }
+
+    public static void shareStory(final Activity activity, final AbsStory story) {
+        if (activity == null) {
+            throw new IllegalArgumentException("activity parameter can't be null");
+        } else if (story == null) {
+            throw new IllegalArgumentException("story parameter can't be null");
+        }
+
+        ShareCompat.IntentBuilder.from(activity)
+                .setChooserTitle(R.string.share_story)
+                .setText(Constants.HUMMINGBIRD_STORY_URL + story.getId())
                 .setType(Constants.MIMETYPE_TEXT)
                 .startChooser();
     }

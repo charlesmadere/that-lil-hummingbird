@@ -139,6 +139,7 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
             }
         }
 
+        mShareFeedButton.setContent(mCommentStory);
         mCommentsFeedButton.setContent(mCommentStory);
         mLikesFeedButton.setContent(mCommentStory);
     }
