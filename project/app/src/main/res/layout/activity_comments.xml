@@ -29,7 +29,8 @@
                     android:imeOptions="actionSend"
                     android:inputType="textCapSentences|textMultiLine"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:maxLines="3"
                     android:paddingBottom="@dimen/root_padding_half"
                     android:paddingEnd="@dimen/root_padding"
@@ -39,9 +40,9 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="@string/post_comment"
                     android:id="@+id/ibPostComment"
-                    android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:padding="@dimen/root_padding_half"
                     android:src="@drawable/ic_send" />
             </LinearLayout>
         </LinearLayout>

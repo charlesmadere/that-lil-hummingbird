@@ -215,6 +215,7 @@ public class CommentsActivity extends BaseDrawerActivity implements ObjectCache.
         mAdapter = new CommentsAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
+        mPostComment.setEnabled(false);
     }
 
     @Override
@@ -241,6 +242,7 @@ public class CommentsActivity extends BaseDrawerActivity implements ObjectCache.
         MiscUtils.closeKeyboard(this);
         mRefreshLayout.setRefreshing(true);
         mCommentField.setEnabled(false);
+        mPostComment.setEnabled(false);
 
         final String comment = mCommentField.getText().toString().trim();
         final CommentPost commentPost = new CommentPost(comment, mCommentStory.getId());
@@ -266,6 +268,7 @@ public class CommentsActivity extends BaseDrawerActivity implements ObjectCache.
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
         mCommentField.setEnabled(true);
+        mPostComment.setEnabled(isCommentFormValid());
         mPaginator.setEnabled(feed.hasCursor());
         mRefreshLayout.setRefreshing(false);
     }
