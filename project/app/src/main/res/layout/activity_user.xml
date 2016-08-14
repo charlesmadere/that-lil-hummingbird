@@ -23,13 +23,16 @@
             android:layout_width="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         <FrameLayout
+            android:elevation="@dimen/root_padding"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/root_padding_double"
             android:layout_width="wrap_content"
             app:layout_anchor="@id/tabLayout"
-            app:layout_anchorGravity="bottom|end">
+            app:layout_anchorGravity="bottom|end"
+            tools:ignore="UnusedAttribute">
             <com.charlesmadere.hummingbird.views.AvatarView
                 android:id="@+id/avatarView"
+                app:enableClickListener="false"
                 app:placeholderImage="@null"
                 app:roundAsCircle="true"
                 style="@style/Avatar.Medium" />
