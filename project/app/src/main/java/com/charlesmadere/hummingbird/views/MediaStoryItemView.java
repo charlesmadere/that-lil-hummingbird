@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.activities.MangaActivity;
-import com.charlesmadere.hummingbird.activities.MediaStoryActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.Anime;
@@ -21,7 +20,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class MediaStoryItemView extends CardView implements AdapterView<MediaStory>,
         View.OnClickListener {
@@ -34,6 +32,9 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
     @BindView(R.id.msivOne)
     AbsSubstoryItemView mMediaOne;
 
+    @BindView(R.id.showMoreFeedButton)
+    ShowMoreFeedButton mShowMoreFeedButton;
+
     @BindView(R.id.sdvImage)
     SimpleDraweeView mImage;
 
@@ -43,11 +44,11 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
     @BindView(R.id.tvGenres)
     TextView mGenres;
 
-    @BindView(R.id.tvShowMore)
-    TextView mShowMore;
-
     @BindView(R.id.tvTitle)
     TextView mTitle;
+
+    @BindView(R.id.feedButtons)
+    View mFeedButtons;
 
 
     public MediaStoryItemView(final Context context, final AttributeSet attrs) {
@@ -88,12 +89,6 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
         setOnClickListener(this);
     }
 
-    @OnClick(R.id.tvShowMore)
-    void onShowMoreClick() {
-        final Context context = getContext();
-        context.startActivity(MediaStoryActivity.getLaunchIntent(context, mMediaStory));
-    }
-
     @Override
     public void setContent(final MediaStory content) {
         mMediaStory = content;
@@ -122,7 +117,13 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
             mMediaOne.setVisibility(GONE);
         }
 
-        mShowMore.setVisibility(mMediaStory.getSubstoryCount() >= 4 ? VISIBLE : GONE);
+        if (mMediaStory.getSubstoryCount() >= 3) {
+            mFeedButtons.setVisibility(VISIBLE);
+            mShowMoreFeedButton.setContent(mMediaStory);
+        } else {
+            mFeedButtons.setVisibility(GONE);
+            mShowMoreFeedButton.setContent(null);
+        }
     }
 
     private void setContent(final MediaStory.AnimeMedia media) {

@@ -9,11 +9,17 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.MediaStoryActivity;
+import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.models.MediaStory;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ShowMoreFeedButton extends FrameLayout implements View.OnClickListener {
+public class ShowMoreFeedButton extends FrameLayout implements AdapterView<MediaStory>,
+        View.OnClickListener {
+
+    private MediaStory mMediaStory;
 
     @BindView(R.id.tvShowMoreFeedButton)
     TextView mLabel;
@@ -36,7 +42,10 @@ public class ShowMoreFeedButton extends FrameLayout implements View.OnClickListe
 
     @Override
     public void onClick(final View view) {
-
+        if (mMediaStory != null) {
+            final Context context = getContext();
+            context.startActivity(MediaStoryActivity.getLaunchIntent(context, mMediaStory));
+        }
     }
 
     @Override
@@ -44,6 +53,11 @@ public class ShowMoreFeedButton extends FrameLayout implements View.OnClickListe
         super.onFinishInflate();
         ButterKnife.bind(this);
         setOnClickListener(this);
+    }
+
+    @Override
+    public void setContent(final MediaStory content) {
+        mMediaStory = content;
     }
 
 }
