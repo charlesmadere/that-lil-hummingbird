@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.CommentsActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.CommentStory;
 
@@ -44,7 +45,10 @@ public class CommentsFeedButton extends FrameLayout implements AdapterView<Comme
 
     @Override
     public void onClick(final View view) {
-
+        if (mCommentStory != null) {
+            final Context context = getContext();
+            context.startActivity(CommentsActivity.getLaunchIntent(context, mCommentStory));
+        }
     }
 
     @Override
