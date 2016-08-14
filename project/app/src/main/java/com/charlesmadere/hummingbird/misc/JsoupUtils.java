@@ -51,10 +51,14 @@ public final class JsoupUtils {
         iframes = iframes.tagName("a");
 
         for (final Element iframe : iframes) {
-            final String src = iframe.attr("src");
+            String src = iframe.attr("src");
 
             stripAttributes(iframe);
             stripChildren(iframe);
+
+            if (src.startsWith("//")) {
+                src = "http:" + src;
+            }
 
             iframe.attr("href", src);
             iframe.html(src);
