@@ -270,6 +270,11 @@
         <item name="android:visibility">gone</item>
     </style>
 
+    <style name="FeedCardItem" parent="BaseCardItem">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
     <style name="FloatingActionButton">
         <item name="android:id">@id/floatingActionButton</item>
         <item name="android:layout_alignParentBottom">true</item>

@@ -36,9 +36,6 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
     @BindView(R.id.commentTitleTextView)
     CommentTitleTextView mTitle;
 
-    @BindView(R.id.likeTextView)
-    LikeTextView mLikeTextView;
-
     @BindView(R.id.llReplies)
     LinearLayout mReplies;
 
@@ -109,7 +106,6 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
         mCommentStory = content;
 
         mAvatar.setContent(mCommentStory.getPoster());
-        mLikeTextView.setContent(mCommentStory);
         mTitle.setContent(mCommentStory);
         mTimeAgo.setText(mCommentStory.getCreatedAt().getRelativeTimeText(getContext()));
 

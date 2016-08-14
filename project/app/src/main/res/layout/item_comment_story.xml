@@ -1,57 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.charlesmadere.hummingbird.views.CommentStoryItemView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/CardItem">
-    <RelativeLayout
+    style="@style/FeedCardItem">
+    <LinearLayout
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
-        <com.charlesmadere.hummingbird.views.AvatarView
-            android:id="@+id/avatarView"
-            android:layout_marginEnd="@dimen/root_padding"
-            style="@style/Avatar.Medium" />
-        <com.charlesmadere.hummingbird.views.LikeTextView
-            android:layout_alignParentEnd="true"
-            tools:text="25"
-            style="@style/LikeTextView" />
-        <com.charlesmadere.hummingbird.views.CommentTitleTextView
-            android:id="@+id/commentTitleTextView"
-            android:layout_toEndOf="@id/avatarView"
-            android:layout_toStartOf="@id/likeTextView"
-            tools:ignore="UnknownId"
-            tools:text="LimitB"
-            style="@style/UserTitle" />
-        <com.charlesmadere.hummingbird.views.TypefaceTextView
-            android:id="@+id/tvTimeAgo"
-            android:layout_below="@id/commentTitleTextView"
-            android:layout_marginBottom="@dimen/root_padding_half"
-            android:layout_toEndOf="@id/avatarView"
-            android:layout_toStartOf="@id/likeTextView"
-            tools:ignore="UnknownId"
-            tools:text="an hour ago"
-            style="@style/TimeOrDate" />
-        <com.charlesmadere.hummingbird.views.TypefaceTextView
-            android:id="@+id/tvNsfwContent"
-            android:layout_below="@id/tvTimeAgo"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/avatarView"
-            android:layout_width="wrap_content"
-            android:text="@string/nsfw_content"
-            android:textColor="?attr/colorAccent"
-            android:visibility="gone"
-            tools:visibility="visible" />
-        <com.charlesmadere.hummingbird.views.CommentTextView
-            android:id="@+id/commentTextView"
-            android:layout_below="@id/tvTimeAgo"
-            android:layout_toEndOf="@id/avatarView"
-            android:visibility="gone"
-            tools:text="Hello, World!"
-            tools:visibility="visible"
-            style="@style/CommentTextView.OP.Limited" />
+            android:layout_width="match_parent"
+            android:paddingEnd="@dimen/root_padding"
+            android:paddingStart="@dimen/root_padding"
+            android:paddingTop="@dimen/root_padding">
+            <com.charlesmadere.hummingbird.views.AvatarView
+                android:id="@+id/avatarView"
+                android:layout_marginEnd="@dimen/root_padding"
+                style="@style/Avatar.Medium" />
+            <com.charlesmadere.hummingbird.views.CommentTitleTextView
+                android:id="@+id/commentTitleTextView"
+                android:layout_toEndOf="@id/avatarView"
+                tools:text="LimitB"
+                style="@style/UserTitle" />
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvTimeAgo"
+                android:layout_below="@id/commentTitleTextView"
+                android:layout_marginBottom="@dimen/root_padding_half"
+                android:layout_toEndOf="@id/avatarView"
+                tools:text="an hour ago"
+                style="@style/TimeOrDate" />
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvNsfwContent"
+                android:layout_below="@id/tvTimeAgo"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/avatarView"
+                android:layout_width="wrap_content"
+                android:text="@string/nsfw_content"
+                android:textColor="?attr/colorAccent"
+                android:visibility="gone"
+                tools:visibility="visible" />
+            <com.charlesmadere.hummingbird.views.CommentTextView
+                android:id="@+id/commentTextView"
+                android:layout_below="@id/tvTimeAgo"
+                android:layout_toEndOf="@id/avatarView"
+                android:visibility="gone"
+                tools:text="Hello, World!"
+                tools:visibility="visible"
+                style="@style/CommentTextView.OP.Limited" />
+        </RelativeLayout>
         <LinearLayout
             android:divider="?android:attr/listDivider"
             android:id="@+id/llReplies"
-            android:layout_below="@id/commentTextView"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/root_padding"
+            android:layout_marginStart="@dimen/root_padding"
             android:layout_marginTop="@dimen/root_padding"
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -65,5 +66,11 @@
                 android:id="@+id/rsivOne"
                 layout="@layout/item_reply_substory" />
         </LinearLayout>
-    </RelativeLayout>
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+    </LinearLayout>
 </com.charlesmadere.hummingbird.views.CommentStoryItemView>
