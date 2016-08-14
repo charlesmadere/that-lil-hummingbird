@@ -8,7 +8,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.ThatLilHummingbird;
-import com.charlesmadere.hummingbird.activities.NotificationsActivity;
+import com.charlesmadere.hummingbird.activities.LoginActivity;
 import com.charlesmadere.hummingbird.models.AbsNotification;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
@@ -178,7 +178,7 @@ public final class SyncManager extends GcmTaskService {
     }
 
     private void setBuilderContentIntent(final NotificationCompat.Builder builder) {
-        final Intent intent = NotificationsActivity.getLaunchIntent(getContext());
+        final Intent intent = LoginActivity.getNotificationsLaunchIntent(getContext());
         final PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pendingIntent);

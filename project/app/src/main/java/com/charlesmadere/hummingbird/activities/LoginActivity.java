@@ -36,6 +36,8 @@ import butterknife.OnTextChanged;
 public class LoginActivity extends BaseActivity {
 
     private static final String TAG = "LoginActivity";
+    private static final String CNAME = LoginActivity.class.getCanonicalName();
+    private static final String EXTRA_LAUNCH_TO_NOTIFICATIONS = CNAME + ".LaunchToNotifications";
 
     @BindView(R.id.bLogin)
     Button mLogin;
@@ -66,6 +68,10 @@ public class LoginActivity extends BaseActivity {
         return getLaunchIntent(context).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
+    public static Intent getNotificationsLaunchIntent(final Context context) {
+        return getLaunchIntent(context).putExtra(EXTRA_LAUNCH_TO_NOTIFICATIONS, true);
+    }
+
     @Override
     public String getActivityName() {
         return TAG;
@@ -73,19 +79,6 @@ public class LoginActivity extends BaseActivity {
 
     private void fetchCurrentUser() {
         Api.getCurrentUser(new GetCurrentUserListener(this));
-    }
-
-    private void followDeepLinkOrGoToHomeActivity() {
-        final Intent[] activityStack = DeepLinkUtils.buildActivityStack(this);
-
-        if (activityStack == null || activityStack.length == 0) {
-            final LaunchScreen launchScreen = Preferences.General.DefaultLaunchScreen.get();
-            startActivity(launchScreen.getLaunchIntent(this));
-        } else {
-            ContextCompat.startActivities(this, activityStack);
-        }
-
-        finish();
     }
 
     private boolean isLoginFormValid() {
@@ -113,7 +106,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         if (CurrentUser.exists()) {
-            followDeepLinkOrGoToHomeActivity();
+            proceed();
         } else {
             setContentView(R.layout.activity_login);
 
@@ -158,6 +151,25 @@ public class LoginActivity extends BaseActivity {
         final String password = mPasswordField.getText().toString();
 
         Api.signIn(username, password, new SignInListener(this));
+    }
+
+    private void proceed() {
+        final Intent intent = getIntent();
+
+        if (intent != null && intent.getBooleanExtra(EXTRA_LAUNCH_TO_NOTIFICATIONS, false)) {
+            startActivity(NotificationsActivity.getLaunchIntent(this));
+        } else {
+            final Intent[] activityStack = DeepLinkUtils.buildActivityStack(this);
+
+            if (activityStack == null || activityStack.length == 0) {
+                final LaunchScreen launchScreen = Preferences.General.DefaultLaunchScreen.get();
+                startActivity(launchScreen.getLaunchIntent(this));
+            } else {
+                ContextCompat.startActivities(this, activityStack);
+            }
+        }
+
+        finish();
     }
 
     private void showError(@Nullable final String error) {
@@ -210,7 +222,7 @@ public class LoginActivity extends BaseActivity {
             final LoginActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
-                activity.followDeepLinkOrGoToHomeActivity();
+                activity.proceed();
             }
         }
     }
