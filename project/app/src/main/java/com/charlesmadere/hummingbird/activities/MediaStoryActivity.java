@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.MediaStoryAdapter;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
+import com.charlesmadere.hummingbird.misc.ShareUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.MediaStory;
@@ -91,6 +94,23 @@ public class MediaStoryActivity extends BaseDrawerActivity implements ObjectCach
         } else {
             showFeed(mFeed);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_media_story, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.miShare:
+                ShareUtils.shareStory(this, mMediaStory);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
