@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.CommentsFeedButton xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/commentsFeedButton"
+    android:visibility="gone"
+    tools:visibility="visible"
+    style="@style/FeedButtonContainer">
+    <com.charlesmadere.hummingbird.views.TypefaceTextView
+        android:drawableStart="@drawable/ic_insert_comment_18dp"
+        android:id="@+id/tvMoreComments"
+        tools:text="32 comments"
+        style="@style/FeedButton" />
+</com.charlesmadere.hummingbird.views.CommentsFeedButton>

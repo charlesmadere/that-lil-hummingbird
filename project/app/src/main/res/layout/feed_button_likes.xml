@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.LikesFeedButton xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/likesFeedButton"
+    style="@style/FeedButtonContainer">
+    <com.charlesmadere.hummingbird.views.TypefaceTextView
+        android:drawableStart="@drawable/ic_favorite_border_18dp"
+        android:id="@+id/tvLikes"
+        tools:text="50 likes"
+        style="@style/FeedButton" />
+</com.charlesmadere.hummingbird.views.LikesFeedButton>
