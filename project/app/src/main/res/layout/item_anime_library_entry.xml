@@ -59,7 +59,7 @@
         </LinearLayout>
         <android.support.v4.widget.Space
             android:id="@+id/feedButtonsSpace"
-            android:layout_height="@dimen/root_padding_half"
+            android:layout_height="@dimen/root_padding"
             android:layout_width="match_parent" />
         <LinearLayout
             style="@style/FeedButtons">
