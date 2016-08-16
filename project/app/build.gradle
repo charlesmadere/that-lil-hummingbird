@@ -31,8 +31,8 @@ android {
         applicationId 'com.charlesmadere.hummingbird'
         minSdkVersion 17
         targetSdkVersion 24
-        versionCode 27
-        versionName '0.8.11'
+        versionCode 28
+        versionName '0.8.12'
     }
 
     buildTypes {
