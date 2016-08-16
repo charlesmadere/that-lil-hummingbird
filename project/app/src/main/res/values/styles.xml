@@ -605,20 +605,6 @@
         <item name="android:layout_width">wrap_content</item>
     </style>
 
-    <style name="SectionHeader">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:paddingEnd">@dimen/root_padding_double</item>
-        <item name="android:paddingStart">@dimen/root_padding_double</item>
-        <item name="android:paddingTop">@dimen/root_padding</item>
-        <item name="android:textSize">@dimen/text_xlarge</item>
-        <item name="typeface">open_sans_extra_bold</item>
-    </style>
-
-    <style name="SectionHeader.WithMargins">
-        <item name="android:layout_marginBottom">@dimen/root_padding_half</item>
-    </style>
-
     <style name="Switch">
         <item name="android:background">@null</item>
         <item name="android:clickable">false</item>

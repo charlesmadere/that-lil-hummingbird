@@ -41,7 +41,7 @@
                 style="@style/Badge.Pro" />
         </FrameLayout>
         <android.support.design.widget.FloatingActionButton
-            android:src="@drawable/ic_comment_white_24dp"
+            android:src="@drawable/ic_insert_comment_white_24dp"
             android:visibility="gone"
             tools:visibility="visible"
             style="@style/FloatingActionButton" />
