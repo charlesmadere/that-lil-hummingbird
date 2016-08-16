@@ -35,6 +35,13 @@
             tools:visibility="visible"
             style="@style/ResponsiveWidthCardItem" />
         <com.charlesmadere.hummingbird.views.HeadBodyItemView
+            android:id="@+id/hbivWebsites"
+            android:visibility="gone"
+            app:bodyText="@string/websites"
+            app:iconDrawable="@drawable/ic_link_24dp"
+            tools:visibility="visible"
+            style="@style/ResponsiveWidthCardItem" />
+        <com.charlesmadere.hummingbird.views.HeadBodyItemView
             android:id="@+id/hbivFollowers"
             style="@style/ResponsiveWidthCardItem" />
         <com.charlesmadere.hummingbird.views.HeadBodyItemView

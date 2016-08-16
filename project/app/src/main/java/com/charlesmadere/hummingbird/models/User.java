@@ -116,6 +116,15 @@ public class User implements Parcelable {
         return mData.mWebsite;
     }
 
+    @Nullable
+    public String[] getWebsites() {
+        if (hasWebsite()) {
+            return mData.mWebsite.split("\\s+");
+        } else {
+            return null;
+        }
+    }
+
     public boolean hasAbout() {
         return !TextUtils.isEmpty(mCompiledAbout);
     }
@@ -144,6 +153,11 @@ public class User implements Parcelable {
 
     public boolean hasWebsite() {
         return !TextUtils.isEmpty(mData.mWebsite);
+    }
+
+    public boolean hasWebsites() {
+        final String[] websites = getWebsites();
+        return websites != null && websites.length >= 2;
     }
 
     public void hydrate() {

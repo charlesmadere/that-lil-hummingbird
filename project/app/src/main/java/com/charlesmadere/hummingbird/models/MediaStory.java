@@ -11,6 +11,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Collections;
+
 public class MediaStory extends AbsStory implements Parcelable {
 
     @SerializedName("media")
@@ -30,6 +32,10 @@ public class MediaStory extends AbsStory implements Parcelable {
     public void hydrate(final Feed feed) {
         super.hydrate(feed);
         mMedia.hydrate(feed);
+
+        if (hasSubstoryIds()) {
+            Collections.sort(getSubstories(), AbsSubstory.REVERSE_CHRONOLOGICAL_ORDER);
+        }
     }
 
     @Override

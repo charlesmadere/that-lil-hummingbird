@@ -47,7 +47,7 @@
 
         <activity
             android:label=""
-            android:name=".activities.CommentsActivity"
+            android:name=".activities.CommentStoryActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer"
             android:windowSoftInputMode="adjustResize|stateUnchanged" />
 

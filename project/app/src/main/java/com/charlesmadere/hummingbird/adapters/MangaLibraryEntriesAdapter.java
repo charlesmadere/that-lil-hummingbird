@@ -15,20 +15,17 @@ import java.util.Collections;
 
 public class MangaLibraryEntriesAdapter extends BasePaginationAdapter<MangaLibraryEntry> {
 
-    private final MangaLibraryEntryItemView.OnDeleteClickListener mDeleteClickListener;
-    private final MangaLibraryEntryItemView.OnEditClickListener mEditClickListener;
+    private final MangaLibraryEntryItemView.OnFeedButtonClickListeners mListeners;
 
 
     public MangaLibraryEntriesAdapter(final Context context) {
-        this(context, null, null);
+        this(context, null);
     }
 
     public MangaLibraryEntriesAdapter(final Context context,
-            @Nullable final MangaLibraryEntryItemView.OnDeleteClickListener deleteClickListener,
-            @Nullable final MangaLibraryEntryItemView.OnEditClickListener editClickListener) {
+            @Nullable final MangaLibraryEntryItemView.OnFeedButtonClickListeners listeners) {
         super(context);
-        mDeleteClickListener = deleteClickListener;
-        mEditClickListener = editClickListener;
+        mListeners = listeners;
     }
 
     @Override
@@ -40,8 +37,7 @@ public class MangaLibraryEntriesAdapter extends BasePaginationAdapter<MangaLibra
     public AdapterView.ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         final AdapterView.ViewHolder viewHolder = super.onCreateViewHolder(parent, viewType);
         final MangaLibraryEntryItemView view = (MangaLibraryEntryItemView) viewHolder.itemView;
-        view.setOnDeleteClickListener(mDeleteClickListener);
-        view.setOnEditClickListener(mEditClickListener);
+        view.setOnFeedButtonClickListeners(mListeners);
         return viewHolder;
     }
 

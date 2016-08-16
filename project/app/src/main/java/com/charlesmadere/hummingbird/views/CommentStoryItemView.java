@@ -1,5 +1,6 @@
 package com.charlesmadere.hummingbird.views;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -10,11 +11,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.activities.CommentsActivity;
+import com.charlesmadere.hummingbird.activities.CommentStoryActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
+import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
+import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 
 import java.util.ArrayList;
@@ -71,8 +75,16 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
     }
 
     private void commentClick() {
+        if (mCommentStory == null) {
+            return;
+        }
+
         final Context context = getContext();
-        context.startActivity(CommentsActivity.getLaunchIntent(context, mCommentStory));
+        final Activity activity = MiscUtils.optActivity(context);
+        final UiColorSet uiColorSet = activity instanceof PaletteUtils.Listener ?
+                ((PaletteUtils.Listener) activity).getUiColorSet() : null;
+        context.startActivity(CommentStoryActivity.getLaunchIntent(context, mCommentStory,
+                uiColorSet));
     }
 
     private void nsfwClick() {

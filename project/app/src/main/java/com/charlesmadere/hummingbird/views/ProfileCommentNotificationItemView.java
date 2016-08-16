@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.activities.CommentsActivity;
+import com.charlesmadere.hummingbird.activities.CommentStoryActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.AbsNotification;
 import com.charlesmadere.hummingbird.models.AbsStory;
@@ -47,7 +47,7 @@ public class ProfileCommentNotificationItemView extends CardView implements
 
         switch (story.getType()) {
             case COMMENT:
-                context.startActivity(CommentsActivity.getLaunchIntent(context,
+                context.startActivity(CommentStoryActivity.getLaunchIntent(context,
                         (CommentStory) story));
                 break;
 

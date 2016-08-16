@@ -6,18 +6,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.MediaStoryAdapter;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
-import com.charlesmadere.hummingbird.misc.ShareUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.MediaStory;
+import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
@@ -50,8 +48,19 @@ public class MediaStoryActivity extends BaseDrawerActivity implements ObjectCach
 
 
     public static Intent getLaunchIntent(final Context context, final MediaStory mediaStory) {
-        return new Intent(context, MediaStoryActivity.class)
+        return getLaunchIntent(context, mediaStory, null);
+    }
+
+    public static Intent getLaunchIntent(final Context context, final MediaStory mediaStory,
+            @Nullable final UiColorSet uiColorSet) {
+        final Intent intent = new Intent(context, MediaStoryActivity.class)
                 .putExtra(EXTRA_MEDIA_STORY, mediaStory);
+
+        if (uiColorSet != null) {
+            intent.putExtra(EXTRA_UI_COLOR_SET, uiColorSet);
+        }
+
+        return intent;
     }
 
     private void fetchFeed() {
@@ -94,23 +103,6 @@ public class MediaStoryActivity extends BaseDrawerActivity implements ObjectCach
         } else {
             showFeed(mFeed);
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(final Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_media_story, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.miShare:
-                ShareUtils.shareStory(this, mMediaStory);
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

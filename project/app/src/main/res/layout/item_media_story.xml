@@ -24,7 +24,7 @@
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:id="@+id/tvTitle"
                     tools:text="The Disappearance of Haruhi Suzumiya"
-                    style="@style/AnimeTitle" />
+                    style="@style/MediaTitle" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:id="@+id/tvMediaType"
                     tools:text="@string/movie"

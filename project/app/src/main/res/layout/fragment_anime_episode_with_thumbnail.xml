@@ -43,7 +43,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/text_xxxlarge"
         tools:text="Naturals Election"
-        style="@style/AnimeTitle" />
+        style="@style/MediaTitle" />
     <android.support.v4.widget.NestedScrollView
         android:clipToPadding="false"
         android:layout_below="@id/sdvThumbnail"
@@ -60,6 +60,6 @@
             android:layout_marginStart="@dimen/root_padding"
             android:lineSpacingExtra="2dp"
             tools:text="Bacon ipsum dolor amet corned beef alcatra fatback ribeye capicola sirloin tenderloin rump short loin pig brisket ham leberkas."
-            style="@style/AnimeSynopsis" />
+            style="@style/MediaSynopsis" />
     </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

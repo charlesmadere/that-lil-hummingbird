@@ -16,7 +16,7 @@
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@id/reviewRatingView"
             tools:text="Durarara!!"
-            style="@style/AnimeTitle" />
+            style="@style/MediaTitle" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvSummary"
             android:layout_below="@id/tvTitle"

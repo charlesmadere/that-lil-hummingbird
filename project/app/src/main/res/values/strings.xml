@@ -363,6 +363,7 @@
     <string name="watched">Watched</string>
     <string name="watched_episode_x">watched episode %1$s</string>
     <string name="website">Website</string>
+    <string name="websites">Websites</string>
     <string name="weekly">Weekly</string>
     <string name="whats_trending">What\'s Trending</string>
     <string name="will_air">Will air</string>
@@ -507,6 +508,11 @@
     <plurals name="x_seconds">
         <item quantity="one">%1$s second</item>
         <item quantity="other">%1$s seconds</item>
+    </plurals>
+
+    <plurals name="x_websites">
+        <item quantity="one">%1$s website</item>
+        <item quantity="other">%1$s websites</item>
     </plurals>
 
     <plurals name="x_weeks">

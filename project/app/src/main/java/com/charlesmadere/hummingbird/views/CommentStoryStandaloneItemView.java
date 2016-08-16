@@ -26,6 +26,9 @@ public class CommentStoryStandaloneItemView extends CardView implements AdapterV
     @BindView(R.id.likesFeedButton)
     LikesFeedButton mLikesFeedButton;
 
+    @BindView(R.id.shareFeedButton)
+    ShareFeedButton mShareFeedButton;
+
     @BindView(R.id.tvTimeAgo)
     TextView mTimeAgo;
 
@@ -51,6 +54,7 @@ public class CommentStoryStandaloneItemView extends CardView implements AdapterV
         mCommentTitleTextView.setContent(content);
         mTimeAgo.setText(content.getCreatedAt().getRelativeTimeText(getContext()));
         mComment.setContent(content);
+        mShareFeedButton.setContent(content);
         mLikesFeedButton.setContent(content);
     }
 

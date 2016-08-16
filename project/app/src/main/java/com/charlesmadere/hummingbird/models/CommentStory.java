@@ -9,6 +9,8 @@ import com.charlesmadere.hummingbird.misc.JsoupUtils;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Collections;
+
 public class CommentStory extends AbsStory implements Parcelable {
 
     @SerializedName("adult")
@@ -98,6 +100,10 @@ public class CommentStory extends AbsStory implements Parcelable {
         }
 
         mCompiledComment = JsoupUtils.parse(mComment);
+
+        if (hasSubstoryIds()) {
+            Collections.sort(getSubstories(), AbsSubstory.CHRONOLOGICAL_ORDER);
+        }
     }
 
     public boolean isAdult() {

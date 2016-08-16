@@ -16,12 +16,12 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.CommentsAdapter;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
-import com.charlesmadere.hummingbird.misc.ShareUtils;
 import com.charlesmadere.hummingbird.models.CommentPost;
 import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.Group;
+import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
@@ -33,12 +33,12 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class CommentsActivity extends BaseDrawerActivity implements CommentField.Listener,
+public class CommentStoryActivity extends BaseDrawerActivity implements CommentField.Listener,
         ObjectCache.KeyProvider, RecyclerViewPaginator.Listeners,
         SwipeRefreshLayout.OnRefreshListener {
 
-    private static final String TAG = "CommentsActivity";
-    private static final String CNAME = CommentsActivity.class.getCanonicalName();
+    private static final String TAG = "CommentStoryActivity";
+    private static final String CNAME = CommentStoryActivity.class.getCanonicalName();
     private static final String EXTRA_COMMENT_STORY = CNAME + ".CommentStory";
 
     private CommentsAdapter mAdapter;
@@ -60,8 +60,19 @@ public class CommentsActivity extends BaseDrawerActivity implements CommentField
 
 
     public static Intent getLaunchIntent(final Context context, final CommentStory commentStory) {
-        return new Intent(context, CommentsActivity.class)
+        return getLaunchIntent(context, commentStory, null);
+    }
+
+    public static Intent getLaunchIntent(final Context context, final CommentStory commentStory,
+            @Nullable final UiColorSet uiColorSet) {
+        final Intent intent = new Intent(context, CommentStoryActivity.class)
                 .putExtra(EXTRA_COMMENT_STORY, commentStory);
+
+        if (uiColorSet != null) {
+            intent.putExtra(EXTRA_UI_COLOR_SET, uiColorSet);
+        }
+
+        return intent;
     }
 
     public void fetchSubstories() {
@@ -103,7 +114,7 @@ public class CommentsActivity extends BaseDrawerActivity implements CommentField
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comments);
+        setContentView(R.layout.activity_comment_story);
 
         final Intent intent = getIntent();
         mCommentStory = intent.getParcelableExtra(EXTRA_COMMENT_STORY);
@@ -149,10 +160,6 @@ public class CommentsActivity extends BaseDrawerActivity implements CommentField
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.miShare:
-                ShareUtils.shareStory(this, mCommentStory);
-                return true;
-
             case R.id.miViewGroup:
                 final Group group = mCommentStory.getGroup();
                 startActivity(GroupActivity.getLaunchIntent(this, group.getId(), group.getName()));
@@ -243,15 +250,15 @@ public class CommentsActivity extends BaseDrawerActivity implements CommentField
 
 
     private static class GetSubstoriesListener implements ApiResponse<Feed> {
-        private final WeakReference<CommentsActivity> mActivityReference;
+        private final WeakReference<CommentStoryActivity> mActivityReference;
 
-        private GetSubstoriesListener(final CommentsActivity activity) {
+        private GetSubstoriesListener(final CommentStoryActivity activity) {
             mActivityReference = new WeakReference<>(activity);
         }
 
         @Override
         public void failure(@Nullable final ErrorInfo error) {
-            final CommentsActivity activity = mActivityReference.get();
+            final CommentStoryActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
                 activity.showError();
@@ -260,7 +267,7 @@ public class CommentsActivity extends BaseDrawerActivity implements CommentField
 
         @Override
         public void success(final Feed feed) {
-            final CommentsActivity activity = mActivityReference.get();
+            final CommentStoryActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
                 activity.showFeed(feed);
@@ -269,17 +276,17 @@ public class CommentsActivity extends BaseDrawerActivity implements CommentField
     }
 
     private static class PaginateSubstoriesListener implements ApiResponse<Feed> {
-        private final WeakReference<CommentsActivity> mActivityReference;
+        private final WeakReference<CommentStoryActivity> mActivityReference;
         private final int mSubstoriesSize;
 
-        private PaginateSubstoriesListener(final CommentsActivity activity) {
+        private PaginateSubstoriesListener(final CommentStoryActivity activity) {
             mActivityReference = new WeakReference<>(activity);
             mSubstoriesSize = activity.mCommentStory.getSubstories().size();
         }
 
         @Override
         public void failure(@Nullable final ErrorInfo error) {
-            final CommentsActivity activity = mActivityReference.get();
+            final CommentStoryActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
                 activity.paginationNoMore();
@@ -288,7 +295,7 @@ public class CommentsActivity extends BaseDrawerActivity implements CommentField
 
         @Override
         public void success(final Feed feed) {
-            final CommentsActivity activity = mActivityReference.get();
+            final CommentStoryActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
                 if (feed.hasCursor() && feed.getSubstoriesSize() > mSubstoriesSize) {
@@ -301,15 +308,15 @@ public class CommentsActivity extends BaseDrawerActivity implements CommentField
     }
 
     private static class PostCommentListener implements ApiResponse<Void> {
-        private final WeakReference<CommentsActivity> mActivityReference;
+        private final WeakReference<CommentStoryActivity> mActivityReference;
 
-        private PostCommentListener(final CommentsActivity activity) {
+        private PostCommentListener(final CommentStoryActivity activity) {
             mActivityReference = new WeakReference<>(activity);
         }
 
         @Override
         public void failure(@Nullable final ErrorInfo error) {
-            final CommentsActivity activity = mActivityReference.get();
+            final CommentStoryActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
                 activity.showCommentError();
@@ -318,7 +325,7 @@ public class CommentsActivity extends BaseDrawerActivity implements CommentField
 
         @Override
         public void success(@Nullable final Void object) {
-            final CommentsActivity activity = mActivityReference.get();
+            final CommentStoryActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
                 activity.mCommentField.clear();

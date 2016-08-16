@@ -24,7 +24,7 @@
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:id="@+id/tvTitle"
                     tools:text="The Disappearance of Haruhi Suzumiya"
-                    style="@style/AnimeTitle" />
+                    style="@style/MediaTitle" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:id="@+id/tvAnimeType"
                     tools:text="@string/movie"
@@ -39,7 +39,7 @@
                     android:id="@+id/tvSynopsis"
                     android:layout_marginTop="@dimen/root_padding"
                     tools:text="It is mid-December, and SOS Brigade chief Haruhi Suzumiya announces that the Brigade is going to hold a Christmas party in their clubroom, with Japanese hotpot for dinner."
-                    style="@style/AnimeSynopsis.Limited" />
+                    style="@style/MediaSynopsis.Limited" />
                 <android.support.v4.widget.Space
                     android:layout_height="@dimen/root_padding_half"
                     android:layout_width="match_parent" />
@@ -57,6 +57,10 @@
                     tools:visibility="visible" />
             </LinearLayout>
         </LinearLayout>
+        <android.support.v4.widget.Space
+            android:id="@+id/feedButtonsSpace"
+            android:layout_height="@dimen/root_padding_half"
+            android:layout_width="match_parent" />
         <LinearLayout
             style="@style/FeedButtons">
             <android.support.v4.widget.Space

@@ -23,6 +23,9 @@ public class HeaderMediaStoryItemView extends CardView implements AdapterView<Me
 
     private MediaStory mMediaStory;
 
+    @BindView(R.id.shareFeedButton)
+    ShareFeedButton mShareFeedButton;
+
     @BindView(R.id.sdvImage)
     SimpleDraweeView mImage;
 
@@ -91,6 +94,8 @@ public class HeaderMediaStoryItemView extends CardView implements AdapterView<Me
                 throw new RuntimeException("encountered unknown " +
                         MediaStory.AbsMedia.Type.class.getName() + ": \"" + media.getType() + '"');
         }
+
+        mShareFeedButton.setContent(content);
     }
 
     private void setContent(final MediaStory.AnimeMedia media) {

@@ -2,7 +2,9 @@ package com.charlesmadere.hummingbird.views;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.widget.TextView;
@@ -46,6 +48,9 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
     @BindView(R.id.hbivWebsite)
     HeadBodyItemView mWebsite;
 
+    @BindView(R.id.hbivWebsites)
+    HeadBodyItemView mWebsites;
+
     @BindView(R.id.tvAbout)
     TextView mAbout;
 
@@ -63,11 +68,11 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
 
     @OnClick(R.id.tvAnimeReviews)
     void onAnimeReviewsClick() {
-        final Activity activity = MiscUtils.getActivity(getContext());
+        final Context context = getContext();
+        final Activity activity = MiscUtils.optActivity(context);
         final UiColorSet uiColorSet = activity instanceof PaletteUtils.Listener ?
                 ((PaletteUtils.Listener) activity).getUiColorSet() : null;
-
-        activity.startActivity(UserAnimeReviewsActivity.getLaunchIntent(activity,
+        context.startActivity(UserAnimeReviewsActivity.getLaunchIntent(context,
                 mUserDigest.getUserId(), uiColorSet));
     }
 
@@ -85,22 +90,22 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
 
     @OnClick(R.id.hbivFollowers)
     void onFollowersClick() {
-        final Activity activity = MiscUtils.getActivity(getContext());
+        final Context context = getContext();
+        final Activity activity = MiscUtils.optActivity(context);
         final UiColorSet uiColorSet = activity instanceof PaletteUtils.Listener ?
                 ((PaletteUtils.Listener) activity).getUiColorSet() : null;
-
-        activity.startActivity(FollowersActivity.getLaunchIntent(activity, mUserDigest.getUserId(),
+        context.startActivity(FollowersActivity.getLaunchIntent(context, mUserDigest.getUserId(),
                 uiColorSet));
     }
 
     @OnClick(R.id.hbivFollowing)
     void onFollowingClick() {
-        final Activity activity = MiscUtils.getActivity(getContext());
+        final Context context = getContext();
+        final Activity activity = MiscUtils.optActivity(context);
         final UiColorSet uiColorSet = activity instanceof PaletteUtils.Listener ?
                 ((PaletteUtils.Listener) activity).getUiColorSet() : null;
-
-        activity.startActivity(FollowingActivity.getLaunchIntent(activity,
-                mUserDigest.getUserId(), uiColorSet));
+        context.startActivity(FollowingActivity.getLaunchIntent(context, mUserDigest.getUserId(),
+                uiColorSet));
     }
 
     @OnClick(R.id.tvGroups)
@@ -123,6 +128,21 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
     @OnClick(R.id.hbivWebsite)
     void onWebsiteClick() {
         MiscUtils.openUrl(getContext(), mUserDigest.getUser().getWebsite());
+    }
+
+    @OnClick(R.id.hbivWebsites)
+    void onWebsitesClick() {
+        final String[] websites = mUserDigest.getUser().getWebsites();
+
+        new AlertDialog.Builder(getContext())
+                .setItems(websites, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        dialog.dismiss();
+                        MiscUtils.openUrl(getContext(), websites[which]);
+                    }
+                })
+                .show();
     }
 
     @Override
@@ -155,10 +175,18 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
             mLocation.setVisibility(GONE);
         }
 
-        if (user.hasWebsite()) {
+        if (user.hasWebsites()) {
+            mWebsite.setVisibility(GONE);
+            final String[] websites = user.getWebsites();
+            mWebsites.setHead(res.getQuantityString(R.plurals.x_websites, websites.length,
+                    mNumberFormat.format(websites.length)));
+            mWebsites.setVisibility(VISIBLE);
+        } else if (user.hasWebsite()) {
+            mWebsites.setVisibility(GONE);
             mWebsite.setHead(user.getWebsite());
             mWebsite.setVisibility(VISIBLE);
         } else {
+            mWebsites.setVisibility(GONE);
             mWebsite.setVisibility(GONE);
         }
 

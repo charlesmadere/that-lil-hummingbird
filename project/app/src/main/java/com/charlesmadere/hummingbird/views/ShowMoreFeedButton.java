@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -11,7 +12,10 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.MediaStoryActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
+import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.models.MediaStory;
+import com.charlesmadere.hummingbird.models.UiColorSet;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,10 +46,15 @@ public class ShowMoreFeedButton extends FrameLayout implements AdapterView<Media
 
     @Override
     public void onClick(final View view) {
-        if (mMediaStory != null) {
-            final Context context = getContext();
-            context.startActivity(MediaStoryActivity.getLaunchIntent(context, mMediaStory));
+        if (mMediaStory == null) {
+            return;
         }
+
+        final Context context = getContext();
+        final Activity activity = MiscUtils.optActivity(context);
+        final UiColorSet uiColorSet = activity instanceof PaletteUtils.Listener ?
+                ((PaletteUtils.Listener) activity).getUiColorSet() : null;
+        context.startActivity(MediaStoryActivity.getLaunchIntent(context, mMediaStory, uiColorSet));
     }
 
     @Override

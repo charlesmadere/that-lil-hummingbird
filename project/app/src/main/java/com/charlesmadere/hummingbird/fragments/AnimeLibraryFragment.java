@@ -23,8 +23,7 @@ import com.charlesmadere.hummingbird.views.AnimeLibraryEntryItemView;
 import java.lang.ref.WeakReference;
 
 public class AnimeLibraryFragment extends BaseLibraryFragment implements
-        AnimeLibraryEntryItemView.OnDeleteClickListener,
-        AnimeLibraryEntryItemView.OnEditClickListener,
+        AnimeLibraryEntryItemView.OnFeedButtonClickListeners,
         AnimeLibraryUpdateFragment.UpdateListener {
 
     private static final String TAG = "AnimeLibraryFragment";
@@ -125,7 +124,7 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
         super.onViewCreated(view, savedInstanceState);
 
         if (mEditableLibrary) {
-            mAdapter = new AnimeLibraryEntriesAdapter(getContext(), this, this);
+            mAdapter = new AnimeLibraryEntriesAdapter(getContext(), this);
         } else {
             mAdapter = new AnimeLibraryEntriesAdapter(getContext());
         }

@@ -23,11 +23,11 @@
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:id="@+id/tvTitle"
                     tools:text="Kyousougiga"
-                    style="@style/AnimeTitle.Small" />
+                    style="@style/MediaTitle.Small" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:id="@+id/tvSynopsis"
                     tools:text="Kyousougiga"
-                    style="@style/AnimeSynopsis.Limited" />
+                    style="@style/MediaSynopsis.Limited" />
             </LinearLayout>
         </LinearLayout>
         <View

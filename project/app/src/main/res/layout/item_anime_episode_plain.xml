@@ -20,7 +20,7 @@
             android:layout_marginEnd="@dimen/root_padding"
             android:layout_toStartOf="@id/tvNumber"
             tools:text="Naturals Election"
-            style="@style/AnimeTitle" />
+            style="@style/MediaTitle" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvSynopsis"
             android:layout_below="@id/tvTitle"
@@ -28,6 +28,6 @@
             android:layout_toEndOf="@id/sdvThumbnail"
             android:layout_toStartOf="@id/tvNumber"
             tools:text="It is mid-December, and SOS Brigade chief Haruhi Suzumiya announces that the Brigade is going to hold a Christmas party in their clubroom, with Japanese hotpot for dinner."
-            style="@style/AnimeSynopsis.Limited" />
+            style="@style/MediaSynopsis.Limited" />
     </RelativeLayout>
 </com.charlesmadere.hummingbird.views.AnimeEpisodeItemView>

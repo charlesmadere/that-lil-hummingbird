@@ -37,9 +37,11 @@
         </RelativeLayout>
         <LinearLayout
             style="@style/FeedButtons">
+            <include
+                layout="@layout/feed_button_share" />
             <android.support.v4.widget.Space
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:layout_width="0dp" />
             <include
                 layout="@layout/feed_button_likes" />

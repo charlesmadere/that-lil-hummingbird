@@ -56,6 +56,12 @@ public class MangaLibraryEntryItemView extends CardView implements AdapterView<M
     @BindView(R.id.tvTitle)
     TextView mTitle;
 
+    @BindView(R.id.feedButtons)
+    View mFeedButtons;
+
+    @BindView(R.id.feedButtonsSpace)
+    View mFeedButtonsSpace;
+
 
     public MangaLibraryEntryItemView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
@@ -147,23 +153,23 @@ public class MangaLibraryEntryItemView extends CardView implements AdapterView<M
         }
     }
 
-    public void setOnDeleteClickListener(@Nullable final OnDeleteClickListener l) {
+    public void setOnFeedButtonClickListeners(@Nullable final OnFeedButtonClickListeners l) {
         if (l == null) {
+            mFeedButtons.setVisibility(GONE);
+            mFeedButtonsSpace.setVisibility(VISIBLE);
             mDeleteFeedButton.setOnClickListener(null);
+            mEditFeedButton.setOnClickListener(null);
         } else {
+            mFeedButtonsSpace.setVisibility(GONE);
+            mFeedButtons.setVisibility(VISIBLE);
+
             mDeleteFeedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(final View view) {
                     l.onDeleteClick(MangaLibraryEntryItemView.this);
                 }
             });
-        }
-    }
 
-    public void setOnEditClickListener(@Nullable final OnEditClickListener l) {
-        if (l == null) {
-            mEditFeedButton.setOnClickListener(null);
-        } else {
             mEditFeedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(final View view) {
@@ -174,11 +180,8 @@ public class MangaLibraryEntryItemView extends CardView implements AdapterView<M
     }
 
 
-    public interface OnDeleteClickListener {
+    public interface OnFeedButtonClickListeners {
         void onDeleteClick(final MangaLibraryEntryItemView v);
-    }
-
-    public interface OnEditClickListener {
         void onEditClick(final MangaLibraryEntryItemView v);
     }
 

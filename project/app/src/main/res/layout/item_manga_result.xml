@@ -23,11 +23,11 @@
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:id="@+id/tvTitle"
                     tools:text="Scott Pilgrim vs the World"
-                    style="@style/MangaTitle.Small" />
+                    style="@style/MediaTitle.Small" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:id="@+id/tvSynopsis"
                     tools:text="Seven deadly exes"
-                    style="@style/MangaSynopsis.Limited" />
+                    style="@style/MediaSynopsis.Limited" />
             </LinearLayout>
         </LinearLayout>
         <View
