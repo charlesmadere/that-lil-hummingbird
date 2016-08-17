@@ -67,6 +67,11 @@ public class Manga implements Parcelable {
     }
 
     @Nullable
+    public Integer getChapterCount() {
+        return mChapterCount;
+    }
+
+    @Nullable
     public String getCoverImage() {
         return mCoverImage;
     }
@@ -74,11 +79,6 @@ public class Manga implements Parcelable {
     @Nullable
     public Integer getCoverImageTopOffset() {
         return mCoverImageTopOffset;
-    }
-
-    @Nullable
-    public Integer getChapterCount() {
-        return mChapterCount;
     }
 
     @Nullable
