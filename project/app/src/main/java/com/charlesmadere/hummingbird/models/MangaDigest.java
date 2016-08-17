@@ -381,6 +381,10 @@ public class MangaDigest implements Parcelable {
             return mGenres;
         }
 
+        public int getGenresSize() {
+            return mGenres == null ? 0 : mGenres.size();
+        }
+
         public String getId() {
             return mId;
         }
