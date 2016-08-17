@@ -109,15 +109,6 @@ public class MangaLibraryFragment extends BaseLibraryFragment implements
     }
 
     @Override
-    public void onSaveInstanceState(final Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        if (mFeed != null) {
-            ObjectCache.put(mFeed, this);
-        }
-    }
-
-    @Override
     public void onUpdateLibraryEntry() {
         final MangaLibraryUpdateFragment fragment = (MangaLibraryUpdateFragment)
                 getChildFragmentManager().findFragmentByTag(MangaLibraryUpdateFragment.TAG);

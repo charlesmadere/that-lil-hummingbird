@@ -92,8 +92,6 @@ public abstract class BaseLibraryFragment extends BaseFragment implements Object
         final Bundle args = getArguments();
         mUsername = args.getString(KEY_USERNAME);
         mEditableLibrary = args.getBoolean(KEY_EDITABLE_LIBRARY);
-
-        mFeed = ObjectCache.get(this);
     }
 
     @Override
