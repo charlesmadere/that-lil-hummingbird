@@ -36,6 +36,16 @@ public class MangaDigest implements Parcelable {
     private Info mInfo;
 
 
+    public void addLibraryEntry(final MangaLibraryEntry libraryEntry) {
+        if (mLibraryEntries == null) {
+            mLibraryEntries = new ArrayList<>(1);
+            mLibraryEntries.add(libraryEntry);
+        } else if (!mLibraryEntries.contains(libraryEntry)) {
+            mLibraryEntries.add(libraryEntry);
+        }
+    }
+
+
     @Override
     public boolean equals(final Object o) {
         return o instanceof MangaDigest && getId().equalsIgnoreCase(((MangaDigest) o).getId());

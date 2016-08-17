@@ -65,6 +65,15 @@ public class AnimeDigest implements Parcelable {
     private Info mInfo;
 
 
+    public void addLibraryEntry(final AnimeLibraryEntry libraryEntry) {
+        if (mLibraryEntries == null) {
+            mLibraryEntries = new ArrayList<>(1);
+            mLibraryEntries.add(libraryEntry);
+        } else if (!mLibraryEntries.contains(libraryEntry)) {
+            mLibraryEntries.add(libraryEntry);
+        }
+    }
+
     @Override
     public boolean equals(final Object o) {
         return o instanceof AnimeDigest && getId().equalsIgnoreCase(((AnimeDigest) o).getId());
@@ -983,10 +992,6 @@ public class AnimeDigest implements Parcelable {
 
         public boolean hasYouTubeVideoId() {
             return !TextUtils.isEmpty(mYouTubeVideoId);
-        }
-
-        public void setLibraryEntryId(@Nullable final String libraryEntryId) {
-            mLibraryEntryId = libraryEntryId;
         }
 
         @Override

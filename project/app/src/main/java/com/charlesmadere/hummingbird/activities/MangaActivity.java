@@ -89,7 +89,7 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
     }
 
     private void addedLibraryEntry(final AddMangaLibraryEntryResponse response) {
-        mMangaDigest.setLibraryEntry(response.getLibraryEntry());
+        mMangaDigest.addLibraryEntry(response.getLibraryEntry());
         supportInvalidateOptionsMenu();
         mSimpleProgressView.fadeOut();
         Toast.makeText(this, R.string.added_to_library, Toast.LENGTH_LONG).show();
