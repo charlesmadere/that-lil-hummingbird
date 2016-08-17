@@ -15,6 +15,7 @@ import com.charlesmadere.hummingbird.views.HeadBodyItemView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.text.NumberFormat;
+import java.util.Locale;
 
 import butterknife.BindView;
 
@@ -27,6 +28,9 @@ public class MangaDetailsFragment extends BaseMangaFragment {
 
     @BindView(R.id.hbivChapters)
     HeadBodyItemView mChapters;
+
+    @BindView(R.id.hbivCommunityRating)
+    HeadBodyItemView mCommunityRating;
 
     @BindView(R.id.hbivGenres)
     HeadBodyItemView mGenres;
@@ -98,6 +102,12 @@ public class MangaDetailsFragment extends BaseMangaFragment {
             mGenres.setHead(info.getGenresString(resources));
             mGenres.setBody(resources.getQuantityText(R.plurals.genres, info.getGenresSize()));
             mGenres.setVisibility(View.VISIBLE);
+        }
+
+        if (info.hasBayesianRating()) {
+            mCommunityRating.setHead(String.format(Locale.getDefault(), "%.4f",
+                    info.getBayesianRating()));
+            mCommunityRating.setVisibility(View.VISIBLE);
         }
 
         if (info.hasSynopsis()) {
