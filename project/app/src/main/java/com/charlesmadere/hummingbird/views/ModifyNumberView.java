@@ -122,7 +122,7 @@ public class ModifyNumberView extends LinearLayout {
 
     public void setForChaptersRead(final MangaLibraryUpdate libraryUpdate,
             final MangaDigest digest) {
-        setContent(libraryUpdate.getChaptersRead(), digest.getManga().getChapterCount());
+        setContent(libraryUpdate.getChaptersRead(), digest.getInfo().getChapterCount());
         mTitle.setText(R.string.chapters_read);
     }
 
@@ -144,7 +144,7 @@ public class ModifyNumberView extends LinearLayout {
 
     public void setForVolumesRead(final MangaLibraryUpdate libraryUpdate,
             final MangaDigest digest) {
-        setContent(libraryUpdate.getVolumesRead(), digest.getManga().getVolumeCount());
+        setContent(libraryUpdate.getVolumesRead(), digest.getInfo().getVolumeCount());
         mTitle.setText(R.string.volumes_read);
     }
 

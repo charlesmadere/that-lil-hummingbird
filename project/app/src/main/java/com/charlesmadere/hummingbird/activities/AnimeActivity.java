@@ -190,7 +190,7 @@ public class AnimeActivity extends BaseDrawerActivity implements
         if (mAnimeDigest != null) {
             menu.findItem(R.id.miShare).setVisible(true);
 
-            if (mAnimeDigest.getInfo().hasLibraryEntryId()) {
+            if (mAnimeDigest.hasLibraryEntries()) {
                 menu.findItem(R.id.miEditInLibrary).setVisible(true);
             } else {
                 menu.findItem(R.id.miAddToLibrary).setVisible(true);

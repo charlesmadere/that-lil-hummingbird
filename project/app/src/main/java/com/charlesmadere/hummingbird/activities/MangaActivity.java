@@ -182,7 +182,7 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
         if (mMangaDigest != null) {
             menu.findItem(R.id.miShare).setVisible(true);
 
-            if (mMangaDigest.hasLibraryEntry()) {
+            if (mMangaDigest.hasLibraryEntries()) {
                 menu.findItem(R.id.miEditInLibrary).setVisible(true);
             } else {
                 menu.findItem(R.id.miAddToLibrary).setVisible(true);
@@ -254,8 +254,8 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
             setTitle(mMangaDigest.getTitle());
         }
 
-        if (mangaDigest.getManga().hasCoverImage()) {
-            PaletteUtils.applyParallaxColors(mangaDigest.getManga().getCoverImage(), this, this,
+        if (mangaDigest.getInfo().hasCoverImage()) {
+            PaletteUtils.applyParallaxColors(mangaDigest.getInfo().getCoverImage(), this, this,
                     mCoverImage, mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
         }
 

@@ -1,10 +1,13 @@
 package com.charlesmadere.hummingbird.models;
 
+import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
@@ -32,6 +35,11 @@ public class MangaDigest implements Parcelable {
     @SerializedName("full_manga")
     private Info mInfo;
 
+
+    @Override
+    public boolean equals(final Object o) {
+        return o instanceof MangaDigest && getId().equalsIgnoreCase(((MangaDigest) o).getId());
+    }
 
     @Nullable
     public ArrayList<Casting> getCastings() {
@@ -70,6 +78,11 @@ public class MangaDigest implements Parcelable {
 
     public boolean hasCharacters() {
         return mCharacters != null && !mCharacters.isEmpty();
+    }
+
+    @Override
+    public int hashCode() {
+        return getId().hashCode();
     }
 
     public boolean hasLibraryEntries() {
@@ -315,6 +328,10 @@ public class MangaDigest implements Parcelable {
         private ArrayList<String> mGenres;
 
         @Nullable
+        @SerializedName("bayesian_rating")
+        private Float mBayesianRating;
+
+        @Nullable
         @SerializedName("chapter_count")
         private Integer mChapterCount;
 
@@ -333,6 +350,13 @@ public class MangaDigest implements Parcelable {
         @Nullable
         @SerializedName("manga_type")
         private MangaType mType;
+
+        @SerializedName("updated_at")
+        private SimpleDate mUpdatedAt;
+
+        @Nullable
+        @SerializedName("cover_image")
+        private String mCoverImage;
 
         @SerializedName("id")
         private String mId;
@@ -362,6 +386,11 @@ public class MangaDigest implements Parcelable {
         }
 
         @Nullable
+        public Float getBayesianRating() {
+            return mBayesianRating;
+        }
+
+        @Nullable
         public Integer getChapterCount() {
             return mChapterCount;
         }
@@ -369,6 +398,11 @@ public class MangaDigest implements Parcelable {
         @Nullable
         public ArrayList<Integer> getCommunityRatings() {
             return mCommunityRatings;
+        }
+
+        @Nullable
+        public String getCoverImage() {
+            return mCoverImage;
         }
 
         @Nullable
@@ -383,6 +417,14 @@ public class MangaDigest implements Parcelable {
 
         public int getGenresSize() {
             return mGenres == null ? 0 : mGenres.size();
+        }
+
+        public String getGenresString(final Resources res) {
+            if (!hasGenres()) {
+                return "";
+            }
+
+            return TextUtils.join(res.getText(R.string.delimiter), mGenres);
         }
 
         public String getId() {
@@ -431,9 +473,45 @@ public class MangaDigest implements Parcelable {
             return mVolumeCount;
         }
 
+        public boolean hasBayesianRating() {
+            return mBayesianRating != null;
+        }
+
+        public boolean hasChapterCount() {
+            return mChapterCount != null && mChapterCount >= 1;
+        }
+
+        public boolean hasCoverImage() {
+            return MiscUtils.isValidArtwork(mCoverImage);
+        }
+
         @Override
         public int hashCode() {
             return mId.hashCode();
+        }
+
+        public boolean hasGenres() {
+            return mGenres != null && !mGenres.isEmpty();
+        }
+
+        public boolean hasPosterImage() {
+            return MiscUtils.isValidArtwork(mPosterImage);
+        }
+
+        public boolean hasPosterImageThumb() {
+            return MiscUtils.isValidArtwork(mPosterImageThumb);
+        }
+
+        public boolean hasType() {
+            return mType != null;
+        }
+
+        public boolean hasSynopsis() {
+            return !TextUtils.isEmpty(mSynopsis);
+        }
+
+        public boolean hasVolumeCount() {
+            return mVolumeCount != null && mVolumeCount >= 1;
         }
 
         @Override
@@ -450,11 +528,14 @@ public class MangaDigest implements Parcelable {
         public void writeToParcel(final Parcel dest, final int flags) {
             ParcelableUtils.writeIntegerArrayList(mCommunityRatings, dest);
             dest.writeStringList(mGenres);
+            ParcelableUtils.writeFloat(mBayesianRating, dest);
             ParcelableUtils.writeInteger(mChapterCount, dest);
             ParcelableUtils.writeInteger(mCoverImageTopOffset, dest);
             ParcelableUtils.writeInteger(mPendingEdits, dest);
             ParcelableUtils.writeInteger(mVolumeCount, dest);
             dest.writeParcelable(mType, flags);
+            dest.writeParcelable(mUpdatedAt, flags);
+            dest.writeString(mCoverImage);
             dest.writeString(mId);
             dest.writeString(mLibraryEntryId);
             dest.writeString(mPosterImage);
@@ -469,11 +550,14 @@ public class MangaDigest implements Parcelable {
                 final Info i = new Info();
                 i.mCommunityRatings = ParcelableUtils.readIntegerArrayList(source);
                 i.mGenres = source.createStringArrayList();
+                i.mBayesianRating = ParcelableUtils.readFloat(source);
                 i.mChapterCount = ParcelableUtils.readInteger(source);
                 i.mCoverImageTopOffset = ParcelableUtils.readInteger(source);
                 i.mPendingEdits = ParcelableUtils.readInteger(source);
                 i.mVolumeCount = ParcelableUtils.readInteger(source);
                 i.mType = source.readParcelable(MangaType.class.getClassLoader());
+                i.mUpdatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
+                i.mCoverImage = source.readString();
                 i.mId = source.readString();
                 i.mLibraryEntryId = source.readString();
                 i.mPosterImage = source.readString();

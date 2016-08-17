@@ -1,5 +1,6 @@
 package com.charlesmadere.hummingbird.fragments;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -9,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.models.Manga;
+import com.charlesmadere.hummingbird.models.MangaDigest;
 import com.charlesmadere.hummingbird.views.HeadBodyItemView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -63,44 +64,44 @@ public class MangaDetailsFragment extends BaseMangaFragment {
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final Manga manga = getMangaDigest().getManga();
+        final MangaDigest mangaDigest = getMangaDigest();
+        final MangaDigest.Info info = mangaDigest.getInfo();
+        final Context context = getContext();
+        final Resources resources = getResources();
+        final NumberFormat numberFormat = NumberFormat.getInstance();
 
-        if (manga.hasPosterImage()) {
-            mCover.setImageURI(manga.getPosterImage());
+        if (info.hasPosterImage()) {
+            mCover.setImageURI(info.getPosterImage());
             mCoverContainer.setVisibility(View.VISIBLE);
         }
 
-        if (manga.hasType()) {
-            mMangaType.setHead(manga.getType().getTextResId());
+        if (info.hasType()) {
+            mMangaType.setHead(info.getType().getTextResId());
             mMangaType.setVisibility(View.VISIBLE);
         }
 
-        final NumberFormat numberFormat = NumberFormat.getInstance();
-        final Resources resources = getResources();
-
-        if (manga.hasVolumeCount()) {
-            mVolumes.setHead(numberFormat.format(manga.getVolumeCount()));
+        if (info.hasVolumeCount()) {
+            mVolumes.setHead(numberFormat.format(info.getVolumeCount()));
             mVolumes.setBody(resources.getQuantityText(R.plurals.volumes,
-                    manga.getVolumeCount()));
+                    info.getVolumeCount()));
             mVolumes.setVisibility(View.VISIBLE);
         }
 
-        if (manga.hasChapterCount()) {
-            mChapters.setHead(numberFormat.format(manga.getChapterCount()));
+        if (info.hasChapterCount()) {
+            mChapters.setHead(numberFormat.format(info.getChapterCount()));
             mChapters.setBody(resources.getQuantityText(R.plurals.chapters,
-                    manga.getChapterCount()));
+                    info.getChapterCount()));
             mChapters.setVisibility(View.VISIBLE);
         }
 
-        if (manga.hasGenres()) {
-            mGenres.setHead(manga.getGenresString(resources));
-            mGenres.setBody(resources.getQuantityText(R.plurals.genres,
-                    manga.getGenres().size()));
+        if (info.hasGenres()) {
+            mGenres.setHead(info.getGenresString(resources));
+            mGenres.setBody(resources.getQuantityText(R.plurals.genres, info.getGenresSize()));
             mGenres.setVisibility(View.VISIBLE);
         }
 
-        if (manga.hasSynopsis()) {
-            mSynopsis.setText(manga.getSynopsis());
+        if (info.hasSynopsis()) {
+            mSynopsis.setText(info.getSynopsis());
         } else {
             mSynopsis.setText(R.string.no_synopsis_available);
         }

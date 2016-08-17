@@ -65,6 +65,11 @@ public class AnimeDigest implements Parcelable {
     private Info mInfo;
 
 
+    @Override
+    public boolean equals(final Object o) {
+        return o instanceof AnimeDigest && getId().equalsIgnoreCase(((AnimeDigest) o).getId());
+    }
+
     @Nullable
     public ArrayList<Anime> getAnime() {
         return mAnime;
@@ -153,6 +158,11 @@ public class AnimeDigest implements Parcelable {
 
     public boolean hasEpisodes() {
         return mEpisodes != null && !mEpisodes.isEmpty();
+    }
+
+    @Override
+    public int hashCode() {
+        return getId().hashCode();
     }
 
     public boolean hasLibraryEntries() {
@@ -587,7 +597,7 @@ public class AnimeDigest implements Parcelable {
 
         @Nullable
         @SerializedName("show_type")
-        private AnimeType mAnimeType;
+        private AnimeType mType;
 
         @Nullable
         @SerializedName("franchise_ids")
@@ -684,6 +694,11 @@ public class AnimeDigest implements Parcelable {
         @SerializedName("youtube_id")
         private String mYouTubeVideoId;
 
+
+        @Override
+        public boolean equals(final Object o) {
+            return o instanceof Info && mId.equalsIgnoreCase(((Info) o).getId());
+        }
 
         @Nullable
         public AgeRating getAgeRating() {
@@ -851,7 +866,7 @@ public class AnimeDigest implements Parcelable {
 
         @Nullable
         public AnimeType getType() {
-            return mAnimeType;
+            return mType;
         }
 
         @Nullable
@@ -886,7 +901,7 @@ public class AnimeDigest implements Parcelable {
         }
 
         public boolean hasBayesianRating() {
-            return mBayesianRating != null && mBayesianRating != 0f;
+            return mBayesianRating != null;
         }
 
         public boolean hasCoverImage() {
@@ -915,6 +930,11 @@ public class AnimeDigest implements Parcelable {
 
         public boolean hasGenres() {
             return mGenres != null && !mGenres.isEmpty();
+        }
+
+        @Override
+        public int hashCode() {
+            return mId.hashCode();
         }
 
         public boolean hasLanguages() {
@@ -954,7 +974,7 @@ public class AnimeDigest implements Parcelable {
         }
 
         public boolean hasType() {
-            return mAnimeType != null;
+            return mType != null;
         }
 
         public boolean hasUpdatedAt() {
@@ -982,7 +1002,7 @@ public class AnimeDigest implements Parcelable {
         @Override
         public void writeToParcel(final Parcel dest, final int flags) {
             dest.writeParcelable(mAgeRating, flags);
-            dest.writeParcelable(mAnimeType, flags);
+            dest.writeParcelable(mType, flags);
             dest.writeStringList(mFranchiseIds);
             dest.writeStringList(mGenres);
             dest.writeStringList(mLanguages);
@@ -1015,7 +1035,7 @@ public class AnimeDigest implements Parcelable {
             public Info createFromParcel(final Parcel source) {
                 final Info i = new Info();
                 i.mAgeRating = source.readParcelable(AgeRating.class.getClassLoader());
-                i.mAnimeType = source.readParcelable(AnimeType.class.getClassLoader());
+                i.mType = source.readParcelable(AnimeType.class.getClassLoader());
                 i.mFranchiseIds = source.createStringArrayList();
                 i.mGenres = source.createStringArrayList();
                 i.mLanguages = source.createStringArrayList();
