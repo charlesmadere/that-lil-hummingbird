@@ -9,6 +9,7 @@ import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class MangaDigest implements Parcelable {
 
@@ -17,12 +18,12 @@ public class MangaDigest implements Parcelable {
     private ArrayList<Casting> mCastings;
 
     @Nullable
-    @SerializedName("manga")
-    private ArrayList<Manga> mManga;
-
-    @Nullable
     @SerializedName("characters")
     private ArrayList<Character> mCharacters;
+
+    @Nullable
+    @SerializedName("manga")
+    private ArrayList<Manga> mManga;
 
     @Nullable
     @SerializedName("manga_library_entries")
@@ -43,19 +44,24 @@ public class MangaDigest implements Parcelable {
     }
 
     public String getId() {
-        return mManga.getId();
+        return mInfo.getId();
+    }
+
+    public Info getInfo() {
+        return mInfo;
     }
 
     public MangaLibraryEntry getLibraryEntry() {
         return mLibraryEntries.get(0);
     }
 
-    public Manga getManga() {
+    @Nullable
+    public ArrayList<Manga> getManga() {
         return mManga;
     }
 
     public String getTitle() {
-        return mManga.getTitle();
+        return mInfo.getTitle();
     }
 
     public boolean hasCastings() {
@@ -66,20 +72,32 @@ public class MangaDigest implements Parcelable {
         return mCharacters != null && !mCharacters.isEmpty();
     }
 
-    public boolean hasLibraryEntry() {
+    public boolean hasLibraryEntries() {
         return mLibraryEntries != null && !mLibraryEntries.isEmpty();
     }
 
-    public void setLibraryEntry(final MangaLibraryEntry libraryEntry) {
-        if (hasLibraryEntry()) {
-            throw new RuntimeException("MangaLibraryEntry already exists: " + getLibraryEntry());
-        }
+    public boolean hasManga() {
+        return mManga != null && !mManga.isEmpty();
+    }
 
-        if (mLibraryEntries == null) {
-            mLibraryEntries = new ArrayList<>(1);
-        }
+    public void hydrate() {
+        if (hasLibraryEntries()) {
+            final Iterator<MangaLibraryEntry> iterator = mLibraryEntries.iterator();
 
-        mLibraryEntries.add(libraryEntry);
+            do {
+                final MangaLibraryEntry libraryEntry = iterator.next();
+
+                if (!libraryEntry.hydrate(this)) {
+                    iterator.remove();
+                }
+            } while (iterator.hasNext());
+
+            if (mLibraryEntries.isEmpty()) {
+                mLibraryEntries = null;
+            }
+        } else {
+            mLibraryEntries = null;
+        }
     }
 
     @Override
@@ -96,8 +114,9 @@ public class MangaDigest implements Parcelable {
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeTypedList(mCastings);
         dest.writeTypedList(mCharacters);
+        dest.writeTypedList(mManga);
         dest.writeTypedList(mLibraryEntries);
-        dest.writeParcelable(mManga, flags);
+        dest.writeParcelable(mInfo, flags);
     }
 
     public static final Creator<MangaDigest> CREATOR = new Creator<MangaDigest>() {
@@ -106,8 +125,9 @@ public class MangaDigest implements Parcelable {
             final MangaDigest md = new MangaDigest();
             md.mCastings = source.createTypedArrayList(Casting.CREATOR);
             md.mCharacters = source.createTypedArrayList(Character.CREATOR);
+            md.mManga = source.createTypedArrayList(Manga.CREATOR);
             md.mLibraryEntries = source.createTypedArrayList(MangaLibraryEntry.CREATOR);
-            md.mManga = source.readParcelable(Manga.class.getClassLoader());
+            md.mInfo = source.readParcelable(Info.class.getClassLoader());
             return md;
         }
 
@@ -318,7 +338,7 @@ public class MangaDigest implements Parcelable {
         private String mId;
 
         @SerializedName("manga_library_entry_id")
-        private String mMangaLibraryEntryId;
+        private String mLibraryEntryId;
 
         @Nullable
         @SerializedName("poster_image")
@@ -337,6 +357,87 @@ public class MangaDigest implements Parcelable {
 
 
         @Override
+        public boolean equals(final Object o) {
+            return o instanceof Info && mId.equalsIgnoreCase(((Info) o).getId());
+        }
+
+        @Nullable
+        public Integer getChapterCount() {
+            return mChapterCount;
+        }
+
+        @Nullable
+        public ArrayList<Integer> getCommunityRatings() {
+            return mCommunityRatings;
+        }
+
+        @Nullable
+        public Integer getCoverImageTopOffset() {
+            return mCoverImageTopOffset;
+        }
+
+        @Nullable
+        public ArrayList<String> getGenres() {
+            return mGenres;
+        }
+
+        public String getId() {
+            return mId;
+        }
+
+        public String getLibraryEntryId() {
+            return mLibraryEntryId;
+        }
+
+        @Nullable
+        public Integer getPendingEdits() {
+            return mPendingEdits;
+        }
+
+        @Nullable
+        public String getPosterImage() {
+            return mPosterImage;
+        }
+
+        @Nullable
+        public String getPosterImageThumb() {
+            return mPosterImageThumb;
+        }
+
+        public String getRomajiTitle() {
+            return mRomajiTitle;
+        }
+
+        @Nullable
+        public String getSynopsis() {
+            return mSynopsis;
+        }
+
+        public String getTitle() {
+            return getRomajiTitle();
+        }
+
+        @Nullable
+        public MangaType getType() {
+            return mType;
+        }
+
+        @Nullable
+        public Integer getVolumeCount() {
+            return mVolumeCount;
+        }
+
+        @Override
+        public int hashCode() {
+            return mId.hashCode();
+        }
+
+        @Override
+        public String toString() {
+            return getTitle();
+        }
+
+        @Override
         public int describeContents() {
             return 0;
         }
@@ -344,6 +445,18 @@ public class MangaDigest implements Parcelable {
         @Override
         public void writeToParcel(final Parcel dest, final int flags) {
             ParcelableUtils.writeIntegerArrayList(mCommunityRatings, dest);
+            dest.writeStringList(mGenres);
+            ParcelableUtils.writeInteger(mChapterCount, dest);
+            ParcelableUtils.writeInteger(mCoverImageTopOffset, dest);
+            ParcelableUtils.writeInteger(mPendingEdits, dest);
+            ParcelableUtils.writeInteger(mVolumeCount, dest);
+            dest.writeParcelable(mType, flags);
+            dest.writeString(mId);
+            dest.writeString(mLibraryEntryId);
+            dest.writeString(mPosterImage);
+            dest.writeString(mPosterImageThumb);
+            dest.writeString(mRomajiTitle);
+            dest.writeString(mSynopsis);
         }
 
         public static final Creator<Info> CREATOR = new Creator<Info>() {
@@ -351,6 +464,18 @@ public class MangaDigest implements Parcelable {
             public Info createFromParcel(final Parcel source) {
                 final Info i = new Info();
                 i.mCommunityRatings = ParcelableUtils.readIntegerArrayList(source);
+                i.mGenres = source.createStringArrayList();
+                i.mChapterCount = ParcelableUtils.readInteger(source);
+                i.mCoverImageTopOffset = ParcelableUtils.readInteger(source);
+                i.mPendingEdits = ParcelableUtils.readInteger(source);
+                i.mVolumeCount = ParcelableUtils.readInteger(source);
+                i.mType = source.readParcelable(MangaType.class.getClassLoader());
+                i.mId = source.readString();
+                i.mLibraryEntryId = source.readString();
+                i.mPosterImage = source.readString();
+                i.mPosterImageThumb = source.readString();
+                i.mRomajiTitle = source.readString();
+                i.mSynopsis = source.readString();
                 return i;
             }
 

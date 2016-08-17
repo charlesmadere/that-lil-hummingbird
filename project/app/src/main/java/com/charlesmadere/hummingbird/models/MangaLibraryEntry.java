@@ -122,6 +122,21 @@ public class MangaLibraryEntry implements Parcelable {
         }
     }
 
+    public boolean hydrate(final MangaDigest digest) {
+        if (!digest.hasManga()) {
+            return false;
+        }
+
+        for (final Manga manga : digest.getManga()) {
+            if (mMangaId.equalsIgnoreCase(manga.getId())) {
+                mManga = manga;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public boolean isFavorite() {
         return mIsFavorite;
     }

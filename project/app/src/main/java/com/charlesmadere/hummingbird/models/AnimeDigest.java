@@ -30,6 +30,10 @@ public class AnimeDigest implements Parcelable {
     private ArrayList<AnimeLibraryEntry> mLibraryEntries;
 
     @Nullable
+    @SerializedName("reviews")
+    private ArrayList<AnimeReview> mReviews;
+
+    @Nullable
     @SerializedName("castings")
     private ArrayList<Casting> mCastings;
 
@@ -52,10 +56,6 @@ public class AnimeDigest implements Parcelable {
     @Nullable
     @SerializedName("quotes")
     private ArrayList<Quote> mQuotes;
-
-    @Nullable
-    @SerializedName("reviews")
-    private ArrayList<AnimeReview> mReviews;
 
     @Nullable
     @SerializedName("users")
@@ -254,13 +254,14 @@ public class AnimeDigest implements Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeTypedList(mAnime);
+        dest.writeTypedList(mLibraryEntries);
+        dest.writeTypedList(mReviews);
         dest.writeTypedList(mCastings);
         dest.writeTypedList(mCharacters);
         dest.writeTypedList(mEpisodes);
         dest.writeTypedList(mPeople);
         dest.writeTypedList(mProducers);
         dest.writeTypedList(mQuotes);
-        dest.writeTypedList(mReviews);
         dest.writeTypedList(mUsers);
         dest.writeParcelable(mInfo, flags);
     }
@@ -271,13 +272,13 @@ public class AnimeDigest implements Parcelable {
             final AnimeDigest ad = new AnimeDigest();
             ad.mAnime = source.createTypedArrayList(Anime.CREATOR);
             ad.mLibraryEntries = source.createTypedArrayList(AnimeLibraryEntry.CREATOR);
+            ad.mReviews = source.createTypedArrayList(AnimeReview.CREATOR);
             ad.mCastings = source.createTypedArrayList(Casting.CREATOR);
             ad.mCharacters = source.createTypedArrayList(Character.CREATOR);
             ad.mEpisodes = source.createTypedArrayList(Episode.CREATOR);
             ad.mPeople = source.createTypedArrayList(Person.CREATOR);
             ad.mProducers = source.createTypedArrayList(Producer.CREATOR);
             ad.mQuotes = source.createTypedArrayList(Quote.CREATOR);
-            ad.mReviews = source.createTypedArrayList(AnimeReview.CREATOR);
             ad.mUsers = source.createTypedArrayList(User.CREATOR);
             ad.mInfo = source.readParcelable(Info.class.getClassLoader());
             return ad;

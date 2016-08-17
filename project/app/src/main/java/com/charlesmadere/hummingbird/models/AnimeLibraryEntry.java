@@ -110,7 +110,18 @@ public class AnimeLibraryEntry implements Parcelable {
     }
 
     public boolean hydrate(final AnimeDigest digest) {
-        mAnime = digest.getAnime();
+        if (!digest.hasAnime()) {
+            return false;
+        }
+
+        for (final Anime anime : digest.getAnime()) {
+            if (mAnimeId.equalsIgnoreCase(anime.getId())) {
+                mAnime = anime;
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void hydrate(final Feed feed) {
