@@ -48,12 +48,14 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
         final ViewGroup.LayoutParams vglp = view.getLayoutParams();
 
         if (vglp instanceof CoordinatorLayout.LayoutParams) {
-            final CoordinatorLayout.LayoutParams cllp = (CoordinatorLayout.LayoutParams)
-                    view.getLayoutParams();
-            final BottomSheetBehavior behavior = BottomSheetBehavior.from(view);
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            cllp.setBehavior(behavior);
-            view.setLayoutParams(cllp);
+            final CoordinatorLayout.LayoutParams cllp = (CoordinatorLayout.LayoutParams) vglp;
+
+            if (cllp.getBehavior() instanceof BottomSheetBehavior) {
+                final BottomSheetBehavior behavior = BottomSheetBehavior.from(view);
+                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                cllp.setBehavior(behavior);
+                view.setLayoutParams(cllp);
+            }
         }
     }
 
@@ -95,12 +97,14 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Dialog dialog = super.onCreateDialog(savedInstanceState);
 
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(final DialogInterface dialog) {
-                autoExpand();
-            }
-        });
+        if (shouldAutoExpand()) {
+            dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(final DialogInterface dialog) {
+                    autoExpand();
+                }
+            });
+        }
 
         return dialog;
     }
@@ -122,6 +126,10 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
         super.onViewCreated(view, savedInstanceState);
         mUnbinder = ButterKnife.bind(this, view);
         mIsDestroyed = false;
+    }
+
+    protected boolean shouldAutoExpand() {
+        return false;
     }
 
 }

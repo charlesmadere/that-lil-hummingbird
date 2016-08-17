@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -51,6 +52,9 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
 
     @BindView(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout mCollapsingToolbarLayout;
+
+    @BindView(R.id.floatingActionButton)
+    FloatingActionButton mPostToFeed;
 
     @BindView(R.id.parallaxCoverImage)
     SimpleDraweeView mCoverImage;

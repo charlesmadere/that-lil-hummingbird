@@ -46,13 +46,13 @@ public class MediaStory extends AbsStory implements Parcelable {
     @Override
     protected void readFromParcel(final Parcel source) {
         super.readFromParcel(source);
-        mMedia = ParcelableUtils.readMediaStoryAbsMediaFromParcel(source);
+        mMedia = ParcelableUtils.readMediaStoryAbsMedia(source);
     }
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         super.writeToParcel(dest, flags);
-        ParcelableUtils.writeMediaStoryAbsMediaToParcel(mMedia, dest, flags);
+        ParcelableUtils.writeMediaStoryAbsMedia(mMedia, dest, flags);
     }
 
     public static final Creator<MediaStory> CREATOR = new Creator<MediaStory>() {

@@ -92,6 +92,8 @@ public abstract class BaseLibraryFragment extends BaseFragment implements Object
         final Bundle args = getArguments();
         mUsername = args.getString(KEY_USERNAME);
         mEditableLibrary = args.getBoolean(KEY_EDITABLE_LIBRARY);
+
+        mFeed = ObjectCache.get(this);
     }
 
     @Override
@@ -116,8 +118,6 @@ public abstract class BaseLibraryFragment extends BaseFragment implements Object
         mRecyclerView.setHasFixedSize(true);
         SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
-
-        mFeed = ObjectCache.get(this);
     }
 
     @Override

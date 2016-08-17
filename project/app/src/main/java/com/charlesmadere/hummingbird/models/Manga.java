@@ -33,7 +33,7 @@ public class Manga implements Parcelable {
 
     @Nullable
     @SerializedName("manga_type")
-    private MangaType mMangaType;
+    private MangaType mType;
 
     @SerializedName("updated_at")
     private SimpleDate mUpdatedAt;
@@ -44,10 +44,6 @@ public class Manga implements Parcelable {
 
     @SerializedName("id")
     private String mId;
-
-    @Nullable
-    @SerializedName("manga_library_entry_id")
-    private String mLibraryEntryId;
 
     @Nullable
     @SerializedName("poster_image")
@@ -107,11 +103,6 @@ public class Manga implements Parcelable {
     }
 
     @Nullable
-    public String getLibraryEntryId() {
-        return mLibraryEntryId;
-    }
-
-    @Nullable
     public String getPosterImage() {
         return mPosterImage;
     }
@@ -136,7 +127,7 @@ public class Manga implements Parcelable {
 
     @Nullable
     public MangaType getType() {
-        return mMangaType;
+        return mType;
     }
 
     public SimpleDate getUpdatedAt() {
@@ -157,7 +148,7 @@ public class Manga implements Parcelable {
     }
 
     public boolean hasCoverImageTopOffset() {
-        return mCoverImageTopOffset != null && mCoverImageTopOffset >= 1;
+        return mCoverImageTopOffset != null;
     }
 
     @Override
@@ -167,10 +158,6 @@ public class Manga implements Parcelable {
 
     public boolean hasGenres() {
         return mGenres != null && !mGenres.isEmpty();
-    }
-
-    public boolean hasLibraryEntryId() {
-        return !TextUtils.isEmpty(mLibraryEntryId);
     }
 
     public boolean hasPosterImage() {
@@ -186,7 +173,7 @@ public class Manga implements Parcelable {
     }
 
     public boolean hasType() {
-        return mMangaType != null;
+        return mType != null;
     }
 
     public boolean hasVolumeCount() {
@@ -209,11 +196,10 @@ public class Manga implements Parcelable {
         ParcelableUtils.writeInteger(mChapterCount, dest);
         ParcelableUtils.writeInteger(mCoverImageTopOffset, dest);
         ParcelableUtils.writeInteger(mVolumeCount, dest);
-        dest.writeParcelable(mMangaType, flags);
+        dest.writeParcelable(mType, flags);
         dest.writeParcelable(mUpdatedAt, flags);
         dest.writeString(mCoverImage);
         dest.writeString(mId);
-        dest.writeString(mLibraryEntryId);
         dest.writeString(mPosterImage);
         dest.writeString(mPosterImageThumb);
         dest.writeString(mRomajiTitle);
@@ -228,11 +214,10 @@ public class Manga implements Parcelable {
             m.mChapterCount = ParcelableUtils.readInteger(source);
             m.mCoverImageTopOffset = ParcelableUtils.readInteger(source);
             m.mVolumeCount = ParcelableUtils.readInteger(source);
-            m.mMangaType = source.readParcelable(MangaType.class.getClassLoader());
+            m.mType = source.readParcelable(MangaType.class.getClassLoader());
             m.mUpdatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
             m.mCoverImage = source.readString();
             m.mId = source.readString();
-            m.mLibraryEntryId = source.readString();
             m.mPosterImage = source.readString();
             m.mPosterImageThumb = source.readString();
             m.mRomajiTitle = source.readString();

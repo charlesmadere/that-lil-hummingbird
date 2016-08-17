@@ -68,6 +68,13 @@ public class AnimeFranchiseFragment extends BaseAnimeFragment implements ObjectC
     }
 
     @Override
+    public void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mFranchise = ObjectCache.get(this);
+    }
+
+    @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);

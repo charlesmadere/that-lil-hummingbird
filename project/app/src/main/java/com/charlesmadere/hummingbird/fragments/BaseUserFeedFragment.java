@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,13 +49,6 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
     @BindView(R.id.refreshLayout)
     protected RefreshLayout mRefreshLayout;
 
-
-    private void feedPostFailure() {
-        new AlertDialog.Builder(getContext())
-                .setMessage(R.string.error_posting_to_feed)
-                .setNeutralButton(R.string.ok, null)
-                .show();
-    }
 
     public void fetchFeed() {
         mFetchingFeed = true;
@@ -103,6 +95,13 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
     }
 
     @Override
+    public void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mFeed = ObjectCache.get(this);
+    }
+
+    @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -133,8 +132,6 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
         mAdapter = new FeedAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
-
-        mFeed = ObjectCache.get(this);
 
         if (mFeed == null) {
             fetchFeed();
@@ -174,11 +171,11 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
 
     protected void showFeed(final Feed feed) {
         mFeed = feed;
-        mAdapter.set(feed);
+        mAdapter.set(mFeed);
         mEmpty.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
-        mPaginator.setEnabled(feed.hasCursor());
+        mPaginator.setEnabled(mFeed.hasCursor());
         mRefreshLayout.setRefreshing(false);
         mFetchingFeed = false;
         mListener.onFeedFinishedLoading();

@@ -24,7 +24,7 @@ import java.util.List;
 public final class ParcelableUtils {
 
     @Nullable
-    public static <T extends AbsNotification> T readAbsNotificationFromParcel(final Parcel source) {
+    public static <T extends AbsNotification> T readAbsNotification(final Parcel source) {
         final AbsNotification.Type type = source.readParcelable(
                 AbsNotification.Type.class.getClassLoader());
 
@@ -52,7 +52,7 @@ public final class ParcelableUtils {
     }
 
     @Nullable
-    public static ArrayList<AbsNotification> readAbsNotificationListFromParcel(final Parcel source) {
+    public static ArrayList<AbsNotification> readAbsNotificationList(final Parcel source) {
         final int count = source.readInt();
 
         if (count == 0) {
@@ -62,13 +62,13 @@ public final class ParcelableUtils {
         final ArrayList<AbsNotification> list = new ArrayList<>(count);
 
         for (int i = 0; i < count; ++i) {
-            list.add(readAbsNotificationFromParcel(source));
+            list.add(readAbsNotification(source));
         }
 
         return list;
     }
 
-    public static void writeAbsNotificationToParcel(@Nullable final AbsNotification notification,
+    public static void writeAbsNotification(@Nullable final AbsNotification notification,
             final Parcel dest, final int flags) {
         if (notification == null) {
             dest.writeParcelable(null, flags);
@@ -78,7 +78,7 @@ public final class ParcelableUtils {
         }
     }
 
-    public static void writeAbsNotificationListToParcel(@Nullable final List<AbsNotification> list,
+    public static void writeAbsNotificationList(@Nullable final List<AbsNotification> list,
             final Parcel dest, final int flags) {
         if (list == null || list.isEmpty()) {
             dest.writeInt(0);
@@ -88,12 +88,12 @@ public final class ParcelableUtils {
         dest.writeInt(list.size());
 
         for (final AbsNotification notification : list) {
-            writeAbsNotificationToParcel(notification, dest, flags);
+            writeAbsNotification(notification, dest, flags);
         }
     }
 
     @Nullable
-    public static <T extends AbsNotification.AbsSource> T readAbsNotificationAbsSourceFromParcel(
+    public static <T extends AbsNotification.AbsSource> T readAbsNotificationAbsSource(
             final Parcel source) {
         final AbsNotification.AbsSource.Type type = source.readParcelable(
                 AbsNotification.AbsSource.Type.class.getClassLoader());
@@ -121,7 +121,7 @@ public final class ParcelableUtils {
         return absSource;
     }
 
-    public static ArrayList<AbsNotification.AbsSource> readAbsNotificationAbsSourceListFromParcel(
+    public static ArrayList<AbsNotification.AbsSource> readAbsNotificationAbsSourceList(
             final Parcel source) {
         final int count = source.readInt();
 
@@ -132,13 +132,13 @@ public final class ParcelableUtils {
         final ArrayList<AbsNotification.AbsSource> list = new ArrayList<>(count);
 
         for (int i = 0; i < count; ++i) {
-            list.add(readAbsNotificationAbsSourceFromParcel(source));
+            list.add(readAbsNotificationAbsSource(source));
         }
 
         return list;
     }
 
-    public static void writeAbsNotificationAbsSourceToParcel(
+    public static void writeAbsNotificationAbsSource(
             @Nullable final AbsNotification.AbsSource source, final Parcel dest, final int flags) {
         if (source == null) {
             dest.writeParcelable(null, flags);
@@ -148,7 +148,7 @@ public final class ParcelableUtils {
         }
     }
 
-    public static void writeAbsNotificationAbsSourceListToParcel(
+    public static void writeAbsNotificationAbsSourceList(
             @Nullable final List<AbsNotification.AbsSource> list, final Parcel dest,
             final int flags) {
         if (list == null || list.isEmpty()) {
@@ -159,12 +159,12 @@ public final class ParcelableUtils {
         dest.writeInt(list.size());
 
         for (final AbsNotification.AbsSource source : list) {
-            writeAbsNotificationAbsSourceToParcel(source, dest, flags);
+            writeAbsNotificationAbsSource(source, dest, flags);
         }
     }
 
     @Nullable
-    public static <T extends AbsStory> T readAbsStoryFromParcel(final Parcel source) {
+    public static <T extends AbsStory> T readAbsStory(final Parcel source) {
         final AbsStory.Type type = source.readParcelable(AbsStory.Type.class.getClassLoader());
 
         if (type == null) {
@@ -195,7 +195,7 @@ public final class ParcelableUtils {
     }
 
     @Nullable
-    public static ArrayList<AbsStory> readAbsStoryListFromParcel(final Parcel source) {
+    public static ArrayList<AbsStory> readAbsStoryList(final Parcel source) {
         final int count = source.readInt();
 
         if (count == 0) {
@@ -205,13 +205,13 @@ public final class ParcelableUtils {
         final ArrayList<AbsStory> list = new ArrayList<>(count);
 
         for (int i = 0; i < count; ++i) {
-            list.add(readAbsStoryFromParcel(source));
+            list.add(readAbsStory(source));
         }
 
         return list;
     }
 
-    public static void writeAbsStoryToParcel(@Nullable final AbsStory story, final Parcel dest,
+    public static void writeAbsStory(@Nullable final AbsStory story, final Parcel dest,
             final int flags) {
         if (story == null) {
             dest.writeParcelable(null, flags);
@@ -221,8 +221,8 @@ public final class ParcelableUtils {
         }
     }
 
-    public static void writeAbsStoryListToParcel(@Nullable final List<AbsStory> list,
-            final Parcel dest, final int flags) {
+    public static void writeAbsStoryList(@Nullable final List<AbsStory> list, final Parcel dest,
+            final int flags) {
         if (list == null || list.isEmpty()) {
             dest.writeInt(0);
             return;
@@ -231,12 +231,12 @@ public final class ParcelableUtils {
         dest.writeInt(list.size());
 
         for (final AbsStory story : list) {
-            writeAbsStoryToParcel(story, dest, flags);
+            writeAbsStory(story, dest, flags);
         }
     }
 
     @Nullable
-    public static <T extends AbsSubstory> T readAbsSubstoryFromParcel(final Parcel source) {
+    public static <T extends AbsSubstory> T readAbsSubstory(final Parcel source) {
         final AbsSubstory.Type type = source.readParcelable(AbsSubstory.Type.class.getClassLoader());
 
         if (type == null) {
@@ -271,7 +271,7 @@ public final class ParcelableUtils {
     }
 
     @Nullable
-    public static ArrayList<AbsSubstory> readAbsSubstoryListFromParcel(final Parcel source) {
+    public static ArrayList<AbsSubstory> readAbsSubstoryList(final Parcel source) {
         final int count = source.readInt();
 
         if (count == 0) {
@@ -281,14 +281,14 @@ public final class ParcelableUtils {
         final ArrayList<AbsSubstory> list = new ArrayList<>(count);
 
         for (int i = 0; i < count; ++i) {
-            list.add(readAbsSubstoryFromParcel(source));
+            list.add(readAbsSubstory(source));
         }
 
         return list;
     }
 
-    public static void writeAbsSubstoryToParcel(@Nullable final AbsSubstory substory,
-            final Parcel dest, final int flags) {
+    public static void writeAbsSubstory(@Nullable final AbsSubstory substory, final Parcel dest,
+            final int flags) {
         if (substory == null) {
             dest.writeParcelable(null, flags);
         } else {
@@ -297,7 +297,7 @@ public final class ParcelableUtils {
         }
     }
 
-    public static void writeAbsSubstoryListToParcel(@Nullable final List<AbsSubstory> list,
+    public static void writeAbsSubstoryList(@Nullable final List<AbsSubstory> list,
             final Parcel dest, final int flags) {
         if (list == null || list.isEmpty()) {
             dest.writeInt(0);
@@ -307,7 +307,7 @@ public final class ParcelableUtils {
         dest.writeInt(list.size());
 
         for (final AbsSubstory substory : list) {
-            writeAbsSubstoryToParcel(substory, dest, flags);
+            writeAbsSubstory(substory, dest, flags);
         }
     }
 
@@ -345,6 +345,37 @@ public final class ParcelableUtils {
         }
     }
 
+    @Nullable
+    public static ArrayList<Integer> readIntegerArrayList(final Parcel source) {
+        final int count = source.readInt();
+
+        if (count == 0) {
+            return null;
+        }
+
+        final ArrayList<Integer> list = new ArrayList<>(count);
+
+        for (int i = 0; i < count; ++i) {
+            list.add(readInteger(source));
+        }
+
+        return list;
+    }
+
+    public static void writeIntegerArrayList(@Nullable final ArrayList<Integer> list,
+            final Parcel dest) {
+        if (list == null || list.isEmpty()) {
+            dest.writeInt(0);
+            return;
+        }
+
+        dest.writeInt(list.size());
+
+        for (final Integer integer : list) {
+            writeInteger(integer, dest);
+        }
+    }
+
     public static void writeFloat(@Nullable final Float f, final Parcel dest) {
         dest.writeString(f == null ? null : f.toString());
     }
@@ -365,8 +396,7 @@ public final class ParcelableUtils {
     }
 
     @Nullable
-    public static <T extends MediaStory.AbsMedia> T readMediaStoryAbsMediaFromParcel(
-            final Parcel source) {
+    public static <T extends MediaStory.AbsMedia> T readMediaStoryAbsMedia(final Parcel source) {
         final MediaStory.AbsMedia.Type type = source.readParcelable(
                 MediaStory.AbsMedia.Type.class.getClassLoader());
 
@@ -394,8 +424,7 @@ public final class ParcelableUtils {
     }
 
     @Nullable
-    public static ArrayList<MediaStory.AbsMedia> readMediaStoryAbsMediaListFromParcel(
-            final Parcel source) {
+    public static ArrayList<MediaStory.AbsMedia> readMediaStoryAbsMediaList(final Parcel source) {
         final int count = source.readInt();
 
         if (count == 0) {
@@ -405,13 +434,13 @@ public final class ParcelableUtils {
         final ArrayList<MediaStory.AbsMedia> list = new ArrayList<>(count);
 
         for (int i = 0; i < count; ++i) {
-            list.add(readMediaStoryAbsMediaFromParcel(source));
+            list.add(readMediaStoryAbsMedia(source));
         }
 
         return list;
     }
 
-    public static void writeMediaStoryAbsMediaToParcel(@Nullable final MediaStory.AbsMedia media,
+    public static void writeMediaStoryAbsMedia(@Nullable final MediaStory.AbsMedia media,
             final Parcel dest, final int flags) {
         if (media == null) {
             dest.writeParcelable(null, flags);
@@ -421,8 +450,8 @@ public final class ParcelableUtils {
         }
     }
 
-    public static void writeMediaStoryAbsMediaListToParcel(
-            @Nullable final List<MediaStory.AbsMedia> list, final Parcel dest, final int flags) {
+    public static void writeMediaStoryAbsMediaList(@Nullable final List<MediaStory.AbsMedia> list,
+            final Parcel dest, final int flags) {
         if (list == null || list.isEmpty()) {
             dest.writeInt(0);
             return;
@@ -431,12 +460,12 @@ public final class ParcelableUtils {
         dest.writeInt(list.size());
 
         for (final MediaStory.AbsMedia media : list) {
-            writeMediaStoryAbsMediaToParcel(media, dest, flags);
+            writeMediaStoryAbsMedia(media, dest, flags);
         }
     }
 
     @Nullable
-    public static <T extends SearchBundle.AbsResult> T readSearchBundleAbsResultFromParcel(
+    public static <T extends SearchBundle.AbsResult> T readSearchBundleAbsResult(
             final Parcel source) {
         final SearchBundle.AbsResult.Type type = source.readParcelable(
                 SearchBundle.AbsResult.Type.class.getClassLoader());
@@ -473,7 +502,7 @@ public final class ParcelableUtils {
     }
 
     @Nullable
-    public static ArrayList<SearchBundle.AbsResult> readSearchBundleAbsResultListFromParcel(
+    public static ArrayList<SearchBundle.AbsResult> readSearchBundleAbsResultList(
             final Parcel source) {
         final int count = source.readInt();
 
@@ -484,14 +513,14 @@ public final class ParcelableUtils {
         final ArrayList<SearchBundle.AbsResult> list = new ArrayList<>(count);
 
         for (int i = 0; i < count; ++i) {
-            list.add(readSearchBundleAbsResultFromParcel(source));
+            list.add(readSearchBundleAbsResult(source));
         }
 
         return list;
     }
 
-    public static void writeSearchBundleAbsResultToParcel(
-            @Nullable final SearchBundle.AbsResult result, final Parcel dest, final int flags) {
+    public static void writeSearchBundleAbsResult(@Nullable final SearchBundle.AbsResult result,
+            final Parcel dest, final int flags) {
         if (result == null) {
             dest.writeParcelable(null, flags);
         } else {
@@ -500,7 +529,7 @@ public final class ParcelableUtils {
         }
     }
 
-    public static void writeSearchBundleAbsResultListToParcel(
+    public static void writeSearchBundleAbsResultList(
             @Nullable final List<SearchBundle.AbsResult> list, final Parcel dest, final int flags) {
         if (list == null || list.isEmpty()) {
             dest.writeInt(0);
@@ -510,12 +539,12 @@ public final class ParcelableUtils {
         dest.writeInt(list.size());
 
         for (final SearchBundle.AbsResult result : list) {
-            writeSearchBundleAbsResultToParcel(result, dest, flags);
+            writeSearchBundleAbsResult(result, dest, flags);
         }
     }
 
     @Nullable
-    public static <T extends UserDigest.Favorite.AbsItem> T readUserDigestFavoriteAbsItemFromParcel(
+    public static <T extends UserDigest.Favorite.AbsItem> T readUserDigestFavoriteAbsItem(
             final Parcel source) {
         final UserDigest.Favorite.AbsItem.Type type = source.readParcelable(
                 UserDigest.Favorite.AbsItem.Type.class.getClassLoader());
@@ -544,7 +573,7 @@ public final class ParcelableUtils {
     }
 
     @Nullable
-    public static ArrayList<UserDigest.Favorite.AbsItem> readUserDigestFavoriteAbsItemListFromParcel(
+    public static ArrayList<UserDigest.Favorite.AbsItem> readUserDigestFavoriteAbsItemList(
             final Parcel source) {
         final int count = source.readInt();
 
@@ -555,7 +584,7 @@ public final class ParcelableUtils {
         final ArrayList<UserDigest.Favorite.AbsItem> list = new ArrayList<>(count);
 
         for (int i = 0; i < count; ++i) {
-            list.add(readUserDigestFavoriteAbsItemFromParcel(source));
+            list.add(readUserDigestFavoriteAbsItem(source));
         }
 
         return list;
@@ -571,7 +600,7 @@ public final class ParcelableUtils {
         }
     }
 
-    public static void writeUserDigestFavoriteAbsItemListToParcel(
+    public static void writeUserDigestFavoriteAbsItemList(
             @Nullable final List<UserDigest.Favorite.AbsItem> list, final Parcel dest,
             final int flags) {
         if (list == null || list.isEmpty()) {

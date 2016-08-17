@@ -27,6 +27,7 @@ import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Manga;
 import com.charlesmadere.hummingbird.models.MangaDigest;
 import com.charlesmadere.hummingbird.models.MangaLibraryUpdate;
+import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.SimpleProgressView;
@@ -37,7 +38,7 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 
 public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragment.Listener,
-        MangaLibraryUpdateFragment.UpdateListener, ObjectCache.KeyProvider {
+        MangaLibraryUpdateFragment.Listener, ObjectCache.KeyProvider, PaletteUtils.Listener {
 
     private static final String TAG = "MangaActivity";
     private static final String CNAME = MangaActivity.class.getCanonicalName();
@@ -46,6 +47,7 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
 
     private MangaDigest mMangaDigest;
     private String mMangaId;
+    private UiColorSet mUiColorSet;
 
     @BindView(R.id.appBarLayout)
     AppBarLayout mAppBarLayout;
@@ -93,6 +95,10 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
         Toast.makeText(this, R.string.added_to_library, Toast.LENGTH_LONG).show();
     }
 
+    private void editInLibrary() {
+        // TODO
+    }
+
     private void fetchMangaDigest() {
         mSimpleProgressView.fadeIn();
         Api.getMangaDigest(mMangaId, new GetMangaDigestListener(this));
@@ -111,6 +117,12 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
     @Override
     public String[] getObjectCacheKeys() {
         return new String[] { getActivityName(), mMangaId };
+    }
+
+    @Nullable
+    @Override
+    public UiColorSet getUiColorSet() {
+        return mUiColorSet;
     }
 
     @Override
@@ -153,6 +165,10 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
                         MangaLibraryUpdateFragment.TAG);
                 return true;
 
+            case R.id.miEditInLibrary:
+                editInLibrary();
+                return true;
+
             case R.id.miShare:
                 ShareUtils.shareManga(this, mMangaDigest);
                 return true;
@@ -166,7 +182,9 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
         if (mMangaDigest != null) {
             menu.findItem(R.id.miShare).setVisible(true);
 
-            if (!mMangaDigest.hasLibraryEntry()) {
+            if (mMangaDigest.hasLibraryEntry()) {
+                menu.findItem(R.id.miEditInLibrary).setVisible(true);
+            } else {
                 menu.findItem(R.id.miAddToLibrary).setVisible(true);
             }
         }
@@ -181,6 +199,11 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
         if (mMangaDigest != null) {
             ObjectCache.put(mMangaDigest, this);
         }
+    }
+
+    @Override
+    public void onUiColorsBuilt(final UiColorSet uiColorSet) {
+        mUiColorSet = uiColorSet;
     }
 
     @Override
@@ -232,7 +255,7 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
         }
 
         if (mangaDigest.getManga().hasCoverImage()) {
-            PaletteUtils.applyParallaxColors(mangaDigest.getManga().getCoverImage(), this,
+            PaletteUtils.applyParallaxColors(mangaDigest.getManga().getCoverImage(), this, this,
                     mCoverImage, mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
         }
 

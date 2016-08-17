@@ -22,6 +22,14 @@ import java.util.Iterator;
 public class AnimeDigest implements Parcelable {
 
     @Nullable
+    @SerializedName("anime")
+    private ArrayList<Anime> mAnime;
+
+    @Nullable
+    @SerializedName("library_entries")
+    private ArrayList<AnimeLibraryEntry> mLibraryEntries;
+
+    @Nullable
     @SerializedName("castings")
     private ArrayList<Casting> mCastings;
 
@@ -58,6 +66,11 @@ public class AnimeDigest implements Parcelable {
 
 
     @Nullable
+    public ArrayList<Anime> getAnime() {
+        return mAnime;
+    }
+
+    @Nullable
     public ArrayList<Casting> getCastings() {
         return mCastings;
     }
@@ -78,6 +91,11 @@ public class AnimeDigest implements Parcelable {
 
     public Info getInfo() {
         return mInfo;
+    }
+
+    @Nullable
+    public ArrayList<AnimeLibraryEntry> getLibraryEntries() {
+        return mLibraryEntries;
     }
 
     @Nullable
@@ -121,6 +139,10 @@ public class AnimeDigest implements Parcelable {
         return mUsers;
     }
 
+    protected boolean hasAnime() {
+        return mAnime != null && !mAnime.isEmpty();
+    }
+
     public boolean hasCastings() {
         return mCastings != null && !mCastings.isEmpty();
     }
@@ -131,6 +153,10 @@ public class AnimeDigest implements Parcelable {
 
     public boolean hasEpisodes() {
         return mEpisodes != null && !mEpisodes.isEmpty();
+    }
+
+    public boolean hasLibraryEntries() {
+        return mLibraryEntries != null && !mLibraryEntries.isEmpty();
     }
 
     public boolean hasPeople() {
@@ -174,6 +200,26 @@ public class AnimeDigest implements Parcelable {
 
         if (hasEpisodes()) {
             Collections.sort(mEpisodes, Episode.COMPARATOR);
+        } else {
+            mEpisodes = null;
+        }
+
+        if (hasLibraryEntries()) {
+            final Iterator<AnimeLibraryEntry> iterator = mLibraryEntries.iterator();
+
+            do {
+                final AnimeLibraryEntry libraryEntry = iterator.next();
+
+                if (!libraryEntry.hydrate(this)) {
+                    iterator.remove();
+                }
+            } while (iterator.hasNext());
+
+            if (mLibraryEntries.isEmpty()) {
+                mLibraryEntries = null;
+            }
+        } else {
+            mLibraryEntries = null;
         }
 
         if (hasReviews() && hasUsers()) {
@@ -186,6 +232,10 @@ public class AnimeDigest implements Parcelable {
                     iterator.remove();
                 }
             } while (iterator.hasNext());
+
+            if (mReviews.isEmpty()) {
+                mReviews = null;
+            }
         } else {
             mReviews = null;
         }
@@ -203,6 +253,7 @@ public class AnimeDigest implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
+        dest.writeTypedList(mAnime);
         dest.writeTypedList(mCastings);
         dest.writeTypedList(mCharacters);
         dest.writeTypedList(mEpisodes);
@@ -218,6 +269,8 @@ public class AnimeDigest implements Parcelable {
         @Override
         public AnimeDigest createFromParcel(final Parcel source) {
             final AnimeDigest ad = new AnimeDigest();
+            ad.mAnime = source.createTypedArrayList(Anime.CREATOR);
+            ad.mLibraryEntries = source.createTypedArrayList(AnimeLibraryEntry.CREATOR);
             ad.mCastings = source.createTypedArrayList(Casting.CREATOR);
             ad.mCharacters = source.createTypedArrayList(Character.CREATOR);
             ad.mEpisodes = source.createTypedArrayList(Episode.CREATOR);
@@ -836,7 +889,7 @@ public class AnimeDigest implements Parcelable {
         }
 
         public boolean hasCoverImage() {
-            return !TextUtils.isEmpty(mCoverImage);
+            return MiscUtils.isValidArtwork(mCoverImage);
         }
 
         public boolean hasEnglishTitle() {

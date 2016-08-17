@@ -220,7 +220,7 @@ public class UserDigest implements Parcelable {
             public Favorite createFromParcel(final Parcel source) {
                 final Favorite f = new Favorite();
                 f.mFavoriteRank = source.readInt();
-                f.mItem = ParcelableUtils.readUserDigestFavoriteAbsItemFromParcel(source);
+                f.mItem = ParcelableUtils.readUserDigestFavoriteAbsItem(source);
                 f.mId = source.readString();
                 f.mUserId = source.readString();
                 return f;

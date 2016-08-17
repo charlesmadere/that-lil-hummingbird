@@ -133,7 +133,7 @@ public abstract class AbsStory implements Parcelable {
         mCreatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
         mId = source.readString();
         mUserId = source.readString();
-        mSubstories = ParcelableUtils.readAbsSubstoryListFromParcel(source);
+        mSubstories = ParcelableUtils.readAbsSubstoryList(source);
         mUser = source.readParcelable(User.class.getClassLoader());
     }
 
@@ -145,7 +145,7 @@ public abstract class AbsStory implements Parcelable {
         dest.writeParcelable(mCreatedAt, flags);
         dest.writeString(mId);
         dest.writeString(mUserId);
-        ParcelableUtils.writeAbsSubstoryListToParcel(mSubstories, dest, flags);
+        ParcelableUtils.writeAbsSubstoryList(mSubstories, dest, flags);
         dest.writeParcelable(mUser, flags);
     }
 

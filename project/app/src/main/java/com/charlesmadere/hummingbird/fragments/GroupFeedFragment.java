@@ -71,6 +71,13 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
     }
 
     @Override
+    public void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mFeed = ObjectCache.get(this);
+    }
+
+    @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -101,8 +108,6 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
         mAdapter = new FeedAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
-
-        mFeed = ObjectCache.get(this);
 
         if (mFeed == null) {
             fetchGroupStories();
@@ -144,11 +149,11 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
 
     private void showGroupStories(final Feed feed) {
         mFeed = feed;
-        mAdapter.set(feed);
+        mAdapter.set(mFeed);
         mEmpty.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
-        mPaginator.setEnabled(feed.hasCursor());
+        mPaginator.setEnabled(mFeed.hasCursor());
         mRefreshLayout.setRefreshing(false);
     }
 

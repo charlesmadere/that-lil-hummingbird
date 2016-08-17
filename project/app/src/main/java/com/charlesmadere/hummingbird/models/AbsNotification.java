@@ -71,7 +71,7 @@ public abstract class AbsNotification implements Parcelable {
     }
 
     protected void readFromParcel(final Parcel source) {
-        mSource = ParcelableUtils.readAbsNotificationAbsSourceFromParcel(source);
+        mSource = ParcelableUtils.readAbsNotificationAbsSource(source);
         mSeen = source.readInt() != 0;
         mCreatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
         mId = source.readString();
@@ -79,7 +79,7 @@ public abstract class AbsNotification implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        ParcelableUtils.writeAbsNotificationAbsSourceToParcel(mSource, dest, flags);
+        ParcelableUtils.writeAbsNotificationAbsSource(mSource, dest, flags);
         dest.writeInt(mSeen ? 1 : 0);
         dest.writeParcelable(mCreatedAt, flags);
         dest.writeString(mId);
@@ -226,13 +226,13 @@ public abstract class AbsNotification implements Parcelable {
         @Override
         protected void readFromParcel(final Parcel source) {
             super.readFromParcel(source);
-            mStory = ParcelableUtils.readAbsStoryFromParcel(source);
+            mStory = ParcelableUtils.readAbsStory(source);
         }
 
         @Override
         public void writeToParcel(final Parcel dest, final int flags) {
             super.writeToParcel(dest, flags);
-            ParcelableUtils.writeAbsStoryToParcel(mStory, dest, flags);
+            ParcelableUtils.writeAbsStory(mStory, dest, flags);
         }
 
         public static final Creator<StorySource> CREATOR = new Creator<StorySource>() {
@@ -292,13 +292,13 @@ public abstract class AbsNotification implements Parcelable {
         @Override
         protected void readFromParcel(final Parcel source) {
             super.readFromParcel(source);
-            mSubstory = ParcelableUtils.readAbsSubstoryFromParcel(source);
+            mSubstory = ParcelableUtils.readAbsSubstory(source);
         }
 
         @Override
         public void writeToParcel(final Parcel dest, final int flags) {
             super.writeToParcel(dest, flags);
-            ParcelableUtils.writeAbsSubstoryToParcel(mSubstory, dest, flags);
+            ParcelableUtils.writeAbsSubstory(mSubstory, dest, flags);
         }
 
         public static final Creator<SubstorySource> CREATOR = new Creator<SubstorySource>() {

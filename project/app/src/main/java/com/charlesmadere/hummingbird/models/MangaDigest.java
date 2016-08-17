@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -16,6 +17,10 @@ public class MangaDigest implements Parcelable {
     private ArrayList<Casting> mCastings;
 
     @Nullable
+    @SerializedName("manga")
+    private ArrayList<Manga> mManga;
+
+    @Nullable
     @SerializedName("characters")
     private ArrayList<Character> mCharacters;
 
@@ -24,7 +29,7 @@ public class MangaDigest implements Parcelable {
     private ArrayList<MangaLibraryEntry> mLibraryEntries;
 
     @SerializedName("full_manga")
-    private Manga mManga;
+    private Info mInfo;
 
 
     @Nullable
@@ -275,6 +280,83 @@ public class MangaDigest implements Parcelable {
             @Override
             public Character[] newArray(final int size) {
                 return new Character[size];
+            }
+        };
+    }
+
+
+    public static class Info implements Parcelable {
+        @Nullable
+        @SerializedName("community_ratings")
+        private ArrayList<Integer> mCommunityRatings;
+
+        @Nullable
+        @SerializedName("genres")
+        private ArrayList<String> mGenres;
+
+        @Nullable
+        @SerializedName("chapter_count")
+        private Integer mChapterCount;
+
+        @Nullable
+        @SerializedName("cover_image_top_offset")
+        private Integer mCoverImageTopOffset;
+
+        @Nullable
+        @SerializedName("pending_edits")
+        private Integer mPendingEdits;
+
+        @Nullable
+        @SerializedName("volume_count")
+        private Integer mVolumeCount;
+
+        @Nullable
+        @SerializedName("manga_type")
+        private MangaType mType;
+
+        @SerializedName("id")
+        private String mId;
+
+        @SerializedName("manga_library_entry_id")
+        private String mMangaLibraryEntryId;
+
+        @Nullable
+        @SerializedName("poster_image")
+        private String mPosterImage;
+
+        @Nullable
+        @SerializedName("poster_image_thumb")
+        private String mPosterImageThumb;
+
+        @SerializedName("romaji_title")
+        private String mRomajiTitle;
+
+        @Nullable
+        @SerializedName("synopsis")
+        private String mSynopsis;
+
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(final Parcel dest, final int flags) {
+            ParcelableUtils.writeIntegerArrayList(mCommunityRatings, dest);
+        }
+
+        public static final Creator<Info> CREATOR = new Creator<Info>() {
+            @Override
+            public Info createFromParcel(final Parcel source) {
+                final Info i = new Info();
+                i.mCommunityRatings = ParcelableUtils.readIntegerArrayList(source);
+                return i;
+            }
+
+            @Override
+            public Info[] newArray(final int size) {
+                return new Info[size];
             }
         };
     }

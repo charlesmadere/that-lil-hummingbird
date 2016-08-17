@@ -8,12 +8,19 @@
         android:title="@string/add_to_library"
         android:visible="false"
         compat:showAsAction="ifRoom"
-        tools:visible="true"/>
+        tools:visible="true" />
+    <item
+        android:icon="@drawable/ic_edit_white_24dp"
+        android:id="@+id/miEditInLibrary"
+        android:title="@string/edit_in_library"
+        android:visible="false"
+        compat:showAsAction="ifRoom"
+        tools:visible="true" />
     <item
         android:icon="@drawable/ic_share_white_24dp"
         android:id="@+id/miShare"
         android:title="@string/share"
         android:visible="false"
         compat:showAsAction="ifRoom"
-        tools:visible="true"/>
+        tools:visible="true" />
 </menu>

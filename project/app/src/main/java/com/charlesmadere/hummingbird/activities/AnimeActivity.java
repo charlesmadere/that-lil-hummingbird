@@ -40,7 +40,7 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 
 public class AnimeActivity extends BaseDrawerActivity implements
-        AnimeEpisodeItemView.OnClickListener, AnimeLibraryUpdateFragment.UpdateListener,
+        AnimeEpisodeItemView.OnClickListener, AnimeLibraryUpdateFragment.Listener,
         BaseAnimeFragment.Listener, ObjectCache.KeyProvider, PaletteUtils.Listener {
 
     private static final String TAG = "AnimeActivity";
@@ -96,6 +96,10 @@ public class AnimeActivity extends BaseDrawerActivity implements
         supportInvalidateOptionsMenu();
         mSimpleProgressView.fadeOut();
         Toast.makeText(this, R.string.added_to_library, Toast.LENGTH_LONG).show();
+    }
+
+    private void editInLibrary() {
+        // TODO
     }
 
     private void fetchAnimeDigest() {
@@ -169,6 +173,10 @@ public class AnimeActivity extends BaseDrawerActivity implements
                         AnimeLibraryUpdateFragment.TAG);
                 return true;
 
+            case R.id.miEditInLibrary:
+                editInLibrary();
+                return true;
+
             case R.id.miShare:
                 ShareUtils.shareAnime(this, mAnimeDigest);
                 return true;
@@ -182,7 +190,9 @@ public class AnimeActivity extends BaseDrawerActivity implements
         if (mAnimeDigest != null) {
             menu.findItem(R.id.miShare).setVisible(true);
 
-            if (!mAnimeDigest.getInfo().hasLibraryEntryId()) {
+            if (mAnimeDigest.getInfo().hasLibraryEntryId()) {
+                menu.findItem(R.id.miEditInLibrary).setVisible(true);
+            } else {
                 menu.findItem(R.id.miAddToLibrary).setVisible(true);
             }
         }

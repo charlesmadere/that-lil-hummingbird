@@ -24,7 +24,7 @@ import java.lang.ref.WeakReference;
 
 public class MangaLibraryFragment extends BaseLibraryFragment implements
         MangaLibraryEntryItemView.OnFeedButtonClickListeners,
-        MangaLibraryUpdateFragment.UpdateListener {
+        MangaLibraryUpdateFragment.Listener {
 
     private static final String TAG = "MangaLibraryFragment";
     private static final String KEY_READING_STATUS = "ReadingStatus";
@@ -106,6 +106,15 @@ public class MangaLibraryFragment extends BaseLibraryFragment implements
     public void onEditClick(final MangaLibraryEntryItemView v) {
         MangaLibraryUpdateFragment.create(v.getLibraryEntry()).show(getChildFragmentManager(),
                 MangaLibraryUpdateFragment.TAG);
+    }
+
+    @Override
+    public void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (mFeed != null) {
+            ObjectCache.put(mFeed, this);
+        }
     }
 
     @Override

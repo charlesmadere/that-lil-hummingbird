@@ -83,14 +83,14 @@ public class SearchBundle implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        ParcelableUtils.writeSearchBundleAbsResultListToParcel(mResults, dest, flags);
+        ParcelableUtils.writeSearchBundleAbsResultList(mResults, dest, flags);
     }
 
     public static final Creator<SearchBundle> CREATOR = new Creator<SearchBundle>() {
         @Override
         public SearchBundle createFromParcel(final Parcel source) {
             final SearchBundle sb = new SearchBundle();
-            sb.mResults = ParcelableUtils.readSearchBundleAbsResultListFromParcel(source);
+            sb.mResults = ParcelableUtils.readSearchBundleAbsResultList(source);
             return sb;
         }
 

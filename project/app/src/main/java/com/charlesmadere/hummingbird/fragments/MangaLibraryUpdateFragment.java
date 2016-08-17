@@ -37,10 +37,10 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     private static final String KEY_LIBRARY_UPDATE = "LibraryUpdate";
     private static final String KEY_MANGA_DIGEST = "MangaDigest";
 
+    private Listener mListener;
     private MangaDigest mMangaDigest;
     private MangaLibraryEntry mLibraryEntry;
     private MangaLibraryUpdate mLibraryUpdate;
-    private UpdateListener mUpdateListener;
 
     @BindView(R.id.cbReReading)
     CheckBox mReReading;
@@ -117,17 +117,17 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         super.onAttach(context);
 
         final Fragment fragment = getParentFragment();
-        if (fragment instanceof UpdateListener) {
-            mUpdateListener = (UpdateListener) fragment;
+        if (fragment instanceof Listener) {
+            mListener = (Listener) fragment;
         } else {
             final Activity activity = MiscUtils.getActivity(context);
 
-            if (activity instanceof UpdateListener) {
-                mUpdateListener = (UpdateListener) activity;
+            if (activity instanceof Listener) {
+                mListener = (Listener) activity;
             }
         }
 
-        if (mUpdateListener == null) {
+        if (mListener == null) {
             throw new IllegalStateException(TAG + " must have a listener attached");
         }
     }
@@ -211,7 +211,7 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
 
     @OnClick(R.id.ibSave)
     void onSaveClick() {
-        mUpdateListener.onUpdateLibraryEntry();
+        mListener.onUpdateLibraryEntry();
         dismiss();
     }
 
@@ -273,12 +273,17 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         });
     }
 
+    @Override
+    protected boolean shouldAutoExpand() {
+        return true;
+    }
+
     private void update() {
         mSave.setEnabled(mLibraryUpdate.containsModifications());
     }
 
 
-    public interface UpdateListener {
+    public interface Listener {
         void onUpdateLibraryEntry();
     }
 
