@@ -19,7 +19,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 
-public class AnimeDigest implements Parcelable {
+public class AnimeDigest implements Hydratable, Parcelable {
 
     @Nullable
     @SerializedName("anime")
@@ -69,7 +69,9 @@ public class AnimeDigest implements Parcelable {
         if (mLibraryEntries == null) {
             mLibraryEntries = new ArrayList<>(1);
             mLibraryEntries.add(libraryEntry);
-        } else if (!mLibraryEntries.contains(libraryEntry)) {
+        } else if (mLibraryEntries.contains(libraryEntry)) {
+            mLibraryEntries.set(mLibraryEntries.indexOf(libraryEntry), libraryEntry);
+        } else {
             mLibraryEntries.add(libraryEntry);
         }
     }
@@ -198,6 +200,7 @@ public class AnimeDigest implements Parcelable {
         return mUsers != null && !mUsers.isEmpty();
     }
 
+    @Override
     public void hydrate() {
         if (hasCastings() && hasPeople()) {
             final Iterator<Casting> iterator = mCastings.iterator();

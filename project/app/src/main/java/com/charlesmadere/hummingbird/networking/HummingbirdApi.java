@@ -136,7 +136,7 @@ public interface HummingbirdApi {
     Call<Feed> getUserReviews(@Query("user_id") String userId, @Query("page") Integer page);
 
     @GET("stories")
-    Call<Feed> getUserStories(@Query("user_id") String username, @Query("page") Integer page);
+    Call<Feed> getUserStories(@Query("user_id") String userId, @Query("page") Integer page);
 
     @Headers(ACCEPT_JSON_MIMETYPE)
     @POST("group_members")

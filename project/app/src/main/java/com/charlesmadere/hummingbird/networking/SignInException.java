@@ -1,6 +1,8 @@
-package com.charlesmadere.hummingbird.models;
+package com.charlesmadere.hummingbird.networking;
 
 import android.support.annotation.Nullable;
+
+import com.charlesmadere.hummingbird.models.ErrorInfo;
 
 public class SignInException extends Exception {
 

@@ -91,7 +91,7 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
 
     private void fetchFeed() {
         mSimpleProgressView.fadeIn();
-        Api.getGroup(mGroupId, new GetGroupDigestListener(this));
+        Api.getGroupDigest(mGroupId, new GetGroupDigestListener(this));
     }
 
     @Override

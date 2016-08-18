@@ -102,13 +102,18 @@ public abstract class AbsStory implements Parcelable {
 
             for (final String substoryId : mSubstoryIds) {
                 for (final AbsSubstory substory : feed.getSubstories()) {
-                    if (substoryId.equalsIgnoreCase(substory.getId())) {
+                    if (substoryId.equalsIgnoreCase(substory.getId()) &&
+                            !mSubstories.contains(substory)) {
                         mSubstories.add(substory);
                     }
                 }
             }
 
-            mSubstories.trimToSize();
+            if (mSubstories.isEmpty()) {
+                mSubstories = null;
+            } else {
+                mSubstories.trimToSize();
+            }
         }
     }
 

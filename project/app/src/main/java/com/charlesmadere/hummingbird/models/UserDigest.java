@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.concurrent.TimeUnit;
 
-public class UserDigest implements Parcelable {
+public class UserDigest implements Hydratable, Parcelable {
 
     @Nullable
     @SerializedName("anime")
@@ -88,6 +88,7 @@ public class UserDigest implements Parcelable {
         return mManga != null && !mManga.isEmpty();
     }
 
+    @Override
     public void hydrate() {
         for (final User user : mUsers) {
             user.hydrate();

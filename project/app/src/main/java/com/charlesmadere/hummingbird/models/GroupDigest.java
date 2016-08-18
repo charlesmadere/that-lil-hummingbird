@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class GroupDigest implements Parcelable {
+public class GroupDigest implements Hydratable, Parcelable {
 
     @Nullable
     @SerializedName("group_members")
@@ -39,6 +39,7 @@ public class GroupDigest implements Parcelable {
         return mGroupMembers != null && !mGroupMembers.isEmpty();
     }
 
+    @Override
     public void hydrate() {
         if (hasGroupMembers()) {
             mGroup.hydrate(this);

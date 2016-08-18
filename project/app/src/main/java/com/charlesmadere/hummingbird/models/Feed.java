@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Feed {
+public class Feed implements Hydratable {
 
     @Nullable
     @SerializedName("anime")
@@ -281,6 +281,7 @@ public class Feed {
         return mUsers != null && !mUsers.isEmpty();
     }
 
+    @Override
     public void hydrate() {
         if (hasAnimeLibraryEntries()) {
             for (final AnimeLibraryEntry ale : mAnimeLibraryEntries) {

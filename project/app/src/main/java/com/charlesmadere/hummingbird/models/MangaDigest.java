@@ -14,7 +14,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class MangaDigest implements Parcelable {
+public class MangaDigest implements Hydratable, Parcelable {
 
     @Nullable
     @SerializedName("castings")
@@ -40,11 +40,12 @@ public class MangaDigest implements Parcelable {
         if (mLibraryEntries == null) {
             mLibraryEntries = new ArrayList<>(1);
             mLibraryEntries.add(libraryEntry);
-        } else if (!mLibraryEntries.contains(libraryEntry)) {
+        } else if (mLibraryEntries.contains(libraryEntry)) {
+            mLibraryEntries.set(mLibraryEntries.indexOf(libraryEntry), libraryEntry);
+        } else {
             mLibraryEntries.add(libraryEntry);
         }
     }
-
 
     @Override
     public boolean equals(final Object o) {
@@ -69,8 +70,9 @@ public class MangaDigest implements Parcelable {
         return mInfo;
     }
 
-    public MangaLibraryEntry getLibraryEntry() {
-        return mLibraryEntries.get(0);
+    @Nullable
+    public ArrayList<MangaLibraryEntry> getLibraryEntries() {
+        return mLibraryEntries;
     }
 
     @Nullable
@@ -103,6 +105,7 @@ public class MangaDigest implements Parcelable {
         return mManga != null && !mManga.isEmpty();
     }
 
+    @Override
     public void hydrate() {
         if (hasLibraryEntries()) {
             final Iterator<MangaLibraryEntry> iterator = mLibraryEntries.iterator();

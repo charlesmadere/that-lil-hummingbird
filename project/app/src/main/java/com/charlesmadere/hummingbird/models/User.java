@@ -17,7 +17,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.lang.reflect.Type;
 
-public class User implements Parcelable {
+public class User implements Hydratable, Parcelable {
 
     @SerializedName("user")
     private Data mData;
@@ -160,6 +160,7 @@ public class User implements Parcelable {
         return websites != null && websites.length >= 2;
     }
 
+    @Override
     public void hydrate() {
         if (!TextUtils.isEmpty(mData.mAboutFormatted)) {
             mCompiledAbout = JsoupUtils.parse(mData.mAboutFormatted);

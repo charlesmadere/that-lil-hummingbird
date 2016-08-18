@@ -114,7 +114,7 @@ public class GroupMembersActivity extends BaseDrawerActivity implements ObjectCa
         if (intent.hasExtra(EXTRA_GROUP_NAME)) {
             setSubtitle(intent.getStringExtra(EXTRA_GROUP_NAME));
         } else {
-            Api.getGroup(mGroupId, new GetGroupDigestListener(this));
+            Api.getGroupDigest(mGroupId, new GetGroupDigestListener(this));
         }
 
         mFeed = ObjectCache.get(this);

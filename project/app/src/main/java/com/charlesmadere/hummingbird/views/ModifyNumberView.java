@@ -122,48 +122,78 @@ public class ModifyNumberView extends LinearLayout {
 
     public void setForChaptersRead(final MangaLibraryUpdate libraryUpdate,
             final MangaDigest digest) {
-        setContent(libraryUpdate.getChaptersRead(), digest.getInfo().getChapterCount());
         mTitle.setText(R.string.chapters_read);
+
+        if (digest.getInfo().hasChapterCount()) {
+            setContent(libraryUpdate.getChaptersRead(), digest.getInfo().getChapterCount());
+        } else {
+            setContent(libraryUpdate.getChaptersRead());
+        }
     }
 
     public void setForChaptersRead(final MangaLibraryUpdate libraryUpdate,
             final MangaLibraryEntry libraryEntry) {
-        setContent(libraryUpdate.getChaptersRead(), libraryEntry.getManga().getChapterCount());
         mTitle.setText(R.string.chapters_read);
+
+        if (libraryEntry.getManga().hasChapterCount()) {
+            setContent(libraryUpdate.getChaptersRead(), libraryEntry.getManga().getChapterCount());
+        } else {
+            setContent(libraryUpdate.getChaptersRead());
+        }
     }
 
     public void setForReReadCount(final MangaLibraryUpdate libraryUpdate) {
-        setContent(libraryUpdate.getReReadCount());
         mTitle.setText(R.string.reread_times);
+        setContent(libraryUpdate.getReReadCount());
     }
 
     public void setForRewatchedTimes(final AnimeLibraryUpdate libraryUpdate) {
-        setContent(libraryUpdate.getRewatchCount());
         mTitle.setText(R.string.rewatched_times);
+        setContent(libraryUpdate.getRewatchCount());
     }
 
     public void setForVolumesRead(final MangaLibraryUpdate libraryUpdate,
             final MangaDigest digest) {
-        setContent(libraryUpdate.getVolumesRead(), digest.getInfo().getVolumeCount());
         mTitle.setText(R.string.volumes_read);
+
+        if (digest.getInfo().hasVolumeCount()) {
+            setContent(libraryUpdate.getVolumesRead(), digest.getInfo().getVolumeCount());
+        } else {
+            setContent(libraryUpdate.getVolumesRead());
+        }
     }
 
     public void setForVolumesRead(final MangaLibraryUpdate libraryUpdate,
             final MangaLibraryEntry libraryEntry) {
-        setContent(libraryUpdate.getVolumesRead(), libraryEntry.getManga().getVolumeCount());
         mTitle.setText(R.string.volumes_read);
+
+        if (libraryEntry.getManga().hasVolumeCount()) {
+            setContent(libraryUpdate.getVolumesRead(), libraryEntry.getManga().getVolumeCount());
+        } else {
+            setContent(libraryUpdate.getVolumesRead());
+        }
     }
 
     public void setForWatchedCount(final AnimeLibraryUpdate libraryUpdate,
             final AnimeDigest digest) {
-        setContent(libraryUpdate.getEpisodesWatched(), digest.getInfo().getEpisodeCount());
         mTitle.setText(R.string.watched);
+
+        if (digest.getInfo().hasEpisodeCount()) {
+            setContent(libraryUpdate.getEpisodesWatched(), digest.getInfo().getEpisodeCount());
+        } else {
+            setContent(libraryUpdate.getEpisodesWatched());
+        }
     }
 
     public void setForWatchedCount(final AnimeLibraryUpdate libraryUpdate,
             final AnimeLibraryEntry libraryEntry) {
-        setContent(libraryUpdate.getEpisodesWatched(), libraryEntry.getAnime().getEpisodeCount());
         mTitle.setText(R.string.watched);
+
+        if (libraryEntry.getAnime().hasEpisodeCount()) {
+            setContent(libraryUpdate.getEpisodesWatched(), libraryEntry.getAnime().getEpisodeCount());
+        } else {
+            setContent(libraryUpdate.getEpisodesWatched());
+        }
     }
 
     public void setListener(@Nullable final Listener listener) {

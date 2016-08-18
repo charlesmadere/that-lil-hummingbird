@@ -130,16 +130,26 @@ public class Group implements Parcelable {
         return mGroupMembers != null && !mGroupMembers.isEmpty();
     }
 
-    private void hydrate(final ArrayList<GroupMember> groupMembers) {
-        mGroupMembers = new ArrayList<>();
+    private void hydrate(@Nullable final ArrayList<GroupMember> groupMembers) {
+        if (groupMembers == null || groupMembers.isEmpty()) {
+            mGroupMembers = null;
+        } else {
+            mGroupMembers = new ArrayList<>();
 
-        for (final GroupMember groupMember : groupMembers) {
-            if (mId.equalsIgnoreCase(groupMember.getGroupId())) {
-                mGroupMembers.add(groupMember);
+            for (final GroupMember groupMember : groupMembers) {
+                if (mId.equalsIgnoreCase(groupMember.getGroupId()) &&
+                        !mGroupMembers.contains(groupMember)) {
+                    mGroupMembers.add(groupMember);
+                }
+            }
+
+            if (mGroupMembers.isEmpty()) {
+                mGroupMembers = null;
+            } else {
+                mGroupMembers.trimToSize();
             }
         }
 
-        mGroupMembers.trimToSize();
 
         if (!TextUtils.isEmpty(mAboutFormatted)) {
             mCompiledAbout = JsoupUtils.parse(mAboutFormatted);
