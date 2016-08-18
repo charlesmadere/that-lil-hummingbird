@@ -355,6 +355,23 @@ public final class Api {
         tcs.setResult(null);
     }
 
+    private static Task<Anime> getAnimeTask(final String animeId) {
+        return new TaskCompletionSource<Void>().getTask().continueWith(
+                new Continuation<Void, Anime>() {
+            @Override
+            public Anime then(final Task<Void> task) throws Exception {
+                final Response<AnimeWrapper> response = HUMMINGBIRD.getAnime(animeId).execute();
+                final AnimeWrapper body = response.isSuccessful() ? response.body() : null;
+
+                if (body == null) {
+                    throw new ServerException(retrieveErrorInfo(response));
+                } else {
+                    return body.getAnime();
+                }
+            }
+        }, Task.BACKGROUND_EXECUTOR);
+    }
+
     public static void getAppNews(final ApiResponse<ArrayList<AppNews>> listener) {
         WEBSITE.getAppNews().enqueue(new Callback<ArrayList<AppNews>>() {
             @Override
@@ -1061,63 +1078,45 @@ public final class Api {
                 final Feed body = task.getResult();
 
                 if (!body.hasAnimeReviews()) {
-                    return hydrate(body);
+                    return merge(body, feed);
                 }
 
                 final ArrayList<String> animeIds = body.getAnimeIdsNeededForAnimeReviews();
 
                 if (animeIds == null || animeIds.isEmpty()) {
-                    return hydrate(body);
+                    return merge(body, feed);
                 }
 
-                return Task.forResult(body);
-            }
-        }, Task.BACKGROUND_EXECUTOR);
+                final ArrayList<Task<Anime>> tasks = new ArrayList<>(animeIds.size());
 
-        tcs.setResult(null);
-
-        HUMMINGBIRD.getUserReviews(username, page).enqueue(new Callback<Feed>() {
-            @Override
-            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
-                final Feed body = response.isSuccessful() ? response.body() : null;
-
-                if (body == null) {
-                    listener.failure(retrieveErrorInfo(response));
-                    return;
+                for (final String animeId : animeIds) {
+                    tasks.add(getAnimeTask(animeId));
                 }
 
-                if (!body.hasAnimeReviews()) {
-                    hydrateFeed(body, feed, listener);
-                    return;
-                }
-
-                final ArrayList<String> animeIds = body.getAnimeIdsNeededForAnimeReviews();
-
-                if (animeIds == null || animeIds.isEmpty()) {
-                    hydrateFeed(body, feed, listener);
-                    return;
-                }
-
-                getAnime(animeIds, new ApiResponse<ArrayList<Anime>>() {
+                return Task.whenAll(tasks).continueWithTask(new Continuation<Void, Task<Feed>>() {
                     @Override
-                    public void failure(@Nullable final ErrorInfo error) {
-                        listener.failure(error);
-                    }
+                    public Task<Feed> then(final Task<Void> task) throws Exception {
+                        final ArrayList<Anime> animeList = new ArrayList<>(tasks.size());
 
-                    @Override
-                    public void success(@Nullable final ArrayList<Anime> anime) {
-                        body.addAnime(anime);
-                        hydrateFeed(body, feed, listener);
+                        for (final Task<Anime> animeTask : tasks) {
+                            if (!task.isCancelled() && !task.isFaulted()) {
+                                animeList.add(animeTask.getResult());
+                            }
+                        }
+
+                        body.addAnime(animeList);
+                        return merge(body, feed);
                     }
                 });
             }
-
+        }, Task.BACKGROUND_EXECUTOR).continueWith(new Continuation<Feed, Void>() {
             @Override
-            public void onFailure(final Call<Feed> call, final Throwable t) {
-                Timber.e(TAG, "get user reviews (" + username + ") failed", t);
-                listener.failure(null);
+            public Void then(final Task<Feed> task) throws Exception {
+                return null;
             }
-        });
+        }, Task.UI_THREAD_EXECUTOR);
+
+        tcs.setResult(null);
     }
 
     public static void getUserStories(final String userId, final ApiResponse<Feed> listener) {
@@ -1181,12 +1180,12 @@ public final class Api {
             public Feed then(final Task<Void> task) throws Exception {
                 if (oldFeed == null) {
                     newFeed.hydrate();
+                    return newFeed;
                 } else {
                     oldFeed.merge(newFeed);
                     oldFeed.hydrate();
+                    return oldFeed;
                 }
-
-                return newFeed;
             }
         }, Task.BACKGROUND_EXECUTOR);
     }

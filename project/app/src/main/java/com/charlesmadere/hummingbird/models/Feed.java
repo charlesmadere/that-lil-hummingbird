@@ -66,6 +66,21 @@ public class Feed implements Hydratable {
     private AbsStory mStory;
 
 
+    public void addAnime(@Nullable final Anime anime) {
+        if (anime == null) {
+            return;
+        }
+
+        if (hasAnime()) {
+            if (!mAnime.contains(anime)) {
+                mAnime.add(anime);
+            }
+        } else {
+            mAnime = new ArrayList<>();
+            mAnime.add(anime);
+        }
+    }
+
     public void addAnime(@Nullable final ArrayList<Anime> anime) {
         if (anime == null || anime.isEmpty()) {
             return;
