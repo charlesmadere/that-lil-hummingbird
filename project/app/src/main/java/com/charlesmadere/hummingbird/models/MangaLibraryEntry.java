@@ -162,6 +162,19 @@ public class MangaLibraryEntry implements Parcelable {
         return mManga.toString();
     }
 
+    public void update(final MangaLibraryEntry libraryEntry) {
+        mIsFavorite = libraryEntry.isFavorite();
+        mIsPrivate = libraryEntry.isPrivate();
+        mIsReReading = libraryEntry.isReReading();
+        mChaptersRead = libraryEntry.getChaptersRead();
+        mReReadCount = libraryEntry.getReReadCount();
+        mVolumesRead = libraryEntry.getVolumesRead();
+        mRating = libraryEntry.getRating();
+        mStatus = libraryEntry.getStatus();
+        mLastRead = libraryEntry.getLastRead();
+        mNotes = libraryEntry.getNotes();
+    }
+
     @Override
     public int describeContents() {
         return 0;

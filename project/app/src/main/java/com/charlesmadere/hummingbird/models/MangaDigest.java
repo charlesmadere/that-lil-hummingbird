@@ -41,7 +41,7 @@ public class MangaDigest implements Hydratable, Parcelable {
             mLibraryEntries = new ArrayList<>(1);
             mLibraryEntries.add(libraryEntry);
         } else if (mLibraryEntries.contains(libraryEntry)) {
-            mLibraryEntries.set(mLibraryEntries.indexOf(libraryEntry), libraryEntry);
+            mLibraryEntries.get(mLibraryEntries.indexOf(libraryEntry)).update(libraryEntry);
         } else {
             mLibraryEntries.add(libraryEntry);
         }

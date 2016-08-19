@@ -67,10 +67,10 @@ public class AnimeDigest implements Hydratable, Parcelable {
 
     public void addLibraryEntry(final AnimeLibraryEntry libraryEntry) {
         if (mLibraryEntries == null) {
-            mLibraryEntries = new ArrayList<>(1);
+            mLibraryEntries = new ArrayList<>();
             mLibraryEntries.add(libraryEntry);
         } else if (mLibraryEntries.contains(libraryEntry)) {
-            mLibraryEntries.set(mLibraryEntries.indexOf(libraryEntry), libraryEntry);
+            mLibraryEntries.get(mLibraryEntries.indexOf(libraryEntry)).update(libraryEntry);
         } else {
             mLibraryEntries.add(libraryEntry);
         }

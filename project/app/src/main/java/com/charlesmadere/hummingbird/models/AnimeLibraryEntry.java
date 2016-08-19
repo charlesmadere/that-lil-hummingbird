@@ -158,6 +158,19 @@ public class AnimeLibraryEntry implements Parcelable {
         return mAnime.getTitle();
     }
 
+    public void update(final AnimeLibraryEntry libraryEntry) {
+        mIsFavorite = libraryEntry.isFavorite();
+        mIsPrivate = libraryEntry.isPrivate();
+        mIsRewatching = libraryEntry.isRewatching();
+        mNotesPresent = libraryEntry.hasNotes();
+        mEpisodesWatched = libraryEntry.getEpisodesWatched();
+        mRewatchCount = libraryEntry.getRewatchCount();
+        mRating = libraryEntry.getRating();
+        mLastWatched = libraryEntry.getLastWatched();
+        mNotes = libraryEntry.getNotes();
+        mStatus = libraryEntry.getStatus();
+    }
+
     @Override
     public int describeContents() {
         return 0;
