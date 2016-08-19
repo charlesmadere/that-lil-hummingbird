@@ -109,14 +109,22 @@ public class AnimeLibraryEntry implements Parcelable {
         return mRating != null;
     }
 
+    public boolean hydrate(final Anime anime) {
+        if (mAnimeId.equalsIgnoreCase(anime.getId())) {
+            mAnime = anime;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public boolean hydrate(final AnimeDigest digest) {
         if (!digest.hasAnime()) {
             return false;
         }
 
         for (final Anime anime : digest.getAnime()) {
-            if (mAnimeId.equalsIgnoreCase(anime.getId())) {
-                mAnime = anime;
+            if (hydrate(anime)) {
                 return true;
             }
         }
