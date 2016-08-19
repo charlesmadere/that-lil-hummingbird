@@ -544,18 +544,33 @@ public final class Api {
         });
     }
 
-    public static void getMangaDigest(final String mangaId,
-            final ApiResponse<MangaDigest> listener) {
+    public static void getMangaDigest(final String mangaId, final ApiResponse<MangaDigest> listener) {
         HUMMINGBIRD.getMangaDigest(mangaId).enqueue(new Callback<MangaDigest>() {
+            private MangaDigest mBody;
+
             @Override
             public void onResponse(final Call<MangaDigest> call,
                     final Response<MangaDigest> response) {
-                final MangaDigest body = response.isSuccessful() ? response.body() : null;
+                if (response.isSuccessful()) {
+                    mBody = response.body();
+                }
 
-                if (body == null) {
+                if (mBody == null) {
                     listener.failure(retrieveErrorInfo(response));
                 } else {
-                    listener.success(body);
+                    ThreadUtils.runOnBackground(new Runnable() {
+                        @Override
+                        public void run() {
+                            mBody.hydrate();
+
+                            ThreadUtils.runOnUi(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listener.success(mBody);
+                                }
+                            });
+                        }
+                    });
                 }
             }
 
