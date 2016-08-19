@@ -86,8 +86,7 @@ public final class Api {
             }
 
             @Override
-            public void onFailure(final Call<AnimeLibraryEntryResponse> call,
-                    final Throwable t) {
+            public void onFailure(final Call<AnimeLibraryEntryResponse> call, final Throwable t) {
                 Timber.e(TAG, "add anime library entry failed", t);
                 listener.failure(null);
             }
@@ -112,8 +111,7 @@ public final class Api {
             }
 
             @Override
-            public void onFailure(final Call<MangaLibraryEntryResponse> call,
-                    final Throwable t) {
+            public void onFailure(final Call<MangaLibraryEntryResponse> call, final Throwable t) {
                 Timber.e(TAG, "add manga library entry failed", t);
                 listener.failure(null);
             }
