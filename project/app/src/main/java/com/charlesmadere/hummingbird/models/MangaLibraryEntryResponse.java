@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class AddMangaLibraryEntryResponse implements Parcelable {
+public class MangaLibraryEntryResponse implements Parcelable {
 
     @SerializedName("manga")
     private ArrayList<Manga> mManga;
@@ -35,18 +35,18 @@ public class AddMangaLibraryEntryResponse implements Parcelable {
         dest.writeParcelable(mLibraryEntry, flags);
     }
 
-    public static final Creator<AddMangaLibraryEntryResponse> CREATOR = new Creator<AddMangaLibraryEntryResponse>() {
+    public static final Creator<MangaLibraryEntryResponse> CREATOR = new Creator<MangaLibraryEntryResponse>() {
         @Override
-        public AddMangaLibraryEntryResponse createFromParcel(final Parcel source) {
-            final AddMangaLibraryEntryResponse amler = new AddMangaLibraryEntryResponse();
-            amler.mManga = source.readParcelable(Manga.class.getClassLoader());
-            amler.mLibraryEntry = source.readParcelable(MangaLibraryEntry.class.getClassLoader());
-            return amler;
+        public MangaLibraryEntryResponse createFromParcel(final Parcel source) {
+            final MangaLibraryEntryResponse mler = new MangaLibraryEntryResponse();
+            mler.mManga = source.readParcelable(Manga.class.getClassLoader());
+            mler.mLibraryEntry = source.readParcelable(MangaLibraryEntry.class.getClassLoader());
+            return mler;
         }
 
         @Override
-        public AddMangaLibraryEntryResponse[] newArray(final int size) {
-            return new AddMangaLibraryEntryResponse[size];
+        public MangaLibraryEntryResponse[] newArray(final int size) {
+            return new MangaLibraryEntryResponse[size];
         }
     };
 

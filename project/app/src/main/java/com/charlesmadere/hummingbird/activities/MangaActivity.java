@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -22,10 +23,10 @@ import com.charlesmadere.hummingbird.fragments.MangaLibraryUpdateFragment;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.misc.ShareUtils;
-import com.charlesmadere.hummingbird.models.AddMangaLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Manga;
 import com.charlesmadere.hummingbird.models.MangaDigest;
+import com.charlesmadere.hummingbird.models.MangaLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.MangaLibraryUpdate;
 import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -44,6 +45,8 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
     private static final String CNAME = MangaActivity.class.getCanonicalName();
     private static final String EXTRA_MANGA_ID = CNAME + ".MangaId";
     private static final String EXTRA_MANGA_NAME = CNAME + ".MangaName";
+    private static final String ADD_TAG = MangaLibraryUpdateFragment.TAG + "|Add";
+    private static final String EDIT_TAG = MangaLibraryUpdateFragment.TAG + "|Edit";
 
     private MangaDigest mMangaDigest;
     private String mMangaId;
@@ -88,15 +91,18 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
         return intent;
     }
 
-    private void addedLibraryEntry(final AddMangaLibraryEntryResponse response) {
+    private void addedLibraryEntry(final MangaLibraryEntryResponse response) {
         mMangaDigest.addLibraryEntry(response.getLibraryEntry());
         supportInvalidateOptionsMenu();
         mSimpleProgressView.fadeOut();
         Toast.makeText(this, R.string.added_to_library, Toast.LENGTH_LONG).show();
     }
 
-    private void editInLibrary() {
-        // TODO
+    private void editedLibraryEntry(final MangaLibraryEntryResponse response) {
+        mMangaDigest.addLibraryEntry(response.getLibraryEntry());
+        supportInvalidateOptionsMenu();
+        mSimpleProgressView.fadeOut();
+        Toast.makeText(this, R.string.saved_changes, Toast.LENGTH_LONG).show();
     }
 
     private void fetchMangaDigest() {
@@ -161,12 +167,13 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.miAddToLibrary:
-                MangaLibraryUpdateFragment.create(mMangaDigest).show(getSupportFragmentManager(),
-                        MangaLibraryUpdateFragment.TAG);
+                MangaLibraryUpdateFragment.create(mMangaDigest)
+                        .show(getSupportFragmentManager(), ADD_TAG);
                 return true;
 
             case R.id.miEditInLibrary:
-                editInLibrary();
+                MangaLibraryUpdateFragment.create(mMangaDigest.getLibraryEntry())
+                        .show(getSupportFragmentManager(), EDIT_TAG);
                 return true;
 
             case R.id.miShare:
@@ -208,17 +215,31 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
 
     @Override
     public void onUpdateLibraryEntry() {
-        final MangaLibraryUpdateFragment fragment = (MangaLibraryUpdateFragment)
-                getSupportFragmentManager().findFragmentByTag(MangaLibraryUpdateFragment.TAG);
-        final MangaLibraryUpdate libraryUpdate = fragment.getLibraryUpdate();
-
         mSimpleProgressView.fadeIn();
-        Api.addMangaLibraryEntry(libraryUpdate, new AddLibraryEntryListener(this));
+
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        MangaLibraryUpdateFragment fragment = (MangaLibraryUpdateFragment)
+                fragmentManager.findFragmentByTag(ADD_TAG);
+
+        if (fragment == null) {
+            fragment = (MangaLibraryUpdateFragment) fragmentManager.findFragmentByTag(EDIT_TAG);
+            final String libraryEntryId = fragment.getLibraryEntry().getId();
+            final MangaLibraryUpdate libraryUpdate = fragment.getLibraryUpdate();
+            Api.updateMangaLibraryEntry(libraryEntryId, libraryUpdate, new EditLibraryEntryListener(this));
+        } else {
+            final MangaLibraryUpdate libraryUpdate = fragment.getLibraryUpdate();
+            Api.addMangaLibraryEntry(libraryUpdate, new AddLibraryEntryListener(this));
+        }
     }
 
     private void showAddLibraryEntryError() {
         mSimpleProgressView.fadeOut();
         Toast.makeText(this, R.string.error_adding_library_entry, Toast.LENGTH_LONG).show();
+    }
+
+    private void showEditLibraryEntryError() {
+        mSimpleProgressView.fadeOut();
+        Toast.makeText(this, R.string.error_editing_library_entry, Toast.LENGTH_LONG).show();
     }
 
     private void showError() {
@@ -269,7 +290,7 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
     }
 
 
-    private static class AddLibraryEntryListener implements ApiResponse<AddMangaLibraryEntryResponse> {
+    private static class AddLibraryEntryListener implements ApiResponse<MangaLibraryEntryResponse> {
         private final WeakReference<MangaActivity> mActivityReference;
 
         private AddLibraryEntryListener(final MangaActivity activity) {
@@ -286,11 +307,37 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
         }
 
         @Override
-        public void success(final AddMangaLibraryEntryResponse response) {
+        public void success(final MangaLibraryEntryResponse response) {
             final MangaActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
                 activity.addedLibraryEntry(response);
+            }
+        }
+    }
+
+    private static class EditLibraryEntryListener implements ApiResponse<MangaLibraryEntryResponse> {
+        private final WeakReference<MangaActivity> mActivityReference;
+
+        private EditLibraryEntryListener(final MangaActivity activity) {
+            mActivityReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final MangaActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.showEditLibraryEntryError();
+            }
+        }
+
+        @Override
+        public void success(final MangaLibraryEntryResponse response) {
+            final MangaActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.editedLibraryEntry(response);
             }
         }
     }

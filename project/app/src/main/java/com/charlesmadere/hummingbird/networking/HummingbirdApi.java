@@ -1,14 +1,14 @@
 package com.charlesmadere.hummingbird.networking;
 
 import com.charlesmadere.hummingbird.misc.Constants;
-import com.charlesmadere.hummingbird.models.AddAnimeLibraryEntryResponse;
-import com.charlesmadere.hummingbird.models.AddMangaLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
+import com.charlesmadere.hummingbird.models.AnimeLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.AnimeWrapper;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.Franchise;
 import com.charlesmadere.hummingbird.models.GroupDigest;
 import com.charlesmadere.hummingbird.models.MangaDigest;
+import com.charlesmadere.hummingbird.models.MangaLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.charlesmadere.hummingbird.models.SearchDepth;
 import com.charlesmadere.hummingbird.models.SearchScope;
@@ -40,11 +40,11 @@ public interface HummingbirdApi {
 
     @Headers(ACCEPT_JSON_MIMETYPE)
     @POST("library_entries")
-    Call<AddAnimeLibraryEntryResponse> addAnimeLibraryEntry(@Body JsonElement body);
+    Call<AnimeLibraryEntryResponse> addAnimeLibraryEntry(@Body JsonElement body);
 
     @Headers(ACCEPT_JSON_MIMETYPE)
     @POST("manga_library_entries")
-    Call<AddMangaLibraryEntryResponse> addMangaLibraryEntry(@Body JsonElement body);
+    Call<MangaLibraryEntryResponse> addMangaLibraryEntry(@Body JsonElement body);
 
     @DELETE("library_entries/{libraryEntryId}")
     Call<Void> deleteAnimeLibraryEntry(@Path("libraryEntryId") String libraryEntryId);
@@ -71,11 +71,10 @@ public interface HummingbirdApi {
             @Query("status") String watchingStatusLibraryUpdateValue);
 
     @GET("users")
-    Call<Feed> getFollowedUsers(@Query("followed_by") String username, @Query("page") Integer page);
+    Call<Feed> getFollowedUsers(@Query("followed_by") String userId, @Query("page") Integer page);
 
     @GET("users")
-    Call<Feed> getFollowingUsers(@Query("followers_of") String username,
-            @Query("page") Integer page);
+    Call<Feed> getFollowingUsers(@Query("followers_of") String userId, @Query("page") Integer page);
 
     @Headers(ACCEPT_JSON_MIMETYPE)
     @GET("franchises/{franchiseId}")
@@ -83,7 +82,7 @@ public interface HummingbirdApi {
 
     @Headers(ACCEPT_JSON_MIMETYPE)
     @GET("groups/{groupId}")
-    Call<GroupDigest> getGroup(@Path("groupId") String groupId);
+    Call<GroupDigest> getGroupDigest(@Path("groupId") String groupId);
 
     @GET("group_members")
     Call<Feed> getGroupMembers(@Query("group_id") String groupId, @Query("page") Integer page);
@@ -121,11 +120,11 @@ public interface HummingbirdApi {
     Call<Feed> getSubstories(@Query("story_id") String storyId, @Query("page") Integer page);
 
     @Headers(ACCEPT_JSON_MIMETYPE)
-    @GET("users/{username}")
-    Call<User> getUser(@Path("username") String username);
+    @GET("users/{userId}")
+    Call<User> getUser(@Path("userId") String userId);
 
-    @GET("user_infos/{username}")
-    Call<UserDigest> getUserDigest(@Path("username") String username);
+    @GET("user_infos/{userId}")
+    Call<UserDigest> getUserDigest(@Path("userId") String userId);
 
     @Headers(ACCEPT_JSON_MIMETYPE)
     @GET("groups")
@@ -171,12 +170,12 @@ public interface HummingbirdApi {
 
     @Headers(ACCEPT_JSON_MIMETYPE)
     @PUT("library_entries/{libraryEntryId}")
-    Call<Void> updateAnimeLibraryEntry(@Path("libraryEntryId") String libraryEntryId,
-            @Body JsonElement body);
+    Call<AnimeLibraryEntryResponse> updateAnimeLibraryEntry(
+            @Path("libraryEntryId") String libraryEntryId, @Body JsonElement body);
 
     @Headers(ACCEPT_JSON_MIMETYPE)
     @PUT("manga_library_entries/{libraryEntryId}")
-    Call<Void> updateMangaLibraryEntry(@Path("libraryEntryId") String libraryEntryId,
-            @Body JsonElement body);
+    Call<MangaLibraryEntryResponse> updateMangaLibraryEntry(
+            @Path("libraryEntryId") String libraryEntryId, @Body JsonElement body);
 
 }

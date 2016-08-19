@@ -12,12 +12,12 @@ import com.charlesmadere.hummingbird.misc.JsoupUtils;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.OkHttpUtils;
 import com.charlesmadere.hummingbird.misc.RetrofitUtils;
+import com.charlesmadere.hummingbird.misc.ThreadUtils;
 import com.charlesmadere.hummingbird.misc.Timber;
-import com.charlesmadere.hummingbird.models.AddAnimeLibraryEntryResponse;
-import com.charlesmadere.hummingbird.models.AddMangaLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.Anime;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
+import com.charlesmadere.hummingbird.models.AnimeLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
 import com.charlesmadere.hummingbird.models.AnimeWrapper;
 import com.charlesmadere.hummingbird.models.AppNews;
@@ -28,9 +28,9 @@ import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.FeedPost;
 import com.charlesmadere.hummingbird.models.Franchise;
 import com.charlesmadere.hummingbird.models.GroupDigest;
-import com.charlesmadere.hummingbird.models.Hydratable;
 import com.charlesmadere.hummingbird.models.MangaDigest;
 import com.charlesmadere.hummingbird.models.MangaLibraryEntry;
+import com.charlesmadere.hummingbird.models.MangaLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.MangaLibraryUpdate;
 import com.charlesmadere.hummingbird.models.ReadingStatus;
 import com.charlesmadere.hummingbird.models.SearchBundle;
@@ -69,13 +69,13 @@ public final class Api {
 
 
     public static void addAnimeLibraryEntry(final AnimeLibraryUpdate libraryUpdate,
-            final ApiResponse<AddAnimeLibraryEntryResponse> listener) {
+            final ApiResponse<AnimeLibraryEntryResponse> listener) {
         HUMMINGBIRD.addAnimeLibraryEntry(libraryUpdate.toJson()).enqueue(
-                new Callback<AddAnimeLibraryEntryResponse>() {
+                new Callback<AnimeLibraryEntryResponse>() {
             @Override
-            public void onResponse(final Call<AddAnimeLibraryEntryResponse> call,
-                    final Response<AddAnimeLibraryEntryResponse> response) {
-                final AddAnimeLibraryEntryResponse body = response.isSuccessful() ?
+            public void onResponse(final Call<AnimeLibraryEntryResponse> call,
+                    final Response<AnimeLibraryEntryResponse> response) {
+                final AnimeLibraryEntryResponse body = response.isSuccessful() ?
                         response.body() : null;
 
                 if (body == null) {
@@ -86,7 +86,7 @@ public final class Api {
             }
 
             @Override
-            public void onFailure(final Call<AddAnimeLibraryEntryResponse> call,
+            public void onFailure(final Call<AnimeLibraryEntryResponse> call,
                     final Throwable t) {
                 Timber.e(TAG, "add anime library entry failed", t);
                 listener.failure(null);
@@ -95,13 +95,13 @@ public final class Api {
     }
 
     public static void addMangaLibraryEntry(final MangaLibraryUpdate libraryUpdate,
-            final ApiResponse<AddMangaLibraryEntryResponse> listener) {
+            final ApiResponse<MangaLibraryEntryResponse> listener) {
         HUMMINGBIRD.addMangaLibraryEntry(libraryUpdate.toJson()).enqueue(
-                new Callback<AddMangaLibraryEntryResponse>() {
+                new Callback<MangaLibraryEntryResponse>() {
             @Override
-            public void onResponse(final Call<AddMangaLibraryEntryResponse> call,
-                    final Response<AddMangaLibraryEntryResponse> response) {
-                final AddMangaLibraryEntryResponse body = response.isSuccessful() ?
+            public void onResponse(final Call<MangaLibraryEntryResponse> call,
+                    final Response<MangaLibraryEntryResponse> response) {
+                final MangaLibraryEntryResponse body = response.isSuccessful() ?
                         response.body() : null;
 
                 if (body == null) {
@@ -112,7 +112,7 @@ public final class Api {
             }
 
             @Override
-            public void onFailure(final Call<AddMangaLibraryEntryResponse> call,
+            public void onFailure(final Call<MangaLibraryEntryResponse> call,
                     final Throwable t) {
                 Timber.e(TAG, "add manga library entry failed", t);
                 listener.failure(null);
@@ -274,41 +274,46 @@ public final class Api {
     }
 
     public static void getAnimeDigest(final String animeId, final ApiResponse<AnimeDigest> listener) {
-        TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
-        tcs.getTask().continueWithTask(new Continuation<Void, Task<AnimeDigest>>() {
-            @Override
-            public Task<AnimeDigest> then(final Task<Void> task) throws Exception {
-                final Response<AnimeDigest> response = HUMMINGBIRD.getAnimeDigest(animeId).execute();
-                final AnimeDigest body = response.isSuccessful() ? response.body() : null;
+        HUMMINGBIRD.getAnimeDigest(animeId).enqueue(new Callback<AnimeDigest>() {
+            private AnimeDigest mBody;
 
-                if (body == null) {
-                    throw new ServerException(retrieveErrorInfo(response));
-                } else {
-                    return hydrate(body);
-                }
-            }
-        }, Task.BACKGROUND_EXECUTOR).continueWith(new Continuation<AnimeDigest, Void>() {
             @Override
-            public Void then(final Task<AnimeDigest> task) throws Exception {
-                if (task.isCancelled() || task.isFaulted()) {
-                    final Exception exception = task.getError();
-                    Timber.e(TAG, "get anime digest (" + animeId + ") failed", exception);
-                    listener.failure(exception instanceof ServerException ?
-                            ((ServerException) exception).getErrorInfo() : null);
-                } else {
-                    listener.success(task.getResult());
+            public void onResponse(final Call<AnimeDigest> call,
+                    final Response<AnimeDigest> response) {
+                if (response.isSuccessful()) {
+                    mBody = response.body();
                 }
 
-                return null;
-            }
-        }, Task.UI_THREAD_EXECUTOR);
+                if (mBody == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    ThreadUtils.runOnBackground(new Runnable() {
+                        @Override
+                        public void run() {
+                            mBody.hydrate();
 
-        tcs.setResult(null);
+                            ThreadUtils.runOnUi(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listener.success(mBody);
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<AnimeDigest> call, final Throwable t) {
+                Timber.e(TAG, "get anime digest (" + animeId + ") failed", t);
+                listener.failure(null);
+            }
+        });
     }
 
-    public static void getAnimeLibraryEntries(final String username,
+    public static void getAnimeLibraryEntries(final String userId,
             @Nullable final WatchingStatus watchingStatus, final ApiResponse<Feed> listener) {
-        getAnimeLibraryEntries(username, watchingStatus, null, listener);
+        getAnimeLibraryEntries(userId, watchingStatus, null, listener);
     }
 
     public static void getAnimeLibraryEntries(final String userId,
@@ -316,60 +321,25 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final String ws = watchingStatus == null ? null : watchingStatus.getPostValue();
 
-        TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
-        tcs.getTask().continueWithTask(new Continuation<Void, Task<Feed>>() {
+        HUMMINGBIRD.getAnimeLibraryEntries(userId, ws).enqueue(new Callback<Feed>() {
             @Override
-            public Task<Feed> then(final Task<Void> task) throws Exception {
-                final Response<Feed> response = HUMMINGBIRD.getAnimeLibraryEntries(userId, ws)
-                        .execute();
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
 
                 if (body == null) {
-                    throw new ServerException(retrieveErrorInfo(response));
+                    listener.failure(retrieveErrorInfo(response));
                 } else {
-                    return hydrate(body);
+                    hydrateFeed(body, feed, listener);
                 }
             }
-        }, Task.BACKGROUND_EXECUTOR).onSuccessTask(new Continuation<Feed, Task<Feed>>() {
-            @Override
-            public Task<Feed> then(final Task<Feed> task) throws Exception {
-                return merge(task.getResult(), feed);
-            }
-        }, Task.BACKGROUND_EXECUTOR).continueWith(new Continuation<Feed, Void>() {
-            @Override
-            public Void then(final Task<Feed> task) throws Exception {
-                if (task.isCancelled() || task.isFaulted()) {
-                    final Exception exception = task.getError();
-                    Timber.e(TAG, "get anime library entries (" + userId +
-                            ") (watching status " + ws + ") failed", exception);
-                    listener.failure(exception instanceof ServerException ?
-                            ((ServerException) exception).getErrorInfo() : null);
-                } else {
-                    listener.success(task.getResult());
-                }
 
-                return null;
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get anime library entries (" + userId + ") (watching status "
+                        + ws + ") failed", t);
+                listener.failure(null);
             }
         });
-
-        tcs.setResult(null);
-    }
-
-    private static Task<Anime> getAnimeTask(final String animeId) {
-        return new TaskCompletionSource<Void>().getTask().continueWith(
-                new Continuation<Void, Anime>() {
-            @Override
-            public Anime then(final Task<Void> task) throws Exception {
-                final Response<AnimeWrapper> response = HUMMINGBIRD.getAnime(animeId).execute();
-                final AnimeWrapper body = response.isSuccessful() ? response.body() : null;
-
-                if (body == null) {
-                    throw new ServerException(retrieveErrorInfo(response));
-                } else {
-                    return body.getAnime();
-                }
-            }
-        }, Task.BACKGROUND_EXECUTOR);
     }
 
     public static void getAppNews(final ApiResponse<ArrayList<AppNews>> listener) {
@@ -407,98 +377,60 @@ public final class Api {
         });
     }
 
-    public static void getFollowedUsers(final String username, final ApiResponse<Feed> listener) {
-        getFollowedUsers(username, null, listener);
+    public static void getFollowedUsers(final String userId, final ApiResponse<Feed> listener) {
+        getFollowedUsers(userId, null, listener);
     }
 
-    public static void getFollowedUsers(final String username, @Nullable final Feed feed,
+    public static void getFollowedUsers(final String userId, @Nullable final Feed feed,
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
-        tcs.getTask().continueWithTask(new Continuation<Void, Task<Feed>>() {
+        HUMMINGBIRD.getFollowedUsers(userId, page).enqueue(new Callback<Feed>() {
             @Override
-            public Task<Feed> then(final Task<Void> task) throws Exception {
-                final Response<Feed> response = HUMMINGBIRD.getFollowedUsers(username, page)
-                        .execute();
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
 
                 if (body == null) {
-                    throw new ServerException(retrieveErrorInfo(response));
+                    listener.failure(retrieveErrorInfo(response));
                 } else {
-                    return hydrate(body);
+                    hydrateFeed(body, feed, listener);
                 }
             }
-        }, Task.BACKGROUND_EXECUTOR).onSuccessTask(new Continuation<Feed, Task<Feed>>() {
-            @Override
-            public Task<Feed> then(final Task<Feed> task) throws Exception {
-                return merge(task.getResult(), feed);
-            }
-        }, Task.BACKGROUND_EXECUTOR).continueWith(new Continuation<Feed, Void>() {
-            @Override
-            public Void then(final Task<Feed> task) throws Exception {
-                if (task.isCancelled() || task.isFaulted()) {
-                    final Exception exception = task.getError();
-                    Timber.e(TAG, "get followed users (" + username + ") (page "
-                            + page + ") failed", exception);
-                    listener.failure(exception instanceof ServerException ?
-                            ((ServerException) exception).getErrorInfo() : null);
-                } else {
-                    listener.success(task.getResult());
-                }
 
-                return null;
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get followed users (" + userId + ") (page " + page + ") failed", t);
+                listener.failure(null);
             }
-        }, Task.UI_THREAD_EXECUTOR);
-
-        tcs.setResult(null);
+        });
     }
 
-    public static void getFollowingUsers(final String username, final ApiResponse<Feed> listener) {
-        getFollowingUsers(username, null, listener);
+    public static void getFollowingUsers(final String userId, final ApiResponse<Feed> listener) {
+        getFollowingUsers(userId, null, listener);
     }
 
-    public static void getFollowingUsers(final String username, @Nullable final Feed feed,
+    public static void getFollowingUsers(final String userId, @Nullable final Feed feed,
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
-        tcs.getTask().continueWithTask(new Continuation<Void, Task<Feed>>() {
+        HUMMINGBIRD.getFollowingUsers(userId, page).enqueue(new Callback<Feed>() {
             @Override
-            public Task<Feed> then(final Task<Void> task) throws Exception {
-                final Response<Feed> response = HUMMINGBIRD.getFollowingUsers(username, page)
-                        .execute();
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
 
                 if (body == null) {
-                    throw new ServerException(retrieveErrorInfo(response));
+                    listener.failure(retrieveErrorInfo(response));
                 } else {
-                    return hydrate(body);
+                    hydrateFeed(body, feed, listener);
                 }
             }
-        }, Task.BACKGROUND_EXECUTOR).onSuccessTask(new Continuation<Feed, Task<Feed>>() {
-            @Override
-            public Task<Feed> then(final Task<Feed> task) throws Exception {
-                return merge(task.getResult(), feed);
-            }
-        }, Task.BACKGROUND_EXECUTOR).continueWith(new Continuation<Feed, Void>() {
-            @Override
-            public Void then(final Task<Feed> task) throws Exception {
-                if (task.isCancelled() || task.isFaulted()) {
-                    final Exception exception = task.getError();
-                    Timber.e(TAG, "get following users (" + username + ") (page "
-                            + page + ") failed", exception);
-                    listener.failure(exception instanceof ServerException ?
-                            ((ServerException) exception).getErrorInfo() : null);
-                } else {
-                    listener.success(task.getResult());
-                }
 
-                return null;
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get following users (" + userId + ") (page " + page + ") failed", t);
+                listener.failure(null);
             }
-        }, Task.UI_THREAD_EXECUTOR);
-
-        tcs.setResult(null);
+        });
     }
 
     public static void getFranchise(final String franchiseId, final ApiResponse<Franchise> listener) {
@@ -521,36 +453,41 @@ public final class Api {
     }
 
     public static void getGroupDigest(final String groupId, final ApiResponse<GroupDigest> listener) {
-        TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
-        tcs.getTask().continueWithTask(new Continuation<Void, Task<GroupDigest>>() {
-            @Override
-            public Task<GroupDigest> then(final Task<Void> task) throws Exception {
-                final Response<GroupDigest> response = HUMMINGBIRD.getGroup(groupId).execute();
-                final GroupDigest body = response.isSuccessful() ? response.body() : null;
+        HUMMINGBIRD.getGroupDigest(groupId).enqueue(new Callback<GroupDigest>() {
+            private GroupDigest mGroupDigest;
 
-                if (body == null) {
-                    throw new ServerException(retrieveErrorInfo(response));
-                } else {
-                    return hydrate(body);
-                }
-            }
-        }, Task.BACKGROUND_EXECUTOR).continueWith(new Continuation<GroupDigest, Void>() {
             @Override
-            public Void then(final Task<GroupDigest> task) throws Exception {
-                if (task.isCancelled() || task.isFaulted()) {
-                    final Exception exception = task.getError();
-                    Timber.e(TAG, "get group digest (" + groupId + ") failed", exception);
-                    listener.failure(exception instanceof ServerException ?
-                            ((ServerException) exception).getErrorInfo() : null);
-                } else {
-                    listener.success(task.getResult());
+            public void onResponse(final Call<GroupDigest> call,
+                    final Response<GroupDigest> response) {
+                if (response.isSuccessful()) {
+                    mGroupDigest = response.body();
                 }
 
-                return null;
-            }
-        }, Task.UI_THREAD_EXECUTOR);
+                if (mGroupDigest == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else {
+                    ThreadUtils.runOnBackground(new Runnable() {
+                        @Override
+                        public void run() {
+                            mGroupDigest.hydrate();
 
-        tcs.setResult(null);
+                            ThreadUtils.runOnUi(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listener.success(mGroupDigest);
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<GroupDigest> call, final Throwable t) {
+                Timber.e(TAG, "get group (" + groupId + ") failed", t);
+                listener.failure(null);
+            }
+        });
     }
 
     public static void getGroupMembers(final String groupId, final ApiResponse<Feed> listener) {
@@ -561,42 +498,24 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
-        tcs.getTask().continueWithTask(new Continuation<Void, Task<Feed>>() {
+        HUMMINGBIRD.getGroupMembers(groupId, page).enqueue(new Callback<Feed>() {
             @Override
-            public Task<Feed> then(final Task<Void> task) throws Exception {
-                final Response<Feed> response = HUMMINGBIRD.getGroupMembers(groupId, page).execute();
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
 
                 if (body == null) {
-                    throw new ServerException(retrieveErrorInfo(response));
+                    listener.failure(retrieveErrorInfo(response));
                 } else {
-                    return hydrate(body);
+                    hydrateFeed(body, feed, listener);
                 }
             }
-        }, Task.BACKGROUND_EXECUTOR).onSuccessTask(new Continuation<Feed, Task<Feed>>() {
-            @Override
-            public Task<Feed> then(final Task<Feed> task) throws Exception {
-                return merge(task.getResult(), feed);
-            }
-        }, Task.BACKGROUND_EXECUTOR).continueWith(new Continuation<Feed, Void>() {
-            @Override
-            public Void then(final Task<Feed> task) throws Exception {
-                if (task.isCancelled() || task.isFaulted()) {
-                    final Exception exception = task.getError();
-                    Timber.e(TAG, "get group members (" + groupId + ") (page "
-                            + page + ") failed", exception);
-                    listener.failure(exception instanceof ServerException ?
-                            ((ServerException) exception).getErrorInfo() : null);
-                } else {
-                    listener.success(task.getResult());
-                }
 
-                return null;
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get group members (" + groupId + ") (page " + page + ") failed", t);
+                listener.failure(null);
             }
-        }, Task.UI_THREAD_EXECUTOR);
-
-        tcs.setResult(null);
+        });
     }
 
     public static void getGroupStories(final String groupId, final ApiResponse<Feed> listener) {
@@ -607,124 +526,78 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
-        tcs.getTask().continueWithTask(new Continuation<Void, Task<Feed>>() {
+        HUMMINGBIRD.getGroupStories(groupId, page).enqueue(new Callback<Feed>() {
             @Override
-            public Task<Feed> then(final Task<Void> task) throws Exception {
-                final Response<Feed> response = HUMMINGBIRD.getGroupStories(groupId, page).execute();
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
 
                 if (body == null) {
-                    throw new ServerException(retrieveErrorInfo(response));
+                    listener.failure(retrieveErrorInfo(response));
                 } else {
-                    return hydrate(body);
+                    hydrateFeed(body, feed, listener);
                 }
             }
-        }, Task.BACKGROUND_EXECUTOR).onSuccessTask(new Continuation<Feed, Task<Feed>>() {
-            @Override
-            public Task<Feed> then(final Task<Feed> task) throws Exception {
-                return merge(task.getResult(), feed);
-            }
-        }, Task.BACKGROUND_EXECUTOR).continueWith(new Continuation<Feed, Void>() {
-            @Override
-            public Void then(final Task<Feed> task) throws Exception {
-                if (task.isCancelled() || task.isFaulted()) {
-                    final Exception exception = task.getError();
-                    Timber.e(TAG, "get group stories (" + groupId + ") (page "
-                            + page + ") failed", exception);
-                    listener.failure(exception instanceof ServerException ?
-                            ((ServerException) exception).getErrorInfo() : null);
-                } else {
-                    listener.success(task.getResult());
-                }
 
-                return null;
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get group stories (" + groupId + ") (page " + page + ") failed", t);
+                listener.failure(null);
             }
-        }, Task.UI_THREAD_EXECUTOR);
-
-        tcs.setResult(null);
+        });
     }
 
-    public static void getMangaDigest(final String mangaId, final ApiResponse<MangaDigest> listener) {
-        TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
-        tcs.getTask().continueWithTask(new Continuation<Void, Task<MangaDigest>>() {
+    public static void getMangaDigest(final String mangaId,
+            final ApiResponse<MangaDigest> listener) {
+        HUMMINGBIRD.getMangaDigest(mangaId).enqueue(new Callback<MangaDigest>() {
             @Override
-            public Task<MangaDigest> then(final Task<Void> task) throws Exception {
-                final Response<MangaDigest> response = HUMMINGBIRD.getMangaDigest(mangaId).execute();
+            public void onResponse(final Call<MangaDigest> call,
+                    final Response<MangaDigest> response) {
                 final MangaDigest body = response.isSuccessful() ? response.body() : null;
 
                 if (body == null) {
-                    throw new ServerException(retrieveErrorInfo(response));
+                    listener.failure(retrieveErrorInfo(response));
                 } else {
-                    return hydrate(body);
+                    listener.success(body);
                 }
             }
-        }, Task.BACKGROUND_EXECUTOR).continueWith(new Continuation<MangaDigest, Void>() {
+
             @Override
-            public Void then(final Task<MangaDigest> task) throws Exception {
-                if (task.isCancelled() || task.isFaulted()) {
-                    final Exception exception = task.getError();
-                    Timber.e(TAG, "get manga digest (" + mangaId + ") failed", exception);
-                    listener.failure(exception instanceof ServerException ?
-                            ((ServerException) exception).getErrorInfo() : null);
-                } else {
-                    listener.success(task.getResult());
-                }
-
-                return null;
+            public void onFailure(final Call<MangaDigest> call, final Throwable t) {
+                Timber.e(TAG, "get manga digest (" + mangaId + ") failed", t);
+                listener.failure(null);
             }
-        }, Task.UI_THREAD_EXECUTOR);
-
-        tcs.setResult(null);
+        });
     }
 
-    public static void getMangaLibraryEntries(final String username,
+    public static void getMangaLibraryEntries(final String userId,
             @Nullable final ReadingStatus readingStatus, final ApiResponse<Feed> listener) {
-        getMangaLibraryEntries(username, readingStatus, null, listener);
+        getMangaLibraryEntries(userId, readingStatus, null, listener);
     }
 
-    public static void getMangaLibraryEntries(final String username,
+    public static void getMangaLibraryEntries(final String userId,
             @Nullable final ReadingStatus readingStatus, @Nullable final Feed feed,
             final ApiResponse<Feed> listener) {
         final String rs = readingStatus == null ? null : readingStatus.getPostValue();
 
-        TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
-        tcs.getTask().continueWithTask(new Continuation<Void, Task<Feed>>() {
+        HUMMINGBIRD.getMangaLibraryEntries(userId, rs).enqueue(new Callback<Feed>() {
             @Override
-            public Task<Feed> then(final Task<Void> task) throws Exception {
-                final Response<Feed> response = HUMMINGBIRD.getMangaLibraryEntries(username, rs)
-                        .execute();
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
 
                 if (body == null) {
-                    throw new ServerException(retrieveErrorInfo(response));
+                    listener.failure(retrieveErrorInfo(response));
                 } else {
-                    return hydrate(body);
+                    hydrateFeed(body, feed, listener);
                 }
             }
-        }, Task.BACKGROUND_EXECUTOR).continueWithTask(new Continuation<Feed, Task<Feed>>() {
-            @Override
-            public Task<Feed> then(final Task<Feed> task) throws Exception {
-                return merge(task.getResult(), feed);
-            }
-        }, Task.BACKGROUND_EXECUTOR).continueWith(new Continuation<Feed, Void>() {
-            @Override
-            public Void then(final Task<Feed> task) throws Exception {
-                if (task.isCancelled() || task.isFaulted()) {
-                    final Exception exception = task.getError();
-                    Timber.e(TAG, "get manga library entries (" + username +
-                            ") (reading status " + rs + ") failed", exception);
-                    listener.failure(exception instanceof ServerException ?
-                            ((ServerException) exception).getErrorInfo() : null);
-                } else {
-                    listener.success(task.getResult());
-                }
 
-                return null;
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get manga library entries (" + userId + ") (reading status "
+                        + rs + ") failed", t);
+                listener.failure(null);
             }
-        }, Task.UI_THREAD_EXECUTOR);
-
-        tcs.setResult(null);
+        });
     }
 
     public static void getNewsFeed(final ApiResponse<Feed> listener) {
@@ -734,41 +607,24 @@ public final class Api {
     public static void getNewsFeed(@Nullable final Feed feed, final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
-        tcs.getTask().continueWithTask(new Continuation<Void, Task<Feed>>() {
+        HUMMINGBIRD.getNewsFeed(true, page).enqueue(new Callback<Feed>() {
             @Override
-            public Task<Feed> then(final Task<Void> task) throws Exception {
-                final Response<Feed> response = HUMMINGBIRD.getNewsFeed(true, page).execute();
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
 
                 if (body == null) {
-                    throw new ServerException(retrieveErrorInfo(response));
+                    listener.failure(retrieveErrorInfo(response));
                 } else {
-                    return hydrate(body);
+                    hydrateFeed(body, feed, listener);
                 }
             }
-        }, Task.BACKGROUND_EXECUTOR).continueWithTask(new Continuation<Feed, Task<Feed>>() {
-            @Override
-            public Task<Feed> then(final Task<Feed> task) throws Exception {
-                return merge(task.getResult(), feed);
-            }
-        }, Task.BACKGROUND_EXECUTOR).continueWith(new Continuation<Feed, Void>() {
-            @Override
-            public Void then(final Task<Feed> task) throws Exception {
-                if (task.isCancelled() || task.isFaulted()) {
-                    final Exception exception = task.getError();
-                    Timber.e(TAG, "get news feed (page " + page + ") failed", exception);
-                    listener.failure(exception instanceof ServerException ?
-                            ((ServerException) exception).getErrorInfo() : null);
-                } else {
-                    listener.success(task.getResult());
-                }
 
-                return null;
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get news feed (page " + page + ") failed", t);
+                listener.failure(null);
             }
-        }, Task.UI_THREAD_EXECUTOR);
-
-        tcs.setResult(null);
+        });
     }
 
     public static void getNotifications(final ApiResponse<Feed> listener) {
@@ -778,110 +634,67 @@ public final class Api {
     public static void getNotifications(@Nullable final Feed feed, final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
-        tcs.getTask().continueWithTask(new Continuation<Void, Task<Feed>>() {
+        HUMMINGBIRD.getNotifications(page).enqueue(new Callback<Feed>() {
             @Override
-            public Task<Feed> then(final Task<Void> task) throws Exception {
-                final Response<Feed> response = HUMMINGBIRD.getNotifications(page).execute();
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
 
                 if (body == null) {
-                    throw new ServerException(retrieveErrorInfo(response));
+                    listener.failure(retrieveErrorInfo(response));
                 } else {
-                    return hydrate(body);
+                    hydrateFeed(body, feed, listener);
                 }
             }
-        }, Task.BACKGROUND_EXECUTOR).continueWithTask(new Continuation<Feed, Task<Feed>>() {
-            @Override
-            public Task<Feed> then(final Task<Feed> task) throws Exception {
-                return merge(task.getResult(), feed);
-            }
-        }, Task.BACKGROUND_EXECUTOR).continueWith(new Continuation<Feed, Void>() {
-            @Override
-            public Void then(final Task<Feed> task) throws Exception {
-                if (task.isCancelled() || task.isFaulted()) {
-                    final Exception exception = task.getError();
-                    Timber.e(TAG, "get notifications (page " + page + ") failed", exception);
-                    listener.failure(exception instanceof ServerException ?
-                            ((ServerException) exception).getErrorInfo() : null);
-                } else {
-                    listener.success(task.getResult());
-                }
 
-                return null;
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get notifications (page " + page + ") failed", t);
+                listener.failure(null);
             }
-        }, Task.UI_THREAD_EXECUTOR);
-
-        tcs.setResult(null);
+        });
     }
 
     public static void getStory(final String storyId, final ApiResponse<Feed> listener) {
-        TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
-        tcs.getTask().continueWithTask(new Continuation<Void, Task<Feed>>() {
+        HUMMINGBIRD.getStory(storyId).enqueue(new Callback<Feed>() {
             @Override
-            public Task<Feed> then(final Task<Void> task) throws Exception {
-                final Response<Feed> response = HUMMINGBIRD.getStory(storyId).execute();
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
 
                 if (body == null) {
-                    throw new ServerException(retrieveErrorInfo(response));
+                    listener.failure(retrieveErrorInfo(response));
                 } else {
-                    return hydrate(body);
+                    hydrateFeed(body, null, listener);
                 }
             }
-        }, Task.BACKGROUND_EXECUTOR).continueWith(new Continuation<Feed, Void>() {
+
             @Override
-            public Void then(final Task<Feed> task) throws Exception {
-                if (task.isCancelled() || task.isFaulted()) {
-                    final Exception exception = task.getError();
-                    Timber.e(TAG, "get story (" + storyId + ") failed", exception);
-                    listener.failure(exception instanceof ServerException ?
-                            ((ServerException) exception).getErrorInfo() : null);
-                } else {
-                    listener.success(task.getResult());
-                }
-
-                return null;
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get story (" + storyId + ") failed", t);
+                listener.failure(null);
             }
-        }, Task.UI_THREAD_EXECUTOR);
-
-        tcs.setResult(null);
+        });
     }
 
     public static void getStoryFromNotification(final String notificationId,
             final ApiResponse<Feed> listener) {
-        TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
-        tcs.getTask().continueWithTask(new Continuation<Void, Task<Feed>>() {
+        HUMMINGBIRD.getStoryFromNotification(notificationId).enqueue(new Callback<Feed>() {
             @Override
-            public Task<Feed> then(final Task<Void> task) throws Exception {
-                final Response<Feed> response = HUMMINGBIRD.getStoryFromNotification(notificationId)
-                        .execute();
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
 
                 if (body == null) {
-                    throw new ServerException(retrieveErrorInfo(response));
+                    listener.failure(retrieveErrorInfo(response));
                 } else {
-                    return hydrate(body);
+                    hydrateFeed(body, null, listener);
                 }
             }
-        }, Task.BACKGROUND_EXECUTOR).continueWith(new Continuation<Feed, Void>() {
+
             @Override
-            public Void then(final Task<Feed> task) throws Exception {
-                if (task.isCancelled() || task.isFaulted()) {
-                    final Exception exception = task.getError();
-                    Timber.e(TAG, "get story from notification (" +
-                            notificationId + ") failed", exception);
-                    listener.failure(exception instanceof ServerException ?
-                            ((ServerException) exception).getErrorInfo() : null);
-                } else {
-                    listener.success(task.getResult());
-                }
-
-                return null;
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get story from notification (" + notificationId + ") failed", t);
+                listener.failure(null);
             }
-        }, Task.UI_THREAD_EXECUTOR);
-
-        tcs.setResult(null);
+        });
     }
 
     public static void getSubstories(final String storyId, final ApiResponse<Feed> listener) {
@@ -892,46 +705,28 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
-        tcs.getTask().continueWithTask(new Continuation<Void, Task<Feed>>() {
+        HUMMINGBIRD.getSubstories(storyId, page).enqueue(new Callback<Feed>() {
             @Override
-            public Task<Feed> then(final Task<Void> task) throws Exception {
-                final Response<Feed> response = HUMMINGBIRD.getSubstories(storyId, page).execute();
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
 
                 if (body == null) {
-                    throw new ServerException(retrieveErrorInfo(response));
+                    listener.failure(retrieveErrorInfo(response));
                 } else {
-                    return hydrate(body);
+                    hydrateFeed(body, feed, listener);
                 }
             }
-        }, Task.BACKGROUND_EXECUTOR).continueWithTask(new Continuation<Feed, Task<Feed>>() {
-            @Override
-            public Task<Feed> then(final Task<Feed> task) throws Exception {
-                return merge(task.getResult(), feed);
-            }
-        }, Task.BACKGROUND_EXECUTOR).continueWith(new Continuation<Feed, Void>() {
-            @Override
-            public Void then(final Task<Feed> task) throws Exception {
-                if (task.isCancelled() || task.isFaulted()) {
-                    final Exception exception = task.getError();
-                    Timber.e(TAG, "get substories (" + storyId + ") (page "
-                            + page + ") failed", exception);
-                    listener.failure(exception instanceof ServerException ?
-                            ((ServerException) exception).getErrorInfo() : null);
-                } else {
-                    listener.success(task.getResult());
-                }
 
-                return null;
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get substories (" + storyId + ") (page " + page + ") failed", t);
+                listener.failure(null);
             }
-        }, Task.UI_THREAD_EXECUTOR);
-
-        tcs.setResult(null);
+        });
     }
 
-    public static void getUser(final String username, final ApiResponse<User> listener) {
-        HUMMINGBIRD.getUser(username).enqueue(new Callback<User>() {
+    public static void getUser(final String userId, final ApiResponse<User> listener) {
+        HUMMINGBIRD.getUser(userId).enqueue(new Callback<User>() {
             @Override
             public void onResponse(final Call<User> call, final Response<User> response) {
                 final User body = response.isSuccessful() ? response.body() : null;
@@ -945,64 +740,69 @@ public final class Api {
 
             @Override
             public void onFailure(final Call<User> call, final Throwable t) {
-                Timber.e(TAG, "get user (" + username + ") failed", t);
+                Timber.e(TAG, "get user (" + userId + ") failed", t);
                 listener.failure(null);
             }
         });
     }
 
-    public static void getUserDigest(final String username, final ApiResponse<UserDigest> listener) {
-        TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
-        tcs.getTask().continueWithTask(new Continuation<Void, Task<UserDigest>>() {
-            @Override
-            public Task<UserDigest> then(final Task<Void> task) throws Exception {
-                final Response<UserDigest> response = HUMMINGBIRD.getUserDigest(username).execute();
-                final UserDigest body = response.isSuccessful() ? response.body() : null;
+    public static void getUserDigest(final String userId, final ApiResponse<UserDigest> listener) {
+        HUMMINGBIRD.getUserDigest(userId).enqueue(new Callback<UserDigest>() {
+            private UserDigest mBody;
 
-                if (body == null) {
-                    throw new ServerException(retrieveErrorInfo(response));
-                } else {
-                    return Task.forResult(body);
-                }
-            }
-        }, Task.BACKGROUND_EXECUTOR).onSuccessTask(new Continuation<UserDigest, Task<UserDigest>>() {
-            @Override
-            public Task<UserDigest> then(final Task<UserDigest> task) throws Exception {
-                final UserDigest digest = task.getResult();
-
-                if (digest.isMissingUser()) {
-                    Timber.d(TAG, "user digest for \"" + username + "\" is missing user");
-
-                    final Response<User> response = HUMMINGBIRD.getUser(digest.getInfo().getId())
-                            .execute();
-                    final User user = response.isSuccessful() ? response.body() : null;
-
-                    if (user == null) {
-                        throw new ServerException(retrieveErrorInfo(response));
-                    } else {
-                        digest.setUser(user);
+            private void fetchUser() {
+                getUser(mBody.getInfo().getId(), new ApiResponse<User>() {
+                    @Override
+                    public void failure(@Nullable final ErrorInfo error) {
+                        listener.failure(error);
                     }
-                }
 
-                return hydrate(digest);
+                    @Override
+                    public void success(final User user) {
+                        mBody.setUser(user);
+                        hydrate();
+                    }
+                });
             }
-        }, Task.BACKGROUND_EXECUTOR).continueWith(new Continuation<UserDigest, Void>() {
+
+            private void hydrate() {
+                ThreadUtils.runOnBackground(new Runnable() {
+                    @Override
+                    public void run() {
+                        mBody.hydrate();
+
+                        ThreadUtils.runOnUi(new Runnable() {
+                            @Override
+                            public void run() {
+                                listener.success(mBody);
+                            }
+                        });
+                    }
+                });
+            }
+
             @Override
-            public Void then(final Task<UserDigest> task) throws Exception {
-                if (task.isCancelled() || task.isFaulted()) {
-                    final Exception exception = task.getError();
-                    Timber.e(TAG, "get user digest (" + username + ") failed", exception);
-                    listener.failure(exception instanceof ServerException ?
-                            ((ServerException) exception).getErrorInfo() : null);
-                } else {
-                    listener.success(task.getResult());
+            public void onResponse(final Call<UserDigest> call,
+                    final Response<UserDigest> response) {
+                if (response.isSuccessful()) {
+                    mBody = response.body();
                 }
 
-                return null;
+                if (mBody == null) {
+                    listener.failure(retrieveErrorInfo(response));
+                } else if (mBody.isMissingUser()) {
+                    fetchUser();
+                } else {
+                    hydrate();
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<UserDigest> call, final Throwable t) {
+                Timber.e(TAG, "get user digest (" + userId + ") failed", t);
+                listener.failure(null);
             }
         });
-
-        tcs.setResult(null);
     }
 
     public static void getUserGroups(final String userId, final ApiResponse<Feed> listener) {
@@ -1013,42 +813,24 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
-        tcs.getTask().continueWithTask(new Continuation<Void, Task<Feed>>() {
+        HUMMINGBIRD.getUserGroups(userId,page).enqueue(new Callback<Feed>() {
             @Override
-            public Task<Feed> then(final Task<Void> task) throws Exception {
-                final Response<Feed> response = HUMMINGBIRD.getUserGroups(userId, page).execute();
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
 
                 if (body == null) {
-                    throw new ServerException(retrieveErrorInfo(response));
+                    listener.failure(retrieveErrorInfo(response));
                 } else {
-                    return hydrate(body);
+                    hydrateFeed(body, feed, listener);
                 }
             }
-        }, Task.BACKGROUND_EXECUTOR).continueWithTask(new Continuation<Feed, Task<Feed>>() {
-            @Override
-            public Task<Feed> then(final Task<Feed> task) throws Exception {
-                return merge(task.getResult(), feed);
-            }
-        }, Task.BACKGROUND_EXECUTOR).continueWith(new Continuation<Feed, Void>() {
-            @Override
-            public Void then(final Task<Feed> task) throws Exception {
-                if (task.isCancelled() || task.isFaulted()) {
-                    final Exception exception = task.getError();
-                    Timber.e(TAG, "get user groups (" + userId + ") (page " +
-                            page + ") failed", exception);
-                    listener.failure(exception instanceof ServerException ?
-                            ((ServerException) exception).getErrorInfo() : null);
-                } else {
-                    listener.success(task.getResult());
-                }
 
-                return null;
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get user groups (" + userId + ") (page " + page + ") failed", t);
+                listener.failure(null);
             }
-        }, Task.UI_THREAD_EXECUTOR);
-
-        tcs.setResult(null);
+        });
     }
 
     public static void getUserReviews(final String userId, final ApiResponse<Feed> listener) {
@@ -1059,64 +841,48 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
-        tcs.getTask().continueWithTask(new Continuation<Void, Task<Feed>>() {
+        HUMMINGBIRD.getUserReviews(userId, page).enqueue(new Callback<Feed>() {
             @Override
-            public Task<Feed> then(final Task<Void> task) throws Exception {
-                final Response<Feed> response = HUMMINGBIRD.getUserReviews(userId, page).execute();
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
 
                 if (body == null) {
-                    throw new ServerException(retrieveErrorInfo(response));
-                } else {
-                    return Task.forResult(body);
+                    listener.failure(retrieveErrorInfo(response));
+                    return;
                 }
-            }
-        }, Task.BACKGROUND_EXECUTOR).onSuccessTask(new Continuation<Feed, Task<Feed>>() {
-            @Override
-            public Task<Feed> then(final Task<Feed> task) throws Exception {
-                final Feed body = task.getResult();
 
                 if (!body.hasAnimeReviews()) {
-                    return merge(body, feed);
+                    hydrateFeed(body, feed, listener);
+                    return;
                 }
 
                 final ArrayList<String> animeIds = body.getAnimeIdsNeededForAnimeReviews();
 
                 if (animeIds == null || animeIds.isEmpty()) {
-                    return merge(body, feed);
+                    hydrateFeed(body, feed, listener);
+                    return;
                 }
 
-                final ArrayList<Task<Anime>> tasks = new ArrayList<>(animeIds.size());
-
-                for (final String animeId : animeIds) {
-                    tasks.add(getAnimeTask(animeId));
-                }
-
-                return Task.whenAll(tasks).continueWithTask(new Continuation<Void, Task<Feed>>() {
+                getAnime(animeIds, new ApiResponse<ArrayList<Anime>>() {
                     @Override
-                    public Task<Feed> then(final Task<Void> task) throws Exception {
-                        final ArrayList<Anime> animeList = new ArrayList<>(tasks.size());
+                    public void failure(@Nullable final ErrorInfo error) {
+                        listener.failure(error);
+                    }
 
-                        for (final Task<Anime> animeTask : tasks) {
-                            if (!task.isCancelled() && !task.isFaulted()) {
-                                animeList.add(animeTask.getResult());
-                            }
-                        }
-
-                        body.addAnime(animeList);
-                        return merge(body, feed);
+                    @Override
+                    public void success(@Nullable final ArrayList<Anime> anime) {
+                        body.addAnime(anime);
+                        hydrateFeed(body, feed, listener);
                     }
                 });
             }
-        }, Task.BACKGROUND_EXECUTOR).continueWith(new Continuation<Feed, Void>() {
-            @Override
-            public Void then(final Task<Feed> task) throws Exception {
-                return null;
-            }
-        }, Task.UI_THREAD_EXECUTOR);
 
-        tcs.setResult(null);
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get user reviews (" + userId + ") failed", t);
+                listener.failure(null);
+            }
+        });
     }
 
     public static void getUserStories(final String userId, final ApiResponse<Feed> listener) {
@@ -1127,67 +893,50 @@ public final class Api {
             final ApiResponse<Feed> listener) {
         final int page = feed == null ? 1 : feed.getCursor();
 
-        TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
-        tcs.getTask().continueWithTask(new Continuation<Void, Task<Feed>>() {
+        HUMMINGBIRD.getUserStories(userId, page).enqueue(new Callback<Feed>() {
             @Override
-            public Task<Feed> then(final Task<Void> task) throws Exception {
-                final Response<Feed> response = HUMMINGBIRD.getUserStories(userId, page).execute();
+            public void onResponse(final Call<Feed> call, final Response<Feed> response) {
                 final Feed body = response.isSuccessful() ? response.body() : null;
 
                 if (body == null) {
-                    throw new ServerException(retrieveErrorInfo(response));
+                    listener.failure(retrieveErrorInfo(response));
                 } else {
-                    return hydrate(body);
+                    hydrateFeed(body, feed, listener);
                 }
             }
-        }, Task.BACKGROUND_EXECUTOR).continueWithTask(new Continuation<Feed, Task<Feed>>() {
-            @Override
-            public Task<Feed> then(final Task<Feed> task) throws Exception {
-                return merge(task.getResult(), feed);
-            }
-        }, Task.BACKGROUND_EXECUTOR).continueWith(new Continuation<Feed, Void>() {
-            @Override
-            public Void then(final Task<Feed> task) throws Exception {
-                if (task.isCancelled() || task.isFaulted()) {
-                    final Exception exception = task.getError();
-                    Timber.e(TAG, "get user stories (" + userId + ") failed", exception);
-                    listener.failure(exception instanceof ServerException ?
-                            ((ServerException) exception).getErrorInfo() : null);
-                } else {
-                    listener.success(task.getResult());
-                }
 
-                return null;
+            @Override
+            public void onFailure(final Call<Feed> call, final Throwable t) {
+                Timber.e(TAG, "get user stories (" + userId + ") failed", t);
+                listener.failure(null);
             }
-        }, Task.UI_THREAD_EXECUTOR);
-
-        tcs.setResult(null);
+        });
     }
 
-    private static <T extends Hydratable> Task<T> hydrate(final T hydratable) {
-        return new TaskCompletionSource<Void>().getTask().continueWith(new Continuation<Void, T>() {
+    private static void hydrateFeed(@NonNull final Feed newFeed, @Nullable final Feed oldFeed,
+            @NonNull final ApiResponse<Feed> listener) {
+        ThreadUtils.runOnBackground(new Runnable() {
             @Override
-            public T then(final Task<Void> task) throws Exception {
-                hydratable.hydrate();
-                return hydratable;
-            }
-        }, Task.BACKGROUND_EXECUTOR);
-    }
-
-    private static Task<Feed> merge(@NonNull final Feed newFeed, @Nullable final Feed oldFeed) {
-        return new TaskCompletionSource<Void>().getTask().continueWith(new Continuation<Void, Feed>() {
-            @Override
-            public Feed then(final Task<Void> task) throws Exception {
+            public void run() {
                 if (oldFeed == null) {
                     newFeed.hydrate();
-                    return newFeed;
                 } else {
                     oldFeed.merge(newFeed);
                     oldFeed.hydrate();
-                    return oldFeed;
                 }
+
+                ThreadUtils.runOnUi(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (oldFeed == null) {
+                            listener.success(newFeed);
+                        } else {
+                            listener.success(oldFeed);
+                        }
+                    }
+                });
             }
-        }, Task.BACKGROUND_EXECUTOR);
+        });
     }
 
     public static void joinGroup(final String groupId) {
@@ -1345,20 +1094,20 @@ public final class Api {
             final ApiResponse<Void> listener) {
         TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
         tcs.getTask().continueWithTask(new Continuation<Void, Task<String>>() {
-           @Override
-           public Task<String> then(final Task<Void> task) throws Exception {
-               Timber.d(TAG, "attempting to retrieve sign in page...");
+            @Override
+            public Task<String> then(final Task<Void> task) throws Exception {
+                Timber.d(TAG, "attempting to retrieve sign in page...");
 
-               final Response<ResponseBody> response = HUMMINGBIRD.getSignInPage().execute();
+                final Response<ResponseBody> response = HUMMINGBIRD.getSignInPage().execute();
 
-               if (response.isSuccessful()) {
-                   Timber.d(TAG, "sign in page was retrieved");
-                   return Task.forResult(response.body().string());
-               } else {
-                   Timber.e(TAG, "failed to retrieve sign in page");
-                   throw new ServerException(retrieveErrorInfo(response));
-               }
-           }
+                if (response.isSuccessful()) {
+                    Timber.d(TAG, "sign in page was retrieved");
+                    return Task.forResult(response.body().string());
+                } else {
+                    Timber.e(TAG, "failed to retrieve sign in page");
+                    throw new ServerException(retrieveErrorInfo(response));
+                }
+            }
         }, Task.BACKGROUND_EXECUTOR).onSuccessTask(new Continuation<String, Task<Void>>() {
             @Override
             public Task<Void> then(final Task<String> task) throws Exception {
@@ -1470,20 +1219,24 @@ public final class Api {
     }
 
     public static void updateAnimeLibraryEntry(final String libraryEntryId,
-            final AnimeLibraryUpdate libraryUpdate, final ApiResponse<Void> listener) {
+            final AnimeLibraryUpdate libraryUpdate, final ApiResponse<AnimeLibraryEntryResponse> listener) {
         HUMMINGBIRD.updateAnimeLibraryEntry(libraryEntryId, libraryUpdate.toJson()).enqueue(
-                new Callback<Void>() {
+                new Callback<AnimeLibraryEntryResponse>() {
             @Override
-            public void onResponse(final Call<Void> call, final Response<Void> response) {
-                if (response.isSuccessful()) {
-                    listener.success(response.body());
-                } else {
+            public void onResponse(final Call<AnimeLibraryEntryResponse> call,
+                    final Response<AnimeLibraryEntryResponse> response) {
+                final AnimeLibraryEntryResponse body = response.isSuccessful() ?
+                        response.body() : null;
+
+                if (body == null) {
                     listener.failure(retrieveErrorInfo(response));
+                } else {
+                    listener.success(body);
                 }
             }
 
             @Override
-            public void onFailure(final Call<Void> call, final Throwable t) {
+            public void onFailure(final Call<AnimeLibraryEntryResponse> call, final Throwable t) {
                 Timber.e(TAG, "update anime library entry (" + libraryEntryId + ") failed", t);
                 listener.failure(null);
             }
@@ -1491,20 +1244,24 @@ public final class Api {
     }
 
     public static void updateMangaLibraryEntry(final String libraryEntryId,
-            final MangaLibraryUpdate libraryUpdate, final ApiResponse<Void> listener) {
+            final MangaLibraryUpdate libraryUpdate, final ApiResponse<MangaLibraryEntryResponse> listener) {
         HUMMINGBIRD.updateMangaLibraryEntry(libraryEntryId, libraryUpdate.toJson()).enqueue(
-                new Callback<Void>() {
+                new Callback<MangaLibraryEntryResponse>() {
             @Override
-            public void onResponse(final Call<Void> call, final Response<Void> response) {
-                if (response.isSuccessful()) {
-                    listener.success(response.body());
-                } else {
+            public void onResponse(final Call<MangaLibraryEntryResponse> call,
+                    final Response<MangaLibraryEntryResponse> response) {
+                final MangaLibraryEntryResponse body = response.isSuccessful() ?
+                        response.body() : null;
+
+                if (body == null) {
                     listener.failure(retrieveErrorInfo(response));
+                } else {
+                    listener.success(body);
                 }
             }
 
             @Override
-            public void onFailure(final Call<Void> call, final Throwable t) {
+            public void onFailure(final Call<MangaLibraryEntryResponse> call, final Throwable t) {
                 Timber.e(TAG, "update manga library entry (" + libraryEntryId + ") failed", t);
                 listener.failure(null);
             }

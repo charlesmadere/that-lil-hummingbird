@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.GroupFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.BaseGroupFragment;
+import com.charlesmadere.hummingbird.fragments.FeedPostFragment;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
@@ -34,9 +35,10 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragment.Listener,
-        ObjectCache.KeyProvider, PaletteUtils.Listener {
+        FeedPostFragment.Listener, ObjectCache.KeyProvider, PaletteUtils.Listener {
 
     private static final String TAG = "GroupActivity";
     private static final String CNAME = GroupActivity.class.getCanonicalName();
@@ -160,6 +162,11 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
     }
 
     @Override
+    public void onFeedPostSubmit() {
+        // TODO
+    }
+
+    @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.miJoinGroup:
@@ -176,6 +183,11 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.floatingActionButton)
+    void onPostToFeedClick() {
+        FeedPostFragment.create().show(getSupportFragmentManager(), FeedPostFragment.TAG);
     }
 
     @Override

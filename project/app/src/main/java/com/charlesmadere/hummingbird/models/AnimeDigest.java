@@ -109,9 +109,8 @@ public class AnimeDigest implements Hydratable, Parcelable {
         return mInfo;
     }
 
-    @Nullable
-    public ArrayList<AnimeLibraryEntry> getLibraryEntries() {
-        return mLibraryEntries;
+    public AnimeLibraryEntry getLibraryEntry() {
+        return mLibraryEntries.get(0);
     }
 
     @Nullable

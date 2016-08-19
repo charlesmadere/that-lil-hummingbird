@@ -70,9 +70,8 @@ public class MangaDigest implements Hydratable, Parcelable {
         return mInfo;
     }
 
-    @Nullable
-    public ArrayList<MangaLibraryEntry> getLibraryEntries() {
-        return mLibraryEntries;
+    public MangaLibraryEntry getLibraryEntry() {
+        return mLibraryEntries.get(0);
     }
 
     @Nullable

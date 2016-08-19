@@ -14,6 +14,7 @@ import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.MangaLibraryEntry;
+import com.charlesmadere.hummingbird.models.MangaLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.MangaLibraryUpdate;
 import com.charlesmadere.hummingbird.models.ReadingStatus;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -199,7 +200,7 @@ public class MangaLibraryFragment extends BaseLibraryFragment implements
         }
     }
 
-    private static class EditLibraryEntryListener implements ApiResponse<Void> {
+    private static class EditLibraryEntryListener implements ApiResponse<MangaLibraryEntryResponse> {
         private final WeakReference<MangaLibraryFragment> mFragmentReference;
 
         private EditLibraryEntryListener(final MangaLibraryFragment fragment) {
@@ -216,7 +217,7 @@ public class MangaLibraryFragment extends BaseLibraryFragment implements
         }
 
         @Override
-        public void success(@Nullable final Void object) {
+        public void success(final MangaLibraryEntryResponse response) {
             final MangaLibraryFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {

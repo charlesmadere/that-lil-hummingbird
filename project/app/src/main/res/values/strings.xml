@@ -300,6 +300,7 @@
     <string name="romaji">Romaji</string>
     <string name="romaji_title">Romaji title</string>
     <string name="save">Save</string>
+    <string name="saved_changes">Saved changes</string>
     <string name="search">Search</string>
     <string name="search_">Search…</string>
     <string name="search_for_">Search for…</string>

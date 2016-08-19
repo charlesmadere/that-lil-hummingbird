@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -23,9 +24,9 @@ import com.charlesmadere.hummingbird.fragments.BaseAnimeFragment;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.misc.ShareUtils;
-import com.charlesmadere.hummingbird.models.AddAnimeLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.Anime;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
+import com.charlesmadere.hummingbird.models.AnimeLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.UiColorSet;
@@ -47,6 +48,8 @@ public class AnimeActivity extends BaseDrawerActivity implements
     private static final String CNAME = AnimeActivity.class.getCanonicalName();
     private static final String EXTRA_ANIME_ID = CNAME + ".AnimeId";
     private static final String EXTRA_ANIME_NAME = CNAME + ".AnimeName";
+    private static final String ADD_TAG = AnimeLibraryUpdateFragment.TAG + "|Add";
+    private static final String EDIT_TAG = AnimeLibraryUpdateFragment.TAG + "|Edit";
 
     private AnimeDigest mAnimeDigest;
     private String mAnimeId;
@@ -91,15 +94,18 @@ public class AnimeActivity extends BaseDrawerActivity implements
         return intent;
     }
 
-    private void addedLibraryEntry(final AddAnimeLibraryEntryResponse response) {
+    private void addedLibraryEntry(final AnimeLibraryEntryResponse response) {
         mAnimeDigest.addLibraryEntry(response.getLibraryEntry());
         supportInvalidateOptionsMenu();
         mSimpleProgressView.fadeOut();
         Toast.makeText(this, R.string.added_to_library, Toast.LENGTH_LONG).show();
     }
 
-    private void editInLibrary() {
-        // TODO
+    private void editedLibraryEntry(final AnimeLibraryEntryResponse response) {
+        mAnimeDigest.addLibraryEntry(response.getLibraryEntry());
+        supportInvalidateOptionsMenu();
+        mSimpleProgressView.fadeOut();
+        Toast.makeText(this, R.string.saved_changes, Toast.LENGTH_LONG).show();
     }
 
     private void fetchAnimeDigest() {
@@ -169,12 +175,13 @@ public class AnimeActivity extends BaseDrawerActivity implements
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.miAddToLibrary:
-                AnimeLibraryUpdateFragment.create(mAnimeDigest).show(getSupportFragmentManager(),
-                        AnimeLibraryUpdateFragment.TAG);
+                AnimeLibraryUpdateFragment.create(mAnimeDigest)
+                        .show(getSupportFragmentManager(), ADD_TAG);
                 return true;
 
             case R.id.miEditInLibrary:
-                editInLibrary();
+                AnimeLibraryUpdateFragment.create(mAnimeDigest.getLibraryEntry())
+                        .show(getSupportFragmentManager(), EDIT_TAG);
                 return true;
 
             case R.id.miShare:
@@ -216,12 +223,21 @@ public class AnimeActivity extends BaseDrawerActivity implements
 
     @Override
     public void onUpdateLibraryEntry() {
-        final AnimeLibraryUpdateFragment fragment = (AnimeLibraryUpdateFragment)
-                getSupportFragmentManager().findFragmentByTag(AnimeLibraryUpdateFragment.TAG);
-        final AnimeLibraryUpdate libraryUpdate = fragment.getLibraryUpdate();
-
         mSimpleProgressView.fadeIn();
-        Api.addAnimeLibraryEntry(libraryUpdate, new AddLibraryEntryListener(this));
+
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        AnimeLibraryUpdateFragment fragment = (AnimeLibraryUpdateFragment)
+                fragmentManager.findFragmentByTag(ADD_TAG);
+
+        if (fragment == null) {
+            fragment = (AnimeLibraryUpdateFragment) fragmentManager.findFragmentByTag(EDIT_TAG);
+            final String libraryEntryId = fragment.getLibraryEntry().getId();
+            final AnimeLibraryUpdate libraryUpdate = fragment.getLibraryUpdate();
+            Api.updateAnimeLibraryEntry(libraryEntryId, libraryUpdate, new EditLibraryEntryListener(this));
+        } else {
+            final AnimeLibraryUpdate libraryUpdate = fragment.getLibraryUpdate();
+            Api.addAnimeLibraryEntry(libraryUpdate, new AddLibraryEntryListener(this));
+        }
     }
 
     private void showAddLibraryEntryError() {
@@ -248,6 +264,11 @@ public class AnimeActivity extends BaseDrawerActivity implements
 
         supportInvalidateOptionsMenu();
         mSimpleProgressView.fadeOut();
+    }
+
+    private void showEditLibraryEntryError() {
+        mSimpleProgressView.fadeOut();
+        Toast.makeText(this, R.string.error_editing_library_entry, Toast.LENGTH_LONG).show();
     }
 
     private void showError() {
@@ -277,7 +298,7 @@ public class AnimeActivity extends BaseDrawerActivity implements
     }
 
 
-    private static class AddLibraryEntryListener implements ApiResponse<AddAnimeLibraryEntryResponse> {
+    private static class AddLibraryEntryListener implements ApiResponse<AnimeLibraryEntryResponse> {
         private final WeakReference<AnimeActivity> mActivityReference;
 
         private AddLibraryEntryListener(final AnimeActivity activity) {
@@ -294,11 +315,37 @@ public class AnimeActivity extends BaseDrawerActivity implements
         }
 
         @Override
-        public void success(final AddAnimeLibraryEntryResponse response) {
+        public void success(final AnimeLibraryEntryResponse response) {
             final AnimeActivity activity = mActivityReference.get();
 
             if (activity != null && !activity.isDestroyed()) {
                 activity.addedLibraryEntry(response);
+            }
+        }
+    }
+
+    private static class EditLibraryEntryListener implements ApiResponse<AnimeLibraryEntryResponse> {
+        private final WeakReference<AnimeActivity> mActivityReference;
+
+        private EditLibraryEntryListener(final AnimeActivity activity) {
+            mActivityReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final AnimeActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.showEditLibraryEntryError();
+            }
+        }
+
+        @Override
+        public void success(final AnimeLibraryEntryResponse response) {
+            final AnimeActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.editedLibraryEntry(response);
             }
         }
     }
