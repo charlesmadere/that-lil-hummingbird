@@ -34,6 +34,7 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
 
     private static final String TAG = "GroupFeedFragment";
 
+    private boolean mFetchingGroupStories;
     private Feed mFeed;
     private FeedAdapter mAdapter;
     private FeedListeners mFeedListeners;
@@ -57,6 +58,8 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
     }
 
     private void fetchGroupStories() {
+        mFeedListeners.onFeedBeganLoading();
+        mFetchingGroupStories = true;
         mRefreshLayout.setRefreshing(true);
         Api.getGroupStories(getGroupDigest().getId(), new GetGroupStoriesListener(this));
     }
@@ -71,9 +74,13 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
         return TAG;
     }
 
+    public boolean isFetchingGroupStories() {
+        return mFetchingGroupStories;
+    }
+
     @Override
     public boolean isLoading() {
-        return mRefreshLayout.isRefreshing() || mAdapter.isPaginating();
+        return mFetchingGroupStories || mRefreshLayout.isRefreshing() || mAdapter.isPaginating();
     }
 
     @Override
@@ -179,6 +186,8 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
         mRecyclerView.setVisibility(View.VISIBLE);
         mPaginator.setEnabled(mFeed.hasCursor());
         mRefreshLayout.setRefreshing(false);
+        mFetchingGroupStories = false;
+        mFeedListeners.onFeedFinishedLoading();
     }
 
 

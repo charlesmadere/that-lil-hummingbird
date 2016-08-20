@@ -53,9 +53,9 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
 
 
     public void fetchFeed() {
+        mFeedListeners.onFeedBeganLoading();
         mFetchingFeed = true;
         mRefreshLayout.setRefreshing(true);
-        mFeedListeners.onFeedBeganLoading();
     }
 
     @Override
