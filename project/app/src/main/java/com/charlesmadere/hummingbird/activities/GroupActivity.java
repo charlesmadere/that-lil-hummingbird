@@ -19,6 +19,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.GroupFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.BaseGroupFragment;
 import com.charlesmadere.hummingbird.fragments.FeedPostFragment;
+import com.charlesmadere.hummingbird.fragments.GroupFeedFragment;
 import com.charlesmadere.hummingbird.fragments.GroupFeedPostFragment;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.FeedListeners;
@@ -28,6 +29,7 @@ import com.charlesmadere.hummingbird.misc.ShareUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Group;
 import com.charlesmadere.hummingbird.models.GroupDigest;
+import com.charlesmadere.hummingbird.models.GroupFeedPost;
 import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
@@ -91,6 +93,13 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
         }
 
         return intent;
+    }
+
+    private void feedPostFailure() {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.error_posting_to_feed)
+                .setNeutralButton(R.string.ok, null)
+                .show();
     }
 
     private void fetchFeed() {
@@ -165,17 +174,25 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
 
     @Override
     public void onFeedBeganLoading() {
-        // TODO
+        updatePostToFeedVisibility();
     }
 
     @Override
     public void onFeedFinishedLoading() {
-        // TODO
+        updatePostToFeedVisibility();
     }
 
     @Override
     public void onFeedPostSubmit() {
-        // TODO
+        final GroupFeedPostFragment fragment = (GroupFeedPostFragment) getSupportFragmentManager()
+                .findFragmentByTag(GroupFeedPostFragment.TAG);
+        final GroupFeedPost post = fragment.getGroupFeedPost(CurrentUser.get().getUserId(), mGroupId);
+
+        if (post == null) {
+            return;
+        }
+
+        Api.postToFeed(post, new FeedPostListener(this));
     }
 
     @Override
@@ -278,6 +295,47 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
         mSimpleProgressView.fadeOut();
     }
 
+    protected void updatePostToFeedVisibility() {
+        if (mViewPager.getCurrentItem() == GroupFragmentAdapter.POSITION_FEED) {
+            final GroupFeedFragment fragment = ((GroupFragmentAdapter) mViewPager.getAdapter())
+                    .getFeedFragment();
+
+            if (fragment == null || fragment.isFetchingGroupStories()) {
+                mPostToFeed.hide();
+            } else {
+                mPostToFeed.show();
+            }
+        } else {
+            mPostToFeed.hide();
+        }
+    }
+
+
+    private static class FeedPostListener implements ApiResponse<Void> {
+        private final WeakReference<GroupActivity> mActivityReference;
+
+        protected FeedPostListener(final GroupActivity activity) {
+            mActivityReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final GroupActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.feedPostFailure();
+            }
+        }
+
+        @Override
+        public void success(@Nullable final Void object) {
+            final GroupActivity activity = mActivityReference.get();
+
+            if (activity != null && !activity.isDestroyed()) {
+                activity.fetchFeed();
+            }
+        }
+    }
 
     private static class GetGroupDigestListener implements ApiResponse<GroupDigest> {
         private final WeakReference<GroupActivity> mActivityReference;
