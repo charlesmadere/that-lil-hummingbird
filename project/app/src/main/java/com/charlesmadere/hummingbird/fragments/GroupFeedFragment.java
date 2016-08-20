@@ -1,7 +1,10 @@
 package com.charlesmadere.hummingbird.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +14,8 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.FeedAdapter;
+import com.charlesmadere.hummingbird.misc.FeedListeners;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
@@ -31,6 +36,7 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
 
     private Feed mFeed;
     private FeedAdapter mAdapter;
+    private FeedListeners mFeedListeners;
     private RecyclerViewPaginator mPaginator;
 
     @BindView(R.id.llEmpty)
@@ -68,6 +74,24 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
     @Override
     public boolean isLoading() {
         return mRefreshLayout.isRefreshing() || mAdapter.isPaginating();
+    }
+
+    @Override
+    public void onAttach(final Context context) {
+        super.onAttach(context);
+
+        final Fragment fragment = getParentFragment();
+        final Activity activity = MiscUtils.optActivity(context);
+
+        if (fragment instanceof FeedListeners) {
+            mFeedListeners = (FeedListeners) fragment;
+        } else if (activity instanceof FeedListeners) {
+            mFeedListeners = (FeedListeners) activity;
+        }
+
+        if (mFeedListeners == null) {
+            throw new IllegalStateException(getFragmentName() + " must attach to FeedListeners");
+        }
     }
 
     @Override

@@ -20,6 +20,7 @@ import com.charlesmadere.hummingbird.adapters.GroupFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.BaseGroupFragment;
 import com.charlesmadere.hummingbird.fragments.FeedPostFragment;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
+import com.charlesmadere.hummingbird.misc.FeedListeners;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.misc.ShareUtils;
@@ -38,7 +39,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragment.Listener,
-        FeedPostFragment.Listener, ObjectCache.KeyProvider, PaletteUtils.Listener {
+        FeedListeners, FeedPostFragment.Listener, ObjectCache.KeyProvider, PaletteUtils.Listener {
 
     private static final String TAG = "GroupActivity";
     private static final String CNAME = GroupActivity.class.getCanonicalName();
@@ -159,6 +160,16 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.activity_group, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onFeedBeganLoading() {
+        // TODO
+    }
+
+    @Override
+    public void onFeedFinishedLoading() {
+        // TODO
     }
 
     @Override

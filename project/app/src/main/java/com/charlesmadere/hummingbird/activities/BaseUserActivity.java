@@ -10,6 +10,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.BaseUserFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.BaseUserFeedFragment;
 import com.charlesmadere.hummingbird.fragments.FeedPostFragment;
+import com.charlesmadere.hummingbird.misc.FeedListeners;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 
@@ -20,7 +21,7 @@ import butterknife.OnClick;
 import butterknife.OnPageChange;
 
 public abstract class BaseUserActivity extends BaseDrawerActivity implements
-        BaseUserFeedFragment.Listener, FeedPostFragment.Listener {
+        BaseUserFeedFragment.Listener, FeedListeners, FeedPostFragment.Listener {
 
     @BindView(R.id.floatingActionButton)
     protected FloatingActionButton mPostToFeed;

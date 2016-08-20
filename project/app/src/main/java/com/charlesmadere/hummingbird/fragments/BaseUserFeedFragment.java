@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.FeedAdapter;
+import com.charlesmadere.hummingbird.misc.FeedListeners;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
@@ -34,6 +35,7 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
     protected boolean mFetchingFeed;
     protected Feed mFeed;
     protected FeedAdapter mAdapter;
+    protected FeedListeners mFeedListeners;
     protected Listener mListener;
     protected RecyclerViewPaginator mPaginator;
 
@@ -53,7 +55,7 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
     public void fetchFeed() {
         mFetchingFeed = true;
         mRefreshLayout.setRefreshing(true);
-        mListener.onFeedBeganLoading();
+        mFeedListeners.onFeedBeganLoading();
     }
 
     @Override
@@ -79,18 +81,26 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
         super.onAttach(context);
 
         final Fragment fragment = getParentFragment();
+        final Activity activity = MiscUtils.optActivity(context);
+
         if (fragment instanceof Listener) {
             mListener = (Listener) fragment;
-        } else {
-            final Activity activity = MiscUtils.optActivity(context);
-
-            if (activity instanceof Listener) {
-                mListener = (Listener) activity;
-            }
+        } else if (activity instanceof Listener) {
+            mListener = (Listener) activity;
         }
 
         if (mListener == null) {
             throw new IllegalStateException(getFragmentName() + " must have a Listener");
+        }
+
+        if (fragment instanceof FeedListeners) {
+            mFeedListeners = (FeedListeners) fragment;
+        } else if (activity instanceof FeedListeners) {
+            mFeedListeners = (FeedListeners) activity;
+        }
+
+        if (mFeedListeners == null) {
+            throw new IllegalStateException(getFragmentName() + " must attach to FeedListeners");
         }
     }
 
@@ -178,14 +188,12 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
         mPaginator.setEnabled(mFeed.hasCursor());
         mRefreshLayout.setRefreshing(false);
         mFetchingFeed = false;
-        mListener.onFeedFinishedLoading();
+        mFeedListeners.onFeedFinishedLoading();
     }
 
 
     public interface Listener {
         UserDigest getUserDigest();
-        void onFeedBeganLoading();
-        void onFeedFinishedLoading();
     }
 
     protected static class GetFeedListener implements ApiResponse<Feed> {
