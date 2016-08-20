@@ -129,6 +129,10 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
         return mUiColorSet;
     }
 
+    private boolean isInGroup() {
+        return mGroupDigest.getGroup().hasCurrentMemberId();
+    }
+
     @Override
     protected boolean isUpNavigationEnabled() {
         return true;
@@ -225,7 +229,7 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
         if (mGroupDigest != null) {
             menu.findItem(R.id.miShare).setVisible(true);
 
-            if (mGroupDigest.getGroup().hasCurrentMemberId()) {
+            if (isInGroup()) {
                 menu.findItem(R.id.miLeaveGroup).setVisible(true);
             } else {
                 menu.findItem(R.id.miJoinGroup).setVisible(true);
@@ -302,14 +306,18 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
     }
 
     protected void updatePostToFeedVisibility() {
-        if (mViewPager.getCurrentItem() == GroupFragmentAdapter.POSITION_FEED) {
-            final GroupFeedFragment fragment = ((GroupFragmentAdapter) mViewPager.getAdapter())
-                    .getFeedFragment();
+        if (isInGroup()) {
+            if (mViewPager.getCurrentItem() == GroupFragmentAdapter.POSITION_FEED) {
+                final GroupFeedFragment fragment = ((GroupFragmentAdapter) mViewPager.getAdapter())
+                        .getFeedFragment();
 
-            if (fragment == null || fragment.isFetchingGroupStories()) {
-                mPostToFeed.hide();
+                if (fragment == null || fragment.isFetchingGroupStories()) {
+                    mPostToFeed.hide();
+                } else {
+                    mPostToFeed.show();
+                }
             } else {
-                mPostToFeed.show();
+                mPostToFeed.hide();
             }
         } else {
             mPostToFeed.hide();
