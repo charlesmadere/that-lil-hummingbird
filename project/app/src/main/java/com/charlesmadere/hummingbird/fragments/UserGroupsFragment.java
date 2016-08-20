@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.adapters.FeedAdapter;
+import com.charlesmadere.hummingbird.adapters.GroupsAdapter;
+import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
@@ -24,14 +25,16 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.KeyProvider,
+public class UserGroupsFragment extends BaseFragment implements ObjectCache.KeyProvider,
         RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
-    private static final String TAG = "GroupFeedFragment";
+    private static final String TAG = "UserGroupsFragment";
+    private static final String KEY_USERNAME = "Username";
 
     private Feed mFeed;
-    private FeedAdapter mAdapter;
+    private GroupsAdapter mAdapter;
     private RecyclerViewPaginator mPaginator;
+    private String mUsername;
 
     @BindView(R.id.llEmpty)
     LinearLayout mEmpty;
@@ -46,23 +49,33 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
     RefreshLayout mRefreshLayout;
 
 
-    public static GroupFeedFragment create() {
-        return new GroupFeedFragment();
+    public static UserGroupsFragment create() {
+        return create(CurrentUser.get().getUserId());
     }
 
-    private void fetchGroupStories() {
+    public static UserGroupsFragment create(final String username) {
+        final Bundle args = new Bundle(1);
+        args.putString(KEY_USERNAME, username);
+
+        final UserGroupsFragment fragment = new UserGroupsFragment();
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
+    private void fetchUserGroups() {
         mRefreshLayout.setRefreshing(true);
-        Api.getGroupStories(getGroupDigest().getId(), new GetGroupStoriesListener(this));
-    }
-
-    @Override
-    public String[] getObjectCacheKeys() {
-        return new String[] { getFragmentName(), getGroupDigest().getId() };
+        Api.getUserGroups(mUsername, new GetUserGroupsListener(this));
     }
 
     @Override
     public String getFragmentName() {
         return TAG;
+    }
+
+    @Override
+    public String[] getObjectCacheKeys() {
+        return new String[] { getFragmentName(), mUsername};
     }
 
     @Override
@@ -74,6 +87,9 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        final Bundle args = getArguments();
+        mUsername = args.getString(KEY_USERNAME);
+
         mFeed = ObjectCache.get(this);
     }
 
@@ -81,12 +97,12 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_user_feed, container, false);
+        return inflater.inflate(R.layout.fragment_user_groups, container, false);
     }
 
     @Override
     public void onRefresh() {
-        fetchGroupStories();
+        fetchUserGroups();
     }
 
     @Override
@@ -105,22 +121,21 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
         mRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.setHasFixedSize(true);
         SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
-        mAdapter = new FeedAdapter(getContext());
+        mAdapter = new GroupsAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
 
         if (mFeed == null) {
-            fetchGroupStories();
+            fetchUserGroups();
         } else {
-            showGroupStories(mFeed);
+            showUserGroups(mFeed);
         }
     }
 
     @Override
     public void paginate() {
         mAdapter.setPaginating(true);
-        Api.getGroupStories(getGroupDigest().getId(), mFeed,
-                new PaginateGroupStoriesListener(this));
+        Api.getUserGroups(mUsername, mFeed, new PaginateUserGroupsListener(this));
     }
 
     private void paginationComplete() {
@@ -142,12 +157,12 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
 
     private void showEmpty() {
         mRecyclerView.setVisibility(View.GONE);
-        mError.setVisibility(View.GONE);
-        mEmpty.setVisibility(View.VISIBLE);
+        mEmpty.setVisibility(View.GONE);
+        mError.setVisibility(View.VISIBLE);
         mRefreshLayout.setRefreshing(false);
     }
 
-    private void showGroupStories(final Feed feed) {
+    private void showUserGroups(final Feed feed) {
         mFeed = feed;
         mAdapter.set(mFeed);
         mEmpty.setVisibility(View.GONE);
@@ -158,16 +173,16 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
     }
 
 
-    private static class GetGroupStoriesListener implements ApiResponse<Feed> {
-        private final WeakReference<GroupFeedFragment> mFragmentReference;
+    private static class GetUserGroupsListener implements ApiResponse<Feed> {
+        private final WeakReference<UserGroupsFragment> mFragmentReference;
 
-        private GetGroupStoriesListener(final GroupFeedFragment fragment) {
+        private GetUserGroupsListener(final UserGroupsFragment fragment) {
             mFragmentReference = new WeakReference<>(fragment);
         }
 
         @Override
         public void failure(@Nullable final ErrorInfo error) {
-            final GroupFeedFragment fragment = mFragmentReference.get();
+            final UserGroupsFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {
                 fragment.showError();
@@ -176,11 +191,11 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
 
         @Override
         public void success(final Feed feed) {
-            final GroupFeedFragment fragment = mFragmentReference.get();
+            final UserGroupsFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {
-                if (feed.hasStories()) {
-                    fragment.showGroupStories(feed);
+                if (feed.hasGroups()) {
+                    fragment.showUserGroups(feed);
                 } else {
                     fragment.showEmpty();
                 }
@@ -188,18 +203,18 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
         }
     }
 
-    private static class PaginateGroupStoriesListener implements ApiResponse<Feed> {
-        private final WeakReference<GroupFeedFragment> mFragmentReference;
-        private final int mStoriesSize;
+    private static class PaginateUserGroupsListener implements ApiResponse<Feed> {
+        private final WeakReference<UserGroupsFragment> mFragmentReference;
+        private final int mGroupsSize;
 
-        private PaginateGroupStoriesListener(final GroupFeedFragment fragment) {
+        private PaginateUserGroupsListener(final UserGroupsFragment fragment) {
             mFragmentReference = new WeakReference<>(fragment);
-            mStoriesSize = fragment.mFeed.getStoriesSize();
+            mGroupsSize = fragment.mFeed.getGroupsSize();
         }
 
         @Override
         public void failure(@Nullable final ErrorInfo error) {
-            final GroupFeedFragment fragment = mFragmentReference.get();
+            final UserGroupsFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {
                 fragment.paginationNoMore();
@@ -208,10 +223,10 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
 
         @Override
         public void success(final Feed feed) {
-            final GroupFeedFragment fragment = mFragmentReference.get();
+            final UserGroupsFragment fragment = mFragmentReference.get();
 
             if (fragment != null && !fragment.isDestroyed()) {
-                if (feed.hasCursor() && feed.getStoriesSize() > mStoriesSize) {
+                if (feed.hasCursor() && feed.getGroupsSize() > mGroupsSize) {
                     fragment.paginationComplete();
                 } else {
                     fragment.paginationNoMore();

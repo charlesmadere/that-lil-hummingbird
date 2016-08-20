@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.fragments.BaseFragment;
 import com.charlesmadere.hummingbird.fragments.BaseUserFeedFragment;
+import com.charlesmadere.hummingbird.fragments.UserGroupsFragment;
 import com.charlesmadere.hummingbird.fragments.UserProfileFragment;
 
 import java.lang.ref.WeakReference;
@@ -19,6 +20,7 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
 
     public static final int POSITION_FEED = 0;
     public static final int POSITION_PROFILE = 1;
+    public static final int POSITION_GROUPS = 2;
 
     private final Context mContext;
     private final SparseArrayCompat<WeakReference<BaseFragment>> mFragments;
@@ -36,6 +38,8 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
 
     protected abstract BaseUserFeedFragment createUserFeedFragment();
 
+    protected abstract UserGroupsFragment createUserGroupsFragment();
+
     protected abstract UserProfileFragment createUserProfileFragment();
 
     @Override
@@ -46,7 +50,7 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Nullable
@@ -67,6 +71,7 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
         switch (position) {
             case POSITION_FEED: fragment = createUserFeedFragment(); break;
             case POSITION_PROFILE: fragment = createUserProfileFragment(); break;
+            case POSITION_GROUPS: fragment = createUserGroupsFragment(); break;
             default: throw new IllegalArgumentException("invalid position: " + position);
         }
 
@@ -79,12 +84,13 @@ public abstract class BaseUserFragmentAdapter extends FragmentStatePagerAdapter 
         switch (position) {
             case POSITION_FEED: return mContext.getText(R.string.feed);
             case POSITION_PROFILE: return mContext.getText(R.string.profile);
+            case POSITION_GROUPS: return mContext.getText(R.string.groups);
             default: throw new IllegalArgumentException("invalid position: " + position);
         }
     }
 
     @Override
-    public Object instantiateItem(final ViewGroup container, final int position) {
+    public BaseFragment instantiateItem(final ViewGroup container, final int position) {
         final BaseFragment fragment = (BaseFragment) super.instantiateItem(container, position);
         mFragments.put(position, new WeakReference<>(fragment));
         return fragment;

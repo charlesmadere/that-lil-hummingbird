@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.fragments;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -9,13 +10,16 @@ import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.charlesmadere.hummingbird.misc.Timber;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFragment {
+public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFragment implements
+        DialogInterface.OnShowListener {
 
     private static final String TAG = "BaseBottomSheetDialogFragment";
 
@@ -96,15 +100,7 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Dialog dialog = super.onCreateDialog(savedInstanceState);
-
-        if (shouldAutoExpand()) {
-            dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                @Override
-                public void onShow(final DialogInterface dialog) {
-                    autoExpand();
-                }
-            });
-        }
+        dialog.setOnShowListener(this);
 
         return dialog;
     }
@@ -119,6 +115,20 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
         }
 
         super.onDestroyView();
+    }
+
+    @Override
+    public void onShow(final DialogInterface dialog) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            final Window window = getDialog().getWindow();
+            final WindowManager.LayoutParams layoutParams = window.getAttributes();
+            layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            window.setAttributes(layoutParams);
+        }
+
+        if (shouldAutoExpand()) {
+            autoExpand();
+        }
     }
 
     @Override

@@ -14,7 +14,6 @@ import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.activities.FollowersActivity;
 import com.charlesmadere.hummingbird.activities.FollowingActivity;
 import com.charlesmadere.hummingbird.activities.UserAnimeReviewsActivity;
-import com.charlesmadere.hummingbird.activities.UserGroupsActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
@@ -106,16 +105,6 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
                 ((PaletteUtils.Listener) activity).getUiColorSet() : null;
         context.startActivity(FollowingActivity.getLaunchIntent(context, mUserDigest.getUserId(),
                 uiColorSet));
-    }
-
-    @OnClick(R.id.tvGroups)
-    void onGroupsClick() {
-        final Activity activity = MiscUtils.getActivity(getContext());
-        final UiColorSet uiColorSet = activity instanceof PaletteUtils.Listener ?
-                ((PaletteUtils.Listener) activity).getUiColorSet() : null;
-
-        activity.startActivity(UserGroupsActivity.getLaunchIntent(activity,
-                mUserDigest.getUserId(), uiColorSet));
     }
 
     @OnClick(R.id.hbivWaifuOrHusbando)

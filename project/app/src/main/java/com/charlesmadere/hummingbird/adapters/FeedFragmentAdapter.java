@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
 import com.charlesmadere.hummingbird.fragments.FeedFragment;
+import com.charlesmadere.hummingbird.fragments.UserGroupsFragment;
 import com.charlesmadere.hummingbird.fragments.UserProfileFragment;
 
 public class FeedFragmentAdapter extends BaseUserFragmentAdapter {
@@ -21,6 +22,11 @@ public class FeedFragmentAdapter extends BaseUserFragmentAdapter {
     @Override
     protected FeedFragment createUserFeedFragment() {
         return FeedFragment.create();
+    }
+
+    @Override
+    protected UserGroupsFragment createUserGroupsFragment() {
+        return UserGroupsFragment.create();
     }
 
     @Override
