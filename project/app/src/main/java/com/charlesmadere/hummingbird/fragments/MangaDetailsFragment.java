@@ -1,6 +1,5 @@
 package com.charlesmadere.hummingbird.fragments;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -70,7 +69,6 @@ public class MangaDetailsFragment extends BaseMangaFragment {
 
         final MangaDigest mangaDigest = getMangaDigest();
         final MangaDigest.Info info = mangaDigest.getInfo();
-        final Context context = getContext();
         final Resources resources = getResources();
         final NumberFormat numberFormat = NumberFormat.getInstance();
 
