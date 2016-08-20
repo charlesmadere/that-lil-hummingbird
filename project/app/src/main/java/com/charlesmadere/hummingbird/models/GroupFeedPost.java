@@ -21,6 +21,10 @@ public class GroupFeedPost extends FeedPost {
         mGroupId = groupId;
     }
 
+    public GroupFeedPost(final FeedPost feedPost, final String groupId) {
+        this(feedPost.isAdult(), feedPost.getComment(), feedPost.getUserId(), groupId);
+    }
+
     public String getGroupId() {
         return mGroupId;
     }
