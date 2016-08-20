@@ -54,7 +54,7 @@ public class AnimeEpisodeItemView extends CardView implements AdapterView<AnimeD
 
     @Override
     public void onClick(final View view) {
-        final Activity activity = MiscUtils.getActivity(getContext());
+        final Activity activity = MiscUtils.optActivity(getContext());
 
         if (activity instanceof OnClickListener) {
             ((OnClickListener) activity).onClick(this);
@@ -64,11 +64,6 @@ public class AnimeEpisodeItemView extends CardView implements AdapterView<AnimeD
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        if (isInEditMode()) {
-            return;
-        }
-
         ButterKnife.bind(this);
         setOnClickListener(this);
         mNumberFormat = NumberFormat.getInstance();

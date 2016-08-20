@@ -24,7 +24,7 @@ public abstract class BaseGroupFragment extends BaseFragment {
         if (fragment instanceof Listener) {
             mListener = (Listener) fragment;
         } else {
-            final Activity activity = MiscUtils.getActivity(context);
+            final Activity activity = MiscUtils.optActivity(context);
 
             if (activity instanceof Listener) {
                 mListener = (Listener) activity;
