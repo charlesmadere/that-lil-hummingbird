@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.adapters.FeedFragmentAdapter;
+import com.charlesmadere.hummingbird.adapters.NewsFeedFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.FeedPostFragment;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.models.FeedPost;
@@ -52,7 +52,7 @@ public class NewsFeedActivity extends BaseUserActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
-        setAdapter(new FeedFragmentAdapter(this));
+        setAdapter(new NewsFeedFragmentAdapter(this));
     }
 
     @Override

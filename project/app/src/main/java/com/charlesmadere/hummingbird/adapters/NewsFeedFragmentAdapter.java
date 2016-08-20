@@ -5,23 +5,23 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
-import com.charlesmadere.hummingbird.fragments.FeedFragment;
+import com.charlesmadere.hummingbird.fragments.NewsFeedFragment;
 import com.charlesmadere.hummingbird.fragments.UserGroupsFragment;
 import com.charlesmadere.hummingbird.fragments.UserProfileFragment;
 
-public class FeedFragmentAdapter extends BaseUserFragmentAdapter {
+public class NewsFeedFragmentAdapter extends BaseUserFragmentAdapter {
 
-    public FeedFragmentAdapter(final FragmentActivity activity) {
+    public NewsFeedFragmentAdapter(final FragmentActivity activity) {
         super(activity);
     }
 
-    public FeedFragmentAdapter(final Context context, final FragmentManager fm) {
+    public NewsFeedFragmentAdapter(final Context context, final FragmentManager fm) {
         super(context, fm);
     }
 
     @Override
-    protected FeedFragment createUserFeedFragment() {
-        return FeedFragment.create();
+    protected NewsFeedFragment createUserFeedFragment() {
+        return NewsFeedFragment.create();
     }
 
     @Override
@@ -36,8 +36,8 @@ public class FeedFragmentAdapter extends BaseUserFragmentAdapter {
 
     @Nullable
     @Override
-    public FeedFragment getFeedFragment() {
-        return (FeedFragment) super.getFeedFragment();
+    public NewsFeedFragment getFeedFragment() {
+        return (NewsFeedFragment) super.getFeedFragment();
     }
 
 }

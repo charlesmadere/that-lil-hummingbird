@@ -2,13 +2,13 @@ package com.charlesmadere.hummingbird.fragments;
 
 import com.charlesmadere.hummingbird.networking.Api;
 
-public class FeedFragment extends BaseUserFeedFragment {
+public class NewsFeedFragment extends BaseUserFeedFragment {
 
-    private static final String TAG = "CurrentUserFeedFragment";
+    private static final String TAG = "NewsFeedFragment";
 
 
-    public static FeedFragment create() {
-        return new FeedFragment();
+    public static NewsFeedFragment create() {
+        return new NewsFeedFragment();
     }
 
     @Override
