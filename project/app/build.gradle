@@ -76,8 +76,8 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
 
     // Facebook's Fresco
-    compile 'com.facebook.fresco:fresco:0.12.0'
-    compile "com.facebook.fresco:imagepipeline-okhttp3:0.12.0"
+    compile 'com.facebook.fresco:fresco:0.13.0'
+    compile "com.facebook.fresco:imagepipeline-okhttp3:0.13.0"
 
     // Google's GSON
     compile 'com.google.code.gson:gson:2.7'
