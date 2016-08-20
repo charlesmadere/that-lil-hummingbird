@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.adapters;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -43,6 +44,17 @@ public class GroupFragmentAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return 2;
+    }
+
+    @Nullable
+    public GroupFeedFragment getFeedFragment() {
+        final WeakReference<BaseFragment> fragmentReference = mFragments.get(POSITION_FEED);
+
+        if (fragmentReference == null) {
+            return null;
+        } else {
+            return (GroupFeedFragment) fragmentReference.get();
+        }
     }
 
     @Override
