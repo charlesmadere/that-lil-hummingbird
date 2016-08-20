@@ -17,15 +17,15 @@ import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 
-public class FeedActivity extends BaseUserActivity {
+public class NewsFeedActivity extends BaseUserActivity {
 
-    private static final String TAG = "FeedActivity";
+    private static final String TAG = "NewsFeedActivity";
 
 
     public static Intent getLaunchIntent(final Context context) {
-        final Intent intent = createDrawerActivityIntent(context, FeedActivity.class);
+        final Intent intent = createDrawerActivityIntent(context, NewsFeedActivity.class);
 
-        if (Preferences.General.DefaultLaunchScreen.get() == LaunchScreen.FEED) {
+        if (Preferences.General.DefaultLaunchScreen.get() == LaunchScreen.NEWS_FEED) {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }

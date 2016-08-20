@@ -21,6 +21,7 @@ public enum TitleType implements Parcelable {
     @SerializedName("romaji")
     ROMAJI(R.string.romaji);
 
+    @StringRes
     private final int mTextResId;
 
 
@@ -46,8 +47,7 @@ public enum TitleType implements Parcelable {
     public static final Creator<TitleType> CREATOR = new Creator<TitleType>() {
         @Override
         public TitleType createFromParcel(final Parcel source) {
-            final int ordinal = source.readInt();
-            return values()[ordinal];
+            return values()[source.readInt()];
         }
 
         @Override

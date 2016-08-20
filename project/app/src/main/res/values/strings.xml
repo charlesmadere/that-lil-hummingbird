@@ -132,8 +132,6 @@
     <string name="favorite_anime">Favorite Anime</string>
     <string name="favorite_manga">Favorite Manga</string>
     <string name="favorites">Favorites</string>
-    <string name="feed">Feed</string>
-    <string name="feed_is_empty">Feed is empty</string>
     <string name="filter">Filter</string>
     <string name="finished_airing">Finished airing</string>
     <string name="finished_airing_x">Finished airing %1$s</string>
@@ -206,6 +204,7 @@
     <string name="must_be_on_wifi">Must be on wifi</string>
     <string name="my_anime_library">My Anime Library</string>
     <string name="my_manga_library">My Manga Library</string>
+    <string name="news_feed">News Feed</string>
     <string name="night">Night</string>
     <string name="no_anime_quotes">No anime quotes</string>
     <string name="no_anime_reviews">No anime reviews</string>

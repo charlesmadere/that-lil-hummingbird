@@ -70,7 +70,7 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
 
     public static Intent getLaunchIntent(final Context context, final String username) {
         if (username.equalsIgnoreCase(CurrentUser.get().getUserId())) {
-            return FeedActivity.getLaunchIntent(context);
+            return NewsFeedActivity.getLaunchIntent(context);
         } else {
             return new Intent(context, UserActivity.class)
                     .putExtra(EXTRA_USERNAME, username);

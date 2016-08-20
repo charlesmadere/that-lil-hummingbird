@@ -82,7 +82,7 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
                 break;
 
             case FEED:
-                intent = FeedActivity.getLaunchIntent(this);
+                intent = NewsFeedActivity.getLaunchIntent(this);
                 break;
 
             case MANGA_LIBRARY:
