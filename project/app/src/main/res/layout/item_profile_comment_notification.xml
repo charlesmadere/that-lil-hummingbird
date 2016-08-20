@@ -11,10 +11,9 @@
             style="@style/Avatar.Medium" />
         <com.charlesmadere.hummingbird.views.NotificationTitleTextView
             android:id="@+id/notificationTitleTextView"
-            android:layout_marginBottom="@dimen/root_padding_quarter"
             android:layout_toEndOf="@id/avatarView"
             android:lineSpacingExtra="-4dp"
-            android:textSize="@dimen/text_xxlarge"
+            android:textSize="@dimen/text_large"
             tools:text="LimitB wrote a comment on your profile"
             style="@style/UserTitle" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
