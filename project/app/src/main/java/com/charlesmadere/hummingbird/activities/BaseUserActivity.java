@@ -71,6 +71,7 @@ public abstract class BaseUserActivity extends BaseDrawerActivity implements
     protected void setAdapter(final BaseUserFragmentAdapter adapter) {
         mViewPager.setAdapter(adapter);
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
+        mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);
         updatePostToFeedVisibility();
     }
