@@ -40,6 +40,7 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnPageChange;
 
 public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragment.Listener,
         FeedListeners, FeedPostFragment.Listener, ObjectCache.KeyProvider, PaletteUtils.Listener {
@@ -246,6 +247,11 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
     @Override
     public void onUiColorsBuilt(final UiColorSet uiColorSet) {
         mUiColorSet = uiColorSet;
+    }
+
+    @OnPageChange(R.id.viewPager)
+    void onViewPagerPageChange() {
+        updatePostToFeedVisibility();
     }
 
     private void showError() {
