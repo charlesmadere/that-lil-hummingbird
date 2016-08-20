@@ -87,9 +87,7 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
             mListener = (Listener) fragment;
         } else if (activity instanceof Listener) {
             mListener = (Listener) activity;
-        }
-
-        if (mListener == null) {
+        } else {
             throw new IllegalStateException(getFragmentName() + " must attach to Listener");
         }
 
@@ -97,9 +95,7 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
             mFeedListeners = (FeedListeners) fragment;
         } else if (activity instanceof FeedListeners) {
             mFeedListeners = (FeedListeners) activity;
-        }
-
-        if (mFeedListeners == null) {
+        } else {
             throw new IllegalStateException(getFragmentName() + " must attach to FeedListeners");
         }
     }
