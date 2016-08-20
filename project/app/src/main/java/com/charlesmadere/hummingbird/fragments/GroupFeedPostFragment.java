@@ -7,7 +7,7 @@ import com.charlesmadere.hummingbird.models.GroupFeedPost;
 
 public class GroupFeedPostFragment extends FeedPostFragment {
 
-    private static final String TAG = "GroupFeedPostFragment";
+    public static final String TAG = "GroupFeedPostFragment";
 
 
     public static GroupFeedPostFragment create() {

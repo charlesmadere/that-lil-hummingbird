@@ -19,6 +19,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.GroupFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.BaseGroupFragment;
 import com.charlesmadere.hummingbird.fragments.FeedPostFragment;
+import com.charlesmadere.hummingbird.fragments.GroupFeedPostFragment;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.FeedListeners;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
@@ -198,7 +199,7 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
 
     @OnClick(R.id.floatingActionButton)
     void onPostToFeedClick() {
-        FeedPostFragment.create().show(getSupportFragmentManager(), FeedPostFragment.TAG);
+        GroupFeedPostFragment.create().show(getSupportFragmentManager(), GroupFeedPostFragment.TAG);
     }
 
     @Override
