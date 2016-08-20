@@ -73,7 +73,7 @@ public class FeedPostFragment extends BaseBottomSheetDialogFragment {
         }
 
         if (mListener == null) {
-            throw new IllegalStateException(TAG + " must have a Listener");
+            throw new IllegalStateException(TAG + " must attach to Listener");
         }
     }
 

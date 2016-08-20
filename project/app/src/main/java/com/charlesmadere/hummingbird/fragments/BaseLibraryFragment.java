@@ -81,7 +81,7 @@ public abstract class BaseLibraryFragment extends BaseFragment implements Object
         }
 
         if (mListener == null) {
-            throw new IllegalStateException(getFragmentName() + " must have a Listener");
+            throw new IllegalStateException(getFragmentName() + " must attach to Listener");
         }
     }
 

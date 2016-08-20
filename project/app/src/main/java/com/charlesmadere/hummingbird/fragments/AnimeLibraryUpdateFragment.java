@@ -125,7 +125,7 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         }
 
         if (mListener == null) {
-            throw new IllegalStateException(TAG + " must have a listener attached");
+            throw new IllegalStateException(TAG + " must attach to Listener");
         }
     }
 

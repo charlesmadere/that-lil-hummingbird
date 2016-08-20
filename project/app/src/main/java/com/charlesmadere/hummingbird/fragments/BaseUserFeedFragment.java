@@ -90,7 +90,7 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
         }
 
         if (mListener == null) {
-            throw new IllegalStateException(getFragmentName() + " must have a Listener");
+            throw new IllegalStateException(getFragmentName() + " must attach to Listener");
         }
 
         if (fragment instanceof FeedListeners) {

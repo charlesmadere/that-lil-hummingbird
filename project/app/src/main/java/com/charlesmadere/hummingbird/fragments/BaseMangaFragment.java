@@ -32,7 +32,7 @@ public abstract class BaseMangaFragment extends BaseFragment {
         }
 
         if (mListener == null) {
-            throw new IllegalStateException(getFragmentName() + " must have a Listener");
+            throw new IllegalStateException(getFragmentName() + " must attach to Listener");
         }
     }
 
