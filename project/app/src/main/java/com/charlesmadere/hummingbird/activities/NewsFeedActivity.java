@@ -40,7 +40,7 @@ public class NewsFeedActivity extends BaseUserActivity {
 
     @Override
     protected NavigationDrawerItemView.Entry getSelectedNavigationDrawerItemViewEntry() {
-        return NavigationDrawerItemView.Entry.FEED;
+        return NavigationDrawerItemView.Entry.NEWS_FEED;
     }
 
     @Override
