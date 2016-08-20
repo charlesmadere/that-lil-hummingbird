@@ -58,8 +58,8 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
     }
 
     private void fetchGroupStories() {
-        mFeedListeners.onFeedBeganLoading();
         mFetchingGroupStories = true;
+        mFeedListeners.onFeedBeganLoading();
         mRefreshLayout.setRefreshing(true);
         Api.getGroupStories(getGroupDigest().getId(), new GetGroupStoriesListener(this));
     }
