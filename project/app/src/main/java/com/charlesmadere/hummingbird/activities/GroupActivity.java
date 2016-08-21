@@ -96,16 +96,25 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
         return intent;
     }
 
+    private void fetchFeed() {
+        final GroupFragmentAdapter adapter = (GroupFragmentAdapter) mViewPager.getAdapter();
+        final GroupFeedFragment fragment = adapter.getFeedFragment();
+
+        if (fragment != null) {
+            fragment.fetchGroupStories();
+        }
+    }
+
+    private void fetchGroupDigest() {
+        mSimpleProgressView.fadeIn();
+        Api.getGroupDigest(mGroupId, new GetGroupDigestListener(this));
+    }
+
     private void feedPostFailure() {
         new AlertDialog.Builder(this)
                 .setMessage(R.string.error_posting_to_feed)
                 .setNeutralButton(R.string.ok, null)
                 .show();
-    }
-
-    private void fetchFeed() {
-        mSimpleProgressView.fadeIn();
-        Api.getGroupDigest(mGroupId, new GetGroupDigestListener(this));
     }
 
     @Override
@@ -165,7 +174,7 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
         mGroupDigest = ObjectCache.get(this);
 
         if (mGroupDigest == null) {
-            fetchFeed();
+            fetchGroupDigest();
         } else {
             showGroupDigest(mGroupDigest);
         }
@@ -278,7 +287,7 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
                 .setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
-                        fetchFeed();
+                        fetchGroupDigest();
                     }
                 })
                 .show();

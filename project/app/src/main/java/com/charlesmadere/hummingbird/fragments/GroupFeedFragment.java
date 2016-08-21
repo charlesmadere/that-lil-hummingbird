@@ -57,7 +57,7 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
         return new GroupFeedFragment();
     }
 
-    private void fetchGroupStories() {
+    public void fetchGroupStories() {
         mFetchingGroupStories = true;
         mFeedListeners.onFeedBeganLoading();
         mRefreshLayout.setRefreshing(true);
