@@ -41,6 +41,37 @@ public final class JsoupUtils {
         }
     }
 
+    private static void fixH(final Document document) {
+        fixH(document, "1");
+        fixH(document, "2");
+        fixH(document, "3");
+        fixH(document, "4");
+        fixH(document, "5");
+        fixH(document, "6");
+    }
+
+    private static void fixH(final Document document, final String which) {
+        if (TextUtils.isEmpty(which)) {
+            return;
+        }
+
+        final Elements hs = document.select("h" + which);
+
+        if (hs == null || hs.isEmpty()) {
+            return;
+        }
+
+        for (final Element h : hs) {
+            final String inner = h.html();
+
+            if (!TextUtils.isEmpty(inner)) {
+                h.before(inner);
+            }
+
+            h.remove();
+        }
+    }
+
     private static void fixIframe(final Document document) {
         Elements iframes = document.select("iframe");
 
@@ -146,6 +177,7 @@ public final class JsoupUtils {
         final Document document = Jsoup.parse(text, Constants.HUMMINGBIRD_URL_HTTPS);
 
         fixA(document);
+        fixH(document);
         fixIframe(document);
         fixImg(document);
 
