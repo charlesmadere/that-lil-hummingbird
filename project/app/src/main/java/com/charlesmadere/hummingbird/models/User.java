@@ -38,12 +38,17 @@ public class User implements Hydratable, Parcelable {
 
     public String[] getAvatars() {
         return new String[] { getAvatarThumb(), getAvatarThumbSmall(), getAvatarSmall(),
-                getAvatarMedium() };
+                getAvatarMedium(), getAvatarOriginal() };
     }
 
     public String getAvatarMedium() {
         return mData.mAvatarTemplate.replaceFirst(Constants.IMAGE_TEMPLATE_STUB,
                 Constants.IMAGE_TEMPLATE_MEDIUM);
+    }
+
+    public String getAvatarOriginal() {
+        return mData.mAvatarTemplate.replaceFirst(Constants.IMAGE_TEMPLATE_STUB,
+                Constants.IMAGE_TEMPLATE_ORIGINAL);
     }
 
     public String getAvatarSmall() {

@@ -27,6 +27,7 @@ public final class Constants {
     public static final String HUMMINGBIRD_USER_URL = "https://hummingbird.me/users/";
     public static final String IMAGE_TEMPLATE_STUB = "\\{size\\}";
     public static final String IMAGE_TEMPLATE_MEDIUM = "medium";
+    public static final String IMAGE_TEMPLATE_ORIGINAL = "original";
     public static final String IMAGE_TEMPLATE_SMALL = "small";
     public static final String IMAGE_TEMPLATE_THUMB = "thumb";
     public static final String IMAGE_TEMPLATE_THUMB_SMALL = "thumb_small";

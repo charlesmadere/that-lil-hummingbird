@@ -223,6 +223,8 @@ public final class MiscUtils {
             replace = '/' + Constants.IMAGE_TEMPLATE_THUMB + '.';
         } else if (logo.contains('/' + Constants.IMAGE_TEMPLATE_THUMB_SMALL + '.')) {
             replace = '/' + Constants.IMAGE_TEMPLATE_THUMB_SMALL + '.';
+        } else if (logo.contains('/' + Constants.IMAGE_TEMPLATE_ORIGINAL + '.')) {
+            replace = '/' + Constants.IMAGE_TEMPLATE_ORIGINAL + '.';
         } else {
             return new String[] { logo };
         }
@@ -230,7 +232,8 @@ public final class MiscUtils {
         return new String[] { logo.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_THUMB + '.'),
                 logo.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_THUMB_SMALL + '.'),
                 logo.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_SMALL + '.'),
-                logo.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_MEDIUM + '.') };
+                logo.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_MEDIUM + '.'),
+                logo.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_ORIGINAL + '.') };
     }
 
     public static LayerDrawable getStatusBarScrim(final Context context,
@@ -255,6 +258,8 @@ public final class MiscUtils {
             replace = '/' + Constants.IMAGE_TEMPLATE_THUMB + '/';
         } else if (avatar.contains('/' + Constants.IMAGE_TEMPLATE_THUMB_SMALL + '/')) {
             replace = '/' + Constants.IMAGE_TEMPLATE_THUMB_SMALL + '/';
+        } else if (avatar.contains('/' + Constants.IMAGE_TEMPLATE_ORIGINAL + '/')) {
+            replace = '/' + Constants.IMAGE_TEMPLATE_ORIGINAL + '/';
         } else {
             return new String[] { avatar };
         }
@@ -262,7 +267,8 @@ public final class MiscUtils {
         return new String[] { avatar.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_THUMB + '/'),
                 avatar.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_THUMB_SMALL + '/'),
                 avatar.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_SMALL + '/'),
-                avatar.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_MEDIUM + '/') };
+                avatar.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_MEDIUM + '/'),
+                avatar.replaceFirst(replace, '/' + Constants.IMAGE_TEMPLATE_ORIGINAL + '/') };
     }
 
     public static int integerCompare(final int lhs, final int rhs) {
