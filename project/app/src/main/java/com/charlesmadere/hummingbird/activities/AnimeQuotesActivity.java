@@ -172,7 +172,7 @@ public class AnimeQuotesActivity extends BaseDrawerActivity implements ObjectCac
         public void failure(@Nullable final ErrorInfo error) {
             final AnimeQuotesActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showError();
             }
         }
@@ -181,7 +181,7 @@ public class AnimeQuotesActivity extends BaseDrawerActivity implements ObjectCac
         public void success(final AnimeDigest animeDigest) {
             final AnimeQuotesActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 if (animeDigest.hasQuotes()) {
                     activity.showQuotes(animeDigest);
                 } else {

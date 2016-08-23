@@ -186,7 +186,7 @@ public class UserAnimeReviewsActivity extends BaseDrawerActivity implements Obje
         public void failure(@Nullable final ErrorInfo error) {
             final UserAnimeReviewsActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showError();
             }
         }
@@ -195,7 +195,7 @@ public class UserAnimeReviewsActivity extends BaseDrawerActivity implements Obje
         public void success(final Feed feed) {
             final UserAnimeReviewsActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 if (feed.hasAnimeReviews()) {
                     activity.showReviews(feed);
                 } else {
@@ -218,7 +218,7 @@ public class UserAnimeReviewsActivity extends BaseDrawerActivity implements Obje
         public void failure(@Nullable final ErrorInfo error) {
             final UserAnimeReviewsActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.paginationNoMore();
             }
         }
@@ -227,7 +227,7 @@ public class UserAnimeReviewsActivity extends BaseDrawerActivity implements Obje
         public void success(final Feed feed) {
             final UserAnimeReviewsActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 if (feed.hasCursor() && feed.getAnimeReviewsSize() > mReviewsSize) {
                     activity.paginationComplete();
                 } else {

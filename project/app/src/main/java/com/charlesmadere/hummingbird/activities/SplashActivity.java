@@ -58,7 +58,7 @@ public class SplashActivity extends BaseActivity {
         final Runnable four = new Runnable() {
             @Override
             public void run() {
-                if (isDestroyed()) {
+                if (!isAlive()) {
                     return;
                 }
 
@@ -73,7 +73,7 @@ public class SplashActivity extends BaseActivity {
         final Runnable three = new Runnable() {
             @Override
             public void run() {
-                if (isDestroyed()) {
+                if (!isAlive()) {
                     return;
                 }
 
@@ -85,7 +85,7 @@ public class SplashActivity extends BaseActivity {
         final Runnable two = new Runnable() {
             @Override
             public void run() {
-                if (isDestroyed()) {
+                if (!isAlive()) {
                     return;
                 }
 

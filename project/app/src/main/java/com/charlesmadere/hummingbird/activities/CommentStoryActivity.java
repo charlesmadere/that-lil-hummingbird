@@ -260,7 +260,7 @@ public class CommentStoryActivity extends BaseDrawerActivity implements CommentF
         public void failure(@Nullable final ErrorInfo error) {
             final CommentStoryActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showError();
             }
         }
@@ -269,7 +269,7 @@ public class CommentStoryActivity extends BaseDrawerActivity implements CommentF
         public void success(final Feed feed) {
             final CommentStoryActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showFeed(feed);
             }
         }
@@ -288,7 +288,7 @@ public class CommentStoryActivity extends BaseDrawerActivity implements CommentF
         public void failure(@Nullable final ErrorInfo error) {
             final CommentStoryActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.paginationNoMore();
             }
         }
@@ -297,7 +297,7 @@ public class CommentStoryActivity extends BaseDrawerActivity implements CommentF
         public void success(final Feed feed) {
             final CommentStoryActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 if (feed.hasCursor() && feed.getSubstoriesSize() > mSubstoriesSize) {
                     activity.paginationComplete();
                 } else {
@@ -318,7 +318,7 @@ public class CommentStoryActivity extends BaseDrawerActivity implements CommentF
         public void failure(@Nullable final ErrorInfo error) {
             final CommentStoryActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showCommentError();
             }
         }
@@ -327,7 +327,7 @@ public class CommentStoryActivity extends BaseDrawerActivity implements CommentF
         public void success(@Nullable final Void object) {
             final CommentStoryActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.mCommentField.clear();
                 activity.fetchSubstories();
             }

@@ -457,6 +457,11 @@
         <item quantity="other">Rewatched %1$s times</item>
     </plurals>
 
+    <plurals name="show_x_more_replies">
+        <item quantity="one">Show %1$s more reply</item>
+        <item quantity="other">Show %1$s more replies</item>
+    </plurals>
+
     <plurals name="volumes">
         <item quantity="one">Volume</item>
         <item quantity="other">Volumes</item>

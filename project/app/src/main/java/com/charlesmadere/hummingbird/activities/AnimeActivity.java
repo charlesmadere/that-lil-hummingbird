@@ -309,7 +309,7 @@ public class AnimeActivity extends BaseDrawerActivity implements
         public void failure(@Nullable final ErrorInfo error) {
             final AnimeActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showAddLibraryEntryError();
             }
         }
@@ -318,7 +318,7 @@ public class AnimeActivity extends BaseDrawerActivity implements
         public void success(final AnimeLibraryEntryResponse response) {
             final AnimeActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.addedLibraryEntry(response);
             }
         }
@@ -335,7 +335,7 @@ public class AnimeActivity extends BaseDrawerActivity implements
         public void failure(@Nullable final ErrorInfo error) {
             final AnimeActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showEditLibraryEntryError();
             }
         }
@@ -344,7 +344,7 @@ public class AnimeActivity extends BaseDrawerActivity implements
         public void success(final AnimeLibraryEntryResponse response) {
             final AnimeActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.editedLibraryEntry(response);
             }
         }
@@ -361,7 +361,7 @@ public class AnimeActivity extends BaseDrawerActivity implements
         public void failure(@Nullable final ErrorInfo error) {
             final AnimeActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showError();
             }
         }
@@ -370,7 +370,7 @@ public class AnimeActivity extends BaseDrawerActivity implements
         public void success(final AnimeDigest animeDigest) {
             final AnimeActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showAnimeDigest(animeDigest);
             }
         }

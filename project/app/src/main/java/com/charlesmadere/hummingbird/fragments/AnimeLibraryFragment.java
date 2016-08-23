@@ -185,7 +185,7 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
         public void failure(@Nullable final ErrorInfo error) {
             final AnimeLibraryFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 fragment.showDeleteLibraryEntryError();
             }
         }
@@ -194,7 +194,7 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
         public void success(@Nullable final Void object) {
             final AnimeLibraryFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 fragment.fetchLibraryEntries();
             }
         }
@@ -211,7 +211,7 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
         public void failure(@Nullable final ErrorInfo error) {
             final AnimeLibraryFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 fragment.showEditLibraryEntryError();
             }
         }
@@ -220,7 +220,7 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
         public void success(final AnimeLibraryEntryResponse response) {
             final AnimeLibraryFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 fragment.fetchLibraryEntries();
             }
         }
@@ -237,7 +237,7 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
         public void failure(@Nullable final ErrorInfo error) {
             final AnimeLibraryFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 fragment.showError();
             }
         }
@@ -246,7 +246,7 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
         public void success(final Feed feed) {
             final AnimeLibraryFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 if (feed.hasAnimeLibraryEntries()) {
                     fragment.showLibraryEntries(feed);
                 } else {
@@ -269,7 +269,7 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
         public void failure(@Nullable final ErrorInfo error) {
             final AnimeLibraryFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 fragment.paginationNoMore();
             }
         }
@@ -278,7 +278,7 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
         public void success(final Feed feed) {
             final AnimeLibraryFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 if (feed.hasCursor() && feed.getAnimeLibraryEntriesSize() > mLibraryEntriesSize) {
                     fragment.paginationComplete();
                 } else {

@@ -152,7 +152,7 @@ public class AppNewsActivity extends BaseDrawerActivity implements AppNewsItemVi
         public void failure(@Nullable final ErrorInfo error) {
             final AppNewsActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showError();
             }
         }
@@ -161,7 +161,7 @@ public class AppNewsActivity extends BaseDrawerActivity implements AppNewsItemVi
         public void success(@Nullable final ArrayList<AppNews> appNews) {
             final AppNewsActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 final AppNewsStatus appNewsStatus = Preferences.Misc.AppNewsAvailability.get();
 
                 if (appNewsStatus != null) {

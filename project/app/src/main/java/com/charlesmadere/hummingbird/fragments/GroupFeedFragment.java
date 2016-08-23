@@ -202,7 +202,7 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
         public void failure(@Nullable final ErrorInfo error) {
             final GroupFeedFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 fragment.showError();
             }
         }
@@ -211,7 +211,7 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
         public void success(final Feed feed) {
             final GroupFeedFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 if (feed.hasStories()) {
                     fragment.showGroupStories(feed);
                 } else {
@@ -234,7 +234,7 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
         public void failure(@Nullable final ErrorInfo error) {
             final GroupFeedFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 fragment.paginationNoMore();
             }
         }
@@ -243,7 +243,7 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
         public void success(final Feed feed) {
             final GroupFeedFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 if (feed.hasCursor() && feed.getStoriesSize() > mStoriesSize) {
                     fragment.paginationComplete();
                 } else {

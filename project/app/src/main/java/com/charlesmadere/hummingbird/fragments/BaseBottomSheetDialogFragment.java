@@ -20,7 +20,7 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
 
     private static final String TAG = "BaseBottomSheetDialogFragment";
 
-    private boolean mIsDestroyed;
+    private boolean mIsAlive;
     private Unbinder mUnbinder;
 
 
@@ -84,8 +84,8 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
 
     public abstract String getFragmentName();
 
-    public boolean isDestroyed() {
-        return mIsDestroyed;
+    public boolean isAlive() {
+        return mIsAlive;
     }
 
     @Override
@@ -104,7 +104,7 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
 
     @Override
     public void onDestroyView() {
-        mIsDestroyed = true;
+        mIsAlive = false;
 
         if (mUnbinder != null) {
             mUnbinder.unbind();
@@ -125,7 +125,7 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mUnbinder = ButterKnife.bind(this, view);
-        mIsDestroyed = false;
+        mIsAlive = true;
     }
 
     protected boolean shouldAutoExpand() {

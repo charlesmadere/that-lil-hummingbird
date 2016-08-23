@@ -195,7 +195,7 @@ public class AnimeReviewActivity extends BaseDrawerActivity implements ObjectCac
         public void failure(@Nullable final ErrorInfo error) {
             final AnimeReviewActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showError();
             }
         }
@@ -204,7 +204,7 @@ public class AnimeReviewActivity extends BaseDrawerActivity implements ObjectCac
         public void success(final AnimeDigest animeDigest) {
             final AnimeReviewActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showAnimeDigest(animeDigest);
             }
         }

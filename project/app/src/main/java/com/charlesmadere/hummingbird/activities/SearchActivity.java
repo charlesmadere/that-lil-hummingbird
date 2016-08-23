@@ -211,7 +211,7 @@ public class SearchActivity extends BaseDrawerActivity implements
         }
 
         private boolean proceed(final SearchActivity activity) {
-            return activity != null && !activity.isDestroyed() &&
+            return activity != null && activity.isAlive() &&
                     mSearchScope == activity.mSearchScope.getSelectedItem() &&
                     mQuery.equals(activity.getSearchQuery());
         }

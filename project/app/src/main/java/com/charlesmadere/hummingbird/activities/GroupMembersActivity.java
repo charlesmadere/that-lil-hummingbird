@@ -208,7 +208,7 @@ public class GroupMembersActivity extends BaseDrawerActivity implements ObjectCa
         public void success(final GroupDigest groupDigest) {
             final GroupMembersActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.setSubtitle(groupDigest.getName());
             }
         }
@@ -225,7 +225,7 @@ public class GroupMembersActivity extends BaseDrawerActivity implements ObjectCa
         public void failure(@Nullable final ErrorInfo error) {
             final GroupMembersActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showError();
             }
         }
@@ -234,7 +234,7 @@ public class GroupMembersActivity extends BaseDrawerActivity implements ObjectCa
         public void success(final Feed feed) {
             final GroupMembersActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 if (feed.hasGroupMembers()) {
                     activity.showGroupMembers(feed);
                 } else {
@@ -257,7 +257,7 @@ public class GroupMembersActivity extends BaseDrawerActivity implements ObjectCa
         public void failure(@Nullable final ErrorInfo error) {
             final GroupMembersActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.paginationNoMore();
             }
         }
@@ -266,7 +266,7 @@ public class GroupMembersActivity extends BaseDrawerActivity implements ObjectCa
         public void success(final Feed feed) {
             final GroupMembersActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 if (feed.hasCursor() && feed.getGroupMembersSize() > mGroupMembersSize) {
                     activity.paginationComplete();
                 } else {

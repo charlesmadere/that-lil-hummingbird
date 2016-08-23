@@ -184,7 +184,7 @@ public class UserGroupsFragment extends BaseFragment implements ObjectCache.KeyP
         public void failure(@Nullable final ErrorInfo error) {
             final UserGroupsFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 fragment.showError();
             }
         }
@@ -193,7 +193,7 @@ public class UserGroupsFragment extends BaseFragment implements ObjectCache.KeyP
         public void success(final Feed feed) {
             final UserGroupsFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 if (feed.hasGroups()) {
                     fragment.showUserGroups(feed);
                 } else {
@@ -216,7 +216,7 @@ public class UserGroupsFragment extends BaseFragment implements ObjectCache.KeyP
         public void failure(@Nullable final ErrorInfo error) {
             final UserGroupsFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 fragment.paginationNoMore();
             }
         }
@@ -225,7 +225,7 @@ public class UserGroupsFragment extends BaseFragment implements ObjectCache.KeyP
         public void success(final Feed feed) {
             final UserGroupsFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 if (feed.hasCursor() && feed.getGroupsSize() > mGroupsSize) {
                     fragment.paginationComplete();
                 } else {

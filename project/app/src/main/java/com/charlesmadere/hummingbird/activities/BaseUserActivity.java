@@ -104,7 +104,7 @@ public abstract class BaseUserActivity extends BaseDrawerActivity implements
         public void failure(@Nullable final ErrorInfo error) {
             final BaseUserActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.feedPostFailure();
             }
         }
@@ -113,7 +113,7 @@ public abstract class BaseUserActivity extends BaseDrawerActivity implements
         public void success(@Nullable final Void object) {
             final BaseUserActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.fetchFeed();
             }
         }

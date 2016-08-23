@@ -269,7 +269,7 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
         public void failure(@Nullable final ErrorInfo error) {
             final UserActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showError();
             }
         }
@@ -278,7 +278,7 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
         public void success(final UserDigest userDigest) {
             final UserActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showUserDigest(userDigest);
             }
         }

@@ -13,14 +13,14 @@ public abstract class BaseFragment extends Fragment {
 
     private static final String TAG = "BaseFragment";
 
-    private boolean mIsDestroyed;
+    private boolean mIsAlive;
     private Unbinder mUnbinder;
 
 
     public abstract String getFragmentName();
 
-    public boolean isDestroyed() {
-        return mIsDestroyed;
+    public boolean isAlive() {
+        return mIsAlive;
     }
 
     @Override
@@ -31,7 +31,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        mIsDestroyed = true;
+        mIsAlive = false;
 
         if (mUnbinder != null) {
             mUnbinder.unbind();
@@ -45,7 +45,7 @@ public abstract class BaseFragment extends Fragment {
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mUnbinder = ButterKnife.bind(this, view);
-        mIsDestroyed = false;
+        mIsAlive = true;
     }
 
     @Override

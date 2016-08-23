@@ -22,7 +22,7 @@ public final class ActivityRegister {
             while (iterator.hasNext()) {
                 final Activity a = iterator.next().get();
 
-                if (a == null || a.isDestroyed()) {
+                if (a == null || a.isFinishing() || a.isDestroyed()) {
                     iterator.remove();
                 } else if (a == activity) {
                     attach = false;
@@ -41,7 +41,7 @@ public final class ActivityRegister {
         while (iterator.hasNext()) {
             final Activity a = iterator.next().get();
 
-            if (a == null || a.isDestroyed() || a == activity) {
+            if (a == null || a.isFinishing() || a.isDestroyed() || a == activity) {
                 iterator.remove();
             }
         }
@@ -57,12 +57,12 @@ public final class ActivityRegister {
         final Iterator<WeakReference<Activity>> iterator = ATTACHMENTS.iterator();
 
         while (iterator.hasNext()) {
-            final Activity activity = iterator.next().get();
+            final Activity a = iterator.next().get();
 
-            if (activity == null || activity.isDestroyed()) {
+            if (a == null || a.isFinishing() || a.isDestroyed()) {
                 iterator.remove();
             } else {
-                activities.add(activity);
+                activities.add(a);
             }
         }
 

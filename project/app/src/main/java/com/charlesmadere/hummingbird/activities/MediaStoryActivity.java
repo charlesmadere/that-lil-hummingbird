@@ -172,7 +172,7 @@ public class MediaStoryActivity extends BaseDrawerActivity implements ObjectCach
         public void failure(@Nullable final ErrorInfo error) {
             final MediaStoryActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showError();
             }
         }
@@ -181,7 +181,7 @@ public class MediaStoryActivity extends BaseDrawerActivity implements ObjectCach
         public void success(final Feed feed) {
             final MediaStoryActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showFeed(feed);
             }
         }
@@ -200,7 +200,7 @@ public class MediaStoryActivity extends BaseDrawerActivity implements ObjectCach
         public void failure(@Nullable final ErrorInfo error) {
             final MediaStoryActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.paginationNoMore();
             }
         }
@@ -209,7 +209,7 @@ public class MediaStoryActivity extends BaseDrawerActivity implements ObjectCach
         public void success(final Feed feed) {
             final MediaStoryActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 if (feed.hasCursor() && feed.getSubstoriesSize() > mSubstoriesSize) {
                     activity.paginationComplete();
                 } else {

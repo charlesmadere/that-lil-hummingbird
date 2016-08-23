@@ -186,7 +186,7 @@ public class FollowingActivity extends BaseDrawerActivity implements ObjectCache
         public void failure(@Nullable final ErrorInfo error) {
             final FollowingActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showError();
             }
         }
@@ -195,7 +195,7 @@ public class FollowingActivity extends BaseDrawerActivity implements ObjectCache
         public void success(final Feed feed) {
             final FollowingActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 if (feed.hasUsers()) {
                     activity.showFollowing(feed);
                 } else {
@@ -218,7 +218,7 @@ public class FollowingActivity extends BaseDrawerActivity implements ObjectCache
         public void failure(@Nullable final ErrorInfo error) {
             final FollowingActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.paginationNoMore();
             }
         }
@@ -227,7 +227,7 @@ public class FollowingActivity extends BaseDrawerActivity implements ObjectCache
         public void success(final Feed feed) {
             final FollowingActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 if (feed.hasCursor() && feed.getUsersSize() > mUsersSize) {
                     activity.paginationComplete();
                 } else {

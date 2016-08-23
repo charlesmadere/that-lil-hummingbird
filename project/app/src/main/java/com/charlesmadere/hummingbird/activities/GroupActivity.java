@@ -345,7 +345,7 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
         public void failure(@Nullable final ErrorInfo error) {
             final GroupActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.feedPostFailure();
             }
         }
@@ -354,7 +354,7 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
         public void success(@Nullable final Void object) {
             final GroupActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.fetchFeed();
             }
         }
@@ -371,7 +371,7 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
         public void failure(@Nullable final ErrorInfo error) {
             final GroupActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showError();
             }
         }
@@ -380,7 +380,7 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
         public void success(final GroupDigest groupDigest) {
             final GroupActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showGroupDigest(groupDigest);
             }
         }

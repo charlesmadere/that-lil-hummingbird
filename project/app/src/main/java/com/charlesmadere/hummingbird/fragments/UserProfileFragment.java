@@ -186,7 +186,7 @@ public class UserProfileFragment extends BaseFragment implements ObjectCache.Key
         public void failure(@Nullable final ErrorInfo error) {
             final UserProfileFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 fragment.showError();
             }
         }
@@ -195,7 +195,7 @@ public class UserProfileFragment extends BaseFragment implements ObjectCache.Key
         public void success(final UserDigest userDigest) {
             final UserProfileFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 fragment.showUserDigest(userDigest);
             }
         }

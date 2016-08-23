@@ -57,7 +57,7 @@ public abstract class BaseLibraryFragmentAdapter extends FragmentStatePagerAdapt
             if (fragmentReference != null) {
                 final BaseLibraryFragment fragment = fragmentReference.get();
 
-                if (fragment != null && !fragment.isDestroyed()) {
+                if (fragment != null && fragment.isAlive()) {
                     fragment.updateLibrarySort();
                 }
             }

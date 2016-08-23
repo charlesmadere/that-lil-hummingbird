@@ -151,7 +151,7 @@ public class StoryActivity extends BaseDrawerActivity implements ObjectCache.Key
         public void failure(@Nullable final ErrorInfo error) {
             final StoryActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showError();
             }
         }
@@ -160,7 +160,7 @@ public class StoryActivity extends BaseDrawerActivity implements ObjectCache.Key
         public void success(final Feed feed) {
             final StoryActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 if (feed.hasStories() || feed.hasStory()) {
                     activity.showFeed(feed);
                 } else {

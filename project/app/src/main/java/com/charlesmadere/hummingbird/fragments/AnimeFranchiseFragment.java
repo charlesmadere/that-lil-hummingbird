@@ -150,7 +150,7 @@ public class AnimeFranchiseFragment extends BaseAnimeFragment implements ObjectC
         public void failure(@Nullable final ErrorInfo error) {
             final AnimeFranchiseFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 fragment.showError();
             }
         }
@@ -159,7 +159,7 @@ public class AnimeFranchiseFragment extends BaseAnimeFragment implements ObjectC
         public void success(@Nullable final Franchise franchise) {
             final AnimeFranchiseFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 if (franchise == null || !franchise.hasAnime()) {
                     fragment.showEmpty();
                 } else {

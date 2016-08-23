@@ -171,7 +171,7 @@ public class AnimeReviewsActivity extends BaseDrawerActivity implements ObjectCa
         public void failure(@Nullable final ErrorInfo error) {
             final AnimeReviewsActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showError();
             }
         }
@@ -180,7 +180,7 @@ public class AnimeReviewsActivity extends BaseDrawerActivity implements ObjectCa
         public void success(final AnimeDigest animeDigest) {
             final AnimeReviewsActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 if (animeDigest.hasReviews()) {
                     activity.showReviews(animeDigest);
                 } else {

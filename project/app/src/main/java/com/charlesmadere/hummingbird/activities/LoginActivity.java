@@ -212,7 +212,7 @@ public class LoginActivity extends BaseActivity {
         public void failure(@Nullable final ErrorInfo error) {
             final LoginActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showError(null);
             }
         }
@@ -221,7 +221,7 @@ public class LoginActivity extends BaseActivity {
         public void success(final UserDigest userDigest) {
             final LoginActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.proceed();
             }
         }
@@ -238,7 +238,7 @@ public class LoginActivity extends BaseActivity {
         public void failure(@Nullable final ErrorInfo error) {
             final LoginActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 if (error == null) {
                     activity.showError(null);
                 } else {
@@ -251,7 +251,7 @@ public class LoginActivity extends BaseActivity {
         public void success(@Nullable final Void object) {
             final LoginActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.fetchCurrentUser();
             }
         }

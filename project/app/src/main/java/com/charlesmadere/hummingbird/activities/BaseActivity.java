@@ -57,6 +57,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    public boolean isAlive() {
+        return !isFinishing() && !isDestroyed();
+    }
+
     /**
      * This method's code came from the Android documentation:
      * https://developer.android.com/training/implementing-navigation/ancestral.html

@@ -203,7 +203,7 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
         public void failure(@Nullable final ErrorInfo error) {
             final BaseUserFeedFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 fragment.showError();
             }
         }
@@ -212,7 +212,7 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
         public void success(final Feed feed) {
             final BaseUserFeedFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 if (feed.hasStories()) {
                     fragment.showFeed(feed);
                 } else {
@@ -235,7 +235,7 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
         public void failure(@Nullable final ErrorInfo error) {
             final BaseUserFeedFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 fragment.paginationNoMore();
             }
         }
@@ -244,7 +244,7 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
         public void success(final Feed feed) {
             final BaseUserFeedFragment fragment = mFragmentReference.get();
 
-            if (fragment != null && !fragment.isDestroyed()) {
+            if (fragment != null && fragment.isAlive()) {
                 if (feed.hasCursor() && feed.getStoriesSize() > mStoriesSize) {
                     fragment.paginationComplete();
                 } else {

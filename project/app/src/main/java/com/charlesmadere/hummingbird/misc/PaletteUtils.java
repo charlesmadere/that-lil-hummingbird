@@ -153,9 +153,9 @@ public final class PaletteUtils {
         }
 
         private boolean isAlive() {
-            final Activity activity = mActivity.get();
-            return activity != null && !activity.isDestroyed() && mAppBar.get() != null &&
-                    mCollapsingToolbar.get() != null && mTabLayout.get() != null;
+            final Activity a = mActivity.get();
+            return a != null && !a.isFinishing() && !a.isDestroyed() && mAppBar.get() != null
+                    && mCollapsingToolbar.get() != null && mTabLayout.get() != null;
         }
 
         @Override

@@ -301,7 +301,7 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
         public void failure(@Nullable final ErrorInfo error) {
             final MangaActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showAddLibraryEntryError();
             }
         }
@@ -310,7 +310,7 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
         public void success(final MangaLibraryEntryResponse response) {
             final MangaActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.addedLibraryEntry(response);
             }
         }
@@ -327,7 +327,7 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
         public void failure(@Nullable final ErrorInfo error) {
             final MangaActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showEditLibraryEntryError();
             }
         }
@@ -336,7 +336,7 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
         public void success(final MangaLibraryEntryResponse response) {
             final MangaActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.editedLibraryEntry(response);
             }
         }
@@ -353,7 +353,7 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
         public void failure(@Nullable final ErrorInfo error) {
             final MangaActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showError();
             }
         }
@@ -362,7 +362,7 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
         public void success(final MangaDigest mangaDigest) {
             final MangaActivity activity = mActivityReference.get();
 
-            if (activity != null && !activity.isDestroyed()) {
+            if (activity != null && activity.isAlive()) {
                 activity.showMangaDigest(mangaDigest);
             }
         }
