@@ -17,8 +17,8 @@ import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.interfaces.DraweeController;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.image.ImageInfo;
+import com.facebook.samples.zoomable.ZoomableDraweeView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,11 +28,11 @@ public class GalleryPagerView extends FrameLayout implements AdapterView<String>
     @BindView(R.id.progressBar)
     ProgressBar mProgressBar;
 
-    @BindView(R.id.sdvImage)
-    SimpleDraweeView mImage;
-
     @BindView(R.id.tvError)
     TextView mError;
+
+    @BindView(R.id.zdvImage)
+    ZoomableDraweeView mImage;
 
 
     public static GalleryPagerView inflate(final ViewGroup parent) {

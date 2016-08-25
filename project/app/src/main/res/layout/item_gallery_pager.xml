@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/sdvImage"
+    <com.facebook.samples.zoomable.ZoomableDraweeView
+        android:id="@+id/zdvImage"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        app:actualImageScaleType="centerInside" />
+        app:actualImageScaleType="fitCenter" />
     <com.charlesmadere.hummingbird.views.TypefaceTextView
         android:gravity="center"
         android:id="@+id/tvError"
