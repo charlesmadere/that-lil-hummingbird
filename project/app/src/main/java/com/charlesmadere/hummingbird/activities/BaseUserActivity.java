@@ -1,5 +1,7 @@
 package com.charlesmadere.hummingbird.activities;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -22,6 +24,16 @@ import butterknife.OnPageChange;
 
 public abstract class BaseUserActivity extends BaseDrawerActivity implements
         BaseUserFeedFragment.Listener, FeedListeners, FeedPostFragment.Listener {
+
+    private static final String CNAME = BaseUserActivity.class.getCanonicalName();
+    protected static final String EXTRA_INITIAL_TAB = CNAME + ".InitialTab";
+    private static final String KEY_INITIAL_TAB = "InitialTab";
+
+    public static final int TAB_FEED = BaseUserFragmentAdapter.POSITION_FEED;
+    public static final int TAB_PROFILE = BaseUserFragmentAdapter.POSITION_PROFILE;
+    public static final int TAB_GROUPS = BaseUserFragmentAdapter.POSITION_GROUPS;
+
+    protected int mInitialTab;
 
     @BindView(R.id.floatingActionButton)
     protected FloatingActionButton mPostToFeed;
@@ -50,6 +62,20 @@ public abstract class BaseUserActivity extends BaseDrawerActivity implements
     }
 
     @Override
+    protected void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        final Intent intent = getIntent();
+        if (intent != null && intent.hasExtra(EXTRA_INITIAL_TAB)) {
+            mInitialTab = intent.getIntExtra(EXTRA_INITIAL_TAB, 0);
+        }
+
+        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
+            mInitialTab = savedInstanceState.getInt(KEY_INITIAL_TAB, 0);
+        }
+    }
+
+    @Override
     public void onFeedBeganLoading() {
         updatePostToFeedVisibility();
     }
@@ -64,6 +90,12 @@ public abstract class BaseUserActivity extends BaseDrawerActivity implements
         FeedPostFragment.create().show(getSupportFragmentManager(), FeedPostFragment.TAG);
     }
 
+    @Override
+    protected void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_INITIAL_TAB, mViewPager.getCurrentItem());
+    }
+
     @OnPageChange(R.id.viewPager)
     protected void onViewPagerPageChange() {
         updatePostToFeedVisibility();
@@ -74,6 +106,7 @@ public abstract class BaseUserActivity extends BaseDrawerActivity implements
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);
+        mViewPager.setCurrentItem(mInitialTab);
         updatePostToFeedVisibility();
     }
 

@@ -181,11 +181,6 @@
             android:name=".activities.UserAnimeReviewsActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
-        <activity
-            android:label="@string/groups"
-            android:name=".activities.UserGroupsActivity"
-            android:theme="@style/HummingbirdTheme.WithDrawer" />
-
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="bd8750ba792168bfa4d0bc52e19ad83a6fad27c3" />

@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -23,11 +24,19 @@ public class NewsFeedActivity extends BaseUserActivity {
 
 
     public static Intent getLaunchIntent(final Context context) {
+        return getLaunchIntent(context, null);
+    }
+
+    public static Intent getLaunchIntent(final Context context, @Nullable final Integer initialTab) {
         final Intent intent = createDrawerActivityIntent(context, NewsFeedActivity.class);
 
         if (Preferences.General.DefaultLaunchScreen.get() == LaunchScreen.NEWS_FEED) {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
+
+        if (initialTab != null) {
+            intent.putExtra(EXTRA_INITIAL_TAB, initialTab);
         }
 
         return intent;

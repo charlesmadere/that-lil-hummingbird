@@ -10,6 +10,7 @@ import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.activities.AnimeQuotesActivity;
 import com.charlesmadere.hummingbird.activities.AnimeReviewActivity;
 import com.charlesmadere.hummingbird.activities.AnimeReviewsActivity;
+import com.charlesmadere.hummingbird.activities.BaseUserActivity;
 import com.charlesmadere.hummingbird.activities.FollowersActivity;
 import com.charlesmadere.hummingbird.activities.FollowingActivity;
 import com.charlesmadere.hummingbird.activities.GroupActivity;
@@ -20,7 +21,6 @@ import com.charlesmadere.hummingbird.activities.NotificationsActivity;
 import com.charlesmadere.hummingbird.activities.StoryActivity;
 import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.activities.UserAnimeReviewsActivity;
-import com.charlesmadere.hummingbird.activities.UserGroupsActivity;
 
 import java.util.ArrayList;
 
@@ -228,15 +228,22 @@ public final class DeepLinkUtils {
 
     private static void buildUserActivityStack(final Activity activity, final String[] paths,
             final ArrayList<Intent> activityStack) {
-        activityStack.add(UserActivity.getLaunchIntent(activity, paths[1]));
-
         if (paths.length == 2) {
+            activityStack.add(UserActivity.getLaunchIntent(activity, paths[1]));
             return;
         }
 
+        // https://hummingbird.me/users/ThatLilChestnut/groups
+        if (GROUPS.equalsIgnoreCase(paths[2])) {
+            activityStack.add(UserActivity.getLaunchIntent(activity, paths[2],
+                    BaseUserActivity.TAB_FEED));
+            return;
+        }
+
+        activityStack.add(UserActivity.getLaunchIntent(activity, paths[1]));
+
         // https://hummingbird.me/users/ThatLilChestnut/followers
         // https://hummingbird.me/users/ThatLilChestnut/following
-        // https://hummingbird.me/users/ThatLilChestnut/groups
         // https://hummingbird.me/users/ThatLilChestnut/library
         // https://hummingbird.me/users/ThatLilChestnut/reviews
 
@@ -244,8 +251,6 @@ public final class DeepLinkUtils {
             activityStack.add(FollowersActivity.getLaunchIntent(activity, paths[1]));
         } else if (FOLLOWING.equalsIgnoreCase(paths[2])) {
             activityStack.add(FollowingActivity.getLaunchIntent(activity, paths[1]));
-        } else if (GROUPS.equalsIgnoreCase(paths[2])) {
-            activityStack.add(UserGroupsActivity.getLaunchIntent(activity, paths[1]));
         } else if (LIBRARY.equalsIgnoreCase(paths[2])) {
             // https://hummingbird.me/users/ThatLilChestnut/library/manga
             if (paths.length >= 4 && MANGA.equalsIgnoreCase(paths[3])) {

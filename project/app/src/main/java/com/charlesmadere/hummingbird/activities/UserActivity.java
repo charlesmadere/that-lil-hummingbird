@@ -69,11 +69,22 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
     }
 
     public static Intent getLaunchIntent(final Context context, final String username) {
+        return getLaunchIntent(context, username, null);
+    }
+
+    public static Intent getLaunchIntent(final Context context, final String username,
+            @Nullable final Integer initialTab) {
         if (username.equalsIgnoreCase(CurrentUser.get().getUserId())) {
-            return NewsFeedActivity.getLaunchIntent(context);
+            return NewsFeedActivity.getLaunchIntent(context, initialTab);
         } else {
-            return new Intent(context, UserActivity.class)
+            final Intent intent = new Intent(context, UserActivity.class)
                     .putExtra(EXTRA_USERNAME, username);
+
+            if (initialTab != null) {
+                intent.putExtra(EXTRA_INITIAL_TAB, initialTab);
+            }
+
+            return intent;
         }
     }
 
