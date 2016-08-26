@@ -110,14 +110,24 @@ public class MangaLibraryFragment extends BaseLibraryFragment implements
     }
 
     @Override
+    public void onPlusOneClick(final MangaLibraryEntryItemView v) {
+        final MangaLibraryEntry entry = v.getLibraryEntry();
+        final MangaLibraryUpdate update = new MangaLibraryUpdate(entry);
+        update.setChaptersRead(update.getChaptersRead() + 1);
+
+        mRefreshLayout.setRefreshing(true);
+        Api.updateMangaLibraryEntry(entry.getId(), update, new EditLibraryEntryListener(this));
+    }
+
+    @Override
     public void onUpdateLibraryEntry() {
         final MangaLibraryUpdateFragment fragment = (MangaLibraryUpdateFragment)
                 getChildFragmentManager().findFragmentByTag(MangaLibraryUpdateFragment.TAG);
-        final MangaLibraryUpdate libraryUpdate = fragment.getLibraryUpdate();
-        final String libraryEntryId = fragment.getLibraryEntry().getId();
+        final MangaLibraryUpdate update = fragment.getLibraryUpdate();
+        final String entryId = fragment.getLibraryEntry().getId();
 
         mRefreshLayout.setRefreshing(true);
-        Api.updateMangaLibraryEntry(libraryEntryId, libraryUpdate, new EditLibraryEntryListener(this));
+        Api.updateMangaLibraryEntry(entryId, update, new EditLibraryEntryListener(this));
     }
 
     @Override

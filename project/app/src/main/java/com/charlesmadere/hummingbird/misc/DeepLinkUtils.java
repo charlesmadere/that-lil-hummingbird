@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.activities.AnimeActivity;
+import com.charlesmadere.hummingbird.activities.AnimeLibraryActivity;
 import com.charlesmadere.hummingbird.activities.AnimeQuotesActivity;
 import com.charlesmadere.hummingbird.activities.AnimeReviewActivity;
 import com.charlesmadere.hummingbird.activities.AnimeReviewsActivity;
@@ -15,9 +16,11 @@ import com.charlesmadere.hummingbird.activities.FollowersActivity;
 import com.charlesmadere.hummingbird.activities.FollowingActivity;
 import com.charlesmadere.hummingbird.activities.GroupActivity;
 import com.charlesmadere.hummingbird.activities.GroupMembersActivity;
+import com.charlesmadere.hummingbird.activities.LoginActivity;
 import com.charlesmadere.hummingbird.activities.MangaActivity;
 import com.charlesmadere.hummingbird.activities.MangaLibraryActivity;
 import com.charlesmadere.hummingbird.activities.NotificationsActivity;
+import com.charlesmadere.hummingbird.activities.SplashActivity;
 import com.charlesmadere.hummingbird.activities.StoryActivity;
 import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.activities.UserAnimeReviewsActivity;
@@ -26,6 +29,7 @@ import java.util.ArrayList;
 
 import static com.charlesmadere.hummingbird.misc.Constants.ANIME;
 import static com.charlesmadere.hummingbird.misc.Constants.ANIME_SHORT;
+import static com.charlesmadere.hummingbird.misc.Constants.DASHBOARD;
 import static com.charlesmadere.hummingbird.misc.Constants.FOLLOWERS;
 import static com.charlesmadere.hummingbird.misc.Constants.FOLLOWING;
 import static com.charlesmadere.hummingbird.misc.Constants.GROUPS;
@@ -49,17 +53,16 @@ public final class DeepLinkUtils {
 
 
     @Nullable
-    public static Intent[] buildActivityStack(final Activity activity) {
+    public static Intent[] buildIntentStack(final Activity activity) {
         if (activity == null) {
             throw new IllegalArgumentException("activity parameter must not be null");
         }
 
-        return buildActivityStack(activity, activity.getIntent());
+        return buildIntentStack(activity, activity.getIntent());
     }
 
     @Nullable
-    public static Intent[] buildActivityStack(final Activity activity,
-            @Nullable final Intent intent) {
+    public static Intent[] buildIntentStack(final Activity activity, @Nullable final Intent intent) {
         if (activity == null) {
             throw new IllegalArgumentException("activity parameter must not be null");
         }
@@ -68,13 +71,12 @@ public final class DeepLinkUtils {
             Timber.d(TAG, "Nothing to deep link to, Intent is null");
             return null;
         } else {
-            return buildActivityStack(activity, intent.getData());
+            return buildIntentStack(activity, intent.getData());
         }
     }
 
     @Nullable
-    public static Intent[] buildActivityStack(final Activity activity,
-            @Nullable final String uri) {
+    public static Intent[] buildIntentStack(final Activity activity, @Nullable final String uri) {
         if (activity == null) {
             throw new IllegalArgumentException("activity parameter must not be null");
         }
@@ -111,55 +113,77 @@ public final class DeepLinkUtils {
 
         final String pageIdentifier = paths[0];
 
-        if (pageIdentifier.equalsIgnoreCase("dashboard")) {
+        if (pageIdentifier.equalsIgnoreCase(DASHBOARD)) {
             Timber.d(TAG, "Deep link URI is to the user's own dashboard");
             return null;
         }
 
-        final ArrayList<Intent> activityStack = new ArrayList<>();
+        final ArrayList<Intent> intentStack = new ArrayList<>();
 
         // https://hummingbird.me/anime/rwby-ii
         if (ANIME.equalsIgnoreCase(pageIdentifier) || ANIME_SHORT.equalsIgnoreCase(pageIdentifier)) {
-            buildAnimeActivityStack(activity, paths, activityStack);
+            buildAnimeIntentStack(activity, paths, intentStack);
         }
 
         // https://hummingbird.me/groups/sos-brigade
         else if (GROUPS.equalsIgnoreCase(pageIdentifier) || GROUPS_SHORT.equalsIgnoreCase(pageIdentifier)) {
-            buildGroupsActivityStack(activity, paths, activityStack);
+            buildGroupsIntentStack(activity, paths, intentStack);
         }
 
         // https://hummingbird.me/manga/rwby
         else if (MANGA.equalsIgnoreCase(pageIdentifier) || MANGA_SHORT.equalsIgnoreCase(pageIdentifier)) {
-            buildMangaActivityStack(activity, paths, activityStack);
+            buildMangaIntentStack(activity, paths, intentStack);
         }
 
         // https://hummingbird.me/notifications
         else if (NOTIFICATIONS.equalsIgnoreCase(pageIdentifier)) {
-            buildNotificationsActivityStack(activity, activityStack);
+            buildNotificationsIntentStack(activity, intentStack);
         }
 
         // https://hummingbird.me/stories/8032021
         else if (STORIES.equalsIgnoreCase(pageIdentifier)) {
-            buildStoriesActivityStack(activity, paths, activityStack);
+            buildStoriesIntentStack(activity, paths, intentStack);
         }
 
         // https://hummingbird.me/users/ThatLilChestnut
         else if (USERS.equalsIgnoreCase(pageIdentifier) || USERS_SHORT.equalsIgnoreCase(pageIdentifier)) {
-            buildUserActivityStack(activity, paths, activityStack);
+            buildUserIntentStack(activity, paths, intentStack);
         }
 
-        if (activityStack.isEmpty()) {
+        if (intentStack.isEmpty()) {
             return null;
-        } else {
-            final Intent[] intents = new Intent[activityStack.size()];
-            activityStack.toArray(intents);
-            return intents;
         }
+
+        final ArrayList<Activity> activities = ActivityRegister.get();
+
+        if (activities != null && !activities.isEmpty()) {
+            boolean initialLaunch = true;
+
+            for (final Activity a : activities) {
+                if (!(a instanceof SplashActivity || a instanceof LoginActivity)) {
+                    initialLaunch = false;
+                    break;
+                }
+            }
+
+            if (!initialLaunch) {
+                // If there's an Activity in the register that is not SplashActivity or
+                // LoginActivity, then we know that this is not an initial launch, and therefore
+                // should only launch the very last Intent in the stack.
+
+                while (intentStack.size() > 1) {
+                    intentStack.remove(0);
+                }
+            }
+        }
+
+        final Intent[] intents = new Intent[intentStack.size()];
+        intentStack.toArray(intents);
+        return intents;
     }
 
     @Nullable
-    public static Intent[] buildActivityStack(final Activity activity,
-            @Nullable final Uri data) {
+    public static Intent[] buildIntentStack(final Activity activity, @Nullable final Uri data) {
         if (activity == null) {
             throw new IllegalArgumentException("activity parameter must not be null");
         }
@@ -168,13 +192,13 @@ public final class DeepLinkUtils {
             Timber.d(TAG, "Nothing to deep link to, Intent's data is null");
             return null;
         } else {
-            return buildActivityStack(activity, data.toString());
+            return buildIntentStack(activity, data.toString());
         }
     }
 
-    private static void buildAnimeActivityStack(final Activity activity, final String[] paths,
-            final ArrayList<Intent> activityStack) {
-        activityStack.add(AnimeActivity.getLaunchIntent(activity, paths[1]));
+    private static void buildAnimeIntentStack(final Activity activity, final String[] paths,
+            final ArrayList<Intent> intentStack) {
+        intentStack.add(AnimeActivity.getLaunchIntent(activity, paths[1]));
 
         if (paths.length == 2) {
             return;
@@ -185,20 +209,20 @@ public final class DeepLinkUtils {
         // https://hummingbird.me/anime/rwby-ii/reviews/10090
 
         if (QUOTES.equalsIgnoreCase(paths[2])) {
-            activityStack.add(AnimeQuotesActivity.getLaunchIntent(activity, paths[1]));
+            intentStack.add(AnimeQuotesActivity.getLaunchIntent(activity, paths[1]));
         } else if (REVIEWS.equalsIgnoreCase(paths[2])) {
-            activityStack.add(AnimeReviewsActivity.getLaunchIntent(activity, paths[1]));
+            intentStack.add(AnimeReviewsActivity.getLaunchIntent(activity, paths[1]));
             // https://hummingbird.me/anime/rwby-ii/reviews/10090
             if (paths.length >= 4) {
-                activityStack.add(AnimeReviewActivity.getLaunchIntent(activity, paths[1],
+                intentStack.add(AnimeReviewActivity.getLaunchIntent(activity, paths[1],
                         paths[3]));
             }
         }
     }
 
-    private static void buildGroupsActivityStack(final Activity activity, final String[] paths,
-            final ArrayList<Intent> activityStack) {
-        activityStack.add(GroupActivity.getLaunchIntent(activity, paths[1]));
+    private static void buildGroupsIntentStack(final Activity activity, final String[] paths,
+            final ArrayList<Intent> intentStack) {
+        intentStack.add(GroupActivity.getLaunchIntent(activity, paths[1]));
 
         if (paths.length == 2) {
             return;
@@ -207,40 +231,40 @@ public final class DeepLinkUtils {
         // https://hummingbird.me/groups/sos-brigade/members
 
         if (MEMBERS.equalsIgnoreCase(paths[2])) {
-            activityStack.add(GroupMembersActivity.getLaunchIntent(activity, paths[1]));
+            intentStack.add(GroupMembersActivity.getLaunchIntent(activity, paths[1]));
         }
     }
 
-    private static void buildMangaActivityStack(final Activity activity, final String[] paths,
-            final ArrayList<Intent> activityStack) {
-        activityStack.add(MangaActivity.getLaunchIntent(activity, paths[1]));
+    private static void buildMangaIntentStack(final Activity activity, final String[] paths,
+            final ArrayList<Intent> intentStack) {
+        intentStack.add(MangaActivity.getLaunchIntent(activity, paths[1]));
     }
 
-    private static void buildNotificationsActivityStack(final Activity activity,
-            final ArrayList<Intent> activityStack) {
-        activityStack.add(NotificationsActivity.getLaunchIntent(activity));
+    private static void buildNotificationsIntentStack(final Activity activity,
+            final ArrayList<Intent> intentStack) {
+        intentStack.add(NotificationsActivity.getLaunchIntent(activity));
     }
 
-    private static void buildStoriesActivityStack(final Activity activity, final String[] paths,
-            final ArrayList<Intent> activityStack) {
-        activityStack.add(StoryActivity.getStoryIdLaunchIntent(activity, paths[1]));
+    private static void buildStoriesIntentStack(final Activity activity, final String[] paths,
+            final ArrayList<Intent> intentStack) {
+        intentStack.add(StoryActivity.getStoryIdLaunchIntent(activity, paths[1]));
     }
 
-    private static void buildUserActivityStack(final Activity activity, final String[] paths,
-            final ArrayList<Intent> activityStack) {
+    private static void buildUserIntentStack(final Activity activity, final String[] paths,
+            final ArrayList<Intent> intentStack) {
         if (paths.length == 2) {
-            activityStack.add(UserActivity.getLaunchIntent(activity, paths[1]));
+            intentStack.add(UserActivity.getLaunchIntent(activity, paths[1]));
             return;
         }
 
         // https://hummingbird.me/users/ThatLilChestnut/groups
         if (GROUPS.equalsIgnoreCase(paths[2])) {
-            activityStack.add(UserActivity.getLaunchIntent(activity, paths[2],
-                    BaseUserActivity.TAB_FEED));
+            intentStack.add(UserActivity.getLaunchIntent(activity, paths[1],
+                    BaseUserActivity.TAB_GROUPS));
             return;
         }
 
-        activityStack.add(UserActivity.getLaunchIntent(activity, paths[1]));
+        intentStack.add(UserActivity.getLaunchIntent(activity, paths[1]));
 
         // https://hummingbird.me/users/ThatLilChestnut/followers
         // https://hummingbird.me/users/ThatLilChestnut/following
@@ -248,16 +272,18 @@ public final class DeepLinkUtils {
         // https://hummingbird.me/users/ThatLilChestnut/reviews
 
         if (FOLLOWERS.equalsIgnoreCase(paths[2])) {
-            activityStack.add(FollowersActivity.getLaunchIntent(activity, paths[1]));
+            intentStack.add(FollowersActivity.getLaunchIntent(activity, paths[1]));
         } else if (FOLLOWING.equalsIgnoreCase(paths[2])) {
-            activityStack.add(FollowingActivity.getLaunchIntent(activity, paths[1]));
+            intentStack.add(FollowingActivity.getLaunchIntent(activity, paths[1]));
         } else if (LIBRARY.equalsIgnoreCase(paths[2])) {
             // https://hummingbird.me/users/ThatLilChestnut/library/manga
             if (paths.length >= 4 && MANGA.equalsIgnoreCase(paths[3])) {
-                activityStack.add(MangaLibraryActivity.getLaunchIntent(activity, paths[1]));
+                intentStack.add(MangaLibraryActivity.getLaunchIntent(activity, paths[1]));
+            } else {
+                intentStack.add(AnimeLibraryActivity.getLaunchIntent(activity, paths[1]));
             }
         } else if (REVIEWS.equalsIgnoreCase(paths[2])) {
-            activityStack.add(UserAnimeReviewsActivity.getLaunchIntent(activity, paths[1]));
+            intentStack.add(UserAnimeReviewsActivity.getLaunchIntent(activity, paths[1]));
         }
     }
 

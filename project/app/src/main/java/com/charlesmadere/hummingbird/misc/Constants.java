@@ -9,6 +9,7 @@ public final class Constants {
     public static final String ANIME = "anime";
     public static final String ANIME_SHORT = "a";
     public static final String CHARLES_TWITTER_URL = "https://twitter.com/charlesmadere";
+    public static final String DASHBOARD = "dashboard";
     public static final String DEBUG = "debug";
     public static final String FOLLOWERS = "followers";
     public static final String FOLLOWING = "following";

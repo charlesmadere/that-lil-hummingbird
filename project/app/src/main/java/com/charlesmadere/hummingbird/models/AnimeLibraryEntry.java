@@ -53,6 +53,10 @@ public class AnimeLibraryEntry implements Parcelable {
     private Anime mAnime;
 
 
+    public boolean canBeIncremented() {
+        return !mAnime.hasEpisodeCount() || mEpisodesWatched < mAnime.getEpisodeCount();
+    }
+
     @Override
     public boolean equals(final Object o) {
         return o instanceof AnimeLibraryEntry && mId.equalsIgnoreCase(((AnimeLibraryEntry) o).getId());

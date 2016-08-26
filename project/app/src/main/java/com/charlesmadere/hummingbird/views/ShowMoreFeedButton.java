@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -65,7 +66,7 @@ public class ShowMoreFeedButton extends FrameLayout implements AdapterView<Media
     }
 
     @Override
-    public void setContent(final MediaStory content) {
+    public void setContent(@Nullable final MediaStory content) {
         mMediaStory = content;
     }
 

@@ -38,14 +38,14 @@ public class AnimeLibraryEntryItemView extends CardView implements AdapterView<A
     @BindView(R.id.kvtvRating)
     KeyValueTextView mRating;
 
+    @BindView(R.id.plusOneFeedButton)
+    PlusOneFeedButton mPlusOneFeedButton;
+
     @BindView(R.id.sdvPoster)
     SimpleDraweeView mPoster;
 
     @BindView(R.id.tvGenres)
     TextView mGenres;
-
-    @BindView(R.id.tvSynopsis)
-    TextView mSynopsis;
 
     @BindView(R.id.tvAnimeType)
     TextView mType;
@@ -111,13 +111,6 @@ public class AnimeLibraryEntryItemView extends CardView implements AdapterView<A
             mGenres.setVisibility(GONE);
         }
 
-        if (anime.hasSynopsis()) {
-            mSynopsis.setText(anime.getSynopsis());
-            mSynopsis.setVisibility(VISIBLE);
-        } else {
-            mSynopsis.setVisibility(GONE);
-        }
-
         if (anime.hasEpisodeCount()) {
             mProgress.setText(R.string.progress, res.getString(R.string.progress_format,
                     mNumberFormat.format(mLibraryEntry.getEpisodesWatched()),
@@ -134,28 +127,38 @@ public class AnimeLibraryEntryItemView extends CardView implements AdapterView<A
         } else {
             mRating.setVisibility(GONE);
         }
+
+        mPlusOneFeedButton.setVisibility(mLibraryEntry.canBeIncremented() ? VISIBLE : INVISIBLE);
     }
 
     public void setOnFeedButtonClickListeners(@Nullable final OnFeedButtonClickListeners l) {
         if (l == null) {
             mFeedButtons.setVisibility(GONE);
             mFeedButtonsSpace.setVisibility(VISIBLE);
+            mPlusOneFeedButton.setOnClickListener(null);
             mDeleteFeedButton.setOnClickListener(null);
             mEditFeedButton.setOnClickListener(null);
         } else {
             mFeedButtonsSpace.setVisibility(GONE);
             mFeedButtons.setVisibility(VISIBLE);
 
+            mPlusOneFeedButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    l.onPlusOneClick(AnimeLibraryEntryItemView.this);
+                }
+            });
+
             mDeleteFeedButton.setOnClickListener(new OnClickListener() {
                 @Override
-                public void onClick(final View view) {
+                public void onClick(final View v) {
                     l.onDeleteClick(AnimeLibraryEntryItemView.this);
                 }
             });
 
             mEditFeedButton.setOnClickListener(new OnClickListener() {
                 @Override
-                public void onClick(final View view) {
+                public void onClick(final View v) {
                     l.onEditClick(AnimeLibraryEntryItemView.this);
                 }
             });
@@ -166,6 +169,7 @@ public class AnimeLibraryEntryItemView extends CardView implements AdapterView<A
     public interface OnFeedButtonClickListeners {
         void onDeleteClick(final AnimeLibraryEntryItemView v);
         void onEditClick(final AnimeLibraryEntryItemView v);
+        void onPlusOneClick(final AnimeLibraryEntryItemView v);
     }
 
 }

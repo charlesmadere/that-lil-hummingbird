@@ -159,7 +159,7 @@ public class LoginActivity extends BaseActivity {
         if (intent != null && intent.getBooleanExtra(EXTRA_LAUNCH_TO_NOTIFICATIONS, false)) {
             startActivity(NotificationsActivity.getLaunchIntent(this));
         } else {
-            final Intent[] activityStack = DeepLinkUtils.buildActivityStack(this);
+            final Intent[] activityStack = DeepLinkUtils.buildIntentStack(this);
 
             if (activityStack == null || activityStack.length == 0) {
                 final LaunchScreen launchScreen = Preferences.General.DefaultLaunchScreen.get();

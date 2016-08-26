@@ -41,6 +41,9 @@ public class MangaLibraryEntryItemView extends CardView implements AdapterView<M
     @BindView(R.id.kvtvVolumes)
     KeyValueTextView mVolumes;
 
+    @BindView(R.id.plusOneFeedButton)
+    PlusOneFeedButton mPlusOneFeedButton;
+
     @BindView(R.id.sdvCover)
     SimpleDraweeView mCover;
 
@@ -49,9 +52,6 @@ public class MangaLibraryEntryItemView extends CardView implements AdapterView<M
 
     @BindView(R.id.tvMangaType)
     TextView mMangaType;
-
-    @BindView(R.id.tvSynopsis)
-    TextView mSynopsis;
 
     @BindView(R.id.tvTitle)
     TextView mTitle;
@@ -119,13 +119,6 @@ public class MangaLibraryEntryItemView extends CardView implements AdapterView<M
             mGenres.setVisibility(GONE);
         }
 
-        if (manga.hasSynopsis()) {
-            mSynopsis.setText(manga.getSynopsis());
-            mSynopsis.setVisibility(VISIBLE);
-        } else {
-            mSynopsis.setVisibility(GONE);
-        }
-
         if (manga.hasChapterCount()) {
             mChapters.setText(R.string.chapters, res.getString(R.string.progress_format,
                     mNumberFormat.format(mLibraryEntry.getChaptersRead()),
@@ -151,28 +144,38 @@ public class MangaLibraryEntryItemView extends CardView implements AdapterView<M
         } else {
             mRating.setVisibility(GONE);
         }
+
+        mPlusOneFeedButton.setVisibility(mLibraryEntry.canBeIncremented() ? VISIBLE : INVISIBLE);
     }
 
     public void setOnFeedButtonClickListeners(@Nullable final OnFeedButtonClickListeners l) {
         if (l == null) {
             mFeedButtons.setVisibility(GONE);
             mFeedButtonsSpace.setVisibility(VISIBLE);
+            mPlusOneFeedButton.setOnClickListener(null);
             mDeleteFeedButton.setOnClickListener(null);
             mEditFeedButton.setOnClickListener(null);
         } else {
             mFeedButtonsSpace.setVisibility(GONE);
             mFeedButtons.setVisibility(VISIBLE);
 
+            mPlusOneFeedButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    l.onPlusOneClick(MangaLibraryEntryItemView.this);
+                }
+            });
+
             mDeleteFeedButton.setOnClickListener(new OnClickListener() {
                 @Override
-                public void onClick(final View view) {
+                public void onClick(final View v) {
                     l.onDeleteClick(MangaLibraryEntryItemView.this);
                 }
             });
 
             mEditFeedButton.setOnClickListener(new OnClickListener() {
                 @Override
-                public void onClick(final View view) {
+                public void onClick(final View v) {
                     l.onEditClick(MangaLibraryEntryItemView.this);
                 }
             });
@@ -183,6 +186,7 @@ public class MangaLibraryEntryItemView extends CardView implements AdapterView<M
     public interface OnFeedButtonClickListeners {
         void onDeleteClick(final MangaLibraryEntryItemView v);
         void onEditClick(final MangaLibraryEntryItemView v);
+        void onPlusOneClick(final MangaLibraryEntryItemView v);
     }
 
 }

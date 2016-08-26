@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.PlusOneFeedButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/plusOneFeedButton"
+    style="@style/FeedButtonContainer">
+    <com.charlesmadere.hummingbird.views.TypefaceTextView
+        android:drawableStart="@drawable/ic_add_box_18dp"
+        android:id="@+id/tvPlusOneFeedButton"
+        android:text="@string/one"
+        style="@style/FeedButton" />
+</com.charlesmadere.hummingbird.views.PlusOneFeedButton>

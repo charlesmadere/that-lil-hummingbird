@@ -110,14 +110,24 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
     }
 
     @Override
+    public void onPlusOneClick(final AnimeLibraryEntryItemView v) {
+        final AnimeLibraryEntry entry = v.getLibraryEntry();
+        final AnimeLibraryUpdate update = new AnimeLibraryUpdate(entry);
+        update.setEpisodesWatched(update.getEpisodesWatched() + 1);
+
+        mRefreshLayout.setRefreshing(true);
+        Api.updateAnimeLibraryEntry(entry.getId(), update, new EditLibraryEntryListener(this));
+    }
+
+    @Override
     public void onUpdateLibraryEntry() {
         final AnimeLibraryUpdateFragment fragment = (AnimeLibraryUpdateFragment)
                 getChildFragmentManager().findFragmentByTag(AnimeLibraryUpdateFragment.TAG);
-        final AnimeLibraryUpdate libraryUpdate = fragment.getLibraryUpdate();
-        final String libraryEntryId = fragment.getLibraryEntry().getId();
+        final AnimeLibraryUpdate update = fragment.getLibraryUpdate();
+        final String entryId = fragment.getLibraryEntry().getId();
 
         mRefreshLayout.setRefreshing(true);
-        Api.updateAnimeLibraryEntry(libraryEntryId, libraryUpdate, new EditLibraryEntryListener(this));
+        Api.updateAnimeLibraryEntry(entryId, update, new EditLibraryEntryListener(this));
     }
 
     @Override

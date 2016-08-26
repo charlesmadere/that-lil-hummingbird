@@ -53,6 +53,10 @@ public class MangaLibraryEntry implements Parcelable {
     private Manga mManga;
 
 
+    public boolean canBeIncremented() {
+        return !mManga.hasChapterCount() || mChaptersRead < mManga.getChapterCount();
+    }
+
     @Override
     public boolean equals(final Object o) {
         return o instanceof MangaLibraryEntry && mId.equalsIgnoreCase(((MangaLibraryEntry) o).getId());
