@@ -72,8 +72,8 @@ dependencies {
     compile 'com.android.support:support-fragment:24.2.0'
 
     // ButterKnife
-    compile 'com.jakewharton:butterknife:8.2.1'
-    apt 'com.jakewharton:butterknife-compiler:8.2.1'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
 
     // Facebook's Fresco
     compile 'com.facebook.fresco:fresco:0.13.0'
