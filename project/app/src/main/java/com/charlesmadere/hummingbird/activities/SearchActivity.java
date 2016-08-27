@@ -30,6 +30,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
+import butterknife.OnTouch;
 
 public class SearchActivity extends BaseDrawerActivity implements
         SearchScopeSpinner.OnItemSelectedListener {
@@ -143,6 +144,12 @@ public class SearchActivity extends BaseDrawerActivity implements
 
         mHandler.postDelayed(new Search(this, mSearchScope.getSelectedItem(), query),
                 SEARCH_DELAY_MS);
+    }
+
+    @OnTouch(R.id.vTouchDetector)
+    boolean onTouchDetectorTouched() {
+        MiscUtils.closeKeyboard(this);
+        return false;
     }
 
     @Override

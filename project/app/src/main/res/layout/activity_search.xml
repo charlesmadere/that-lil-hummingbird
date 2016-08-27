@@ -67,6 +67,10 @@
                 android:id="@+id/tvEmpty"
                 android:text="@string/no_search_results"
                 style="@style/ListMessageTitle.Standalone" />
+            <View
+                android:id="@+id/vTouchDetector"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent" />
         </FrameLayout>
     </LinearLayout>
     <include
