@@ -26,7 +26,7 @@ public class NotificationsAdapter extends BaseMultiPaginationAdapter {
     }
 
     public void set(@Nullable final Feed feed) {
-        if (feed == null) {
+        if (feed == null || !feed.hasNotifications()) {
             super.set(null);
         } else {
             super.set(new ArrayList<Object>(feed.getNotifications()));
