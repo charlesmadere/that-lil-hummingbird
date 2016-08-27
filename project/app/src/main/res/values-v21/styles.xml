@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="LoginTitle" parent="BaseLoginTitle">
+        <item name="android:letterSpacing">-0.05</item>
+        <item name="android:lineSpacingExtra">-8dp</item>
+    </style>
+
     <style name="CardItem.NoPadding.NothingSpecial">
         <item name="cardCornerRadius">0dp</item>
     </style>
