@@ -34,10 +34,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected Toolbar mToolbar;
 
 
-    protected static Intent createDrawerActivityIntent(final Context context, final Class c) {
-        return new Intent(context, c).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-    }
-
     protected void applyUiColorSet(final UiColorSet uiColorSet) {
         if (mToolbar != null) {
             mToolbar.setBackgroundColor(uiColorSet.getDarkVibrantColor());

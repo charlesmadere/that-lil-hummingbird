@@ -1,5 +1,6 @@
 package com.charlesmadere.hummingbird.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
@@ -29,6 +30,10 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
     @BindView(R.id.navigationDrawerView)
     protected NavigationDrawerView mNavigationDrawerView;
 
+
+    protected static Intent createDrawerActivityIntent(final Context context, final Class c) {
+        return new Intent(context, c).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+    }
 
     @Override
     protected void applyUiColorSet(final UiColorSet uiColorSet) {

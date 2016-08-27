@@ -51,7 +51,7 @@ public class AppNewsActivity extends BaseDrawerActivity implements AppNewsItemVi
 
 
     public static Intent getLaunchIntent(final Context context) {
-        return new Intent(context, AppNewsActivity.class);
+        return createDrawerActivityIntent(context, AppNewsActivity.class);
     }
 
     private void fetchAppNews() {

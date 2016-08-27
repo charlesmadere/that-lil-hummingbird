@@ -49,7 +49,7 @@ public class NotificationsActivity extends BaseDrawerActivity implements ObjectC
 
 
     public static Intent getLaunchIntent(final Context context) {
-        return new Intent(context, NotificationsActivity.class);
+        return createDrawerActivityIntent(context, NotificationsActivity.class);
     }
 
     private void fetchNotifications() {
