@@ -12,19 +12,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.adapters.PaginatingAdapter;
+import com.charlesmadere.hummingbird.adapters.BaseAdapter;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.LibrarySort;
-import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
 import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import butterknife.BindView;
 
 public abstract class BaseLibraryFragment extends BaseFragment implements ObjectCache.KeyProvider,
-        RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
+        SwipeRefreshLayout.OnRefreshListener {
 
     protected static final String KEY_EDITABLE_LIBRARY = "EditableLibrary";
     protected static final String KEY_USERNAME = "Username";
@@ -32,7 +31,6 @@ public abstract class BaseLibraryFragment extends BaseFragment implements Object
     protected boolean mEditableLibrary;
     protected Feed mFeed;
     protected Listener mListener;
-    protected RecyclerViewPaginator mPaginator;
     protected String mUsername;
 
     @BindView(R.id.llEmpty)
@@ -58,12 +56,7 @@ public abstract class BaseLibraryFragment extends BaseFragment implements Object
         mRefreshLayout.setRefreshing(true);
     }
 
-    protected abstract PaginatingAdapter getAdapter();
-
-    @Override
-    public boolean isLoading() {
-        return mRefreshLayout.isRefreshing() || getAdapter().isPaginating();
-    }
+    protected abstract BaseAdapter getAdapter();
 
     @Override
     public void onAttach(final Context context) {
@@ -115,19 +108,6 @@ public abstract class BaseLibraryFragment extends BaseFragment implements Object
         mRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.setHasFixedSize(true);
         SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
-        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
-    }
-
-    @Override
-    public void paginate() {
-        getAdapter().setPaginating(true);
-    }
-
-    protected abstract void paginationComplete();
-
-    protected void paginationNoMore() {
-        mPaginator.setEnabled(false);
-        getAdapter().setPaginating(false);
     }
 
     protected void showDeleteLibraryEntryError() {

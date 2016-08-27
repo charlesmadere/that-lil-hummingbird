@@ -131,13 +131,16 @@ public class AnimeLibraryEntryItemView extends CardView implements AdapterView<A
         mPlusOneFeedButton.setVisibility(mLibraryEntry.canBeIncremented() ? VISIBLE : INVISIBLE);
     }
 
-    public void setOnFeedButtonClickListeners(@Nullable final OnFeedButtonClickListeners l) {
+    public void setListeners(@Nullable final Listeners l) {
         if (l == null) {
             mFeedButtons.setVisibility(GONE);
             mFeedButtonsSpace.setVisibility(VISIBLE);
             mPlusOneFeedButton.setOnClickListener(null);
+            mPlusOneFeedButton.setClickable(false);
             mDeleteFeedButton.setOnClickListener(null);
+            mDeleteFeedButton.setClickable(false);
             mEditFeedButton.setOnClickListener(null);
+            mEditFeedButton.setClickable(false);
         } else {
             mFeedButtonsSpace.setVisibility(GONE);
             mFeedButtons.setVisibility(VISIBLE);
@@ -145,28 +148,35 @@ public class AnimeLibraryEntryItemView extends CardView implements AdapterView<A
             mPlusOneFeedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(final View v) {
-                    l.onPlusOneClick(AnimeLibraryEntryItemView.this);
+                    if (!l.isLibraryLoading()) {
+                        l.onPlusOneClick(AnimeLibraryEntryItemView.this);
+                    }
                 }
             });
 
             mDeleteFeedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(final View v) {
-                    l.onDeleteClick(AnimeLibraryEntryItemView.this);
+                    if (!l.isLibraryLoading()) {
+                        l.onDeleteClick(AnimeLibraryEntryItemView.this);
+                    }
                 }
             });
 
             mEditFeedButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(final View v) {
-                    l.onEditClick(AnimeLibraryEntryItemView.this);
+                    if (!l.isLibraryLoading()) {
+                        l.onEditClick(AnimeLibraryEntryItemView.this);
+                    }
                 }
             });
         }
     }
 
 
-    public interface OnFeedButtonClickListeners {
+    public interface Listeners {
+        boolean isLibraryLoading();
         void onDeleteClick(final AnimeLibraryEntryItemView v);
         void onEditClick(final AnimeLibraryEntryItemView v);
         void onPlusOneClick(final AnimeLibraryEntryItemView v);

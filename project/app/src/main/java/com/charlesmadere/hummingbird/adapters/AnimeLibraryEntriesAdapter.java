@@ -13,9 +13,9 @@ import com.charlesmadere.hummingbird.views.AnimeLibraryEntryItemView;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class AnimeLibraryEntriesAdapter extends BasePaginationAdapter<AnimeLibraryEntry> {
+public class AnimeLibraryEntriesAdapter extends BaseAdapter<AnimeLibraryEntry> {
 
-    private final AnimeLibraryEntryItemView.OnFeedButtonClickListeners mListeners;
+    private final AnimeLibraryEntryItemView.Listeners mListeners;
 
 
     public AnimeLibraryEntriesAdapter(final Context context) {
@@ -23,13 +23,19 @@ public class AnimeLibraryEntriesAdapter extends BasePaginationAdapter<AnimeLibra
     }
 
     public AnimeLibraryEntriesAdapter(final Context context,
-            @Nullable final AnimeLibraryEntryItemView.OnFeedButtonClickListeners listeners) {
+            @Nullable final AnimeLibraryEntryItemView.Listeners listeners) {
         super(context);
         mListeners = listeners;
+        setHasStableIds(true);
     }
 
     @Override
-    public int getItemViewTypeForPosition(final int position) {
+    public long getItemId(final int position) {
+        return getItem(position).hashCode();
+    }
+
+    @Override
+    public int getItemViewType(final int position) {
         return R.layout.item_anime_library_entry;
     }
 
@@ -37,7 +43,7 @@ public class AnimeLibraryEntriesAdapter extends BasePaginationAdapter<AnimeLibra
     public AdapterView.ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         final AdapterView.ViewHolder viewHolder = super.onCreateViewHolder(parent, viewType);
         final AnimeLibraryEntryItemView view = (AnimeLibraryEntryItemView) viewHolder.itemView;
-        view.setOnFeedButtonClickListeners(mListeners);
+        view.setListeners(mListeners);
         return viewHolder;
     }
 

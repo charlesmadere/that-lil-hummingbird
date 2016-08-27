@@ -24,8 +24,7 @@ import com.charlesmadere.hummingbird.views.MangaLibraryEntryItemView;
 import java.lang.ref.WeakReference;
 
 public class MangaLibraryFragment extends BaseLibraryFragment implements
-        MangaLibraryEntryItemView.OnFeedButtonClickListeners,
-        MangaLibraryUpdateFragment.Listener {
+        MangaLibraryEntryItemView.Listeners, MangaLibraryUpdateFragment.Listener {
 
     private static final String TAG = "MangaLibraryFragment";
     private static final String KEY_READING_STATUS = "ReadingStatus";
@@ -66,6 +65,11 @@ public class MangaLibraryFragment extends BaseLibraryFragment implements
     @Override
     public String[] getObjectCacheKeys() {
         return new String[] { getFragmentName(), mUsername, mReadingStatus.name() };
+    }
+
+    @Override
+    public boolean isLibraryLoading() {
+        return mRefreshLayout.isRefreshing();
     }
 
     @Override
@@ -153,19 +157,6 @@ public class MangaLibraryFragment extends BaseLibraryFragment implements
     }
 
     @Override
-    public void paginate() {
-        super.paginate();
-        Api.getMangaLibraryEntries(mUsername, mReadingStatus, mFeed,
-                new PaginateLibraryEntriesListener(this));
-    }
-
-    @Override
-    protected void paginationComplete() {
-        mAdapter.set(mFeed, mListener.getLibrarySort());
-        mAdapter.setPaginating(false);
-    }
-
-    @Override
     protected void showLibraryEntries(final Feed feed) {
         mFeed = feed;
         mAdapter.set(mFeed, mListener.getLibrarySort());
@@ -173,7 +164,6 @@ public class MangaLibraryFragment extends BaseLibraryFragment implements
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
         mRefreshLayout.setRefreshing(false);
-        mPaginator.setEnabled(feed.hasCursor());
     }
 
     @Override
@@ -261,38 +251,6 @@ public class MangaLibraryFragment extends BaseLibraryFragment implements
                     fragment.showLibraryEntries(feed);
                 } else {
                     fragment.showEmpty();
-                }
-            }
-        }
-    }
-
-    private static class PaginateLibraryEntriesListener implements ApiResponse<Feed> {
-        private final WeakReference<MangaLibraryFragment> mFragmentReference;
-        private final int mLibraryEntriesSize;
-
-        private PaginateLibraryEntriesListener(final MangaLibraryFragment fragment) {
-            mFragmentReference = new WeakReference<>(fragment);
-            mLibraryEntriesSize = fragment.mFeed.getMangaLibraryEntriesSize();
-        }
-
-        @Override
-        public void failure(@Nullable final ErrorInfo error) {
-            final MangaLibraryFragment fragment = mFragmentReference.get();
-
-            if (fragment != null && fragment.isAlive()) {
-                fragment.paginationNoMore();
-            }
-        }
-
-        @Override
-        public void success(final Feed feed) {
-            final MangaLibraryFragment fragment = mFragmentReference.get();
-
-            if (fragment != null && fragment.isAlive()) {
-                if (feed.hasCursor() && feed.getMangaLibraryEntriesSize() > mLibraryEntriesSize) {
-                    fragment.paginationComplete();
-                } else {
-                    fragment.paginationNoMore();
                 }
             }
         }

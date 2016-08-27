@@ -24,8 +24,7 @@ import com.charlesmadere.hummingbird.views.AnimeLibraryEntryItemView;
 import java.lang.ref.WeakReference;
 
 public class AnimeLibraryFragment extends BaseLibraryFragment implements
-        AnimeLibraryEntryItemView.OnFeedButtonClickListeners,
-        AnimeLibraryUpdateFragment.Listener {
+        AnimeLibraryEntryItemView.Listeners, AnimeLibraryUpdateFragment.Listener {
 
     private static final String TAG = "AnimeLibraryFragment";
     private static final String KEY_WATCHING_STATUS = "WatchingStatus";
@@ -66,6 +65,11 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
     @Override
     public String[] getObjectCacheKeys() {
         return new String[] { getFragmentName(), mUsername, mWatchingStatus.name() };
+    }
+
+    @Override
+    public boolean isLibraryLoading() {
+        return mRefreshLayout.isRefreshing();
     }
 
     @Override
@@ -153,19 +157,6 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
     }
 
     @Override
-    public void paginate() {
-        super.paginate();
-        Api.getAnimeLibraryEntries(mUsername, mWatchingStatus, mFeed,
-                new PaginateLibraryEntriesListener(this));
-    }
-
-    @Override
-    protected void paginationComplete() {
-        mAdapter.set(mFeed, mListener.getLibrarySort());
-        mAdapter.setPaginating(false);
-    }
-
-    @Override
     protected void showLibraryEntries(final Feed feed) {
         mFeed = feed;
         mAdapter.set(mFeed, mListener.getLibrarySort());
@@ -173,7 +164,6 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
         mRefreshLayout.setRefreshing(false);
-        mPaginator.setEnabled(feed.hasCursor());
     }
 
     @Override
@@ -261,38 +251,6 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
                     fragment.showLibraryEntries(feed);
                 } else {
                     fragment.showEmpty();
-                }
-            }
-        }
-    }
-
-    private static class PaginateLibraryEntriesListener implements ApiResponse<Feed> {
-        private final WeakReference<AnimeLibraryFragment> mFragmentReference;
-        private final int mLibraryEntriesSize;
-
-        private PaginateLibraryEntriesListener(final AnimeLibraryFragment fragment) {
-            mFragmentReference = new WeakReference<>(fragment);
-            mLibraryEntriesSize = fragment.mFeed.getAnimeLibraryEntriesSize();
-        }
-
-        @Override
-        public void failure(@Nullable final ErrorInfo error) {
-            final AnimeLibraryFragment fragment = mFragmentReference.get();
-
-            if (fragment != null && fragment.isAlive()) {
-                fragment.paginationNoMore();
-            }
-        }
-
-        @Override
-        public void success(final Feed feed) {
-            final AnimeLibraryFragment fragment = mFragmentReference.get();
-
-            if (fragment != null && fragment.isAlive()) {
-                if (feed.hasCursor() && feed.getAnimeLibraryEntriesSize() > mLibraryEntriesSize) {
-                    fragment.paginationComplete();
-                } else {
-                    fragment.paginationNoMore();
                 }
             }
         }
