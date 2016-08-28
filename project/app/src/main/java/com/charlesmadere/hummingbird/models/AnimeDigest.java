@@ -912,7 +912,7 @@ public class AnimeDigest implements Hydratable, Parcelable {
         }
 
         public boolean hasBayesianRating() {
-            return mBayesianRating != null;
+            return mBayesianRating != null && mBayesianRating > 0f;
         }
 
         public boolean hasCoverImage() {
