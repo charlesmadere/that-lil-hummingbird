@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.charlesmadere.hummingbird.views.CharSequenceCardItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/CardItem.NoPadding.NothingSpecial.Header">
-    <com.charlesmadere.hummingbird.views.TypefaceTextView
-        android:id="@+id/tvTitle"
-        tools:text="Kill La Kill"
-        style="@style/CardHeader" />
-</com.charlesmadere.hummingbird.views.CharSequenceCardItemView>
+    android:background="@color/cardBg"
+    android:elevation="@dimen/cardview_default_elevation"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/root_padding_half"
+    android:layout_marginStart="@dimen/root_padding_half"
+    android:layout_marginTop="@dimen/root_padding_half"
+    android:layout_width="match_parent"
+    android:padding="@dimen/root_padding_half"
+    android:textColor="?android:attr/textColorPrimary"
+    app:typeface="open_sans_bold"
+    tools:text="Kill La Kill" />

@@ -153,18 +153,6 @@
         <item name="contentPaddingTop">0dp</item>
     </style>
 
-    <style name="CardItem.NoPadding.NothingSpecial">
-        <item name="cardCornerRadius">0dp</item>
-        <item name="cardElevation">0dp</item>
-    </style>
-
-    <style name="CardItem.NoPadding.NothingSpecial.Header">
-        <item name="android:layout_marginTop">@dimen/root_padding_half</item>
-        <item name="contentPaddingLeft">@dimen/root_padding</item>
-        <item name="contentPaddingRight">@dimen/root_padding</item>
-        <item name="contentPaddingTop">@dimen/root_padding_half</item>
-    </style>
-
     <style name="CardItem.WithMargins">
         <item name="android:layout_marginBottom">@dimen/root_padding_half</item>
         <item name="android:layout_marginTop">@dimen/root_padding_half</item>
@@ -218,19 +206,23 @@
         <item name="android:layout_width">match_parent</item>
     </style>
 
-    <style name="DividerCardItem" parent="CardItem">
-        <item name="android:layout_marginEnd">0dp</item>
-        <item name="android:layout_marginStart">0dp</item>
-        <item name="cardCornerRadius">0dp</item>
-        <item name="cardElevation">0dp</item>
-        <item name="cardPreventCornerOverlap">false</item>
+    <style name="DividerListItem">
+        <item name="android:background">@color/cardBg</item>
+        <item name="android:elevation" tools:targetApi="lollipop">@dimen/cardview_default_elevation</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:padding">@dimen/root_padding</item>
     </style>
 
-    <style name="DividerCardItem.LessPadding">
-        <item name="contentPaddingBottom">@dimen/root_padding_half</item>
-        <item name="contentPaddingLeft">@dimen/root_padding_half</item>
-        <item name="contentPaddingRight">@dimen/root_padding_half</item>
-        <item name="contentPaddingTop">@dimen/root_padding_half</item>
+    <style name="DividerListItem.LessPadding">
+        <item name="android:padding">@dimen/root_padding_half</item>
+    </style>
+
+    <style name="DividerListItem.NoPadding">
+        <item name="android:layout_marginEnd">@dimen/root_padding_half</item>
+        <item name="android:layout_marginStart">@dimen/root_padding_half</item>
+        <item name="android:padding">0dp</item>
     </style>
 
     <style name="DrawerLayout">

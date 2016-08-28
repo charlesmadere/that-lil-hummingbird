@@ -1,9 +1,11 @@
 package com.charlesmadere.hummingbird.views;
 
+import android.annotation.TargetApi;
 import android.content.Context;
-import android.support.v7.widget.CardView;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
@@ -16,7 +18,7 @@ import java.text.NumberFormat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class UserAnimeReviewItemView extends CardView implements AdapterView<AnimeReview>,
+public class UserAnimeReviewItemView extends FrameLayout implements AdapterView<AnimeReview>,
         View.OnClickListener {
 
     private AnimeReview mReview;
@@ -42,6 +44,12 @@ public class UserAnimeReviewItemView extends CardView implements AdapterView<Ani
     public UserAnimeReviewItemView(final Context context, final AttributeSet attrs,
             final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public UserAnimeReviewItemView(final Context context, final AttributeSet attrs,
+            final int defStyleAttr, final int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override

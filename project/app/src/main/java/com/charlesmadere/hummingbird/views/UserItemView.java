@@ -3,7 +3,6 @@ package com.charlesmadere.hummingbird.views;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -12,16 +11,14 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
-import com.charlesmadere.hummingbird.models.GroupMember;
 import com.charlesmadere.hummingbird.models.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class GroupMemberItemView extends FrameLayout implements AdapterView<GroupMember>,
-        View.OnClickListener {
+public class UserItemView extends FrameLayout implements AdapterView<User>, View.OnClickListener {
 
-    private GroupMember mGroupMember;
+    private User mUser;
 
     @BindView(R.id.avatarView)
     AvatarView mAvatar;
@@ -29,32 +26,31 @@ public class GroupMemberItemView extends FrameLayout implements AdapterView<Grou
     @BindView(R.id.tvBio)
     TextView mBio;
 
-    @BindView(R.id.groupMemberBadge)
-    TextView mGroupMemberBadge;
-
     @BindView(R.id.tvTitle)
     TextView mTitle;
 
+    @BindView(R.id.proBadge)
+    View mProBadge;
 
-    public GroupMemberItemView(final Context context, final AttributeSet attrs) {
+
+    public UserItemView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public GroupMemberItemView(final Context context, final AttributeSet attrs,
-            final int defStyleAttr) {
+    public UserItemView(final Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public GroupMemberItemView(final Context context, final AttributeSet attrs,
-            final int defStyleAttr, final int defStyleRes) {
+    public UserItemView(final Context context, final AttributeSet attrs, final int defStyleAttr,
+            final int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override
     public void onClick(final View v) {
         final Context context = getContext();
-        context.startActivity(UserActivity.getLaunchIntent(context, mGroupMember.getUserId()));
+        context.startActivity(UserActivity.getLaunchIntent(context, mUser));
     }
 
     @Override
@@ -65,17 +61,15 @@ public class GroupMemberItemView extends FrameLayout implements AdapterView<Grou
     }
 
     @Override
-    public void setContent(final GroupMember content) {
-        mGroupMember = content;
+    public void setContent(final User content) {
+        mUser = content;
 
-        final User user = mGroupMember.getUser();
-        mAvatar.setContent(user);
-        mGroupMemberBadge.setText(mGroupMember.getRank().getTextResId());
+        mAvatar.setContent(mUser);
+        mProBadge.setVisibility(mUser.isPro() ? VISIBLE : GONE);
+        mTitle.setText(mUser.getId());
 
-        mTitle.setText(user.getId());
-
-        if (user.hasBio()) {
-            mBio.setText(user.getBio());
+        if (mUser.hasBio()) {
+            mBio.setText(mUser.getBio());
             mBio.setVisibility(VISIBLE);
         } else {
             mBio.setVisibility(GONE);

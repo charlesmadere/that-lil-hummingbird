@@ -1,9 +1,11 @@
 package com.charlesmadere.hummingbird.views;
 
+import android.annotation.TargetApi;
 import android.content.Context;
-import android.support.v7.widget.CardView;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
@@ -17,7 +19,7 @@ import com.charlesmadere.hummingbird.models.ProfileCommentNotification;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ProfileCommentNotificationItemView extends CardView implements
+public class ProfileCommentNotificationItemView extends FrameLayout implements
         AdapterView<ProfileCommentNotification>, View.OnClickListener {
 
     private ProfileCommentNotification mProfileCommentNotification;
@@ -39,6 +41,12 @@ public class ProfileCommentNotificationItemView extends CardView implements
     public ProfileCommentNotificationItemView(final Context context, final AttributeSet attrs,
             final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public ProfileCommentNotificationItemView(final Context context, final AttributeSet attrs,
+            final int defStyleAttr, final int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     private void handleStoryClick(final AbsNotification.StorySource source) {

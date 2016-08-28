@@ -1,21 +1,13 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
-import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CharSequenceCardItemView extends CardView implements AdapterView<CharSequence> {
-
-    @BindView(R.id.tvTitle)
-    TextView mTitle;
-
+public class CharSequenceCardItemView extends TypefaceTextView implements AdapterView<CharSequence> {
 
     public CharSequenceCardItemView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
@@ -34,7 +26,7 @@ public class CharSequenceCardItemView extends CardView implements AdapterView<Ch
 
     @Override
     public void setContent(final CharSequence content) {
-        mTitle.setText(content);
+        setText(content);
     }
 
 }

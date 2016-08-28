@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="commentFieldBg">#424242</color>
+    <color name="cardBg">#424242</color>
     <color name="orangeSecondary">#A35C42</color>
     <color name="placeholderGradientEnd">#666666</color>
     <color name="placeholderGradientStart">#444444</color>

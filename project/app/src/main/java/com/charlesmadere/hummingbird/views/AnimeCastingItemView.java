@@ -1,9 +1,11 @@
 package com.charlesmadere.hummingbird.views;
 
+import android.annotation.TargetApi;
 import android.content.Context;
-import android.support.v7.widget.CardView;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
@@ -13,7 +15,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AnimeCastingItemView extends CardView implements AdapterView<Void> {
+public class AnimeCastingItemView extends FrameLayout implements AdapterView<Void> {
 
     @BindView(R.id.kvtvTitle)
     KeyValueTextView mTitle;
@@ -35,6 +37,12 @@ public class AnimeCastingItemView extends CardView implements AdapterView<Void> 
     public AnimeCastingItemView(final Context context, final AttributeSet attrs,
             final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public AnimeCastingItemView(final Context context, final AttributeSet attrs,
+            final int defStyleAttr, final int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override

@@ -56,7 +56,7 @@
         </LinearLayout>
     </RelativeLayout>
     <com.charlesmadere.hummingbird.views.TypefaceEditText
-        android:background="@color/commentFieldBg"
+        android:background="@color/cardBg"
         android:gravity="top"
         android:hint="@string/write_something_"
         android:id="@+id/etFeedPost"

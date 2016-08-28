@@ -1,10 +1,13 @@
 package com.charlesmadere.hummingbird.views;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,7 +20,7 @@ import java.text.NumberFormat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AppNewsItemView extends CardView implements AdapterView<AppNews> {
+public class AppNewsItemView extends FrameLayout implements AdapterView<AppNews> {
 
     private AppNews mAppNews;
     private NumberFormat mNumberFormat;
@@ -45,6 +48,12 @@ public class AppNewsItemView extends CardView implements AdapterView<AppNews> {
     public AppNewsItemView(final Context context, final AttributeSet attrs,
             final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public AppNewsItemView(final Context context, final AttributeSet attrs,
+            final int defStyleAttr, final int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     public AppNews getAppNews() {
