@@ -1,9 +1,11 @@
 package com.charlesmadere.hummingbird.views;
 
+import android.annotation.TargetApi;
 import android.content.Context;
-import android.support.v7.widget.CardView;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
@@ -13,7 +15,7 @@ import com.charlesmadere.hummingbird.models.ReplySubstory;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ReplySubstoryStandaloneItemView extends CardView implements AdapterView<Void> {
+public class ReplySubstoryStandaloneItemView extends FrameLayout implements AdapterView<Void> {
 
     private int mBottomMargin;
 
@@ -37,6 +39,12 @@ public class ReplySubstoryStandaloneItemView extends CardView implements Adapter
     public ReplySubstoryStandaloneItemView(final Context context, final AttributeSet attrs,
             final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public ReplySubstoryStandaloneItemView(final Context context, final AttributeSet attrs,
+            final int defStyleAttr, final int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override
