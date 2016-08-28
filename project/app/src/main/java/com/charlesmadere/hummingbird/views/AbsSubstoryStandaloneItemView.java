@@ -5,7 +5,7 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
@@ -16,7 +16,7 @@ import com.charlesmadere.hummingbird.models.User;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AbsSubstoryStandaloneItemView extends FrameLayout implements AdapterView<Void> {
+public class AbsSubstoryStandaloneItemView extends LinearLayout implements AdapterView<Void> {
 
     private int mBottomMargin;
 
