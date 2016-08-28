@@ -5,7 +5,7 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
@@ -22,7 +22,7 @@ import com.facebook.imagepipeline.image.ImageInfo;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class UserResultItemView extends LinearLayout implements AdapterView<Void>,
+public class UserResultItemView extends FrameLayout implements AdapterView<Void>,
         SearchResultsAdapter.Handler, View.OnClickListener {
 
     private SearchBundle.UserResult mUserResult;

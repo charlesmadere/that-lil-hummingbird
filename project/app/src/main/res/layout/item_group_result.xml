@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.charlesmadere.hummingbird.views.GroupResultItemView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     style="@style/DividerListItem.NoPadding">
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:padding="@dimen/root_padding_half">
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/sdvLogo"
-            android:layout_marginEnd="@dimen/root_padding"
-            style="@style/GroupLogo.Small" />
+        android:orientation="vertical">
         <LinearLayout
-            android:layout_gravity="center_vertical"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:orientation="vertical">
-            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                android:id="@+id/tvTitle"
-                tools:text="SOS Brigade"
-                style="@style/GroupTitle" />
-            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                android:id="@+id/tvDescription"
-                tools:text="Kyousougiga"
-                style="@style/GroupDescription.Limited" />
+            android:orientation="horizontal"
+            android:padding="@dimen/root_padding_half">
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdvLogo"
+                android:layout_marginEnd="@dimen/root_padding"
+                style="@style/GroupLogo.Small" />
+            <LinearLayout
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
+                <com.charlesmadere.hummingbird.views.TypefaceTextView
+                    android:id="@+id/tvTitle"
+                    tools:text="SOS Brigade"
+                    style="@style/GroupTitle" />
+                <com.charlesmadere.hummingbird.views.TypefaceTextView
+                    android:id="@+id/tvDescription"
+                    tools:text="Kyousougiga"
+                    style="@style/GroupDescription.Limited" />
+            </LinearLayout>
         </LinearLayout>
+        <View
+            style="@style/Divider" />
     </LinearLayout>
-    <View
-        style="@style/Divider" />
 </com.charlesmadere.hummingbird.views.GroupResultItemView>
