@@ -27,9 +27,11 @@ public class AnimeFranchiseFragment extends BaseAnimeFragment implements ObjectC
         SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "AnimeFranchiseFragment";
+    private static final String KEY_FRANCHISE_ID = "FranchiseId";
 
     private AnimeAdapter mAdapter;
     private Franchise mFranchise;
+    private String mFranchiseId;
 
     @BindView(R.id.llEmpty)
     LinearLayout mEmpty;
@@ -44,17 +46,19 @@ public class AnimeFranchiseFragment extends BaseAnimeFragment implements ObjectC
     RefreshLayout mRefreshLayout;
 
 
-    public static AnimeFranchiseFragment create() {
-        return new AnimeFranchiseFragment();
+    public static AnimeFranchiseFragment create(final String franchiseId) {
+        final Bundle args = new Bundle(1);
+        args.putString(KEY_FRANCHISE_ID, franchiseId);
+
+        final AnimeFranchiseFragment fragment = new AnimeFranchiseFragment();
+        fragment.setArguments(args);
+
+        return fragment;
     }
 
     private void fetchFranchise() {
         mRefreshLayout.setRefreshing(true);
-        Api.getFranchise(getFranchiseId(), new GetFranchiseListener(this));
-    }
-
-    private String getFranchiseId() {
-        return getAnimeDigest().getInfo().getFranchiseId();
+        Api.getFranchise(mFranchiseId, new GetFranchiseListener(this));
     }
 
     @Override
@@ -64,12 +68,15 @@ public class AnimeFranchiseFragment extends BaseAnimeFragment implements ObjectC
 
     @Override
     public String[] getObjectCacheKeys() {
-        return new String[] { getFragmentName(), getFranchiseId() };
+        return new String[] { getFragmentName(), mFranchiseId };
     }
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        final Bundle args = getArguments();
+        mFranchiseId = args.getString(KEY_FRANCHISE_ID);
 
         mFranchise = ObjectCache.get(this);
     }
