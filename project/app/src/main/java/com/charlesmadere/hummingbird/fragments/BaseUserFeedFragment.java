@@ -32,12 +32,15 @@ import butterknife.BindView;
 public abstract class BaseUserFeedFragment extends BaseFragment implements ObjectCache.KeyProvider,
         RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
+    protected static final String KEY_USERNAME = "Username";
+
     protected boolean mFetchingFeed;
     protected Feed mFeed;
     protected FeedAdapter mAdapter;
     protected FeedListeners mFeedListeners;
     protected Listener mListener;
     protected RecyclerViewPaginator mPaginator;
+    protected String mUsername;
 
     @BindView(R.id.llEmpty)
     protected LinearLayout mEmpty;
@@ -60,7 +63,7 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
 
     @Override
     public String[] getObjectCacheKeys() {
-        return new String[] { getFragmentName(), getUserDigest().getUserId() };
+        return new String[] { getFragmentName(), mUsername };
     }
 
     protected UserDigest getUserDigest() {
@@ -103,6 +106,9 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        final Bundle args = getArguments();
+        mUsername = args.getString(KEY_USERNAME);
 
         mFeed = ObjectCache.get(this);
     }
