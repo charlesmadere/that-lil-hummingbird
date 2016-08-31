@@ -84,6 +84,26 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
     }
 
     @Override
+    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        mRefreshLayout.setOnRefreshListener(this);
+        mRecyclerView.setHasFixedSize(true);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
+        mAdapter = new FeedAdapter(getContext());
+        mRecyclerView.setAdapter(mAdapter);
+        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
+
+        mFeed = ObjectCache.get(this);
+
+        if (mFeed == null) {
+            fetchGroupStories();
+        } else {
+            showGroupStories(mFeed);
+        }
+    }
+
+    @Override
     public void onAttach(final Context context) {
         super.onAttach(context);
 
@@ -99,13 +119,6 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
         if (mFeedListeners == null) {
             throw new IllegalStateException(getFragmentName() + " must attach to FeedListeners");
         }
-    }
-
-    @Override
-    public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        mFeed = ObjectCache.get(this);
     }
 
     @Override
@@ -126,24 +139,6 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
 
         if (mFeed != null) {
             ObjectCache.put(mFeed, this);
-        }
-    }
-
-    @Override
-    public void onViewCreated(final View view, final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        mRefreshLayout.setOnRefreshListener(this);
-        mRecyclerView.setHasFixedSize(true);
-        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
-        mAdapter = new FeedAdapter(getContext());
-        mRecyclerView.setAdapter(mAdapter);
-        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
-
-        if (mFeed == null) {
-            fetchGroupStories();
-        } else {
-            showGroupStories(mFeed);
         }
     }
 

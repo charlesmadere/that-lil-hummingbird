@@ -33,11 +33,11 @@ public class MangaLibraryFragment extends BaseLibraryFragment implements
     private ReadingStatus mReadingStatus;
 
 
-    public static MangaLibraryFragment create(final ReadingStatus readingStatus,
-            final String username, final boolean editableLibrary) {
+    public static MangaLibraryFragment create(final String username,
+            final ReadingStatus readingStatus, final boolean editableLibrary) {
         final Bundle args = new Bundle(3);
-        args.putParcelable(KEY_READING_STATUS, readingStatus);
         args.putString(KEY_USERNAME, username);
+        args.putParcelable(KEY_READING_STATUS, readingStatus);
         args.putBoolean(KEY_EDITABLE_LIBRARY, editableLibrary);
 
         final MangaLibraryFragment fragment = new MangaLibraryFragment();
@@ -73,13 +73,35 @@ public class MangaLibraryFragment extends BaseLibraryFragment implements
     }
 
     @Override
+    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (mEditableLibrary) {
+            mAdapter = new MangaLibraryEntriesAdapter(getContext(), this);
+        } else {
+            mAdapter = new MangaLibraryEntriesAdapter(getContext());
+        }
+
+        mRecyclerView.setAdapter(mAdapter);
+
+        mEmptyText.setText(mReadingStatus.getEmptyTextResId());
+        mErrorText.setText(mReadingStatus.getErrorTextResId());
+
+        mFeed = ObjectCache.get(this);
+
+        if (mFeed == null || !mFeed.hasMangaLibraryEntries()) {
+            fetchLibraryEntries();
+        } else {
+            showLibraryEntries(mFeed);
+        }
+    }
+
+    @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         final Bundle args = getArguments();
         mReadingStatus = args.getParcelable(KEY_READING_STATUS);
-
-        mFeed = ObjectCache.get(this);
     }
 
     @Override
@@ -132,28 +154,6 @@ public class MangaLibraryFragment extends BaseLibraryFragment implements
 
         mRefreshLayout.setRefreshing(true);
         Api.updateMangaLibraryEntry(entryId, update, new EditLibraryEntryListener(this));
-    }
-
-    @Override
-    public void onViewCreated(final View view, final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        if (mEditableLibrary) {
-            mAdapter = new MangaLibraryEntriesAdapter(getContext(), this);
-        } else {
-            mAdapter = new MangaLibraryEntriesAdapter(getContext());
-        }
-
-        mRecyclerView.setAdapter(mAdapter);
-
-        mEmptyText.setText(mReadingStatus.getEmptyTextResId());
-        mErrorText.setText(mReadingStatus.getErrorTextResId());
-
-        if (mFeed == null || !mFeed.hasMangaLibraryEntries()) {
-            fetchLibraryEntries();
-        } else {
-            showLibraryEntries(mFeed);
-        }
     }
 
     @Override

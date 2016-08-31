@@ -54,29 +54,9 @@ public class AppNewsFragment extends BaseBottomSheetDialogFragment {
         return TAG;
     }
 
-    @OnClick(R.id.ibClose)
-    void onCloseClick() {
-        dismiss();
-    }
-
     @Override
-    public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        final Bundle args = getArguments();
-        mAppNews = args.getParcelable(KEY_APP_NEWS);
-    }
-
-    @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-            final Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_app_news, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         if (mAppNews.isImportant()) {
             mStar.setVisibility(View.VISIBLE);
@@ -108,6 +88,26 @@ public class AppNewsFragment extends BaseBottomSheetDialogFragment {
         } else {
             mLinks.setVisibility(View.GONE);
         }
+    }
+
+    @OnClick(R.id.ibClose)
+    void onCloseClick() {
+        dismiss();
+    }
+
+    @Override
+    public void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        final Bundle args = getArguments();
+        mAppNews = args.getParcelable(KEY_APP_NEWS);
+    }
+
+    @Override
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+            final Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_app_news, container, false);
     }
 
 }

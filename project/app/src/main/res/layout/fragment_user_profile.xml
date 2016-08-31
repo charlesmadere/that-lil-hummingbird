@@ -1,67 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.charlesmadere.hummingbird.views.RefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/refreshLayout"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     app:scrolling_child="@+id/nestedScrollView">
-    <FrameLayout
+    <android.support.v4.widget.NestedScrollView
+        android:fillViewport="true"
+        android:id="@id/nestedScrollView"
         android:layout_height="match_parent"
-        android:layout_width="match_parent">
-        <android.support.v4.widget.NestedScrollView
-            android:fillViewport="true"
-            android:id="@id/nestedScrollView"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:overScrollMode="never"
-            android:scrollbars="vertical"
-            android:visibility="gone"
-            tools:visibility="visible">
-            <LinearLayout
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:orientation="vertical">
-                <android.support.v4.widget.Space
-                    android:layout_height="@dimen/root_padding_half"
-                    android:layout_width="match_parent" />
-                <include
-                    layout="@layout/about_user_view" />
-                <android.support.v4.widget.Space
-                    android:layout_height="@dimen/root_padding_half"
-                    android:layout_width="match_parent" />
-                <include
-                    layout="@layout/user_bio_view" />
-                <android.support.v4.widget.Space
-                    android:layout_height="@dimen/root_padding_half"
-                    android:layout_width="match_parent" />
-                <include
-                    layout="@layout/anime_breakdown_view" />
-                <android.support.v4.widget.Space
-                    android:id="@+id/animeBreakdownSpace"
-                    android:layout_height="@dimen/root_padding_half"
-                    android:layout_width="match_parent" />
-                <include
-                    layout="@layout/favorite_anime_view" />
-                <android.support.v4.widget.Space
-                    android:layout_height="@dimen/root_padding_half"
-                    android:layout_width="match_parent" />
-                <include
-                    layout="@layout/favorite_manga_view" />
-                <android.support.v4.widget.Space
-                    android:layout_height="@dimen/root_padding_half"
-                    android:layout_width="match_parent" />
-            </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+        android:layout_width="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="vertical">
         <LinearLayout
-            android:id="@+id/llError"
-            style="@style/ListMessageContainer">
-            <TextView
-                android:text="@string/error_loading_user"
-                style="@style/ListMessageTitle" />
-            <TextView
-                android:text="@string/pull_to_refresh_to_try_again"
-                style="@style/ListMessageSubtitle" />
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+            <android.support.v4.widget.Space
+                android:layout_height="@dimen/root_padding_half"
+                android:layout_width="match_parent" />
+            <include
+                layout="@layout/about_user_view" />
+            <android.support.v4.widget.Space
+                android:layout_height="@dimen/root_padding_half"
+                android:layout_width="match_parent" />
+            <include
+                layout="@layout/user_bio_view" />
+            <android.support.v4.widget.Space
+                android:layout_height="@dimen/root_padding_half"
+                android:layout_width="match_parent" />
+            <include
+                layout="@layout/anime_breakdown_view" />
+            <android.support.v4.widget.Space
+                android:id="@+id/animeBreakdownSpace"
+                android:layout_height="@dimen/root_padding_half"
+                android:layout_width="match_parent" />
+            <include
+                layout="@layout/favorite_anime_view" />
+            <android.support.v4.widget.Space
+                android:layout_height="@dimen/root_padding_half"
+                android:layout_width="match_parent" />
+            <include
+                layout="@layout/favorite_manga_view" />
+            <android.support.v4.widget.Space
+                android:layout_height="@dimen/root_padding_half"
+                android:layout_width="match_parent" />
         </LinearLayout>
-    </FrameLayout>
+    </android.support.v4.widget.NestedScrollView>
 </com.charlesmadere.hummingbird.views.RefreshLayout>

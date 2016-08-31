@@ -27,11 +27,9 @@ public class AnimeFranchiseFragment extends BaseAnimeFragment implements ObjectC
         SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "AnimeFranchiseFragment";
-    private static final String KEY_FRANCHISE_ID = "FranchiseId";
 
     private AnimeAdapter mAdapter;
     private Franchise mFranchise;
-    private String mFranchiseId;
 
     @BindView(R.id.llEmpty)
     LinearLayout mEmpty;
@@ -46,19 +44,13 @@ public class AnimeFranchiseFragment extends BaseAnimeFragment implements ObjectC
     RefreshLayout mRefreshLayout;
 
 
-    public static AnimeFranchiseFragment create(final String franchiseId) {
-        final Bundle args = new Bundle(1);
-        args.putString(KEY_FRANCHISE_ID, franchiseId);
-
-        final AnimeFranchiseFragment fragment = new AnimeFranchiseFragment();
-        fragment.setArguments(args);
-
-        return fragment;
+    public static AnimeFranchiseFragment create() {
+        return new AnimeFranchiseFragment();
     }
 
     private void fetchFranchise() {
         mRefreshLayout.setRefreshing(true);
-        Api.getFranchise(mFranchiseId, new GetFranchiseListener(this));
+        Api.getFranchise(getFranchiseId(), new GetFranchiseListener(this));
     }
 
     @Override
@@ -66,19 +58,34 @@ public class AnimeFranchiseFragment extends BaseAnimeFragment implements ObjectC
         return TAG;
     }
 
-    @Override
-    public String[] getObjectCacheKeys() {
-        return new String[] { getFragmentName(), mFranchiseId };
+    private String getFranchiseId() {
+        return getAnimeDigest().getInfo().getFranchiseId();
     }
 
     @Override
-    public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public String[] getObjectCacheKeys() {
+        return new String[] { getFragmentName(), getFranchiseId() };
+    }
 
-        final Bundle args = getArguments();
-        mFranchiseId = args.getString(KEY_FRANCHISE_ID);
+    @Override
+    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        mRefreshLayout.setOnRefreshListener(this);
+        mRecyclerView.setHasFixedSize(true);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
+        mAdapter = new AnimeAdapter(getContext());
+        mRecyclerView.setAdapter(mAdapter);
 
         mFranchise = ObjectCache.get(this);
+
+        if (mFranchise == null) {
+            fetchFranchise();
+        } else if (mFranchise.hasAnime()) {
+            showFranchise(mFranchise);
+        } else {
+            showEmpty();
+        }
     }
 
     @Override
@@ -99,25 +106,6 @@ public class AnimeFranchiseFragment extends BaseAnimeFragment implements ObjectC
 
         if (mFranchise != null) {
             ObjectCache.put(mFranchise, this);
-        }
-    }
-
-    @Override
-    public void onViewCreated(final View view, final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        mRefreshLayout.setOnRefreshListener(this);
-        mRecyclerView.setHasFixedSize(true);
-        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
-        mAdapter = new AnimeAdapter(getContext());
-        mRecyclerView.setAdapter(mAdapter);
-
-        if (mFranchise == null) {
-            fetchFranchise();
-        } else if (mFranchise.hasAnime()) {
-            showFranchise(mFranchise);
-        } else {
-            showEmpty();
         }
     }
 

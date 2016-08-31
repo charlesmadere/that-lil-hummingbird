@@ -113,6 +113,70 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     }
 
     @Override
+    public void onActivityCreated(final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
+            mLibraryUpdate = savedInstanceState.getParcelable(KEY_LIBRARY_UPDATE);
+        }
+
+        if (mLibraryUpdate == null) {
+            if (mLibraryEntry == null) {
+                mLibraryUpdate = new MangaLibraryUpdate(mMangaDigest);
+            } else {
+                mLibraryUpdate = new MangaLibraryUpdate(mLibraryEntry);
+            }
+        }
+
+        mTitle.setText(mLibraryUpdate.getMangaTitle());
+        mSave.setEnabled(false);
+
+        if (mMangaDigest == null) {
+            mChaptersRead.setForChaptersRead(mLibraryUpdate, mLibraryEntry);
+            mVolumesRead.setForVolumesRead(mLibraryUpdate, mLibraryEntry);
+        } else {
+            mChaptersRead.setForChaptersRead(mLibraryUpdate, mMangaDigest);
+            mVolumesRead.setForVolumesRead(mLibraryUpdate, mMangaDigest);
+        }
+
+        mModifyPublicPrivateSpinner.setContent(mLibraryUpdate);
+        mModifyRatingSpinner.setContent(mLibraryUpdate);
+        mModifyReadingStatusSpinner.setContent(mLibraryUpdate);
+
+        mReReading.setChecked(mLibraryUpdate.isReReading());
+        mReReadCount.setForReReadCount(mLibraryUpdate);
+        mPersonalNotes.setText(mLibraryUpdate.getNotes());
+
+        mChaptersRead.setListener(new ModifyNumberView.Listener() {
+            @Override
+            public void onNumberChanged(final ModifyNumberView v) {
+                mLibraryUpdate.setChaptersRead(v.getNumber());
+                update();
+            }
+        });
+
+        mVolumesRead.setListener(new ModifyNumberView.Listener() {
+            @Override
+            public void onNumberChanged(final ModifyNumberView v) {
+                mLibraryUpdate.setVolumesRead(v.getNumber());
+                update();
+            }
+        });
+
+        mModifyPublicPrivateSpinner.setOnItemSelectedListener(this);
+        mModifyRatingSpinner.setOnItemSelectedListener(this);
+        mModifyReadingStatusSpinner.setOnItemSelectedListener(this);
+
+        mReReadCount.setListener(new ModifyNumberView.Listener() {
+            @Override
+            public void onNumberChanged(final ModifyNumberView v) {
+                mLibraryUpdate.setReReadCount(v.getNumber());
+                update();
+            }
+        });
+    }
+
+    @Override
     public void onAttach(final Context context) {
         super.onAttach(context);
 
@@ -144,18 +208,6 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         final Bundle args = getArguments();
         mMangaDigest = args.getParcelable(KEY_MANGA_DIGEST);
         mLibraryEntry = args.getParcelable(KEY_LIBRARY_ENTRY);
-
-        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mLibraryUpdate = savedInstanceState.getParcelable(KEY_LIBRARY_UPDATE);
-        }
-
-        if (mLibraryUpdate == null) {
-            if (mLibraryEntry == null) {
-                mLibraryUpdate = new MangaLibraryUpdate(mMangaDigest);
-            } else {
-                mLibraryUpdate = new MangaLibraryUpdate(mLibraryEntry);
-            }
-        }
     }
 
     @Override
@@ -219,58 +271,6 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     public void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(KEY_LIBRARY_UPDATE, mLibraryUpdate);
-    }
-
-    @Override
-    public void onViewCreated(final View view, final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        mTitle.setText(mLibraryUpdate.getMangaTitle());
-        mSave.setEnabled(false);
-
-        if (mMangaDigest == null) {
-            mChaptersRead.setForChaptersRead(mLibraryUpdate, mLibraryEntry);
-            mVolumesRead.setForVolumesRead(mLibraryUpdate, mLibraryEntry);
-        } else {
-            mChaptersRead.setForChaptersRead(mLibraryUpdate, mMangaDigest);
-            mVolumesRead.setForVolumesRead(mLibraryUpdate, mMangaDigest);
-        }
-
-        mModifyPublicPrivateSpinner.setContent(mLibraryUpdate);
-        mModifyRatingSpinner.setContent(mLibraryUpdate);
-        mModifyReadingStatusSpinner.setContent(mLibraryUpdate);
-
-        mReReading.setChecked(mLibraryUpdate.isReReading());
-        mReReadCount.setForReReadCount(mLibraryUpdate);
-        mPersonalNotes.setText(mLibraryUpdate.getNotes());
-
-        mChaptersRead.setListener(new ModifyNumberView.Listener() {
-            @Override
-            public void onNumberChanged(final ModifyNumberView v) {
-                mLibraryUpdate.setChaptersRead(v.getNumber());
-                update();
-            }
-        });
-
-        mVolumesRead.setListener(new ModifyNumberView.Listener() {
-            @Override
-            public void onNumberChanged(final ModifyNumberView v) {
-                mLibraryUpdate.setVolumesRead(v.getNumber());
-                update();
-            }
-        });
-
-        mModifyPublicPrivateSpinner.setOnItemSelectedListener(this);
-        mModifyRatingSpinner.setOnItemSelectedListener(this);
-        mModifyReadingStatusSpinner.setOnItemSelectedListener(this);
-
-        mReReadCount.setListener(new ModifyNumberView.Listener() {
-            @Override
-            public void onNumberChanged(final ModifyNumberView v) {
-                mLibraryUpdate.setReReadCount(v.getNumber());
-                update();
-            }
-        });
     }
 
     @Override

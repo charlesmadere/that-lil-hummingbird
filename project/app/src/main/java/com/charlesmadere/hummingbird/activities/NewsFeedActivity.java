@@ -98,4 +98,9 @@ public class NewsFeedActivity extends BaseUserActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void setUserDigest(final UserDigest userDigest) {
+        CurrentUser.set(userDigest);
+    }
+
 }

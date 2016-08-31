@@ -110,6 +110,60 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     }
 
     @Override
+    public void onActivityCreated(final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
+            mLibraryUpdate = savedInstanceState.getParcelable(KEY_LIBRARY_UPDATE);
+        }
+
+        if (mLibraryUpdate == null) {
+            if (mLibraryEntry == null) {
+                mLibraryUpdate = new AnimeLibraryUpdate(mAnimeDigest);
+            } else {
+                mLibraryUpdate = new AnimeLibraryUpdate(mLibraryEntry);
+            }
+        }
+
+        mTitle.setText(mLibraryUpdate.getAnimeTitle());
+        mSave.setEnabled(false);
+
+        if (mAnimeDigest == null) {
+            mWatchCount.setForWatchedCount(mLibraryUpdate, mLibraryEntry);
+        } else {
+            mWatchCount.setForWatchedCount(mLibraryUpdate, mAnimeDigest);
+        }
+
+        mModifyWatchingStatusSpinner.setContent(mLibraryUpdate);
+        mModifyPublicPrivateSpinner.setContent(mLibraryUpdate);
+        mModifyRatingSpinner.setContent(mLibraryUpdate);
+        mRewatchCount.setForRewatchedTimes(mLibraryUpdate);
+
+        mRewatching.setChecked(mLibraryUpdate.isRewatching());
+        mPersonalNotes.setText(mLibraryUpdate.getNotes());
+
+        mWatchCount.setListener(new ModifyNumberView.Listener() {
+            @Override
+            public void onNumberChanged(final ModifyNumberView v) {
+                mLibraryUpdate.setEpisodesWatched(mWatchCount.getNumber());
+                update();
+            }
+        });
+
+        mModifyWatchingStatusSpinner.setOnItemSelectedListener(this);
+        mModifyPublicPrivateSpinner.setOnItemSelectedListener(this);
+        mModifyRatingSpinner.setOnItemSelectedListener(this);
+
+        mRewatchCount.setListener(new ModifyNumberView.Listener() {
+            @Override
+            public void onNumberChanged(final ModifyNumberView v) {
+                mLibraryUpdate.setRewatchCount(mRewatchCount.getNumber());
+                update();
+            }
+        });
+    }
+
+    @Override
     public void onAttach(final Context context) {
         super.onAttach(context);
 
@@ -141,18 +195,6 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         final Bundle args = getArguments();
         mAnimeDigest = args.getParcelable(KEY_ANIME_DIGEST);
         mLibraryEntry = args.getParcelable(KEY_LIBRARY_ENTRY);
-
-        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mLibraryUpdate = savedInstanceState.getParcelable(KEY_LIBRARY_UPDATE);
-        }
-
-        if (mLibraryUpdate == null) {
-            if (mLibraryEntry == null) {
-                mLibraryUpdate = new AnimeLibraryUpdate(mAnimeDigest);
-            } else {
-                mLibraryUpdate = new AnimeLibraryUpdate(mLibraryEntry);
-            }
-        }
     }
 
     @Override
@@ -216,48 +258,6 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     public void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(KEY_LIBRARY_UPDATE, mLibraryUpdate);
-    }
-
-    @Override
-    public void onViewCreated(final View view, final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        mTitle.setText(mLibraryUpdate.getAnimeTitle());
-        mSave.setEnabled(false);
-
-        if (mAnimeDigest == null) {
-            mWatchCount.setForWatchedCount(mLibraryUpdate, mLibraryEntry);
-        } else {
-            mWatchCount.setForWatchedCount(mLibraryUpdate, mAnimeDigest);
-        }
-
-        mModifyWatchingStatusSpinner.setContent(mLibraryUpdate);
-        mModifyPublicPrivateSpinner.setContent(mLibraryUpdate);
-        mModifyRatingSpinner.setContent(mLibraryUpdate);
-        mRewatchCount.setForRewatchedTimes(mLibraryUpdate);
-
-        mRewatching.setChecked(mLibraryUpdate.isRewatching());
-        mPersonalNotes.setText(mLibraryUpdate.getNotes());
-
-        mWatchCount.setListener(new ModifyNumberView.Listener() {
-            @Override
-            public void onNumberChanged(final ModifyNumberView v) {
-                mLibraryUpdate.setEpisodesWatched(mWatchCount.getNumber());
-                update();
-            }
-        });
-
-        mModifyWatchingStatusSpinner.setOnItemSelectedListener(this);
-        mModifyPublicPrivateSpinner.setOnItemSelectedListener(this);
-        mModifyRatingSpinner.setOnItemSelectedListener(this);
-
-        mRewatchCount.setListener(new ModifyNumberView.Listener() {
-            @Override
-            public void onNumberChanged(final ModifyNumberView v) {
-                mLibraryUpdate.setRewatchCount(mRewatchCount.getNumber());
-                update();
-            }
-        });
     }
 
     @Override

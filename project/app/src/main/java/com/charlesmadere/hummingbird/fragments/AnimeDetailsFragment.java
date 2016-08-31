@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.fragments;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -98,22 +99,8 @@ public class AnimeDetailsFragment extends BaseAnimeFragment {
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-            final Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_anime_details, container, false);
-    }
-
-    @OnClick(R.id.cvPoster)
-    void onPosterClick() {
-        final AnimeDigest animeDigest = getAnimeDigest();
-        startActivity(GalleryActivity.getLaunchIntent(getContext(), animeDigest.getInfo(),
-                animeDigest.getInfo().getPosterImage()));
-    }
-
-    @Override
-    public void onViewCreated(final View view, final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         final AnimeDigest animeDigest = getAnimeDigest();
         final AnimeDigest.Info info = animeDigest.getInfo();
@@ -232,6 +219,20 @@ public class AnimeDetailsFragment extends BaseAnimeFragment {
         } else {
             mSynopsis.setText(R.string.no_synopsis_available);
         }
+    }
+
+    @Override
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+            final Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_anime_details, container, false);
+    }
+
+    @OnClick(R.id.cvPoster)
+    void onPosterClick() {
+        final AnimeDigest animeDigest = getAnimeDigest();
+        startActivity(GalleryActivity.getLaunchIntent(getContext(), animeDigest.getInfo(),
+                animeDigest.getInfo().getPosterImage()));
     }
 
     @OnClick(R.id.hbivYouTubeLink)

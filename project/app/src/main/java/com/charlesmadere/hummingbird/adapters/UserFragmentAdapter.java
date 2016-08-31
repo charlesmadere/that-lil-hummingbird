@@ -27,7 +27,7 @@ public class UserFragmentAdapter extends BaseUserFragmentAdapter {
 
     @Override
     protected UserFeedFragment createUserFeedFragment() {
-        return UserFeedFragment.create(mUsername);
+        return UserFeedFragment.create();
     }
 
     @Override

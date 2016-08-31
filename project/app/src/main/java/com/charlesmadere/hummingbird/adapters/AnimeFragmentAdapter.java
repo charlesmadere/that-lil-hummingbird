@@ -124,7 +124,7 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     private class AnimeFranchiseFragmentPage implements FragmentPage {
         @Override
         public Fragment getItem() {
-            return AnimeFranchiseFragment.create(mAnimeDigest.getInfo().getFranchiseId());
+            return AnimeFranchiseFragment.create();
         }
 
         @Override

@@ -73,13 +73,35 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
     }
 
     @Override
+    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (mEditableLibrary) {
+            mAdapter = new AnimeLibraryEntriesAdapter(getContext(), this);
+        } else {
+            mAdapter = new AnimeLibraryEntriesAdapter(getContext());
+        }
+
+        mRecyclerView.setAdapter(mAdapter);
+
+        mEmptyText.setText(mWatchingStatus.getEmptyTextResId());
+        mErrorText.setText(mWatchingStatus.getErrorTextResId());
+
+        mFeed = ObjectCache.get(this);
+
+        if (mFeed == null || !mFeed.hasAnimeLibraryEntries()) {
+            fetchLibraryEntries();
+        } else {
+            showLibraryEntries(mFeed);
+        }
+    }
+
+    @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         final Bundle args = getArguments();
         mWatchingStatus = args.getParcelable(KEY_WATCHING_STATUS);
-
-        mFeed = ObjectCache.get(this);
     }
 
     @Override
@@ -132,28 +154,6 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
 
         mRefreshLayout.setRefreshing(true);
         Api.updateAnimeLibraryEntry(entryId, update, new EditLibraryEntryListener(this));
-    }
-
-    @Override
-    public void onViewCreated(final View view, final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        if (mEditableLibrary) {
-            mAdapter = new AnimeLibraryEntriesAdapter(getContext(), this);
-        } else {
-            mAdapter = new AnimeLibraryEntriesAdapter(getContext());
-        }
-
-        mRecyclerView.setAdapter(mAdapter);
-
-        mEmptyText.setText(mWatchingStatus.getEmptyTextResId());
-        mErrorText.setText(mWatchingStatus.getErrorTextResId());
-
-        if (mFeed == null || !mFeed.hasAnimeLibraryEntries()) {
-            fetchLibraryEntries();
-        } else {
-            showLibraryEntries(mFeed);
-        }
     }
 
     @Override

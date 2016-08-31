@@ -19,7 +19,6 @@ import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
-import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
@@ -29,18 +28,15 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public abstract class BaseUserFeedFragment extends BaseFragment implements ObjectCache.KeyProvider,
-        RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
-
-    protected static final String KEY_USERNAME = "Username";
+public abstract class BaseUserFeedFragment extends BaseUserFragment implements
+        ObjectCache.KeyProvider, RecyclerViewPaginator.Listeners,
+        SwipeRefreshLayout.OnRefreshListener {
 
     protected boolean mFetchingFeed;
     protected Feed mFeed;
     protected FeedAdapter mAdapter;
     protected FeedListeners mFeedListeners;
-    protected Listener mListener;
     protected RecyclerViewPaginator mPaginator;
-    protected String mUsername;
 
     @BindView(R.id.llEmpty)
     protected LinearLayout mEmpty;
@@ -63,11 +59,7 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
 
     @Override
     public String[] getObjectCacheKeys() {
-        return new String[] { getFragmentName(), mUsername };
-    }
-
-    protected UserDigest getUserDigest() {
-        return mListener.getUserDigest();
+        return new String[] { getFragmentName(), getUserDigest().getUserId() };
     }
 
     public boolean isFetchingFeed() {
@@ -80,37 +72,43 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
     }
 
     @Override
-    public void onAttach(final Context context) {
-        super.onAttach(context);
+    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-        final Fragment fragment = getParentFragment();
-        final Activity activity = MiscUtils.optActivity(context);
+        mRefreshLayout.setOnRefreshListener(this);
+        mRecyclerView.setHasFixedSize(true);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
+        mAdapter = new FeedAdapter(getContext());
+        mRecyclerView.setAdapter(mAdapter);
+        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
 
-        if (fragment instanceof Listener) {
-            mListener = (Listener) fragment;
-        } else if (activity instanceof Listener) {
-            mListener = (Listener) activity;
+        mFeed = ObjectCache.get(this);
+
+        if (mFeed == null) {
+            fetchFeed();
         } else {
-            throw new IllegalStateException(getFragmentName() + " must attach to Listener");
-        }
-
-        if (fragment instanceof FeedListeners) {
-            mFeedListeners = (FeedListeners) fragment;
-        } else if (activity instanceof FeedListeners) {
-            mFeedListeners = (FeedListeners) activity;
-        } else {
-            throw new IllegalStateException(getFragmentName() + " must attach to FeedListeners");
+            showFeed(mFeed);
         }
     }
 
     @Override
-    public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onAttach(final Context context) {
+        super.onAttach(context);
 
-        final Bundle args = getArguments();
-        mUsername = args.getString(KEY_USERNAME);
+        final Fragment fragment = getParentFragment();
+        if (fragment instanceof FeedListeners) {
+            mFeedListeners = (FeedListeners) fragment;
+        } else {
+            final Activity activity = MiscUtils.optActivity(context);
 
-        mFeed = ObjectCache.get(this);
+            if (activity instanceof FeedListeners) {
+                mFeedListeners = (FeedListeners) activity;
+            }
+        }
+
+        if (mFeedListeners == null) {
+            throw new IllegalStateException(getFragmentName() + " must attach to FeedListeners");
+        }
     }
 
     @Override
@@ -131,24 +129,6 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
 
         if (mFeed != null) {
             ObjectCache.put(mFeed, this);
-        }
-    }
-
-    @Override
-    public void onViewCreated(final View view, final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        mRefreshLayout.setOnRefreshListener(this);
-        mRecyclerView.setHasFixedSize(true);
-        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
-        mAdapter = new FeedAdapter(getContext());
-        mRecyclerView.setAdapter(mAdapter);
-        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
-
-        if (mFeed == null) {
-            fetchFeed();
-        } else {
-            showFeed(mFeed);
         }
     }
 
@@ -193,10 +173,6 @@ public abstract class BaseUserFeedFragment extends BaseFragment implements Objec
         mFeedListeners.onFeedFinishedLoading();
     }
 
-
-    public interface Listener {
-        UserDigest getUserDigest();
-    }
 
     protected static class GetFeedListener implements ApiResponse<Feed> {
         private final WeakReference<BaseUserFeedFragment> mFragmentReference;

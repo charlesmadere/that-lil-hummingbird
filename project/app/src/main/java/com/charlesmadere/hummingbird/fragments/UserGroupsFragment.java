@@ -84,13 +84,31 @@ public class UserGroupsFragment extends BaseFragment implements ObjectCache.KeyP
     }
 
     @Override
+    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        mRefreshLayout.setOnRefreshListener(this);
+        mRecyclerView.setHasFixedSize(true);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
+        mAdapter = new GroupsAdapter(getContext());
+        mRecyclerView.setAdapter(mAdapter);
+        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
+
+        mFeed = ObjectCache.get(this);
+
+        if (mFeed == null) {
+            fetchUserGroups();
+        } else {
+            showUserGroups(mFeed);
+        }
+    }
+
+    @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         final Bundle args = getArguments();
         mUsername = args.getString(KEY_USERNAME);
-
-        mFeed = ObjectCache.get(this);
     }
 
     @Override
@@ -111,24 +129,6 @@ public class UserGroupsFragment extends BaseFragment implements ObjectCache.KeyP
 
         if (mFeed != null) {
             ObjectCache.put(mFeed, this);
-        }
-    }
-
-    @Override
-    public void onViewCreated(final View view, final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        mRefreshLayout.setOnRefreshListener(this);
-        mRecyclerView.setHasFixedSize(true);
-        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
-        mAdapter = new GroupsAdapter(getContext());
-        mRecyclerView.setAdapter(mAdapter);
-        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
-
-        if (mFeed == null) {
-            fetchUserGroups();
-        } else {
-            showUserGroups(mFeed);
         }
     }
 

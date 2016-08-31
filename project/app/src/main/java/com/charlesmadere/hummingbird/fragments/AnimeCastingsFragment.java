@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,15 +35,8 @@ public class AnimeCastingsFragment extends BaseAnimeFragment {
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-            final Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_anime_castings, container, false);
-    }
-
-    @Override
-    public void onViewCreated(final View view, final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         mRecyclerView.setHasFixedSize(true);
 
@@ -56,6 +50,13 @@ public class AnimeCastingsFragment extends BaseAnimeFragment {
         } else {
             mEmpty.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+            final Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_anime_castings, container, false);
     }
 
 }

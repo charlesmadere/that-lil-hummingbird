@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,25 +53,8 @@ public class GroupDetailsFragment extends BaseGroupFragment {
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-            final Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_group_details, container, false);
-    }
-
-    @OnClick(R.id.hbivGroupMembers)
-    void onGroupMembersClick() {
-        final Activity activity = getActivity();
-        final UiColorSet uiColorSet = activity instanceof PaletteUtils.Listener ?
-                ((PaletteUtils.Listener) activity).getUiColorSet() : null;
-
-        startActivity(GroupMembersActivity.getLaunchIntent(getContext(), getGroupDigest().getId(),
-                getGroupDigest().getName(), uiColorSet));
-    }
-
-    @Override
-    public void onViewCreated(final View view, final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         final Group group = getGroupDigest().getGroup();
         mAboutTitle.setText(getString(R.string.about_x, group.getName()));
@@ -93,6 +77,23 @@ public class GroupDetailsFragment extends BaseGroupFragment {
         } else {
             mNoBio.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+            final Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_group_details, container, false);
+    }
+
+    @OnClick(R.id.hbivGroupMembers)
+    void onGroupMembersClick() {
+        final Activity activity = getActivity();
+        final UiColorSet uiColorSet = activity instanceof PaletteUtils.Listener ?
+                ((PaletteUtils.Listener) activity).getUiColorSet() : null;
+
+        startActivity(GroupMembersActivity.getLaunchIntent(getContext(), getGroupDigest().getId(),
+                getGroupDigest().getName(), uiColorSet));
     }
 
 }

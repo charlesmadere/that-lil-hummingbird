@@ -1,8 +1,5 @@
 package com.charlesmadere.hummingbird.fragments;
 
-import android.os.Bundle;
-
-import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.networking.Api;
 
 public class NewsFeedFragment extends BaseUserFeedFragment {
@@ -11,13 +8,7 @@ public class NewsFeedFragment extends BaseUserFeedFragment {
 
 
     public static NewsFeedFragment create() {
-        final Bundle args = new Bundle(1);
-        args.putString(KEY_USERNAME, CurrentUser.get().getUserId());
-
-        final NewsFeedFragment fragment = new NewsFeedFragment();
-        fragment.setArguments(args);
-
-        return fragment;
+        return new NewsFeedFragment();
     }
 
     @Override

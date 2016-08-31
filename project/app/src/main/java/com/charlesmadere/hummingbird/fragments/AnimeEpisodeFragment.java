@@ -52,6 +52,24 @@ public class AnimeEpisodeFragment extends BaseBottomSheetDialogFragment {
         return TAG;
     }
 
+    @Override
+    public void onActivityCreated(final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        mTitle.setText(mEpisode.getTitle());
+        mNumber.setText(NumberFormat.getInstance().format(mEpisode.getNumber()));
+
+        if (mEpisode.hasThumbnail()) {
+            mThumbnail.setImageURI(mEpisode.getThumbnail());
+        }
+
+        if (mEpisode.hasSynopsis()) {
+            mSynopsis.setText(mEpisode.getSynopsis());
+        } else {
+            mSynopsis.setText(R.string.no_synopsis_available);
+        }
+    }
+
     @OnClick(R.id.ibClose)
     void onCloseClick() {
         dismiss();
@@ -75,24 +93,6 @@ public class AnimeEpisodeFragment extends BaseBottomSheetDialogFragment {
                 R.layout.fragment_anime_episode_without_thumbnail;
 
         return inflater.inflate(layoutResId, container, false);
-    }
-
-    @Override
-    public void onViewCreated(final View view, final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        mTitle.setText(mEpisode.getTitle());
-        mNumber.setText(NumberFormat.getInstance().format(mEpisode.getNumber()));
-
-        if (mEpisode.hasThumbnail()) {
-            mThumbnail.setImageURI(mEpisode.getThumbnail());
-        }
-
-        if (mEpisode.hasSynopsis()) {
-            mSynopsis.setText(mEpisode.getSynopsis());
-        } else {
-            mSynopsis.setText(R.string.no_synopsis_available);
-        }
     }
 
 }

@@ -31,7 +31,7 @@ public class MangaLibraryFragmentAdapter extends BaseLibraryFragmentAdapter {
 
     @Override
     public MangaLibraryFragment getItem(final int position) {
-        return MangaLibraryFragment.create(READING_STATUSES[position], mUsername,
+        return MangaLibraryFragment.create(mUsername, READING_STATUSES[position],
                 mEditableLibrary);
     }
 

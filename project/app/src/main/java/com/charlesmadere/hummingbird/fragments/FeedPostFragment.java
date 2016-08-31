@@ -58,6 +58,12 @@ public class FeedPostFragment extends BaseBottomSheetDialogFragment {
     }
 
     @Override
+    public void onActivityCreated(final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        pollField();
+    }
+
+    @Override
     public void onAttach(final Context context) {
         super.onAttach(context);
 
@@ -103,12 +109,6 @@ public class FeedPostFragment extends BaseBottomSheetDialogFragment {
     void onPostClick() {
         mListener.onFeedPostSubmit();
         dismiss();
-    }
-
-    @Override
-    public void onViewCreated(final View view, final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        pollField();
     }
 
     private void pollField() {

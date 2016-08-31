@@ -64,7 +64,7 @@ public class SearchActivity extends BaseDrawerActivity implements
 
 
     public static Intent getLaunchIntent(final Context context) {
-        return createDrawerActivityIntent(context, SearchActivity.class);
+        return new Intent(context, SearchActivity.class);
     }
 
     @Override

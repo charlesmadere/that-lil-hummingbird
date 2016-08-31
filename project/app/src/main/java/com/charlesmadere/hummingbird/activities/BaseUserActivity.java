@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.BaseUserFragmentAdapter;
 import com.charlesmadere.hummingbird.fragments.BaseUserFeedFragment;
+import com.charlesmadere.hummingbird.fragments.BaseUserFragment;
 import com.charlesmadere.hummingbird.fragments.FeedPostFragment;
 import com.charlesmadere.hummingbird.misc.FeedListeners;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
@@ -23,7 +24,7 @@ import butterknife.OnClick;
 import butterknife.OnPageChange;
 
 public abstract class BaseUserActivity extends BaseDrawerActivity implements
-        BaseUserFeedFragment.Listener, FeedListeners, FeedPostFragment.Listener {
+        BaseUserFragment.Listeners, FeedListeners, FeedPostFragment.Listener {
 
     private static final String CNAME = BaseUserActivity.class.getCanonicalName();
     protected static final String EXTRA_INITIAL_TAB = CNAME + ".InitialTab";

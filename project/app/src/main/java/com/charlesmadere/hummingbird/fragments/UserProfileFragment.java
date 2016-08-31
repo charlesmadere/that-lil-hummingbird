@@ -8,11 +8,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
-import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -28,14 +27,10 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class UserProfileFragment extends BaseFragment implements ObjectCache.KeyProvider,
+public class UserProfileFragment extends BaseUserFragment implements
         SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "UserDigestFragment";
-    private static final String KEY_USERNAME = "Username";
-
-    private String mUsername;
-    private UserDigest mUserDigest;
 
     @BindView(R.id.aboutUserView)
     AboutUserView mAboutUserView;
@@ -48,9 +43,6 @@ public class UserProfileFragment extends BaseFragment implements ObjectCache.Key
 
     @BindView(R.id.favoriteMangaView)
     FavoriteMangaView mFavoriteMangaView;
-
-    @BindView(R.id.llError)
-    LinearLayout mError;
 
     @BindView(R.id.nestedScrollView)
     NestedScrollView mNestedScrollView;
@@ -69,43 +61,17 @@ public class UserProfileFragment extends BaseFragment implements ObjectCache.Key
         return new UserProfileFragment();
     }
 
-    public static UserProfileFragment create(final String username) {
-        final Bundle args = new Bundle(1);
-        args.putString(KEY_USERNAME, username);
-
-        final UserProfileFragment fragment = new UserProfileFragment();
-        fragment.setArguments(args);
-
-        return fragment;
-    }
-
-    private void fetchUserDigest() {
-        mRefreshLayout.setRefreshing(true);
-        Api.getUserDigest(mUsername, new GetUserDigestListener(this));
-    }
-
     @Override
     public String getFragmentName() {
         return TAG;
     }
 
     @Override
-    public String[] getObjectCacheKeys() {
-        return new String[] { getFragmentName(), mUsername };
-    }
+    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-    @Override
-    public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        final Bundle args = getArguments();
-        if (args == null || args.isEmpty()) {
-            mUsername = CurrentUser.get().getUserId();
-            mUserDigest = CurrentUser.get();
-        } else {
-            mUsername = args.getString(KEY_USERNAME);
-            mUserDigest = ObjectCache.get(this);
-        }
+        mRefreshLayout.setOnRefreshListener(this);
+        showUserDigest();
     }
 
     @Override
@@ -117,38 +83,27 @@ public class UserProfileFragment extends BaseFragment implements ObjectCache.Key
 
     @Override
     public void onRefresh() {
-        fetchUserDigest();
+        refreshUserDigest();
+    }
+
+    private void refreshUserDigest() {
+        mRefreshLayout.setRefreshing(true);
+        Api.getUserDigest(getUserDigest().getUserId(), new GetUserDigestListener(this));
     }
 
     @Override
-    public void onSaveInstanceState(final Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        if (mUserDigest != null) {
-            ObjectCache.put(mUserDigest, this);
-        }
+    protected void setUserDigest(final UserDigest userDigest) {
+        super.setUserDigest(userDigest);
+        showUserDigest();
     }
 
-    @Override
-    public void onViewCreated(final View view, final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mRefreshLayout.setOnRefreshListener(this);
-
-        if (mUserDigest == null) {
-            fetchUserDigest();
-        } else {
-            showUserDigest(mUserDigest);
-        }
-    }
-
-    private void showError() {
-        mNestedScrollView.setVisibility(View.GONE);
-        mError.setVisibility(View.VISIBLE);
+    private void showRefreshError() {
+        Toast.makeText(getContext(), R.string.error_refreshing_user, Toast.LENGTH_LONG).show();
         mRefreshLayout.setRefreshing(false);
     }
 
-    private void showUserDigest(final UserDigest userDigest) {
-        mUserDigest = userDigest;
+    private void showUserDigest() {
+        final UserDigest userDigest = getUserDigest();
 
         if (userDigest.equals(CurrentUser.get())) {
             CurrentUser.set(userDigest);
@@ -169,8 +124,6 @@ public class UserProfileFragment extends BaseFragment implements ObjectCache.Key
         mFavoriteAnimeView.setContent(userDigest);
         mFavoriteMangaView.setContent(userDigest);
 
-        mError.setVisibility(View.GONE);
-        mNestedScrollView.setVisibility(View.VISIBLE);
         mRefreshLayout.setRefreshing(false);
     }
 
@@ -187,7 +140,7 @@ public class UserProfileFragment extends BaseFragment implements ObjectCache.Key
             final UserProfileFragment fragment = mFragmentReference.get();
 
             if (fragment != null && fragment.isAlive()) {
-                fragment.showError();
+                fragment.showRefreshError();
             }
         }
 
@@ -196,7 +149,7 @@ public class UserProfileFragment extends BaseFragment implements ObjectCache.Key
             final UserProfileFragment fragment = mFragmentReference.get();
 
             if (fragment != null && fragment.isAlive()) {
-                fragment.showUserDigest(userDigest);
+                fragment.setUserDigest(userDigest);
             }
         }
     }

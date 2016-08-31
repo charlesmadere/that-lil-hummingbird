@@ -215,6 +215,11 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
         mUiColorSet = uiColorSet;
     }
 
+    @Override
+    public void setUserDigest(final UserDigest userDigest) {
+        showUserDigest(userDigest);
+    }
+
     private void showError() {
         mSimpleProgressView.fadeOut();
 
