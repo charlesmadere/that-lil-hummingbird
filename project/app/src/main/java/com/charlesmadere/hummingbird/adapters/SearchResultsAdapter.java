@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.adapters;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.SearchBundle;
@@ -37,7 +38,7 @@ public class SearchResultsAdapter extends BaseMultiAdapter {
         }
     }
 
-    public void set(final SearchBundle searchBundle) {
+    public void set(@Nullable final SearchBundle searchBundle) {
         if (searchBundle == null || !searchBundle.hasResults()) {
             super.set(null);
             return;
