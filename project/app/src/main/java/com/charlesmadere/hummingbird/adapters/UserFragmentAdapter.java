@@ -37,7 +37,7 @@ public class UserFragmentAdapter extends BaseUserFragmentAdapter {
 
     @Override
     protected UserProfileFragment createUserProfileFragment() {
-        return UserProfileFragment.create(mUsername);
+        return UserProfileFragment.create();
     }
 
     @Nullable
