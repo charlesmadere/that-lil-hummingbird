@@ -10,7 +10,10 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:padding="@dimen/root_padding_half">
+            android:paddingBottom="@dimen/root_padding_half"
+            android:paddingEnd="@dimen/root_padding"
+            android:paddingStart="@dimen/root_padding"
+            android:paddingTop="@dimen/root_padding_half">
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/sdvCastPhoto"
                 android:layout_marginEnd="@dimen/root_padding_half"

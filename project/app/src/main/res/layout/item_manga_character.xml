@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.charlesmadere.hummingbird.views.MangaCharacterItemView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/DividerListItem.LessPadding">
+    android:paddingBottom="@dimen/root_padding_half"
+    android:paddingEnd="@dimen/root_padding"
+    android:paddingStart="@dimen/root_padding"
+    android:paddingTop="@dimen/root_padding_half"
+    style="@style/DividerListItem">
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -9,7 +13,7 @@
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/sdvCharacterPhoto"
             android:layout_marginEnd="@dimen/root_padding_half"
-            style="@style/Avatar.Medium" />
+            style="@style/Avatar.Small" />
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:id="@+id/tvTitle"
             android:layout_gravity="center_vertical"
