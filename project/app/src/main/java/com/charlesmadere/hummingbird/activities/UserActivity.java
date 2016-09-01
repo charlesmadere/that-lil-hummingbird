@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -262,7 +263,12 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
             mProBadge.setVisibility(View.VISIBLE);
         }
 
-        setAdapter(new UserFragmentAdapter(this, mUsername));
+        final PagerAdapter adapter = mViewPager.getAdapter();
+
+        if (adapter == null) {
+            setAdapter(new UserFragmentAdapter(this, mUsername));
+        }
+
         supportInvalidateOptionsMenu();
         mSimpleProgressView.fadeOut();
     }
