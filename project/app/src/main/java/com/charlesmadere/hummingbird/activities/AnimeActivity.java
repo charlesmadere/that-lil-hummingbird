@@ -33,8 +33,8 @@ import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.AnimeEpisodeItemView;
+import com.charlesmadere.hummingbird.views.ParallaxCoverImage;
 import com.charlesmadere.hummingbird.views.SimpleProgressView;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.lang.ref.WeakReference;
 
@@ -62,7 +62,7 @@ public class AnimeActivity extends BaseDrawerActivity implements
     CollapsingToolbarLayout mCollapsingToolbarLayout;
 
     @BindView(R.id.parallaxCoverImage)
-    SimpleDraweeView mCoverImage;
+    ParallaxCoverImage mCoverImage;
 
     @BindView(R.id.simpleProgressView)
     SimpleProgressView mSimpleProgressView;
@@ -253,8 +253,12 @@ public class AnimeActivity extends BaseDrawerActivity implements
         }
 
         if (animeDigest.getInfo().hasCoverImage()) {
-            PaletteUtils.applyParallaxColors(animeDigest.getInfo().getCoverImage(), this,
-                    this, mCoverImage, mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
+            final String coverImage = animeDigest.getInfo().getCoverImage();
+
+            if (mCoverImage.hasDifferentImageThan(coverImage)) {
+                PaletteUtils.applyParallaxColors(coverImage, this, this, mCoverImage,
+                        mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
+            }
         }
 
         mViewPager.setAdapter(new AnimeFragmentAdapter(this, mAnimeDigest));

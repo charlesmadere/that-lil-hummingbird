@@ -28,8 +28,8 @@ import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.AvatarView;
+import com.charlesmadere.hummingbird.views.ParallaxCoverImage;
 import com.charlesmadere.hummingbird.views.SimpleProgressView;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.lang.ref.WeakReference;
 
@@ -56,7 +56,7 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
     CollapsingToolbarLayout mCollapsingToolbarLayout;
 
     @BindView(R.id.parallaxCoverImage)
-    SimpleDraweeView mCoverImage;
+    ParallaxCoverImage mCoverImage;
 
     @BindView(R.id.simpleProgressView)
     SimpleProgressView mSimpleProgressView;
@@ -253,8 +253,12 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
         final User user = mUserDigest.getUser();
 
         if (user.hasCoverImage()) {
-            PaletteUtils.applyParallaxColors(user.getCoverImage(), this, this, mCoverImage,
-                    mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
+            final String coverImage = user.getCoverImage();
+
+            if (mCoverImage.hasDifferentImageThan(coverImage)) {
+                PaletteUtils.applyParallaxColors(coverImage, this, this, mCoverImage,
+                        mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
+            }
         }
 
         mAvatar.setContent(user);

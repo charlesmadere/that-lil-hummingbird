@@ -34,8 +34,8 @@ import com.charlesmadere.hummingbird.models.GroupFeedPost;
 import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.views.ParallaxCoverImage;
 import com.charlesmadere.hummingbird.views.SimpleProgressView;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.lang.ref.WeakReference;
 
@@ -65,7 +65,7 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
     FloatingActionButton mPostToFeed;
 
     @BindView(R.id.parallaxCoverImage)
-    SimpleDraweeView mCoverImage;
+    ParallaxCoverImage mCoverImage;
 
     @BindView(R.id.simpleProgressView)
     SimpleProgressView mSimpleProgressView;
@@ -307,8 +307,12 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
         }
 
         if (groupDigest.getGroup().hasCoverImage()) {
-            PaletteUtils.applyParallaxColors(groupDigest.getGroup().getCoverImageUrl(), this,
-                    this, mCoverImage, mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
+            final String coverImage = groupDigest.getGroup().getCoverImageUrl();
+
+            if (mCoverImage.hasDifferentImageThan(coverImage)) {
+                PaletteUtils.applyParallaxColors(coverImage, this, this, mCoverImage,
+                        mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
+            }
         }
 
         final PagerAdapter adapter = mViewPager.getAdapter();

@@ -8,7 +8,7 @@
             style="@style/AppBarLayout">
             <com.charlesmadere.hummingbird.views.CollapsingTypefaceToolbarLayout
                 style="@style/CollapsingToolbarLayout">
-                <com.facebook.drawee.view.SimpleDraweeView
+                <com.charlesmadere.hummingbird.views.ParallaxCoverImage
                     style="@style/ParallaxCoverImage" />
                 <com.charlesmadere.hummingbird.views.TypefaceToolbar
                     style="@style/Toolbar.Parallax" />

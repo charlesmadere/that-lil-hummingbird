@@ -31,8 +31,8 @@ import com.charlesmadere.hummingbird.models.MangaLibraryUpdate;
 import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.views.ParallaxCoverImage;
 import com.charlesmadere.hummingbird.views.SimpleProgressView;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.lang.ref.WeakReference;
 
@@ -59,7 +59,7 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
     CollapsingToolbarLayout mCollapsingToolbarLayout;
 
     @BindView(R.id.parallaxCoverImage)
-    SimpleDraweeView mCoverImage;
+    ParallaxCoverImage mCoverImage;
 
     @BindView(R.id.simpleProgressView)
     SimpleProgressView mSimpleProgressView;
@@ -276,8 +276,12 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
         }
 
         if (mangaDigest.getInfo().hasCoverImage()) {
-            PaletteUtils.applyParallaxColors(mangaDigest.getInfo().getCoverImage(), this, this,
-                    mCoverImage, mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
+            final String coverImage = mangaDigest.getInfo().getCoverImage();
+
+            if (mCoverImage.hasDifferentImageThan(coverImage)) {
+                PaletteUtils.applyParallaxColors(coverImage, this, this, mCoverImage,
+                        mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
+            }
         }
 
         mViewPager.setAdapter(new MangaFragmentAdapter(this, mMangaDigest));

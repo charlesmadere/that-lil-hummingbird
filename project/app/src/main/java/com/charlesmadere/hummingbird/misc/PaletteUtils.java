@@ -24,9 +24,9 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.UiColorSet;
+import com.charlesmadere.hummingbird.views.ParallaxCoverImage;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.AbstractDraweeController;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.BasePostprocessor;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
@@ -36,14 +36,14 @@ import java.lang.ref.WeakReference;
 public final class PaletteUtils {
 
     public static void applyParallaxColors(final String url, final Activity activity,
-            final SimpleDraweeView simpleDraweeView, final AppBarLayout appBar,
+            final ParallaxCoverImage parallaxCoverImage, final AppBarLayout appBar,
             final CollapsingToolbarLayout collapsingToolbar, final TabLayout tabLayout) {
-        applyParallaxColors(url, activity, null, simpleDraweeView, appBar, collapsingToolbar,
+        applyParallaxColors(url, activity, null, parallaxCoverImage, appBar, collapsingToolbar,
                 tabLayout);
     }
 
     public static void applyParallaxColors(final String url, final Activity activity,
-            @Nullable final Listener listener, final SimpleDraweeView simpleDraweeView,
+            @Nullable final Listener listener, final ParallaxCoverImage parallaxCoverImage,
             final AppBarLayout appBar, final CollapsingToolbarLayout collapsingToolbar,
             final TabLayout tabLayout) {
         if (TextUtils.isEmpty(url)) {
@@ -53,7 +53,7 @@ public final class PaletteUtils {
         final Uri uri = Uri.parse(url);
 
         if (MiscUtils.isLowRamDevice()) {
-            simpleDraweeView.setImageURI(uri);
+            parallaxCoverImage.setImageURI(uri);
         } else {
             final ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
                     .setPostprocessor(new PalettePostprocessor(activity, listener, appBar,
@@ -61,11 +61,11 @@ public final class PaletteUtils {
                     .build();
 
             final AbstractDraweeController controller = Fresco.newDraweeControllerBuilder()
-                    .setOldController(simpleDraweeView.getController())
+                    .setOldController(parallaxCoverImage.getController())
                     .setImageRequest(request)
                     .build();
 
-            simpleDraweeView.setController(controller);
+            parallaxCoverImage.setController(uri, controller);
         }
     }
 
