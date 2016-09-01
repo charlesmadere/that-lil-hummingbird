@@ -9,6 +9,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -42,7 +43,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
 
-public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragment.Listener,
+public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragment.Listeners,
         FeedListeners, FeedPostFragment.Listener, ObjectCache.KeyProvider, PaletteUtils.Listener {
 
     private static final String TAG = "GroupActivity";
@@ -267,6 +268,11 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
         updatePostToFeedVisibility();
     }
 
+    @Override
+    public void setGroupDigest(final GroupDigest groupDigest) {
+        showGroupDigest(groupDigest);
+    }
+
     private void showError() {
         mSimpleProgressView.fadeOut();
 
@@ -305,10 +311,14 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
                     this, mCoverImage, mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
         }
 
-        mViewPager.setAdapter(new GroupFragmentAdapter(this));
-        mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
-        mViewPager.setOffscreenPageLimit(3);
-        mTabLayout.setupWithViewPager(mViewPager);
+        final PagerAdapter adapter = mViewPager.getAdapter();
+
+        if (adapter == null) {
+            mViewPager.setAdapter(new GroupFragmentAdapter(this));
+            mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
+            mViewPager.setOffscreenPageLimit(3);
+            mTabLayout.setupWithViewPager(mViewPager);
+        }
 
         supportInvalidateOptionsMenu();
         mSimpleProgressView.fadeOut();

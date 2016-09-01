@@ -9,11 +9,11 @@ import com.charlesmadere.hummingbird.models.GroupDigest;
 
 public abstract class BaseGroupFragment extends BaseFragment {
 
-    private Listener mListener;
+    private Listeners mListeners;
 
 
     protected GroupDigest getGroupDigest() {
-        return mListener.getGroupDigest();
+        return mListeners.getGroupDigest();
     }
 
     @Override
@@ -21,24 +21,29 @@ public abstract class BaseGroupFragment extends BaseFragment {
         super.onAttach(context);
 
         final Fragment fragment = getParentFragment();
-        if (fragment instanceof Listener) {
-            mListener = (Listener) fragment;
+        if (fragment instanceof Listeners) {
+            mListeners = (Listeners) fragment;
         } else {
             final Activity activity = MiscUtils.optActivity(context);
 
-            if (activity instanceof Listener) {
-                mListener = (Listener) activity;
+            if (activity instanceof Listeners) {
+                mListeners = (Listeners) activity;
             }
         }
 
-        if (mListener == null) {
-            throw new IllegalStateException(getFragmentName() + " must attach to Listener");
+        if (mListeners == null) {
+            throw new IllegalStateException(getFragmentName() + " must attach to Listeners");
         }
     }
 
+    protected void setGroupDigest(final GroupDigest groupDigest) {
+        mListeners.setGroupDigest(groupDigest);
+    }
 
-    public interface Listener {
+
+    public interface Listeners {
         GroupDigest getGroupDigest();
+        void setGroupDigest(final GroupDigest groupDigest);
     }
 
 }
