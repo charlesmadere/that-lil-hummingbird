@@ -122,6 +122,7 @@
     <string name="error_logging_in_server">Encountered a server error when logging in! Please try again.</string>
     <string name="error_posting_comment">Error posting comment! Please check your network connection and try again.</string>
     <string name="error_posting_to_feed">Error posting to feed! Please check your network connection and try again.</string>
+    <string name="error_refreshing_group">Error refreshing group! Please check your network connection and try again.</string>
     <string name="error_refreshing_user">Error refreshing user! Please check your network connection and try again.</string>
     <string name="error_retrieving_client_configuration">Error retrieving client configuration from Hummingbird! Please check your network connection and try again.</string>
     <string name="explore">Explore</string>
