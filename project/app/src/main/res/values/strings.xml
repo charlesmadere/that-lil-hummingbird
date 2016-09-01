@@ -519,11 +519,6 @@
         <item quantity="other">%1$s seconds</item>
     </plurals>
 
-    <plurals name="x_websites">
-        <item quantity="one">%1$s website</item>
-        <item quantity="other">%1$s websites</item>
-    </plurals>
-
     <plurals name="x_weeks">
         <item quantity="one">%1$s week</item>
         <item quantity="other">%1$s weeks</item>

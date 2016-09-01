@@ -167,7 +167,7 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
         if (user.hasWebsites()) {
             mWebsite.setVisibility(GONE);
             final String[] websites = user.getWebsites();
-            mWebsites.setHead(res.getQuantityString(R.plurals.x_websites, websites.length,
+            mWebsites.setHead(res.getQuantityString(R.plurals.x_links, websites.length,
                     mNumberFormat.format(websites.length)));
             mWebsites.setVisibility(VISIBLE);
         } else if (user.hasWebsite()) {
