@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -104,11 +103,6 @@ public class UserProfileFragment extends BaseUserFragment implements
 
     private void showUserDigest() {
         final UserDigest userDigest = getUserDigest();
-
-        if (userDigest.equals(CurrentUser.get())) {
-            CurrentUser.set(userDigest);
-        }
-
         mAboutUserView.setContent(userDigest);
 
         if (userDigest.getInfo().hasTopGenres()) {
