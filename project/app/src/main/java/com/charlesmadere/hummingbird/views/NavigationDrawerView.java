@@ -98,26 +98,36 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout implements
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
+
+        if (isInEditMode()) {
+            return;
+        }
+
         Preferences.Misc.AppNewsAvailability.addListener(this);
         refreshImportantNewsBadge();
     }
 
     @Override
     protected void onDetachedFromWindow() {
-        Preferences.Misc.AppNewsAvailability.removeListener(this);
         super.onDetachedFromWindow();
+
+        if (isInEditMode()) {
+            return;
+        }
+
+        Preferences.Misc.AppNewsAvailability.removeListener(this);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
 
+        ButterKnife.bind(this);
+        findAllNavigationDrawerItemViewChildren();
+
         if (isInEditMode()) {
             return;
         }
-
-        ButterKnife.bind(this);
-        findAllNavigationDrawerItemViewChildren();
 
         final User user = CurrentUser.get().getUser();
         mAvatar.setContent(user);
