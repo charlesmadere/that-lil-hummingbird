@@ -11,6 +11,7 @@ import com.charlesmadere.hummingbird.models.LibrarySort;
 import com.charlesmadere.hummingbird.models.NightMode;
 import com.charlesmadere.hummingbird.models.PollFrequency;
 import com.charlesmadere.hummingbird.models.TitleType;
+import com.charlesmadere.hummingbird.models.UserDigest;
 
 public final class Preferences {
 
@@ -44,16 +45,19 @@ public final class Preferences {
 
     public static final class Account {
         private static final String TAG = Preferences.TAG + ".Account";
+        private static final String CURRENT_USER_DIGEST_TAG = TAG + ".CurrentUserDigest";
+        public static final GsonPreference<UserDigest> CurrentUserDigest;
         public static final StringPreference CsrfToken;
         public static final StringPreference Username;
 
         static {
+            CurrentUserDigest = new GsonPreference<>(CURRENT_USER_DIGEST_TAG, "CurrentUserDigest", UserDigest.class, null);
             CsrfToken = new StringPreference(TAG, "CsrfToken", null);
             Username = new StringPreference(TAG, "Username", null);
         }
 
         public static void eraseAll() {
-            erase(TAG);
+            erase(TAG, CURRENT_USER_DIGEST_TAG);
         }
     }
 

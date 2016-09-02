@@ -15,12 +15,17 @@ public final class CurrentUser {
     private static UserDigest sCurrentUserDigest;
 
 
-    public static boolean exists() {
+    public static synchronized boolean exists() {
         return Preferences.Account.CsrfToken.exists() && Preferences.Account.Username.exists()
-                && get() != null;
+                && sCurrentUserDigest != null;
     }
 
     public static synchronized UserDigest get() {
+        if (sCurrentUserDigest == null) {
+            Timber.e(TAG, "reading in stored UserDigest, this should never happen");
+            sCurrentUserDigest = Preferences.Account.CurrentUserDigest.get();
+        }
+
         return sCurrentUserDigest;
     }
 
@@ -39,11 +44,12 @@ public final class CurrentUser {
         }
 
         sCurrentUserDigest = userDigest;
+        Preferences.Account.CurrentUserDigest.set(userDigest);
     }
 
     public static synchronized boolean shouldBeFetched() {
         return Preferences.Account.CsrfToken.exists() && Preferences.Account.Username.exists()
-                && get() == null;
+                && sCurrentUserDigest == null;
     }
 
     public static synchronized void signOut() {
