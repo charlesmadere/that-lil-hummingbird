@@ -9,7 +9,7 @@ import com.charlesmadere.hummingbird.models.WatchingStatus;
 
 public class AnimeLibraryFragmentAdapter extends BaseLibraryFragmentAdapter {
 
-    private static WatchingStatus[] WATCHING_STATUSES = { WatchingStatus.CURRENTLY_WATCHING,
+    private static final WatchingStatus[] WATCHING_STATUSES = { WatchingStatus.CURRENTLY_WATCHING,
             WatchingStatus.COMPLETED, WatchingStatus.PLAN_TO_WATCH, WatchingStatus.ON_HOLD,
             WatchingStatus.DROPPED };
 

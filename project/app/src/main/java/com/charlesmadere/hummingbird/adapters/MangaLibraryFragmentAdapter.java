@@ -9,7 +9,7 @@ import com.charlesmadere.hummingbird.models.ReadingStatus;
 
 public class MangaLibraryFragmentAdapter extends BaseLibraryFragmentAdapter {
 
-    private static ReadingStatus[] READING_STATUSES = { ReadingStatus.CURRENTLY_READING,
+    private static final ReadingStatus[] READING_STATUSES = { ReadingStatus.CURRENTLY_READING,
             ReadingStatus.COMPLETED, ReadingStatus.PLAN_TO_READ, ReadingStatus.ON_HOLD,
             ReadingStatus.DROPPED};
 
