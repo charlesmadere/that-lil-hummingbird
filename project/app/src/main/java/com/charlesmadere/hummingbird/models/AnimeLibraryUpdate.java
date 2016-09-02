@@ -19,8 +19,8 @@ public class AnimeLibraryUpdate implements Parcelable {
     @Nullable
     private Rating mRating;
 
-    private String mAnimeId;
-    private String mAnimeTitle;
+    private final String mAnimeId;
+    private final String mAnimeTitle;
 
     @Nullable
     private String mNotes;

@@ -23,8 +23,8 @@ public class MangaLibraryUpdate implements Parcelable {
     @Nullable
     private ReadingStatus mReadingStatus;
 
-    private String mMangaId;
-    private String mMangaTitle;
+    private final String mMangaId;
+    private final String mMangaTitle;
 
     @Nullable
     private String mNotes;
