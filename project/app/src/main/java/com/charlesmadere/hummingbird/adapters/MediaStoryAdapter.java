@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.adapters;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
@@ -46,16 +47,15 @@ public class MediaStoryAdapter extends BaseMultiPaginationAdapter {
         }
     }
 
-    public void set(final MediaStory mediaStory, final Feed feed) {
+    public void set(final MediaStory mediaStory, @Nullable final Feed feed) {
         mUser = mediaStory.getUser();
         final ArrayList<Object> list = new ArrayList<>();
         list.add(mediaStory);
 
-        final ArrayList<AbsSubstory> substories = feed.getSubstories();
-        if (substories == null || substories.isEmpty()) {
+        if (feed == null || !feed.hasSubstories()) {
             list.add(getContext().getString(R.string.nothing_more_to_show));
         } else {
-            list.addAll(substories);
+            list.addAll(feed.getSubstories());
         }
 
         super.set(list);

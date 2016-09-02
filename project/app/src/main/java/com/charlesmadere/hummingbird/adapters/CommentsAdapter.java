@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.adapters;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
@@ -47,9 +48,14 @@ public class CommentsAdapter extends BaseMultiPaginationAdapter implements Compa
         }
     }
 
-    public void set(final CommentStory commentStory, final Feed feed) {
+    public void set(final CommentStory commentStory, @Nullable final Feed feed) {
         final ArrayList<Object> list = new ArrayList<>();
         list.add(commentStory);
+
+        if (feed == null || !feed.hasSubstories()) {
+            super.set(list);
+            return;
+        }
 
         final ArrayList<AbsSubstory> substories = feed.getSubstories(AbsSubstory.Type.REPLY);
         if (substories != null && !substories.isEmpty()) {

@@ -47,7 +47,7 @@ public class MangaLibraryEntriesAdapter extends BaseAdapter<MangaLibraryEntry> {
         return viewHolder;
     }
 
-    public void set(final Feed feed, final LibrarySort sort) {
+    public void set(@Nullable final Feed feed, final LibrarySort sort) {
         if (feed == null || !feed.hasMangaLibraryEntries()) {
             super.set(null);
             return;

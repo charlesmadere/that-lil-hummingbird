@@ -47,7 +47,7 @@ public class AnimeLibraryEntriesAdapter extends BaseAdapter<AnimeLibraryEntry> {
         return viewHolder;
     }
 
-    public void set(final Feed feed, final LibrarySort sort) {
+    public void set(@Nullable final Feed feed, final LibrarySort sort) {
         if (feed == null || !feed.hasAnimeLibraryEntries()) {
             super.set(null);
             return;
