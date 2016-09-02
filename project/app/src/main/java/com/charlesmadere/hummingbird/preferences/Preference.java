@@ -165,7 +165,7 @@ public abstract class Preference<T> {
      * returns the name of the preferences file that this Preference is stored in
      */
     @NonNull
-    public String getName() {
+    public final String getName() {
         return mName;
     }
 
