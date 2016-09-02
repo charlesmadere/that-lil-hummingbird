@@ -20,7 +20,7 @@ public abstract class BaseFragment extends Fragment {
     public abstract String getFragmentName();
 
     public boolean isAlive() {
-        return mIsAlive;
+        return mIsAlive && isAdded() && !isRemoving();
     }
 
     @Override
