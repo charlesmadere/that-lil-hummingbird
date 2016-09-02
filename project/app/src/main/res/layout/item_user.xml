@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.charlesmadere.hummingbird.views.UserView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.charlesmadere.hummingbird.views.UserItemView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/DividerListItem">
     <LinearLayout
@@ -13,6 +13,7 @@
             android:orientation="vertical">
             <com.charlesmadere.hummingbird.views.AvatarView
                 android:id="@+id/avatarView"
+                android:layout_gravity="center"
                 style="@style/Avatar.Medium" />
             <com.charlesmadere.hummingbird.views.TypefaceTextView
                 tools:visibility="visible"
@@ -33,4 +34,4 @@
                 style="@style/UserBio.Limited" />
         </LinearLayout>
     </LinearLayout>
-</com.charlesmadere.hummingbird.views.UserView>
+</com.charlesmadere.hummingbird.views.UserItemView>
