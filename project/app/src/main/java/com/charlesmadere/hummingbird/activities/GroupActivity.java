@@ -307,12 +307,8 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
         }
 
         if (groupDigest.getGroup().hasCoverImage()) {
-            final String coverImage = groupDigest.getGroup().getCoverImageUrl();
-
-            if (mCoverImage.hasDifferentImageThan(coverImage)) {
-                PaletteUtils.applyParallaxColors(coverImage, this, this, mCoverImage,
-                        mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
-            }
+            PaletteUtils.applyParallaxColors(groupDigest.getGroup().getCoverImageUrl(), this,
+                    this, mCoverImage, mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
         }
 
         final PagerAdapter adapter = mViewPager.getAdapter();

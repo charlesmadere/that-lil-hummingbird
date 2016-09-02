@@ -253,12 +253,8 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
         final User user = mUserDigest.getUser();
 
         if (user.hasCoverImage()) {
-            final String coverImage = user.getCoverImage();
-
-            if (mCoverImage.hasDifferentImageThan(coverImage)) {
-                PaletteUtils.applyParallaxColors(coverImage, this, this, mCoverImage,
-                        mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
-            }
+            PaletteUtils.applyParallaxColors(user.getCoverImage(), this, this, mCoverImage,
+                    mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
         }
 
         mAvatar.setContent(user);

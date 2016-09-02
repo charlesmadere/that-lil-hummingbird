@@ -50,6 +50,10 @@ public final class PaletteUtils {
             throw new IllegalArgumentException("url parameter can't be null / empty");
         }
 
+        if (!parallaxCoverImage.hasDifferentImageThan(url)) {
+            return;
+        }
+
         final Uri uri = Uri.parse(url);
 
         if (MiscUtils.isLowRamDevice()) {

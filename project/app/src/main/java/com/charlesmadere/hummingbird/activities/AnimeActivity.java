@@ -253,12 +253,8 @@ public class AnimeActivity extends BaseDrawerActivity implements
         }
 
         if (animeDigest.getInfo().hasCoverImage()) {
-            final String coverImage = animeDigest.getInfo().getCoverImage();
-
-            if (mCoverImage.hasDifferentImageThan(coverImage)) {
-                PaletteUtils.applyParallaxColors(coverImage, this, this, mCoverImage,
-                        mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
-            }
+            PaletteUtils.applyParallaxColors(animeDigest.getInfo().getCoverImage(), this, this,
+                    mCoverImage, mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
         }
 
         mViewPager.setAdapter(new AnimeFragmentAdapter(this, mAnimeDigest));

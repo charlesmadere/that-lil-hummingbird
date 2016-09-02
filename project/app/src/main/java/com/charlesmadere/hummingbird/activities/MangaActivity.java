@@ -276,12 +276,8 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
         }
 
         if (mangaDigest.getInfo().hasCoverImage()) {
-            final String coverImage = mangaDigest.getInfo().getCoverImage();
-
-            if (mCoverImage.hasDifferentImageThan(coverImage)) {
-                PaletteUtils.applyParallaxColors(coverImage, this, this, mCoverImage,
-                        mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
-            }
+            PaletteUtils.applyParallaxColors(mangaDigest.getInfo().getCoverImage(), this, this,
+                    mCoverImage, mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
         }
 
         mViewPager.setAdapter(new MangaFragmentAdapter(this, mMangaDigest));
