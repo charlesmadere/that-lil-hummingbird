@@ -235,11 +235,11 @@ public class CommentStoryActivity extends BaseDrawerActivity implements CommentF
 
     private void showFeed(final Feed feed) {
         mFeed = feed;
-        mAdapter.set(mCommentStory, feed);
+        mAdapter.set(mCommentStory, mFeed);
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
         mCommentField.setEnabled(true);
-        mPaginator.setEnabled(feed.hasCursor());
+        mPaginator.setEnabled(mFeed.hasCursor());
         mRefreshLayout.setRefreshing(false);
     }
 
