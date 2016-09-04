@@ -17,7 +17,7 @@ public class SplashActivity extends BaseActivity {
     private static final String TAG = "SplashActivity";
     private static final String EXTRA_REWATCH = CNAME + ".Rewatch";
 
-    private static final long ANIM_TIME_MS = 1500L;
+    private static final long ANIM_TIME_MS = 1250L;
 
     private Handler mHandler;
 
