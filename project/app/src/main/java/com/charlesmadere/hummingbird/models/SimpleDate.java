@@ -61,6 +61,11 @@ public class SimpleDate implements Parcelable {
         return DateUtils.getRelativeTimeSpanString(context, mDate.getTime());
     }
 
+    @Override
+    public int hashCode() {
+        return mDate.hashCode();
+    }
+
     public boolean isInTheFuture() {
         final long now = System.currentTimeMillis();
 
@@ -69,11 +74,6 @@ public class SimpleDate implements Parcelable {
         } else {
             return true;
         }
-    }
-
-    @Override
-    public int hashCode() {
-        return mDate.hashCode();
     }
 
     @Override
