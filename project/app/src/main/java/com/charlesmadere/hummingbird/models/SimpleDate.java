@@ -121,6 +121,10 @@ public class SimpleDate implements Parcelable {
         @Override
         public SimpleDate deserialize(final JsonElement json, final Type typeOfT,
                 final JsonDeserializationContext context) throws JsonParseException {
+            if (json.isJsonNull()) {
+                return null;
+            }
+
             final String dateString = fixTimeZone(json.getAsString());
 
             for (final SimpleDateFormat format : FORMATS) {
