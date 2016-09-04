@@ -28,6 +28,14 @@ public class SimpleDate implements Parcelable {
     private final Date mDate;
 
 
+    private static String fixTimeZone(String string) {
+        if (string.endsWith("Z")) {
+            string = string.replace("Z", "+0000");
+        }
+
+        return string;
+    }
+
     public SimpleDate(final long time) {
         this(new Date(time));
     }
@@ -124,9 +132,7 @@ public class SimpleDate implements Parcelable {
                 return null;
             }
 
-            if (string.endsWith("Z")) {
-                string = string.replace("Z", "+0000");
-            }
+            string = fixTimeZone(string);
 
             for (final SimpleDateFormat format : FORMATS) {
                 try {
