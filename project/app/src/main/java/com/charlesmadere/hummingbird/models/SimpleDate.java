@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 
 import com.google.gson.JsonDeserializationContext;
@@ -26,14 +27,6 @@ public class SimpleDate implements Parcelable {
 
     private final Date mDate;
 
-
-    private static String fixTimeZone(final String dateString) {
-        if (dateString.endsWith("Z")) {
-            return dateString.replace("Z", "+0000");
-        } else {
-            return dateString;
-        }
-    }
 
     public SimpleDate(final long time) {
         this(new Date(time));
@@ -125,17 +118,25 @@ public class SimpleDate implements Parcelable {
                 return null;
             }
 
-            final String dateString = fixTimeZone(json.getAsString());
+            String string = json.getAsString();
+
+            if (TextUtils.isEmpty(string)) {
+                return null;
+            }
+
+            if (string.endsWith("Z")) {
+                string = string.replace("Z", "+0000");
+            }
 
             for (final SimpleDateFormat format : FORMATS) {
                 try {
-                    return new SimpleDate(format.parse(dateString));
+                    return new SimpleDate(format.parse(string));
                 } catch (final ParseException e) {
                     // this can be safely ignored
                 }
             }
 
-            throw new JsonParseException("Couldn't parse date: \"" + dateString + "'");
+            throw new JsonParseException("Couldn't parse date: \"" + string + "'");
         }
     };
 
