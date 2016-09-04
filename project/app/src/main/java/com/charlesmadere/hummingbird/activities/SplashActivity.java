@@ -77,7 +77,7 @@ public class SplashActivity extends BaseActivity {
                     return;
                 }
 
-                mSplash.setImageResource(R.drawable.three);
+                mSplash.setImageResource(R.drawable.atsuka_frame_3);
                 mHandler.postDelayed(four, ANIM_TIME_MS);
             }
         };
@@ -89,7 +89,7 @@ public class SplashActivity extends BaseActivity {
                     return;
                 }
 
-                mSplash.setImageResource(R.drawable.two);
+                mSplash.setImageResource(R.drawable.atsuka_frame_2);
                 mHandler.postDelayed(three, ANIM_TIME_MS);
             }
         };
