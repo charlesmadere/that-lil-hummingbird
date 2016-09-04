@@ -17,7 +17,7 @@ public class SplashActivity extends BaseActivity {
     private static final String TAG = "SplashActivity";
     private static final String EXTRA_REWATCH = CNAME + ".Rewatch";
 
-    private static final long ANIM_TIME_MS = 1500L;
+    private static final long ANIM_TIME_MS = 1250L;
 
     private Handler mHandler;
 
@@ -77,7 +77,7 @@ public class SplashActivity extends BaseActivity {
                     return;
                 }
 
-                mSplash.setImageResource(R.drawable.three);
+                mSplash.setImageResource(R.drawable.atsuka_frame_3);
                 mHandler.postDelayed(four, ANIM_TIME_MS);
             }
         };
@@ -89,7 +89,7 @@ public class SplashActivity extends BaseActivity {
                     return;
                 }
 
-                mSplash.setImageResource(R.drawable.two);
+                mSplash.setImageResource(R.drawable.atsuka_frame_2);
                 mHandler.postDelayed(three, ANIM_TIME_MS);
             }
         };
