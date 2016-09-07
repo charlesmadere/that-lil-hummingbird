@@ -62,6 +62,7 @@ public class ThatLilHummingbird extends Application {
 
         final Activity activity = activities.get(0);
         final LaunchScreen launchScreen = Preferences.General.DefaultLaunchScreen.get();
+        // noinspection ConstantConditions
         activity.startActivity(launchScreen.getRestartAppLaunchIntent(activity));
 
         for (final Activity a : activities) {
