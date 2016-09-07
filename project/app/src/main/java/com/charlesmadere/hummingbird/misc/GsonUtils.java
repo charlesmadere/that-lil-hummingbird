@@ -34,6 +34,7 @@ public final class GsonUtils {
                     .registerTypeAdapter(ReadingStatus.class, ReadingStatus.JSON_DESERIALIZER)
                     .registerTypeAdapter(SearchBundle.AbsResult.class, SearchBundle.AbsResult.JSON_DESERIALIZER)
                     .registerTypeAdapter(SimpleDate.class, SimpleDate.JSON_DESERIALIZER)
+                    .registerTypeAdapter(SimpleDate.class, SimpleDate.JSON_SERIALIZER)
                     .registerTypeAdapter(User.class, User.JSON_DESERIALIZER)
                     .registerTypeAdapter(UserDigest.Favorite.AbsItem.class, UserDigest.Favorite.AbsItem.JSON_DESERIALIZER)
                     .registerTypeAdapter(WatchingStatus.class, WatchingStatus.JSON_DESERIALIZER)

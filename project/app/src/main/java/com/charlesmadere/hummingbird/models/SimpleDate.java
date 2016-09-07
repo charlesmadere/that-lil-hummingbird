@@ -10,6 +10,8 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
 import java.lang.reflect.Type;
 import java.text.ParseException;
@@ -126,7 +128,13 @@ public class SimpleDate implements Parcelable {
                 return null;
             }
 
-            String string = json.getAsString();
+            String string;
+
+            try {
+                string = json.getAsString();
+            } catch (final ClassCastException | UnsupportedOperationException e) {
+                throw new JsonParseException("couldn't get date as string: \"" + json + "'", e);
+            }
 
             if (TextUtils.isEmpty(string)) {
                 return null;
@@ -142,7 +150,15 @@ public class SimpleDate implements Parcelable {
                 }
             }
 
-            throw new JsonParseException("Couldn't parse date: \"" + string + "'");
+            throw new JsonParseException("couldn't parse date string: \"" + string + "'");
+        }
+    };
+
+    public static final JsonSerializer<SimpleDate> JSON_SERIALIZER = new JsonSerializer<SimpleDate>() {
+        @Override
+        public JsonElement serialize(final SimpleDate src, final Type typeOfSrc,
+                final JsonSerializationContext context) {
+            return context.serialize(src.getDate());
         }
     };
 
