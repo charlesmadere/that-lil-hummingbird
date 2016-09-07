@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 
+import com.charlesmadere.hummingbird.misc.Timber;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -26,6 +27,8 @@ public class SimpleDate implements Parcelable {
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US),
             new SimpleDateFormat("yyyy-MM-dd", Locale.US)
     };
+
+    private static final String TAG = "SimpleDate";
 
     private final Date mDate;
 
@@ -133,7 +136,8 @@ public class SimpleDate implements Parcelable {
             try {
                 string = json.getAsString();
             } catch (final ClassCastException | UnsupportedOperationException e) {
-                throw new JsonParseException("couldn't get date as string: \"" + json + "'", e);
+                Timber.e(TAG, "couldn't get date as string: \"" + json + "'", e);
+                return null;
             }
 
             if (TextUtils.isEmpty(string)) {
