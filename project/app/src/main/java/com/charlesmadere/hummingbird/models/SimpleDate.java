@@ -25,6 +25,7 @@ public class SimpleDate implements Parcelable {
 
     private static final SimpleDateFormat[] FORMATS = {
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US),
+            new SimpleDateFormat("MMM d, yyyy hh:mm:ss a", Locale.US),
             new SimpleDateFormat("yyyy-MM-dd", Locale.US)
     };
 
