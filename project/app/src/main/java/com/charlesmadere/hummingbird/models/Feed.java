@@ -14,6 +14,10 @@ import java.util.Iterator;
 public class Feed implements Hydratable {
 
     @Nullable
+    @SerializedName("story")
+    private AbsStory mStory;
+
+    @Nullable
     @SerializedName("anime")
     private ArrayList<Anime> mAnime;
 
@@ -61,25 +65,6 @@ public class Feed implements Hydratable {
     @SerializedName("meta")
     private Metadata mMetadata;
 
-    @Nullable
-    @SerializedName("story")
-    private AbsStory mStory;
-
-
-    public void addAnime(@Nullable final Anime anime) {
-        if (anime == null) {
-            return;
-        }
-
-        if (hasAnime()) {
-            if (!mAnime.contains(anime)) {
-                mAnime.add(anime);
-            }
-        } else {
-            mAnime = new ArrayList<>();
-            mAnime.add(anime);
-        }
-    }
 
     public void addAnime(@Nullable final ArrayList<Anime> anime) {
         if (anime == null || anime.isEmpty()) {
