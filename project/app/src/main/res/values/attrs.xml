@@ -25,10 +25,6 @@
         </attr>
     </declare-styleable>
 
-    <declare-styleable name="GroupEnabledLinearLayout">
-        <attr name="start_enabled" format="boolean" />
-    </declare-styleable>
-
     <declare-styleable name="HeadBodyItemView">
         <attr name="bodyText" format="string" />
         <attr name="headText" format="string" />
