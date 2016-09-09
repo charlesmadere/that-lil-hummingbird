@@ -137,7 +137,7 @@ public class SimpleDate implements Parcelable {
             try {
                 string = json.getAsString();
             } catch (final ClassCastException | UnsupportedOperationException e) {
-                Timber.e(TAG, "couldn't get date as string: \"" + json + "'", e);
+                Timber.e(TAG, "couldn't get date as string: \"" + json + '"', e);
                 return null;
             }
 
@@ -155,7 +155,7 @@ public class SimpleDate implements Parcelable {
                 }
             }
 
-            throw new JsonParseException("couldn't parse date string: \"" + string + "'");
+            throw new JsonParseException("couldn't parse date string: \"" + string + '"');
         }
     };
 
