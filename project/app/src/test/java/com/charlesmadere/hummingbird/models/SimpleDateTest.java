@@ -28,6 +28,8 @@ public class SimpleDateTest {
     private static final String AM_PM_DATE_0 = "Feb 2, 1998 4:34:20 AM";
     private static final String AM_PM_DATE_1 = "Jun 08, 2000 08:10:59 PM";
     private static final String AM_PM_DATE_2 = "Dec 28, 2012 12:00:00 AM";
+    private static final String ARMY_DATE_0 = "Sep 26, 2015 00:00:00";
+    private static final String ARMY_DATE_1 = "Nov 28, 1989 13:41:26";
     private static final String EXTENDED_DATE_0 = "2013-02-20T16:00:15.623Z";
     private static final String EXTENDED_DATE_1 = "2015-08-06T18:46:42.723Z";
     private static final String SHORT_DATE_0 = "2013-07-18";
@@ -36,6 +38,7 @@ public class SimpleDateTest {
     private Constructor<SimpleDate> mConstructor;
     private Method mFixTimeZone;
     private SimpleDateFormat mAmPmFormat;
+    private SimpleDateFormat mArmyFormat;
     private SimpleDateFormat mExtendedFormat;
     private SimpleDateFormat mShortFormat;
 
@@ -53,7 +56,8 @@ public class SimpleDateTest {
         final SimpleDateFormat[] formats = (SimpleDateFormat[]) field.get(null);
         mExtendedFormat = formats[0];
         mAmPmFormat = formats[1];
-        mShortFormat = formats[2];
+        mArmyFormat = formats[2];
+        mShortFormat = formats[3];
     }
 
     @Test
@@ -94,6 +98,32 @@ public class SimpleDateTest {
         assertEquals(calendar.get(Calendar.MINUTE), 0);
         assertEquals(calendar.get(Calendar.SECOND), 0);
         assertEquals(calendar.get(Calendar.AM_PM), Calendar.AM);
+    }
+
+    @Test
+    public void testArmyDateConstruction() throws Exception {
+        SimpleDate sd = mConstructor.newInstance(mArmyFormat.parse(ARMY_DATE_0));
+        assertNotNull(sd);
+
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(sd.getDate());
+        assertEquals(calendar.get(Calendar.YEAR), 2015);
+        assertEquals(calendar.get(Calendar.MONTH), Calendar.SEPTEMBER);
+        assertEquals(calendar.get(Calendar.DAY_OF_MONTH), 26);
+        assertEquals(calendar.get(Calendar.HOUR_OF_DAY), 0);
+        assertEquals(calendar.get(Calendar.MINUTE), 0);
+        assertEquals(calendar.get(Calendar.SECOND), 0);
+
+        sd = mConstructor.newInstance(mArmyFormat.parse(ARMY_DATE_1));
+        assertNotNull(sd);
+
+        calendar.setTime(sd.getDate());
+        assertEquals(calendar.get(Calendar.YEAR), 1989);
+        assertEquals(calendar.get(Calendar.MONTH), Calendar.NOVEMBER);
+        assertEquals(calendar.get(Calendar.DAY_OF_MONTH), 28);
+        assertEquals(calendar.get(Calendar.HOUR_OF_DAY), 13);
+        assertEquals(calendar.get(Calendar.MINUTE), 41);
+        assertEquals(calendar.get(Calendar.SECOND), 26);
     }
 
     @Test
