@@ -106,6 +106,7 @@ public class Feed implements Hydratable {
 
         final ArrayList<String> animeIds = new ArrayList<>();
 
+        // noinspection ConstantConditions
         for (final AnimeReview animeReview : mAnimeReviews) {
             if (animeReview.getAnime() == null) {
                 final String animeId = animeReview.getAnimeId();
@@ -215,6 +216,7 @@ public class Feed implements Hydratable {
             return null;
         }
 
+        // noinspection ConstantConditions
         final ArrayList<AbsSubstory> substories = new ArrayList<>(mSubstories.size());
 
         for (final AbsSubstory substory : mSubstories) {
@@ -299,12 +301,14 @@ public class Feed implements Hydratable {
     @Override
     public void hydrate() {
         if (hasAnimeLibraryEntries()) {
+            // noinspection ConstantConditions
             for (final AnimeLibraryEntry ale : mAnimeLibraryEntries) {
                 ale.hydrate(this);
             }
         }
 
         if (hasAnimeReviews()) {
+            // noinspection ConstantConditions
             final Iterator<AnimeReview> iterator = mAnimeReviews.iterator();
 
             do {
@@ -317,46 +321,54 @@ public class Feed implements Hydratable {
         }
 
         if (hasGroupMembers()) {
+            // noinspection ConstantConditions
             for (final GroupMember groupMember : mGroupMembers) {
                 groupMember.hydrate(this);
             }
         }
 
         if (hasGroups()) {
+            // noinspection ConstantConditions
             for (final Group group : mGroups) {
                 group.hydrate(this);
             }
         }
 
         if (hasMangaLibraryEntries()) {
+            // noinspection ConstantConditions
             for (final MangaLibraryEntry mle : mMangaLibraryEntries) {
                 mle.hydrate(this);
             }
         }
 
         if (hasNotifications()) {
+            // noinspection ConstantConditions
             for (final AbsNotification notification : mNotifications) {
                 notification.hydrate(this);
             }
         }
 
         if (hasSubstories()) {
+            // noinspection ConstantConditions
             for (final AbsSubstory substory : mSubstories) {
                 substory.hydrate(this);
             }
         }
 
         if (hasStories()) {
+            // noinspection ConstantConditions
             for (final AbsStory story : mStories) {
                 story.hydrate(this);
             }
         }
 
         if (hasStory()) {
+            // noinspection ConstantConditions
             mStory.hydrate(this);
         }
 
         if (hasUsers()) {
+            // noinspection ConstantConditions
             for (final User user : mUsers) {
                 user.hydrate();
             }

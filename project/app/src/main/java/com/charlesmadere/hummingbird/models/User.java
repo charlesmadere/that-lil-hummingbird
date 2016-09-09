@@ -124,6 +124,7 @@ public class User implements Hydratable, Parcelable {
     @Nullable
     public String[] getWebsites() {
         if (hasWebsite()) {
+            // noinspection ConstantConditions
             return mData.mWebsite.split("\\s+");
         } else {
             return null;

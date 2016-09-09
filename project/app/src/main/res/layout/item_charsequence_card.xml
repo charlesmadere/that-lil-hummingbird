@@ -15,5 +15,5 @@
     android:paddingTop="@dimen/root_padding_half"
     android:textColor="?android:attr/textColorPrimary"
     app:typeface="open_sans_bold"
-    tools:ignore="UnusedAttribute"
+    tools:ignore="Overdraw,UnusedAttribute"
     tools:text="Kill La Kill" />

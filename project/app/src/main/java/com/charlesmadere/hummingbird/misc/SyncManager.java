@@ -153,6 +153,7 @@ public final class SyncManager extends GcmTaskService {
 
                 final ArrayList<AbsNotification> unSeenNotifications = new ArrayList<>();
 
+                // noinspection ConstantConditions
                 for (final AbsNotification notification : feed.getNotifications()) {
                     if (!notification.isSeen()) {
                         unSeenNotifications.add(notification);

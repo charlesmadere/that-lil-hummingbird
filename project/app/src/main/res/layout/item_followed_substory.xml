@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:orientation="horizontal"
     android:paddingBottom="@dimen/root_padding_half"
-    android:paddingTop="@dimen/root_padding_half">
+    android:paddingTop="@dimen/root_padding_half"
+    tools:ignore="Overdraw">
     <com.charlesmadere.hummingbird.views.AvatarView
         android:id="@+id/avatarView"
         android:layout_marginEnd="@dimen/root_padding"
