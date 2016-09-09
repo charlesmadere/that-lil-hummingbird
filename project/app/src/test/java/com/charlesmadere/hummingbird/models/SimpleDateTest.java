@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -24,6 +25,9 @@ import static org.junit.Assert.assertTrue;
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
 public class SimpleDateTest {
 
+    private static final String AM_PM_DATE_0 = "Feb 2, 1998 4:34:20 AM";
+    private static final String AM_PM_DATE_1 = "Jun 08, 2000 08:10:59 PM";
+    private static final String AM_PM_DATE_2 = "Dec 28, 2012 12:00:00 AM";
     private static final String EXTENDED_DATE_0 = "2013-02-20T16:00:15.623Z";
     private static final String EXTENDED_DATE_1 = "2015-08-06T18:46:42.723Z";
     private static final String SHORT_DATE_0 = "2013-07-18";
@@ -31,6 +35,7 @@ public class SimpleDateTest {
 
     private Constructor<SimpleDate> mConstructor;
     private Method mFixTimeZone;
+    private SimpleDateFormat mAmPmFormat;
     private SimpleDateFormat mExtendedFormat;
     private SimpleDateFormat mShortFormat;
 
@@ -47,7 +52,48 @@ public class SimpleDateTest {
         field.setAccessible(true);
         final SimpleDateFormat[] formats = (SimpleDateFormat[]) field.get(null);
         mExtendedFormat = formats[0];
-        mShortFormat = formats[1];
+        mAmPmFormat = formats[1];
+        mShortFormat = formats[2];
+    }
+
+    @Test
+    public void testAmPmDateConstruction() throws Exception {
+        SimpleDate sd = mConstructor.newInstance(mAmPmFormat.parse(AM_PM_DATE_0));
+        assertNotNull(sd);
+
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(sd.getDate());
+        assertEquals(calendar.get(Calendar.YEAR), 1998);
+        assertEquals(calendar.get(Calendar.MONTH), Calendar.FEBRUARY);
+        assertEquals(calendar.get(Calendar.DAY_OF_MONTH), 2);
+        assertEquals(calendar.get(Calendar.HOUR), 4);
+        assertEquals(calendar.get(Calendar.MINUTE), 34);
+        assertEquals(calendar.get(Calendar.SECOND), 20);
+        assertEquals(calendar.get(Calendar.AM_PM), Calendar.AM);
+
+        sd = mConstructor.newInstance(mAmPmFormat.parse(AM_PM_DATE_1));
+        assertNotNull(sd);
+
+        calendar.setTime(sd.getDate());
+        assertEquals(calendar.get(Calendar.YEAR), 2000);
+        assertEquals(calendar.get(Calendar.MONTH), Calendar.JUNE);
+        assertEquals(calendar.get(Calendar.DAY_OF_MONTH), 8);
+        assertEquals(calendar.get(Calendar.HOUR), 8);
+        assertEquals(calendar.get(Calendar.MINUTE), 10);
+        assertEquals(calendar.get(Calendar.SECOND), 59);
+        assertEquals(calendar.get(Calendar.AM_PM), Calendar.PM);
+
+        sd = mConstructor.newInstance(mAmPmFormat.parse(AM_PM_DATE_2));
+        assertNotNull(sd);
+
+        calendar.setTime(sd.getDate());
+        assertEquals(calendar.get(Calendar.YEAR), 2012);
+        assertEquals(calendar.get(Calendar.MONTH), Calendar.DECEMBER);
+        assertEquals(calendar.get(Calendar.DAY_OF_MONTH), 28);
+        assertEquals(calendar.get(Calendar.HOUR), 0);
+        assertEquals(calendar.get(Calendar.MINUTE), 0);
+        assertEquals(calendar.get(Calendar.SECOND), 0);
+        assertEquals(calendar.get(Calendar.AM_PM), Calendar.AM);
     }
 
     @Test
@@ -58,33 +104,42 @@ public class SimpleDateTest {
 
         final Calendar calendar = Calendar.getInstance();
         calendar.setTime(sd.getDate());
-        assertTrue(calendar.get(Calendar.YEAR) == 2013);
-        assertTrue(calendar.get(Calendar.MONTH) == Calendar.FEBRUARY);
-        assertTrue(calendar.get(Calendar.DAY_OF_MONTH) == 20);
+        assertEquals(calendar.get(Calendar.YEAR), 2013);
+        assertEquals(calendar.get(Calendar.MONTH), Calendar.FEBRUARY);
+        assertEquals(calendar.get(Calendar.DAY_OF_MONTH), 20);
 
         dateString = (String) mFixTimeZone.invoke(null, EXTENDED_DATE_1);
         sd = mConstructor.newInstance(mExtendedFormat.parse(dateString));
         assertNotNull(sd);
 
         calendar.setTime(sd.getDate());
-        assertTrue(calendar.get(Calendar.YEAR) == 2015);
-        assertTrue(calendar.get(Calendar.MONTH) == Calendar.AUGUST);
-        assertTrue(calendar.get(Calendar.DAY_OF_MONTH) == 6);
+        assertEquals(calendar.get(Calendar.YEAR), 2015);
+        assertEquals(calendar.get(Calendar.MONTH), Calendar.AUGUST);
+        assertEquals(calendar.get(Calendar.DAY_OF_MONTH), 6);
     }
 
     @Test
     public void testFixTimeZone() throws Exception {
-        String string = (String) mFixTimeZone.invoke(null, EXTENDED_DATE_0);
+        String string = (String) mFixTimeZone.invoke(null, AM_PM_DATE_0);
+        assertEquals(string, AM_PM_DATE_0);
+
+        string = (String) mFixTimeZone.invoke(null, AM_PM_DATE_1);
+        assertEquals(string, AM_PM_DATE_1);
+
+        string = (String) mFixTimeZone.invoke(null, AM_PM_DATE_2);
+        assertEquals(string, AM_PM_DATE_2);
+
+        string = (String) mFixTimeZone.invoke(null, EXTENDED_DATE_0);
         assertTrue(string.endsWith("+0000"));
 
         string = (String) mFixTimeZone.invoke(null, EXTENDED_DATE_1);
         assertTrue(string.endsWith("+0000"));
 
         string = (String) mFixTimeZone.invoke(null, SHORT_DATE_0);
-        assertTrue(string.equals(SHORT_DATE_0));
+        assertEquals(string, SHORT_DATE_0);
 
         string = (String) mFixTimeZone.invoke(null, SHORT_DATE_1);
-        assertTrue(string.equals(SHORT_DATE_1));
+        assertEquals(string, SHORT_DATE_1);
     }
 
     @Test
@@ -94,17 +149,17 @@ public class SimpleDateTest {
 
         final Calendar calendar = Calendar.getInstance();
         calendar.setTime(sd.getDate());
-        assertTrue(calendar.get(Calendar.YEAR) == 2013);
-        assertTrue(calendar.get(Calendar.MONTH) == Calendar.JULY);
-        assertTrue(calendar.get(Calendar.DAY_OF_MONTH) == 18);
+        assertEquals(calendar.get(Calendar.YEAR), 2013);
+        assertEquals(calendar.get(Calendar.MONTH), Calendar.JULY);
+        assertEquals(calendar.get(Calendar.DAY_OF_MONTH), 18);
 
         sd = mConstructor.newInstance(mShortFormat.parse(SHORT_DATE_1));
         assertNotNull(sd);
 
         calendar.setTime(sd.getDate());
-        assertTrue(calendar.get(Calendar.YEAR) == 2016);
-        assertTrue(calendar.get(Calendar.MONTH) == Calendar.MARCH);
-        assertTrue(calendar.get(Calendar.DAY_OF_MONTH) == 4);
+        assertEquals(calendar.get(Calendar.YEAR), 2016);
+        assertEquals(calendar.get(Calendar.MONTH), Calendar.MARCH);
+        assertEquals(calendar.get(Calendar.DAY_OF_MONTH), 4);
     }
 
 }
