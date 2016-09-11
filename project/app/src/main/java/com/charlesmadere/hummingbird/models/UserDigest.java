@@ -32,6 +32,7 @@ public class UserDigest implements Hydratable, Parcelable {
     @SerializedName("manga")
     private ArrayList<Manga> mManga;
 
+    @Nullable
     @SerializedName("users")
     private ArrayList<User> mUsers;
 
