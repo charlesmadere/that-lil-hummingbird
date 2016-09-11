@@ -245,6 +245,9 @@ public class UserDigest implements Hydratable, Parcelable {
             @SerializedName("id")
             private String mId;
 
+            @SerializedName("type")
+            private Type mType;
+
             @Override
             public boolean equals(final Object o) {
                 return o instanceof AbsItem && mId.equalsIgnoreCase(((AbsItem) o).getId());
@@ -254,7 +257,9 @@ public class UserDigest implements Hydratable, Parcelable {
                 return mId;
             }
 
-            public abstract Type getType();
+            public Type getType() {
+                return mType;
+            }
 
             @Override
             public int hashCode() {
@@ -275,11 +280,13 @@ public class UserDigest implements Hydratable, Parcelable {
 
             protected void readFromParcel(final Parcel source) {
                 mId = source.readString();
+                mType = source.readParcelable(Type.class.getClassLoader());
             }
 
             @Override
             public void writeToParcel(final Parcel dest, final int flags) {
                 dest.writeString(mId);
+                dest.writeParcelable(mType, flags);
             }
 
             public enum Type implements Parcelable {
@@ -364,11 +371,6 @@ public class UserDigest implements Hydratable, Parcelable {
             }
 
             @Override
-            public Type getType() {
-                return Type.ANIME;
-            }
-
-            @Override
             public void hydrate(final UserDigest userDigest) {
                 for (final Anime anime : userDigest.getAnime()) {
                     if (getId().equalsIgnoreCase(anime.getId())) {
@@ -413,11 +415,6 @@ public class UserDigest implements Hydratable, Parcelable {
 
             public Manga getManga() {
                 return mManga;
-            }
-
-            @Override
-            public Type getType() {
-                return Type.MANGA;
             }
 
             @Override
