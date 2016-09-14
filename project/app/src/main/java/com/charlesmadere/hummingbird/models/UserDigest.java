@@ -65,6 +65,7 @@ public class UserDigest implements Hydratable, Parcelable {
     }
 
     public User getUser() {
+        // noinspection ConstantConditions
         return mUsers.get(0);
     }
 
@@ -91,11 +92,13 @@ public class UserDigest implements Hydratable, Parcelable {
 
     @Override
     public void hydrate() {
+        // noinspection ConstantConditions
         for (final User user : mUsers) {
             user.hydrate();
         }
 
         if (hasFavorites()) {
+            // noinspection ConstantConditions
             for (final Favorite favorite : mFavorites) {
                 favorite.hydrate(this);
             }
@@ -372,6 +375,7 @@ public class UserDigest implements Hydratable, Parcelable {
 
             @Override
             public void hydrate(final UserDigest userDigest) {
+                // noinspection ConstantConditions
                 for (final Anime anime : userDigest.getAnime()) {
                     if (getId().equalsIgnoreCase(anime.getId())) {
                         mAnime = anime;
@@ -419,6 +423,7 @@ public class UserDigest implements Hydratable, Parcelable {
 
             @Override
             public void hydrate(final UserDigest userDigest) {
+                // noinspection ConstantConditions
                 for (final Manga manga : userDigest.getManga()) {
                     if (getId().equalsIgnoreCase(manga.getId())) {
                         mManga = manga;
@@ -505,6 +510,7 @@ public class UserDigest implements Hydratable, Parcelable {
 
             Genre topGenre = null;
 
+            // noinspection ConstantConditions
             for (final Genre genre : mTopGenres) {
                 if (topGenre == null || topGenre.getNum() < genre.getNum()) {
                     topGenre = genre;
