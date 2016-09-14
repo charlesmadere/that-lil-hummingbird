@@ -37,6 +37,7 @@ public final class GsonUtils {
                     .registerTypeAdapter(SimpleDate.class, SimpleDate.JSON_SERIALIZER)
                     .registerTypeAdapter(User.class, User.JSON_DESERIALIZER)
                     .registerTypeAdapter(UserDigest.Favorite.AbsItem.class, UserDigest.Favorite.AbsItem.JSON_DESERIALIZER)
+                    .registerTypeAdapter(UserDigest.Favorite.AbsItem.class, UserDigest.Favorite.AbsItem.JSON_SERIALIZER)
                     .registerTypeAdapter(WatchingStatus.class, WatchingStatus.JSON_DESERIALIZER)
                     .serializeNulls()
                     .create();

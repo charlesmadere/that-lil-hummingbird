@@ -11,6 +11,8 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -364,10 +366,29 @@ public class UserDigest implements Hydratable, Parcelable {
                     return item;
                 }
             };
+
+            public static final JsonSerializer<AbsItem> JSON_SERIALIZER = new JsonSerializer<AbsItem>() {
+                @Override
+                public JsonElement serialize(final AbsItem src,
+                        final java.lang.reflect.Type typeOfSrc,
+                        final JsonSerializationContext context) {
+                    switch (src.getType()) {
+                        case ANIME:
+                            return context.serialize(src, AnimeItem.class);
+
+                        case MANGA:
+                            return context.serialize(src, MangaItem.class);
+
+                        default:
+                            throw new RuntimeException("encountered unknown " +
+                                    Type.class.getName() + ": \"" + src.getType() + '"');
+                    }
+                }
+            };
         }
 
         public static class AnimeItem extends AbsItem implements Parcelable {
-            // hydrated fields
+            @SerializedName("anime")
             private Anime mAnime;
 
             public Anime getAnime() {
@@ -415,7 +436,7 @@ public class UserDigest implements Hydratable, Parcelable {
         }
 
         public static class MangaItem extends AbsItem implements Parcelable {
-            // hydrated fields
+            @SerializedName("manga")
             private Manga mManga;
 
             public Manga getManga() {
