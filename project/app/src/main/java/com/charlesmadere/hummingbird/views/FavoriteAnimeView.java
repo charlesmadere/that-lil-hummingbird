@@ -63,11 +63,6 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        if (isInEditMode()) {
-            return;
-        }
-
         ButterKnife.bind(this);
     }
 
@@ -118,6 +113,7 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
             mAnime.clear();
         }
 
+        // noinspection ConstantConditions
         for (final UserDigest.Favorite favorite : favorites) {
             final UserDigest.Favorite.AbsItem item = favorite.getItem();
 
