@@ -112,10 +112,11 @@ public class UserDigest implements Hydratable, Parcelable {
     }
 
     public void setUser(final User user) {
-        if (!isMissingUser()) {
-            throw new RuntimeException("User already exists: (" + getUserId() + ')');
-        } else if (user == null) {
+        if (user == null) {
             throw new IllegalArgumentException("user parameter can't be null");
+        } else if (!isMissingUser()) {
+            throw new RuntimeException("user already exists: (" + getUserId() + "), "
+                    + " attempted to replace it with \"" + user.getId() + '"');
         }
 
         if (mUsers == null) {
