@@ -46,6 +46,11 @@ public class LikesFeedButton extends FrameLayout implements AdapterView<CommentS
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
+
+        if (isInEditMode()) {
+            return;
+        }
+
         update();
     }
 
