@@ -31,7 +31,7 @@
                 tools:text="11 days ago"
                 style="@style/TimeOrDate" />
             <LinearLayout
-                android:divider="?android:attr/listDivider"
+                android:divider="@drawable/divider"
                 android:layout_below="@id/tvTimeAgo"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/avatarView"

@@ -48,7 +48,7 @@
                 style="@style/CommentTextView.OP.Limited" />
         </RelativeLayout>
         <LinearLayout
-            android:divider="?android:attr/listDivider"
+            android:divider="@drawable/divider"
             android:id="@+id/llReplies"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/root_padding"
