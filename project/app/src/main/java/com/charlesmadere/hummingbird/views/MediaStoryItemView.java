@@ -119,12 +119,12 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
 
         mShareFeedButton.setContent(mMediaStory);
 
-        if (mMediaStory.getSubstoryCount() >= 3) {
+        if (mMediaStory.getSubstoryCount() > 2) {
             mShowMoreFeedButton.setContent(mMediaStory);
             mShowMoreFeedButton.setVisibility(VISIBLE);
         } else {
-            mShowMoreFeedButton.setContent(null);
-            mShowMoreFeedButton.setVisibility(INVISIBLE);
+            mShowMoreFeedButton.setContent((MediaStory) null);
+            mShowMoreFeedButton.setVisibility(GONE);
         }
     }
 
@@ -134,6 +134,7 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
         mTitle.setText(anime.getTitle());
 
         if (anime.hasType()) {
+            // noinspection ConstantConditions
             mMediaType.setText(anime.getType().getTextResId());
             mMediaType.setVisibility(VISIBLE);
         } else {
@@ -154,6 +155,7 @@ public class MediaStoryItemView extends CardView implements AdapterView<MediaSto
         mTitle.setText(manga.getTitle());
 
         if (manga.hasType()) {
+            // noinspection ConstantConditions
             mMediaType.setText(manga.getType().getTextResId());
             mMediaType.setVisibility(VISIBLE);
         } else {

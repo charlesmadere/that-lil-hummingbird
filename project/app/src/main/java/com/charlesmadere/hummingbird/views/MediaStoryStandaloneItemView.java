@@ -18,7 +18,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HeaderMediaStoryItemView extends CardView implements AdapterView<MediaStory>,
+public class MediaStoryStandaloneItemView extends CardView implements AdapterView<MediaStory>,
         View.OnClickListener {
 
     private MediaStory mMediaStory;
@@ -39,11 +39,11 @@ public class HeaderMediaStoryItemView extends CardView implements AdapterView<Me
     TextView mMediaType;
 
 
-    public HeaderMediaStoryItemView(final Context context, final AttributeSet attrs) {
+    public MediaStoryStandaloneItemView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public HeaderMediaStoryItemView(final Context context, final AttributeSet attrs,
+    public MediaStoryStandaloneItemView(final Context context, final AttributeSet attrs,
             final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
