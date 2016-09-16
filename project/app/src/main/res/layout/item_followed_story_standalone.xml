@@ -14,7 +14,7 @@
             android:paddingStart="@dimen/root_padding"
             android:paddingTop="@dimen/root_padding">
             <com.charlesmadere.hummingbird.views.AvatarView
-                android:id="@+id/sdvImage"
+                android:id="@+id/avatarView"
                 android:layout_marginEnd="@dimen/root_padding"
                 style="@style/Avatar.Large" />
             <LinearLayout
