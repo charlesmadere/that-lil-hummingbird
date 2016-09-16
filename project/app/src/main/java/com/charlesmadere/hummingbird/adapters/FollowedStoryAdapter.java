@@ -7,7 +7,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.FollowedStory;
 import com.charlesmadere.hummingbird.models.FollowedSubstory;
-import com.charlesmadere.hummingbird.models.ReplySubstory;
+import com.charlesmadere.hummingbird.views.FollowedSubstoryStandaloneItemView;
 import com.charlesmadere.hummingbird.views.ReplySubstoryStandaloneItemView;
 
 import java.util.ArrayList;
@@ -34,8 +34,8 @@ public class FollowedStoryAdapter extends BaseMultiPaginationAdapter {
             final boolean showDivider = isPaginating() ? position + 2 < getItemCount()
                     : position + 1 < getItemCount();
 
-            ((ReplySubstoryStandaloneItemView) holder.getAdapterView()).setContent(
-                    (ReplySubstory) getItem(position), showDivider);
+            ((FollowedSubstoryStandaloneItemView) holder.getAdapterView()).setContent(
+                    (FollowedSubstory) getItem(position), showDivider);
         } else {
             super.onBindViewHolder(holder, position);
         }
