@@ -57,6 +57,7 @@ public class FollowedSubstoryStandaloneItemView extends LinearLayout implements
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
+        setOnClickListener(this);
         mBottomMargin = getResources().getDimensionPixelSize(R.dimen.root_padding_half);
     }
 
