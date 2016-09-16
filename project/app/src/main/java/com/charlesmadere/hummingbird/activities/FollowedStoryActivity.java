@@ -53,7 +53,7 @@ public class FollowedStoryActivity extends BaseDrawerActivity implements ObjectC
 
     public static Intent getLaunchIntent(final Context context, final FollowedStory followedStory,
             @Nullable final UiColorSet uiColorSet) {
-        final Intent intent = new Intent(context, MediaStoryActivity.class)
+        final Intent intent = new Intent(context, FollowedStoryActivity.class)
                 .putExtra(EXTRA_FOLLOWED_STORY, followedStory);
 
         if (uiColorSet != null) {
