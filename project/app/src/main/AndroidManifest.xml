@@ -64,6 +64,11 @@
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
         <activity
+            android:label=""
+            android:name=".activities.FollowedStoryActivity"
+            android:theme="@style/HummingbirdTheme.WithDrawer" />
+
+        <activity
             android:label="@string/followers"
             android:name=".activities.FollowersActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer" />
