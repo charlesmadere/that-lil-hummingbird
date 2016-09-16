@@ -27,6 +27,7 @@
                     tools:text="ThatLilChestnut"
                     style="@style/UserTitle" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
+                    android:id="@+id/tvFollowedCount"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     tools:text="followed 5 users" />

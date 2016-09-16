@@ -3,13 +3,30 @@ package com.charlesmadere.hummingbird.views;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.widget.TextView;
 
+import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.FollowedStory;
 
+import java.text.NumberFormat;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FollowedStoryStandaloneItemView extends CardView implements AdapterView<FollowedStory> {
+
+    private NumberFormat mNumberFormat;
+
+    @BindView(R.id.avatarView)
+    AvatarView mAvatarView;
+
+    @BindView(R.id.tvFollowedCount)
+    TextView mFollowedCount;
+
+    @BindView(R.id.tvUsername)
+    TextView mUsername;
+
 
     public FollowedStoryStandaloneItemView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
@@ -24,6 +41,7 @@ public class FollowedStoryStandaloneItemView extends CardView implements Adapter
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
+        mNumberFormat = NumberFormat.getInstance();
     }
 
     @Override
