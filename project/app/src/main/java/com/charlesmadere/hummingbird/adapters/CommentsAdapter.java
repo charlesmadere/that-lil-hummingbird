@@ -29,9 +29,10 @@ public class CommentsAdapter extends BaseMultiPaginationAdapter implements Compa
 
     @Override
     protected HashMap<Class, Integer> getItemViewKeyMap() {
-        final HashMap<Class, Integer> map = new HashMap<>(2);
+        final HashMap<Class, Integer> map = new HashMap<>(3);
         map.put(CommentStory.class, R.layout.item_comment_story_standalone);
         map.put(ReplySubstory.class, R.layout.item_reply_substory_standalone);
+        map.put(String.class, R.layout.item_charsequence_plain);
         return map;
     }
 
@@ -53,6 +54,7 @@ public class CommentsAdapter extends BaseMultiPaginationAdapter implements Compa
         list.add(commentStory);
 
         if (feed == null || !feed.hasSubstories()) {
+            list.add(getContext().getString(R.string.no_replies));
             super.set(list);
             return;
         }
