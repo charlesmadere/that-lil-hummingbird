@@ -46,7 +46,10 @@ public class FollowedStoryStandaloneItemView extends CardView implements Adapter
 
     @Override
     public void setContent(final FollowedStory content) {
-
+        mAvatarView.setContent(content.getUser());
+        mUsername.setText(content.getUserId());
+        mFollowedCount.setText(getResources().getQuantityString(R.plurals.followed_x_users,
+                content.getSubstoryCount(), mNumberFormat.format(content.getSubstoryCount())));
     }
 
 }
