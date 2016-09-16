@@ -17,11 +17,20 @@
                 android:id="@+id/sdvImage"
                 android:layout_marginEnd="@dimen/root_padding"
                 style="@style/Avatar.Large" />
-            <com.charlesmadere.hummingbird.views.TypefaceTextView
-                android:id="@+id/tvTitle"
+            <LinearLayout
                 android:layout_gravity="center_vertical"
-                tools:text="ThatLilChestnut followed 5 users"
-                style="@style/UserTitle" />
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
+                <com.charlesmadere.hummingbird.views.TypefaceTextView
+                    android:id="@+id/tvUsername"
+                    tools:text="ThatLilChestnut"
+                    style="@style/UserTitle" />
+                <com.charlesmadere.hummingbird.views.TypefaceTextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    tools:text="followed 5 users" />
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
             style="@style/FeedButtons">
