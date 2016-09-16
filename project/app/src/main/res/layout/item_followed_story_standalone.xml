@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.charlesmadere.hummingbird.views.MediaStoryStandaloneItemView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.charlesmadere.hummingbird.views.FollowedStoryStandaloneItemView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/FeedCardItem.Standalone">
     <LinearLayout
@@ -43,4 +43,4 @@
                 layout="@layout/feed_button_share" />
         </LinearLayout>
     </LinearLayout>
-</com.charlesmadere.hummingbird.views.MediaStoryStandaloneItemView>
+</com.charlesmadere.hummingbird.views.FollowedStoryStandaloneItemView>

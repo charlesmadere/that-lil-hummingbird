@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.FollowedStory;
 import com.charlesmadere.hummingbird.models.FollowedSubstory;
@@ -47,8 +48,15 @@ public class FollowedStoryAdapter extends BaseMultiPaginationAdapter {
 
         if (feed == null || !feed.hasSubstories()) {
             list.add(getContext().getString(R.string.nothing_more_to_show));
+            super.set(list);
+            return;
+        }
+
+        final ArrayList<AbsSubstory> substories = feed.getSubstories(AbsSubstory.Type.FOLLOWED);
+        if (substories == null || substories.isEmpty()) {
+            list.add(getContext().getString(R.string.nothing_more_to_show));
         } else {
-            list.addAll(feed.getSubstories());
+            list.addAll(substories);
         }
 
         super.set(list);

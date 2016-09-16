@@ -60,7 +60,9 @@ public class CommentsAdapter extends BaseMultiPaginationAdapter implements Compa
         }
 
         final ArrayList<AbsSubstory> substories = feed.getSubstories(AbsSubstory.Type.REPLY);
-        if (substories != null && !substories.isEmpty()) {
+        if (substories == null || substories.isEmpty()) {
+            list.add(getContext().getString(R.string.no_replies));
+        } else {
             Collections.sort(substories, this);
             list.addAll(substories);
         }
