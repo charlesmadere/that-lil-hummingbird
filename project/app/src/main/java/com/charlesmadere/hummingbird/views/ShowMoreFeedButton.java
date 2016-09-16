@@ -11,19 +11,20 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.FollowedStoryActivity;
 import com.charlesmadere.hummingbird.activities.MediaStoryActivity;
-import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
+import com.charlesmadere.hummingbird.models.FollowedStory;
 import com.charlesmadere.hummingbird.models.MediaStory;
 import com.charlesmadere.hummingbird.models.UiColorSet;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ShowMoreFeedButton extends FrameLayout implements AdapterView<MediaStory>,
-        View.OnClickListener {
+public class ShowMoreFeedButton extends FrameLayout implements View.OnClickListener {
 
+    private FollowedStory mFollowedStory;
     private MediaStory mMediaStory;
 
     @BindView(R.id.tvShowMoreFeedButton)
@@ -47,15 +48,18 @@ public class ShowMoreFeedButton extends FrameLayout implements AdapterView<Media
 
     @Override
     public void onClick(final View view) {
-        if (mMediaStory == null) {
-            return;
-        }
-
         final Context context = getContext();
         final Activity activity = MiscUtils.optActivity(context);
         final UiColorSet uiColorSet = activity instanceof PaletteUtils.Listener ?
                 ((PaletteUtils.Listener) activity).getUiColorSet() : null;
-        context.startActivity(MediaStoryActivity.getLaunchIntent(context, mMediaStory, uiColorSet));
+
+        if (mFollowedStory != null) {
+            context.startActivity(FollowedStoryActivity.getLaunchIntent(context, mFollowedStory,
+                    uiColorSet));
+        } else if (mMediaStory != null) {
+            context.startActivity(MediaStoryActivity.getLaunchIntent(context, mMediaStory,
+                    uiColorSet));
+        }
     }
 
     @Override
@@ -65,9 +69,14 @@ public class ShowMoreFeedButton extends FrameLayout implements AdapterView<Media
         setOnClickListener(this);
     }
 
-    @Override
+    public void setContent(@Nullable final FollowedStory content) {
+        mFollowedStory = content;
+        mMediaStory = null;
+    }
+
     public void setContent(@Nullable final MediaStory content) {
         mMediaStory = content;
+        mFollowedStory = null;
     }
 
 }
