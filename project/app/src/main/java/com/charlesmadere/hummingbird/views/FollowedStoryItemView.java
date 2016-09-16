@@ -32,6 +32,9 @@ public class FollowedStoryItemView extends CardView implements AdapterView<Follo
     @BindView(R.id.fsivOne)
     FollowedSubstoryItemView mFollowedOne;
 
+    @BindView(R.id.shareFeedButton)
+    ShareFeedButton mShareFeedButton;
+
     @BindView(R.id.showMoreFeedButton)
     ShowMoreFeedButton mShowMoreFeedButton;
 
@@ -40,9 +43,6 @@ public class FollowedStoryItemView extends CardView implements AdapterView<Follo
 
     @BindView(R.id.feedButtons)
     View mFeedButtons;
-
-    @BindView(R.id.feedButtonsSpace)
-    View mFeedButtonsSpace;
 
 
     public FollowedStoryItemView(final Context context, final AttributeSet attrs) {
@@ -77,14 +77,14 @@ public class FollowedStoryItemView extends CardView implements AdapterView<Follo
             mFollowedOne.setVisibility(GONE);
         }
 
+        mShareFeedButton.setContent(content);
+
         if (content.getSubstoryCount() > 2) {
             mShowMoreFeedButton.setContent(content);
-            mFeedButtonsSpace.setVisibility(GONE);
-            mFeedButtons.setVisibility(VISIBLE);
+            mShowMoreFeedButton.setVisibility(VISIBLE);
         } else {
             mShowMoreFeedButton.setContent((FollowedStory) null);
-            mFeedButtons.setVisibility(GONE);
-            mFeedButtonsSpace.setVisibility(VISIBLE);
+            mShowMoreFeedButton.setVisibility(GONE);
         }
     }
 

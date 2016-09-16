@@ -46,12 +46,10 @@
                     layout="@layout/item_followed_substory" />
             </LinearLayout>
         </RelativeLayout>
-        <android.support.v4.widget.Space
-            android:id="@+id/feedButtonsSpace"
-            android:layout_height="@dimen/root_padding"
-            android:layout_width="match_parent" />
         <LinearLayout
             style="@style/FeedButtons">
+            <include
+                layout="@layout/feed_button_share" />
             <include
                 layout="@layout/feed_button_show_more" />
         </LinearLayout>
