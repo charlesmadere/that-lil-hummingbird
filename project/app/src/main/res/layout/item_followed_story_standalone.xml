@@ -13,29 +13,15 @@
             android:paddingEnd="@dimen/root_padding"
             android:paddingStart="@dimen/root_padding"
             android:paddingTop="@dimen/root_padding">
-            <com.facebook.drawee.view.SimpleDraweeView
+            <com.charlesmadere.hummingbird.views.AvatarView
                 android:id="@+id/sdvImage"
                 android:layout_marginEnd="@dimen/root_padding"
-                style="@style/AnimePoster" />
-            <LinearLayout
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:orientation="vertical">
-                <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:id="@+id/tvTitle"
-                    tools:text="The Disappearance of Haruhi Suzumiya"
-                    style="@style/MediaTitle" />
-                <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:id="@+id/tvMediaType"
-                    tools:text="@string/movie"
-                    tools:visibility="visible"
-                    style="@style/MediaType" />
-                <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:id="@+id/tvGenres"
-                    tools:text="Comedy, Mystery, Romance"
-                    tools:visibility="visible"
-                    style="@style/MediaGenres" />
-            </LinearLayout>
+                style="@style/Avatar.Large" />
+            <com.charlesmadere.hummingbird.views.TypefaceTextView
+                android:id="@+id/tvTitle"
+                android:layout_gravity="center_vertical"
+                tools:text="ThatLilChestnut followed 5 users"
+                style="@style/UserTitle" />
         </LinearLayout>
         <LinearLayout
             style="@style/FeedButtons">
