@@ -21,6 +21,9 @@ public class FollowedStoryStandaloneItemView extends CardView implements Adapter
     @BindView(R.id.avatarView)
     AvatarView mAvatarView;
 
+    @BindView(R.id.shareFeedButton)
+    ShareFeedButton mShareFeedButton;
+
     @BindView(R.id.tvFollowedCount)
     TextView mFollowedCount;
 
@@ -50,6 +53,7 @@ public class FollowedStoryStandaloneItemView extends CardView implements Adapter
         mUsername.setText(content.getUserId());
         mFollowedCount.setText(getResources().getQuantityString(R.plurals.followed_x_users,
                 content.getSubstoryCount(), mNumberFormat.format(content.getSubstoryCount())));
+        mShareFeedButton.setContent(content);
     }
 
 }
