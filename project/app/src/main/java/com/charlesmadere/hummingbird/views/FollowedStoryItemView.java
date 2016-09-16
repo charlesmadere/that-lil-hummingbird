@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.views;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
@@ -31,8 +32,17 @@ public class FollowedStoryItemView extends CardView implements AdapterView<Follo
     @BindView(R.id.fsivOne)
     FollowedSubstoryItemView mFollowedOne;
 
+    @BindView(R.id.showMoreFeedButton)
+    ShowMoreFeedButton mShowMoreFeedButton;
+
     @BindView(R.id.tvTimeAgo)
     TextView mTimeAgo;
+
+    @BindView(R.id.feedButtons)
+    View mFeedButtons;
+
+    @BindView(R.id.feedButtonsSpace)
+    View mFeedButtonsSpace;
 
 
     public FollowedStoryItemView(final Context context, final AttributeSet attrs) {
@@ -47,11 +57,6 @@ public class FollowedStoryItemView extends CardView implements AdapterView<Follo
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        if (isInEditMode()) {
-            return;
-        }
-
         ButterKnife.bind(this);
     }
 
@@ -70,6 +75,16 @@ public class FollowedStoryItemView extends CardView implements AdapterView<Follo
             mFollowedOne.setVisibility(VISIBLE);
         } else {
             mFollowedOne.setVisibility(GONE);
+        }
+
+        if (content.getSubstoryCount() > 2) {
+            mShowMoreFeedButton.setContent(content);
+            mFeedButtonsSpace.setVisibility(GONE);
+            mFeedButtons.setVisibility(VISIBLE);
+        } else {
+            mShowMoreFeedButton.setContent((FollowedStory) null);
+            mFeedButtons.setVisibility(GONE);
+            mFeedButtonsSpace.setVisibility(VISIBLE);
         }
     }
 

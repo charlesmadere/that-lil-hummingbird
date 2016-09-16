@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.MediaStoryStandaloneItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/FeedCardItem.Standalone">
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:paddingEnd="@dimen/root_padding"
+            android:paddingStart="@dimen/root_padding"
+            android:paddingTop="@dimen/root_padding">
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdvImage"
+                android:layout_marginEnd="@dimen/root_padding"
+                style="@style/AnimePoster" />
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
+                <com.charlesmadere.hummingbird.views.TypefaceTextView
+                    android:id="@+id/tvTitle"
+                    tools:text="The Disappearance of Haruhi Suzumiya"
+                    style="@style/MediaTitle" />
+                <com.charlesmadere.hummingbird.views.TypefaceTextView
+                    android:id="@+id/tvMediaType"
+                    tools:text="@string/movie"
+                    tools:visibility="visible"
+                    style="@style/MediaType" />
+                <com.charlesmadere.hummingbird.views.TypefaceTextView
+                    android:id="@+id/tvGenres"
+                    tools:text="Comedy, Mystery, Romance"
+                    tools:visibility="visible"
+                    style="@style/MediaGenres" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/FeedButtons">
+            <include
+                layout="@layout/feed_button_share" />
+        </LinearLayout>
+    </LinearLayout>
+</com.charlesmadere.hummingbird.views.MediaStoryStandaloneItemView>

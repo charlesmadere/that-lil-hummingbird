@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.FollowedSubstoryStandaloneItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    style="@style/DividerListItem.NoPadding">
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:padding="@dimen/root_padding_half">
+        <com.charlesmadere.hummingbird.views.AvatarView
+            android:id="@+id/avatarView"
+            android:layout_marginEnd="@dimen/root_padding"
+            style="@style/Avatar.Medium" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:id="@+id/tvUsername"
+            android:layout_gravity="center_vertical"
+            tools:text="halfaxa"
+            style="@style/UserTitle" />
+    </LinearLayout>
+    <View
+        style="@style/Divider" />
+</com.charlesmadere.hummingbird.views.FollowedSubstoryStandaloneItemView>
