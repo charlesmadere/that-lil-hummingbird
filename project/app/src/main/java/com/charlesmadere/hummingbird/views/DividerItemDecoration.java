@@ -1,5 +1,6 @@
 package com.charlesmadere.hummingbird.views;
 
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -13,12 +14,17 @@ import android.support.v7.widget.RecyclerView.State;
 import android.view.View;
 import android.view.ViewGroup.MarginLayoutParams;
 
-import com.charlesmadere.hummingbird.R;
-
 public final class DividerItemDecoration {
 
+    private static final int[] DEFAULT_DIVIDER = { android.R.attr.listDivider };
+
+
     public static void apply(final RecyclerView view) {
-        apply(view, R.drawable.divider);
+        final TypedArray ta = view.getContext().obtainStyledAttributes(DEFAULT_DIVIDER);
+        final Drawable divider = ta.getDrawable(0);
+        ta.recycle();
+
+        apply(view, divider);
     }
 
     public static void apply(final RecyclerView view, final Drawable divider) {

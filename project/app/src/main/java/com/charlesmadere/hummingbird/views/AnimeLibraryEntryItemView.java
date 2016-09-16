@@ -128,7 +128,7 @@ public class AnimeLibraryEntryItemView extends CardView implements AdapterView<A
             mRating.setVisibility(GONE);
         }
 
-        mPlusOneFeedButton.setVisibility(mLibraryEntry.canBeIncremented() ? VISIBLE : INVISIBLE);
+        mPlusOneFeedButton.setVisibility(mLibraryEntry.canBeIncremented() ? VISIBLE : GONE);
     }
 
     public void setListeners(@Nullable final Listeners l) {
