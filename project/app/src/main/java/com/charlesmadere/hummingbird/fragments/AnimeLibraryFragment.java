@@ -24,7 +24,7 @@ import com.charlesmadere.hummingbird.views.AnimeLibraryEntryItemView;
 import java.lang.ref.WeakReference;
 
 public class AnimeLibraryFragment extends BaseLibraryFragment implements
-        AnimeLibraryEntryItemView.Listeners, AnimeLibraryUpdateFragment.Listener {
+        AnimeLibraryEntryItemView.Listeners, AnimeLibraryUpdateFragment.LibraryEntryListener {
 
     private static final String TAG = "AnimeLibraryFragment";
     private static final String KEY_WATCHING_STATUS = "WatchingStatus";
@@ -55,6 +55,17 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
     @Override
     public AnimeLibraryEntriesAdapter getAdapter() {
         return mAdapter;
+    }
+
+    @Override
+    public AnimeLibraryEntry getAnimeLibraryEntry(final String libraryEntryId) {
+        for (final AnimeLibraryEntry libraryEntry : mFeed.getAnimeLibraryEntries()) {
+            if (libraryEntryId.equalsIgnoreCase(libraryEntry.getId())) {
+                return libraryEntry;
+            }
+        }
+
+        throw new RuntimeException("couldn't find AnimeLibraryEntry: \"" + libraryEntryId + '"');
     }
 
     @Override
@@ -131,8 +142,8 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
 
     @Override
     public void onEditClick(final AnimeLibraryEntryItemView v) {
-        AnimeLibraryUpdateFragment.create(v.getLibraryEntry()).show(getChildFragmentManager(),
-                AnimeLibraryUpdateFragment.TAG);
+        AnimeLibraryUpdateFragment.create(v.getLibraryEntry().getId()).show(
+                getChildFragmentManager(), AnimeLibraryUpdateFragment.TAG);
     }
 
     @Override

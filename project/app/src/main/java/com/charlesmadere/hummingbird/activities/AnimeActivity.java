@@ -41,7 +41,7 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 
 public class AnimeActivity extends BaseDrawerActivity implements
-        AnimeEpisodeItemView.OnClickListener, AnimeLibraryUpdateFragment.Listener,
+        AnimeEpisodeItemView.OnClickListener, AnimeLibraryUpdateFragment.DigestListener,
         BaseAnimeFragment.Listener, ObjectCache.KeyProvider, PaletteUtils.Listener {
 
     private static final String TAG = "AnimeActivity";
@@ -175,12 +175,12 @@ public class AnimeActivity extends BaseDrawerActivity implements
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.miAddToLibrary:
-                AnimeLibraryUpdateFragment.create(mAnimeDigest)
+                AnimeLibraryUpdateFragment.create()
                         .show(getSupportFragmentManager(), ADD_TAG);
                 return true;
 
             case R.id.miEditInLibrary:
-                AnimeLibraryUpdateFragment.create(mAnimeDigest.getLibraryEntry())
+                AnimeLibraryUpdateFragment.create(mAnimeDigest.getLibraryEntry().getId())
                         .show(getSupportFragmentManager(), EDIT_TAG);
                 return true;
 
