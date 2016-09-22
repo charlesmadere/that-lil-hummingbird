@@ -26,6 +26,7 @@ import com.charlesmadere.hummingbird.misc.ShareUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Manga;
 import com.charlesmadere.hummingbird.models.MangaDigest;
+import com.charlesmadere.hummingbird.models.MangaLibraryEntry;
 import com.charlesmadere.hummingbird.models.MangaLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.MangaLibraryUpdate;
 import com.charlesmadere.hummingbird.models.UiColorSet;
@@ -39,7 +40,8 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 
 public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragment.Listener,
-        MangaLibraryUpdateFragment.DigestListener, ObjectCache.KeyProvider, PaletteUtils.Listener {
+        MangaLibraryUpdateFragment.DigestListener, MangaLibraryUpdateFragment.LibraryEntryListener,
+        ObjectCache.KeyProvider, PaletteUtils.Listener {
 
     private static final String TAG = "MangaActivity";
     private static final String CNAME = MangaActivity.class.getCanonicalName();
@@ -118,6 +120,11 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
     @Override
     public MangaDigest getMangaDigest() {
         return mMangaDigest;
+    }
+
+    @Override
+    public MangaLibraryEntry getMangaLibraryEntry(final String libraryEntryId) {
+        return mMangaDigest.getLibraryEntry();
     }
 
     @Override

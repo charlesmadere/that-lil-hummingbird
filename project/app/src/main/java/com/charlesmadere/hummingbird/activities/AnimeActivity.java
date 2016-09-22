@@ -26,6 +26,7 @@ import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.misc.ShareUtils;
 import com.charlesmadere.hummingbird.models.Anime;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
+import com.charlesmadere.hummingbird.models.AnimeLibraryEntry;
 import com.charlesmadere.hummingbird.models.AnimeLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.AnimeLibraryUpdate;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
@@ -42,7 +43,8 @@ import butterknife.BindView;
 
 public class AnimeActivity extends BaseDrawerActivity implements
         AnimeEpisodeItemView.OnClickListener, AnimeLibraryUpdateFragment.DigestListener,
-        BaseAnimeFragment.Listener, ObjectCache.KeyProvider, PaletteUtils.Listener {
+        AnimeLibraryUpdateFragment.LibraryEntryListener, BaseAnimeFragment.Listener,
+        ObjectCache.KeyProvider, PaletteUtils.Listener {
 
     private static final String TAG = "AnimeActivity";
     private static final String CNAME = AnimeActivity.class.getCanonicalName();
@@ -121,6 +123,11 @@ public class AnimeActivity extends BaseDrawerActivity implements
     @Override
     public AnimeDigest getAnimeDigest() {
         return mAnimeDigest;
+    }
+
+    @Override
+    public AnimeLibraryEntry getAnimeLibraryEntry(final String libraryEntryId) {
+        return mAnimeDigest.getLibraryEntry();
     }
 
     @Override
