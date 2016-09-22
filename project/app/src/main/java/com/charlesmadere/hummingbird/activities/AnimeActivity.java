@@ -175,8 +175,7 @@ public class AnimeActivity extends BaseDrawerActivity implements
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.miAddToLibrary:
-                AnimeLibraryUpdateFragment.create()
-                        .show(getSupportFragmentManager(), ADD_TAG);
+                AnimeLibraryUpdateFragment.create().show(getSupportFragmentManager(), ADD_TAG);
                 return true;
 
             case R.id.miEditInLibrary:
