@@ -113,12 +113,12 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         final MangaDigest digest;
         final MangaLibraryEntry libraryEntry;
 
-        if (mListener instanceof DigestListener) {
-            digest = getDigest();
-            libraryEntry = null;
-        } else if (mListener instanceof LibraryEntryListener) {
+        if (mListener instanceof LibraryEntryListener) {
             digest = null;
             libraryEntry = getLibraryEntry();
+        } else if (mListener instanceof DigestListener) {
+            digest = getDigest();
+            libraryEntry = null;
         } else {
             throw new IllegalStateException("unknown Listener attached: " + mListener);
         }
