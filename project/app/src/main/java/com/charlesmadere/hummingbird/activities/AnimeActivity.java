@@ -231,7 +231,7 @@ public class AnimeActivity extends BaseDrawerActivity implements
 
         if (fragment == null) {
             fragment = (AnimeLibraryUpdateFragment) fragmentManager.findFragmentByTag(EDIT_TAG);
-            final String libraryEntryId = fragment.getLibraryEntry().getId();
+            final String libraryEntryId = fragment.getLibraryEntryId();
             final AnimeLibraryUpdate libraryUpdate = fragment.getLibraryUpdate();
             Api.updateAnimeLibraryEntry(libraryEntryId, libraryUpdate, new EditLibraryEntryListener(this));
         } else {

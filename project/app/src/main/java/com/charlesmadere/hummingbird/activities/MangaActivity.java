@@ -39,7 +39,7 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 
 public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragment.Listener,
-        MangaLibraryUpdateFragment.Listener, ObjectCache.KeyProvider, PaletteUtils.Listener {
+        MangaLibraryUpdateFragment.DigestListener, ObjectCache.KeyProvider, PaletteUtils.Listener {
 
     private static final String TAG = "MangaActivity";
     private static final String CNAME = MangaActivity.class.getCanonicalName();
@@ -167,12 +167,11 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.miAddToLibrary:
-                MangaLibraryUpdateFragment.create(mMangaDigest)
-                        .show(getSupportFragmentManager(), ADD_TAG);
+                MangaLibraryUpdateFragment.create().show(getSupportFragmentManager(), ADD_TAG);
                 return true;
 
             case R.id.miEditInLibrary:
-                MangaLibraryUpdateFragment.create(mMangaDigest.getLibraryEntry())
+                MangaLibraryUpdateFragment.create(mMangaDigest.getLibraryEntry().getId())
                         .show(getSupportFragmentManager(), EDIT_TAG);
                 return true;
 

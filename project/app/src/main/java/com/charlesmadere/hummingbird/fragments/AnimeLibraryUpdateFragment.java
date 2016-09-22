@@ -117,7 +117,7 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
             digest = null;
             libraryEntry = getLibraryEntry();
         } else {
-            throw new IllegalStateException("unknown Listener attached");
+            throw new IllegalStateException("unknown Listener attached: " + mListener);
         }
 
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
@@ -200,7 +200,10 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         super.onCreate(savedInstanceState);
 
         final Bundle args = getArguments();
-        mLibraryEntryId = args.getString(KEY_LIBRARY_ENTRY_ID);
+
+        if (args != null && !args.isEmpty()) {
+            mLibraryEntryId = args.getString(KEY_LIBRARY_ENTRY_ID);
+        }
     }
 
     @Override

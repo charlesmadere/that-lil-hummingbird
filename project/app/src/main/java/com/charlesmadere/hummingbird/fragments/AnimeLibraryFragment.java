@@ -161,7 +161,7 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
         final AnimeLibraryUpdateFragment fragment = (AnimeLibraryUpdateFragment)
                 getChildFragmentManager().findFragmentByTag(AnimeLibraryUpdateFragment.TAG);
         final AnimeLibraryUpdate update = fragment.getLibraryUpdate();
-        final String entryId = fragment.getLibraryEntry().getId();
+        final String entryId = fragment.getLibraryEntryId();
 
         mRefreshLayout.setRefreshing(true);
         Api.updateAnimeLibraryEntry(entryId, update, new EditLibraryEntryListener(this));

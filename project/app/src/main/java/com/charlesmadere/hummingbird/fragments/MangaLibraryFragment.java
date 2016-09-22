@@ -24,7 +24,7 @@ import com.charlesmadere.hummingbird.views.MangaLibraryEntryItemView;
 import java.lang.ref.WeakReference;
 
 public class MangaLibraryFragment extends BaseLibraryFragment implements
-        MangaLibraryEntryItemView.Listeners, MangaLibraryUpdateFragment.Listener {
+        MangaLibraryEntryItemView.Listeners, MangaLibraryUpdateFragment.LibraryEntryListener {
 
     private static final String TAG = "MangaLibraryFragment";
     private static final String KEY_READING_STATUS = "ReadingStatus";
@@ -60,6 +60,17 @@ public class MangaLibraryFragment extends BaseLibraryFragment implements
     @Override
     public String getFragmentName() {
         return TAG;
+    }
+
+    @Override
+    public MangaLibraryEntry getMangaLibraryEntry(final String libraryEntryId) {
+        for (final MangaLibraryEntry libraryEntry : mFeed.getMangaLibraryEntries()) {
+            if (libraryEntryId.equalsIgnoreCase(libraryEntry.getId())) {
+                return libraryEntry;
+            }
+        }
+
+        throw new RuntimeException("couldn't find MangaLibraryEntry: \"" + libraryEntryId + '"');
     }
 
     @Override
@@ -131,8 +142,8 @@ public class MangaLibraryFragment extends BaseLibraryFragment implements
 
     @Override
     public void onEditClick(final MangaLibraryEntryItemView v) {
-        MangaLibraryUpdateFragment.create(v.getLibraryEntry()).show(getChildFragmentManager(),
-                MangaLibraryUpdateFragment.TAG);
+        MangaLibraryUpdateFragment.create(v.getLibraryEntry().getId()).show(
+                getChildFragmentManager(), MangaLibraryUpdateFragment.TAG);
     }
 
     @Override

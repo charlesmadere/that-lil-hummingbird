@@ -33,14 +33,12 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         ModifyReadingStatusSpinner.OnItemSelectedListener {
 
     public static final String TAG = "MangaLibraryUpdateFragment";
-    private static final String KEY_LIBRARY_ENTRY = "LibraryEntry";
+    private static final String KEY_LIBRARY_ENTRY_ID = "LibraryEntryId";
     private static final String KEY_LIBRARY_UPDATE = "LibraryUpdate";
-    private static final String KEY_MANGA_DIGEST = "MangaDigest";
 
     private Listener mListener;
-    private MangaDigest mMangaDigest;
-    private MangaLibraryEntry mLibraryEntry;
     private MangaLibraryUpdate mLibraryUpdate;
+    private String mLibraryEntryId;
 
     @BindView(R.id.cbReReading)
     CheckBox mReReading;
@@ -73,30 +71,22 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     TextView mTitle;
 
 
-    public static MangaLibraryUpdateFragment create(final MangaDigest mangaDigest) {
-        return create(mangaDigest, null);
+    public static MangaLibraryUpdateFragment create() {
+        return new MangaLibraryUpdateFragment();
     }
 
-    public static MangaLibraryUpdateFragment create(final MangaLibraryEntry libraryEntry) {
-        return create(null, libraryEntry);
-    }
-
-    private static MangaLibraryUpdateFragment create(final MangaDigest mangaDigest,
-            final MangaLibraryEntry libraryEntry) {
+    public static MangaLibraryUpdateFragment create(final String libraryEntryId) {
         final Bundle args = new Bundle(1);
-
-        if (mangaDigest != null) {
-            args.putParcelable(KEY_MANGA_DIGEST, mangaDigest);
-        } else if (libraryEntry != null) {
-            args.putParcelable(KEY_LIBRARY_ENTRY, libraryEntry);
-        } else {
-            throw new IllegalArgumentException("both mangaDigest and libraryEntry can't be null");
-        }
+        args.putString(KEY_LIBRARY_ENTRY_ID, libraryEntryId);
 
         final MangaLibraryUpdateFragment fragment = new MangaLibraryUpdateFragment();
         fragment.setArguments(args);
 
         return fragment;
+    }
+
+    public MangaDigest getDigest() {
+        return ((DigestListener) mListener).getMangaDigest();
     }
 
     @Override
@@ -105,7 +95,11 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     }
 
     public MangaLibraryEntry getLibraryEntry() {
-        return mLibraryEntry;
+        return ((LibraryEntryListener) mListener).getMangaLibraryEntry(mLibraryEntryId);
+    }
+
+    public String getLibraryEntryId() {
+        return mLibraryEntryId;
     }
 
     public MangaLibraryUpdate getLibraryUpdate() {
@@ -116,27 +110,40 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        final MangaDigest digest;
+        final MangaLibraryEntry libraryEntry;
+
+        if (mListener instanceof DigestListener) {
+            digest = getDigest();
+            libraryEntry = null;
+        } else if (mListener instanceof LibraryEntryListener) {
+            digest = null;
+            libraryEntry = getLibraryEntry();
+        } else {
+            throw new IllegalStateException("unknown Listener attached: " + mListener);
+        }
+
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             mLibraryUpdate = savedInstanceState.getParcelable(KEY_LIBRARY_UPDATE);
         }
 
         if (mLibraryUpdate == null) {
-            if (mLibraryEntry == null) {
-                mLibraryUpdate = new MangaLibraryUpdate(mMangaDigest);
+            if (TextUtils.isEmpty(mLibraryEntryId)) {
+                mLibraryUpdate = new MangaLibraryUpdate(digest);
             } else {
-                mLibraryUpdate = new MangaLibraryUpdate(mLibraryEntry);
+                mLibraryUpdate = new MangaLibraryUpdate(libraryEntry);
             }
         }
 
         mTitle.setText(mLibraryUpdate.getMangaTitle());
         mSave.setEnabled(false);
 
-        if (mMangaDigest == null) {
-            mChaptersRead.setForChaptersRead(mLibraryUpdate, mLibraryEntry);
-            mVolumesRead.setForVolumesRead(mLibraryUpdate, mLibraryEntry);
+        if (TextUtils.isEmpty(mLibraryEntryId)) {
+            mChaptersRead.setForChaptersRead(mLibraryUpdate, digest);
+            mVolumesRead.setForVolumesRead(mLibraryUpdate, digest);
         } else {
-            mChaptersRead.setForChaptersRead(mLibraryUpdate, mMangaDigest);
-            mVolumesRead.setForVolumesRead(mLibraryUpdate, mMangaDigest);
+            mChaptersRead.setForChaptersRead(mLibraryUpdate, libraryEntry);
+            mVolumesRead.setForVolumesRead(mLibraryUpdate, libraryEntry);
         }
 
         mModifyPublicPrivateSpinner.setContent(mLibraryUpdate);
@@ -206,8 +213,10 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         super.onCreate(savedInstanceState);
 
         final Bundle args = getArguments();
-        mMangaDigest = args.getParcelable(KEY_MANGA_DIGEST);
-        mLibraryEntry = args.getParcelable(KEY_LIBRARY_ENTRY);
+
+        if (args != null && !args.isEmpty()) {
+            mLibraryEntryId = args.getString(KEY_LIBRARY_ENTRY_ID);
+        }
     }
 
     @Override
@@ -283,7 +292,15 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     }
 
 
-    public interface Listener {
+    public interface DigestListener extends Listener {
+        MangaDigest getMangaDigest();
+    }
+
+    public interface LibraryEntryListener extends Listener {
+        MangaLibraryEntry getMangaLibraryEntry(final String libraryEntryId);
+    }
+
+    private interface Listener {
         void onUpdateLibraryEntry();
     }
 
