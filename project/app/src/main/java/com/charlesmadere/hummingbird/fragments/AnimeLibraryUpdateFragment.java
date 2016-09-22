@@ -107,21 +107,19 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
+            mLibraryUpdate = savedInstanceState.getParcelable(KEY_LIBRARY_UPDATE);
+        }
+
         final AnimeDigest digest;
         final AnimeLibraryEntry libraryEntry;
 
-        if (mListener instanceof LibraryEntryListener) {
-            digest = null;
-            libraryEntry = getLibraryEntry();
-        } else if (mListener instanceof DigestListener) {
+        if (TextUtils.isEmpty(mLibraryEntryId)) {
             digest = getDigest();
             libraryEntry = null;
         } else {
-            throw new IllegalStateException("unknown Listener attached: " + mListener);
-        }
-
-        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            mLibraryUpdate = savedInstanceState.getParcelable(KEY_LIBRARY_UPDATE);
+            digest = null;
+            libraryEntry = getLibraryEntry();
         }
 
         if (mLibraryUpdate == null) {
