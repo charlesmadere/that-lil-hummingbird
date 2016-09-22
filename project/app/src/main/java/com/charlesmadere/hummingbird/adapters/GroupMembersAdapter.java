@@ -11,6 +11,16 @@ public class GroupMembersAdapter extends BasePaginationAdapter<GroupMember> {
 
     public GroupMembersAdapter(final Context context) {
         super(context);
+        setHasStableIds(true);
+    }
+
+    @Override
+    public long getItemId(final int position) {
+        if (isPaginating() && position == getItemCount() - 1) {
+            return Long.MIN_VALUE;
+        } else {
+            return getItem(position).hashCode();
+        }
     }
 
     @Override

@@ -13,6 +13,15 @@ public class UserAnimeReviewsAdapter extends BasePaginationAdapter<AnimeReview> 
     }
 
     @Override
+    public long getItemId(final int position) {
+        if (isPaginating() && position == getItemCount() - 1) {
+            return Long.MIN_VALUE;
+        } else {
+            return getItem(position).hashCode();
+        }
+    }
+
+    @Override
     public int getItemViewTypeForPosition(final int position) {
         return R.layout.item_user_anime_review;
     }
