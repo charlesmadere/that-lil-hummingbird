@@ -222,7 +222,7 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
 
         if (fragment == null) {
             fragment = (MangaLibraryUpdateFragment) fragmentManager.findFragmentByTag(EDIT_TAG);
-            final String libraryEntryId = fragment.getLibraryEntry().getId();
+            final String libraryEntryId = fragment.getLibraryEntryId();
             final MangaLibraryUpdate libraryUpdate = fragment.getLibraryUpdate();
             Api.updateMangaLibraryEntry(libraryEntryId, libraryUpdate, new EditLibraryEntryListener(this));
         } else {
