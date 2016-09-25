@@ -11,6 +11,7 @@ public class UsersAdapter extends BasePaginationAdapter<User> {
 
     public UsersAdapter(final Context context) {
         super(context);
+        setHasStableIds(true);
     }
 
     @Override
