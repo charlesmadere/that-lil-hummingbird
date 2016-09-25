@@ -47,6 +47,17 @@
                 tools:visibility="visible"
                 style="@style/CommentTextView.OP.Limited" />
         </RelativeLayout>
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:gravity="center"
+            android:id="@+id/tvShowMoreReplies"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/root_padding"
+            android:textColor="?attr/colorAccent"
+            android:textSize="@dimen/text_small"
+            android:visibility="gone"
+            tools:text="Show 30 more replies"
+            tools:visibility="visible" />
         <LinearLayout
             android:divider="?android:attr/listDivider"
             android:id="@+id/llReplies"

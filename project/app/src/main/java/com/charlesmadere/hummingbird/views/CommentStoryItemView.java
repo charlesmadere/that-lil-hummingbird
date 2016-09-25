@@ -21,6 +21,7 @@ import com.charlesmadere.hummingbird.models.ReplySubstory;
 import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -30,6 +31,7 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
         View.OnClickListener {
 
     private CommentStory mCommentStory;
+    private NumberFormat mNumberFormat;
 
     @BindView(R.id.avatarView)
     AvatarView mAvatar;
@@ -60,6 +62,9 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
 
     @BindView(R.id.tvNsfwContent)
     TextView mNsfwContent;
+
+    @BindView(R.id.tvShowMoreReplies)
+    TextView mShowMoreReplies;
 
     @BindView(R.id.tvTimeAgo)
     TextView mTimeAgo;
@@ -120,6 +125,7 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
         super.onFinishInflate();
         ButterKnife.bind(this);
         setOnClickListener(this);
+        mNumberFormat = NumberFormat.getInstance();
     }
 
     @Override
@@ -141,10 +147,19 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
             mComment.setVisibility(VISIBLE);
 
             if (content.hasSubstoryIds()) {
+                if (content.getSubstoryCount() > 2) {
+                    final int moreReplies = content.getSubstoryCount() - 2;
+                    mShowMoreReplies.setText(getResources().getQuantityString(
+                            R.plurals.show_x_more_replies, moreReplies,
+                            mNumberFormat.format(moreReplies)));
+                    mShowMoreReplies.setVisibility(VISIBLE);
+                } else {
+                    mShowMoreReplies.setVisibility(GONE);
+                }
+
                 final ArrayList<AbsSubstory> substories = mCommentStory.getSubstories();
                 setReplyView(mReplyZero, substories, 1);
                 setReplyView(mReplyOne, substories, 2);
-
                 mReplies.setVisibility(VISIBLE);
             } else {
                 mReplies.setVisibility(GONE);
