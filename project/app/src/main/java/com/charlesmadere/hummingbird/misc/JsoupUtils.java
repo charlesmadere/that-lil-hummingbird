@@ -107,11 +107,16 @@ public final class JsoupUtils {
 
         for (final Element img : imgs) {
             final String src = img.attr("src");
+            final String alt = img.attr("alt");
 
             stripAttributes(img);
             stripChildren(img);
 
             img.attr("href", src);
+
+            if (!TextUtils.isEmpty(alt) && TextUtils.isEmpty(img.html())) {
+                img.html(alt);
+            }
         }
     }
 
