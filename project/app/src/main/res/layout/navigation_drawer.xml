@@ -60,7 +60,7 @@
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
                 android:id="@+id/ndivFeed"
                 android:layout_below="@id/rrlHeader"
-                app:entry="news_feed"
+                app:entry="activity_feed"
                 style="@style/NavigationDrawerItemView" />
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
                 android:id="@+id/ndivAnimeLibrary"

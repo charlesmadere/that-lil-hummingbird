@@ -7,12 +7,20 @@ import android.os.Parcelable;
 import android.support.annotation.StringRes;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.ActivityFeedActivity;
 import com.charlesmadere.hummingbird.activities.CurrentUserAnimeLibraryActivity;
 import com.charlesmadere.hummingbird.activities.CurrentUserMangaLibraryActivity;
-import com.charlesmadere.hummingbird.activities.NewsFeedActivity;
 import com.google.gson.annotations.SerializedName;
 
 public enum LaunchScreen implements Parcelable {
+
+    @SerializedName("activity_feed")
+    ACTIVITY_FEED(R.string.activity_feed) {
+        @Override
+        Intent createIntent(final Context context) {
+            return ActivityFeedActivity.getLaunchIntent(context);
+        }
+    },
 
     @SerializedName("anime_library")
     ANIME_LIBRARY(R.string.anime_library) {
@@ -27,14 +35,6 @@ public enum LaunchScreen implements Parcelable {
         @Override
         Intent createIntent(final Context context) {
             return CurrentUserMangaLibraryActivity.getLaunchIntent(context);
-        }
-    },
-
-    @SerializedName("news_feed")
-    NEWS_FEED(R.string.news_feed) {
-        @Override
-        Intent createIntent(final Context context) {
-            return NewsFeedActivity.getLaunchIntent(context);
         }
     };
 

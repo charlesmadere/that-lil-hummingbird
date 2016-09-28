@@ -15,6 +15,12 @@
         android:theme="@style/HummingbirdTheme_Splash">
 
         <activity
+            android:label="@string/activity_feed"
+            android:launchMode="singleTop"
+            android:name=".activities.ActivityFeedActivity"
+            android:theme="@style/HummingbirdTheme.WithDrawer" />
+
+        <activity
             android:label=""
             android:name=".activities.AnimeActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer" />
@@ -134,12 +140,6 @@
         <activity
             android:label=""
             android:name=".activities.MediaStoryActivity"
-            android:theme="@style/HummingbirdTheme.WithDrawer" />
-
-        <activity
-            android:label="@string/news_feed"
-            android:launchMode="singleTop"
-            android:name=".activities.NewsFeedActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
         <activity

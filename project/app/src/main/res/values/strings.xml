@@ -3,6 +3,7 @@
 
     <string name="about_x">About %1$s</string>
     <string name="account">Account</string>
+    <string name="activity_feed">Activity Feed</string>
     <string name="add_to_library">Add to Library</string>
     <string name="added_to_library">Added to library</string>
     <string name="admin">Admin</string>
@@ -207,7 +208,6 @@
     <string name="must_be_on_wifi">Must be on wifi</string>
     <string name="my_anime_library">My Anime Library</string>
     <string name="my_manga_library">My Manga Library</string>
-    <string name="news_feed">News Feed</string>
     <string name="night">Night</string>
     <string name="no_anime_quotes">No anime quotes</string>
     <string name="no_anime_reviews">No anime reviews</string>

@@ -120,7 +120,7 @@ public class ThatLilHummingbird extends Application {
             Preferences.eraseAll();
         }
 
-        if (previousVersion == null || previousVersion < 29) {
+        if (previousVersion == null || previousVersion < 50) {
             Preferences.General.DefaultLaunchScreen.delete();
         }
     }

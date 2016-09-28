@@ -72,7 +72,7 @@ public final class Preferences {
 
         static {
             ShowNsfwContent = new BooleanPreference(TAG, "ShowNsfwContent", Boolean.FALSE);
-            DefaultLaunchScreen = new GsonPreference<>(TAG, "DefaultLaunchScreen", LaunchScreen.class, LaunchScreen.NEWS_FEED);
+            DefaultLaunchScreen = new GsonPreference<>(TAG, "DefaultLaunchScreen", LaunchScreen.class, LaunchScreen.ACTIVITY_FEED);
             DefaultLibrarySort = new GsonPreference<>(TAG, "DefaultLibrarySort", LibrarySort.class, LibrarySort.DATE);
             Theme = new GsonPreference<>(TAG, "NightMode", NightMode.class, NightMode.getDefault());
             TitleLanguage = new GsonPreference<>(TAG, "TitleLanguage", TitleType.class, TitleType.ENGLISH);

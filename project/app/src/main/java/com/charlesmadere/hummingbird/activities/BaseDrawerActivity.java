@@ -78,6 +78,10 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
         Intent intent = null;
 
         switch (v.getEntry()) {
+            case ACTIVITY_FEED:
+                intent = ActivityFeedActivity.getLaunchIntent(this);
+                break;
+
             case ANIME_LIBRARY:
                 intent = CurrentUserAnimeLibraryActivity.getLaunchIntent(this);
                 break;
@@ -88,10 +92,6 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
 
             case MANGA_LIBRARY:
                 intent = CurrentUserMangaLibraryActivity.getLaunchIntent(this);
-                break;
-
-            case NEWS_FEED:
-                intent = NewsFeedActivity.getLaunchIntent(this);
                 break;
 
             case NOTIFICATIONS:

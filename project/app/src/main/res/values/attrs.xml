@@ -41,10 +41,10 @@
 
     <declare-styleable name="NavigationDrawerItemView">
         <attr name="entry" format="enum">
-            <enum name="anime_library" value="0" />
-            <enum name="app_news" value="1" />
-            <enum name="manga_library" value="2" />
-            <enum name="news_feed" value="3" />
+            <enum name="activity_feed" value="0" />
+            <enum name="anime_library" value="1" />
+            <enum name="app_news" value="2" />
+            <enum name="manga_library" value="3" />
             <enum name="notifications" value="4" />
             <enum name="settings" value="5" />
         </attr>

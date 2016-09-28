@@ -18,9 +18,9 @@ import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 
-public class NewsFeedActivity extends BaseUserActivity {
+public class ActivityFeedActivity extends BaseUserActivity {
 
-    private static final String TAG = "NewsFeedActivity";
+    private static final String TAG = "ActivityFeedActivity";
 
 
     public static Intent getLaunchIntent(final Context context) {
@@ -28,9 +28,9 @@ public class NewsFeedActivity extends BaseUserActivity {
     }
 
     public static Intent getLaunchIntent(final Context context, @Nullable final Integer initialTab) {
-        final Intent intent = createDrawerActivityIntent(context, NewsFeedActivity.class);
+        final Intent intent = createDrawerActivityIntent(context, ActivityFeedActivity.class);
 
-        if (Preferences.General.DefaultLaunchScreen.get() == LaunchScreen.NEWS_FEED) {
+        if (Preferences.General.DefaultLaunchScreen.get() == LaunchScreen.ACTIVITY_FEED) {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
@@ -49,7 +49,7 @@ public class NewsFeedActivity extends BaseUserActivity {
 
     @Override
     protected NavigationDrawerItemView.Entry getSelectedNavigationDrawerItemViewEntry() {
-        return NavigationDrawerItemView.Entry.NEWS_FEED;
+        return NavigationDrawerItemView.Entry.ACTIVITY_FEED;
     }
 
     @Override
