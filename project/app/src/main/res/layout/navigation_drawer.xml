@@ -28,6 +28,7 @@
                     app:overlayImage="@drawable/image_overlay_bottom" />
                 <com.charlesmadere.hummingbird.views.TypefaceTextView
                     android:ellipsize="end"
+                    android:gravity="center_vertical"
                     android:id="@+id/tvUsername"
                     android:layout_alignParentBottom="true"
                     android:layout_height="wrap_content"
