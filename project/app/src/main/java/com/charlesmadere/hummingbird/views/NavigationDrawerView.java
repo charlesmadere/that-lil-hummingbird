@@ -153,9 +153,10 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout implements
     }
 
     private void refreshImportantNewsBadge() {
-        final NavigationDrawerItemView appNewsView = getNavigationDrawerItemView(Entry.APP_NEWS);
-        final AppNewsStatus appNewsStatus = Preferences.Misc.AppNewsAvailability.get();
-        appNewsView.setActivated(appNewsStatus != null && appNewsStatus.isImportantNewsAvailable());
+        // TODO
+//        final NavigationDrawerItemView appNewsView = getNavigationDrawerItemView(Entry.APP_NEWS);
+//        final AppNewsStatus appNewsStatus = Preferences.Misc.AppNewsAvailability.get();
+//        appNewsView.setActivated(appNewsStatus != null && appNewsStatus.isImportantNewsAvailable());
     }
 
     public void setOnNavigationDrawerItemViewClickListener(

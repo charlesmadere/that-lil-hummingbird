@@ -63,8 +63,13 @@
                 app:entry="activity_feed"
                 style="@style/NavigationDrawerItemView" />
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
-                android:id="@+id/ndivAnimeLibrary"
+                android:id="@+id/ndivProfile"
                 android:layout_below="@id/ndivFeed"
+                app:entry="profile"
+                style="@style/NavigationDrawerItemView" />
+            <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
+                android:id="@+id/ndivAnimeLibrary"
+                android:layout_below="@id/ndivProfile"
                 app:entry="anime_library"
                 style="@style/NavigationDrawerItemView" />
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
@@ -82,27 +87,34 @@
                 android:layout_below="@id/ndivNotifications"
                 app:entry="settings"
                 style="@style/NavigationDrawerItemView" />
-            <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
-                android:id="@+id/ndivAppNews"
-                android:layout_below="@id/ndivSettings"
-                android:layout_marginBottom="@dimen/root_padding"
-                app:entry="app_news"
-                style="@style/NavigationDrawerItemView" />
             <FrameLayout
                 android:layout_alignParentBottom="true"
-                android:layout_below="@id/ndivAppNews"
+                android:layout_below="@id/ndivSettings"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent">
-                <View
+                <FrameLayout
                     android:background="@color/overlay"
-                    android:layout_gravity="bottom"
-                    android:layout_height="@dimen/root_padding_quadruple"
-                    android:layout_width="match_parent" />
+                    android:layout_gravity="bottom|start"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:paddingEnd="@dimen/root_padding"
+                    android:paddingStart="@dimen/root_padding">
+                    <com.charlesmadere.hummingbird.views.AppNewsTextView
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:gravity="center_vertical"
+                        android:id="@+id/appNewsTextView"
+                        android:layout_gravity="center_vertical"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:minHeight="@dimen/list_item_height"
+                        android:text="@string/app_news"
+                        android:textColor="@color/white" />
+                </FrameLayout>
                 <ImageView
                     android:adjustViewBounds="true"
                     android:layout_gravity="bottom|end"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/root_padding_double"
+                    android:layout_margin="@dimen/root_padding_half"
                     android:layout_width="wrap_content"
                     android:src="@drawable/atsuka_kneeling"
                     tools:ignore="ContentDescription" />

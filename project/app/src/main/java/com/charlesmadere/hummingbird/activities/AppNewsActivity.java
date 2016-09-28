@@ -21,7 +21,6 @@ import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.AppNewsItemView;
 import com.charlesmadere.hummingbird.views.DividerItemDecoration;
-import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
 
 import java.lang.ref.WeakReference;
@@ -67,11 +66,6 @@ public class AppNewsActivity extends BaseDrawerActivity implements AppNewsItemVi
     @Override
     public String[] getObjectCacheKeys() {
         return new String[] { getActivityName() };
-    }
-
-    @Override
-    protected NavigationDrawerItemView.Entry getSelectedNavigationDrawerItemViewEntry() {
-        return NavigationDrawerItemView.Entry.APP_NEWS;
     }
 
     @Override

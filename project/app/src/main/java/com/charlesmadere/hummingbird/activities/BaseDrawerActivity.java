@@ -86,10 +86,6 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
                 intent = CurrentUserAnimeLibraryActivity.getLaunchIntent(this);
                 break;
 
-            case APP_NEWS:
-                intent = AppNewsActivity.getLaunchIntent(this);
-                break;
-
             case MANGA_LIBRARY:
                 intent = CurrentUserMangaLibraryActivity.getLaunchIntent(this);
                 break;

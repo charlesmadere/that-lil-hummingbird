@@ -106,9 +106,9 @@ public class NavigationDrawerItemView extends AppCompatTextView {
     public enum Entry {
         ACTIVITY_FEED(R.drawable.ic_feed, R.string.activity_feed),
         ANIME_LIBRARY(R.drawable.ic_anime_library, R.string.anime_library),
-        APP_NEWS(R.drawable.ic_new_releases, R.string.app_news),
         MANGA_LIBRARY(R.drawable.ic_manga_library, R.string.manga_library),
         NOTIFICATIONS(R.drawable.ic_notifications, R.string.notifications),
+        PROFILE(R.drawable.ic_person, R.string.profile),
         SETTINGS(R.drawable.ic_settings, R.string.settings);
 
         @DrawableRes
