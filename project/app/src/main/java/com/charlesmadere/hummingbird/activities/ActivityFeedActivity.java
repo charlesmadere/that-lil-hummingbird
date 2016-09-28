@@ -60,13 +60,13 @@ public class ActivityFeedActivity extends BaseUserActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_feed);
+        setContentView(R.layout.activity_feed_activity);
         setAdapter(new NewsFeedFragmentAdapter(this));
     }
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_news_feed, menu);
+        getMenuInflater().inflate(R.menu.activity_feed_activity, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
