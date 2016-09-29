@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.models.UserDigest;
-import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 
 public class CurrentUserActivity extends BaseUserActivity {
 
@@ -34,11 +33,6 @@ public class CurrentUserActivity extends BaseUserActivity {
     @Override
     public String getActivityName() {
         return TAG;
-    }
-
-    @Override
-    protected NavigationDrawerItemView.Entry getSelectedNavigationDrawerItemViewEntry() {
-        return NavigationDrawerItemView.Entry.PROFILE;
     }
 
     @Override

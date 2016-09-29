@@ -58,13 +58,8 @@
                 </FrameLayout>
             </com.charlesmadere.hummingbird.views.RatioRelativeLayout>
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
-                android:id="@+id/ndivProfile"
-                android:layout_below="@id/rrlHeader"
-                app:entry="profile"
-                style="@style/NavigationDrawerItemView" />
-            <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
                 android:id="@+id/ndivFeed"
-                android:layout_below="@id/ndivProfile"
+                android:layout_below="@id/rrlHeader"
                 app:entry="activity_feed"
                 style="@style/NavigationDrawerItemView" />
             <com.charlesmadere.hummingbird.views.NavigationDrawerItemView

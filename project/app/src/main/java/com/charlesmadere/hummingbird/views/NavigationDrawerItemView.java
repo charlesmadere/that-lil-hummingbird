@@ -99,8 +99,7 @@ public class NavigationDrawerItemView extends AppCompatTextView {
         ACTIVITY_FEED(R.drawable.ic_feed, R.string.activity_feed),
         ANIME_LIBRARY(R.drawable.ic_anime_library, R.string.anime_library),
         MANGA_LIBRARY(R.drawable.ic_manga_library, R.string.manga_library),
-        NOTIFICATIONS(R.drawable.ic_notifications, R.string.notifications),
-        PROFILE(R.drawable.ic_person, R.string.profile);
+        NOTIFICATIONS(R.drawable.ic_notifications, R.string.notifications);
 
         @DrawableRes
         private final int mIconResId;
