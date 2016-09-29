@@ -55,6 +55,9 @@ public class AppNewsDrawerTextView extends AppCompatTextView implements
         }
 
         setTypeface(TypefaceStore.get(TypefaceEntry.OPEN_SANS_SEMIBOLD));
+
+        Preferences.Misc.AppNewsAvailability.addListener(this);
+        refreshImportantNewsBadge();
     }
 
     @Override
