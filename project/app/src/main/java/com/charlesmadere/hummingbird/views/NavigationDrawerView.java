@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.Nullable;
@@ -12,8 +13,11 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.activities.AppNewsActivity;
+import com.charlesmadere.hummingbird.activities.BaseDrawerActivity;
+import com.charlesmadere.hummingbird.activities.CurrentUserActivity;
 import com.charlesmadere.hummingbird.activities.SettingsActivity;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView.Entry;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -25,7 +29,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class NavigationDrawerView extends ScrimInsetsFrameLayout {
+public class NavigationDrawerView extends ScrimInsetsFrameLayout implements
+        AvatarView.OnClickListener {
 
     private NavigationDrawerItemView[] mNavigationDrawerItemViews;
 
@@ -55,6 +60,14 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout {
     public NavigationDrawerView(final Context context, final AttributeSet attrs,
             final int defStyleAttr, final int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+    private void closeDrawer() {
+        final Activity activity = MiscUtils.optActivity(getContext());
+
+        if (activity instanceof BaseDrawerActivity) {
+            ((BaseDrawerActivity) activity).closeDrawer();
+        }
     }
 
     private void findAllNavigationDrawerItemViewChildren() {
@@ -96,8 +109,18 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout {
 
     @OnClick(R.id.appNewsDrawerTextView)
     void onAppNewsDrawerTextViewClick() {
+        closeDrawer();
+
         final Context context = getContext();
         context.startActivity(AppNewsActivity.getLaunchIntent(context));
+    }
+
+    @Override
+    public void onClick(final AvatarView v) {
+        closeDrawer();
+
+        final Context context = getContext();
+        context.startActivity(CurrentUserActivity.getLaunchIntent(context));
     }
 
     @Override
@@ -113,6 +136,7 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout {
 
         final User user = CurrentUser.get().getUser();
         mAvatar.setContent(user);
+        mAvatar.setOnClickListener(this);
         mCoverImage.setImageURI(user.getCoverImage());
         mUsername.setText(user.getId());
 
@@ -123,6 +147,8 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout {
 
     @OnClick(R.id.ibSettings)
     void onSettingsClick() {
+        closeDrawer();
+
         final Context context = getContext();
         context.startActivity(SettingsActivity.getLaunchIntent(context));
     }

@@ -26,6 +26,7 @@ import com.facebook.imagepipeline.image.ImageInfo;
 public class AvatarView extends SimpleDraweeView implements AdapterView<User>,
         View.OnClickListener {
 
+    private OnClickListener mClickListener;
     private User mUser;
 
 
@@ -76,7 +77,10 @@ public class AvatarView extends SimpleDraweeView implements AdapterView<User>,
 
     @Override
     public void onClick(final View view) {
-        if (mUser == null) {
+        if (mClickListener != null) {
+            mClickListener.onClick(this);
+            return;
+        } else if (mUser == null) {
             return;
         }
 
@@ -132,6 +136,15 @@ public class AvatarView extends SimpleDraweeView implements AdapterView<User>,
         } else {
             setImageURI((String) null);
         }
+    }
+
+    public void setOnClickListener(@Nullable final OnClickListener l) {
+        mClickListener = l;
+    }
+
+
+    public interface OnClickListener {
+        void onClick(final AvatarView v);
     }
 
 }
