@@ -60,12 +60,6 @@ public class NavigationDrawerItemView extends AppCompatTextView {
         setTextAndIcon();
     }
 
-    @Override
-    public void setActivated(final boolean activated) {
-        super.setActivated(activated);
-        setTextAndIcon();
-    }
-
     public void setOnClickListener(@Nullable final OnClickListener l) {
         if (l == null) {
             setClickable(false);
@@ -97,9 +91,7 @@ public class NavigationDrawerItemView extends AppCompatTextView {
 
         setTextColor(color);
         setText(mEntry.getTextResId());
-
-        final int badge = isActivated() ? R.drawable.badge : 0;
-        setCompoundDrawablesRelativeWithIntrinsicBounds(mEntry.getIconResId(), 0, badge, 0);
+        setCompoundDrawablesRelativeWithIntrinsicBounds(mEntry.getIconResId(), 0, 0, 0);
     }
 
 
@@ -108,8 +100,7 @@ public class NavigationDrawerItemView extends AppCompatTextView {
         ANIME_LIBRARY(R.drawable.ic_anime_library, R.string.anime_library),
         MANGA_LIBRARY(R.drawable.ic_manga_library, R.string.manga_library),
         NOTIFICATIONS(R.drawable.ic_notifications, R.string.notifications),
-        PROFILE(R.drawable.ic_person, R.string.profile),
-        SETTINGS(R.drawable.ic_settings, R.string.settings);
+        PROFILE(R.drawable.ic_person, R.string.profile);
 
         @DrawableRes
         private final int mIconResId;

@@ -58,6 +58,12 @@
             android:windowSoftInputMode="adjustResize|stateUnchanged" />
 
         <activity
+            android:label=""
+            android:launchMode="singleTop"
+            android:name=".activities.CurrentUserActivity"
+            android:theme="@style/HummingbirdTheme.WithDrawer" />
+
+        <activity
             android:label="@string/my_anime_library"
             android:launchMode="singleTop"
             android:name=".activities.CurrentUserAnimeLibraryActivity"

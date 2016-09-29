@@ -87,7 +87,7 @@ public class UserProfileFragment extends BaseUserFragment implements
 
     private void refreshUserDigest() {
         mRefreshLayout.setRefreshing(true);
-        Api.getUserDigest(getUserDigest().getUserId(), new GetUserDigestListener(this));
+        Api.getUserDigest(getUserId(), new GetUserDigestListener(this));
     }
 
     @Override

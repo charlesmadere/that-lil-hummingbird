@@ -11,11 +11,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.AppNewsActivity;
+import com.charlesmadere.hummingbird.activities.SettingsActivity;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
-import com.charlesmadere.hummingbird.models.AppNewsStatus;
 import com.charlesmadere.hummingbird.models.User;
-import com.charlesmadere.hummingbird.preferences.Preference;
-import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView.Entry;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -24,9 +23,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class NavigationDrawerView extends ScrimInsetsFrameLayout implements
-        Preference.OnPreferenceChangeListener<AppNewsStatus> {
+public class NavigationDrawerView extends ScrimInsetsFrameLayout {
 
     private NavigationDrawerItemView[] mNavigationDrawerItemViews;
 
@@ -95,27 +94,10 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout implements
         throw new IllegalStateException(entry + " is missing from the navigation drawer");
     }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-
-        if (isInEditMode()) {
-            return;
-        }
-
-        Preferences.Misc.AppNewsAvailability.addListener(this);
-        refreshImportantNewsBadge();
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-
-        if (isInEditMode()) {
-            return;
-        }
-
-        Preferences.Misc.AppNewsAvailability.removeListener(this);
+    @OnClick(R.id.appNewsDrawerTextView)
+    void onAppNewsDrawerTextViewClick() {
+        final Context context = getContext();
+        context.startActivity(AppNewsActivity.getLaunchIntent(context));
     }
 
     @Override
@@ -137,26 +119,17 @@ public class NavigationDrawerView extends ScrimInsetsFrameLayout implements
         if (user.isPro()) {
             mProBadge.setVisibility(VISIBLE);
         }
-
-        Preferences.Misc.AppNewsAvailability.addListener(this);
-        refreshImportantNewsBadge();
     }
 
-    @Override
-    public void onPreferenceChange(final Preference<AppNewsStatus> preference) {
-        refreshImportantNewsBadge();
+    @OnClick(R.id.ibSettings)
+    void onSettingsClick() {
+        final Context context = getContext();
+        context.startActivity(SettingsActivity.getLaunchIntent(context));
     }
 
     @Override
     public boolean onTouchEvent(final MotionEvent event) {
         return true;
-    }
-
-    private void refreshImportantNewsBadge() {
-        // TODO
-//        final NavigationDrawerItemView appNewsView = getNavigationDrawerItemView(Entry.APP_NEWS);
-//        final AppNewsStatus appNewsStatus = Preferences.Misc.AppNewsAvailability.get();
-//        appNewsView.setActivated(appNewsStatus != null && appNewsStatus.isImportantNewsAvailable());
     }
 
     public void setOnNavigationDrawerItemViewClickListener(

@@ -50,7 +50,7 @@ public class AppNewsActivity extends BaseDrawerActivity implements AppNewsItemVi
 
 
     public static Intent getLaunchIntent(final Context context) {
-        return createDrawerActivityIntent(context, AppNewsActivity.class);
+        return new Intent(context, AppNewsActivity.class);
     }
 
     private void fetchAppNews() {
@@ -66,6 +66,11 @@ public class AppNewsActivity extends BaseDrawerActivity implements AppNewsItemVi
     @Override
     public String[] getObjectCacheKeys() {
         return new String[] { getActivityName() };
+    }
+
+    @Override
+    protected boolean isUpNavigationEnabled() {
+        return true;
     }
 
     @Override

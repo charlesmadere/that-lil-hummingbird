@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.GroupsAdapter;
-import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
@@ -25,16 +24,14 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
-public class UserGroupsFragment extends BaseFragment implements ObjectCache.KeyProvider,
+public class UserGroupsFragment extends BaseUserFragment implements ObjectCache.KeyProvider,
         RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "UserGroupsFragment";
-    private static final String KEY_USERNAME = "Username";
 
     private Feed mFeed;
     private GroupsAdapter mAdapter;
     private RecyclerViewPaginator mPaginator;
-    private String mUsername;
 
     @BindView(R.id.llEmpty)
     LinearLayout mEmpty;
@@ -50,22 +47,12 @@ public class UserGroupsFragment extends BaseFragment implements ObjectCache.KeyP
 
 
     public static UserGroupsFragment create() {
-        return create(CurrentUser.get().getUserId());
-    }
-
-    public static UserGroupsFragment create(final String username) {
-        final Bundle args = new Bundle(1);
-        args.putString(KEY_USERNAME, username);
-
-        final UserGroupsFragment fragment = new UserGroupsFragment();
-        fragment.setArguments(args);
-
-        return fragment;
+        return new UserGroupsFragment();
     }
 
     private void fetchUserGroups() {
         mRefreshLayout.setRefreshing(true);
-        Api.getUserGroups(mUsername, new GetUserGroupsListener(this));
+        Api.getUserGroups(getUserId(), new GetUserGroupsListener(this));
     }
 
     @Override
@@ -75,7 +62,7 @@ public class UserGroupsFragment extends BaseFragment implements ObjectCache.KeyP
 
     @Override
     public String[] getObjectCacheKeys() {
-        return new String[] { getFragmentName(), mUsername};
+        return new String[] { getFragmentName(), getUserId()};
     }
 
     @Override
@@ -104,14 +91,6 @@ public class UserGroupsFragment extends BaseFragment implements ObjectCache.KeyP
     }
 
     @Override
-    public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        final Bundle args = getArguments();
-        mUsername = args.getString(KEY_USERNAME);
-    }
-
-    @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -135,7 +114,7 @@ public class UserGroupsFragment extends BaseFragment implements ObjectCache.KeyP
     @Override
     public void paginate() {
         mAdapter.setPaginating(true);
-        Api.getUserGroups(mUsername, mFeed, new PaginateUserGroupsListener(this));
+        Api.getUserGroups(getUserId(), mFeed, new PaginateUserGroupsListener(this));
     }
 
     private void paginationComplete() {

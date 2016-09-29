@@ -5,64 +5,30 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.adapters.UserFragmentAdapter;
-import com.charlesmadere.hummingbird.fragments.FeedPostFragment;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
-import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.misc.ShareUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
-import com.charlesmadere.hummingbird.models.FeedPost;
-import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
-import com.charlesmadere.hummingbird.views.AvatarView;
-import com.charlesmadere.hummingbird.views.ParallaxCoverImage;
-import com.charlesmadere.hummingbird.views.SimpleProgressView;
 
 import java.lang.ref.WeakReference;
 
-import butterknife.BindView;
-
-public class UserActivity extends BaseUserActivity implements ObjectCache.KeyProvider,
-        PaletteUtils.Listener {
+public class UserActivity extends BaseUserActivity implements ObjectCache.KeyProvider {
 
     private static final String TAG = "UserActivity";
     private static final String CNAME = UserActivity.class.getCanonicalName();
     private static final String EXTRA_USERNAME = CNAME + ".Username";
 
     private String mUsername;
-    private UiColorSet mUiColorSet;
     private UserDigest mUserDigest;
-
-    @BindView(R.id.appBarLayout)
-    AppBarLayout mAppBarLayout;
-
-    @BindView(R.id.avatarView)
-    AvatarView mAvatar;
-
-    @BindView(R.id.collapsingToolbarLayout)
-    CollapsingToolbarLayout mCollapsingToolbarLayout;
-
-    @BindView(R.id.parallaxCoverImage)
-    ParallaxCoverImage mCoverImage;
-
-    @BindView(R.id.simpleProgressView)
-    SimpleProgressView mSimpleProgressView;
-
-    @BindView(R.id.proBadge)
-    View mProBadge;
 
 
     public static Intent getLaunchIntent(final Context context, final User user) {
@@ -76,7 +42,7 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
     public static Intent getLaunchIntent(final Context context, final String username,
             @Nullable final Integer initialTab) {
         if (username.equalsIgnoreCase(CurrentUser.get().getUserId())) {
-            return ActivityFeedActivity.getLaunchIntent(context, initialTab);
+            return CurrentUserActivity.getLaunchIntent(context, initialTab);
         } else {
             final Intent intent = new Intent(context, UserActivity.class)
                     .putExtra(EXTRA_USERNAME, username);
@@ -104,19 +70,13 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
         return new String[] { getActivityName(), mUsername };
     }
 
-    @Nullable
     @Override
-    public UiColorSet getUiColorSet() {
-        return mUiColorSet;
+    public UserDigest getUserDigest() {
+        return mUserDigest;
     }
 
     public String getUsername() {
         return mUsername;
-    }
-
-    @Override
-    public UserDigest getUserDigest() {
-        return mUserDigest;
     }
 
     @Override
@@ -127,7 +87,6 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user);
 
         final Intent intent = getIntent();
         mUsername = intent.getStringExtra(EXTRA_USERNAME);
@@ -138,7 +97,7 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
         if (mUserDigest == null) {
             fetchUserDigest();
         } else {
-            showUserDigest(mUserDigest);
+            setUserDigest(mUserDigest);
         }
     }
 
@@ -149,32 +108,11 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
     }
 
     @Override
-    public void onFeedPostSubmit() {
-        final FeedPostFragment fragment = (FeedPostFragment) getSupportFragmentManager()
-                .findFragmentByTag(FeedPostFragment.TAG);
-        final FeedPost post = fragment.getFeedPost(mUsername);
-
-        if (post == null) {
-            return;
-        }
-
-        Api.postToFeed(post, new FeedPostListener(this));
-    }
-
-    @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.miFollow:
             case R.id.miUnfollow:
                 toggleFollowingOfUser();
-                return true;
-
-            case R.id.miAnimeLibrary:
-                startActivity(AnimeLibraryActivity.getLaunchIntent(this, mUsername, mUiColorSet));
-                return true;
-
-            case R.id.miMangaLibrary:
-                startActivity(MangaLibraryActivity.getLaunchIntent(this, mUsername, mUiColorSet));
                 return true;
 
             case R.id.miShare:
@@ -212,13 +150,9 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
     }
 
     @Override
-    public void onUiColorsBuilt(final UiColorSet uiColorSet) {
-        mUiColorSet = uiColorSet;
-    }
-
-    @Override
     public void setUserDigest(final UserDigest userDigest) {
-        showUserDigest(userDigest);
+        super.setUserDigest(userDigest);
+        mUserDigest = userDigest;
     }
 
     private void showError() {
@@ -245,32 +179,6 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
                     }
                 })
                 .show();
-    }
-
-    private void showUserDigest(final UserDigest userDigest) {
-        mUserDigest = userDigest;
-
-        final User user = mUserDigest.getUser();
-
-        if (user.hasCoverImage()) {
-            PaletteUtils.applyParallaxColors(user.getCoverImage(), this, this, mCoverImage,
-                    mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
-        }
-
-        mAvatar.setContent(user);
-
-        if (user.isPro()) {
-            mProBadge.setVisibility(View.VISIBLE);
-        }
-
-        final PagerAdapter adapter = mViewPager.getAdapter();
-
-        if (adapter == null) {
-            setAdapter(new UserFragmentAdapter(this, mUsername));
-        }
-
-        supportInvalidateOptionsMenu();
-        mSimpleProgressView.fadeOut();
     }
 
     private void toggleFollowingOfUser() {
@@ -301,7 +209,7 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
             final UserActivity activity = mActivityReference.get();
 
             if (activity != null && activity.isAlive()) {
-                activity.showUserDigest(userDigest);
+                activity.setUserDigest(userDigest);
             }
         }
     }

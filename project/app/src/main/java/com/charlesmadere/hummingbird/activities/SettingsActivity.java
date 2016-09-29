@@ -27,7 +27,6 @@ import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.CheckablePreferenceView;
 import com.charlesmadere.hummingbird.views.CheckablePreferenceView.OnPreferenceChangeListener;
 import com.charlesmadere.hummingbird.views.HeadBodyItemView;
-import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
@@ -95,7 +94,7 @@ public class SettingsActivity extends BaseDrawerActivity {
 
 
     public static Intent getLaunchIntent(final Context context) {
-        return createDrawerActivityIntent(context, SettingsActivity.class);
+        return new Intent(context, SettingsActivity.class);
     }
 
     @Override
@@ -104,8 +103,8 @@ public class SettingsActivity extends BaseDrawerActivity {
     }
 
     @Override
-    protected NavigationDrawerItemView.Entry getSelectedNavigationDrawerItemViewEntry() {
-        return NavigationDrawerItemView.Entry.SETTINGS;
+    protected boolean isUpNavigationEnabled() {
+        return true;
     }
 
     @Override

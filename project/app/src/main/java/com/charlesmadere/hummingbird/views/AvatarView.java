@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.activities.BaseUserActivity;
 import com.charlesmadere.hummingbird.activities.UserActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
@@ -82,8 +83,8 @@ public class AvatarView extends SimpleDraweeView implements AdapterView<User>,
         final Context context = getContext();
         final Activity activity = MiscUtils.optActivity(context);
 
-        if (activity instanceof UserActivity && mUser.getId().equalsIgnoreCase(
-                ((UserActivity) activity).getUsername())) {
+        if (activity instanceof BaseUserActivity && mUser.getId().equalsIgnoreCase(
+                ((BaseUserActivity) activity).getUsername())) {
             return;
         }
 

@@ -16,6 +16,10 @@ public abstract class BaseUserFragment extends BaseFragment {
         return mListeners.getUserDigest();
     }
 
+    protected String getUserId() {
+        return getUserDigest().getUserId();
+    }
+
     @Override
     public void onAttach(final Context context) {
         super.onAttach(context);
