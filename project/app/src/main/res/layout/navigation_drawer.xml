@@ -89,6 +89,7 @@
                     android:layout_width="match_parent">
                     <com.charlesmadere.hummingbird.views.AppNewsDrawerTextView
                         android:background="?attr/selectableItemBackgroundBorderless"
+                        android:drawablePadding="@dimen/root_padding_half"
                         android:gravity="center_vertical"
                         android:id="@+id/appNewsDrawerTextView"
                         android:layout_gravity="center_vertical|start"
