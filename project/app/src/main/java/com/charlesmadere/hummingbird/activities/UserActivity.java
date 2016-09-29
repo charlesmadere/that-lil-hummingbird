@@ -80,11 +80,6 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
     }
 
     @Override
-    protected boolean isUpNavigationEnabled() {
-        return true;
-    }
-
-    @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

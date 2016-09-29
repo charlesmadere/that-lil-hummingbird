@@ -106,6 +106,11 @@ public abstract class BaseUserActivity extends BaseDrawerActivity implements
     public abstract String getUsername();
 
     @Override
+    protected boolean isUpNavigationEnabled() {
+        return true;
+    }
+
+    @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base_user);
