@@ -113,7 +113,7 @@
                     android:adjustViewBounds="true"
                     android:layout_gravity="bottom|end"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/root_padding_half"
+                    android:layout_margin="@dimen/root_padding"
                     android:layout_width="wrap_content"
                     android:src="@drawable/atsuka_kneeling"
                     tools:ignore="ContentDescription" />
