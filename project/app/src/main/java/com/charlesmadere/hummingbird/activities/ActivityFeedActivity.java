@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -38,6 +39,9 @@ public class ActivityFeedActivity extends BaseDrawerActivity implements ObjectCa
     private FeedAdapter mAdapter;
     private RecyclerViewPaginator mPaginator;
 
+    @BindView(R.id.floatingActionButton)
+    FloatingActionButton mPostToFeed;
+
     @BindView(R.id.llEmpty)
     LinearLayout mEmpty;
 
@@ -65,6 +69,7 @@ public class ActivityFeedActivity extends BaseDrawerActivity implements ObjectCa
     private void fetchFeed() {
         mRefreshLayout.setRefreshing(true);
         Api.getNewsFeed(new GetFeedListener(this));
+        mPostToFeed.hide();
     }
 
     @Override
@@ -168,6 +173,7 @@ public class ActivityFeedActivity extends BaseDrawerActivity implements ObjectCa
         mError.setVisibility(View.GONE);
         mEmpty.setVisibility(View.VISIBLE);
         mRefreshLayout.setRefreshing(false);
+        mPostToFeed.hide();
     }
 
     protected void showError() {
@@ -175,6 +181,7 @@ public class ActivityFeedActivity extends BaseDrawerActivity implements ObjectCa
         mEmpty.setVisibility(View.GONE);
         mError.setVisibility(View.VISIBLE);
         mRefreshLayout.setRefreshing(false);
+        mPostToFeed.hide();
     }
 
     private void showFeed(final Feed feed) {
@@ -185,6 +192,7 @@ public class ActivityFeedActivity extends BaseDrawerActivity implements ObjectCa
         mRecyclerView.setVisibility(View.VISIBLE);
         mPaginator.setEnabled(mFeed.hasCursor());
         mRefreshLayout.setRefreshing(false);
+        mPostToFeed.show();
     }
 
 
