@@ -17,7 +17,6 @@ public class MangaFragmentAdapter extends FragmentStatePagerAdapter {
 
     private final Context mContext;
     private final FragmentPage[] mFragmentPages;
-    private final MangaDigest mMangaDigest;
 
 
     public MangaFragmentAdapter(final FragmentActivity activity, final MangaDigest mangaDigest) {
@@ -28,12 +27,11 @@ public class MangaFragmentAdapter extends FragmentStatePagerAdapter {
             final MangaDigest mangaDigest) {
         super(fm);
         mContext = context;
-        mMangaDigest = mangaDigest;
 
         final ArrayList<FragmentPage> fragmentPages = new ArrayList<>();
         fragmentPages.add(new MangaDetailsFragmentPage());
 
-        if (mMangaDigest.hasCharacters()) {
+        if (mangaDigest.hasCharacters()) {
             fragmentPages.add(new MangaCharactersFragmentPage());
         }
 

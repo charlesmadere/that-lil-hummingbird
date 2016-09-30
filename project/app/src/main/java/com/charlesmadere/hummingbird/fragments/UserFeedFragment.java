@@ -160,17 +160,17 @@ public class UserFeedFragment extends BaseUserFragment implements ObjectCache.Ke
         mAdapter.setPaginating(false);
     }
 
-    protected void showError() {
-        mRecyclerView.setVisibility(View.GONE);
-        mEmpty.setVisibility(View.GONE);
-        mError.setVisibility(View.VISIBLE);
-        mRefreshLayout.setRefreshing(false);
-    }
-
     protected void showEmpty() {
         mRecyclerView.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mEmpty.setVisibility(View.VISIBLE);
+        mRefreshLayout.setRefreshing(false);
+    }
+
+    protected void showError() {
+        mRecyclerView.setVisibility(View.GONE);
+        mEmpty.setVisibility(View.GONE);
+        mError.setVisibility(View.VISIBLE);
         mRefreshLayout.setRefreshing(false);
     }
 

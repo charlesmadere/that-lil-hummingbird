@@ -243,11 +243,6 @@ public class CommentStoryActivity extends BaseDrawerActivity implements CommentF
         mRefreshLayout.setRefreshing(false);
     }
 
-    @Override
-    protected boolean showSearchIcon() {
-        return false;
-    }
-
 
     private static class GetSubstoriesListener implements ApiResponse<Feed> {
         private final WeakReference<CommentStoryActivity> mActivityReference;

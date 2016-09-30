@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:state_selected="true"
-        android:drawable="@drawable/ic_new_releases_orange_24dp" />
+        android:drawable="@drawable/ic_search_orange_24dp" />
     <item
-        android:drawable="@drawable/ic_new_releases_white_24dp" />
+        android:drawable="@drawable/ic_search_white_24dp" />
 </selector>

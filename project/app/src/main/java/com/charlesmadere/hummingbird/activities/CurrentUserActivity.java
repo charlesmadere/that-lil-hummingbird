@@ -74,8 +74,8 @@ public class CurrentUserActivity extends BaseUserActivity {
 
     @Override
     public void setUserDigest(final UserDigest userDigest) {
-        super.setUserDigest(userDigest);
         CurrentUser.set(userDigest);
+        super.setUserDigest(userDigest);
     }
 
 }

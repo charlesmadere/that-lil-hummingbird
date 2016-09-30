@@ -35,12 +35,17 @@ public class AnimeLibraryActivity extends BaseAnimeLibraryActivity {
 
     @Override
     protected AnimeLibraryFragmentAdapter createAdapter() {
-        return new AnimeLibraryFragmentAdapter(this, mUsername, false);
+        return new AnimeLibraryFragmentAdapter(this);
     }
 
     @Override
     public String getActivityName() {
         return TAG;
+    }
+
+    @Override
+    public boolean isEditableLibrary() {
+        return false;
     }
 
     @Override

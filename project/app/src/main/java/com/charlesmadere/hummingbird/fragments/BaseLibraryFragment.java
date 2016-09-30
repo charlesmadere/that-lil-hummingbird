@@ -25,13 +25,8 @@ import butterknife.BindView;
 public abstract class BaseLibraryFragment extends BaseFragment implements ObjectCache.KeyProvider,
         SwipeRefreshLayout.OnRefreshListener {
 
-    protected static final String KEY_EDITABLE_LIBRARY = "EditableLibrary";
-    protected static final String KEY_USERNAME = "Username";
-
-    protected boolean mEditableLibrary;
     protected Feed mFeed;
-    protected Listener mListener;
-    protected String mUsername;
+    protected Listeners mListeners;
 
     @BindView(R.id.llEmpty)
     protected LinearLayout mEmpty;
@@ -58,33 +53,36 @@ public abstract class BaseLibraryFragment extends BaseFragment implements Object
 
     protected abstract BaseAdapter getAdapter();
 
+    protected LibrarySort getLibrarySort() {
+        return mListeners.getLibrarySort();
+    }
+
+    protected String getUsername() {
+        return mListeners.getUsername();
+    }
+
+    protected boolean isEditableLibrary() {
+        return mListeners.isEditableLibrary();
+    }
+
     @Override
     public void onAttach(final Context context) {
         super.onAttach(context);
 
         final Fragment fragment = getParentFragment();
-        if (fragment instanceof Listener) {
-            mListener = (Listener) fragment;
+        if (fragment instanceof Listeners) {
+            mListeners = (Listeners) fragment;
         } else {
             final Activity activity = MiscUtils.optActivity(context);
 
-            if (activity instanceof Listener) {
-                mListener = (Listener) activity;
+            if (activity instanceof Listeners) {
+                mListeners = (Listeners) activity;
             }
         }
 
-        if (mListener == null) {
-            throw new IllegalStateException(getFragmentName() + " must attach to Listener");
+        if (mListeners == null) {
+            throw new IllegalStateException(getFragmentName() + " must attach to Listeners");
         }
-    }
-
-    @Override
-    public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        final Bundle args = getArguments();
-        mUsername = args.getString(KEY_USERNAME);
-        mEditableLibrary = args.getBoolean(KEY_EDITABLE_LIBRARY);
     }
 
     @Override
@@ -139,8 +137,10 @@ public abstract class BaseLibraryFragment extends BaseFragment implements Object
     public abstract void updateLibrarySort();
 
 
-    public interface Listener {
+    public interface Listeners {
         LibrarySort getLibrarySort();
+        String getUsername();
+        boolean isEditableLibrary();
     }
 
 }

@@ -45,8 +45,7 @@
             <enum name="anime_library" value="1" />
             <enum name="manga_library" value="2" />
             <enum name="notifications" value="3" />
-            <enum name="profile" value="4" />
-            <enum name="settings" value="5" />
+            <enum name="search" value="4" />
         </attr>
     </declare-styleable>
 

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.charlesmadere.hummingbird.adapters.AnimeLibraryFragmentAdapter;
-import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.models.LaunchScreen;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
@@ -27,7 +26,7 @@ public class CurrentUserAnimeLibraryActivity extends BaseAnimeLibraryActivity {
 
     @Override
     protected AnimeLibraryFragmentAdapter createAdapter() {
-        return new AnimeLibraryFragmentAdapter(this, CurrentUser.get().getUserId(), true);
+        return new AnimeLibraryFragmentAdapter(this);
     }
 
     @Override
@@ -38,6 +37,11 @@ public class CurrentUserAnimeLibraryActivity extends BaseAnimeLibraryActivity {
     @Override
     protected NavigationDrawerItemView.Entry getSelectedNavigationDrawerItemViewEntry() {
         return NavigationDrawerItemView.Entry.ANIME_LIBRARY;
+    }
+
+    @Override
+    public boolean isEditableLibrary() {
+        return true;
     }
 
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="about">About</string>
     <string name="about_x">About %1$s</string>
     <string name="account">Account</string>
     <string name="activity_feed">Activity Feed</string>

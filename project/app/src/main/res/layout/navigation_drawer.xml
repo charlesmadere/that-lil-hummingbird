@@ -77,10 +77,16 @@
                 android:layout_below="@id/ndivMangaLibrary"
                 app:entry="notifications"
                 style="@style/NavigationDrawerItemView" />
+            <com.charlesmadere.hummingbird.views.NavigationDrawerItemView
+                android:id="@+id/ndivSearch"
+                android:layout_below="@id/ndivNotifications"
+                app:entry="search"
+                style="@style/NavigationDrawerItemView" />
             <FrameLayout
                 android:layout_alignParentBottom="true"
-                android:layout_below="@id/ndivNotifications"
+                android:layout_below="@id/ndivSearch"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/root_padding_quarter"
                 android:layout_width="match_parent">
                 <FrameLayout
                     android:background="@color/overlay"
@@ -114,7 +120,8 @@
                     android:adjustViewBounds="true"
                     android:layout_gravity="bottom|end"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/root_padding"
+                    android:layout_marginBottom="@dimen/root_padding"
+                    android:layout_marginEnd="@dimen/root_padding"
                     android:layout_width="wrap_content"
                     android:src="@drawable/atsuka_kneeling"
                     tools:ignore="ContentDescription" />

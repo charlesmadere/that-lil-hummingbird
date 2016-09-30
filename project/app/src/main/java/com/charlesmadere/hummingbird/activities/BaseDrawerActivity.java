@@ -93,6 +93,10 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
             case NOTIFICATIONS:
                 intent = NotificationsActivity.getLaunchIntent(this);
                 break;
+
+            case SEARCH:
+                intent = SearchActivity.getLaunchIntent(this);
+                break;
         }
 
         if (intent != null) {

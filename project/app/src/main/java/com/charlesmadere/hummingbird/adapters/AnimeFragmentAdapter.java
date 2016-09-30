@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
 
-    private final AnimeDigest mAnimeDigest;
     private final Context mContext;
     private final FragmentPage[] mFragmentPages;
 
@@ -34,30 +33,29 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
             final AnimeDigest animeDigest) {
         super(fm);
         mContext = context;
-        mAnimeDigest = animeDigest;
 
         final ArrayList<FragmentPage> fragmentPages = new ArrayList<>();
         fragmentPages.add(new AnimeDetailsFragmentPage());
 
-        final AnimeDigest.Info info = mAnimeDigest.getInfo();
+        final AnimeDigest.Info info = animeDigest.getInfo();
 
         if (info.hasScreencaps()) {
             fragmentPages.add(new AnimeGalleryFragmentPage());
         }
 
-        if (mAnimeDigest.hasReviews()) {
+        if (animeDigest.hasReviews()) {
             fragmentPages.add(new AnimeReviewsFragmentPage());
         }
 
-        if (mAnimeDigest.hasCastings()) {
+        if (animeDigest.hasCastings()) {
             fragmentPages.add(new AnimeCastingsFragmentPage());
         }
 
-        if (mAnimeDigest.hasQuotes()) {
+        if (animeDigest.hasQuotes()) {
             fragmentPages.add(new AnimeQuotesFragmentPage());
         }
 
-        if (mAnimeDigest.hasEpisodes() && info.getType() != AnimeType.MOVIE) {
+        if (animeDigest.hasEpisodes() && info.getType() != AnimeType.MOVIE) {
             fragmentPages.add(new AnimeEpisodesFragmentPage());
         }
 

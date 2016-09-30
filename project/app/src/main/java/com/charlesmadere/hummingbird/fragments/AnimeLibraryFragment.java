@@ -33,12 +33,9 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
     private WatchingStatus mWatchingStatus;
 
 
-    public static AnimeLibraryFragment create(final String username,
-            final WatchingStatus watchingStatus, final boolean editableLibrary) {
-        final Bundle args = new Bundle(3);
-        args.putString(KEY_USERNAME, username);
+    public static AnimeLibraryFragment create(final WatchingStatus watchingStatus) {
+        final Bundle args = new Bundle(1);
         args.putParcelable(KEY_WATCHING_STATUS, watchingStatus);
-        args.putBoolean(KEY_EDITABLE_LIBRARY, editableLibrary);
 
         final AnimeLibraryFragment fragment = new AnimeLibraryFragment();
         fragment.setArguments(args);
@@ -49,7 +46,7 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
     @Override
     protected void fetchLibraryEntries() {
         super.fetchLibraryEntries();
-        Api.getAnimeLibraryEntries(mUsername, mWatchingStatus, new GetLibraryEntriesListener(this));
+        Api.getAnimeLibraryEntries(getUsername(), mWatchingStatus, new GetLibraryEntriesListener(this));
     }
 
     @Override
@@ -75,7 +72,7 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
 
     @Override
     public String[] getObjectCacheKeys() {
-        return new String[] { getFragmentName(), mUsername, mWatchingStatus.name() };
+        return new String[] { getFragmentName(), getUsername(), mWatchingStatus.name() };
     }
 
     @Override
@@ -87,7 +84,7 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
     public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (mEditableLibrary) {
+        if (isEditableLibrary()) {
             mAdapter = new AnimeLibraryEntriesAdapter(getContext(), this);
         } else {
             mAdapter = new AnimeLibraryEntriesAdapter(getContext());
@@ -170,7 +167,7 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
     @Override
     protected void showLibraryEntries(final Feed feed) {
         mFeed = feed;
-        mAdapter.set(mFeed, mListener.getLibrarySort());
+        mAdapter.set(mFeed, getLibrarySort());
         mEmpty.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);

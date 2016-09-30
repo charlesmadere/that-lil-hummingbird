@@ -111,6 +111,7 @@ public class AppNewsActivity extends BaseDrawerActivity implements AppNewsItemVi
     protected void onViewsBound() {
         super.onViewsBound();
         mRefreshLayout.setOnRefreshListener(this);
+        mRecyclerView.setHasFixedSize(true);
         DividerItemDecoration.apply(mRecyclerView);
         mAdapter = new AppNewsAdapter(this, this);
         mRecyclerView.setAdapter(mAdapter);

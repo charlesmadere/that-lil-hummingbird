@@ -5,8 +5,7 @@
     style="@style/DrawerLayout">
     <RelativeLayout
         android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:orientation="vertical">
+        android:layout_width="match_parent">
         <include
             layout="@layout/toolbar" />
         <com.charlesmadere.hummingbird.views.RefreshLayout
@@ -16,29 +15,33 @@
             android:layout_width="match_parent"
             app:scrolling_child="@+id/recyclerView"
             tools:ignore="UnknownId">
-            <android.support.v7.widget.RecyclerView
-                android:id="@id/recyclerView"
-                style="@style/ListOrGrid" />
-            <LinearLayout
-                android:id="@+id/llError"
-                style="@style/ListMessageContainer">
-                <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:text="@string/error_loading_feed"
-                    style="@style/ListMessageTitle" />
-                <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:text="@string/pull_to_refresh_to_try_again"
-                    style="@style/ListMessageSubtitle" />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/llEmpty"
-                style="@style/ListMessageContainer">
-                <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:text="@string/no_feed_content"
-                    style="@style/ListMessageTitle" />
-                <com.charlesmadere.hummingbird.views.TypefaceTextView
-                    android:text="@string/pull_to_refresh_to_check_again"
-                    style="@style/ListMessageSubtitle" />
-            </LinearLayout>
+            <FrameLayout
+                android:layout_height="match_parent"
+                android:layout_width="match_parent">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@id/recyclerView"
+                    style="@style/ListOrGrid" />
+                <LinearLayout
+                    android:id="@+id/llError"
+                    style="@style/ListMessageContainer">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:text="@string/error_loading_feed"
+                        style="@style/ListMessageTitle" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:text="@string/pull_to_refresh_to_try_again"
+                        style="@style/ListMessageSubtitle" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llEmpty"
+                    style="@style/ListMessageContainer">
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:text="@string/no_feed_content"
+                        style="@style/ListMessageTitle" />
+                    <com.charlesmadere.hummingbird.views.TypefaceTextView
+                        android:text="@string/pull_to_refresh_to_check_again"
+                        style="@style/ListMessageSubtitle" />
+                </LinearLayout>
+            </FrameLayout>
         </com.charlesmadere.hummingbird.views.RefreshLayout>
         <android.support.design.widget.FloatingActionButton
             android:src="@drawable/ic_insert_comment_white_24dp"

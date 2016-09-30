@@ -13,17 +13,17 @@ public class MangaLibraryActivity extends BaseMangaLibraryActivity {
     private static final String TAG = "MangaLibraryActivity";
 
 
-    public static Intent getLaunchIntent(final Context context, final String username) {
-        return getLaunchIntent(context, username, null);
+    public static Intent getLaunchIntent(final Context context, final String userId) {
+        return getLaunchIntent(context, userId, null);
     }
 
-    public static Intent getLaunchIntent(final Context context, final String username,
+    public static Intent getLaunchIntent(final Context context, final String userId,
             @Nullable final UiColorSet uiColorSet) {
-        if (username.equalsIgnoreCase(CurrentUser.get().getUserId())) {
+        if (userId.equalsIgnoreCase(CurrentUser.get().getUserId())) {
             return CurrentUserMangaLibraryActivity.getLaunchIntent(context);
         } else {
             final Intent intent = new Intent(context, MangaLibraryActivity.class)
-                    .putExtra(EXTRA_USERNAME, username);
+                    .putExtra(EXTRA_USERNAME, userId);
 
             if (uiColorSet != null) {
                 intent.putExtra(EXTRA_UI_COLOR_SET, uiColorSet);
@@ -35,12 +35,17 @@ public class MangaLibraryActivity extends BaseMangaLibraryActivity {
 
     @Override
     protected MangaLibraryFragmentAdapter createAdapter() {
-        return new MangaLibraryFragmentAdapter(this, mUsername, false);
+        return new MangaLibraryFragmentAdapter(this);
     }
 
     @Override
     public String getActivityName() {
         return TAG;
+    }
+
+    @Override
+    public boolean isEditableLibrary() {
+        return false;
     }
 
     @Override

@@ -25,7 +25,7 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
 
     private static final String TAG = "UserActivity";
     private static final String CNAME = UserActivity.class.getCanonicalName();
-    private static final String EXTRA_USERNAME = CNAME + ".Username";
+    private static final String EXTRA_USERNAME = CNAME + ".UserId";
 
     private String mUsername;
     private UserDigest mUserDigest;
@@ -75,6 +75,7 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
         return mUserDigest;
     }
 
+    @Override
     public String getUsername() {
         return mUsername;
     }
@@ -105,6 +106,14 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.miAnimeLibrary:
+                startActivity(AnimeLibraryActivity.getLaunchIntent(this, mUsername, mUiColorSet));
+                return true;
+
+            case R.id.miMangaLibrary:
+                startActivity(MangaLibraryActivity.getLaunchIntent(this, mUsername, mUiColorSet));
+                return true;
+
             case R.id.miFollow:
             case R.id.miUnfollow:
                 toggleFollowingOfUser();
@@ -146,8 +155,8 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
 
     @Override
     public void setUserDigest(final UserDigest userDigest) {
-        super.setUserDigest(userDigest);
         mUserDigest = userDigest;
+        super.setUserDigest(userDigest);
     }
 
     private void showError() {

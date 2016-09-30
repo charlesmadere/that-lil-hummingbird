@@ -14,14 +14,12 @@ public class MangaLibraryFragmentAdapter extends BaseLibraryFragmentAdapter {
             ReadingStatus.DROPPED};
 
 
-    public MangaLibraryFragmentAdapter(final FragmentActivity activity, final String username,
-            final boolean editableLibrary) {
-        super(activity, activity.getSupportFragmentManager(), username, editableLibrary);
+    public MangaLibraryFragmentAdapter(final FragmentActivity activity) {
+        super(activity, activity.getSupportFragmentManager());
     }
 
-    public MangaLibraryFragmentAdapter(final Context context, final FragmentManager fm,
-            final String username, final boolean editableLibrary) {
-        super(context, fm, username, editableLibrary);
+    public MangaLibraryFragmentAdapter(final Context context, final FragmentManager fm) {
+        super(context, fm);
     }
 
     @Override
@@ -31,8 +29,7 @@ public class MangaLibraryFragmentAdapter extends BaseLibraryFragmentAdapter {
 
     @Override
     public MangaLibraryFragment getItem(final int position) {
-        return MangaLibraryFragment.create(mUsername, READING_STATUSES[position],
-                mEditableLibrary);
+        return MangaLibraryFragment.create(READING_STATUSES[position]);
     }
 
     @Override

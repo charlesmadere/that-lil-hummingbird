@@ -30,11 +30,11 @@ public class UserAnimeReviewsActivity extends BaseDrawerActivity implements Obje
 
     private static final String TAG = "UserAnimeReviewsActivity";
     private static final String CNAME = UserAnimeReviewsActivity.class.getCanonicalName();
-    private static final String EXTRA_USERNAME = CNAME + ".Username";
+    private static final String EXTRA_USER_ID = CNAME + ".UserId";
 
     private Feed mFeed;
     private RecyclerViewPaginator mPaginator;
-    private String mUsername;
+    private String mUserId;
     private UserAnimeReviewsAdapter mAdapter;
 
     @BindView(R.id.llEmpty)
@@ -50,14 +50,14 @@ public class UserAnimeReviewsActivity extends BaseDrawerActivity implements Obje
     RefreshLayout mRefreshLayout;
 
 
-    public static Intent getLaunchIntent(final Context context, final String username) {
-        return getLaunchIntent(context, username, null);
+    public static Intent getLaunchIntent(final Context context, final String userId) {
+        return getLaunchIntent(context, userId, null);
     }
 
-    public static Intent getLaunchIntent(final Context context, final String username,
+    public static Intent getLaunchIntent(final Context context, final String userId,
             @Nullable final UiColorSet uiColorSet) {
         final Intent intent = new Intent(context, UserAnimeReviewsActivity.class)
-                .putExtra(EXTRA_USERNAME, username);
+                .putExtra(EXTRA_USER_ID, userId);
 
         if (uiColorSet != null) {
             intent.putExtra(EXTRA_UI_COLOR_SET, uiColorSet);
@@ -68,7 +68,7 @@ public class UserAnimeReviewsActivity extends BaseDrawerActivity implements Obje
 
     private void fetchReviews() {
         mRefreshLayout.setRefreshing(true);
-        Api.getUserReviews(mUsername, new GetUserReviewsListener(this));
+        Api.getUserReviews(mUserId, new GetUserReviewsListener(this));
     }
 
     @Override
@@ -78,7 +78,7 @@ public class UserAnimeReviewsActivity extends BaseDrawerActivity implements Obje
 
     @Override
     public String[] getObjectCacheKeys() {
-        return new String[] { getActivityName(), mUsername };
+        return new String[] { getActivityName(), mUserId };
     }
 
     @Override
@@ -97,8 +97,8 @@ public class UserAnimeReviewsActivity extends BaseDrawerActivity implements Obje
         setContentView(R.layout.activity_user_anime_reviews);
 
         final Intent intent = getIntent();
-        mUsername = intent.getStringExtra(EXTRA_USERNAME);
-        setSubtitle(mUsername);
+        mUserId = intent.getStringExtra(EXTRA_USER_ID);
+        setSubtitle(mUserId);
 
         mFeed = ObjectCache.get(this);
 
@@ -137,7 +137,7 @@ public class UserAnimeReviewsActivity extends BaseDrawerActivity implements Obje
     @Override
     public void paginate() {
         mAdapter.setPaginating(true);
-        Api.getUserReviews(mUsername, mFeed, new PaginateUserReviewsListener(this));
+        Api.getUserReviews(mUserId, mFeed, new PaginateUserReviewsListener(this));
     }
 
     protected void paginationComplete() {

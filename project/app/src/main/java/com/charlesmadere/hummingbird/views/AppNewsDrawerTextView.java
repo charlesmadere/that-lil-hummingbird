@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
@@ -54,8 +55,6 @@ public class AppNewsDrawerTextView extends AppCompatTextView implements
             return;
         }
 
-        setTypeface(TypefaceStore.get(TypefaceEntry.OPEN_SANS_SEMIBOLD));
-
         Preferences.Misc.AppNewsAvailability.addListener(this);
         refreshImportantNewsBadge();
     }
@@ -67,8 +66,20 @@ public class AppNewsDrawerTextView extends AppCompatTextView implements
 
     private void refreshImportantNewsBadge() {
         final AppNewsStatus appNewsStatus = Preferences.Misc.AppNewsAvailability.get();
-        setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, appNewsStatus != null &&
-                appNewsStatus.isImportantNewsAvailable() ? R.drawable.badge : 0, 0);
+
+        final int badge;
+        final Typeface typeface;
+
+        if (appNewsStatus != null && appNewsStatus.isImportantNewsAvailable()) {
+            badge = R.drawable.badge;
+            typeface = TypefaceStore.get(TypefaceEntry.OPEN_SANS_BOLD);
+        } else {
+            badge = 0;
+            typeface = TypefaceStore.get(TypefaceEntry.OPEN_SANS_SEMIBOLD);
+        }
+
+        setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, badge, 0);
+        setTypeface(typeface);
     }
 
 }

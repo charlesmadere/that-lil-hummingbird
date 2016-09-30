@@ -33,12 +33,9 @@ public class MangaLibraryFragment extends BaseLibraryFragment implements
     private ReadingStatus mReadingStatus;
 
 
-    public static MangaLibraryFragment create(final String username,
-            final ReadingStatus readingStatus, final boolean editableLibrary) {
-        final Bundle args = new Bundle(3);
-        args.putString(KEY_USERNAME, username);
+    public static MangaLibraryFragment create(final ReadingStatus readingStatus) {
+        final Bundle args = new Bundle(1);
         args.putParcelable(KEY_READING_STATUS, readingStatus);
-        args.putBoolean(KEY_EDITABLE_LIBRARY, editableLibrary);
 
         final MangaLibraryFragment fragment = new MangaLibraryFragment();
         fragment.setArguments(args);
@@ -49,7 +46,7 @@ public class MangaLibraryFragment extends BaseLibraryFragment implements
     @Override
     protected void fetchLibraryEntries() {
         super.fetchLibraryEntries();
-        Api.getMangaLibraryEntries(mUsername, mReadingStatus, new GetLibraryEntriesListener(this));
+        Api.getMangaLibraryEntries(getUsername(), mReadingStatus, new GetLibraryEntriesListener(this));
     }
 
     @Override
@@ -75,7 +72,7 @@ public class MangaLibraryFragment extends BaseLibraryFragment implements
 
     @Override
     public String[] getObjectCacheKeys() {
-        return new String[] { getFragmentName(), mUsername, mReadingStatus.name() };
+        return new String[] { getFragmentName(), getUsername(), mReadingStatus.name() };
     }
 
     @Override
@@ -87,7 +84,7 @@ public class MangaLibraryFragment extends BaseLibraryFragment implements
     public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (mEditableLibrary) {
+        if (isEditableLibrary()) {
             mAdapter = new MangaLibraryEntriesAdapter(getContext(), this);
         } else {
             mAdapter = new MangaLibraryEntriesAdapter(getContext());
@@ -170,7 +167,7 @@ public class MangaLibraryFragment extends BaseLibraryFragment implements
     @Override
     protected void showLibraryEntries(final Feed feed) {
         mFeed = feed;
-        mAdapter.set(mFeed, mListener.getLibrarySort());
+        mAdapter.set(mFeed, getLibrarySort());
         mEmpty.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);

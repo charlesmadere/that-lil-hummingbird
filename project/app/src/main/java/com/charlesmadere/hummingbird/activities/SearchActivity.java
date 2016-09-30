@@ -22,6 +22,7 @@ import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.charlesmadere.hummingbird.models.SearchScope;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
 import com.charlesmadere.hummingbird.views.SearchScopeSpinner;
 
 import java.lang.ref.WeakReference;
@@ -64,7 +65,7 @@ public class SearchActivity extends BaseDrawerActivity implements
 
 
     public static Intent getLaunchIntent(final Context context) {
-        return new Intent(context, SearchActivity.class);
+        return createDrawerActivityIntent(context, SearchActivity.class);
     }
 
     @Override
@@ -77,8 +78,8 @@ public class SearchActivity extends BaseDrawerActivity implements
     }
 
     @Override
-    protected boolean isUpNavigationEnabled() {
-        return true;
+    protected NavigationDrawerItemView.Entry getSelectedNavigationDrawerItemViewEntry() {
+        return NavigationDrawerItemView.Entry.SEARCH;
     }
 
     @OnClick(R.id.ibClear)
@@ -159,11 +160,6 @@ public class SearchActivity extends BaseDrawerActivity implements
         mAdapter = new SearchResultsAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         mSearchScope.setOnItemSelectedListener(this);
-    }
-
-    @Override
-    protected boolean showSearchIcon() {
-        return false;
     }
 
     private void showEmpty() {

@@ -139,6 +139,7 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
         if (mCommentStory.isAdult() && !mCommentStory.isAdultBypassed() &&
                 !Boolean.TRUE.equals(Preferences.General.ShowNsfwContent.get())) {
             mComment.setVisibility(GONE);
+            mShowMoreReplies.setVisibility(GONE);
             mReplies.setVisibility(GONE);
             mNsfwContent.setVisibility(VISIBLE);
         } else {
@@ -162,6 +163,7 @@ public class CommentStoryItemView extends CardView implements AdapterView<Commen
                 setReplyView(mReplyOne, substories, 2);
                 mReplies.setVisibility(VISIBLE);
             } else {
+                mShowMoreReplies.setVisibility(GONE);
                 mReplies.setVisibility(GONE);
             }
         }

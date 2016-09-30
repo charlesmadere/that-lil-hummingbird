@@ -153,16 +153,22 @@ public class LoginActivity extends BaseActivity {
         Api.signIn(username, password, new SignInListener(this));
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void proceed() {
         final Intent intent = getIntent();
+        final LaunchScreen launchScreen = Preferences.General.DefaultLaunchScreen.get();
 
         if (intent != null && intent.getBooleanExtra(EXTRA_LAUNCH_TO_NOTIFICATIONS, false)) {
-            startActivity(NotificationsActivity.getLaunchIntent(this));
+            final Intent[] activityStack = new Intent[] {
+                    launchScreen.getLaunchIntent(this),
+                    NotificationsActivity.getLaunchIntent(this)
+            };
+
+            ContextCompat.startActivities(this, activityStack);
         } else {
             final Intent[] activityStack = DeepLinkUtils.buildIntentStack(this);
 
             if (activityStack == null || activityStack.length == 0) {
-                final LaunchScreen launchScreen = Preferences.General.DefaultLaunchScreen.get();
                 startActivity(launchScreen.getLaunchIntent(this));
             } else {
                 ContextCompat.startActivities(this, activityStack);
@@ -189,11 +195,6 @@ public class LoginActivity extends BaseActivity {
         mUsernameContainer.setVisibility(View.VISIBLE);
         mPasswordContainer.setVisibility(View.VISIBLE);
         mLogin.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    protected boolean showSearchIcon() {
-        return false;
     }
 
     private void updateLoginEnabledState() {

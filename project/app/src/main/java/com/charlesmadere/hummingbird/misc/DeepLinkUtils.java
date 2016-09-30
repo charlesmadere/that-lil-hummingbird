@@ -113,7 +113,7 @@ public final class DeepLinkUtils {
 
         final String pageIdentifier = paths[0];
 
-        if (pageIdentifier.equalsIgnoreCase(DASHBOARD)) {
+        if (DASHBOARD.equalsIgnoreCase(pageIdentifier)) {
             Timber.d(TAG, "Deep link URI is to the user's own dashboard");
             return null;
         }

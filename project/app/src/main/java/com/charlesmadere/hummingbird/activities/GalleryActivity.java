@@ -110,11 +110,6 @@ public class GalleryActivity extends BaseActivity {
         updateToolbarTitle();
     }
 
-    @Override
-    protected boolean showSearchIcon() {
-        return false;
-    }
-
     private void updateToolbarTitle() {
         final NumberFormat numberFormat = NumberFormat.getInstance();
         setTitle(getString(R.string.x_of_y, numberFormat.format(mViewPager.getCurrentItem() + 1),

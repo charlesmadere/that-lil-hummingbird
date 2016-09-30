@@ -11,7 +11,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.charlesmadere.hummingbird.R;
@@ -146,21 +145,6 @@ public abstract class BaseUserActivity extends BaseDrawerActivity implements
         }
 
         Api.postToFeed(post, new FeedPostListener(this));
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.miAnimeLibrary:
-                startActivity(AnimeLibraryActivity.getLaunchIntent(this, getUsername(), mUiColorSet));
-                return true;
-
-            case R.id.miMangaLibrary:
-                startActivity(MangaLibraryActivity.getLaunchIntent(this, getUsername(), mUiColorSet));
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @OnClick(R.id.floatingActionButton)

@@ -17,7 +17,7 @@ import com.charlesmadere.hummingbird.preferences.Preferences;
 import butterknife.BindView;
 
 public abstract class BaseLibraryActivity extends BaseDrawerActivity implements
-        BaseLibraryFragment.Listener {
+        BaseLibraryFragment.Listeners {
 
     private static final String CNAME = BaseLibraryActivity.class.getCanonicalName();
     protected static final String EXTRA_USERNAME = CNAME + ".Username";
@@ -45,6 +45,11 @@ public abstract class BaseLibraryActivity extends BaseDrawerActivity implements
     @Override
     public LibrarySort getLibrarySort() {
         return mLibrarySort;
+    }
+
+    @Override
+    public String getUsername() {
+        return mUsername;
     }
 
     @Override

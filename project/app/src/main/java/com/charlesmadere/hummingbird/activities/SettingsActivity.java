@@ -94,7 +94,7 @@ public class SettingsActivity extends BaseDrawerActivity {
 
 
     public static Intent getLaunchIntent(final Context context) {
-        return new Intent(context, SettingsActivity.class);
+        return createDrawerActivityIntent(context, SettingsActivity.class);
     }
 
     @Override
@@ -450,11 +450,6 @@ public class SettingsActivity extends BaseDrawerActivity {
                     }
                 })
                 .show();
-    }
-
-    @Override
-    protected boolean showSearchIcon() {
-        return false;
     }
 
 }
