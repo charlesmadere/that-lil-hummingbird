@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.charlesmadere.hummingbird.adapters.MangaLibraryFragmentAdapter;
+import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.models.LaunchScreen;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
@@ -21,6 +22,7 @@ public class CurrentUserMangaLibraryActivity extends BaseMangaLibraryActivity {
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
 
+        intent.putExtra(EXTRA_USERNAME, CurrentUser.get().getUserId());
         return intent;
     }
 
