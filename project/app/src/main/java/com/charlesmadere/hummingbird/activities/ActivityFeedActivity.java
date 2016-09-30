@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,9 +15,12 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.FeedAdapter;
+import com.charlesmadere.hummingbird.fragments.FeedPostFragment;
+import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
+import com.charlesmadere.hummingbird.models.FeedPost;
 import com.charlesmadere.hummingbird.models.LaunchScreen;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
@@ -29,9 +33,10 @@ import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
-public class ActivityFeedActivity extends BaseDrawerActivity implements ObjectCache.KeyProvider,
-        RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
+public class ActivityFeedActivity extends BaseDrawerActivity implements FeedPostFragment.Listener,
+        ObjectCache.KeyProvider, RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "ActivityFeedActivity";
 
@@ -64,6 +69,13 @@ public class ActivityFeedActivity extends BaseDrawerActivity implements ObjectCa
         }
 
         return intent;
+    }
+
+    private void feedPostFailure() {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.error_posting_to_feed)
+                .setNeutralButton(R.string.ok, null)
+                .show();
     }
 
     private void fetchFeed() {
@@ -113,6 +125,19 @@ public class ActivityFeedActivity extends BaseDrawerActivity implements ObjectCa
     }
 
     @Override
+    public void onFeedPostSubmit() {
+        final FeedPostFragment fragment = (FeedPostFragment) getSupportFragmentManager()
+                .findFragmentByTag(FeedPostFragment.TAG);
+        final FeedPost post = fragment.getFeedPost(CurrentUser.get().getUserId());
+
+        if (post == null) {
+            return;
+        }
+
+        Api.postToFeed(post, new FeedPostListener(this));
+    }
+
+    @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.miAnimeLibrary:
@@ -125,6 +150,11 @@ public class ActivityFeedActivity extends BaseDrawerActivity implements ObjectCa
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.floatingActionButton)
+    void onPostToFeedClick() {
+        FeedPostFragment.create().show(getSupportFragmentManager(), FeedPostFragment.TAG);
     }
 
     @Override
@@ -195,6 +225,32 @@ public class ActivityFeedActivity extends BaseDrawerActivity implements ObjectCa
         mPostToFeed.show();
     }
 
+
+    private static class FeedPostListener implements ApiResponse<Void> {
+        private final WeakReference<ActivityFeedActivity> mActivityReference;
+
+        private FeedPostListener(final ActivityFeedActivity activity) {
+            mActivityReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void failure(@Nullable final ErrorInfo error) {
+            final ActivityFeedActivity activity = mActivityReference.get();
+
+            if (activity != null && activity.isAlive()) {
+                activity.feedPostFailure();
+            }
+        }
+
+        @Override
+        public void success(@Nullable final Void object) {
+            final ActivityFeedActivity activity = mActivityReference.get();
+
+            if (activity != null && activity.isAlive()) {
+                activity.fetchFeed();
+            }
+        }
+    }
 
     private static class GetFeedListener implements ApiResponse<Feed> {
         private final WeakReference<ActivityFeedActivity> mActivityReference;
