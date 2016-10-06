@@ -62,6 +62,10 @@ public class CommentStory extends AbsStory implements Parcelable {
         return json;
     }
 
+    public String getPlainTextComment() {
+        return mComment;
+    }
+
     public User getPoster() {
         return mPoster;
     }

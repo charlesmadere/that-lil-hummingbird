@@ -20,6 +20,10 @@ public class ReplySubstory extends AbsSubstory implements Parcelable {
     private User mUser;
 
 
+    public String getPlainTextReply() {
+        return mReply;
+    }
+
     public CharSequence getReply() {
         return mCompiledReply;
     }
