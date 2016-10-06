@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.charlesmadere.hummingbird.activities.LoginActivity;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.preferences.Preferences;
+import com.crashlytics.android.Crashlytics;
 
 import java.util.ArrayList;
 
@@ -44,6 +45,7 @@ public final class CurrentUser {
         }
 
         sCurrentUserDigest = userDigest;
+        Crashlytics.setUserName(sCurrentUserDigest.getUserId());
         Preferences.Account.CurrentUserDigest.set(userDigest);
     }
 
