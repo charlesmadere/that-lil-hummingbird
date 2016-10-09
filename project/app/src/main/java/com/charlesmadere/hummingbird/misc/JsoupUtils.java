@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.misc;
 
 import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 import android.text.Html;
 import android.text.TextUtils;
 
@@ -164,15 +165,7 @@ public final class JsoupUtils {
     }
 
     @Nullable
-    public static CharSequence parse(@Nullable final CharSequence text) {
-        if (TextUtils.isEmpty(text) || TextUtils.getTrimmedLength(text) == 0) {
-            return text;
-        } else {
-            return parse(text.toString());
-        }
-    }
-
-    @Nullable
+    @WorkerThread
     public static CharSequence parse(@Nullable String text) {
         if (TextUtils.isEmpty(text) || TextUtils.getTrimmedLength(text) == 0) {
             return text;
