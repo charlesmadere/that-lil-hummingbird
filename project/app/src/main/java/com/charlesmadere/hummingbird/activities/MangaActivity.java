@@ -51,6 +51,7 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
     private static final String EDIT_TAG = MangaLibraryUpdateFragment.TAG + "|Edit";
 
     private MangaDigest mMangaDigest;
+    private MangaFragmentAdapter mAdapter;
     private String mMangaId;
     private UiColorSet mUiColorSet;
 
@@ -286,10 +287,15 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
                     mCoverImage, mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
         }
 
-        mViewPager.setAdapter(new MangaFragmentAdapter(this, mMangaDigest));
-        mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
-        mViewPager.setOffscreenPageLimit(3);
-        mTabLayout.setupWithViewPager(mViewPager);
+        if (mAdapter == null) {
+            mAdapter = new MangaFragmentAdapter(this, mMangaDigest);
+            mViewPager.setAdapter(mAdapter);
+            mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
+            mViewPager.setOffscreenPageLimit(3);
+            mTabLayout.setupWithViewPager(mViewPager);
+        } else {
+            mAdapter.showMangaDigest();
+        }
 
         supportInvalidateOptionsMenu();
         mSimpleProgressView.fadeOut();

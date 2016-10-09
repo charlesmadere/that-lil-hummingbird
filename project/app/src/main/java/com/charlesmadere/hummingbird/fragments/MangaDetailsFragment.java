@@ -2,7 +2,6 @@ package com.charlesmadere.hummingbird.fragments;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,10 +57,14 @@ public class MangaDetailsFragment extends BaseMangaFragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+            final Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_manga_details, container, false);
+    }
 
-        final MangaDigest mangaDigest = getMangaDigest();
+    @Override
+    public void showMangaDigest(final MangaDigest mangaDigest) {
         final MangaDigest.Info info = mangaDigest.getInfo();
         final Resources resources = getResources();
         final NumberFormat numberFormat = NumberFormat.getInstance();
@@ -72,12 +75,14 @@ public class MangaDetailsFragment extends BaseMangaFragment {
         }
 
         if (info.hasType()) {
+            // noinspection ConstantConditions
             mMangaType.setHead(info.getType().getTextResId());
             mMangaType.setVisibility(View.VISIBLE);
         }
 
         if (info.hasVolumeCount()) {
             mVolumes.setHead(numberFormat.format(info.getVolumeCount()));
+            // noinspection ConstantConditions
             mVolumes.setBody(resources.getQuantityText(R.plurals.volumes,
                     info.getVolumeCount()));
             mVolumes.setVisibility(View.VISIBLE);
@@ -85,6 +90,7 @@ public class MangaDetailsFragment extends BaseMangaFragment {
 
         if (info.hasChapterCount()) {
             mChapters.setHead(numberFormat.format(info.getChapterCount()));
+            // noinspection ConstantConditions
             mChapters.setBody(resources.getQuantityText(R.plurals.chapters,
                     info.getChapterCount()));
             mChapters.setVisibility(View.VISIBLE);
@@ -107,13 +113,6 @@ public class MangaDetailsFragment extends BaseMangaFragment {
         } else {
             mSynopsis.setText(R.string.no_synopsis_available);
         }
-    }
-
-    @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-            final Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_manga_details, container, false);
     }
 
 }

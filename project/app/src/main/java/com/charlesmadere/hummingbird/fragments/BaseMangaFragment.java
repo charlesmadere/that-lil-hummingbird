@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.charlesmadere.hummingbird.misc.MiscUtils;
@@ -12,8 +13,15 @@ public abstract class BaseMangaFragment extends BaseFragment {
     private Listener mListener;
 
 
-    protected MangaDigest getMangaDigest() {
-        return mListener.getMangaDigest();
+    @Override
+    public void onActivityCreated(final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        final MangaDigest mangaDigest = mListener.getMangaDigest();
+
+        if (mangaDigest != null) {
+            showMangaDigest(mangaDigest);
+        }
     }
 
     @Override
@@ -35,6 +43,12 @@ public abstract class BaseMangaFragment extends BaseFragment {
             throw new IllegalStateException(getFragmentName() + " must attach to Listener");
         }
     }
+
+    public final void showMangaDigest() {
+        showMangaDigest(mListener.getMangaDigest());
+    }
+
+    public abstract void showMangaDigest(final MangaDigest mangaDigest);
 
 
     public interface Listener {

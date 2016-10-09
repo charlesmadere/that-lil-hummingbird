@@ -5,18 +5,23 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.util.SparseArrayCompat;
+import android.view.ViewGroup;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.fragments.BaseMangaFragment;
 import com.charlesmadere.hummingbird.fragments.MangaCharactersFragment;
 import com.charlesmadere.hummingbird.fragments.MangaDetailsFragment;
 import com.charlesmadere.hummingbird.models.MangaDigest;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 public class MangaFragmentAdapter extends FragmentStatePagerAdapter {
 
     private final Context mContext;
     private final FragmentPage[] mFragmentPages;
+    private final SparseArrayCompat<WeakReference<BaseMangaFragment>> mFragments;
 
 
     public MangaFragmentAdapter(final FragmentActivity activity, final MangaDigest mangaDigest) {
@@ -37,6 +42,14 @@ public class MangaFragmentAdapter extends FragmentStatePagerAdapter {
 
         mFragmentPages = new FragmentPage[fragmentPages.size()];
         fragmentPages.toArray(mFragmentPages);
+
+        mFragments = new SparseArrayCompat<>(getCount());
+    }
+
+    @Override
+    public void destroyItem(final ViewGroup container, final int position, final Object object) {
+        super.destroyItem(container, position, object);
+        mFragments.removeAt(position);
     }
 
     @Override
@@ -45,13 +58,37 @@ public class MangaFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public Fragment getItem(final int position) {
-        return mFragmentPages[position].getItem();
+    public BaseMangaFragment getItem(final int position) {
+        final BaseMangaFragment fragment = (BaseMangaFragment) mFragmentPages[position].getItem();
+        mFragments.put(position, new WeakReference<>(fragment));
+        return fragment;
     }
 
     @Override
     public CharSequence getPageTitle(final int position) {
         return mFragmentPages[position].getPageTitle();
+    }
+
+    @Override
+    public BaseMangaFragment instantiateItem(final ViewGroup container, final int position) {
+        final BaseMangaFragment fragment = (BaseMangaFragment) super.instantiateItem(container,
+                position);
+        mFragments.put(position, new WeakReference<>(fragment));
+        return fragment;
+    }
+
+    public void showMangaDigest() {
+        for (int i = 0; i < mFragments.size(); ++i) {
+            final WeakReference<BaseMangaFragment> fragmentReference = mFragments.get(i);
+
+            if (fragmentReference != null) {
+                final BaseMangaFragment fragment = fragmentReference.get();
+
+                if (fragment != null && fragment.isAlive()) {
+                    fragment.showMangaDigest();
+                }
+            }
+        }
     }
 
 
