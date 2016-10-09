@@ -23,7 +23,7 @@ public final class CurrentUser {
 
     public static synchronized UserDigest get() {
         if (sCurrentUserDigest == null) {
-            Timber.w(TAG, "reading in stored UserDigest, this should rarely ever happen");
+            Timber.w(TAG, "reading in persisted UserDigest");
             sCurrentUserDigest = Preferences.Account.CurrentUserDigest.get();
         }
 
