@@ -51,7 +51,7 @@ public final class CurrentUser {
 
     public static synchronized boolean shouldBeFetched() {
         return Preferences.Account.CsrfToken.exists() && Preferences.Account.Username.exists()
-                && sCurrentUserDigest == null;
+                && (sCurrentUserDigest == null || sCurrentUserDigest.getUser() == null);
     }
 
     public static synchronized void signOut() {
