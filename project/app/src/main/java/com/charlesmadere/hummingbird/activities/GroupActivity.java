@@ -24,6 +24,7 @@ import com.charlesmadere.hummingbird.fragments.GroupFeedFragment;
 import com.charlesmadere.hummingbird.fragments.GroupFeedPostFragment;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.FeedListeners;
+import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.misc.PaletteUtils;
 import com.charlesmadere.hummingbird.misc.ShareUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
@@ -43,13 +44,12 @@ import butterknife.OnClick;
 import butterknife.OnPageChange;
 
 public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragment.Listeners,
-        FeedListeners, FeedPostFragment.Listener, PaletteUtils.Listener {
+        FeedListeners, FeedPostFragment.Listener, ObjectCache.KeyProvider, PaletteUtils.Listener {
 
     private static final String TAG = "GroupActivity";
     private static final String CNAME = GroupActivity.class.getCanonicalName();
     private static final String EXTRA_GROUP_ID = CNAME + ".GroupId";
     private static final String EXTRA_GROUP_NAME = CNAME + ".GroupName";
-    private static final String KEY_GROUP_DIGEST = "GroupDigest";
 
     private GroupDigest mGroupDigest;
     private String mGroupId;
@@ -128,6 +128,11 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
         return mGroupDigest;
     }
 
+    @Override
+    public String[] getObjectCacheKeys() {
+        return new String[] { getActivityName(), mGroupId };
+    }
+
     @Nullable
     @Override
     public UiColorSet getUiColorSet() {
@@ -167,9 +172,7 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
             setTitle(intent.getStringExtra(EXTRA_GROUP_NAME));
         }
 
-        if (savedInstanceState != null && savedInstanceState.isEmpty()) {
-            mGroupDigest = savedInstanceState.getParcelable(KEY_GROUP_DIGEST);
-        }
+        mGroupDigest = ObjectCache.get(this);
 
         if (mGroupDigest == null) {
             fetchGroupDigest();
@@ -251,7 +254,7 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
         super.onSaveInstanceState(outState);
 
         if (mGroupDigest != null) {
-            outState.putParcelable(KEY_GROUP_DIGEST, mGroupDigest);
+            ObjectCache.put(mGroupDigest, this);
         }
     }
 
