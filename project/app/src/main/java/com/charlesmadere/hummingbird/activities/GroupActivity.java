@@ -347,7 +347,7 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
     private static class FeedPostListener implements ApiResponse<Void> {
         private final WeakReference<GroupActivity> mActivityReference;
 
-        protected FeedPostListener(final GroupActivity activity) {
+        private FeedPostListener(final GroupActivity activity) {
             mActivityReference = new WeakReference<>(activity);
         }
 
