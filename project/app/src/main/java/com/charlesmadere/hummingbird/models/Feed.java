@@ -315,7 +315,7 @@ public class Feed implements Hydratable {
         if (hasGroups()) {
             // noinspection ConstantConditions
             for (final Group group : mGroups) {
-                group.hydrate(this);
+                group.hydrate();
             }
         }
 

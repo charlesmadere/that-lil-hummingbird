@@ -41,9 +41,7 @@ public class GroupDigest implements Hydratable, Parcelable {
 
     @Override
     public void hydrate() {
-        if (hasGroupMembers()) {
-            mGroup.hydrate(this);
-        }
+        mGroup.hydrate();
     }
 
     @Override

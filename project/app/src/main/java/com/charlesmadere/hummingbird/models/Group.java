@@ -3,13 +3,12 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.JsoupUtils;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.google.gson.annotations.SerializedName;
-
-import java.util.ArrayList;
 
 public class Group implements Parcelable {
 
@@ -48,9 +47,6 @@ public class Group implements Parcelable {
 
     // hydrated fields
     @Nullable
-    private ArrayList<GroupMember> mGroupMembers;
-
-    @Nullable
     private CharSequence mCompiledAbout;
 
 
@@ -82,11 +78,6 @@ public class Group implements Parcelable {
     @Nullable
     public String getCurrentMemberId() {
         return mCurrentMemberId;
-    }
-
-    @Nullable
-    public ArrayList<GroupMember> getGroupMembers() {
-        return mGroupMembers;
     }
 
     public String getId() {
@@ -126,44 +117,13 @@ public class Group implements Parcelable {
         return mId.hashCode();
     }
 
-    public boolean hasGroupMembers() {
-        return mGroupMembers != null && !mGroupMembers.isEmpty();
-    }
-
-    private void hydrate(@Nullable final ArrayList<GroupMember> groupMembers) {
-        if (groupMembers == null || groupMembers.isEmpty()) {
-            mGroupMembers = null;
-        } else {
-            mGroupMembers = new ArrayList<>();
-
-            for (final GroupMember groupMember : groupMembers) {
-                if (mId.equalsIgnoreCase(groupMember.getGroupId()) &&
-                        !mGroupMembers.contains(groupMember)) {
-                    mGroupMembers.add(groupMember);
-                }
-            }
-
-            if (mGroupMembers.isEmpty()) {
-                mGroupMembers = null;
-            } else {
-                mGroupMembers.trimToSize();
-            }
-        }
-
-
+    @WorkerThread
+    public void hydrate() {
         if (!TextUtils.isEmpty(mAboutFormatted)) {
             mCompiledAbout = JsoupUtils.parse(mAboutFormatted);
         } else if (!TextUtils.isEmpty(mAbout)) {
             mCompiledAbout = JsoupUtils.parse(mAbout);
         }
-    }
-
-    public void hydrate(final Feed feed) {
-        hydrate(feed.getGroupMembers());
-    }
-
-    public void hydrate(final GroupDigest groupDigest) {
-        hydrate(groupDigest.getGroupMembers());
     }
 
     public void setCurrentMemberId(@Nullable final String currentMemberId) {
@@ -191,7 +151,6 @@ public class Group implements Parcelable {
         dest.writeString(mCurrentMemberId);
         dest.writeString(mId);
         dest.writeString(mName);
-        dest.writeTypedList(mGroupMembers);
         TextUtils.writeToParcel(mCompiledAbout, dest, flags);
     }
 
@@ -208,7 +167,6 @@ public class Group implements Parcelable {
             g.mCurrentMemberId = source.readString();
             g.mId = source.readString();
             g.mName = source.readString();
-            g.mGroupMembers = source.createTypedArrayList(GroupMember.CREATOR);
             g.mCompiledAbout = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
             return g;
         }
