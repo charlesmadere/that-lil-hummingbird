@@ -53,7 +53,7 @@ public class MangaCharactersFragment extends BaseMangaFragment {
     }
 
     @Override
-    public void showMangaDigest(final MangaDigest mangaDigest) {
+    protected void showMangaDigest(final MangaDigest mangaDigest) {
         if (mangaDigest.hasCharacters()) {
             mAdapter.set(mangaDigest.getCharacters());
             mRecyclerView.setAdapter(mAdapter);

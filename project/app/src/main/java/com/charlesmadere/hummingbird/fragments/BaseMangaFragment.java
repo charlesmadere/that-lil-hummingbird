@@ -48,7 +48,7 @@ public abstract class BaseMangaFragment extends BaseFragment {
         showMangaDigest(mListener.getMangaDigest());
     }
 
-    public abstract void showMangaDigest(final MangaDigest mangaDigest);
+    protected abstract void showMangaDigest(final MangaDigest mangaDigest);
 
 
     public interface Listener {

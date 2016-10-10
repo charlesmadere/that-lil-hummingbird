@@ -64,7 +64,7 @@ public class MangaDetailsFragment extends BaseMangaFragment {
     }
 
     @Override
-    public void showMangaDigest(final MangaDigest mangaDigest) {
+    protected void showMangaDigest(final MangaDigest mangaDigest) {
         final MangaDigest.Info info = mangaDigest.getInfo();
         final Resources resources = getResources();
         final NumberFormat numberFormat = NumberFormat.getInstance();
