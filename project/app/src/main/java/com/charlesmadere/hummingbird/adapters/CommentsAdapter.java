@@ -18,22 +18,23 @@ import java.util.HashMap;
 
 public class CommentsAdapter extends BaseMultiPaginationAdapter implements Comparator<AbsSubstory> {
 
+    private static final HashMap<Class, Integer> VIEW_KEY_MAP;
+
+
+    static {
+        VIEW_KEY_MAP = new HashMap<>(3);
+        VIEW_KEY_MAP.put(CommentStory.class, R.layout.item_comment_story_standalone);
+        VIEW_KEY_MAP.put(ReplySubstory.class, R.layout.item_reply_substory_standalone);
+        VIEW_KEY_MAP.put(String.class, R.layout.item_charsequence_plain);
+    }
+
     public CommentsAdapter(final Context context) {
-        super(context);
+        super(context, VIEW_KEY_MAP);
     }
 
     @Override
     public int compare(final AbsSubstory o1, final AbsSubstory o2) {
         return SimpleDate.CHRONOLOGICAL_ORDER.compare(o1.getCreatedAt(), o2.getCreatedAt());
-    }
-
-    @Override
-    protected HashMap<Class, Integer> getItemViewKeyMap() {
-        final HashMap<Class, Integer> map = new HashMap<>(3);
-        map.put(CommentStory.class, R.layout.item_comment_story_standalone);
-        map.put(ReplySubstory.class, R.layout.item_reply_substory_standalone);
-        map.put(String.class, R.layout.item_charsequence_plain);
-        return map;
     }
 
     @Override

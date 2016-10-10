@@ -13,16 +13,17 @@ import java.util.HashMap;
 
 public class NotificationsAdapter extends BaseMultiPaginationAdapter {
 
-    public NotificationsAdapter(final Context context) {
-        super(context);
+    private static final HashMap<Class, Integer> VIEW_KEY_MAP;
+
+
+    static {
+        VIEW_KEY_MAP = new HashMap<>(2);
+        VIEW_KEY_MAP.put(CommentReplyNotification.class, R.layout.item_comment_reply_notification);
+        VIEW_KEY_MAP.put(ProfileCommentNotification.class, R.layout.item_profile_comment_notification);
     }
 
-    @Override
-    protected HashMap<Class, Integer> getItemViewKeyMap() {
-        final HashMap<Class, Integer> map = new HashMap<>(2);
-        map.put(CommentReplyNotification.class, R.layout.item_comment_reply_notification);
-        map.put(ProfileCommentNotification.class, R.layout.item_profile_comment_notification);
-        return map;
+    public NotificationsAdapter(final Context context) {
+        super(context, VIEW_KEY_MAP);
     }
 
     public void set(@Nullable final Feed feed) {

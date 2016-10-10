@@ -11,19 +11,20 @@ import java.util.HashMap;
 
 public class SearchResultsAdapter extends BaseMultiAdapter {
 
-    public SearchResultsAdapter(final Context context) {
-        super(context);
+    private static final HashMap<Class, Integer> VIEW_KEY_MAP;
+
+
+    static {
+        VIEW_KEY_MAP = new HashMap<>(5);
+        VIEW_KEY_MAP.put(String.class, R.layout.item_charsequence_card);
+        VIEW_KEY_MAP.put(SearchBundle.AnimeResult.class, R.layout.item_anime_result);
+        VIEW_KEY_MAP.put(SearchBundle.GroupResult.class, R.layout.item_group_result);
+        VIEW_KEY_MAP.put(SearchBundle.MangaResult.class, R.layout.item_manga_result);
+        VIEW_KEY_MAP.put(SearchBundle.UserResult.class, R.layout.item_user_result);
     }
 
-    @Override
-    protected HashMap<Class, Integer> getItemViewKeyMap() {
-        final HashMap<Class, Integer> map = new HashMap<>(5);
-        map.put(String.class, R.layout.item_charsequence_card);
-        map.put(SearchBundle.AnimeResult.class, R.layout.item_anime_result);
-        map.put(SearchBundle.GroupResult.class, R.layout.item_group_result);
-        map.put(SearchBundle.MangaResult.class, R.layout.item_manga_result);
-        map.put(SearchBundle.UserResult.class, R.layout.item_user_result);
-        return map;
+    public SearchResultsAdapter(final Context context) {
+        super(context, VIEW_KEY_MAP);
     }
 
     @Override

@@ -15,8 +15,17 @@ import java.util.TreeMap;
 
 public class AnimeCastingsAdapter extends BaseMultiAdapter implements Comparator<String> {
 
+    private static final HashMap<Class, Integer> VIEW_KEY_MAP;
+
+
+    static {
+        VIEW_KEY_MAP = new HashMap<>(2);
+        VIEW_KEY_MAP.put(AnimeDigest.Casting.class, R.layout.item_anime_casting);
+        VIEW_KEY_MAP.put(String.class, R.layout.item_charsequence_card);
+    }
+
     public AnimeCastingsAdapter(final Context context) {
-        super(context);
+        super(context, VIEW_KEY_MAP);
     }
 
     @Override
@@ -30,14 +39,6 @@ public class AnimeCastingsAdapter extends BaseMultiAdapter implements Comparator
         } else {
             return lhs.compareToIgnoreCase(rhs);
         }
-    }
-
-    @Override
-    protected HashMap<Class, Integer> getItemViewKeyMap() {
-        final HashMap<Class, Integer> map = new HashMap<>(2);
-        map.put(AnimeDigest.Casting.class, R.layout.item_anime_casting);
-        map.put(String.class, R.layout.item_charsequence_card);
-        return map;
     }
 
     @Override

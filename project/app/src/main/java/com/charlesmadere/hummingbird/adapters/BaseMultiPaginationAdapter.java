@@ -4,14 +4,17 @@ import android.content.Context;
 
 import com.charlesmadere.hummingbird.R;
 
+import java.util.HashMap;
+
 public abstract class BaseMultiPaginationAdapter extends BaseMultiAdapter implements
         PaginatingAdapter {
 
     private boolean mIsPaginating;
 
 
-    public BaseMultiPaginationAdapter(final Context context) {
-        super(context);
+    public BaseMultiPaginationAdapter(final Context context,
+            final HashMap<Class, Integer> viewKeyMap) {
+        super(context, viewKeyMap);
     }
 
     @Override

@@ -15,17 +15,18 @@ import java.util.HashMap;
 
 public class FollowedStoryAdapter extends BaseMultiPaginationAdapter {
 
-    public FollowedStoryAdapter(final Context context) {
-        super(context);
+    private static final HashMap<Class, Integer> VIEW_KEY_MAP;
+
+
+    static {
+        VIEW_KEY_MAP = new HashMap<>(3);
+        VIEW_KEY_MAP.put(FollowedStory.class, R.layout.item_followed_story_standalone);
+        VIEW_KEY_MAP.put(FollowedSubstory.class, R.layout.item_followed_substory_standalone);
+        VIEW_KEY_MAP.put(String.class, R.layout.item_charsequence_plain);
     }
 
-    @Override
-    protected HashMap<Class, Integer> getItemViewKeyMap() {
-        final HashMap<Class, Integer> map = new HashMap<>(3);
-        map.put(FollowedStory.class, R.layout.item_followed_story_standalone);
-        map.put(FollowedSubstory.class, R.layout.item_followed_substory_standalone);
-        map.put(String.class, R.layout.item_charsequence_plain);
-        return map;
+    public FollowedStoryAdapter(final Context context) {
+        super(context, VIEW_KEY_MAP);
     }
 
     @Override

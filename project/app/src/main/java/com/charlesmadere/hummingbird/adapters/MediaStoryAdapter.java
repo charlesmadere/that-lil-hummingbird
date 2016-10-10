@@ -17,21 +17,21 @@ import java.util.HashMap;
 
 public class MediaStoryAdapter extends BaseMultiPaginationAdapter {
 
+    private static final HashMap<Class, Integer> VIEW_KEY_MAP;
+
     private User mUser;
 
 
-    public MediaStoryAdapter(final Context context) {
-        super(context);
+    static {
+        VIEW_KEY_MAP = new HashMap<>(4);
+        VIEW_KEY_MAP.put(MediaStory.class, R.layout.item_media_story_standalone);
+        VIEW_KEY_MAP.put(String.class, R.layout.item_charsequence_plain);
+        VIEW_KEY_MAP.put(WatchedEpisodeSubstory.class, R.layout.item_abs_substory_standalone);
+        VIEW_KEY_MAP.put(WatchlistStatusUpdateSubstory.class, R.layout.item_abs_substory_standalone);
     }
 
-    @Override
-    protected HashMap<Class, Integer> getItemViewKeyMap() {
-        final HashMap<Class, Integer> map = new HashMap<>(4);
-        map.put(MediaStory.class, R.layout.item_media_story_standalone);
-        map.put(String.class, R.layout.item_charsequence_plain);
-        map.put(WatchedEpisodeSubstory.class, R.layout.item_abs_substory_standalone);
-        map.put(WatchlistStatusUpdateSubstory.class, R.layout.item_abs_substory_standalone);
-        return map;
+    public MediaStoryAdapter(final Context context) {
+        super(context, VIEW_KEY_MAP);
     }
 
     @Override
