@@ -286,10 +286,12 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
                     mCoverImage, mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
         }
 
-        mViewPager.setAdapter(new MangaFragmentAdapter(this, mMangaDigest));
+        final MangaFragmentAdapter adapter = new MangaFragmentAdapter(this, mMangaDigest);
+        mViewPager.setAdapter(adapter);
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);
+        adapter.showMangaDigest();
 
         supportInvalidateOptionsMenu();
         mSimpleProgressView.fadeOut();
