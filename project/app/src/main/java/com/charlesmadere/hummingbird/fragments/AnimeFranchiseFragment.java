@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeAdapter;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
+import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Franchise;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -68,27 +69,6 @@ public class AnimeFranchiseFragment extends BaseAnimeFragment implements ObjectC
     }
 
     @Override
-    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        mRefreshLayout.setOnRefreshListener(this);
-        mRecyclerView.setHasFixedSize(true);
-        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
-        mAdapter = new AnimeAdapter(getContext());
-        mRecyclerView.setAdapter(mAdapter);
-
-        mFranchise = ObjectCache.get(this);
-
-        if (mFranchise == null) {
-            fetchFranchise();
-        } else if (mFranchise.hasAnime()) {
-            showFranchise(mFranchise);
-        } else {
-            showEmpty();
-        }
-    }
-
-    @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -106,6 +86,30 @@ public class AnimeFranchiseFragment extends BaseAnimeFragment implements ObjectC
 
         if (mFranchise != null) {
             ObjectCache.put(mFranchise, this);
+        }
+    }
+
+    @Override
+    public void onViewCreated(final View view, final Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mRefreshLayout.setOnRefreshListener(this);
+        mRecyclerView.setHasFixedSize(true);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
+        mAdapter = new AnimeAdapter(getContext());
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected void showAnimeDigest(final AnimeDigest animeDigest) {
+        mFranchise = ObjectCache.get(this);
+
+        if (mFranchise == null) {
+            fetchFranchise();
+        } else if (mFranchise.hasAnime()) {
+            showFranchise(mFranchise);
+        } else {
+            showEmpty();
         }
     }
 

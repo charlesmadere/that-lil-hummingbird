@@ -7,7 +7,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -51,6 +50,7 @@ public abstract class BaseUserActivity extends BaseDrawerActivity implements
 
     protected int mInitialTab;
     protected UiColorSet mUiColorSet;
+    protected UserFragmentAdapter mAdapter;
 
     @BindView(R.id.appBarLayout)
     protected AppBarLayout mAppBarLayout;
@@ -168,15 +168,6 @@ public abstract class BaseUserActivity extends BaseDrawerActivity implements
         updatePostToFeedVisibility();
     }
 
-    protected void setAdapter(final UserFragmentAdapter adapter) {
-        mViewPager.setAdapter(adapter);
-        mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
-        mViewPager.setOffscreenPageLimit(3);
-        mTabLayout.setupWithViewPager(mViewPager);
-        mViewPager.setCurrentItem(mInitialTab);
-        updatePostToFeedVisibility();
-    }
-
     @Override
     public void setUserDigest(final UserDigest userDigest) {
         if (TextUtils.isEmpty(getTitle())) {
@@ -196,11 +187,17 @@ public abstract class BaseUserActivity extends BaseDrawerActivity implements
             mProBadge.setVisibility(View.VISIBLE);
         }
 
-        final PagerAdapter adapter = mViewPager.getAdapter();
-
-        if (adapter == null) {
-            setAdapter(new UserFragmentAdapter(this));
+        if (mAdapter == null) {
+            mAdapter = new UserFragmentAdapter(this);
+            mViewPager.setAdapter(mAdapter);
+            mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
+            mViewPager.setOffscreenPageLimit(3);
+            mTabLayout.setupWithViewPager(mViewPager);
+            mViewPager.setCurrentItem(mInitialTab);
         }
+
+        mAdapter.showUserDigest();
+        updatePostToFeedVisibility();
 
         supportInvalidateOptionsMenu();
         mSimpleProgressView.fadeOut();

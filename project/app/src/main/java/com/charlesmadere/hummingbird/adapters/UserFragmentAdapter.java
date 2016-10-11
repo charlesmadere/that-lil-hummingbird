@@ -9,7 +9,6 @@ import android.support.v4.util.SparseArrayCompat;
 import android.view.ViewGroup;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.fragments.BaseFragment;
 import com.charlesmadere.hummingbird.fragments.BaseUserFragment;
 import com.charlesmadere.hummingbird.fragments.UserFeedFragment;
 import com.charlesmadere.hummingbird.fragments.UserGroupsFragment;
@@ -85,10 +84,25 @@ public class UserFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public BaseFragment instantiateItem(final ViewGroup container, final int position) {
-        final BaseUserFragment fragment = (BaseUserFragment) super.instantiateItem(container, position);
+    public BaseUserFragment instantiateItem(final ViewGroup container, final int position) {
+        final BaseUserFragment fragment = (BaseUserFragment) super.instantiateItem(container,
+                position);
         mFragments.put(position, new WeakReference<>(fragment));
         return fragment;
+    }
+
+    public void showUserDigest() {
+        for (int i = 0; i < mFragments.size(); ++i) {
+            final WeakReference<BaseUserFragment> fragmentReference = mFragments.get(i);
+
+            if (fragmentReference != null) {
+                final BaseUserFragment fragment = fragmentReference.get();
+
+                if (fragment != null && fragment.isAlive()) {
+                    fragment.showUserDigest();
+                }
+            }
+        }
     }
 
 }

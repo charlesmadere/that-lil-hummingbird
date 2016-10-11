@@ -126,6 +126,7 @@ public class FollowersActivity extends BaseDrawerActivity implements ObjectCache
     @Override
     protected void onViewsBound() {
         super.onViewsBound();
+
         mRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.setHasFixedSize(true);
         DividerItemDecoration.apply(mRecyclerView);

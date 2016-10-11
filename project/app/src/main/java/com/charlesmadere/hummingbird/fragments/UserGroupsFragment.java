@@ -14,6 +14,7 @@ import com.charlesmadere.hummingbird.adapters.GroupsAdapter;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
+import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
@@ -71,26 +72,6 @@ public class UserGroupsFragment extends BaseUserFragment implements ObjectCache.
     }
 
     @Override
-    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        mRefreshLayout.setOnRefreshListener(this);
-        mRecyclerView.setHasFixedSize(true);
-        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
-        mAdapter = new GroupsAdapter(getContext());
-        mRecyclerView.setAdapter(mAdapter);
-        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
-
-        mFeed = ObjectCache.get(this);
-
-        if (mFeed == null) {
-            fetchUserGroups();
-        } else {
-            showUserGroups(mFeed);
-        }
-    }
-
-    @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -109,6 +90,18 @@ public class UserGroupsFragment extends BaseUserFragment implements ObjectCache.
         if (mFeed != null) {
             ObjectCache.put(mFeed, this);
         }
+    }
+
+    @Override
+    public void onViewCreated(final View view, final Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mRefreshLayout.setOnRefreshListener(this);
+        mRecyclerView.setHasFixedSize(true);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
+        mAdapter = new GroupsAdapter(getContext());
+        mRecyclerView.setAdapter(mAdapter);
+        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
     }
 
     @Override
@@ -149,6 +142,17 @@ public class UserGroupsFragment extends BaseUserFragment implements ObjectCache.
         mRecyclerView.setVisibility(View.VISIBLE);
         mPaginator.setEnabled(mFeed.hasCursor());
         mRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    protected void showUserDigest(final UserDigest userDigest) {
+        mFeed = ObjectCache.get(this);
+
+        if (mFeed == null) {
+            fetchUserGroups();
+        } else {
+            showUserGroups(mFeed);
+        }
     }
 
 

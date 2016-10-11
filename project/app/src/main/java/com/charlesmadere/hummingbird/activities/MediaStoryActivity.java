@@ -122,6 +122,7 @@ public class MediaStoryActivity extends BaseDrawerActivity implements ObjectCach
     @Override
     protected void onViewsBound() {
         super.onViewsBound();
+
         mRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.setHasFixedSize(true);
         mAdapter = new MediaStoryAdapter(this);

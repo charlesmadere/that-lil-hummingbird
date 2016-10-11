@@ -10,7 +10,7 @@ import android.support.v4.util.SparseArrayCompat;
 import android.view.ViewGroup;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.fragments.BaseFragment;
+import com.charlesmadere.hummingbird.fragments.BaseGroupFragment;
 import com.charlesmadere.hummingbird.fragments.GroupDetailsFragment;
 import com.charlesmadere.hummingbird.fragments.GroupFeedFragment;
 
@@ -22,7 +22,7 @@ public class GroupFragmentAdapter extends FragmentStatePagerAdapter {
     public static final int POSITION_DETAILS = 1;
 
     private final Context mContext;
-    private final SparseArrayCompat<WeakReference<BaseFragment>> mFragments;
+    private final SparseArrayCompat<WeakReference<BaseGroupFragment>> mFragments;
 
 
     public GroupFragmentAdapter(final FragmentActivity activity) {
@@ -48,7 +48,7 @@ public class GroupFragmentAdapter extends FragmentStatePagerAdapter {
 
     @Nullable
     public GroupFeedFragment getFeedFragment() {
-        final WeakReference<BaseFragment> fragmentReference = mFragments.get(POSITION_FEED);
+        final WeakReference<BaseGroupFragment> fragmentReference = mFragments.get(POSITION_FEED);
 
         if (fragmentReference == null) {
             return null;
@@ -76,10 +76,24 @@ public class GroupFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public BaseFragment instantiateItem(final ViewGroup container, final int position) {
-        final BaseFragment fragment = (BaseFragment) super.instantiateItem(container, position);
+    public BaseGroupFragment instantiateItem(final ViewGroup container, final int position) {
+        final BaseGroupFragment fragment = (BaseGroupFragment) super.instantiateItem(container, position);
         mFragments.put(position, new WeakReference<>(fragment));
         return fragment;
+    }
+
+    public void showGroupDigest() {
+        for (int i = 0; i < mFragments.size(); ++i) {
+            final WeakReference<BaseGroupFragment> fragmentReference = mFragments.get(i);
+
+            if (fragmentReference != null) {
+                final BaseGroupFragment fragment = fragmentReference.get();
+
+                if (fragment != null && fragment.isAlive()) {
+                    fragment.showGroupDigest();
+                }
+            }
+        }
     }
 
 }

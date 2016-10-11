@@ -69,6 +69,7 @@ public class AppNewsFragment extends BaseBottomSheetDialogFragment {
         mBody.setText(mAppNews.getBody());
 
         if (mAppNews.hasLinks()) {
+            // noinspection ConstantConditions
             for (final AppNews.Link link : mAppNews.getLinks()) {
                 HeadBodyItemView hbiv = HeadBodyItemView.inflate(mLinks);
                 hbiv.setHead(link.getTitle());

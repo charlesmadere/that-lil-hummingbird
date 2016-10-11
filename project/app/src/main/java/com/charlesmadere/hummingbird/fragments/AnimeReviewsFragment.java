@@ -1,7 +1,6 @@
 package com.charlesmadere.hummingbird.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +17,8 @@ import butterknife.BindView;
 public class AnimeReviewsFragment extends BaseAnimeFragment {
 
     private static final String TAG = "AnimeReviewsFragment";
+
+    private AnimeReviewsAdapter mAdapter;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -36,29 +37,31 @@ public class AnimeReviewsFragment extends BaseAnimeFragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        mRecyclerView.setHasFixedSize(true);
-        DividerItemDecoration.apply(mRecyclerView);
-
-        final AnimeDigest animeDigest = getAnimeDigest();
-
-        if (animeDigest.hasReviews()) {
-            final AnimeReviewsAdapter adapter = new AnimeReviewsAdapter(getContext());
-            adapter.set(animeDigest.getReviews());
-            mRecyclerView.setAdapter(adapter);
-            mRecyclerView.setVisibility(View.VISIBLE);
-        } else {
-            mEmpty.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         return inflater.inflate(R.layout.fragment_anime_reviews, container, false);
+    }
+
+    @Override
+    public void onViewCreated(final View view, final Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mRecyclerView.setHasFixedSize(true);
+        DividerItemDecoration.apply(mRecyclerView);
+        mAdapter = new AnimeReviewsAdapter(getContext());
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected void showAnimeDigest(final AnimeDigest animeDigest) {
+        if (animeDigest.hasReviews()) {
+            mAdapter.set(animeDigest.getReviews());
+            mRecyclerView.setVisibility(View.VISIBLE);
+        } else {
+            mAdapter.set(null);
+            mEmpty.setVisibility(View.VISIBLE);
+        }
     }
 
 }

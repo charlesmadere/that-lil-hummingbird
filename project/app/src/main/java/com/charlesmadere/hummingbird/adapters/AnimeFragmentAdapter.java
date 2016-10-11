@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.util.SparseArrayCompat;
+import android.view.ViewGroup;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.fragments.AnimeCastingsFragment;
@@ -14,15 +16,18 @@ import com.charlesmadere.hummingbird.fragments.AnimeFranchiseFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeGalleryFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeQuotesFragment;
 import com.charlesmadere.hummingbird.fragments.AnimeReviewsFragment;
+import com.charlesmadere.hummingbird.fragments.BaseAnimeFragment;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
 import com.charlesmadere.hummingbird.models.AnimeType;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
 
     private final Context mContext;
     private final FragmentPage[] mFragmentPages;
+    private final SparseArrayCompat<WeakReference<BaseAnimeFragment>> mFragments;
 
 
     public AnimeFragmentAdapter(final FragmentActivity activity, final AnimeDigest animeDigest) {
@@ -65,6 +70,14 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
 
         mFragmentPages = new FragmentPage[fragmentPages.size()];
         fragmentPages.toArray(mFragmentPages);
+
+        mFragments = new SparseArrayCompat<>(getCount());
+    }
+
+    @Override
+    public void destroyItem(final ViewGroup container, final int position, final Object object) {
+        super.destroyItem(container, position, object);
+        mFragments.removeAt(position);
     }
 
     @Override
@@ -73,13 +86,37 @@ public class AnimeFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public Fragment getItem(final int position) {
-        return mFragmentPages[position].getItem();
+    public BaseAnimeFragment getItem(final int position) {
+        final BaseAnimeFragment fragment = (BaseAnimeFragment) mFragmentPages[position].getItem();
+        mFragments.put(position, new WeakReference<>(fragment));
+        return fragment;
     }
 
     @Override
     public CharSequence getPageTitle(final int position) {
         return mFragmentPages[position].getPageTitle();
+    }
+
+    @Override
+    public BaseAnimeFragment instantiateItem(final ViewGroup container, final int position) {
+        final BaseAnimeFragment fragment = (BaseAnimeFragment) super.instantiateItem(container,
+                position);
+        mFragments.put(position, new WeakReference<>(fragment));
+        return fragment;
+    }
+
+    public void showAnimeDigest() {
+        for (int i = 0; i < mFragments.size(); ++i) {
+            final WeakReference<BaseAnimeFragment> fragmentReference = mFragments.get(i);
+
+            if (fragmentReference != null) {
+                final BaseAnimeFragment fragment = fragmentReference.get();
+
+                if (fragment != null && fragment.isAlive()) {
+                    fragment.showAnimeDigest();
+                }
+            }
+        }
     }
 
 

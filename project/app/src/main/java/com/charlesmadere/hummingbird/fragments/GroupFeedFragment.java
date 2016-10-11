@@ -19,6 +19,7 @@ import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
+import com.charlesmadere.hummingbird.models.GroupDigest;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
@@ -84,26 +85,6 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
     }
 
     @Override
-    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        mRefreshLayout.setOnRefreshListener(this);
-        mRecyclerView.setHasFixedSize(true);
-        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
-        mAdapter = new FeedAdapter(getContext());
-        mRecyclerView.setAdapter(mAdapter);
-        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
-
-        mFeed = ObjectCache.get(this);
-
-        if (mFeed == null) {
-            fetchGroupStories();
-        } else {
-            showGroupStories(mFeed);
-        }
-    }
-
-    @Override
     public void onAttach(final Context context) {
         super.onAttach(context);
 
@@ -143,6 +124,18 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
     }
 
     @Override
+    public void onViewCreated(final View view, final Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mRefreshLayout.setOnRefreshListener(this);
+        mRecyclerView.setHasFixedSize(true);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
+        mAdapter = new FeedAdapter(getContext());
+        mRecyclerView.setAdapter(mAdapter);
+        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
+    }
+
+    @Override
     public void paginate() {
         mAdapter.setPaginating(true);
         Api.getGroupStories(getGroupDigest().getId(), mFeed,
@@ -171,6 +164,17 @@ public class GroupFeedFragment extends BaseGroupFragment implements ObjectCache.
         mError.setVisibility(View.GONE);
         mEmpty.setVisibility(View.VISIBLE);
         mRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    protected void showGroupDigest(final GroupDigest groupDigest) {
+        mFeed = ObjectCache.get(this);
+
+        if (mFeed == null) {
+            fetchGroupStories();
+        } else {
+            showGroupStories(mFeed);
+        }
     }
 
     private void showGroupStories(final Feed feed) {

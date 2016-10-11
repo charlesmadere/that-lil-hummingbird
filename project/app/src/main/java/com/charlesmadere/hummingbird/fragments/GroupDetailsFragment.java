@@ -65,14 +65,6 @@ public class GroupDetailsFragment extends BaseGroupFragment implements
     }
 
     @Override
-    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        mRefreshLayout.setOnRefreshListener(this);
-        showGroupDigest();
-    }
-
-    @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -94,19 +86,20 @@ public class GroupDetailsFragment extends BaseGroupFragment implements
         refreshGroupDigest();
     }
 
+    @Override
+    public void onViewCreated(final View view, final Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mRefreshLayout.setOnRefreshListener(this);
+    }
+
     private void refreshGroupDigest() {
         mRefreshLayout.setRefreshing(true);
         Api.getGroupDigest(getGroupDigest().getId(), new GetGroupDigestListener(this));
     }
 
     @Override
-    protected void setGroupDigest(final GroupDigest groupDigest) {
-        super.setGroupDigest(groupDigest);
-        showGroupDigest();
-    }
-
-    private void showGroupDigest() {
-        final Group group = getGroupDigest().getGroup();
+    protected void showGroupDigest(final GroupDigest groupDigest) {
+        final Group group = groupDigest.getGroup();
         mAboutTitle.setText(getString(R.string.about_x, group.getName()));
 
         if (group.hasAbout()) {

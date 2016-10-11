@@ -19,6 +19,7 @@ import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
+import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
@@ -84,26 +85,6 @@ public class UserFeedFragment extends BaseUserFragment implements ObjectCache.Ke
     }
 
     @Override
-    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        mRefreshLayout.setOnRefreshListener(this);
-        mRecyclerView.setHasFixedSize(true);
-        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
-        mAdapter = new FeedAdapter(getContext());
-        mRecyclerView.setAdapter(mAdapter);
-        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
-
-        mFeed = ObjectCache.get(this);
-
-        if (mFeed == null) {
-            fetchFeed();
-        } else {
-            showFeed(mFeed);
-        }
-    }
-
-    @Override
     public void onAttach(final Context context) {
         super.onAttach(context);
 
@@ -142,6 +123,18 @@ public class UserFeedFragment extends BaseUserFragment implements ObjectCache.Ke
         if (mFeed != null) {
             ObjectCache.put(mFeed, this);
         }
+    }
+
+    @Override
+    public void onViewCreated(final View view, final Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mRefreshLayout.setOnRefreshListener(this);
+        mRecyclerView.setHasFixedSize(true);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
+        mAdapter = new FeedAdapter(getContext());
+        mRecyclerView.setAdapter(mAdapter);
+        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
     }
 
     @Override
@@ -184,6 +177,17 @@ public class UserFeedFragment extends BaseUserFragment implements ObjectCache.Ke
         mRefreshLayout.setRefreshing(false);
         mFetchingFeed = false;
         mFeedListeners.onFeedFinishedLoading();
+    }
+
+    @Override
+    protected void showUserDigest(final UserDigest userDigest) {
+        mFeed = ObjectCache.get(this);
+
+        if (mFeed == null) {
+            fetchFeed();
+        } else {
+            showFeed(mFeed);
+        }
     }
 
 

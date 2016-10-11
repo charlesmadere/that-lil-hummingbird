@@ -3,7 +3,6 @@ package com.charlesmadere.hummingbird.fragments;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -99,10 +98,26 @@ public class AnimeDetailsFragment extends BaseAnimeFragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+            final Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_anime_details, container, false);
+    }
 
+    @OnClick(R.id.cvPoster)
+    void onPosterClick() {
         final AnimeDigest animeDigest = getAnimeDigest();
+        startActivity(GalleryActivity.getLaunchIntent(getContext(), animeDigest.getInfo(),
+                animeDigest.getInfo().getPosterImage()));
+    }
+
+    @OnClick(R.id.hbivYouTubeLink)
+    void onYouTubeLinkClick() {
+        MiscUtils.openUrl(getActivity(), getAnimeDigest().getInfo().getYouTubeVideoUrl());
+    }
+
+    @Override
+    protected void showAnimeDigest(final AnimeDigest animeDigest) {
         final AnimeDigest.Info info = animeDigest.getInfo();
         final Context context = getContext();
         final Resources resources = getResources();
@@ -131,11 +146,13 @@ public class AnimeDetailsFragment extends BaseAnimeFragment {
         }
 
         if (info.hasType()) {
+            // noinspection ConstantConditions
             mAnimeType.setHead(info.getType().getTextResId());
             mAnimeType.setVisibility(View.VISIBLE);
         }
 
         if (info.hasAgeRating()) {
+            // noinspection ConstantConditions
             mAgeRating.setHead(info.getAgeRating().getTextResId());
 
             if (info.hasAgeRatingGuide()) {
@@ -160,6 +177,7 @@ public class AnimeDetailsFragment extends BaseAnimeFragment {
 
         if (info.hasEpisodeCount() && info.getType() != AnimeType.MOVIE) {
             mEpisodeCount.setHead(numberFormat.format(info.getEpisodeCount()));
+            // noinspection ConstantConditions
             mEpisodeCount.setBody(resources.getQuantityText(R.plurals.episodes,
                     info.getEpisodeCount()));
             mEpisodeCount.setVisibility(View.VISIBLE);
@@ -180,6 +198,7 @@ public class AnimeDetailsFragment extends BaseAnimeFragment {
 
         if (info.hasStartedAiringDate()) {
             if (info.getType() == AnimeType.MOVIE) {
+                // noinspection ConstantConditions
                 mAired.setHead(info.getStartedAiringDate().getRelativeTimeText(context));
                 mAired.setVisibility(View.VISIBLE);
             } else if (info.getStartedAiringDate().isInTheFuture()) {
@@ -190,6 +209,7 @@ public class AnimeDetailsFragment extends BaseAnimeFragment {
                 mStartedAiring.setVisibility(View.VISIBLE);
 
                 if (info.hasFinishedAiringDate()) {
+                    // noinspection ConstantConditions
                     mFinishedAiring.setHead(info.getFinishedAiringDate().getRelativeTimeText(context));
                     mFinishedAiring.setVisibility(View.VISIBLE);
                 }
@@ -219,25 +239,6 @@ public class AnimeDetailsFragment extends BaseAnimeFragment {
         } else {
             mSynopsis.setText(R.string.no_synopsis_available);
         }
-    }
-
-    @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-            final Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_anime_details, container, false);
-    }
-
-    @OnClick(R.id.cvPoster)
-    void onPosterClick() {
-        final AnimeDigest animeDigest = getAnimeDigest();
-        startActivity(GalleryActivity.getLaunchIntent(getContext(), animeDigest.getInfo(),
-                animeDigest.getInfo().getPosterImage()));
-    }
-
-    @OnClick(R.id.hbivYouTubeLink)
-    void onYouTubeLinkClick() {
-        MiscUtils.openUrl(getActivity(), getAnimeDigest().getInfo().getYouTubeVideoUrl());
     }
 
 }

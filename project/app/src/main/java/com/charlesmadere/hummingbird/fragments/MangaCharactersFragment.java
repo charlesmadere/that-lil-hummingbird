@@ -56,9 +56,9 @@ public class MangaCharactersFragment extends BaseMangaFragment {
     protected void showMangaDigest(final MangaDigest mangaDigest) {
         if (mangaDigest.hasCharacters()) {
             mAdapter.set(mangaDigest.getCharacters());
-            mRecyclerView.setAdapter(mAdapter);
             mRecyclerView.setVisibility(View.VISIBLE);
         } else {
+            mAdapter.set(null);
             mEmpty.setVisibility(View.VISIBLE);
         }
     }

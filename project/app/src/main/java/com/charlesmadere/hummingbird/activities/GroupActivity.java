@@ -9,7 +9,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -52,6 +51,7 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
     private static final String EXTRA_GROUP_NAME = CNAME + ".GroupName";
 
     private GroupDigest mGroupDigest;
+    private GroupFragmentAdapter mAdapter;
     private String mGroupId;
     private UiColorSet mUiColorSet;
 
@@ -311,14 +311,15 @@ public class GroupActivity extends BaseDrawerActivity implements BaseGroupFragme
                     this, mCoverImage, mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
         }
 
-        final PagerAdapter adapter = mViewPager.getAdapter();
-
-        if (adapter == null) {
-            mViewPager.setAdapter(new GroupFragmentAdapter(this));
+        if (mAdapter == null) {
+            mAdapter = new GroupFragmentAdapter(this);
+            mViewPager.setAdapter(mAdapter);
             mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
             mViewPager.setOffscreenPageLimit(3);
             mTabLayout.setupWithViewPager(mViewPager);
         }
+
+        mAdapter.showGroupDigest();
 
         supportInvalidateOptionsMenu();
         mSimpleProgressView.fadeOut();

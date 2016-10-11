@@ -2,7 +2,6 @@ package com.charlesmadere.hummingbird.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.Space;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -43,9 +42,6 @@ public class UserProfileFragment extends BaseUserFragment implements
     @BindView(R.id.favoriteMangaView)
     FavoriteMangaView mFavoriteMangaView;
 
-    @BindView(R.id.nestedScrollView)
-    NestedScrollView mNestedScrollView;
-
     @BindView(R.id.refreshLayout)
     RefreshLayout mRefreshLayout;
 
@@ -66,14 +62,6 @@ public class UserProfileFragment extends BaseUserFragment implements
     }
 
     @Override
-    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        mRefreshLayout.setOnRefreshListener(this);
-        showUserDigest();
-    }
-
-    @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -85,15 +73,16 @@ public class UserProfileFragment extends BaseUserFragment implements
         refreshUserDigest();
     }
 
+    @Override
+    public void onViewCreated(final View view, final Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mRefreshLayout.setOnRefreshListener(this);
+    }
+
     private void refreshUserDigest() {
         mRefreshLayout.setRefreshing(true);
         Api.getUserDigest(getUserId(), new GetUserDigestListener(this));
-    }
-
-    @Override
-    protected void setUserDigest(final UserDigest userDigest) {
-        super.setUserDigest(userDigest);
-        showUserDigest();
     }
 
     private void showRefreshError() {
@@ -101,8 +90,8 @@ public class UserProfileFragment extends BaseUserFragment implements
         mRefreshLayout.setRefreshing(false);
     }
 
-    private void showUserDigest() {
-        final UserDigest userDigest = getUserDigest();
+    @Override
+    protected void showUserDigest(final UserDigest userDigest) {
         mAboutUserView.setContent(userDigest);
 
         if (userDigest.getInfo().hasTopGenres()) {
