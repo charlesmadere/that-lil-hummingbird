@@ -85,7 +85,7 @@ public class FeedPostFragment extends BaseBottomSheetDialogFragment {
 
     @OnClick(R.id.ibClose)
     void onCloseClick() {
-        dismiss();
+        dismissAllowingStateLoss();
     }
 
     @Override
@@ -108,7 +108,7 @@ public class FeedPostFragment extends BaseBottomSheetDialogFragment {
     @OnClick(R.id.ibPost)
     void onPostClick() {
         mListener.onFeedPostSubmit();
-        dismiss();
+        dismissAllowingStateLoss();
     }
 
     private void pollField() {

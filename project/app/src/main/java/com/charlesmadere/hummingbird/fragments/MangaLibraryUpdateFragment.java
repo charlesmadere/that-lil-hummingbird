@@ -203,7 +203,7 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
 
     @OnClick(R.id.ibClose)
     void onCloseClick() {
-        dismiss();
+        dismissAllowingStateLoss();
     }
 
     @Override
@@ -271,7 +271,7 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
     @OnClick(R.id.ibSave)
     void onSaveClick() {
         mListener.onUpdateLibraryEntry();
-        dismiss();
+        dismissAllowingStateLoss();
     }
 
     @Override

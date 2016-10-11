@@ -72,7 +72,7 @@ public class AnimeEpisodeFragment extends BaseBottomSheetDialogFragment {
 
     @OnClick(R.id.ibClose)
     void onCloseClick() {
-        dismiss();
+        dismissAllowingStateLoss();
     }
 
     @Override
