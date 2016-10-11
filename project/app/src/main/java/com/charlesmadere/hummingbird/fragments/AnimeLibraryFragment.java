@@ -54,8 +54,14 @@ public class AnimeLibraryFragment extends BaseLibraryFragment implements
         return mAdapter;
     }
 
+    @Nullable
     @Override
     public AnimeLibraryEntry getAnimeLibraryEntry(final String libraryEntryId) {
+        if (mFeed == null || !mFeed.hasAnimeLibraryEntries()) {
+            return null;
+        }
+
+        // noinspection ConstantConditions
         for (final AnimeLibraryEntry libraryEntry : mFeed.getAnimeLibraryEntries()) {
             if (libraryEntryId.equalsIgnoreCase(libraryEntry.getId())) {
                 return libraryEntry;

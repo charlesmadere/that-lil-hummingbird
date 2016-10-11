@@ -120,14 +120,20 @@ public class AnimeActivity extends BaseDrawerActivity implements
         return TAG;
     }
 
+    @Nullable
     @Override
     public AnimeDigest getAnimeDigest() {
         return mAnimeDigest;
     }
 
+    @Nullable
     @Override
     public AnimeLibraryEntry getAnimeLibraryEntry(final String libraryEntryId) {
-        return mAnimeDigest.getLibraryEntry();
+        if (mAnimeDigest == null) {
+            return null;
+        } else {
+            return mAnimeDigest.getLibraryEntry();
+        }
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -85,6 +86,7 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         return fragment;
     }
 
+    @Nullable
     public MangaDigest getDigest() {
         return ((DigestListener) mListener).getMangaDigest();
     }
@@ -94,6 +96,7 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         return TAG;
     }
 
+    @Nullable
     public MangaLibraryEntry getLibraryEntry() {
         return ((LibraryEntryListener) mListener).getMangaLibraryEntry(mLibraryEntryId);
     }
@@ -120,9 +123,19 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
         if (TextUtils.isEmpty(mLibraryEntryId)) {
             digest = getDigest();
             libraryEntry = null;
+
+            if (digest == null) {
+                dismissAllowingStateLoss();
+                return;
+            }
         } else {
             digest = null;
             libraryEntry = getLibraryEntry();
+
+            if (libraryEntry == null) {
+                dismissAllowingStateLoss();
+                return;
+            }
         }
 
         if (mLibraryUpdate == null) {
@@ -291,10 +304,12 @@ public class MangaLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
 
 
     public interface DigestListener extends Listener {
+        @Nullable
         MangaDigest getMangaDigest();
     }
 
     public interface LibraryEntryListener extends Listener {
+        @Nullable
         MangaLibraryEntry getMangaLibraryEntry(final String libraryEntryId);
     }
 

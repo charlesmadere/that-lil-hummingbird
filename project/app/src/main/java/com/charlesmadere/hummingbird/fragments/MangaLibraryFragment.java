@@ -59,8 +59,14 @@ public class MangaLibraryFragment extends BaseLibraryFragment implements
         return TAG;
     }
 
+    @Nullable
     @Override
     public MangaLibraryEntry getMangaLibraryEntry(final String libraryEntryId) {
+        if (mFeed == null || !mFeed.hasMangaLibraryEntries()) {
+            return null;
+        }
+
+        // noinspection ConstantConditions
         for (final MangaLibraryEntry libraryEntry : mFeed.getMangaLibraryEntries()) {
             if (libraryEntryId.equalsIgnoreCase(libraryEntry.getId())) {
                 return libraryEntry;

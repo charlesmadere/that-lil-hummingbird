@@ -118,14 +118,20 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
         return TAG;
     }
 
+    @Nullable
     @Override
     public MangaDigest getMangaDigest() {
         return mMangaDigest;
     }
 
+    @Nullable
     @Override
     public MangaLibraryEntry getMangaLibraryEntry(final String libraryEntryId) {
-        return mMangaDigest.getLibraryEntry();
+        if (mMangaDigest == null) {
+            return null;
+        } else {
+            return mMangaDigest.getLibraryEntry();
+        }
     }
 
     @Override
