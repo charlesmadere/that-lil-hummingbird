@@ -54,6 +54,7 @@ public class AnimeActivity extends BaseDrawerActivity implements
     private static final String EDIT_TAG = AnimeLibraryUpdateFragment.TAG + "|Edit";
 
     private AnimeDigest mAnimeDigest;
+    private AnimeFragmentAdapter mAdapter;
     private String mAnimeId;
     private UiColorSet mUiColorSet;
 
@@ -269,10 +270,15 @@ public class AnimeActivity extends BaseDrawerActivity implements
                     mCoverImage, mAppBarLayout, mCollapsingToolbarLayout, mTabLayout);
         }
 
-        mViewPager.setAdapter(new AnimeFragmentAdapter(this, mAnimeDigest));
-        mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
-        mViewPager.setOffscreenPageLimit(3);
-        mTabLayout.setupWithViewPager(mViewPager);
+        if (mAdapter == null) {
+            mAdapter = new AnimeFragmentAdapter(this, mAnimeDigest);
+            mViewPager.setAdapter(mAdapter);
+            mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.root_padding));
+            mViewPager.setOffscreenPageLimit(3);
+            mTabLayout.setupWithViewPager(mViewPager);
+        }
+
+        mAdapter.showAnimeDigest();
 
         supportInvalidateOptionsMenu();
         mSimpleProgressView.fadeOut();
