@@ -10,6 +10,7 @@ import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 
 import com.charlesmadere.hummingbird.misc.Timber;
 
@@ -26,8 +27,19 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
 
 
     private void autoExpand() {
-        final CoordinatorLayout coordinatorLayout = findCoordinatorLayout(
-                getDialog().getWindow().getDecorView());
+        final Dialog dialog = getDialog();
+
+        if (dialog == null) {
+            return;
+        }
+
+        final Window window = dialog.getWindow();
+
+        if (window == null) {
+            return;
+        }
+
+        final CoordinatorLayout coordinatorLayout = findCoordinatorLayout(window.getDecorView());
 
         if (coordinatorLayout == null) {
             return;
