@@ -323,26 +323,28 @@ public final class MiscUtils {
             return;
         }
 
+        final Uri uri = Uri.parse(url);
+
         try {
             final CustomTabsIntent intent = new CustomTabsIntent.Builder()
                     .setToolbarColor(MiscUtils.getAttrColor(activity, R.attr.colorPrimary))
                     .build();
 
-            intent.launchUrl(activity, Uri.parse(url));
+            intent.launchUrl(activity, uri);
             return;
         } catch (final ActivityNotFoundException e) {
-            Timber.e(TAG, "Unable to open Chrome Custom Tab to URL: \"" + url + '"', e);
+            Timber.e(TAG, "Unable to open Chrome Custom Tab to URI: \"" + uri + '"', e);
         }
 
         try {
             final Intent intent = new Intent()
                     .setAction(Intent.ACTION_VIEW)
-                    .setData(Uri.parse(url));
+                    .setData(uri);
 
             activity.startActivity(intent);
             return;
         } catch (final ActivityNotFoundException e) {
-            Timber.e(TAG, "Unable to open browser to URL: \"" + url + '"', e);
+            Timber.e(TAG, "Unable to open browser to URI: \"" + uri + '"', e);
         }
 
         Toast.makeText(activity, R.string.unable_to_open_link, Toast.LENGTH_LONG).show();
