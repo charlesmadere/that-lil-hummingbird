@@ -80,6 +80,13 @@
                     tools:visibility="visible"
                     style="@style/ResponsiveWidthCardItem" />
                 <com.charlesmadere.hummingbird.views.HeadBodyItemView
+                    android:id="@+id/hbivYouTubeLink"
+                    android:visibility="gone"
+                    app:headText="@string/youtube_link"
+                    app:iconDrawable="@drawable/ic_ondemand_video_24dp"
+                    tools:visibility="visible"
+                    style="@style/ResponsiveWidthCardItem" />
+                <com.charlesmadere.hummingbird.views.HeadBodyItemView
                     android:id="@+id/hbivGenres"
                     android:visibility="gone"
                     tools:visibility="visible"
@@ -132,13 +139,6 @@
                 <com.charlesmadere.hummingbird.views.HeadBodyItemView
                     android:id="@+id/hbivProducers"
                     android:visibility="gone"
-                    tools:visibility="visible"
-                    style="@style/ResponsiveWidthCardItem" />
-                <com.charlesmadere.hummingbird.views.HeadBodyItemView
-                    android:id="@+id/hbivYouTubeLink"
-                    android:visibility="gone"
-                    app:headText="@string/youtube_link"
-                    app:iconDrawable="@drawable/ic_ondemand_video_24dp"
                     tools:visibility="visible"
                     style="@style/ResponsiveWidthCardItem" />
             </LinearLayout>

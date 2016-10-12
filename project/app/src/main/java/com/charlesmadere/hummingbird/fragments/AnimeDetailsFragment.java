@@ -162,6 +162,11 @@ public class AnimeDetailsFragment extends BaseAnimeFragment {
             mAgeRating.setVisibility(View.VISIBLE);
         }
 
+        if (info.hasYouTubeVideoId()) {
+            mYouTubeLink.setBody(info.getYouTubeVideoUrl());
+            mYouTubeLink.setVisibility(View.VISIBLE);
+        }
+
         if (info.hasGenres()) {
             mGenres.setHead(info.getGenresString(resources));
             mGenres.setBody(resources.getQuantityText(R.plurals.genres, info.getGenresSize()));
@@ -227,11 +232,6 @@ public class AnimeDetailsFragment extends BaseAnimeFragment {
             mProducers.setBody(resources.getQuantityText(R.plurals.producers,
                     animeDigest.getProducersSize()));
             mProducers.setVisibility(View.VISIBLE);
-        }
-
-        if (info.hasYouTubeVideoId()) {
-            mYouTubeLink.setBody(info.getYouTubeVideoUrl());
-            mYouTubeLink.setVisibility(View.VISIBLE);
         }
 
         if (info.hasSynopsis()) {
