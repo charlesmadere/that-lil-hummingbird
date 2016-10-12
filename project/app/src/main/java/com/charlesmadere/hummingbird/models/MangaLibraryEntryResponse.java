@@ -17,11 +17,11 @@ public class MangaLibraryEntryResponse implements Parcelable {
 
 
     public MangaLibraryEntry getLibraryEntry() {
-        return mLibraryEntry;
-    }
+        if (mLibraryEntry.getManga() == null) {
+            mLibraryEntry.setManga(mManga.get(0));
+        }
 
-    public Manga getManga() {
-        return mManga.get(0);
+        return mLibraryEntry;
     }
 
     @Override

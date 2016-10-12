@@ -157,9 +157,20 @@ public class AnimeLibraryEntry implements Parcelable {
         return mIsRewatching;
     }
 
+    public void setAnime(final Anime anime) {
+        if (anime == null) {
+            throw new IllegalArgumentException("anime parameter can't be null");
+        } else if (!mAnimeId.equalsIgnoreCase(anime.getId())) {
+            throw new IllegalArgumentException("anime IDs don't match (" + mAnimeId +
+                    ") (" + anime.getId() + ')');
+        }
+
+        mAnime = anime;
+    }
+
     @Override
     public String toString() {
-        return mAnime.getTitle();
+        return mAnime.toString();
     }
 
     public void update(final AnimeLibraryEntry libraryEntry) {

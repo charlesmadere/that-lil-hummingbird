@@ -16,11 +16,11 @@ public class AnimeLibraryEntryResponse implements Parcelable {
     private ArrayList<Anime> mAnime;
 
 
-    public Anime getAnime() {
-        return mAnime.get(0);
-    }
-
     public AnimeLibraryEntry getLibraryEntry() {
+        if (mLibraryEntry.getAnime() == null) {
+            mLibraryEntry.setAnime(mAnime.get(0));
+        }
+
         return mLibraryEntry;
     }
 

@@ -161,6 +161,17 @@ public class MangaLibraryEntry implements Parcelable {
         return mIsReReading;
     }
 
+    public void setManga(final Manga manga) {
+        if (manga == null) {
+            throw new IllegalArgumentException("manga parameter can't be null");
+        } else if (!mMangaId.equalsIgnoreCase(manga.getId())) {
+            throw new IllegalArgumentException("manga IDs don't match (" + mMangaId +
+                    ") (" + manga.getId() + ')');
+        }
+
+        mManga = manga;
+    }
+
     @Override
     public String toString() {
         return mManga.toString();
