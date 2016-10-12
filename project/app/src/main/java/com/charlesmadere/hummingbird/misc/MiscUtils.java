@@ -326,8 +326,22 @@ public final class MiscUtils {
         final Uri uri = Uri.parse(url);
 
         try {
+            Integer toolbarColor = null;
+
+            if (activity instanceof PaletteUtils.Listener) {
+                final PaletteUtils.Listener listener = (PaletteUtils.Listener) activity;
+
+                if (listener.getUiColorSet() != null) {
+                    toolbarColor = listener.getUiColorSet().getDarkVibrantColor();
+                }
+            }
+
+            if (toolbarColor == null) {
+                toolbarColor = getAttrColor(activity, R.attr.colorPrimary);
+            }
+
             final CustomTabsIntent intent = new CustomTabsIntent.Builder()
-                    .setToolbarColor(MiscUtils.getAttrColor(activity, R.attr.colorPrimary))
+                    .setToolbarColor(toolbarColor)
                     .build();
 
             intent.launchUrl(activity, uri);
