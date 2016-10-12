@@ -3,8 +3,8 @@ package com.charlesmadere.hummingbird.misc;
 public final class Constants {
 
     public static final String[] MISSING_ARTWORK = { "/assets/missing-anime-cover.jpg",
-            "/assets/processing-avatar.jpg", "/cover_images/original/missing.png",
-            "/thumbnails/original/missing.png" };
+            "/assets/processing-avatar.jpg", "/avatars/original/missing.png",
+            "/cover_images/original/missing.png", "/thumbnails/original/missing.png" };
 
     public static final String ANIME = "anime";
     public static final String ANIME_SHORT = "a";
