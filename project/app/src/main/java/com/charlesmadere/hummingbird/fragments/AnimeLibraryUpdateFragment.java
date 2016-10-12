@@ -121,6 +121,12 @@ public class AnimeLibraryUpdateFragment extends BaseBottomSheetDialogFragment im
             digest = getDigest();
             libraryEntry = null;
 
+            // The below if is a dumb hack. Sigh. Basically it's possible for this Fragment to
+            // be created by the Android system in a way that the AnimeDigest is null. This only
+            // happens if Android terminated the process in a way that it can be later restored
+            // WHILE this Fragment was open. So in this case... we dismiss the Fragment... Same
+            // goes for the other libraryEntry == null statement below.
+
             if (digest == null) {
                 dismissAllowingStateLoss();
                 return;
