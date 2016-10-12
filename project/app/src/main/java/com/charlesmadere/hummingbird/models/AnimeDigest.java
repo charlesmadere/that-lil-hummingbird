@@ -702,7 +702,7 @@ public class AnimeDigest implements Hydratable, Parcelable {
         private String mSynopsis;
 
         @Nullable
-        @SerializedName("youtube_id")
+        @SerializedName("youtube_video_id")
         private String mYouTubeVideoId;
 
 
