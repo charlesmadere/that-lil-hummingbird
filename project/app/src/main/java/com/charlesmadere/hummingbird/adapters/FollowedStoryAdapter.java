@@ -27,6 +27,24 @@ public class FollowedStoryAdapter extends BaseMultiPaginationAdapter {
 
     public FollowedStoryAdapter(final Context context) {
         super(context, VIEW_KEY_MAP);
+        setHasStableIds(true);
+    }
+
+    @Override
+    public long getItemId(final int position) {
+        if (isPaginating() && position == getItemCount() - 1) {
+            return Long.MIN_VALUE;
+        }
+
+        final Object item = getItem(position);
+
+        if (item instanceof FollowedStory) {
+            return Long.MIN_VALUE + 1L;
+        } else if (item instanceof String) {
+            return Long.MIN_VALUE + 2L;
+        } else {
+            return item.hashCode();
+        }
     }
 
     @Override

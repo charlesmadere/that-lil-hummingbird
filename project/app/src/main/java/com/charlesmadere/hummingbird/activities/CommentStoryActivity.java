@@ -162,7 +162,7 @@ public class CommentStoryActivity extends BaseDrawerActivity implements CommentF
         switch (item.getItemId()) {
             case R.id.miViewGroup:
                 final Group group = mCommentStory.getGroup();
-                startActivity(GroupActivity.getLaunchIntent(this, group.getId(), group.getName()));
+                startActivity(GroupActivity.getLaunchIntent(this, group));
                 return true;
 
             case R.id.miViewPoster:

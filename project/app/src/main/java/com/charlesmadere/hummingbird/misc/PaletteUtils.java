@@ -50,11 +50,13 @@ public final class PaletteUtils {
             throw new IllegalArgumentException("url parameter can't be null / empty");
         }
 
-        if (!parallaxCoverImage.hasDifferentImageThan(url)) {
+        Uri uri = parallaxCoverImage.getUri();
+
+        if (TextUtils.equals(uri == null ? null : uri.toString(), url)) {
             return;
         }
 
-        final Uri uri = Uri.parse(url);
+        uri = Uri.parse(url);
 
         if (MiscUtils.isLowRamDevice()) {
             parallaxCoverImage.setImageURI(uri);
@@ -149,7 +151,7 @@ public final class PaletteUtils {
             });
 
             final AnimatorSet animatorSet = new AnimatorSet();
-            animatorSet.setDuration(appBarLayout.getResources().getInteger(R.integer.color_duration));
+            animatorSet.setDuration(appBarLayout.getResources().getInteger(R.integer.animation_duration));
             animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
             animatorSet.playTogether(appBarAnimator, collapsingToolbarStatusBarAnimator,
                     collapsingToolbarContentAnimator);

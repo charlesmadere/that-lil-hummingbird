@@ -16,6 +16,7 @@ import com.charlesmadere.hummingbird.models.LaunchScreen;
 import com.charlesmadere.hummingbird.models.NightMode;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
@@ -77,7 +78,9 @@ public class ThatLilHummingbird extends Application {
         super.onCreate();
         sInstance = this;
 
-        Fabric.with(this, new Crashlytics());
+        Fabric.with(this, new Crashlytics.Builder()
+                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                .build());
 
         Timber.d(TAG, "Application created");
         Crashlytics.setBool(Constants.DEBUG, BuildConfig.DEBUG);

@@ -56,7 +56,7 @@ public final class ObjectCache {
         }
     }
 
-    public static void put(final Object object, final KeyProvider keyProvider) {
+    public static void put(@Nullable final Object object, final KeyProvider keyProvider) {
         if (keyProvider == null) {
             throw new IllegalArgumentException("keyProvider parameter can't be null");
         }
@@ -64,7 +64,7 @@ public final class ObjectCache {
         put(object, keyProvider.getObjectCacheKeys());
     }
 
-    public static void put(final Object object, final String... keys) {
+    public static void put(@Nullable final Object object, final String... keys) {
         final String key = buildKey(keys);
         final int oldSize, newSize;
 

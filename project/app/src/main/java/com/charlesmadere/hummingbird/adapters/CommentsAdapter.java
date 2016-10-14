@@ -30,11 +30,29 @@ public class CommentsAdapter extends BaseMultiPaginationAdapter implements Compa
 
     public CommentsAdapter(final Context context) {
         super(context, VIEW_KEY_MAP);
+        setHasStableIds(true);
     }
 
     @Override
     public int compare(final AbsSubstory o1, final AbsSubstory o2) {
         return SimpleDate.CHRONOLOGICAL_ORDER.compare(o1.getCreatedAt(), o2.getCreatedAt());
+    }
+
+    @Override
+    public long getItemId(final int position) {
+        if (isPaginating() && position == getItemCount() - 1) {
+            return Long.MIN_VALUE;
+        }
+
+        final Object item = getItem(position);
+
+        if (item instanceof CommentStory) {
+            return Long.MIN_VALUE + 1L;
+        } else if (item instanceof String) {
+            return Long.MIN_VALUE + 2L;
+        } else {
+            return item.hashCode();
+        }
     }
 
     @Override

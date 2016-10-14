@@ -7,7 +7,6 @@
     <dimen name="avatar_small">40dp</dimen>
     <dimen name="central_content_width">280dp</dimen>
     <dimen name="list_item_height">48dp</dimen>
-    <dimen name="navigation_bar_height">48dp</dimen>
     <dimen name="navigation_drawer_item_height">42dp</dimen>
     <dimen name="navigation_drawer_view_width">280dp</dimen>
     <dimen name="parallax_cover_image_height">192dp</dimen>
@@ -17,7 +16,6 @@
     <dimen name="root_padding_half">8dp</dimen>
     <dimen name="root_padding_quadruple">64dp</dimen>
     <dimen name="root_padding_quarter">4dp</dimen>
-    <dimen name="status_bar_height">25dp</dimen>
     <dimen name="text_large">16sp</dimen>
     <dimen name="text_normal">14sp</dimen>
     <dimen name="text_small">12sp</dimen>

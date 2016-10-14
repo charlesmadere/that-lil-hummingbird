@@ -32,7 +32,7 @@ public class SimpleProgressView extends FrameLayout {
 
     private void fade(float start, float end, final int startVisibility, final int endVisibility) {
         ValueAnimator animator = ValueAnimator.ofFloat(start, end);
-        animator.setDuration(getResources().getInteger(R.integer.color_duration));
+        animator.setDuration(getResources().getInteger(R.integer.animation_duration));
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
 
         animator.addListener(new SimpleAnimatorListener() {

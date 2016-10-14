@@ -53,6 +53,12 @@
                     android:visibility="gone"
                     tools:text="Rating 2.5"
                     tools:visibility="visible" />
+                <com.charlesmadere.hummingbird.views.TypefaceTextView
+                    android:id="@+id/tvRereading"
+                    android:text="@string/rereading"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    style="@style/MediaRewatching" />
             </LinearLayout>
         </LinearLayout>
         <android.support.v4.widget.Space

@@ -47,6 +47,9 @@ public class AnimeLibraryEntryItemView extends CardView implements AdapterView<A
     @BindView(R.id.tvGenres)
     TextView mGenres;
 
+    @BindView(R.id.tvRewatching)
+    TextView mRewatching;
+
     @BindView(R.id.tvAnimeType)
     TextView mType;
 
@@ -96,6 +99,7 @@ public class AnimeLibraryEntryItemView extends CardView implements AdapterView<A
         mTitle.setText(anime.getTitle());
 
         if (anime.hasType()) {
+            // noinspection ConstantConditions
             mType.setText(anime.getType().getTextResId());
             mType.setVisibility(VISIBLE);
         } else {
@@ -116,18 +120,20 @@ public class AnimeLibraryEntryItemView extends CardView implements AdapterView<A
                     mNumberFormat.format(mLibraryEntry.getEpisodesWatched()),
                     mNumberFormat.format(anime.getEpisodeCount())));
         } else {
-            mProgress.setText(R.string.progress,
-                    mNumberFormat.format(mLibraryEntry.getEpisodesWatched()));
+            mProgress.setText(R.string.progress, mNumberFormat.format(
+                    mLibraryEntry.getEpisodesWatched()));
         }
 
         if (mLibraryEntry.hasRating()) {
-            mRating.setText(R.string.rating,
-                    mNumberFormat.format(mLibraryEntry.getRating().getValue()));
+            // noinspection ConstantConditions
+            mRating.setText(R.string.rating, mNumberFormat.format(
+                    mLibraryEntry.getRating().getValue()));
             mRating.setVisibility(VISIBLE);
         } else {
             mRating.setVisibility(GONE);
         }
 
+        mRewatching.setVisibility(mLibraryEntry.isRewatching() ? VISIBLE : GONE);
         mPlusOneFeedButton.setVisibility(mLibraryEntry.canBeIncremented() ? VISIBLE : GONE);
     }
 

@@ -214,8 +214,7 @@ public final class DeepLinkUtils {
             intentStack.add(AnimeReviewsActivity.getLaunchIntent(activity, paths[1]));
             // https://hummingbird.me/anime/rwby-ii/reviews/10090
             if (paths.length >= 4) {
-                intentStack.add(AnimeReviewActivity.getLaunchIntent(activity, paths[1],
-                        paths[3]));
+                intentStack.add(AnimeReviewActivity.getLaunchIntent(activity, paths[1], paths[3]));
             }
         }
     }

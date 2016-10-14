@@ -50,11 +50,14 @@ public class MangaLibraryEntryItemView extends CardView implements AdapterView<M
     @BindView(R.id.tvGenres)
     TextView mGenres;
 
-    @BindView(R.id.tvMangaType)
-    TextView mMangaType;
+    @BindView(R.id.tvRereading)
+    TextView mRereading;
 
     @BindView(R.id.tvTitle)
     TextView mTitle;
+
+    @BindView(R.id.tvMangaType)
+    TextView mType;
 
     @BindView(R.id.feedButtons)
     View mFeedButtons;
@@ -99,10 +102,11 @@ public class MangaLibraryEntryItemView extends CardView implements AdapterView<M
         mTitle.setText(manga.getTitle());
 
         if (manga.hasType()) {
-            mMangaType.setText(manga.getType().getTextResId());
-            mMangaType.setVisibility(VISIBLE);
+            // noinspection ConstantConditions
+            mType.setText(manga.getType().getTextResId());
+            mType.setVisibility(VISIBLE);
         } else {
-            mMangaType.setVisibility(GONE);
+            mType.setVisibility(GONE);
         }
 
         final Resources res = getResources();
@@ -133,6 +137,7 @@ public class MangaLibraryEntryItemView extends CardView implements AdapterView<M
         }
 
         if (mLibraryEntry.hasRating()) {
+            // noinspection ConstantConditions
             mRating.setText(R.string.rating, mNumberFormat.format(
                     mLibraryEntry.getRating().getValue()));
             mRating.setVisibility(VISIBLE);
@@ -140,6 +145,7 @@ public class MangaLibraryEntryItemView extends CardView implements AdapterView<M
             mRating.setVisibility(GONE);
         }
 
+        mRereading.setVisibility(mLibraryEntry.isReReading() ? VISIBLE : GONE);
         mPlusOneFeedButton.setVisibility(mLibraryEntry.canBeIncremented() ? VISIBLE : GONE);
     }
 

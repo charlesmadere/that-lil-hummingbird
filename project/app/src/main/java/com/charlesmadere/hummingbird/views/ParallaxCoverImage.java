@@ -4,7 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
-import android.text.TextUtils;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
@@ -35,23 +35,20 @@ public class ParallaxCoverImage extends SimpleDraweeView {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public boolean hasDifferentImageThan(final String uriString) {
-        return !TextUtils.equals(uriString, mUri == null ? null : mUri.toString());
+    @Nullable
+    public Uri getUri() {
+        return mUri;
     }
 
     public void setController(final Uri uri, final DraweeController draweeController) {
-        if (hasDifferentImageThan(uri == null ? null : uri.toString())) {
-            mUri = uri;
-            super.setController(draweeController);
-        }
+        mUri = uri;
+        super.setController(draweeController);
     }
 
     @Override
     public void setImageURI(final Uri uri) {
-        if (hasDifferentImageThan(uri == null ? null : uri.toString())) {
-            mUri = uri;
-            super.setImageURI(uri);
-        }
+        mUri = uri;
+        super.setImageURI(uri);
     }
 
 }
