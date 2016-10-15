@@ -78,7 +78,6 @@
     <string name="error_deleting_library_entry">Error deleting library entry! Please check your network connection and try again.</string>
     <string name="error_editing_library_entry">Error editing library entry! Please check your network connection and try again.</string>
     <string name="error_loading_anime">Error loading anime! Please check your network connection and try again.</string>
-    <string name="error_loading_anime_library">Error loading anime library</string>
     <string name="error_loading_anime_quotes">Error loading anime quotes</string>
     <string name="error_loading_anime_review">Error loading anime review</string>
     <string name="error_loading_anime_reviews">Error loading anime reviews</string>
@@ -88,7 +87,6 @@
     <string name="error_loading_currently_reading_library">Error loading currently reading library</string>
     <string name="error_loading_currently_watching_library">Error loading currently watching library</string>
     <string name="error_loading_dropped_library">Error loading dropped library</string>
-    <string name="error_loading_favorites">Error loading favorites</string>
     <string name="error_loading_feed">Error loading feed</string>
     <string name="error_loading_followers_list">Error loading followers list</string>
     <string name="error_loading_following_list">Error loading following list</string>
@@ -105,7 +103,6 @@
     <string name="error_loading_reviews">Error loading reviews</string>
     <string name="error_loading_search_results">Error loading search results</string>
     <string name="error_loading_story">Error loading story</string>
-    <string name="error_loading_timeline">Error loading timeline</string>
     <string name="error_loading_user">Error loading user</string>
     <string name="error_loading_user_check_network_connection">Error loading user! Please check your network connection and try again.</string>
     <string name="error_loading_your_profile_check_network_connection">Error loading your profile! Please check your network connection and try again.</string>
@@ -173,7 +170,6 @@
     <string name="library_sorting">Library sorting</string>
     <string name="library_updates">Library Updates</string>
     <string name="life_spent_on_anime">Life spent on anime</string>
-    <string name="lives_in">Lives in</string>
     <string name="location">Location</string>
     <string name="login">Login</string>
     <string name="log_viewer">Log Viewer</string>
