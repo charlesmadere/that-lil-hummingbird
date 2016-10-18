@@ -134,8 +134,6 @@
     <string name="general">General</string>
     <string name="genre">Genre</string>
     <string name="genres">Genres</string>
-    <string name="get_hummingbird">Get Hummingbird</string>
-    <string name="get_hummingbird_pro">Get Hummingbird Pro</string>
     <string name="google_play_services_error_cant_be_resolved">Sorry, but your Google Play Services error (%1$d) can\'t be resolved.</string>
     <string name="google_play_services_error_has_been_resolved">Google Play Services error has been resolved!</string>
     <string name="group_activity">Group Activity</string>
