@@ -184,13 +184,17 @@ public final class JsoupUtils {
         fixIframe(document);
         fixImg(document);
 
-        final String html = document.body().toString().trim();
+        text = document.body().toString().trim();
+
+        if (TextUtils.isEmpty(text)) {
+            return text;
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT);
+            return Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT);
         } else {
             // noinspection deprecation
-            return Html.fromHtml(html);
+            return Html.fromHtml(text);
         }
     }
 
