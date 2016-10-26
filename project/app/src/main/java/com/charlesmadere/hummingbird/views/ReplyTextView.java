@@ -8,12 +8,9 @@ import android.util.AttributeSet;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
-import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
 
 public class ReplyTextView extends LinkTextView {
-
-    private static final String TAG = "ReplyTextView";
 
     private ForegroundColorSpan mUserSpan;
 
@@ -42,13 +39,16 @@ public class ReplyTextView extends LinkTextView {
         try {
             builder.append(content.getReply());
         } catch (final RuntimeException e) {
-            Timber.e(TAG, "error appending reply (" + content.getStoryId() +
-                    ") (" + content.getId() + "): " + content.getPlainTextReply(), e);
             throw new RuntimeException("error appending reply (" + content.getStoryId() +
                     ") (" + content.getId() + ")", e);
         }
 
-        setText(builder);
+        try {
+            setText(builder);
+        } catch (final RuntimeException e) {
+            throw new RuntimeException("error setting reply (" + content.getStoryId() +
+                    ") (" + content.getId() + ")", e);
+        }
     }
 
 }
