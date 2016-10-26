@@ -172,7 +172,12 @@ public final class JsoupUtils {
         }
 
         text = text.trim();
+
         final Document document = Jsoup.parse(text, Constants.HUMMINGBIRD_URL_HTTPS);
+
+        if (document == null) {
+            return null;
+        }
 
         fixA(document);
         fixH(document);
