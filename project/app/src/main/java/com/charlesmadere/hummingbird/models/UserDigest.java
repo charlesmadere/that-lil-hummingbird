@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
@@ -93,6 +94,7 @@ public class UserDigest implements Hydratable, Parcelable {
     }
 
     @Override
+    @WorkerThread
     public void hydrate() {
         // noinspection ConstantConditions
         for (final User user : mUsers) {

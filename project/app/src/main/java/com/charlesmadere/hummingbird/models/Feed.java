@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
@@ -284,6 +285,7 @@ public class Feed implements Hydratable {
     }
 
     @Override
+    @WorkerThread
     public void hydrate() {
         if (hasAnimeLibraryEntries()) {
             // noinspection ConstantConditions
