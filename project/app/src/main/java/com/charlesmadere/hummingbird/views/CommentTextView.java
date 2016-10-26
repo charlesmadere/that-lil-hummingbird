@@ -3,13 +3,9 @@ package com.charlesmadere.hummingbird.views;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.CommentStory;
 
 public class CommentTextView extends LinkTextView {
-
-    private static final String TAG = "CommentTextView";
-
 
     public CommentTextView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
@@ -24,8 +20,6 @@ public class CommentTextView extends LinkTextView {
         try {
             setText(content.getComment());
         } catch (final RuntimeException e) {
-            Timber.e(TAG, "error setting comment (" + content.getId() + "): " +
-                    content.getPlainTextComment(), e);
             throw new RuntimeException("error setting comment (" + content.getId() + ")", e);
         }
     }
