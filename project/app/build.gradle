@@ -83,7 +83,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-gcm:9.8.0'
 
     // jsoup
-    compile 'org.jsoup:jsoup:1.9.2'
+    compile 'org.jsoup:jsoup:1.10.1'
 
     // Persistent Cookie Jar
     compile 'com.github.franmontiel:PersistentCookieJar:v1.0.0'
