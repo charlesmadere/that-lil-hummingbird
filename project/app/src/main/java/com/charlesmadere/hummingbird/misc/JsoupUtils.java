@@ -212,7 +212,11 @@ public final class JsoupUtils {
         }
 
         for (final Attribute attribute : attributesList) {
-            element.removeAttr(attribute.getKey());
+            final String key = attribute.getKey();
+
+            if (!TextUtils.isEmpty(key)) {
+                element.removeAttr(key);
+            }
         }
     }
 
