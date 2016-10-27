@@ -17,6 +17,9 @@ import java.util.List;
 
 public final class JsoupUtils {
 
+    private static final String TAG = "JsoupUtils";
+
+
     private static void fixA(final Document document) {
         final Elements as = document.select("a");
 
@@ -172,10 +175,19 @@ public final class JsoupUtils {
         }
 
         text = text.trim();
+        final Document document;
 
-        final Document document = Jsoup.parse(text, Constants.HUMMINGBIRD_URL_HTTPS);
+        try {
+            document = Jsoup.parse(text, Constants.HUMMINGBIRD_URL_HTTPS);
+        } catch (final Exception e) {
+            // This is a bit over cautious but probably a good thing. We really want any problems
+            // with the library to be fully caught, logged, and understood.
+            Timber.e(TAG, "parse resulted in an exception", e);
+            throw e;
+        }
 
         if (document == null) {
+            Timber.e(TAG, "parse resulted in a null document");
             return null;
         }
 
