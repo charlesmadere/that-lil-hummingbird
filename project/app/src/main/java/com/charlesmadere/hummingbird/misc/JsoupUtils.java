@@ -158,9 +158,7 @@ public final class JsoupUtils {
             }
         }
 
-        if (startOfToken < 0) {
-            return null;
-        } else if (endOfToken - startOfToken < 1) {
+        if (startOfToken < 0 || endOfToken - startOfToken < 1) {
             return null;
         } else {
             return signInPage.substring(startOfToken, endOfToken);
@@ -170,11 +168,16 @@ public final class JsoupUtils {
     @Nullable
     @WorkerThread
     public static CharSequence parse(@Nullable String text) {
-        if (TextUtils.isEmpty(text) || TextUtils.getTrimmedLength(text) == 0) {
+        if (TextUtils.isEmpty(text)) {
             return null;
         }
 
         text = text.trim();
+
+        if (TextUtils.isEmpty(text)) {
+            return null;
+        }
+
         final Document document;
 
         try {
