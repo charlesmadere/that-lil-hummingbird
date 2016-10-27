@@ -147,7 +147,7 @@ public class GroupMembersActivity extends BaseDrawerActivity implements ObjectCa
         mRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this,
-                DividerItemDecoration.HORIZONTAL));
+                DividerItemDecoration.VERTICAL));
         mAdapter = new GroupMembersAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);

@@ -126,7 +126,7 @@ public class AnimeReviewsActivity extends BaseDrawerActivity implements ObjectCa
         super.onViewsBound();
 
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this,
-                DividerItemDecoration.HORIZONTAL));
+                DividerItemDecoration.VERTICAL));
     }
 
     private void showEmpty(final AnimeDigest animeDigest) {

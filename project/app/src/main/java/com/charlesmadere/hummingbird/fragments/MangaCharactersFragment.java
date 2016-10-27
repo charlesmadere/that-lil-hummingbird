@@ -49,7 +49,7 @@ public class MangaCharactersFragment extends BaseMangaFragment {
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
-                DividerItemDecoration.HORIZONTAL));
+                DividerItemDecoration.VERTICAL));
         mAdapter = new MangaCharactersAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
     }

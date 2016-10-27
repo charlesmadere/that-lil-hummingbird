@@ -49,7 +49,7 @@ public class AnimeReviewsFragment extends BaseAnimeFragment {
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
-                DividerItemDecoration.HORIZONTAL));
+                DividerItemDecoration.VERTICAL));
         mAdapter = new AnimeReviewsAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
     }

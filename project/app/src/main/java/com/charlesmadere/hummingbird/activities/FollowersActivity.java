@@ -130,7 +130,7 @@ public class FollowersActivity extends BaseDrawerActivity implements ObjectCache
         mRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this,
-                DividerItemDecoration.HORIZONTAL));
+                DividerItemDecoration.VERTICAL));
         mAdapter = new UsersAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);

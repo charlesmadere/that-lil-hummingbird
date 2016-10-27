@@ -49,7 +49,7 @@ public class AnimeQuotesFragment extends BaseAnimeFragment {
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
-                DividerItemDecoration.HORIZONTAL));
+                DividerItemDecoration.VERTICAL));
         mAdapter = new AnimeQuotesAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
     }

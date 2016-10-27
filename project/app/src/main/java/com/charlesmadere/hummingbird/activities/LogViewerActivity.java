@@ -110,7 +110,7 @@ public class LogViewerActivity extends BaseDrawerActivity implements
         mRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this,
-                DividerItemDecoration.HORIZONTAL));
+                DividerItemDecoration.VERTICAL));
         mAdapter = new TimberEntriesAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
     }

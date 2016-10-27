@@ -127,7 +127,7 @@ public class AnimeQuotesActivity extends BaseDrawerActivity implements ObjectCac
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this,
-                DividerItemDecoration.HORIZONTAL));
+                DividerItemDecoration.VERTICAL));
     }
 
     private void showEmpty(final AnimeDigest animeDigest) {
