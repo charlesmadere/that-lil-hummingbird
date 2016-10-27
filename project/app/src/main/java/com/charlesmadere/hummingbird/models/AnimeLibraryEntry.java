@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
@@ -113,6 +114,7 @@ public class AnimeLibraryEntry implements Parcelable {
         return mRating != null;
     }
 
+    @WorkerThread
     public boolean hydrate(final Anime anime) {
         if (mAnimeId.equalsIgnoreCase(anime.getId())) {
             mAnime = anime;
@@ -122,11 +124,13 @@ public class AnimeLibraryEntry implements Parcelable {
         }
     }
 
+    @WorkerThread
     public boolean hydrate(final AnimeDigest digest) {
         if (!digest.hasAnime()) {
             return false;
         }
 
+        // noinspection ConstantConditions
         for (final Anime anime : digest.getAnime()) {
             if (hydrate(anime)) {
                 return true;
@@ -136,7 +140,9 @@ public class AnimeLibraryEntry implements Parcelable {
         return false;
     }
 
+    @WorkerThread
     public void hydrate(final Feed feed) {
+        // noinspection ConstantConditions
         for (final Anime anime : feed.getAnime()) {
             if (mAnimeId.equalsIgnoreCase(anime.getId())) {
                 mAnime = anime;

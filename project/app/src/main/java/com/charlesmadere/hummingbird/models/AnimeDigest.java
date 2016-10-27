@@ -204,6 +204,7 @@ public class AnimeDigest implements Hydratable, Parcelable {
     @WorkerThread
     public void hydrate() {
         if (hasCastings() && hasPeople()) {
+            // noinspection ConstantConditions
             final Iterator<Casting> iterator = mCastings.iterator();
 
             do {
@@ -222,12 +223,14 @@ public class AnimeDigest implements Hydratable, Parcelable {
         }
 
         if (hasEpisodes()) {
+            // noinspection ConstantConditions
             Collections.sort(mEpisodes, Episode.COMPARATOR);
         } else {
             mEpisodes = null;
         }
 
         if (hasLibraryEntries()) {
+            // noinspection ConstantConditions
             final Iterator<AnimeLibraryEntry> iterator = mLibraryEntries.iterator();
 
             do {
@@ -246,6 +249,7 @@ public class AnimeDigest implements Hydratable, Parcelable {
         }
 
         if (hasReviews() && hasUsers()) {
+            // noinspection ConstantConditions
             final Iterator<AnimeReview> iterator = mReviews.iterator();
 
             do {
@@ -376,8 +380,10 @@ public class AnimeDigest implements Hydratable, Parcelable {
             return !TextUtils.isEmpty(mLanguage);
         }
 
+        @WorkerThread
         public boolean hydrate(final AnimeDigest animeDigest) {
             if (!TextUtils.isEmpty(mCharacterId)) {
+                // noinspection ConstantConditions
                 for (final Character character : animeDigest.getCharacters()) {
                     if (mCharacterId.equalsIgnoreCase(character.getId())) {
                         mCharacter = character;
@@ -386,6 +392,7 @@ public class AnimeDigest implements Hydratable, Parcelable {
                 }
             }
 
+            // noinspection ConstantConditions
             for (final Person person : animeDigest.getPeople()) {
                 if (mPersonId.equalsIgnoreCase(person.getId())) {
                     mPerson = person;
