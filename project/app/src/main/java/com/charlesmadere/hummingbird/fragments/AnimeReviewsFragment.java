@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.fragments;
 
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,6 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AnimeReviewsAdapter;
 import com.charlesmadere.hummingbird.models.AnimeDigest;
-import com.charlesmadere.hummingbird.views.DividerItemDecoration;
 
 import butterknife.BindView;
 
@@ -48,7 +48,8 @@ public class AnimeReviewsFragment extends BaseAnimeFragment {
         super.onViewCreated(view, savedInstanceState);
 
         mRecyclerView.setHasFixedSize(true);
-        DividerItemDecoration.apply(mRecyclerView);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
+                DividerItemDecoration.HORIZONTAL));
         mAdapter = new AnimeReviewsAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
     }
