@@ -45,6 +45,11 @@ public final class JsoupUtils {
         }
     }
 
+    private static void fixBlockquote(final Document document) {
+        final Elements blockquotes = document.select("blockquote");
+        removeElementsPreserveContents(blockquotes);
+    }
+
     private static void fixH(final Document document) {
         fixH(document, "1");
         fixH(document, "2");
@@ -60,20 +65,7 @@ public final class JsoupUtils {
         }
 
         final Elements hs = document.select("h" + which);
-
-        if (hs == null || hs.isEmpty()) {
-            return;
-        }
-
-        for (final Element h : hs) {
-            final String inner = h.html();
-
-            if (!TextUtils.isEmpty(inner)) {
-                h.before(inner);
-            }
-
-            h.remove();
-        }
+        removeElementsPreserveContents(hs);
     }
 
     private static void fixIframe(final Document document) {
@@ -195,9 +187,11 @@ public final class JsoupUtils {
         }
 
         fixA(document);
+        fixBlockquote(document);
         fixH(document);
         fixIframe(document);
         fixImg(document);
+        stripScript(document);
 
         text = document.body().toString().trim();
 
@@ -210,6 +204,22 @@ public final class JsoupUtils {
         } else {
             // noinspection deprecation
             return Html.fromHtml(text);
+        }
+    }
+
+    private static void removeElementsPreserveContents(@Nullable final Elements elements) {
+        if (elements == null || elements.isEmpty()) {
+            return;
+        }
+
+        for (final Element element : elements) {
+            final String inner = element.html();
+
+            if (!TextUtils.isEmpty(inner)) {
+                element.before(inner);
+            }
+
+            element.remove();
         }
     }
 
@@ -243,6 +253,16 @@ public final class JsoupUtils {
         }
 
         elements.remove();
+    }
+
+    private static void stripScript(final Document document) {
+        final Elements scripts = document.select("script");
+
+        if (scripts == null || scripts.isEmpty()) {
+            return;
+        }
+
+        scripts.remove();
     }
 
 }
