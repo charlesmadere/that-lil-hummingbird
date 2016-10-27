@@ -168,7 +168,7 @@ public final class JsoupUtils {
     @WorkerThread
     public static CharSequence parse(@Nullable String text) {
         if (TextUtils.isEmpty(text) || TextUtils.getTrimmedLength(text) == 0) {
-            return text;
+            return null;
         }
 
         text = text.trim();
@@ -187,7 +187,7 @@ public final class JsoupUtils {
         text = document.body().toString().trim();
 
         if (TextUtils.isEmpty(text)) {
-            return text;
+            return null;
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

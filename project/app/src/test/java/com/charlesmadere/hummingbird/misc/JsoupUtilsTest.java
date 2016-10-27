@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -104,6 +105,18 @@ public class JsoupUtilsTest {
         assertNull(JsoupUtils.getCsrfToken("BLAH"));
         assertNull(JsoupUtils.getCsrfToken("Hello, World!"));
         assertTrue(CSRF_TOKEN.equals(JsoupUtils.getCsrfToken(SIGN_IN_PAGE)));
+    }
+
+    @Test
+    public void testParse() throws Exception {
+        assertNull(JsoupUtils.parse(null));
+        assertNull(JsoupUtils.parse(""));
+        assertNull(JsoupUtils.parse(" "));
+        assertNull(JsoupUtils.parse("  "));
+        assertNotNull(JsoupUtils.parse("Hello, World!"));
+
+        // Yeah... this is a pretty weak test I know. But a more thorough test would be extremely
+        // tedious to create and probably not worth it in the long run.
     }
 
 }
