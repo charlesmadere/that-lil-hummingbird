@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,7 +14,6 @@ import android.widget.LinearLayout;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.TimberEntriesAdapter;
 import com.charlesmadere.hummingbird.misc.Timber;
-import com.charlesmadere.hummingbird.views.DividerItemDecoration;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
 
 import butterknife.BindView;
@@ -106,9 +106,11 @@ public class LogViewerActivity extends BaseDrawerActivity implements
     @Override
     protected void onViewsBound() {
         super.onViewsBound();
+
         mRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.setHasFixedSize(true);
-        DividerItemDecoration.apply(mRecyclerView);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
         mAdapter = new TimberEntriesAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
     }

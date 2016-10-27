@@ -11,7 +11,7 @@
         <LinearLayout
             android:id="@+id/llFavoriteAnimeGrid0"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/root_padding"
+            android:layout_marginBottom="@dimen/root_padding_half"
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:paddingEnd="@dimen/root_padding"

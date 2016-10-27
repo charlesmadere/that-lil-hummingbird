@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.Constants;
@@ -167,6 +168,7 @@ public class User implements Hydratable, Parcelable {
     }
 
     @Override
+    @WorkerThread
     public void hydrate() {
         if (!TextUtils.isEmpty(mData.mAboutFormatted)) {
             mCompiledAbout = JsoupUtils.parse(mData.mAboutFormatted);

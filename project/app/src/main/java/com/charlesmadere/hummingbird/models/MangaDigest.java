@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
@@ -105,6 +106,7 @@ public class MangaDigest implements Hydratable, Parcelable {
     }
 
     @Override
+    @WorkerThread
     public void hydrate() {
         if (hasLibraryEntries()) {
             final Iterator<MangaLibraryEntry> iterator = mLibraryEntries.iterator();

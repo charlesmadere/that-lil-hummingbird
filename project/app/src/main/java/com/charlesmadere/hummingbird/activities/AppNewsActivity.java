@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -20,7 +21,6 @@ import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.AppNewsItemView;
-import com.charlesmadere.hummingbird.views.DividerItemDecoration;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
 
 import java.lang.ref.WeakReference;
@@ -110,9 +110,11 @@ public class AppNewsActivity extends BaseDrawerActivity implements AppNewsItemVi
     @Override
     protected void onViewsBound() {
         super.onViewsBound();
+
         mRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.setHasFixedSize(true);
-        DividerItemDecoration.apply(mRecyclerView);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
         mAdapter = new AppNewsAdapter(this, this);
         mRecyclerView.setAdapter(mAdapter);
     }

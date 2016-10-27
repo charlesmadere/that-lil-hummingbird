@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.fragments;
 
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,6 @@ import android.widget.TextView;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.MangaCharactersAdapter;
 import com.charlesmadere.hummingbird.models.MangaDigest;
-import com.charlesmadere.hummingbird.views.DividerItemDecoration;
 
 import butterknife.BindView;
 
@@ -46,8 +46,10 @@ public class MangaCharactersFragment extends BaseMangaFragment {
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         mRecyclerView.setHasFixedSize(true);
-        DividerItemDecoration.apply(mRecyclerView);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
+                DividerItemDecoration.VERTICAL));
         mAdapter = new MangaCharactersAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
     }

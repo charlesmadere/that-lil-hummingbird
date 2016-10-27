@@ -17,6 +17,9 @@ import java.util.List;
 
 public final class JsoupUtils {
 
+    private static final String TAG = "JsoupUtils";
+
+
     private static void fixA(final Document document) {
         final Elements as = document.select("a");
 
@@ -42,6 +45,11 @@ public final class JsoupUtils {
         }
     }
 
+    private static void fixBlockquote(final Document document) {
+        final Elements blockquotes = document.select("blockquote");
+        removeElementsPreserveContents(blockquotes);
+    }
+
     private static void fixH(final Document document) {
         fixH(document, "1");
         fixH(document, "2");
@@ -57,20 +65,7 @@ public final class JsoupUtils {
         }
 
         final Elements hs = document.select("h" + which);
-
-        if (hs == null || hs.isEmpty()) {
-            return;
-        }
-
-        for (final Element h : hs) {
-            final String inner = h.html();
-
-            if (!TextUtils.isEmpty(inner)) {
-                h.before(inner);
-            }
-
-            h.remove();
-        }
+        removeElementsPreserveContents(hs);
     }
 
     private static void fixIframe(final Document document) {
@@ -155,9 +150,7 @@ public final class JsoupUtils {
             }
         }
 
-        if (startOfToken < 0) {
-            return null;
-        } else if (endOfToken - startOfToken < 1) {
+        if (startOfToken < 0 || endOfToken - startOfToken < 1) {
             return null;
         } else {
             return signInPage.substring(startOfToken, endOfToken);
@@ -167,25 +160,66 @@ public final class JsoupUtils {
     @Nullable
     @WorkerThread
     public static CharSequence parse(@Nullable String text) {
-        if (TextUtils.isEmpty(text) || TextUtils.getTrimmedLength(text) == 0) {
-            return text;
+        if (TextUtils.isEmpty(text)) {
+            return null;
         }
 
         text = text.trim();
-        final Document document = Jsoup.parse(text, Constants.HUMMINGBIRD_URL_HTTPS);
+
+        if (TextUtils.isEmpty(text)) {
+            return null;
+        }
+
+        final Document document;
+
+        try {
+            document = Jsoup.parse(text, Constants.HUMMINGBIRD_URL_HTTPS);
+        } catch (final Exception e) {
+            // This is a bit over cautious but probably a good thing. We really want any problems
+            // with the library to be fully caught, logged, and understood.
+            Timber.e(TAG, "parse resulted in an exception", e);
+            throw e;
+        }
+
+        if (document == null) {
+            Timber.e(TAG, "parse resulted in a null document");
+            return null;
+        }
 
         fixA(document);
+        fixBlockquote(document);
         fixH(document);
         fixIframe(document);
         fixImg(document);
+        stripScript(document);
 
-        final String html = document.body().toString().trim();
+        text = document.body().toString().trim();
+
+        if (TextUtils.isEmpty(text)) {
+            return null;
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT);
+            return Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT);
         } else {
             // noinspection deprecation
-            return Html.fromHtml(html);
+            return Html.fromHtml(text);
+        }
+    }
+
+    private static void removeElementsPreserveContents(@Nullable final Elements elements) {
+        if (elements == null || elements.isEmpty()) {
+            return;
+        }
+
+        for (final Element element : elements) {
+            final String inner = element.html();
+
+            if (!TextUtils.isEmpty(inner)) {
+                element.before(inner);
+            }
+
+            element.remove();
         }
     }
 
@@ -203,7 +237,11 @@ public final class JsoupUtils {
         }
 
         for (final Attribute attribute : attributesList) {
-            element.removeAttr(attribute.getKey());
+            final String key = attribute.getKey();
+
+            if (!TextUtils.isEmpty(key)) {
+                element.removeAttr(key);
+            }
         }
     }
 
@@ -215,6 +253,16 @@ public final class JsoupUtils {
         }
 
         elements.remove();
+    }
+
+    private static void stripScript(final Document document) {
+        final Elements scripts = document.select("script");
+
+        if (scripts == null || scripts.isEmpty()) {
+            return;
+        }
+
+        scripts.remove();
     }
 
 }

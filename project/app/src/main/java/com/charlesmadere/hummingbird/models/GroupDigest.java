@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -40,6 +41,7 @@ public class GroupDigest implements Hydratable, Parcelable {
     }
 
     @Override
+    @WorkerThread
     public void hydrate() {
         mGroup.hydrate();
     }

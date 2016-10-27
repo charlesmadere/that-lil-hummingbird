@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.JsoupUtils;
@@ -146,11 +147,13 @@ public class AnimeReview implements Parcelable {
         return mId.hashCode();
     }
 
+    @WorkerThread
     public void hydrate(final Anime anime) {
         compileContent();
         mAnime = anime;
     }
 
+    @WorkerThread
     public boolean hydrate(final AnimeDigest animeDigest) {
         if (!animeDigest.hasUsers()) {
             return false;
@@ -169,6 +172,7 @@ public class AnimeReview implements Parcelable {
         return false;
     }
 
+    @WorkerThread
     public boolean hydrate(final Feed feed) {
         if (!feed.hasAnime() || !feed.hasUsers()) {
             return false;
