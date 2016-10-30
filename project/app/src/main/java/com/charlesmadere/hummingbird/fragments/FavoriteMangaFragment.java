@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +18,9 @@ import com.charlesmadere.hummingbird.models.UserDigest;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
-public class FavoriteMangaFragment extends BaseBottomSheetDialogFragment implements
-        View.OnClickListener {
+public class FavoriteMangaFragment extends BaseBottomSheetDialogFragment {
 
     private static final String TAG = "FavoriteMangaFragment";
 
@@ -29,9 +28,6 @@ public class FavoriteMangaFragment extends BaseBottomSheetDialogFragment impleme
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
 
 
     public static FavoriteMangaFragment create() {
@@ -63,8 +59,8 @@ public class FavoriteMangaFragment extends BaseBottomSheetDialogFragment impleme
         }
     }
 
-    @Override
-    public void onClick(final View view) {
+    @OnClick(R.id.ibClose)
+    void onCloseClick() {
         dismissAllowingStateLoss();
     }
 
@@ -78,10 +74,6 @@ public class FavoriteMangaFragment extends BaseBottomSheetDialogFragment impleme
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        mToolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
-        mToolbar.setNavigationOnClickListener(this);
-        mToolbar.setTitle(R.string.favorite_manga);
 
         final ArrayList<UserDigest.Favorite.MangaItem> favorites = mListener.getFavoriteManga();
 
