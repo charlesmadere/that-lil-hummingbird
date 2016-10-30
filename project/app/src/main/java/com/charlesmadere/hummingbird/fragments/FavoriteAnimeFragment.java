@@ -15,6 +15,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.FavoriteAnimeAdapter;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.UserDigest;
+import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import java.util.ArrayList;
 
@@ -82,6 +83,8 @@ public class FavoriteAnimeFragment extends BaseBottomSheetDialogFragment impleme
         mToolbar.setTitle(R.string.favorite_anime);
         mToolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
         mToolbar.setNavigationOnClickListener(this);
+
+        SpaceItemDecoration.apply(mRecyclerView, false, R.dimen.root_padding_quarter);
 
         final ArrayList<UserDigest.Favorite.AnimeItem> favorites = mListener.getFavoriteAnime();
 
