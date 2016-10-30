@@ -34,7 +34,7 @@ public class FavoriteMangaItemView extends SimpleDraweeView implements
 
     @Override
     public void setContent(final UserDigest.Favorite.MangaItem content) {
-        // TODO
+        setImageURI(content.getManga().getPosterImageThumb());
     }
 
 }

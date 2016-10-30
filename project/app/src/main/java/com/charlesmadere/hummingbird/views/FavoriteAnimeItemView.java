@@ -34,7 +34,7 @@ public class FavoriteAnimeItemView extends SimpleDraweeView implements
 
     @Override
     public void setContent(final UserDigest.Favorite.AnimeItem content) {
-        // TODO
+        setImageURI(content.getAnime().getPosterImage());
     }
 
 }
