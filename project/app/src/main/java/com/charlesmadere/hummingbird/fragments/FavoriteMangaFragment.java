@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.FavoriteMangaAdapter;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.UserDigest;
 
@@ -89,7 +90,9 @@ public class FavoriteMangaFragment extends BaseBottomSheetDialogFragment impleme
             return;
         }
 
-
+        final FavoriteMangaAdapter adapter = new FavoriteMangaAdapter(getContext());
+        adapter.set(favorites);
+        mRecyclerView.setAdapter(adapter);
     }
 
 
