@@ -54,6 +54,56 @@ public class UserDigest implements Hydratable, Parcelable {
     }
 
     @Nullable
+    public ArrayList<Favorite.AnimeItem> getFavoriteAnime() {
+        if (!hasFavorites()) {
+            return null;
+        }
+
+        final ArrayList<Favorite.AnimeItem> favorites = new ArrayList<>();
+
+        // noinspection ConstantConditions
+        for (final Favorite favorite : mFavorites) {
+            final Favorite.AbsItem item = favorite.getItem();
+
+            if (item.getType() == Favorite.AbsItem.Type.ANIME) {
+                favorites.add((Favorite.AnimeItem) item);
+            }
+        }
+
+        if (favorites.isEmpty()) {
+            return null;
+        } else {
+            favorites.trimToSize();
+            return favorites;
+        }
+    }
+
+    @Nullable
+    public ArrayList<Favorite.MangaItem> getFavoriteManga() {
+        if (!hasFavorites()) {
+            return null;
+        }
+
+        final ArrayList<Favorite.MangaItem> favorites = new ArrayList<>();
+
+        // noinspection ConstantConditions
+        for (final Favorite favorite : mFavorites) {
+            final Favorite.AbsItem item = favorite.getItem();
+
+            if (item.getType() == Favorite.AbsItem.Type.MANGA) {
+                favorites.add((Favorite.MangaItem) item);
+            }
+        }
+
+        if (favorites.isEmpty()) {
+            return null;
+        } else {
+            favorites.trimToSize();
+            return favorites;
+        }
+    }
+
+    @Nullable
     public ArrayList<Favorite> getFavorites() {
         return mFavorites;
     }
