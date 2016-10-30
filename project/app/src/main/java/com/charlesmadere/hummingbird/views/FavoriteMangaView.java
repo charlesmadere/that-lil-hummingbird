@@ -13,7 +13,6 @@ import com.charlesmadere.hummingbird.activities.MangaActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.Manga;
 import com.charlesmadere.hummingbird.models.UserDigest;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 
@@ -25,29 +24,29 @@ public class FavoriteMangaView extends CardView implements AdapterView<UserDiges
 
     private ArrayList<UserDigest.Favorite.MangaItem> mManga;
 
+    @BindView(R.id.fmivCover0)
+    FavoriteMangaItemView mCover0;
+
+    @BindView(R.id.fmivCover1)
+    FavoriteMangaItemView mCover1;
+
+    @BindView(R.id.fmivCover2)
+    FavoriteMangaItemView mCover2;
+
+    @BindView(R.id.fmivCover3)
+    FavoriteMangaItemView mCover3;
+
+    @BindView(R.id.fmivCover4)
+    FavoriteMangaItemView mCover4;
+
+    @BindView(R.id.fmivCover5)
+    FavoriteMangaItemView mCover5;
+
     @BindView(R.id.llFavoriteMangaGrid0)
     LinearLayout mMangaGrid0;
 
     @BindView(R.id.llFavoriteMangaGrid1)
     LinearLayout mMangaGrid1;
-
-    @BindView(R.id.sdvCover0)
-    SimpleDraweeView mCover0;
-
-    @BindView(R.id.sdvCover1)
-    SimpleDraweeView mCover1;
-
-    @BindView(R.id.sdvCover2)
-    SimpleDraweeView mCover2;
-
-    @BindView(R.id.sdvCover3)
-    SimpleDraweeView mCover3;
-
-    @BindView(R.id.sdvCover4)
-    SimpleDraweeView mCover4;
-
-    @BindView(R.id.sdvCover5)
-    SimpleDraweeView mCover5;
 
     @BindView(R.id.tvNoFavorites)
     TextView mNoFavorites;
@@ -65,32 +64,32 @@ public class FavoriteMangaView extends CardView implements AdapterView<UserDiges
         super(context, attrs, defStyleAttr);
     }
 
-    @OnClick(R.id.sdvCover0)
+    @OnClick(R.id.fmivCover0)
     void onCover0Click() {
         startMangaActivity(0);
     }
 
-    @OnClick(R.id.sdvCover1)
+    @OnClick(R.id.fmivCover1)
     void onCover1Click() {
         startMangaActivity(1);
     }
 
-    @OnClick(R.id.sdvCover2)
+    @OnClick(R.id.fmivCover2)
     void onCover2Click() {
         startMangaActivity(2);
     }
 
-    @OnClick(R.id.sdvCover3)
+    @OnClick(R.id.fmivCover3)
     void onCover3Click() {
         startMangaActivity(3);
     }
 
-    @OnClick(R.id.sdvCover4)
+    @OnClick(R.id.fmivCover4)
     void onCover4Click() {
         startMangaActivity(4);
     }
 
-    @OnClick(R.id.sdvCover5)
+    @OnClick(R.id.fmivCover5)
     void onCover5Click() {
         startMangaActivity(5);
     }
@@ -159,10 +158,10 @@ public class FavoriteMangaView extends CardView implements AdapterView<UserDiges
         }
     }
 
-    private void setCoverView(final SimpleDraweeView view,
+    private void setCoverView(final FavoriteMangaItemView view,
             final ArrayList<UserDigest.Favorite.MangaItem> manga, final int index) {
         if (manga.size() >= index) {
-            view.setImageURI(manga.get(index - 1).getManga().getPosterImageThumb());
+            view.setContent(manga.get(index - 1));
             view.setVisibility(VISIBLE);
         } else {
             view.setVisibility(INVISIBLE);
