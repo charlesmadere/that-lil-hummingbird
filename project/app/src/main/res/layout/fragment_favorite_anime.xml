@@ -14,8 +14,7 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/close"
         android:id="@+id/ibClose"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:padding="@dimen/root_padding"
+        android:layout_height="@dimen/list_item_height"
+        android:layout_width="@dimen/list_item_height"
         android:src="@drawable/ic_close_24dp" />
 </FrameLayout>
