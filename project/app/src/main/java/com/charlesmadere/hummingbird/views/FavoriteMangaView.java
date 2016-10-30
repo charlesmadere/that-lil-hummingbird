@@ -9,16 +9,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.activities.MangaActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
-import com.charlesmadere.hummingbird.models.Manga;
 import com.charlesmadere.hummingbird.models.UserDigest;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class FavoriteMangaView extends CardView implements AdapterView<UserDigest> {
 
@@ -62,36 +59,6 @@ public class FavoriteMangaView extends CardView implements AdapterView<UserDiges
     public FavoriteMangaView(final Context context, final AttributeSet attrs,
             final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    @OnClick(R.id.fmivCover0)
-    void onCover0Click() {
-        startMangaActivity(0);
-    }
-
-    @OnClick(R.id.fmivCover1)
-    void onCover1Click() {
-        startMangaActivity(1);
-    }
-
-    @OnClick(R.id.fmivCover2)
-    void onCover2Click() {
-        startMangaActivity(2);
-    }
-
-    @OnClick(R.id.fmivCover3)
-    void onCover3Click() {
-        startMangaActivity(3);
-    }
-
-    @OnClick(R.id.fmivCover4)
-    void onCover4Click() {
-        startMangaActivity(4);
-    }
-
-    @OnClick(R.id.fmivCover5)
-    void onCover5Click() {
-        startMangaActivity(5);
     }
 
     @Override
@@ -179,13 +146,6 @@ public class FavoriteMangaView extends CardView implements AdapterView<UserDiges
                 }
             });
         }
-    }
-
-    private void startMangaActivity(final int index) {
-        final Context context = getContext();
-        final Manga manga = mManga.get(index).getManga();
-        context.startActivity(MangaActivity.getLaunchIntent(context, manga.getId(),
-                manga.getTitle()));
     }
 
 

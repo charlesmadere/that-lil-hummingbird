@@ -9,16 +9,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
-import com.charlesmadere.hummingbird.models.Anime;
 import com.charlesmadere.hummingbird.models.UserDigest;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class FavoriteAnimeView extends CardView implements AdapterView<UserDigest> {
 
@@ -68,36 +65,6 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
-    }
-
-    @OnClick(R.id.faivPoster0)
-    void onPoster0Click() {
-        startAnimeActivity(0);
-    }
-
-    @OnClick(R.id.faivPoster1)
-    void onPoster1Click() {
-        startAnimeActivity(1);
-    }
-
-    @OnClick(R.id.faivPoster2)
-    void onPoster2Click() {
-        startAnimeActivity(2);
-    }
-
-    @OnClick(R.id.faivPoster3)
-    void onPoster3Click() {
-        startAnimeActivity(3);
-    }
-
-    @OnClick(R.id.faivPoster4)
-    void onPoster4Click() {
-        startAnimeActivity(4);
-    }
-
-    @OnClick(R.id.faivPoster5)
-    void onPoster5Click() {
-        startAnimeActivity(5);
     }
 
     @Override
@@ -179,12 +146,6 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
                 }
             });
         }
-    }
-
-    private void startAnimeActivity(final int index) {
-        final Context context = getContext();
-        final Anime anime = mAnime.get(index).getAnime();
-        context.startActivity(AnimeActivity.getLaunchIntent(context, anime));
     }
 
 
