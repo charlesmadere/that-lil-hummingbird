@@ -29,6 +29,7 @@ public class FollowedSubstory extends AbsSubstory implements Parcelable {
 
     @Override
     public void hydrate(final Feed feed) {
+        // noinspection ConstantConditions
         for (final User user : feed.getUsers()) {
             if (mUserId.equalsIgnoreCase(user.getId())) {
                 mUser = user;

@@ -90,6 +90,7 @@ public abstract class AbsStory implements Parcelable {
     }
 
     public void hydrate(final Feed feed) {
+        // noinspection ConstantConditions
         for (final User user : feed.getUsers()) {
             if (mUserId.equalsIgnoreCase(user.getId())) {
                 mUser = user;
@@ -100,7 +101,9 @@ public abstract class AbsStory implements Parcelable {
         if (hasSubstoryIds() && feed.hasSubstories()) {
             mSubstories = new ArrayList<>();
 
+            // noinspection ConstantConditions
             for (final String substoryId : mSubstoryIds) {
+                // noinspection ConstantConditions
                 for (final AbsSubstory substory : feed.getSubstories()) {
                     if (substoryId.equalsIgnoreCase(substory.getId()) &&
                             !mSubstories.contains(substory)) {
