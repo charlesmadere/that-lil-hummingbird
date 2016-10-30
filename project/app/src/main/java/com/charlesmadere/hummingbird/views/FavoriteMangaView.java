@@ -137,15 +137,15 @@ public class FavoriteMangaView extends CardView implements AdapterView<UserDiges
 
         mNoFavorites.setVisibility(GONE);
 
-        setPosterView(mCover0, mManga, 1);
-        setPosterView(mCover1, mManga, 2);
-        setPosterView(mCover2, mManga, 3);
+        setCoverView(mCover0, mManga, 1);
+        setCoverView(mCover1, mManga, 2);
+        setCoverView(mCover2, mManga, 3);
         mMangaGrid0.setVisibility(VISIBLE);
 
         if (mManga.size() >= 4) {
-            setPosterView(mCover3, mManga, 4);
-            setPosterView(mCover4, mManga, 5);
-            setPosterView(mCover5, mManga, 6);
+            setCoverView(mCover3, mManga, 4);
+            setCoverView(mCover4, mManga, 5);
+            setCoverView(mCover5, mManga, 6);
             mMangaGrid1.setVisibility(VISIBLE);
 
             if (mManga.size() > 6) {
@@ -159,6 +159,16 @@ public class FavoriteMangaView extends CardView implements AdapterView<UserDiges
         }
     }
 
+    private void setCoverView(final SimpleDraweeView view,
+            final ArrayList<UserDigest.Favorite.MangaItem> manga, final int index) {
+        if (manga.size() >= index) {
+            view.setImageURI(manga.get(index - 1).getManga().getPosterImageThumb());
+            view.setVisibility(VISIBLE);
+        } else {
+            view.setVisibility(INVISIBLE);
+        }
+    }
+
     public void setOnShowMoreClickListener(@Nullable final OnShowMoreClickListener l) {
         if (l == null) {
             mShowMore.setClickable(false);
@@ -169,16 +179,6 @@ public class FavoriteMangaView extends CardView implements AdapterView<UserDiges
                     l.onShowMoreClick(FavoriteMangaView.this);
                 }
             });
-        }
-    }
-
-    private void setPosterView(final SimpleDraweeView view,
-            final ArrayList<UserDigest.Favorite.MangaItem> manga, final int index) {
-        if (manga.size() >= index) {
-            view.setImageURI(manga.get(index - 1).getManga().getPosterImageThumb());
-            view.setVisibility(VISIBLE);
-        } else {
-            view.setVisibility(INVISIBLE);
         }
     }
 
