@@ -1,6 +1,10 @@
 package com.charlesmadere.hummingbird.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -8,6 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
+import com.charlesmadere.hummingbird.models.UserDigest;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 
@@ -15,6 +23,8 @@ public class FavoriteAnimeFragment extends BaseBottomSheetDialogFragment impleme
         View.OnClickListener {
 
     private static final String TAG = "FavoriteAnimeFragment";
+
+    private Listener mListener;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -30,6 +40,26 @@ public class FavoriteAnimeFragment extends BaseBottomSheetDialogFragment impleme
     @Override
     public String getFragmentName() {
         return TAG;
+    }
+
+    @Override
+    public void onAttach(final Context context) {
+        super.onAttach(context);
+
+        final Fragment fragment = getParentFragment();
+        if (fragment instanceof Listener) {
+            mListener = (Listener) fragment;
+        } else {
+            final Activity activity = MiscUtils.optActivity(context);
+
+            if (activity instanceof Listener) {
+                mListener = (Listener) activity;
+            }
+        }
+
+        if (mListener == null) {
+            throw new IllegalStateException(TAG + " must attach to Listener");
+        }
     }
 
     @Override
@@ -51,6 +81,12 @@ public class FavoriteAnimeFragment extends BaseBottomSheetDialogFragment impleme
         mToolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
         mToolbar.setNavigationOnClickListener(this);
         mToolbar.setTitle(R.string.favorite_anime);
+    }
+
+
+    public interface Listener {
+        @Nullable
+        ArrayList<UserDigest.Favorite.AnimeItem> getFavoriteAnime();
     }
 
 }
