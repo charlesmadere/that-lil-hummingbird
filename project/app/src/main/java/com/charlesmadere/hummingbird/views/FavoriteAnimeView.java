@@ -13,7 +13,6 @@ import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.Anime;
 import com.charlesmadere.hummingbird.models.UserDigest;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 
@@ -25,29 +24,29 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
 
     private ArrayList<UserDigest.Favorite.AnimeItem> mAnime;
 
+    @BindView(R.id.faivPoster0)
+    FavoriteAnimeItemView mPoster0;
+
+    @BindView(R.id.faivPoster1)
+    FavoriteAnimeItemView mPoster1;
+
+    @BindView(R.id.faivPoster2)
+    FavoriteAnimeItemView mPoster2;
+
+    @BindView(R.id.faivPoster3)
+    FavoriteAnimeItemView mPoster3;
+
+    @BindView(R.id.faivPoster4)
+    FavoriteAnimeItemView mPoster4;
+
+    @BindView(R.id.faivPoster5)
+    FavoriteAnimeItemView mPoster5;
+
     @BindView(R.id.llFavoriteAnimeGrid0)
     LinearLayout mAnimeGrid0;
 
     @BindView(R.id.llFavoriteAnimeGrid1)
     LinearLayout mAnimeGrid1;
-
-    @BindView(R.id.sdvPoster0)
-    SimpleDraweeView mPoster0;
-
-    @BindView(R.id.sdvPoster1)
-    SimpleDraweeView mPoster1;
-
-    @BindView(R.id.sdvPoster2)
-    SimpleDraweeView mPoster2;
-
-    @BindView(R.id.sdvPoster3)
-    SimpleDraweeView mPoster3;
-
-    @BindView(R.id.sdvPoster4)
-    SimpleDraweeView mPoster4;
-
-    @BindView(R.id.sdvPoster5)
-    SimpleDraweeView mPoster5;
 
     @BindView(R.id.tvNoFavorites)
     TextView mNoFavorites;
@@ -71,32 +70,32 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.sdvPoster0)
+    @OnClick(R.id.faivPoster0)
     void onPoster0Click() {
         startAnimeActivity(0);
     }
 
-    @OnClick(R.id.sdvPoster1)
+    @OnClick(R.id.faivPoster1)
     void onPoster1Click() {
         startAnimeActivity(1);
     }
 
-    @OnClick(R.id.sdvPoster2)
+    @OnClick(R.id.faivPoster2)
     void onPoster2Click() {
         startAnimeActivity(2);
     }
 
-    @OnClick(R.id.sdvPoster3)
+    @OnClick(R.id.faivPoster3)
     void onPoster3Click() {
         startAnimeActivity(3);
     }
 
-    @OnClick(R.id.sdvPoster4)
+    @OnClick(R.id.faivPoster4)
     void onPoster4Click() {
         startAnimeActivity(4);
     }
 
-    @OnClick(R.id.sdvPoster5)
+    @OnClick(R.id.faivPoster5)
     void onPoster5Click() {
         startAnimeActivity(5);
     }
@@ -159,10 +158,10 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
         }
     }
 
-    private void setPosterView(final SimpleDraweeView view,
+    private void setPosterView(final FavoriteAnimeItemView view,
             final ArrayList<UserDigest.Favorite.AnimeItem> anime, final int index) {
         if (anime.size() >= index) {
-            view.setImageURI(anime.get(index - 1).getAnime().getPosterImage());
+            view.setContent(anime.get(index - 1));
             view.setVisibility(VISIBLE);
         } else {
             view.setVisibility(INVISIBLE);
