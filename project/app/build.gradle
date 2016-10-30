@@ -77,7 +77,7 @@ dependencies {
     compile 'com.facebook.fresco:imagepipeline-okhttp3:0.14.1'
 
     // Google's GSON
-    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.google.code.gson:gson:2.8.0'
 
     // Google Play Services
     compile 'com.google.android.gms:play-services-gcm:9.8.0'
