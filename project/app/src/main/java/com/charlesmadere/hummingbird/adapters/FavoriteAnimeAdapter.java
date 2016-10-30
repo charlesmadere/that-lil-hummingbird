@@ -10,6 +10,12 @@ public class FavoriteAnimeAdapter extends BaseAdapter<UserDigest.Favorite.AnimeI
 
     public FavoriteAnimeAdapter(final Context context) {
         super(context);
+        setHasStableIds(true);
+    }
+
+    @Override
+    public long getItemId(final int position) {
+        return getItem(position).hashCode();
     }
 
     @LayoutRes

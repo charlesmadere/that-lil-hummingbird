@@ -10,6 +10,12 @@ public class FavoriteMangaAdapter extends BaseAdapter<UserDigest.Favorite.MangaI
 
     public FavoriteMangaAdapter(final Context context) {
         super(context);
+        setHasStableIds(true);
+    }
+
+    @Override
+    public long getItemId(final int position) {
+        return getItem(position).hashCode();
     }
 
     @LayoutRes
