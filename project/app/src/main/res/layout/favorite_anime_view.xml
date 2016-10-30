@@ -90,7 +90,7 @@
         <com.charlesmadere.hummingbird.views.TypefaceTextView
             android:drawableEnd="@drawable/ic_expand_more_24dp"
             android:id="@+id/tvShowMore"
-            android:text="@string/show_more"
+            android:text="@string/show_all"
             android:visibility="gone"
             tools:visibility="visible"
             style="@style/ResponsiveWidthCardItem" />
