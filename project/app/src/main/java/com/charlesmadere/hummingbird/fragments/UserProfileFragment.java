@@ -26,6 +26,7 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 
 public class UserProfileFragment extends BaseUserFragment implements
+        FavoriteAnimeView.OnShowMoreClickListener, FavoriteMangaView.OnShowMoreClickListener,
         SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "UserDigestFragment";
@@ -74,10 +75,22 @@ public class UserProfileFragment extends BaseUserFragment implements
     }
 
     @Override
+    public void onShowMoreClick(final FavoriteAnimeView v) {
+        // TODO
+    }
+
+    @Override
+    public void onShowMoreClick(final FavoriteMangaView v) {
+        // TODO
+    }
+
+    @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         mRefreshLayout.setOnRefreshListener(this);
+        mFavoriteAnimeView.setOnShowMoreClickListener(this);
+        mFavoriteMangaView.setOnShowMoreClickListener(this);
     }
 
     private void refreshUserDigest() {

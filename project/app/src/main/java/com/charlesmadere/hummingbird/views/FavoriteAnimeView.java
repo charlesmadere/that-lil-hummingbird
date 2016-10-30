@@ -1,8 +1,10 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -99,11 +101,6 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
         startAnimeActivity(5);
     }
 
-    @OnClick(R.id.tvShowMore)
-    void onShowMoreClick() {
-        // TODO
-    }
-
     @Override
     public void setContent(final UserDigest content) {
         if (!content.hasFavorites()) {
@@ -172,10 +169,28 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
         }
     }
 
+    public void setOnShowMoreClickListener(@Nullable final OnShowMoreClickListener l) {
+        if (l == null) {
+            mShowMore.setClickable(false);
+        } else {
+            mShowMore.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(final View view) {
+                    l.onShowMoreClick(FavoriteAnimeView.this);
+                }
+            });
+        }
+    }
+
     private void startAnimeActivity(final int index) {
         final Context context = getContext();
         final Anime anime = mAnime.get(index).getAnime();
         context.startActivity(AnimeActivity.getLaunchIntent(context, anime));
+    }
+
+
+    public interface OnShowMoreClickListener {
+        void onShowMoreClick(final FavoriteAnimeView v);
     }
 
 }

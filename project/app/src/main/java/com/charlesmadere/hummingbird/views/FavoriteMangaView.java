@@ -1,8 +1,10 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -99,11 +101,6 @@ public class FavoriteMangaView extends CardView implements AdapterView<UserDiges
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.tvShowMore)
-    void onShowMoreClick() {
-        // TODO
-    }
-
     @Override
     public void setContent(final UserDigest content) {
         if (!content.hasFavorites()) {
@@ -162,6 +159,19 @@ public class FavoriteMangaView extends CardView implements AdapterView<UserDiges
         }
     }
 
+    public void setOnShowMoreClickListener(@Nullable final OnShowMoreClickListener l) {
+        if (l == null) {
+            mShowMore.setClickable(false);
+        } else {
+            mShowMore.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(final View view) {
+                    l.onShowMoreClick(FavoriteMangaView.this);
+                }
+            });
+        }
+    }
+
     private void setPosterView(final SimpleDraweeView view,
             final ArrayList<UserDigest.Favorite.MangaItem> manga, final int index) {
         if (manga.size() >= index) {
@@ -177,6 +187,11 @@ public class FavoriteMangaView extends CardView implements AdapterView<UserDiges
         final Manga manga = mManga.get(index).getManga();
         context.startActivity(MangaActivity.getLaunchIntent(context, manga.getId(),
                 manga.getTitle()));
+    }
+
+
+    public interface OnShowMoreClickListener {
+        void onShowMoreClick(final FavoriteMangaView v);
     }
 
 }
