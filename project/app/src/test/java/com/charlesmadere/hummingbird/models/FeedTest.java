@@ -11,6 +11,9 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import java.util.ArrayList;
+
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
@@ -211,6 +214,21 @@ public class FeedTest {
         final Gson gson = GsonUtils.getGson();
         final Feed feed = gson.fromJson(STORY_PAGE, Feed.class);
         assertTrue(feed.hasUsers());
+    }
+
+    @Test
+    public void testHydrate() {
+        final Gson gson = GsonUtils.getGson();
+        final Feed feed = gson.fromJson(STORY_PAGE, Feed.class);
+        feed.hydrate();
+
+        final ArrayList<AbsSubstory> substories = feed.getSubstories();
+
+        // noinspection ConstantConditions
+        for (final AbsSubstory substory : substories) {
+            final ReplySubstory reply = (ReplySubstory) substory;
+            assertNotNull(reply.getUser());
+        }
     }
 
 }
