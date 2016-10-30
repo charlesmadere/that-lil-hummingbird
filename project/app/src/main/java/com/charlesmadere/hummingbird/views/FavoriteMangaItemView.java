@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.View;
 
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.UserDigest;
@@ -11,7 +12,10 @@ import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 public class FavoriteMangaItemView extends SimpleDraweeView implements
-        AdapterView<UserDigest.Favorite.MangaItem> {
+        AdapterView<UserDigest.Favorite.MangaItem>, View.OnClickListener {
+
+    private UserDigest.Favorite.MangaItem mMangaItem;
+
 
     public FavoriteMangaItemView(final Context context, final GenericDraweeHierarchy hierarchy) {
         super(context, hierarchy);
@@ -33,8 +37,20 @@ public class FavoriteMangaItemView extends SimpleDraweeView implements
     }
 
     @Override
+    public void onClick(final View view) {
+
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        setOnClickListener(this);
+    }
+
+    @Override
     public void setContent(final UserDigest.Favorite.MangaItem content) {
-        setImageURI(content.getManga().getPosterImageThumb());
+        mMangaItem = content;
+        setImageURI(mMangaItem.getManga().getPosterImageThumb());
     }
 
 }
