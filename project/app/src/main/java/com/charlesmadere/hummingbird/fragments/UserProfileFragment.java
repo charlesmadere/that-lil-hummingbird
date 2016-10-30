@@ -22,10 +22,13 @@ import com.charlesmadere.hummingbird.views.RefreshLayout;
 import com.charlesmadere.hummingbird.views.UserBioView;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 
 public class UserProfileFragment extends BaseUserFragment implements
+        FavoriteAnimeFragment.Listener, FavoriteMangaFragment.Listener,
+        FavoriteAnimeView.OnShowMoreClickListener, FavoriteMangaView.OnShowMoreClickListener,
         SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "UserDigestFragment";
@@ -56,6 +59,30 @@ public class UserProfileFragment extends BaseUserFragment implements
         return new UserProfileFragment();
     }
 
+    @Nullable
+    @Override
+    public ArrayList<UserDigest.Favorite.AnimeItem> getFavoriteAnime() {
+        final UserDigest userDigest = getUserDigest();
+
+        if (userDigest == null) {
+            return null;
+        } else {
+            return userDigest.getFavoriteAnime();
+        }
+    }
+
+    @Nullable
+    @Override
+    public ArrayList<UserDigest.Favorite.MangaItem> getFavoriteManga() {
+        final UserDigest userDigest = getUserDigest();
+
+        if (userDigest == null) {
+            return null;
+        } else {
+            return userDigest.getFavoriteManga();
+        }
+    }
+
     @Override
     public String getFragmentName() {
         return TAG;
@@ -74,10 +101,22 @@ public class UserProfileFragment extends BaseUserFragment implements
     }
 
     @Override
+    public void onShowMoreClick(final FavoriteAnimeView v) {
+        FavoriteAnimeFragment.create().show(getChildFragmentManager(), null);
+    }
+
+    @Override
+    public void onShowMoreClick(final FavoriteMangaView v) {
+        FavoriteMangaFragment.create().show(getChildFragmentManager(), null);
+    }
+
+    @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         mRefreshLayout.setOnRefreshListener(this);
+        mFavoriteAnimeView.setOnShowMoreClickListener(this);
+        mFavoriteMangaView.setOnShowMoreClickListener(this);
     }
 
     private void refreshUserDigest() {

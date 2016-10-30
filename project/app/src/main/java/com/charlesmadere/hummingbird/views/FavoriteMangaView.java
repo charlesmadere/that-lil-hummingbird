@@ -1,27 +1,43 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.activities.MangaActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
-import com.charlesmadere.hummingbird.models.Manga;
 import com.charlesmadere.hummingbird.models.UserDigest;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class FavoriteMangaView extends CardView implements AdapterView<UserDigest> {
 
     private ArrayList<UserDigest.Favorite.MangaItem> mManga;
+
+    @BindView(R.id.fmivCover0)
+    FavoriteMangaItemView mCover0;
+
+    @BindView(R.id.fmivCover1)
+    FavoriteMangaItemView mCover1;
+
+    @BindView(R.id.fmivCover2)
+    FavoriteMangaItemView mCover2;
+
+    @BindView(R.id.fmivCover3)
+    FavoriteMangaItemView mCover3;
+
+    @BindView(R.id.fmivCover4)
+    FavoriteMangaItemView mCover4;
+
+    @BindView(R.id.fmivCover5)
+    FavoriteMangaItemView mCover5;
 
     @BindView(R.id.llFavoriteMangaGrid0)
     LinearLayout mMangaGrid0;
@@ -29,26 +45,11 @@ public class FavoriteMangaView extends CardView implements AdapterView<UserDiges
     @BindView(R.id.llFavoriteMangaGrid1)
     LinearLayout mMangaGrid1;
 
-    @BindView(R.id.sdvCover0)
-    SimpleDraweeView mCover0;
-
-    @BindView(R.id.sdvCover1)
-    SimpleDraweeView mCover1;
-
-    @BindView(R.id.sdvCover2)
-    SimpleDraweeView mCover2;
-
-    @BindView(R.id.sdvCover3)
-    SimpleDraweeView mCover3;
-
-    @BindView(R.id.sdvCover4)
-    SimpleDraweeView mCover4;
-
-    @BindView(R.id.sdvCover5)
-    SimpleDraweeView mCover5;
-
     @BindView(R.id.tvNoFavorites)
     TextView mNoFavorites;
+
+    @BindView(R.id.tvShowMore)
+    TextView mShowMore;
 
 
     public FavoriteMangaView(final Context context, final AttributeSet attrs) {
@@ -58,36 +59,6 @@ public class FavoriteMangaView extends CardView implements AdapterView<UserDiges
     public FavoriteMangaView(final Context context, final AttributeSet attrs,
             final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    @OnClick(R.id.sdvCover0)
-    void onCover0Click() {
-        startMangaActivity(0);
-    }
-
-    @OnClick(R.id.sdvCover1)
-    void onCover1Click() {
-        startMangaActivity(1);
-    }
-
-    @OnClick(R.id.sdvCover2)
-    void onCover2Click() {
-        startMangaActivity(2);
-    }
-
-    @OnClick(R.id.sdvCover3)
-    void onCover3Click() {
-        startMangaActivity(3);
-    }
-
-    @OnClick(R.id.sdvCover4)
-    void onCover4Click() {
-        startMangaActivity(4);
-    }
-
-    @OnClick(R.id.sdvCover5)
-    void onCover5Click() {
-        startMangaActivity(5);
     }
 
     @Override
@@ -125,42 +96,61 @@ public class FavoriteMangaView extends CardView implements AdapterView<UserDiges
         if (mManga.isEmpty()) {
             mMangaGrid0.setVisibility(GONE);
             mMangaGrid1.setVisibility(GONE);
+            mShowMore.setVisibility(GONE);
             mNoFavorites.setVisibility(VISIBLE);
             return;
         }
 
         mNoFavorites.setVisibility(GONE);
 
-        setPosterView(mCover0, mManga, 1);
-        setPosterView(mCover1, mManga, 2);
-        setPosterView(mCover2, mManga, 3);
+        setCoverView(mCover0, mManga, 1);
+        setCoverView(mCover1, mManga, 2);
+        setCoverView(mCover2, mManga, 3);
         mMangaGrid0.setVisibility(VISIBLE);
 
         if (mManga.size() >= 4) {
-            setPosterView(mCover3, mManga, 4);
-            setPosterView(mCover4, mManga, 5);
-            setPosterView(mCover5, mManga, 6);
+            setCoverView(mCover3, mManga, 4);
+            setCoverView(mCover4, mManga, 5);
+            setCoverView(mCover5, mManga, 6);
             mMangaGrid1.setVisibility(VISIBLE);
+
+            if (mManga.size() > 6) {
+                mShowMore.setVisibility(VISIBLE);
+            } else {
+                mShowMore.setVisibility(GONE);
+            }
         } else {
             mMangaGrid1.setVisibility(GONE);
+            mShowMore.setVisibility(GONE);
         }
     }
 
-    private void setPosterView(final SimpleDraweeView view,
+    private void setCoverView(final FavoriteMangaItemView view,
             final ArrayList<UserDigest.Favorite.MangaItem> manga, final int index) {
         if (manga.size() >= index) {
-            view.setImageURI(manga.get(index - 1).getManga().getPosterImageThumb());
+            view.setContent(manga.get(index - 1));
             view.setVisibility(VISIBLE);
         } else {
             view.setVisibility(INVISIBLE);
         }
     }
 
-    private void startMangaActivity(final int index) {
-        final Context context = getContext();
-        final Manga manga = mManga.get(index).getManga();
-        context.startActivity(MangaActivity.getLaunchIntent(context, manga.getId(),
-                manga.getTitle()));
+    public void setOnShowMoreClickListener(@Nullable final OnShowMoreClickListener l) {
+        if (l == null) {
+            mShowMore.setClickable(false);
+        } else {
+            mShowMore.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(final View view) {
+                    l.onShowMoreClick(FavoriteMangaView.this);
+                }
+            });
+        }
+    }
+
+
+    public interface OnShowMoreClickListener {
+        void onShowMoreClick(final FavoriteMangaView v);
     }
 
 }

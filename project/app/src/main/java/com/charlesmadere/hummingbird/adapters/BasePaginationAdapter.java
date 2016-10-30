@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.adapters;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
 
 import com.charlesmadere.hummingbird.R;
 
@@ -25,6 +26,7 @@ public abstract class BasePaginationAdapter<T> extends BaseAdapter<T> implements
         return itemCount;
     }
 
+    @LayoutRes
     @Override
     public final int getItemViewType(final int position) {
         if (mIsPaginating && position == getItems().size()) {

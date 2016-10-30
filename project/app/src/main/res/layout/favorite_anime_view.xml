@@ -18,24 +18,24 @@
             android:paddingStart="@dimen/root_padding"
             android:visibility="gone"
             tools:visibility="visible">
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/sdvPoster0"
+            <com.charlesmadere.hummingbird.views.FavoriteAnimeItemView
+                android:id="@+id/faivPoster0"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 style="@style/AnimePoster" />
             <android.support.v4.widget.Space
                 android:layout_height="1dp"
                 android:layout_width="@dimen/root_padding_half" />
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/sdvPoster1"
+            <com.charlesmadere.hummingbird.views.FavoriteAnimeItemView
+                android:id="@+id/faivPoster1"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 style="@style/AnimePoster" />
             <android.support.v4.widget.Space
                 android:layout_height="1dp"
                 android:layout_width="@dimen/root_padding_half" />
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/sdvPoster2"
+            <com.charlesmadere.hummingbird.views.FavoriteAnimeItemView
+                android:id="@+id/faivPoster2"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 style="@style/AnimePoster" />
@@ -43,31 +43,31 @@
         <LinearLayout
             android:id="@+id/llFavoriteAnimeGrid1"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/root_padding"
+            android:layout_marginBottom="@dimen/root_padding_half"
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:paddingEnd="@dimen/root_padding"
             android:paddingStart="@dimen/root_padding"
             android:visibility="gone"
             tools:visibility="visible">
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/sdvPoster3"
+            <com.charlesmadere.hummingbird.views.FavoriteAnimeItemView
+                android:id="@+id/faivPoster3"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 style="@style/AnimePoster" />
             <android.support.v4.widget.Space
                 android:layout_height="1dp"
                 android:layout_width="@dimen/root_padding_half" />
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/sdvPoster4"
+            <com.charlesmadere.hummingbird.views.FavoriteAnimeItemView
+                android:id="@+id/faivPoster4"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 style="@style/AnimePoster" />
             <android.support.v4.widget.Space
                 android:layout_height="1dp"
                 android:layout_width="@dimen/root_padding_half" />
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/sdvPoster5"
+            <com.charlesmadere.hummingbird.views.FavoriteAnimeItemView
+                android:id="@+id/faivPoster5"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 style="@style/AnimePoster" />
@@ -84,5 +84,15 @@
             android:text="@string/no_favorites"
             android:visibility="gone"
             tools:visibility="visible" />
+        <android.support.v4.widget.Space
+            android:layout_height="@dimen/root_padding_half"
+            android:layout_width="match_parent" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:drawableEnd="@drawable/ic_expand_more_24dp"
+            android:id="@+id/tvShowMore"
+            android:text="@string/show_all"
+            android:visibility="gone"
+            tools:visibility="visible"
+            style="@style/ResponsiveWidthCardItem" />
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.FavoriteAnimeView>

@@ -4,11 +4,11 @@ import android.content.Context;
 import android.support.annotation.LayoutRes;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.models.AnimeDigest;
+import com.charlesmadere.hummingbird.models.UserDigest;
 
-public class AnimeQuotesAdapter extends BaseAdapter<AnimeDigest.Quote> {
+public class FavoriteMangaAdapter extends BaseAdapter<UserDigest.Favorite.MangaItem> {
 
-    public AnimeQuotesAdapter(final Context context) {
+    public FavoriteMangaAdapter(final Context context) {
         super(context);
         setHasStableIds(true);
     }
@@ -21,7 +21,7 @@ public class AnimeQuotesAdapter extends BaseAdapter<AnimeDigest.Quote> {
     @LayoutRes
     @Override
     public int getItemViewType(final int position) {
-        return R.layout.item_anime_quote;
+        return R.layout.item_favorite_manga_view;
     }
 
 }

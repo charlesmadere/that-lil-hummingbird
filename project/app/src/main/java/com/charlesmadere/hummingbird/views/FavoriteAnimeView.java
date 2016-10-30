@@ -1,27 +1,43 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
-import com.charlesmadere.hummingbird.models.Anime;
 import com.charlesmadere.hummingbird.models.UserDigest;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class FavoriteAnimeView extends CardView implements AdapterView<UserDigest> {
 
     private ArrayList<UserDigest.Favorite.AnimeItem> mAnime;
+
+    @BindView(R.id.faivPoster0)
+    FavoriteAnimeItemView mPoster0;
+
+    @BindView(R.id.faivPoster1)
+    FavoriteAnimeItemView mPoster1;
+
+    @BindView(R.id.faivPoster2)
+    FavoriteAnimeItemView mPoster2;
+
+    @BindView(R.id.faivPoster3)
+    FavoriteAnimeItemView mPoster3;
+
+    @BindView(R.id.faivPoster4)
+    FavoriteAnimeItemView mPoster4;
+
+    @BindView(R.id.faivPoster5)
+    FavoriteAnimeItemView mPoster5;
 
     @BindView(R.id.llFavoriteAnimeGrid0)
     LinearLayout mAnimeGrid0;
@@ -29,26 +45,11 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
     @BindView(R.id.llFavoriteAnimeGrid1)
     LinearLayout mAnimeGrid1;
 
-    @BindView(R.id.sdvPoster0)
-    SimpleDraweeView mPoster0;
-
-    @BindView(R.id.sdvPoster1)
-    SimpleDraweeView mPoster1;
-
-    @BindView(R.id.sdvPoster2)
-    SimpleDraweeView mPoster2;
-
-    @BindView(R.id.sdvPoster3)
-    SimpleDraweeView mPoster3;
-
-    @BindView(R.id.sdvPoster4)
-    SimpleDraweeView mPoster4;
-
-    @BindView(R.id.sdvPoster5)
-    SimpleDraweeView mPoster5;
-
     @BindView(R.id.tvNoFavorites)
     TextView mNoFavorites;
+
+    @BindView(R.id.tvShowMore)
+    TextView mShowMore;
 
 
     public FavoriteAnimeView(final Context context, final AttributeSet attrs) {
@@ -64,36 +65,6 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
-    }
-
-    @OnClick(R.id.sdvPoster0)
-    void onPoster0Click() {
-        startAnimeActivity(0);
-    }
-
-    @OnClick(R.id.sdvPoster1)
-    void onPoster1Click() {
-        startAnimeActivity(1);
-    }
-
-    @OnClick(R.id.sdvPoster2)
-    void onPoster2Click() {
-        startAnimeActivity(2);
-    }
-
-    @OnClick(R.id.sdvPoster3)
-    void onPoster3Click() {
-        startAnimeActivity(3);
-    }
-
-    @OnClick(R.id.sdvPoster4)
-    void onPoster4Click() {
-        startAnimeActivity(4);
-    }
-
-    @OnClick(R.id.sdvPoster5)
-    void onPoster5Click() {
-        startAnimeActivity(5);
     }
 
     @Override
@@ -125,6 +96,7 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
         if (mAnime.isEmpty()) {
             mAnimeGrid0.setVisibility(GONE);
             mAnimeGrid1.setVisibility(GONE);
+            mShowMore.setVisibility(GONE);
             mNoFavorites.setVisibility(VISIBLE);
             return;
         }
@@ -141,25 +113,44 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
             setPosterView(mPoster4, mAnime, 5);
             setPosterView(mPoster5, mAnime, 6);
             mAnimeGrid1.setVisibility(VISIBLE);
+
+            if (mAnime.size() > 6) {
+                mShowMore.setVisibility(VISIBLE);
+            } else {
+                mShowMore.setVisibility(GONE);
+            }
         } else {
             mAnimeGrid1.setVisibility(GONE);
+            mShowMore.setVisibility(GONE);
         }
     }
 
-    private void setPosterView(final SimpleDraweeView view,
+    private void setPosterView(final FavoriteAnimeItemView view,
             final ArrayList<UserDigest.Favorite.AnimeItem> anime, final int index) {
         if (anime.size() >= index) {
-            view.setImageURI(anime.get(index - 1).getAnime().getPosterImage());
+            view.setContent(anime.get(index - 1));
             view.setVisibility(VISIBLE);
         } else {
             view.setVisibility(INVISIBLE);
         }
     }
 
-    private void startAnimeActivity(final int index) {
-        final Context context = getContext();
-        final Anime anime = mAnime.get(index).getAnime();
-        context.startActivity(AnimeActivity.getLaunchIntent(context, anime));
+    public void setOnShowMoreClickListener(@Nullable final OnShowMoreClickListener l) {
+        if (l == null) {
+            mShowMore.setClickable(false);
+        } else {
+            mShowMore.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(final View view) {
+                    l.onShowMoreClick(FavoriteAnimeView.this);
+                }
+            });
+        }
+    }
+
+
+    public interface OnShowMoreClickListener {
+        void onShowMoreClick(final FavoriteAnimeView v);
     }
 
 }
