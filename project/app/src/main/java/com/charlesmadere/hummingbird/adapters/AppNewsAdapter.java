@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.adapters;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 
@@ -29,6 +30,7 @@ public class AppNewsAdapter extends BaseAdapter<AppNews> {
         return getItem(position).hashCode();
     }
 
+    @LayoutRes
     @Override
     public int getItemViewType(final int position) {
         return R.layout.item_app_news;

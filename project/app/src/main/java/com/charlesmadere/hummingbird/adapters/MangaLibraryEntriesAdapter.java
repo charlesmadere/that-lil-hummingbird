@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.adapters;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 
@@ -34,6 +35,7 @@ public class MangaLibraryEntriesAdapter extends BaseAdapter<MangaLibraryEntry> {
         return getItem(position).hashCode();
     }
 
+    @LayoutRes
     @Override
     public int getItemViewType(final int position) {
         return R.layout.item_manga_library_entry;
