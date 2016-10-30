@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,9 @@ import com.charlesmadere.hummingbird.models.UserDigest;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
-public class FavoriteAnimeFragment extends BaseBottomSheetDialogFragment {
+public class FavoriteAnimeFragment extends BaseBottomSheetDialogFragment implements
+        View.OnClickListener {
 
     private static final String TAG = "FavoriteAnimeFragment";
 
@@ -28,6 +29,9 @@ public class FavoriteAnimeFragment extends BaseBottomSheetDialogFragment {
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
 
     public static FavoriteAnimeFragment create() {
@@ -59,8 +63,8 @@ public class FavoriteAnimeFragment extends BaseBottomSheetDialogFragment {
         }
     }
 
-    @OnClick(R.id.ibClose)
-    void onCloseClick() {
+    @Override
+    public void onClick(final View view) {
         dismissAllowingStateLoss();
     }
 
@@ -74,6 +78,10 @@ public class FavoriteAnimeFragment extends BaseBottomSheetDialogFragment {
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mToolbar.setTitle(R.string.favorite_anime);
+        mToolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
+        mToolbar.setNavigationOnClickListener(this);
 
         final ArrayList<UserDigest.Favorite.AnimeItem> favorites = mListener.getFavoriteAnime();
 
