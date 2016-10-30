@@ -3,9 +3,11 @@ package com.charlesmadere.hummingbird.views;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.charlesmadere.hummingbird.activities.AnimeActivity;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
@@ -38,19 +40,21 @@ public class FavoriteAnimeItemView extends SimpleDraweeView implements
 
     @Override
     public void onClick(final View view) {
-
+        final Context context = getContext();
+        context.startActivity(AnimeActivity.getLaunchIntent(context, mAnimeItem.getAnime()));
     }
 
     @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        setOnClickListener(this);
-    }
-
-    @Override
-    public void setContent(final UserDigest.Favorite.AnimeItem content) {
+    public void setContent(@Nullable final UserDigest.Favorite.AnimeItem content) {
         mAnimeItem = content;
-        setImageURI(mAnimeItem.getAnime().getPosterImage());
+
+        if (mAnimeItem == null) {
+            setImageURI((String) null);
+            setClickable(false);
+        } else {
+            setImageURI(mAnimeItem.getAnime().getPosterImage());
+            setOnClickListener(this);
+        }
     }
 
 }
