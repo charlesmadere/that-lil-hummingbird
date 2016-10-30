@@ -18,6 +18,7 @@ import com.charlesmadere.hummingbird.adapters.FeedAdapter;
 import com.charlesmadere.hummingbird.fragments.FeedPostFragment;
 import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
+import com.charlesmadere.hummingbird.misc.SyncManager;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.FeedPost;
@@ -59,6 +60,10 @@ public class ActivityFeedActivity extends BaseDrawerActivity implements FeedPost
     @BindView(R.id.refreshLayout)
     RefreshLayout mRefreshLayout;
 
+
+    static {
+        SyncManager.enableOrDisable();
+    }
 
     public static Intent getLaunchIntent(final Context context) {
         final Intent intent = createDrawerActivityIntent(context, ActivityFeedActivity.class);
