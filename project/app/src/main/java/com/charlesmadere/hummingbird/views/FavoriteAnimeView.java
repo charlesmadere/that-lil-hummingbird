@@ -50,6 +50,9 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
     @BindView(R.id.tvNoFavorites)
     TextView mNoFavorites;
 
+    @BindView(R.id.tvShowMore)
+    TextView mShowMore;
+
 
     public FavoriteAnimeView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
@@ -96,6 +99,11 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
         startAnimeActivity(5);
     }
 
+    @OnClick(R.id.tvShowMore)
+    void onShowMoreClick() {
+        // TODO
+    }
+
     @Override
     public void setContent(final UserDigest content) {
         if (!content.hasFavorites()) {
@@ -125,6 +133,7 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
         if (mAnime.isEmpty()) {
             mAnimeGrid0.setVisibility(GONE);
             mAnimeGrid1.setVisibility(GONE);
+            mShowMore.setVisibility(GONE);
             mNoFavorites.setVisibility(VISIBLE);
             return;
         }
@@ -141,8 +150,15 @@ public class FavoriteAnimeView extends CardView implements AdapterView<UserDiges
             setPosterView(mPoster4, mAnime, 5);
             setPosterView(mPoster5, mAnime, 6);
             mAnimeGrid1.setVisibility(VISIBLE);
+
+            if (mAnime.size() > 6) {
+                mShowMore.setVisibility(VISIBLE);
+            } else {
+                mShowMore.setVisibility(GONE);
+            }
         } else {
             mAnimeGrid1.setVisibility(GONE);
+            mShowMore.setVisibility(GONE);
         }
     }
 

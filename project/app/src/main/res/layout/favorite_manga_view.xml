@@ -87,5 +87,12 @@
         <android.support.v4.widget.Space
             android:layout_height="@dimen/root_padding_half"
             android:layout_width="match_parent" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:drawableEnd="@drawable/ic_expand_more_24dp"
+            android:id="@+id/tvShowMore"
+            android:text="@string/show_more"
+            android:visibility="gone"
+            tools:visibility="visible"
+            style="@style/ResponsiveWidthCardItem" />
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.FavoriteMangaView>
