@@ -81,6 +81,15 @@ public class FavoriteMangaFragment extends BaseBottomSheetDialogFragment impleme
         mToolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
         mToolbar.setNavigationOnClickListener(this);
         mToolbar.setTitle(R.string.favorite_manga);
+
+        final ArrayList<UserDigest.Favorite.MangaItem> favorites = mListener.getFavoriteManga();
+
+        if (favorites == null || favorites.isEmpty()) {
+            dismissAllowingStateLoss();
+            return;
+        }
+
+
     }
 
 
