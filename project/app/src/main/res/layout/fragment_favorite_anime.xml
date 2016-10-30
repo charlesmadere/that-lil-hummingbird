@@ -4,9 +4,11 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent">
     <android.support.v7.widget.RecyclerView
+        android:clipToPadding="false"
         android:id="@+id/recyclerView"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:paddingTop="@dimen/list_item_height"
         android:scrollbars="vertical"
         app:layoutManager="GridLayoutManager"
         app:spanCount="3" />
