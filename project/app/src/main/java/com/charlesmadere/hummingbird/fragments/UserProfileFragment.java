@@ -22,10 +22,12 @@ import com.charlesmadere.hummingbird.views.RefreshLayout;
 import com.charlesmadere.hummingbird.views.UserBioView;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 
 public class UserProfileFragment extends BaseUserFragment implements
+        FavoriteAnimeFragment.Listener, FavoriteMangaFragment.Listener,
         FavoriteAnimeView.OnShowMoreClickListener, FavoriteMangaView.OnShowMoreClickListener,
         SwipeRefreshLayout.OnRefreshListener {
 
@@ -55,6 +57,30 @@ public class UserProfileFragment extends BaseUserFragment implements
 
     public static UserProfileFragment create() {
         return new UserProfileFragment();
+    }
+
+    @Nullable
+    @Override
+    public ArrayList<UserDigest.Favorite.AnimeItem> getFavoriteAnime() {
+        final UserDigest userDigest = getUserDigest();
+
+        if (userDigest == null) {
+            return null;
+        } else {
+            return userDigest.getFavoriteAnime();
+        }
+    }
+
+    @Nullable
+    @Override
+    public ArrayList<UserDigest.Favorite.MangaItem> getFavoriteManga() {
+        final UserDigest userDigest = getUserDigest();
+
+        if (userDigest == null) {
+            return null;
+        } else {
+            return userDigest.getFavoriteManga();
+        }
     }
 
     @Override
