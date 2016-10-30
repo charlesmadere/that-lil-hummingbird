@@ -43,7 +43,7 @@
         <LinearLayout
             android:id="@+id/llFavoriteMangaGrid1"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/root_padding"
+            android:layout_marginBottom="@dimen/root_padding_half"
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:paddingEnd="@dimen/root_padding"
@@ -84,5 +84,8 @@
             android:text="@string/no_favorites"
             android:visibility="gone"
             tools:visibility="visible" />
+        <android.support.v4.widget.Space
+            android:layout_height="@dimen/root_padding_half"
+            android:layout_width="match_parent" />
     </LinearLayout>
 </com.charlesmadere.hummingbird.views.FavoriteMangaView>
