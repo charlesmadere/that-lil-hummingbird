@@ -76,12 +76,12 @@ public class UserProfileFragment extends BaseUserFragment implements
 
     @Override
     public void onShowMoreClick(final FavoriteAnimeView v) {
-        // TODO
+        FavoriteAnimeFragment.create().show(getChildFragmentManager(), null);
     }
 
     @Override
     public void onShowMoreClick(final FavoriteMangaView v) {
-        // TODO
+        FavoriteMangaFragment.create().show(getChildFragmentManager(), null);
     }
 
     @Override
