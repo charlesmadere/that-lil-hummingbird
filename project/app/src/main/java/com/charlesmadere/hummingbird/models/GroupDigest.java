@@ -19,6 +19,11 @@ public class GroupDigest implements Hydratable, Parcelable {
     private Group mGroup;
 
 
+    @Override
+    public boolean equals(final Object o) {
+        return o instanceof GroupDigest && getId().equalsIgnoreCase(((GroupDigest) o).getId());
+    }
+
     public Group getGroup() {
         return mGroup;
     }
@@ -34,6 +39,11 @@ public class GroupDigest implements Hydratable, Parcelable {
 
     public String getName() {
         return mGroup.getName();
+    }
+
+    @Override
+    public int hashCode() {
+        return getId().hashCode();
     }
 
     public boolean hasGroupMembers() {

@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.WorkerThread;
 
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.JsonDeserializationContext;
@@ -57,6 +58,7 @@ public abstract class AbsNotification implements Parcelable {
         return mId.hashCode();
     }
 
+    @WorkerThread
     public void hydrate(final Feed feed) {
         mSource.hydrate(feed);
     }
@@ -98,6 +100,7 @@ public abstract class AbsNotification implements Parcelable {
 
         public abstract User getUser();
 
+        @WorkerThread
         public abstract void hydrate(final Feed feed);
 
         @Override
@@ -214,7 +217,9 @@ public abstract class AbsNotification implements Parcelable {
         }
 
         @Override
+        @WorkerThread
         public void hydrate(final Feed feed) {
+            // noinspection ConstantConditions
             for (final AbsStory story : feed.getStories()) {
                 if (getId().equalsIgnoreCase(story.getId())) {
                     mStory = story;
@@ -280,7 +285,9 @@ public abstract class AbsNotification implements Parcelable {
         }
 
         @Override
+        @WorkerThread
         public void hydrate(final Feed feed) {
+            // noinspection ConstantConditions
             for (final AbsSubstory substory : feed.getSubstories()) {
                 if (getId().equalsIgnoreCase(substory.getId())) {
                     mSubstory = substory;

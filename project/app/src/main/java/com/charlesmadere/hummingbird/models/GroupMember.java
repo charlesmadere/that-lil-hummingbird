@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.StringRes;
+import android.support.annotation.WorkerThread;
 
 import com.charlesmadere.hummingbird.R;
 import com.google.gson.annotations.SerializedName;
@@ -58,7 +59,9 @@ public class GroupMember implements Parcelable {
         return mId.hashCode();
     }
 
+    @WorkerThread
     public void hydrate(final Feed feed) {
+        // noinspection ConstantConditions
         for (final User user : feed.getUsers()) {
             if (mUserId.equalsIgnoreCase(user.getId())) {
                 mUser = user;

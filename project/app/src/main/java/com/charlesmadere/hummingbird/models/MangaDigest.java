@@ -109,6 +109,7 @@ public class MangaDigest implements Hydratable, Parcelable {
     @WorkerThread
     public void hydrate() {
         if (hasLibraryEntries()) {
+            // noinspection ConstantConditions
             final Iterator<MangaLibraryEntry> iterator = mLibraryEntries.iterator();
 
             do {

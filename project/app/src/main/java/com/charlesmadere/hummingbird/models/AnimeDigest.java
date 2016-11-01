@@ -1099,6 +1099,11 @@ public class AnimeDigest implements Hydratable, Parcelable {
         private String mName;
 
 
+        @Override
+        public boolean equals(final Object o) {
+            return o instanceof Person && mId.equalsIgnoreCase(((Person) o).getId());
+        }
+
         public String getId() {
             return mId;
         }
@@ -1110,6 +1115,11 @@ public class AnimeDigest implements Hydratable, Parcelable {
 
         public String getName() {
             return mName;
+        }
+
+        @Override
+        public int hashCode() {
+            return mId.hashCode();
         }
 
         @Override
@@ -1155,12 +1165,22 @@ public class AnimeDigest implements Hydratable, Parcelable {
         private String mName;
 
 
+        @Override
+        public boolean equals(final Object o) {
+            return o instanceof Producer && mId.equalsIgnoreCase(((Producer) o).getId());
+        }
+
         public String getId() {
             return mId;
         }
 
         public String getName() {
             return mName;
+        }
+
+        @Override
+        public int hashCode() {
+            return mId.hashCode();
         }
 
         @Override
@@ -1334,6 +1354,5 @@ public class AnimeDigest implements Hydratable, Parcelable {
             }
         };
     }
-
 
 }
