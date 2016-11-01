@@ -542,11 +542,11 @@ public class MangaDigest implements Hydratable, Parcelable {
         public void writeToParcel(final Parcel dest, final int flags) {
             ParcelableUtils.writeIntegerArrayList(mCommunityRatings, dest);
             dest.writeStringList(mGenres);
-            ParcelableUtils.writeFloat(mBayesianRating, dest);
-            ParcelableUtils.writeInteger(mChapterCount, dest);
-            ParcelableUtils.writeInteger(mCoverImageTopOffset, dest);
-            ParcelableUtils.writeInteger(mPendingEdits, dest);
-            ParcelableUtils.writeInteger(mVolumeCount, dest);
+            dest.writeValue(mBayesianRating);
+            dest.writeValue(mChapterCount);
+            dest.writeValue(mCoverImageTopOffset);
+            dest.writeValue(mPendingEdits);
+            dest.writeValue(mVolumeCount);
             dest.writeParcelable(mType, flags);
             dest.writeParcelable(mUpdatedAt, flags);
             dest.writeString(mCoverImage);
@@ -564,11 +564,11 @@ public class MangaDigest implements Hydratable, Parcelable {
                 final Info i = new Info();
                 i.mCommunityRatings = ParcelableUtils.readIntegerArrayList(source);
                 i.mGenres = source.createStringArrayList();
-                i.mBayesianRating = ParcelableUtils.readFloat(source);
-                i.mChapterCount = ParcelableUtils.readInteger(source);
-                i.mCoverImageTopOffset = ParcelableUtils.readInteger(source);
-                i.mPendingEdits = ParcelableUtils.readInteger(source);
-                i.mVolumeCount = ParcelableUtils.readInteger(source);
+                i.mBayesianRating = (Float) source.readValue(Float.class.getClassLoader());
+                i.mChapterCount = (Integer) source.readValue(Integer.class.getClassLoader());
+                i.mCoverImageTopOffset = (Integer) source.readValue(Integer.class.getClassLoader());
+                i.mPendingEdits = (Integer) source.readValue(Integer.class.getClassLoader());
+                i.mVolumeCount = (Integer) source.readValue(Integer.class.getClassLoader());
                 i.mType = source.readParcelable(MangaType.class.getClassLoader());
                 i.mUpdatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
                 i.mCoverImage = source.readString();

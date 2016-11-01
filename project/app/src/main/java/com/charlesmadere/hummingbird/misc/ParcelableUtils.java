@@ -178,17 +178,6 @@ public final class ParcelableUtils {
     }
 
     @Nullable
-    public static Float readFloat(final Parcel source) {
-        final String value = source.readString();
-
-        if (value == null) {
-            return null;
-        } else {
-            return Float.parseFloat(value);
-        }
-    }
-
-    @Nullable
     public static ArrayList<Integer> readIntegerArrayList(final Parcel source) {
         final int count = source.readInt();
 
@@ -199,7 +188,7 @@ public final class ParcelableUtils {
         final ArrayList<Integer> list = new ArrayList<>(count);
 
         for (int i = 0; i < count; ++i) {
-            list.add(readInteger(source));
+            list.add((Integer) source.readValue(Integer.class.getClassLoader()));
         }
 
         return list;
@@ -215,27 +204,8 @@ public final class ParcelableUtils {
         dest.writeInt(list.size());
 
         for (final Integer integer : list) {
-            writeInteger(integer, dest);
+            dest.writeValue(integer);
         }
-    }
-
-    public static void writeFloat(@Nullable final Float f, final Parcel dest) {
-        dest.writeString(f == null ? null : f.toString());
-    }
-
-    @Nullable
-    public static Integer readInteger(final Parcel source) {
-        final String value = source.readString();
-
-        if (value == null) {
-            return null;
-        } else {
-            return Integer.parseInt(value);
-        }
-    }
-
-    public static void writeInteger(@Nullable final Integer i, final Parcel dest) {
-        dest.writeString(i == null ? null : i.toString());
     }
 
     @Nullable
