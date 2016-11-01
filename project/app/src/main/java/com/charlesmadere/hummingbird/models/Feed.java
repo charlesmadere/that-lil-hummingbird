@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 
 import com.charlesmadere.hummingbird.misc.MiscUtils;
-import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -471,14 +470,14 @@ public class Feed implements Hydratable {
 
         @Override
         public void writeToParcel(final Parcel dest, final int flags) {
-            ParcelableUtils.writeInteger(mCursor, dest);
+            dest.writeValue(mCursor);
         }
 
         public static final Creator<Metadata> CREATOR = new Creator<Metadata>() {
             @Override
             public Metadata createFromParcel(final Parcel source) {
                 final Metadata m = new Metadata();
-                m.mCursor = ParcelableUtils.readInteger(source);
+                m.mCursor = (Integer) source.readValue(Integer.class.getClassLoader());
                 return m;
             }
 

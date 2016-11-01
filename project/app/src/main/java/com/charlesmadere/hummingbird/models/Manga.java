@@ -8,7 +8,6 @@ import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
-import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -193,9 +192,9 @@ public class Manga implements Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeStringList(mGenres);
-        ParcelableUtils.writeInteger(mChapterCount, dest);
-        ParcelableUtils.writeInteger(mCoverImageTopOffset, dest);
-        ParcelableUtils.writeInteger(mVolumeCount, dest);
+        dest.writeValue(mChapterCount);
+        dest.writeValue(mCoverImageTopOffset);
+        dest.writeValue(mVolumeCount);
         dest.writeParcelable(mType, flags);
         dest.writeParcelable(mUpdatedAt, flags);
         dest.writeString(mCoverImage);
@@ -211,9 +210,9 @@ public class Manga implements Parcelable {
         public Manga createFromParcel(final Parcel source) {
             final Manga m = new Manga();
             m.mGenres = source.createStringArrayList();
-            m.mChapterCount = ParcelableUtils.readInteger(source);
-            m.mCoverImageTopOffset = ParcelableUtils.readInteger(source);
-            m.mVolumeCount = ParcelableUtils.readInteger(source);
+            m.mChapterCount = (Integer) source.readValue(Integer.class.getClassLoader());
+            m.mCoverImageTopOffset = (Integer) source.readValue(Integer.class.getClassLoader());
+            m.mVolumeCount = (Integer) source.readValue(Integer.class.getClassLoader());
             m.mType = source.readParcelable(MangaType.class.getClassLoader());
             m.mUpdatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
             m.mCoverImage = source.readString();

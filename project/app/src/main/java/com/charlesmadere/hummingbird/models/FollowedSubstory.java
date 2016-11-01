@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.WorkerThread;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -28,6 +29,7 @@ public class FollowedSubstory extends AbsSubstory implements Parcelable {
     }
 
     @Override
+    @WorkerThread
     public void hydrate(final Feed feed) {
         // noinspection ConstantConditions
         for (final User user : feed.getUsers()) {

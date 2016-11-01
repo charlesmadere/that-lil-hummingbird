@@ -162,6 +162,7 @@ public class AnimeReview implements Parcelable {
         compileContent();
         mAnimeTitle = animeDigest.getTitle();
 
+        // noinspection ConstantConditions
         for (final User user : animeDigest.getUsers()) {
             if (mUserId.equalsIgnoreCase(user.getId())) {
                 mUser = user;
@@ -180,6 +181,7 @@ public class AnimeReview implements Parcelable {
 
         compileContent();
 
+        // noinspection ConstantConditions
         for (final Anime anime : feed.getAnime()) {
             if (mAnimeId.equalsIgnoreCase(anime.getId())) {
                 mAnime = anime;
@@ -187,6 +189,7 @@ public class AnimeReview implements Parcelable {
             }
         }
 
+        // noinspection ConstantConditions
         for (final User user : feed.getUsers()) {
             if (mUserId.equalsIgnoreCase(user.getId())) {
                 mUser = user;

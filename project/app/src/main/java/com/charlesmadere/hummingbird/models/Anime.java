@@ -8,7 +8,6 @@ import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
-import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.google.gson.annotations.SerializedName;
 
@@ -271,8 +270,8 @@ public class Anime implements Parcelable {
         dest.writeStringList(mGenres);
         dest.writeInt(mStartedAiringDateKnown ? 1 : 0);
         dest.writeFloat(mCommunityRating);
-        ParcelableUtils.writeInteger(mEpisodeCount, dest);
-        ParcelableUtils.writeInteger(mEpisodeLength, dest);
+        dest.writeValue(mEpisodeCount);
+        dest.writeValue(mEpisodeLength);
         dest.writeParcelable(mFinishedAiring, flags);
         dest.writeParcelable(mStartedAiring, flags);
         dest.writeString(mAgeRatingGuide);
@@ -294,8 +293,8 @@ public class Anime implements Parcelable {
             a.mGenres = source.createStringArrayList();
             a.mStartedAiringDateKnown = source.readInt() != 0;
             a.mCommunityRating = source.readFloat();
-            a.mEpisodeCount = ParcelableUtils.readInteger(source);
-            a.mEpisodeLength = ParcelableUtils.readInteger(source);
+            a.mEpisodeCount = (Integer) source.readValue(Integer.class.getClassLoader());
+            a.mEpisodeLength = (Integer) source.readValue(Integer.class.getClassLoader());
             a.mFinishedAiring = source.readParcelable(SimpleDate.class.getClassLoader());
             a.mStartedAiring = source.readParcelable(SimpleDate.class.getClassLoader());
             a.mAgeRatingGuide = source.readString();

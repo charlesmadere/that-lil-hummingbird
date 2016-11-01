@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.JsoupUtils;
@@ -42,6 +43,7 @@ public class ReplySubstory extends AbsSubstory implements Parcelable {
     }
 
     @Override
+    @WorkerThread
     public void hydrate(final Feed feed) {
         // noinspection ConstantConditions
         for (final User user : feed.getUsers()) {
