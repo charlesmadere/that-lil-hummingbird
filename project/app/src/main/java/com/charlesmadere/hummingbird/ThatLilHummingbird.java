@@ -110,6 +110,12 @@ public class ThatLilHummingbird extends Application {
             ObjectCache.clear();
         } else if (level >= TRIM_MEMORY_UI_HIDDEN) {
             ObjectCache.trim();
+        } else if (level < TRIM_MEMORY_UI_HIDDEN) {
+            if (level >= TRIM_MEMORY_RUNNING_LOW) {
+                Timber.clearEntries();
+                Fresco.getImagePipeline().clearMemoryCaches();
+                ObjectCache.clear();
+            }
         }
 
         Timber.d(TAG, "onTrimMemory(): " + level);
