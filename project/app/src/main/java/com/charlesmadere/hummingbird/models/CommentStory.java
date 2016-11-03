@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 
 import com.charlesmadere.hummingbird.misc.JsoupUtils;
@@ -62,10 +63,6 @@ public class CommentStory extends AbsStory implements Parcelable {
         return json;
     }
 
-    public String getPlainTextComment() {
-        return mComment;
-    }
-
     public User getPoster() {
         return mPoster;
     }
@@ -84,9 +81,11 @@ public class CommentStory extends AbsStory implements Parcelable {
     }
 
     @Override
+    @WorkerThread
     public void hydrate(final Feed feed) {
         super.hydrate(feed);
 
+        // noinspection ConstantConditions
         for (final User user : feed.getUsers()) {
             if (mPosterId.equalsIgnoreCase(user.getId())) {
                 mPoster = user;
@@ -95,7 +94,9 @@ public class CommentStory extends AbsStory implements Parcelable {
         }
 
         if (hasGroupId()) {
+            // noinspection ConstantConditions
             for (final Group group : feed.getGroups()) {
+                // noinspection ConstantConditions
                 if (mGroupId.equalsIgnoreCase(group.getId())) {
                     mGroup = group;
                     break;

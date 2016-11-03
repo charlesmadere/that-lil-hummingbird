@@ -18,13 +18,23 @@ public class Franchise {
     private Data mData;
 
 
+    @Override
+    public boolean equals(final Object o) {
+        return o instanceof Franchise && mData.equals(((Franchise) o).mData);
+    }
+
     @Nullable
     public ArrayList<Anime> getAnime() {
         return mAnime;
     }
 
-    public Data getData() {
-        return mData;
+    @Nullable
+    public ArrayList<String> getAnimeIds() {
+        return mData.getAnimeIds();
+    }
+
+    public String getId() {
+        return mData.getId();
     }
 
     public boolean hasAnime() {
@@ -32,8 +42,13 @@ public class Franchise {
     }
 
     @Override
+    public int hashCode() {
+        return getId().hashCode();
+    }
+
+    @Override
     public String toString() {
-        return getData().toString();
+        return mData.toString();
     }
 
 
@@ -46,6 +61,11 @@ public class Franchise {
         private String mId;
 
 
+        @Override
+        public boolean equals(final Object o) {
+            return o instanceof Data && mId.equalsIgnoreCase(((Data) o).getId());
+        }
+
         @Nullable
         public ArrayList<String> getAnimeIds() {
             return mAnimeIds;
@@ -57,6 +77,11 @@ public class Franchise {
 
         public boolean hasAnimeIds() {
             return mAnimeIds != null && !mAnimeIds.isEmpty();
+        }
+
+        @Override
+        public int hashCode() {
+            return mId.hashCode();
         }
 
         @Override

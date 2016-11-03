@@ -258,6 +258,7 @@ public class UserDigest implements Hydratable, Parcelable {
             return mId.hashCode();
         }
 
+        @WorkerThread
         public void hydrate(final UserDigest userDigest) {
             mItem.hydrate(userDigest);
         }
@@ -324,6 +325,7 @@ public class UserDigest implements Hydratable, Parcelable {
                 return mId.hashCode();
             }
 
+            @WorkerThread
             public abstract void hydrate(final UserDigest userDigest);
 
             @Override
@@ -448,6 +450,7 @@ public class UserDigest implements Hydratable, Parcelable {
             }
 
             @Override
+            @WorkerThread
             public void hydrate(final UserDigest userDigest) {
                 // noinspection ConstantConditions
                 for (final Anime anime : userDigest.getAnime()) {
@@ -496,6 +499,7 @@ public class UserDigest implements Hydratable, Parcelable {
             }
 
             @Override
+            @WorkerThread
             public void hydrate(final UserDigest userDigest) {
                 // noinspection ConstantConditions
                 for (final Manga manga : userDigest.getManga()) {

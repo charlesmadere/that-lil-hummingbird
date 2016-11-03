@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.WorkerThread;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -48,6 +49,7 @@ public abstract class AbsSubstory implements Parcelable {
         return mId.hashCode();
     }
 
+    @WorkerThread
     public void hydrate(final Feed feed) {
         // method intentionally blank, children can override
     }

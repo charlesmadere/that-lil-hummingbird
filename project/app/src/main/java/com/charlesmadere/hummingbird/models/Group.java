@@ -10,7 +10,7 @@ import com.charlesmadere.hummingbird.misc.JsoupUtils;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.google.gson.annotations.SerializedName;
 
-public class Group implements Parcelable {
+public class Group implements Hydratable, Parcelable {
 
     @SerializedName("member_count")
     private int mMemberCount;
@@ -117,6 +117,7 @@ public class Group implements Parcelable {
         return mId.hashCode();
     }
 
+    @Override
     @WorkerThread
     public void hydrate() {
         if (!TextUtils.isEmpty(mAboutFormatted)) {

@@ -90,7 +90,7 @@ public final class ObjectCache {
 
         synchronized (CACHE) {
             oldSize = CACHE.size();
-            CACHE.trimToSize(CACHE.maxSize() / 2);
+            CACHE.trimToSize(CACHE.size() / 2);
             newSize = CACHE.size();
         }
 

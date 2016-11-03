@@ -7,6 +7,7 @@ import com.charlesmadere.hummingbird.models.AnimeWrapper;
 import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.Franchise;
 import com.charlesmadere.hummingbird.models.GroupDigest;
+import com.charlesmadere.hummingbird.models.Liker;
 import com.charlesmadere.hummingbird.models.MangaDigest;
 import com.charlesmadere.hummingbird.models.MangaLibraryEntryResponse;
 import com.charlesmadere.hummingbird.models.SearchBundle;
@@ -15,6 +16,8 @@ import com.charlesmadere.hummingbird.models.SearchScope;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.google.gson.JsonElement;
+
+import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -89,6 +92,9 @@ public interface HummingbirdApi {
 
     @GET("stories")
     Call<Feed> getGroupStories(@Query("group_id") String groupId, @Query("page") Integer page);
+
+    @GET("stories/{storyId}/likers")
+    Call<ArrayList<Liker>> getLikers(@Path("storyId") String storyId, @Query("page") Integer page);
 
     @GET("full_manga/{mangaId}")
     Call<MangaDigest> getMangaDigest(@Path("mangaId") String mangaId);

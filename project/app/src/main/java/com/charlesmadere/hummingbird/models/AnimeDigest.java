@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.Constants;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
-import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
@@ -1025,10 +1024,10 @@ public class AnimeDigest implements Hydratable, Parcelable {
             dest.writeStringList(mScreencaps);
             dest.writeInt(mHasReviewed ? 1 : 0);
             dest.writeInt(mStartedAiringDateKnown ? 1 : 0);
-            ParcelableUtils.writeFloat(mBayesianRating, dest);
+            dest.writeValue(mBayesianRating);
             dest.writeInt(mCoverImageTopOffset);
-            ParcelableUtils.writeInteger(mEpisodeCount, dest);
-            ParcelableUtils.writeInteger(mEpisodeLength, dest);
+            dest.writeValue(mEpisodeCount);
+            dest.writeValue(mEpisodeLength);
             dest.writeParcelable(mFinishedAiringDate, flags);
             dest.writeParcelable(mStartedAiringDate, flags);
             dest.writeParcelable(mUpdatedAt, flags);
@@ -1058,10 +1057,10 @@ public class AnimeDigest implements Hydratable, Parcelable {
                 i.mScreencaps = source.createStringArrayList();
                 i.mHasReviewed = source.readInt() != 0;
                 i.mStartedAiringDateKnown = source.readInt() != 0;
-                i.mBayesianRating = ParcelableUtils.readFloat(source);
+                i.mBayesianRating = (Float) source.readValue(Float.class.getClassLoader());
                 i.mCoverImageTopOffset = source.readInt();
-                i.mEpisodeCount = ParcelableUtils.readInteger(source);
-                i.mEpisodeLength = ParcelableUtils.readInteger(source);
+                i.mEpisodeCount= (Integer) source.readValue(Integer.class.getClassLoader());
+                i.mEpisodeLength = (Integer) source.readValue(Integer.class.getClassLoader());
                 i.mFinishedAiringDate = source.readParcelable(SimpleDate.class.getClassLoader());
                 i.mStartedAiringDate = source.readParcelable(SimpleDate.class.getClassLoader());
                 i.mUpdatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
@@ -1100,6 +1099,11 @@ public class AnimeDigest implements Hydratable, Parcelable {
         private String mName;
 
 
+        @Override
+        public boolean equals(final Object o) {
+            return o instanceof Person && mId.equalsIgnoreCase(((Person) o).getId());
+        }
+
         public String getId() {
             return mId;
         }
@@ -1111,6 +1115,11 @@ public class AnimeDigest implements Hydratable, Parcelable {
 
         public String getName() {
             return mName;
+        }
+
+        @Override
+        public int hashCode() {
+            return mId.hashCode();
         }
 
         @Override
@@ -1156,12 +1165,22 @@ public class AnimeDigest implements Hydratable, Parcelable {
         private String mName;
 
 
+        @Override
+        public boolean equals(final Object o) {
+            return o instanceof Producer && mId.equalsIgnoreCase(((Producer) o).getId());
+        }
+
         public String getId() {
             return mId;
         }
 
         public String getName() {
             return mName;
+        }
+
+        @Override
+        public int hashCode() {
+            return mId.hashCode();
         }
 
         @Override
@@ -1335,6 +1354,5 @@ public class AnimeDigest implements Hydratable, Parcelable {
             }
         };
     }
-
 
 }

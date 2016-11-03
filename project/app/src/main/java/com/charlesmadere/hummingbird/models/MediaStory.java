@@ -2,6 +2,7 @@ package com.charlesmadere.hummingbird.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.WorkerThread;
 
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.JsonDeserializationContext;
@@ -29,6 +30,7 @@ public class MediaStory extends AbsStory implements Parcelable {
     }
 
     @Override
+    @WorkerThread
     public void hydrate(final Feed feed) {
         super.hydrate(feed);
         mMedia.hydrate(feed);
@@ -75,12 +77,23 @@ public class MediaStory extends AbsStory implements Parcelable {
         private String mId;
 
 
+        @Override
+        public boolean equals(final Object o) {
+            return o instanceof AbsMedia && mId.equalsIgnoreCase(((AbsMedia) o).getId());
+        }
+
         public String getId() {
             return mId;
         }
 
         public abstract Type getType();
 
+        @Override
+        public int hashCode() {
+            return mId.hashCode();
+        }
+
+        @WorkerThread
         public abstract void hydrate(final Feed feed);
 
         @Override
@@ -184,9 +197,11 @@ public class MediaStory extends AbsStory implements Parcelable {
         }
 
         @Override
+        @WorkerThread
         public void hydrate(final Feed feed) {
             final String mediaId = getId();
 
+            // noinspection ConstantConditions
             for (final Anime anime : feed.getAnime()) {
                 if (mediaId.equalsIgnoreCase(anime.getId())) {
                     mAnime = anime;
@@ -242,9 +257,11 @@ public class MediaStory extends AbsStory implements Parcelable {
         }
 
         @Override
+        @WorkerThread
         public void hydrate(final Feed feed) {
             final String mediaId = getId();
 
+            // noinspection ConstantConditions
             for (final Manga manga : feed.getManga()) {
                 if (mediaId.equalsIgnoreCase(manga.getId())) {
                     mManga = manga;

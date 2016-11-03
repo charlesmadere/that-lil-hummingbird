@@ -3,6 +3,7 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 
 import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 import com.google.gson.JsonDeserializationContext;
@@ -89,6 +90,7 @@ public abstract class AbsStory implements Parcelable {
         return mSubstoryIds != null && !mSubstoryIds.isEmpty();
     }
 
+    @WorkerThread
     public void hydrate(final Feed feed) {
         // noinspection ConstantConditions
         for (final User user : feed.getUsers()) {
