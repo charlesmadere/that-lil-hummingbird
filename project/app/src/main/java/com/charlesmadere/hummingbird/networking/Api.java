@@ -28,6 +28,7 @@ import com.charlesmadere.hummingbird.models.Feed;
 import com.charlesmadere.hummingbird.models.FeedPost;
 import com.charlesmadere.hummingbird.models.Franchise;
 import com.charlesmadere.hummingbird.models.GroupDigest;
+import com.charlesmadere.hummingbird.models.Liker;
 import com.charlesmadere.hummingbird.models.MangaDigest;
 import com.charlesmadere.hummingbird.models.MangaLibraryEntry;
 import com.charlesmadere.hummingbird.models.MangaLibraryEntryResponse;
@@ -539,6 +540,31 @@ public final class Api {
             @Override
             public void onFailure(final Call<Feed> call, final Throwable t) {
                 Timber.e(TAG, "get group stories (" + groupId + ") (page " + page + ") failed", t);
+                listener.failure(null);
+            }
+        });
+    }
+
+    public static void getLikers(final String storyId, final ApiResponse<ArrayList<Liker>> listener) {
+        getLikers(storyId, null, 1, listener);
+    }
+
+    public static void getLikers(final String storyId, @Nullable final ArrayList<Liker> likers,
+            final int page, final ApiResponse<ArrayList<Liker>> listener) {
+        HUMMINGBIRD.getLikers(storyId, page).enqueue(new Callback<ArrayList<Liker>>() {
+            @Override
+            public void onResponse(final Call<ArrayList<Liker>> call,
+                    final Response<ArrayList<Liker>> response) {
+                if (response.isSuccessful()) {
+                    listener.success(response.body());
+                } else {
+                    listener.failure(retrieveErrorInfo(response));
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<ArrayList<Liker>> call, final Throwable t) {
+                Timber.e(TAG, "get likers (" + storyId + ") (page " + page + ") failed", t);
                 listener.failure(null);
             }
         });

@@ -246,6 +246,7 @@
     <string name="poll_frequency">Poll frequency</string>
     <string name="post">Post</string>
     <string name="post_comment">Post Comment</string>
+    <string name="post_reactions">Post Reactions</string>
     <string name="posted_to">posted to</string>
     <string name="preferred_title_language">Preferred title language</string>
     <string name="priscilla_zhou">Priscilla Zhou</string>
