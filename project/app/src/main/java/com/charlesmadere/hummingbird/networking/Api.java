@@ -556,7 +556,17 @@ public final class Api {
             public void onResponse(final Call<ArrayList<Liker>> call,
                     final Response<ArrayList<Liker>> response) {
                 if (response.isSuccessful()) {
-                    listener.success(response.body());
+                    final ArrayList<Liker> body = response.body();
+
+                    if (likers != null && !likers.isEmpty()) {
+                        if (body != null && !body.isEmpty()) {
+                            likers.addAll(body);
+                        }
+
+                        listener.success(likers);
+                    } else {
+                        listener.success(body);
+                    }
                 } else {
                     listener.failure(retrieveErrorInfo(response));
                 }
