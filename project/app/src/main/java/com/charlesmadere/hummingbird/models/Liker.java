@@ -2,9 +2,7 @@ package com.charlesmadere.hummingbird.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
 
-import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.google.gson.annotations.SerializedName;
 
 public class Liker implements Parcelable {
@@ -15,9 +13,6 @@ public class Liker implements Parcelable {
     @SerializedName("username")
     private String mUsername;
 
-    // not included in json
-    private String[] mAvatars;
-
 
     @Override
     public boolean equals(final Object o) {
@@ -26,15 +21,6 @@ public class Liker implements Parcelable {
 
     public String getAvatar() {
         return mAvatar;
-    }
-
-    @Nullable
-    public String[] getAvatars() {
-        if (mAvatars == null) {
-            mAvatars = MiscUtils.getUserAvatars(mAvatar);
-        }
-
-        return mAvatars;
     }
 
     public String getUsername() {
@@ -60,7 +46,6 @@ public class Liker implements Parcelable {
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(mAvatar);
         dest.writeString(mUsername);
-        dest.writeStringArray(mAvatars);
     }
 
     public static final Creator<Liker> CREATOR = new Creator<Liker>() {
@@ -69,7 +54,6 @@ public class Liker implements Parcelable {
             final Liker l = new Liker();
             l.mAvatar = source.readString();
             l.mUsername = source.readString();
-            l.mAvatars = source.createStringArray();
             return l;
         }
 
