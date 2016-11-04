@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.adapters;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 
 import com.charlesmadere.hummingbird.R;
@@ -23,6 +24,7 @@ public class UsersAdapter extends BasePaginationAdapter<User> {
         }
     }
 
+    @LayoutRes
     @Override
     public int getItemViewTypeForPosition(final int position) {
         return R.layout.item_user;

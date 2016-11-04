@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.adapters;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.AnimeReview;
@@ -22,6 +23,7 @@ public class UserAnimeReviewsAdapter extends BasePaginationAdapter<AnimeReview> 
         }
     }
 
+    @LayoutRes
     @Override
     public int getItemViewTypeForPosition(final int position) {
         return R.layout.item_user_anime_review;
