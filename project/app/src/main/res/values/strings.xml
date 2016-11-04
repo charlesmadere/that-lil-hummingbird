@@ -100,6 +100,7 @@
     <string name="error_loading_on_hold_library">Error loading on hold library</string>
     <string name="error_loading_plan_to_read_library">Error loading plan to read library</string>
     <string name="error_loading_plan_to_watch_library">Error loading plan to watch library</string>
+    <string name="error_loading_post_reactions">Error loading post reactions</string>
     <string name="error_loading_reviews">Error loading reviews</string>
     <string name="error_loading_search_results">Error loading search results</string>
     <string name="error_loading_story">Error loading story</string>

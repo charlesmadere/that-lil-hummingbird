@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.charlesmadere.hummingbird.views.LikerItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DividerListItem">
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdvAvatar"
+            android:layout_marginEnd="@dimen/root_padding"
+            style="@style/Avatar.Small" />
+        <com.charlesmadere.hummingbird.views.TypefaceTextView
+            android:id="@+id/tvUsername"
+            android:layout_gravity="center_vertical"
+            tools:text="venator"
+            style="@style/UserTitle" />
+    </LinearLayout>
+</com.charlesmadere.hummingbird.views.LikerItemView>
