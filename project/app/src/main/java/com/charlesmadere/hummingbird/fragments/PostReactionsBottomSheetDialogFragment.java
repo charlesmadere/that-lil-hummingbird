@@ -103,8 +103,13 @@ public class PostReactionsBottomSheetDialogFragment extends BaseBottomSheetDialo
         dismissAllowingStateLoss();
     }
 
-    private void showLikers(final ArrayList<Liker> likers) {
+    private void showEmpty() {
+        // TODO
+    }
 
+    private void showLikers(final ArrayList<Liker> likers) {
+        mLikers = likers;
+        // TODO
     }
 
 
@@ -130,9 +135,9 @@ public class PostReactionsBottomSheetDialogFragment extends BaseBottomSheetDialo
 
             if (fragment != null && fragment.isAlive()) {
                 if (likers == null || likers.isEmpty()) {
-
+                    fragment.showEmpty();
                 } else {
-
+                    fragment.showLikers(likers);
                 }
             }
         }
