@@ -214,6 +214,7 @@ public class User implements Hydratable, Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeParcelable(mData, flags);
+        TextUtils.writeToParcel(mCompiledAbout, dest, flags);
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -221,6 +222,7 @@ public class User implements Hydratable, Parcelable {
         public User createFromParcel(final Parcel source) {
             final User u = new User();
             u.mData = source.readParcelable(Data.class.getClassLoader());
+            u.mCompiledAbout = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
             return u;
         }
 
