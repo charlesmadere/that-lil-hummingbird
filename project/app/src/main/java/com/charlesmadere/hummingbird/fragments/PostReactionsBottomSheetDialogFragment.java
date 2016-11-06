@@ -149,6 +149,7 @@ public class PostReactionsBottomSheetDialogFragment extends BaseBottomSheetDialo
 
     @Override
     public void paginate() {
+        mAdapter.setPaginating(true);
         fetchLikers();
     }
 
