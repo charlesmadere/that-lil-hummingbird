@@ -8,13 +8,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.LikersAdapter;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
+import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
 import com.charlesmadere.hummingbird.models.Liker;
+import com.charlesmadere.hummingbird.networking.Api;
 import com.charlesmadere.hummingbird.networking.ApiResponse;
+import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -22,17 +27,18 @@ import java.util.ArrayList;
 import butterknife.BindView;
 
 public class PostReactionsBottomSheetDialogFragment extends BaseBottomSheetDialogFragment
-        implements View.OnClickListener {
+        implements ObjectCache.KeyProvider, RecyclerViewPaginator.Listeners, View.OnClickListener {
 
     private static final String TAG = "PostReactionsBottomSheetDialog";
-    private static final String KEY_LIKERS = "Likers";
-    private static final String KEY_PAGE = "Page";
     private static final String KEY_STORY_ID = "StoryId";
 
-    private ArrayList<Liker> mLikers;
-    private int mPage;
+    private Data mData;
     private LikersAdapter mAdapter;
+    private RecyclerViewPaginator mPaginator;
     private String mStoryId;
+
+    @BindView(R.id.progressBar)
+    ProgressBar mProgressBar;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -51,9 +57,48 @@ public class PostReactionsBottomSheetDialogFragment extends BaseBottomSheetDialo
         return fragment;
     }
 
+    private void addLikers(@Nullable final ArrayList<Liker> likers) {
+        ++mData.mPage;
+        final int currentSize = mData.mLikers.size();
+        MiscUtils.exclusiveAdd(mData.mLikers, likers);
+        mPaginator.setEnabled(currentSize < mData.mLikers.size());
+        mAdapter.set(mData.mLikers);
+        mAdapter.setPaginating(false);
+    }
+
+    private void fetchLikers() {
+        Api.getLikers(mStoryId, mData.mPage, new LikersListener(this));
+    }
+
     @Override
     public String getFragmentName() {
         return TAG;
+    }
+
+    @Override
+    public String[] getObjectCacheKeys() {
+        return new String[] { getFragmentName(), mStoryId };
+    }
+
+    @Override
+    public boolean isLoading() {
+        return mAdapter.isPaginating();
+    }
+
+    @Override
+    public void onActivityCreated(final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        mData = ObjectCache.get(this);
+
+        if (mData == null) {
+            mData = new Data();
+            fetchLikers();
+        } else if (mData.mLikers.isEmpty()) {
+            fetchLikers();
+        } else {
+            showLikers();
+        }
     }
 
     @Override
@@ -80,9 +125,8 @@ public class PostReactionsBottomSheetDialogFragment extends BaseBottomSheetDialo
     public void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if (mLikers != null && !mLikers.isEmpty()) {
-            outState.putParcelableArrayList(KEY_LIKERS, mLikers);
-            outState.putInt(KEY_PAGE, mPage);
+        if (mData != null) {
+            ObjectCache.put(mData, this);
         }
     }
 
@@ -96,6 +140,14 @@ public class PostReactionsBottomSheetDialogFragment extends BaseBottomSheetDialo
 
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
+        mAdapter = new LikersAdapter(getContext());
+        mRecyclerView.setAdapter(mAdapter);
+        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
+    }
+
+    @Override
+    public void paginate() {
+        fetchLikers();
     }
 
     private void showError() {
@@ -104,14 +156,21 @@ public class PostReactionsBottomSheetDialogFragment extends BaseBottomSheetDialo
     }
 
     private void showEmpty() {
-        // TODO
+        Toast.makeText(getContext(), R.string.no_post_reactions, Toast.LENGTH_LONG).show();
+        dismissAllowingStateLoss();
     }
 
-    private void showLikers(final ArrayList<Liker> likers) {
-        mLikers = likers;
-        // TODO
+    private void showLikers() {
+        mAdapter.set(mData.mLikers);
+        mProgressBar.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.VISIBLE);
     }
 
+
+    private static class Data {
+        private final ArrayList<Liker> mLikers = new ArrayList<>();
+        private int mPage;
+    }
 
     private static class LikersListener implements ApiResponse<ArrayList<Liker>> {
         private final WeakReference<PostReactionsBottomSheetDialogFragment> mFragmentReference;
@@ -137,7 +196,7 @@ public class PostReactionsBottomSheetDialogFragment extends BaseBottomSheetDialo
                 if (likers == null || likers.isEmpty()) {
                     fragment.showEmpty();
                 } else {
-                    fragment.showLikers(likers);
+                    fragment.addLikers(likers);
                 }
             }
         }
