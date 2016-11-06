@@ -145,7 +145,7 @@ public class ThatLilHummingbird extends Application {
         }
 
         if (minor) {
-            Timber.clearEntries();
+            Timber.trimEntries();
             ObjectCache.trim();
         }
 

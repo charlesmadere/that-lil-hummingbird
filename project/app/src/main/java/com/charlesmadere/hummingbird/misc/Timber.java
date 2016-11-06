@@ -75,6 +75,16 @@ public final class Timber {
         return entries;
     }
 
+    public static void trimEntries() {
+        final int newMaxSize = ENTRIES_MAX_SIZE / 2;
+
+        synchronized (ENTRIES) {
+            while (ENTRIES.size() >= newMaxSize) {
+                ENTRIES.remove(ENTRIES.size() - 1);
+            }
+        }
+    }
+
     public static void v(final String tag, final String msg) {
         v(tag, msg, null);
     }
