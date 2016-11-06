@@ -20,22 +20,26 @@ public final class Timber {
         if (MiscUtils.isLowRamDevice()) {
             ENTRIES_MAX_SIZE = 48;
         } else {
-            ENTRIES_MAX_SIZE = 256;
+            ENTRIES_MAX_SIZE = 96;
         }
 
         ENTRIES = new ArrayList<>(ENTRIES_MAX_SIZE);
     }
 
-    private static synchronized void addEntry(final BaseEntry entry) {
-        while (ENTRIES.size() >= ENTRIES_MAX_SIZE) {
-            ENTRIES.remove(ENTRIES.size() - 1);
-        }
+    private static void addEntry(final BaseEntry entry) {
+        synchronized (ENTRIES) {
+            while (ENTRIES.size() >= ENTRIES_MAX_SIZE) {
+                ENTRIES.remove(ENTRIES.size() - 1);
+            }
 
-        ENTRIES.add(entry);
+            ENTRIES.add(entry);
+        }
     }
 
-    public static synchronized void clearEntries() {
-        ENTRIES.clear();
+    public static void clearEntries() {
+        synchronized (ENTRIES) {
+            ENTRIES.clear();
+        }
     }
 
     public static void d(final String tag, final String msg) {
@@ -73,6 +77,16 @@ public final class Timber {
 
         Collections.reverse(entries);
         return entries;
+    }
+
+    public static void trimEntries() {
+        final int newMaxSize = ENTRIES_MAX_SIZE / 2;
+
+        synchronized (ENTRIES) {
+            while (ENTRIES.size() >= newMaxSize) {
+                ENTRIES.remove(ENTRIES.size() - 1);
+            }
+        }
     }
 
     public static void v(final String tag, final String msg) {

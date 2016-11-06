@@ -100,6 +100,7 @@
     <string name="error_loading_on_hold_library">Error loading on hold library</string>
     <string name="error_loading_plan_to_read_library">Error loading plan to read library</string>
     <string name="error_loading_plan_to_watch_library">Error loading plan to watch library</string>
+    <string name="error_loading_post_reactions">Error loading post reactions</string>
     <string name="error_loading_reviews">Error loading reviews</string>
     <string name="error_loading_search_results">Error loading search results</string>
     <string name="error_loading_story">Error loading story</string>
@@ -204,6 +205,7 @@
     <string name="no_images">No images</string>
     <string name="no_notifications">No notifications</string>
     <string name="no_one_is_following">No one is following</string>
+    <string name="no_post_reactions">No post reactions</string>
     <string name="no_quotes">No quotes</string>
     <string name="no_rating">No rating</string>
     <string name="no_replies">No replies</string>
@@ -333,6 +335,7 @@
     <string name="version_format">v%1$s (%2$d)</string>
     <string name="view_group">View Group</string>
     <string name="view_poster">View Poster</string>
+    <string name="view_post_reactions">View Post Reactions</string>
     <string name="view_user">View User</string>
     <string name="view_x">View %1$s</string>
     <string name="volumes">Volumes</string>

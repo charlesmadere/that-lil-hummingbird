@@ -16,4 +16,9 @@
         android:title="@string/view_group"
         android:visible="false"
         compat:showAsAction="never" />
+    <item
+        android:id="@+id/miViewPostReactions"
+        android:title="@string/view_post_reactions"
+        android:visible="false"
+        compat:showAsAction="never" />
 </menu>

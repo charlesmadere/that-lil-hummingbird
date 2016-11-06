@@ -14,6 +14,7 @@ import com.charlesmadere.hummingbird.misc.CurrentUser;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.misc.ShareUtils;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
+import com.charlesmadere.hummingbird.models.Liker;
 import com.charlesmadere.hummingbird.models.User;
 import com.charlesmadere.hummingbird.models.UserDigest;
 import com.charlesmadere.hummingbird.networking.Api;
@@ -30,6 +31,10 @@ public class UserActivity extends BaseUserActivity implements ObjectCache.KeyPro
     private String mUsername;
     private UserDigest mUserDigest;
 
+
+    public static Intent getLaunchIntent(final Context context, final Liker liker) {
+        return getLaunchIntent(context, liker.getUsername());
+    }
 
     public static Intent getLaunchIntent(final Context context, final User user) {
         return getLaunchIntent(context, user.getId());

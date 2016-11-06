@@ -1,8 +1,10 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
+import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -10,6 +12,8 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.fragments.PostReactionsBottomSheetDialogFragment;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.networking.Api;
 
@@ -19,7 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class LikesFeedButton extends FrameLayout implements AdapterView<CommentStory>,
-        View.OnClickListener {
+        View.OnClickListener, View.OnLongClickListener {
 
     private CommentStory mCommentStory;
     private NumberFormat mNumberFormat;
@@ -55,7 +59,7 @@ public class LikesFeedButton extends FrameLayout implements AdapterView<CommentS
     }
 
     @Override
-    public void onClick(final View view) {
+    public void onClick(final View v) {
         if (mCommentStory != null) {
             mCommentStory.toggleLiked();
             Api.likeStory(mCommentStory);
@@ -68,7 +72,26 @@ public class LikesFeedButton extends FrameLayout implements AdapterView<CommentS
         super.onFinishInflate();
         ButterKnife.bind(this);
         setOnClickListener(this);
+        setOnLongClickListener(this);
         mNumberFormat = NumberFormat.getInstance();
+    }
+
+    @Override
+    public boolean onLongClick(final View v) {
+        if (mCommentStory == null || mCommentStory.getTotalVotes() < 1) {
+            return false;
+        }
+
+        final Activity activity = MiscUtils.optActivity(getContext());
+
+        if (activity instanceof FragmentActivity) {
+            final FragmentActivity fragmentActivity = (FragmentActivity) activity;
+            PostReactionsBottomSheetDialogFragment.create(mCommentStory.getId()).show(
+                    fragmentActivity.getSupportFragmentManager(), null);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

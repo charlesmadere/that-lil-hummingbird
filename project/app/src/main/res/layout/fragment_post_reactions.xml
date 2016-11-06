@@ -5,11 +5,18 @@
     android:layout_width="match_parent"
     android:orientation="vertical">
     <include
-        layout="@layout/toolbar" />
+        layout="@layout/toolbar_less_elevation" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:scrollbars="vertical"
+        android:visibility="gone"
         app:layoutManager="LinearLayoutManager" />
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/root_padding_double"
+        android:layout_width="wrap_content" />
 </LinearLayout>

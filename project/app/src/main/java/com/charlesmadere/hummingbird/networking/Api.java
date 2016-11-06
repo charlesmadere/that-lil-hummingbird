@@ -546,27 +546,17 @@ public final class Api {
     }
 
     public static void getLikers(final String storyId, final ApiResponse<ArrayList<Liker>> listener) {
-        getLikers(storyId, null, 1, listener);
+        getLikers(storyId, 1, listener);
     }
 
-    public static void getLikers(final String storyId, @Nullable final ArrayList<Liker> likers,
-            final int page, final ApiResponse<ArrayList<Liker>> listener) {
+    public static void getLikers(final String storyId, final int page,
+            final ApiResponse<ArrayList<Liker>> listener) {
         HUMMINGBIRD.getLikers(storyId, page).enqueue(new Callback<ArrayList<Liker>>() {
             @Override
             public void onResponse(final Call<ArrayList<Liker>> call,
                     final Response<ArrayList<Liker>> response) {
                 if (response.isSuccessful()) {
-                    final ArrayList<Liker> body = response.body();
-
-                    if (likers != null && !likers.isEmpty()) {
-                        if (body != null && !body.isEmpty()) {
-                            likers.addAll(body);
-                        }
-
-                        listener.success(likers);
-                    } else {
-                        listener.success(body);
-                    }
+                    listener.success(response.body());
                 } else {
                     listener.failure(retrieveErrorInfo(response));
                 }

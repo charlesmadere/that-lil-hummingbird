@@ -2,15 +2,13 @@ package com.charlesmadere.hummingbird.adapters;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.models.Feed;
-import com.charlesmadere.hummingbird.models.User;
+import com.charlesmadere.hummingbird.models.Liker;
 
-public class UsersAdapter extends BasePaginationAdapter<User> {
+public class LikersAdapter extends BasePaginationAdapter<Liker> {
 
-    public UsersAdapter(final Context context) {
+    public LikersAdapter(final Context context) {
         super(context);
         setHasStableIds(true);
     }
@@ -27,15 +25,7 @@ public class UsersAdapter extends BasePaginationAdapter<User> {
     @LayoutRes
     @Override
     public int getItemViewTypeForPosition(final int position) {
-        return R.layout.item_user;
-    }
-
-    public void set(@Nullable final Feed feed) {
-        if (feed == null) {
-            super.set(null);
-        } else {
-            super.set(feed.getUsers());
-        }
+        return R.layout.item_liker;
     }
 
 }

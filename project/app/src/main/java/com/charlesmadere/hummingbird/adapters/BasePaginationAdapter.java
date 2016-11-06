@@ -36,6 +36,7 @@ public abstract class BasePaginationAdapter<T> extends BaseAdapter<T> implements
         }
     }
 
+    @LayoutRes
     public abstract int getItemViewTypeForPosition(final int position);
 
     @Override

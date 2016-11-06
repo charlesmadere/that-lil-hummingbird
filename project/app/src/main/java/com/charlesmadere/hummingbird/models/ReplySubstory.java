@@ -75,7 +75,7 @@ public class ReplySubstory extends AbsSubstory implements Parcelable {
         super.writeToParcel(dest, flags);
         dest.writeString(mReply);
         dest.writeString(mUserId);
-        TextUtils.writeToParcel(mReply, dest, flags);
+        TextUtils.writeToParcel(mCompiledReply, dest, flags);
         dest.writeParcelable(mUser, flags);
     }
 

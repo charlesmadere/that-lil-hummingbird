@@ -104,18 +104,49 @@ public class ThatLilHummingbird extends Application {
     public void onTrimMemory(final int level) {
         super.onTrimMemory(level);
 
+        boolean major = false;
+        boolean moderate = false;
+        boolean minor = false;
+
+        if (level >= TRIM_MEMORY_MODERATE) {
+            major = true;
+        }
+
         if (level >= TRIM_MEMORY_BACKGROUND) {
-            Timber.clearEntries();
-            Fresco.getImagePipeline().clearMemoryCaches();
-            ObjectCache.clear();
-        } else if (level >= TRIM_MEMORY_UI_HIDDEN) {
-            ObjectCache.trim();
-        } else if (level < TRIM_MEMORY_UI_HIDDEN) {
+            moderate = true;
+        }
+
+        if (level >= TRIM_MEMORY_UI_HIDDEN) {
+            minor = true;
+        }
+
+        if (level < TRIM_MEMORY_UI_HIDDEN) {
+            minor = true;
+
             if (level >= TRIM_MEMORY_RUNNING_LOW) {
-                Timber.clearEntries();
-                Fresco.getImagePipeline().clearMemoryCaches();
-                ObjectCache.clear();
+                major = true;
             }
+
+            if (level >= TRIM_MEMORY_RUNNING_MODERATE) {
+                moderate = true;
+            }
+        }
+
+        if (major) {
+            Fresco.getImagePipeline().clearCaches();
+            Timber.clearEntries();
+            ObjectCache.clear();
+        }
+
+        if (moderate) {
+            Fresco.getImagePipeline().clearMemoryCaches();
+            Timber.clearEntries();
+            ObjectCache.clear();
+        }
+
+        if (minor) {
+            Timber.trimEntries();
+            ObjectCache.trim();
         }
 
         Timber.d(TAG, "onTrimMemory(): " + level);
