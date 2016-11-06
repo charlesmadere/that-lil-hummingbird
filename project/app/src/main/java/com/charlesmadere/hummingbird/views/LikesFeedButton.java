@@ -55,7 +55,7 @@ public class LikesFeedButton extends FrameLayout implements AdapterView<CommentS
     }
 
     @Override
-    public void onClick(final View view) {
+    public void onClick(final View v) {
         if (mCommentStory != null) {
             mCommentStory.toggleLiked();
             Api.likeStory(mCommentStory);
