@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.CommentsAdapter;
+import com.charlesmadere.hummingbird.fragments.PostReactionsBottomSheetDialogFragment;
 import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.misc.ObjectCache;
 import com.charlesmadere.hummingbird.models.CommentPost;
@@ -168,6 +169,11 @@ public class CommentStoryActivity extends BaseDrawerActivity implements CommentF
             case R.id.miViewPoster:
                 final User poster = mCommentStory.getPoster();
                 startActivity(UserActivity.getLaunchIntent(this, poster));
+                return true;
+
+            case R.id.miViewPostReactions:
+                PostReactionsBottomSheetDialogFragment.create(mCommentStory.getId())
+                        .show(getSupportFragmentManager(), null);
                 return true;
 
             case R.id.miViewUser:

@@ -1,8 +1,10 @@
 package com.charlesmadere.hummingbird.views;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
+import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -10,6 +12,8 @@ import android.widget.TextView;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.AdapterView;
+import com.charlesmadere.hummingbird.fragments.PostReactionsBottomSheetDialogFragment;
+import com.charlesmadere.hummingbird.misc.MiscUtils;
 import com.charlesmadere.hummingbird.models.CommentStory;
 import com.charlesmadere.hummingbird.networking.Api;
 
@@ -78,8 +82,16 @@ public class LikesFeedButton extends FrameLayout implements AdapterView<CommentS
             return false;
         }
 
-        // TODO
-        return false;
+        final Activity activity = MiscUtils.optActivity(getContext());
+
+        if (activity instanceof FragmentActivity) {
+            final FragmentActivity fragmentActivity = (FragmentActivity) activity;
+            PostReactionsBottomSheetDialogFragment.create(mCommentStory.getId()).show(
+                    fragmentActivity.getSupportFragmentManager(), null);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
