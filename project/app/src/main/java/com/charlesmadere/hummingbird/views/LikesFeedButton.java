@@ -78,7 +78,7 @@ public class LikesFeedButton extends FrameLayout implements AdapterView<CommentS
 
     @Override
     public boolean onLongClick(final View v) {
-        if (mCommentStory == null) {
+        if (mCommentStory == null || mCommentStory.getTotalVotes() < 1) {
             return false;
         }
 
