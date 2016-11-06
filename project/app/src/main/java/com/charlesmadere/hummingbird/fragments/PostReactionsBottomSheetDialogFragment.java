@@ -64,6 +64,7 @@ public class PostReactionsBottomSheetDialogFragment extends BaseBottomSheetDialo
         mPaginator.setEnabled(currentSize < mData.mLikers.size());
         mAdapter.set(mData.mLikers);
         mAdapter.setPaginating(false);
+        showLikers();
     }
 
     private void fetchLikers() {
@@ -97,6 +98,7 @@ public class PostReactionsBottomSheetDialogFragment extends BaseBottomSheetDialo
         } else if (mData.mLikers.isEmpty()) {
             fetchLikers();
         } else {
+            mAdapter.set(mData.mLikers);
             showLikers();
         }
     }
@@ -161,7 +163,6 @@ public class PostReactionsBottomSheetDialogFragment extends BaseBottomSheetDialo
     }
 
     private void showLikers() {
-        mAdapter.set(mData.mLikers);
         mProgressBar.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
     }
