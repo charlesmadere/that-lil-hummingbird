@@ -149,6 +149,10 @@ public class CommentStoryActivity extends BaseDrawerActivity implements CommentF
             group.setVisible(true);
         }
 
+        if (mCommentStory.getTotalVotes() >= 1) {
+            menu.findItem(R.id.miViewPostReactions).setVisible(true);
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
 
