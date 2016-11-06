@@ -20,7 +20,7 @@ public final class Timber {
         if (MiscUtils.isLowRamDevice()) {
             ENTRIES_MAX_SIZE = 48;
         } else {
-            ENTRIES_MAX_SIZE = 256;
+            ENTRIES_MAX_SIZE = 96;
         }
 
         ENTRIES = new ArrayList<>(ENTRIES_MAX_SIZE);
