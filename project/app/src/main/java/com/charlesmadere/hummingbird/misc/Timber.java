@@ -26,16 +26,20 @@ public final class Timber {
         ENTRIES = new ArrayList<>(ENTRIES_MAX_SIZE);
     }
 
-    private static synchronized void addEntry(final BaseEntry entry) {
-        while (ENTRIES.size() >= ENTRIES_MAX_SIZE) {
-            ENTRIES.remove(ENTRIES.size() - 1);
-        }
+    private static void addEntry(final BaseEntry entry) {
+        synchronized (ENTRIES) {
+            while (ENTRIES.size() >= ENTRIES_MAX_SIZE) {
+                ENTRIES.remove(ENTRIES.size() - 1);
+            }
 
-        ENTRIES.add(entry);
+            ENTRIES.add(entry);
+        }
     }
 
-    public static synchronized void clearEntries() {
-        ENTRIES.clear();
+    public static void clearEntries() {
+        synchronized (ENTRIES) {
+            ENTRIES.clear();
+        }
     }
 
     public static void d(final String tag, final String msg) {
