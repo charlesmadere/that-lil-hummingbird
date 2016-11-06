@@ -19,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class LikesFeedButton extends FrameLayout implements AdapterView<CommentStory>,
-        View.OnClickListener {
+        View.OnClickListener, View.OnLongClickListener {
 
     private CommentStory mCommentStory;
     private NumberFormat mNumberFormat;
@@ -68,7 +68,18 @@ public class LikesFeedButton extends FrameLayout implements AdapterView<CommentS
         super.onFinishInflate();
         ButterKnife.bind(this);
         setOnClickListener(this);
+        setOnLongClickListener(this);
         mNumberFormat = NumberFormat.getInstance();
+    }
+
+    @Override
+    public boolean onLongClick(final View v) {
+        if (mCommentStory == null) {
+            return false;
+        }
+
+        // TODO
+        return false;
     }
 
     @Override
