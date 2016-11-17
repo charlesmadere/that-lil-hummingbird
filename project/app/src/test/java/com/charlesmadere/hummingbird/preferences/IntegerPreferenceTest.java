@@ -11,6 +11,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
@@ -33,6 +34,12 @@ public class IntegerPreferenceTest {
     public void testExists() throws Exception {
         assertFalse(mNullPref.exists());
         assertTrue(mTenPref.exists());
+    }
+
+    @Test
+    public void testGet() throws Exception {
+        assertNull(mNullPref.get());
+        assertTrue(mTenPref.get() == 10);
     }
 
 }

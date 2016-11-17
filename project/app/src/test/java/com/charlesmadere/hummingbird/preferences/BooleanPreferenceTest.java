@@ -56,13 +56,6 @@ public class BooleanPreferenceTest {
     }
 
     @Test
-    public void testGetContext() throws Exception {
-        assertNotNull(mNullPref.getContext());
-        assertNotNull(mFalsePref.getContext());
-        assertNotNull(mTruePref.getContext());
-    }
-
-    @Test
     public void testDelete() throws Exception {
         mNullPref.set(Boolean.TRUE);
         assertTrue(mNullPref.get());
@@ -139,6 +132,13 @@ public class BooleanPreferenceTest {
         assertFalse(mTruePref.get());
         mTruePref.set((Boolean) null);
         assertTrue(mTruePref.get());
+    }
+
+    @Test
+    public void testGetContext() throws Exception {
+        assertNotNull(mNullPref.getContext());
+        assertNotNull(mFalsePref.getContext());
+        assertNotNull(mTruePref.getContext());
     }
 
     @Test
