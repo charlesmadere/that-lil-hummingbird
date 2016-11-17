@@ -243,6 +243,10 @@ public class Feed implements Hydratable {
         return mAnimeReviews != null && !mAnimeReviews.isEmpty();
     }
 
+    public boolean hasCursor() {
+        return mMetadata != null && mMetadata.mCursor != null;
+    }
+
     public boolean hasGroupMembers() {
         return mGroupMembers != null && !mGroupMembers.isEmpty();
     }
@@ -257,10 +261,6 @@ public class Feed implements Hydratable {
 
     public boolean hasMangaLibraryEntries() {
         return mMangaLibraryEntries != null && !mMangaLibraryEntries.isEmpty();
-    }
-
-    public boolean hasCursor() {
-        return mMetadata != null && mMetadata.mCursor != null;
     }
 
     public boolean hasNotifications() {
