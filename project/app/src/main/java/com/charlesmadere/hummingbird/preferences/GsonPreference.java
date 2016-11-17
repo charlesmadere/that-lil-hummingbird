@@ -38,6 +38,7 @@ public class GsonPreference<T> extends Preference<T> {
         }
     }
 
+    @NonNull
     public final Gson getGson() {
         return GsonUtils.getGson();
     }
