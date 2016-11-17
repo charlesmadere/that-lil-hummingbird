@@ -175,7 +175,7 @@ public class LoginActivity extends BaseActivity {
             }
         }
 
-        finish();
+        supportFinishAfterTransition();
     }
 
     private void showError(@Nullable final String error) {

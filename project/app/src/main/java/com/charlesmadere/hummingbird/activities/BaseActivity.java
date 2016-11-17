@@ -63,7 +63,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         final Intent upIntent = NavUtils.getParentActivityIntent(this);
 
         if (upIntent == null) {
-            finish();
+            supportFinishAfterTransition();
         } else if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
             TaskStackBuilder.create(this)
                     .addNextIntentWithParentStack(upIntent)

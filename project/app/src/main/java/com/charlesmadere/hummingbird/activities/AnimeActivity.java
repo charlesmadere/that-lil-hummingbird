@@ -297,13 +297,13 @@ public class AnimeActivity extends BaseDrawerActivity implements
                 .setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(final DialogInterface dialog) {
-                        finish();
+                        supportFinishAfterTransition();
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
-                        finish();
+                        supportFinishAfterTransition();
                     }
                 })
                 .setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
