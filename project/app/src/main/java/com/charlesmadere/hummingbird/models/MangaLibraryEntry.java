@@ -55,6 +55,7 @@ public class MangaLibraryEntry implements Parcelable {
 
 
     public boolean canBeIncremented() {
+        // noinspection ConstantConditions
         return !mManga.hasChapterCount() || mChaptersRead < mManga.getChapterCount();
     }
 
@@ -120,6 +121,7 @@ public class MangaLibraryEntry implements Parcelable {
 
     @WorkerThread
     public void hydrate(final Feed feed) {
+        // noinspection ConstantConditions
         for (final Manga manga : feed.getManga()) {
             if (mMangaId.equalsIgnoreCase(manga.getId())) {
                 mManga = manga;

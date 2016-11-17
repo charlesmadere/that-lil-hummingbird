@@ -104,6 +104,7 @@ public class MediaStoryStandaloneItemView extends CardView implements AdapterVie
         mTitle.setText(anime.getTitle());
 
         if (anime.hasType()) {
+            // noinspection ConstantConditions
             mMediaType.setText(anime.getType().getTextResId());
             mMediaType.setVisibility(VISIBLE);
         } else {
@@ -124,6 +125,7 @@ public class MediaStoryStandaloneItemView extends CardView implements AdapterVie
         mTitle.setText(manga.getTitle());
 
         if (manga.hasType()) {
+            // noinspection ConstantConditions
             mMediaType.setText(manga.getType().getTextResId());
             mMediaType.setVisibility(VISIBLE);
         } else {

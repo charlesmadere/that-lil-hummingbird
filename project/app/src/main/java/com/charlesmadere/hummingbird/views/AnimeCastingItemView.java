@@ -55,6 +55,7 @@ public class AnimeCastingItemView extends FrameLayout implements AdapterView<Voi
         mCastPhoto.setImageURI(casting.getPerson().getImage());
 
         if (casting.hasCharacter()) {
+            // noinspection ConstantConditions
             mCharacterPhoto.setImageURI(casting.getCharacter().getImage());
             mCharacterPhoto.setVisibility(VISIBLE);
             mTitle.setText(casting.getPerson().getName(), getResources().getString(R.string.as_x,

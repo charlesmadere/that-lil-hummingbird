@@ -54,6 +54,7 @@ public class SearchBundle implements Parcelable {
 
         final ArrayList<T> list = new ArrayList<>();
 
+        // noinspection ConstantConditions
         for (final AbsResult result : mResults) {
             if (result.getType() == type) {
                 list.add((T) result);

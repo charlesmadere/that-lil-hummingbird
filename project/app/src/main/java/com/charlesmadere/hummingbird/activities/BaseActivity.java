@@ -118,6 +118,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
 
         final ActionBar actionBar = getSupportActionBar();
+        // noinspection ConstantConditions
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 

@@ -189,6 +189,7 @@ public class AnimeDetailsFragment extends BaseAnimeFragment {
         }
 
         if (info.hasEpisodeLength()) {
+            // noinspection ConstantConditions
             mEpisodeLength.setHead(resources.getQuantityString(R.plurals.x_minutes,
                     info.getEpisodeLength(), numberFormat.format(info.getEpisodeLength())));
 

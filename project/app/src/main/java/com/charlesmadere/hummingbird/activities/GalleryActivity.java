@@ -78,6 +78,7 @@ public class GalleryActivity extends BaseActivity {
         hideStatusBar();
         setContentView(R.layout.activity_gallery);
 
+        // noinspection ConstantConditions
         mToolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
 
         final Intent intent = getIntent();

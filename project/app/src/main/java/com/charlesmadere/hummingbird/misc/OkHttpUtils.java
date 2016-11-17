@@ -45,6 +45,7 @@ public final class OkHttpUtils {
                     final Request request = chain.request();
 
                     if (Preferences.Account.CsrfToken.exists()) {
+                        // noinspection ConstantConditions
                         final Request newRequest = request.newBuilder()
                                 .addHeader("X-CSRF-Token", Preferences.Account.CsrfToken.get())
                                 .build();

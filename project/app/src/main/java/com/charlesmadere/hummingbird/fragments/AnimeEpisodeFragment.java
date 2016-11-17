@@ -60,6 +60,7 @@ public class AnimeEpisodeFragment extends BaseBottomSheetDialogFragment {
         mNumber.setText(NumberFormat.getInstance().format(mEpisode.getNumber()));
 
         if (mEpisode.hasThumbnail()) {
+            // noinspection ConstantConditions
             mThumbnail.setImageURI(mEpisode.getThumbnail());
         }
 

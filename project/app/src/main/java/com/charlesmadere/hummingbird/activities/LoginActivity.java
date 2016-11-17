@@ -153,12 +153,12 @@ public class LoginActivity extends BaseActivity {
         Api.signIn(username, password, new SignInListener(this));
     }
 
-    @SuppressWarnings("ConstantConditions")
     private void proceed() {
         final Intent intent = getIntent();
         final LaunchScreen launchScreen = Preferences.General.DefaultLaunchScreen.get();
 
         if (intent != null && intent.getBooleanExtra(EXTRA_LAUNCH_TO_NOTIFICATIONS, false)) {
+            // noinspection ConstantConditions
             final Intent[] activityStack = new Intent[] {
                     launchScreen.getLaunchIntent(this),
                     NotificationsActivity.getLaunchIntent(this)
@@ -169,6 +169,7 @@ public class LoginActivity extends BaseActivity {
             final Intent[] activityStack = DeepLinkUtils.buildIntentStack(this);
 
             if (activityStack == null || activityStack.length == 0) {
+                // noinspection ConstantConditions
                 startActivity(launchScreen.getLaunchIntent(this));
             } else {
                 ContextCompat.startActivities(this, activityStack);

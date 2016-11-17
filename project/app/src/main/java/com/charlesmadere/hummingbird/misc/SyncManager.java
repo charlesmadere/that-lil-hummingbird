@@ -52,11 +52,11 @@ public final class SyncManager extends GcmTaskService {
             return;
         }
 
+        // noinspection ConstantConditions
         final PeriodicTask.Builder builder = new PeriodicTask.Builder()
                 .setPeriod(Preferences.NotificationPolling.Frequency.get().getPeriod())
                 .setPersisted(true)
-                .setRequiresCharging(Boolean.TRUE.equals(
-                        Preferences.NotificationPolling.IsPowerRequired.get()))
+                .setRequiresCharging(Boolean.TRUE.equals(Preferences.NotificationPolling.IsPowerRequired.get()))
                 .setService(SyncManager.class)
                 .setTag(TAG)
                 .setUpdateCurrent(true);
@@ -85,6 +85,7 @@ public final class SyncManager extends GcmTaskService {
     }
 
     private static String printConfigurationString() {
+        // noinspection ConstantConditions
         return "(frequency: " + Preferences.NotificationPolling.Frequency.get().getPeriod() +
                 ") (power required: " + Preferences.NotificationPolling.IsPowerRequired.get() +
                 ") (wifi required: " + Preferences.NotificationPolling.IsWifiRequired.get() + ")";

@@ -154,6 +154,7 @@ public class AnimeReviewActivity extends BaseDrawerActivity implements ObjectCac
             return;
         }
 
+        // noinspection ConstantConditions
         for (final AnimeReview animeReview : mAnimeDigest.getReviews()) {
             if (mAnimeReviewId.equalsIgnoreCase(animeReview.getId())) {
                 showAnimeReview(animeReview);

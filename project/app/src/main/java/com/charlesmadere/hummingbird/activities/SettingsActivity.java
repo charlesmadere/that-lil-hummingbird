@@ -139,6 +139,7 @@ public class SettingsActivity extends BaseDrawerActivity {
 
         int checkedItem = -1;
         if (Preferences.General.DefaultLaunchScreen.exists()) {
+            // noinspection ConstantConditions
             checkedItem = Preferences.General.DefaultLaunchScreen.get().ordinal();
         }
 
@@ -165,6 +166,7 @@ public class SettingsActivity extends BaseDrawerActivity {
 
         int checkedItem = -1;
         if (Preferences.General.DefaultLibrarySort.exists()) {
+            // noinspection ConstantConditions
             checkedItem = Preferences.General.DefaultLibrarySort.get().ordinal();
         }
 
@@ -234,6 +236,7 @@ public class SettingsActivity extends BaseDrawerActivity {
 
         int checkedItem = -1;
         if (Preferences.NotificationPolling.Frequency.exists()) {
+            // noinspection ConstantConditions
             checkedItem = Preferences.NotificationPolling.Frequency.get().ordinal();
         }
 
@@ -312,6 +315,7 @@ public class SettingsActivity extends BaseDrawerActivity {
 
         int checkedItem = -1;
         if (Preferences.General.Theme.exists()) {
+            // noinspection ConstantConditions
             checkedItem = Preferences.General.Theme.get().ordinal();
         }
 
@@ -357,6 +361,7 @@ public class SettingsActivity extends BaseDrawerActivity {
 
         int checkedItem = -1;
         if (Preferences.General.TitleLanguage.exists()) {
+            // noinspection ConstantConditions
             checkedItem = Preferences.General.TitleLanguage.get().ordinal();
         }
 
