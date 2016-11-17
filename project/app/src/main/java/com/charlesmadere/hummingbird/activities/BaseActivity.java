@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.ActivityRegister;
@@ -49,6 +50,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         } else {
             return actionBar.getSubtitle();
         }
+    }
+
+    protected void hideStatusBar() {
+        final View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
     public boolean isAlive() {
