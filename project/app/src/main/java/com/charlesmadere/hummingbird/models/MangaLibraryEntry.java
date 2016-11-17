@@ -121,6 +121,10 @@ public class MangaLibraryEntry implements Parcelable {
 
     @WorkerThread
     public void hydrate(final Feed feed) {
+        if (!feed.hasManga()) {
+            return;
+        }
+
         // noinspection ConstantConditions
         for (final Manga manga : feed.getManga()) {
             if (mMangaId.equalsIgnoreCase(manga.getId())) {
