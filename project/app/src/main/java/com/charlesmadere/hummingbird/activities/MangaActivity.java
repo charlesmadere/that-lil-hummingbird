@@ -263,13 +263,13 @@ public class MangaActivity extends BaseDrawerActivity implements BaseMangaFragme
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
-                        finish();
+                        supportFinishAfterTransition();
                     }
                 })
                 .setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(final DialogInterface dialog) {
-                        finish();
+                        supportFinishAfterTransition();
                     }
                 })
                 .setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {

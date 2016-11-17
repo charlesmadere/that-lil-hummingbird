@@ -4,8 +4,8 @@ import android.os.Build;
 
 import com.charlesmadere.hummingbird.BuildConfig;
 import com.charlesmadere.hummingbird.misc.GsonUtils;
-import com.google.gson.Gson;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -13,7 +13,10 @@ import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
@@ -201,28 +204,184 @@ public class FeedTest {
             "    ]\n" +
             "}\n";
 
+    private Feed mFeed;
 
-    @Test
-    public void testHasSubstories() {
-        final Gson gson = GsonUtils.getGson();
-        final Feed feed = gson.fromJson(STORY_PAGE, Feed.class);
-        assertTrue(feed.hasSubstories());
+
+    @Before
+    public void setUp() throws Exception {
+        mFeed = GsonUtils.getGson().fromJson(STORY_PAGE, Feed.class);
+        mFeed.hydrate();
     }
 
     @Test
-    public void testHasUsers() {
-        final Gson gson = GsonUtils.getGson();
-        final Feed feed = gson.fromJson(STORY_PAGE, Feed.class);
-        assertTrue(feed.hasUsers());
+    public void testGetAnimeLibraryEntries() throws Exception {
+        final ArrayList<AnimeLibraryEntry> libraryEntries = mFeed.getAnimeLibraryEntries();
+        assertTrue(libraryEntries == null || libraryEntries.isEmpty());
     }
 
     @Test
-    public void testHydrate() {
-        final Gson gson = GsonUtils.getGson();
-        final Feed feed = gson.fromJson(STORY_PAGE, Feed.class);
-        feed.hydrate();
+    public void testGetAnimeLibraryEntriesSize() throws Exception {
+        assertEquals(mFeed.getAnimeLibraryEntriesSize(), 0);
+    }
 
-        final ArrayList<AbsSubstory> substories = feed.getSubstories();
+    @Test
+    public void testGetAnimeReviews() throws Exception {
+        final ArrayList<AnimeReview> animeReviews = mFeed.getAnimeReviews();
+        assertTrue(animeReviews == null || animeReviews.isEmpty());
+    }
+
+    @Test
+    public void testGetGroupMembers() throws Exception {
+        final ArrayList<GroupMember> groupMembers = mFeed.getGroupMembers();
+        assertTrue(groupMembers == null || groupMembers.isEmpty());
+    }
+
+    @Test
+    public void testGetGroups() throws Exception {
+        final ArrayList<Group> groups = mFeed.getGroups();
+        assertTrue(groups == null || groups.isEmpty());
+    }
+
+    @Test
+    public void testGetManga() throws Exception {
+        final ArrayList<Manga> manga = mFeed.getManga();
+        assertTrue(manga == null || manga.isEmpty());
+    }
+
+    @Test
+    public void testGetMangaLibraryEntries() throws Exception {
+        final ArrayList<MangaLibraryEntry> libraryEntries = mFeed.getMangaLibraryEntries();
+        assertTrue(libraryEntries == null || libraryEntries.isEmpty());
+    }
+
+    @Test
+    public void testGetMangaLibraryEntriesSize() throws Exception {
+        assertEquals(mFeed.getMangaLibraryEntriesSize(), 0);
+    }
+
+    @Test
+    public void testGetNotifications() throws Exception {
+        final ArrayList<AbsNotification> notifications = mFeed.getNotifications();
+        assertTrue(notifications == null || notifications.isEmpty());
+    }
+
+    @Test
+    public void testGetStories() throws Exception {
+        final ArrayList<AbsStory> stories = mFeed.getStories();
+        assertTrue(stories == null || stories.isEmpty());
+    }
+
+    @Test
+    public void testGetStoriesSize() throws Exception {
+        assertEquals(mFeed.getStoriesSize(), 0);
+    }
+
+    @Test
+    public void testGetStory() throws Exception {
+        assertNull(mFeed.getStory());
+    }
+
+    @Test
+    public void testGetSubstories() throws Exception {
+        ArrayList<AbsSubstory> substories = mFeed.getSubstories();
+        assertTrue(substories != null && !substories.isEmpty());
+
+        substories = mFeed.getSubstories(AbsSubstory.Type.REPLY);
+        assertTrue(substories != null && !substories.isEmpty());
+
+        for (final AbsSubstory substory : substories) {
+            assertEquals(substory.getType(), AbsSubstory.Type.REPLY);
+        }
+
+        assertNull(mFeed.getSubstories(AbsSubstory.Type.FOLLOWED));
+        assertNull(mFeed.getSubstories(AbsSubstory.Type.WATCHED_EPISODE));
+        assertNull(mFeed.getSubstories(AbsSubstory.Type.WATCHLIST_STATUS_UPDATE));
+    }
+
+    @Test
+    public void testGetSubstoriesSize() throws Exception {
+        assertEquals(mFeed.getSubstoriesSize(), 8);
+    }
+
+    @Test
+    public void testGetUsers() throws Exception {
+        final ArrayList<User> users = mFeed.getUsers();
+        assertTrue(users != null && !users.isEmpty());
+    }
+
+    @Test
+    public void testGetUsersSize() throws Exception {
+        assertEquals(mFeed.getUsersSize(), 5);
+    }
+
+    @Test
+    public void testHasAnime() throws Exception {
+        assertFalse(mFeed.hasAnime());
+    }
+
+    @Test
+    public void testHasAnimeLibraryEntries() throws Exception {
+        assertFalse(mFeed.hasAnimeLibraryEntries());
+    }
+
+    @Test
+    public void testHasAnimeReviews() throws Exception {
+        assertFalse(mFeed.hasAnimeReviews());
+    }
+
+    @Test
+    public void testHasCursor() throws Exception {
+        assertFalse(mFeed.hasCursor());
+    }
+
+    @Test
+    public void testHasGroupMembers() throws Exception {
+        assertFalse(mFeed.hasGroupMembers());
+    }
+
+    @Test
+    public void testHasGroups() throws Exception {
+        assertFalse(mFeed.hasGroups());
+    }
+
+    @Test
+    public void testHasManga() throws Exception {
+        assertFalse(mFeed.hasManga());
+    }
+
+    @Test
+    public void testHasMangaLibraryEntries() throws Exception {
+        assertFalse(mFeed.hasMangaLibraryEntries());
+    }
+
+    @Test
+    public void testHasNotifications() throws Exception {
+        assertFalse(mFeed.hasNotifications());
+    }
+
+    @Test
+    public void testHasStories() throws Exception {
+        assertFalse(mFeed.hasStories());
+    }
+
+    @Test
+    public void testHasStory() throws Exception {
+        assertFalse(mFeed.hasStory());
+    }
+
+    @Test
+    public void testHasSubstories() throws Exception {
+        assertTrue(mFeed.hasSubstories());
+    }
+
+    @Test
+    public void testHasUsers() throws Exception {
+        assertTrue(mFeed.hasUsers());
+    }
+
+    @Test
+    public void testHydrate() throws Exception {
+        final ArrayList<AbsSubstory> substories = mFeed.getSubstories();
 
         // noinspection ConstantConditions
         for (final AbsSubstory substory : substories) {

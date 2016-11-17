@@ -76,8 +76,9 @@ public class AppNewsItemView extends FrameLayout implements AdapterView<AppNews>
         mBody.setText(mAppNews.getBody());
 
         if (mAppNews.hasLinks()) {
+            // noinspection ConstantConditions
             mLinks.setText(getResources().getQuantityString(R.plurals.x_links,
-                    content.getLinks().size(), mNumberFormat.format(mAppNews.getLinks().size())));
+                    mAppNews.getLinks().size(), mNumberFormat.format(mAppNews.getLinks().size())));
             mLinks.setVisibility(VISIBLE);
         } else {
             mLinks.setVisibility(GONE);

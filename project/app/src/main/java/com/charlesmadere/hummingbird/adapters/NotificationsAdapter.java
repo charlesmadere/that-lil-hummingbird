@@ -40,6 +40,7 @@ public class NotificationsAdapter extends BaseMultiPaginationAdapter {
         if (feed == null || !feed.hasNotifications()) {
             super.set(null);
         } else {
+            // noinspection ConstantConditions
             super.set(new ArrayList<Object>(feed.getNotifications()));
         }
     }

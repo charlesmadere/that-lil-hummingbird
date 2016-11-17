@@ -143,6 +143,10 @@ public class AnimeLibraryEntry implements Parcelable {
 
     @WorkerThread
     public void hydrate(final Feed feed) {
+        if (!feed.hasAnime()) {
+            return;
+        }
+
         // noinspection ConstantConditions
         for (final Anime anime : feed.getAnime()) {
             if (mAnimeId.equalsIgnoreCase(anime.getId())) {

@@ -69,6 +69,7 @@ public class AnimeItemView extends CardView implements AdapterView<Anime>, View.
         mTitle.setText(mAnime.getTitle());
 
         if (mAnime.hasType()) {
+            // noinspection ConstantConditions
             mType.setText(mAnime.getType().getTextResId());
             mType.setVisibility(VISIBLE);
         } else {

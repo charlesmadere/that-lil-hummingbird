@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.ActivityRegister;
@@ -51,6 +52,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    protected void hideStatusBar() {
+        final View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+    }
+
     public boolean isAlive() {
         return !isFinishing() && !isDestroyed();
     }
@@ -63,7 +69,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         final Intent upIntent = NavUtils.getParentActivityIntent(this);
 
         if (upIntent == null) {
-            finish();
+            supportFinishAfterTransition();
         } else if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
             TaskStackBuilder.create(this)
                     .addNextIntentWithParentStack(upIntent)
@@ -118,6 +124,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
 
         final ActionBar actionBar = getSupportActionBar();
+        // noinspection ConstantConditions
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 

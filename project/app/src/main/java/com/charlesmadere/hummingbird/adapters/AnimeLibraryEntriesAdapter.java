@@ -55,6 +55,7 @@ public class AnimeLibraryEntriesAdapter extends BaseAdapter<AnimeLibraryEntry> {
             return;
         }
 
+        // noinspection ConstantConditions
         final ArrayList<AnimeLibraryEntry> entries = new ArrayList<>(feed.getAnimeLibraryEntries());
 
         switch (sort) {

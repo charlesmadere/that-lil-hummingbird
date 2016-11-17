@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.view.View;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.GalleryPagerAdapter;
@@ -67,17 +66,13 @@ public class GalleryActivity extends BaseActivity {
         return TAG;
     }
 
-    private void hideStatusBar() {
-        final View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
-    }
-
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         hideStatusBar();
         setContentView(R.layout.activity_gallery);
 
+        // noinspection ConstantConditions
         mToolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
 
         final Intent intent = getIntent();

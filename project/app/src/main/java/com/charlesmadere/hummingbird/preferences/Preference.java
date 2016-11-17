@@ -138,6 +138,7 @@ public abstract class Preference<T> {
     @Nullable
     public abstract T get();
 
+    @NonNull
     public final Context getContext() {
         return ThatLilHummingbird.get();
     }

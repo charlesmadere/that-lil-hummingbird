@@ -128,6 +128,8 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
                         dialog.dismiss();
+
+                        // noinspection ConstantConditions
                         MiscUtils.openUrl(getContext(), websites[which]);
                     }
                 })
@@ -151,6 +153,7 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
 
         if (user.hasWaifuOrHusbando()) {
             mWaifuOrHusbando.setHead(user.getWaifu());
+            // noinspection ConstantConditions
             mWaifuOrHusbando.setBody(user.getWaifuOrHusbando().getTextResId());
             mWaifuOrHusbando.setVisibility(VISIBLE);
         } else {
@@ -167,6 +170,7 @@ public class AboutUserView extends CardView implements AdapterView<UserDigest> {
         if (user.hasWebsites()) {
             mWebsite.setVisibility(GONE);
             final String[] websites = user.getWebsites();
+            // noinspection ConstantConditions
             mWebsites.setHead(res.getQuantityString(R.plurals.x_links, websites.length,
                     mNumberFormat.format(websites.length)));
             mWebsites.setVisibility(VISIBLE);
