@@ -133,6 +133,7 @@
     <string name="initial_search_message">Once you begin typing, search results will be displayed here.</string>
     <string name="is_currently_watching">is currently watching</string>
     <string name="japanese">Japanese</string>
+    <string name="japanese_title">Japanese title</string>
     <string name="join_group">Join group</string>
     <string name="leave_a_comment_">Leave a comment…</string>
     <string name="leave_group">Leave group</string>
@@ -227,8 +228,6 @@
     <string name="rewatched_times">Rewatched times</string>
     <string name="rewatching">Rewatching</string>
     <string name="rewatch_intro_animation">Rewatch intro animation</string>
-    <string name="romaji">Romaji</string>
-    <string name="romaji_title">Romaji title</string>
     <string name="save">Save</string>
     <string name="saved_changes">Saved changes</string>
     <string name="search">Search</string>

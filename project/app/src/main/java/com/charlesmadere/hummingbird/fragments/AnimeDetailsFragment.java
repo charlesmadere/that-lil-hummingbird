@@ -63,14 +63,14 @@ public class AnimeDetailsFragment extends BaseAnimeFragment {
     @BindView(R.id.hbivGenres)
     HeadBodyItemView mGenres;
 
+    @BindView(R.id.hbivJapaneseTitle)
+    HeadBodyItemView mJapaneseTitle;
+
     @BindView(R.id.hbivLanguages)
     HeadBodyItemView mLanguages;
 
     @BindView(R.id.hbivProducers)
     HeadBodyItemView mProducers;
-
-    @BindView(R.id.hbivRomajiTitle)
-    HeadBodyItemView mRomajiTitle;
 
     @BindView(R.id.hbivStartedAiring)
     HeadBodyItemView mStartedAiring;
@@ -141,8 +141,8 @@ public class AnimeDetailsFragment extends BaseAnimeFragment {
         }
 
         if (info.hasRomajiTitle()) {
-            mRomajiTitle.setHead(info.getRomajiTitle());
-            mRomajiTitle.setVisibility(View.VISIBLE);
+            mJapaneseTitle.setHead(info.getRomajiTitle());
+            mJapaneseTitle.setVisibility(View.VISIBLE);
         }
 
         if (info.hasType()) {
