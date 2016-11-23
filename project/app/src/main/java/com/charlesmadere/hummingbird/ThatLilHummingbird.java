@@ -163,6 +163,10 @@ public class ThatLilHummingbird extends Application {
         if (previousVersion == null || previousVersion < 50) {
             Preferences.General.DefaultLaunchScreen.delete();
         }
+
+        if (previousVersion == null || previousVersion < 106) {
+            Preferences.General.TitleLanguage.delete();
+        }
     }
 
 }
