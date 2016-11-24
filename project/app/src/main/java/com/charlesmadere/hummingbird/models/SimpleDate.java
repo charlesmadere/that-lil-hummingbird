@@ -129,7 +129,7 @@ public class SimpleDate implements Parcelable {
         @Override
         public SimpleDate deserialize(final JsonElement json, final Type typeOfT,
                 final JsonDeserializationContext context) throws JsonParseException {
-            if (json.isJsonNull()) {
+            if (json == null || json.isJsonNull()) {
                 return null;
             }
 

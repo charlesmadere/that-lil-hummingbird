@@ -97,7 +97,7 @@ public enum WatchingStatus implements Parcelable {
         @Override
         public WatchingStatus deserialize(final JsonElement json, final Type typeOfT,
                 final JsonDeserializationContext context) throws JsonParseException {
-            if (json.isJsonNull()) {
+            if (json == null || json.isJsonNull()) {
                 return null;
             }
 
