@@ -20,7 +20,6 @@ import java.lang.reflect.Type;
 
 public class User implements Hydratable, Parcelable {
 
-    @SerializedName("user")
     private Data mData;
 
     // hydrated fields

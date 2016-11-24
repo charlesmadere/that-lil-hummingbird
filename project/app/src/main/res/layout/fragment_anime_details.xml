@@ -52,9 +52,9 @@
                     tools:visibility="visible"
                     style="@style/ResponsiveWidthCardItem" />
                 <com.charlesmadere.hummingbird.views.HeadBodyItemView
-                    android:id="@+id/hbivRomajiTitle"
+                    android:id="@+id/hbivJapaneseTitle"
                     android:visibility="gone"
-                    app:bodyText="@string/romaji_title"
+                    app:bodyText="@string/japanese_title"
                     tools:visibility="visible"
                     style="@style/ResponsiveWidthCardItem" />
             </LinearLayout>

@@ -183,7 +183,6 @@ public class Anime implements Parcelable {
                 break;
 
             case JAPANESE:
-            case ROMAJI:
                 title = getRomajiTitle();
                 break;
 

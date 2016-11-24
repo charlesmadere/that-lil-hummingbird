@@ -16,10 +16,7 @@ public enum TitleType implements Parcelable {
     ENGLISH(R.string.english),
 
     @SerializedName("japanese")
-    JAPANESE(R.string.japanese),
-
-    @SerializedName("romaji")
-    ROMAJI(R.string.romaji);
+    JAPANESE(R.string.japanese);
 
     @StringRes
     private final int mTextResId;
