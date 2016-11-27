@@ -23,6 +23,8 @@ import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.image.ImageInfo;
 
+import java.util.ArrayList;
+
 public class AvatarView extends SimpleDraweeView implements AdapterView<User>,
         View.OnClickListener {
 
@@ -52,10 +54,10 @@ public class AvatarView extends SimpleDraweeView implements AdapterView<User>,
         parseAttributes(attrs);
     }
 
-    private void fetchAvatars(final User user, final String[] avatars, final int index) {
+    private void fetchAvatars(final User user, final ArrayList<String> avatars, final int index) {
         if (mUser != user) {
             return;
-        } else if (index >= avatars.length) {
+        } else if (index >= avatars.size()) {
             setImageURI((String) null);
             return;
         }
@@ -69,7 +71,7 @@ public class AvatarView extends SimpleDraweeView implements AdapterView<User>,
                     }
                 })
                 .setOldController(getController())
-                .setUri(avatars[index])
+                .setUri(avatars.get(index))
                 .build();
 
         setController(controller);
@@ -115,9 +117,9 @@ public class AvatarView extends SimpleDraweeView implements AdapterView<User>,
     public void setContent(final User content) {
         mUser = content;
 
-        final String[] avatars = mUser.getAvatars();
+        final ArrayList<String> avatars = mUser.getAvatars();
 
-        if (avatars == null || avatars.length == 0) {
+        if (avatars == null || avatars.isEmpty()) {
             setImageURI((String) null);
             return;
         }

@@ -17,6 +17,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public class User implements Hydratable, Parcelable {
 
@@ -36,34 +37,76 @@ public class User implements Hydratable, Parcelable {
         return mCompiledAbout;
     }
 
-    public String[] getAvatars() {
-        return new String[] { getAvatarThumb(), getAvatarThumbSmall(), getAvatarSmall(),
-                getAvatarMedium(), getAvatarOriginal() };
+    @Nullable
+    private String getAvatar(final String template) {
+        if (TextUtils.isEmpty(mData.mAvatarTemplate)) {
+            return null;
+        } else {
+            return mData.mAvatarTemplate.replaceFirst(Constants.IMAGE_TEMPLATE_STUB, template);
+        }
     }
 
+    @Nullable
+    public ArrayList<String> getAvatars() {
+        final String thumb = getAvatarThumb();
+        final String thumbSmall = getAvatarThumbSmall();
+        final String small = getAvatarSmall();
+        final String medium = getAvatarMedium();
+        final String original = getAvatarOriginal();
+
+        final ArrayList<String> avatars = new ArrayList<>(5);
+
+        if (!TextUtils.isEmpty(thumb)) {
+            avatars.add(thumb);
+        }
+
+        if (!TextUtils.isEmpty(thumbSmall)) {
+            avatars.add(thumbSmall);
+        }
+
+        if (!TextUtils.isEmpty(small)) {
+            avatars.add(small);
+        }
+
+        if (!TextUtils.isEmpty(medium)) {
+            avatars.add(medium);
+        }
+
+        if (!TextUtils.isEmpty(original)) {
+            avatars.add(original);
+        }
+
+        if (avatars.isEmpty()) {
+            return null;
+        } else {
+            avatars.trimToSize();
+            return avatars;
+        }
+    }
+
+    @Nullable
     public String getAvatarMedium() {
-        return mData.mAvatarTemplate.replaceFirst(Constants.IMAGE_TEMPLATE_STUB,
-                Constants.IMAGE_TEMPLATE_MEDIUM);
+        return getAvatar(Constants.IMAGE_TEMPLATE_MEDIUM);
     }
 
+    @Nullable
     public String getAvatarOriginal() {
-        return mData.mAvatarTemplate.replaceFirst(Constants.IMAGE_TEMPLATE_STUB,
-                Constants.IMAGE_TEMPLATE_ORIGINAL);
+        return getAvatar(Constants.IMAGE_TEMPLATE_ORIGINAL);
     }
 
+    @Nullable
     public String getAvatarSmall() {
-        return mData.mAvatarTemplate.replaceFirst(Constants.IMAGE_TEMPLATE_STUB,
-                Constants.IMAGE_TEMPLATE_SMALL);
+        return getAvatar(Constants.IMAGE_TEMPLATE_SMALL);
     }
 
+    @Nullable
     public String getAvatarThumb() {
-        return mData.mAvatarTemplate.replaceFirst(Constants.IMAGE_TEMPLATE_STUB,
-                Constants.IMAGE_TEMPLATE_THUMB);
+        return getAvatar(Constants.IMAGE_TEMPLATE_THUMB);
     }
 
+    @Nullable
     public String getAvatarThumbSmall() {
-        return mData.mAvatarTemplate.replaceFirst(Constants.IMAGE_TEMPLATE_STUB,
-                Constants.IMAGE_TEMPLATE_THUMB_SMALL);
+        return getAvatar(Constants.IMAGE_TEMPLATE_THUMB_SMALL);
     }
 
     @Nullable
@@ -275,6 +318,7 @@ public class User implements Hydratable, Parcelable {
         @SerializedName("about_formatted")
         private String mAboutFormatted;
 
+        @Nullable
         @SerializedName("avatar_template")
         private String mAvatarTemplate;
 

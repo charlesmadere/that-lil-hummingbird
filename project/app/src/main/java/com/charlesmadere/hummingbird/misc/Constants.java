@@ -4,7 +4,8 @@ public final class Constants {
 
     public static final String[] MISSING_ARTWORK = { "/assets/missing-anime-cover.jpg",
             "/assets/processing-avatar.jpg", "/avatars/original/missing.png",
-            "/cover_images/original/missing.png", "/thumbnails/original/missing.png" };
+            "/cover_images/original/missing.png", "/images/original/missing.png",
+            "/logos/original/missing.png", "/thumbnails/original/missing.png" };
 
     public static final String ANIME = "anime";
     public static final String ANIME_SHORT = "a";

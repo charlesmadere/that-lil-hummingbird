@@ -97,7 +97,7 @@ public enum ReadingStatus implements Parcelable {
         @Override
         public ReadingStatus deserialize(final JsonElement json, final Type typeOfT,
                 final JsonDeserializationContext context) throws JsonParseException {
-            if (json.isJsonNull()) {
+            if (json == null || json.isJsonNull()) {
                 return null;
             }
 
