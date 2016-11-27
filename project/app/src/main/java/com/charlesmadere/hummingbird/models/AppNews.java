@@ -130,7 +130,6 @@ public class AppNews implements Parcelable {
         @SerializedName("url")
         private String mUrl;
 
-
         public String getTitle() {
             return mTitle;
         }
