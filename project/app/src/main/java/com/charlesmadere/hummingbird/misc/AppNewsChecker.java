@@ -34,6 +34,7 @@ public final class AppNewsChecker {
             @Override
             public void success(@Nullable final ArrayList<AppNews> appNews) {
                 if (appNews == null || appNews.isEmpty()) {
+                    Timber.d(TAG, "Poll for app news completed (news is null or empty)");
                     Preferences.Misc.AppNewsAvailability.set(appNewsStatus);
                     return;
                 }
