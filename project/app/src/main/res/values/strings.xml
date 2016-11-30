@@ -128,7 +128,6 @@
     <string name="has_placed_on_hold">has placed on hold</string>
     <string name="hourly">Hourly</string>
     <string name="husbando">Husbando</string>
-    <string name="husbando_is">Husbando is</string>
     <string name="increase">Increase</string>
     <string name="initial_search_message">Once you begin typing, search results will be displayed here.</string>
     <string name="is_currently_watching">is currently watching</string>
@@ -275,7 +274,6 @@
     <string name="volumes">Volumes</string>
     <string name="volumes_read">Volumes Read</string>
     <string name="waifu">Waifu</string>
-    <string name="waifu_is">Waifu is</string>
     <string name="watched">Watched</string>
     <string name="watched_episode_x">watched episode %1$s</string>
     <string name="website">Website</string>

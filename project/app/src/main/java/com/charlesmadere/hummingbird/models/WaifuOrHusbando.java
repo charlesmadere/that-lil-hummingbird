@@ -10,27 +10,17 @@ import com.google.gson.annotations.SerializedName;
 public enum WaifuOrHusbando implements Parcelable {
 
     @SerializedName("Husbando")
-    HUSBANDO(R.string.husbando_is, R.string.husbando),
+    HUSBANDO(R.string.husbando),
 
     @SerializedName("Waifu")
-    WAIFU(R.string.waifu_is, R.string.waifu);
-
-
-    @StringRes
-    private final int mExtendedTextResId;
+    WAIFU(R.string.waifu);
 
     @StringRes
     private final int mTextResId;
 
 
-    WaifuOrHusbando(@StringRes final int extendedTextResId, @StringRes final int textResId) {
-        mExtendedTextResId = extendedTextResId;
+    WaifuOrHusbando(@StringRes final int textResId) {
         mTextResId = textResId;
-    }
-
-    @StringRes
-    public int getExtendedTextResId() {
-        return mExtendedTextResId;
     }
 
     @StringRes

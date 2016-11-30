@@ -3,9 +3,13 @@ package com.charlesmadere.hummingbird.misc;
 import com.charlesmadere.hummingbird.models.AbsNotification;
 import com.charlesmadere.hummingbird.models.AbsStory;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
+import com.charlesmadere.hummingbird.models.DataObject;
+import com.charlesmadere.hummingbird.models.DataObjectJsonDeserializer;
+import com.charlesmadere.hummingbird.models.Image;
 import com.charlesmadere.hummingbird.models.MediaStory;
 import com.charlesmadere.hummingbird.models.Rating;
 import com.charlesmadere.hummingbird.models.ReadingStatus;
+import com.charlesmadere.hummingbird.models.Relationship;
 import com.charlesmadere.hummingbird.models.SearchBundle;
 import com.charlesmadere.hummingbird.models.SimpleDate;
 import com.charlesmadere.hummingbird.models.User;
@@ -29,9 +33,12 @@ public final class GsonUtils {
                     .registerTypeAdapter(AbsNotification.AbsSource.class, AbsNotification.AbsSource.JSON_DESERIALIZER)
                     .registerTypeAdapter(AbsStory.class, AbsStory.JSON_DESERIALIZER)
                     .registerTypeAdapter(AbsSubstory.class, AbsSubstory.JSON_DESERIALIZER)
+                    .registerTypeAdapter(DataObject.class, new DataObjectJsonDeserializer())
+                    .registerTypeAdapter(Image.class, Image.JSON_DESERIALIZER)
                     .registerTypeAdapter(MediaStory.AbsMedia.class, MediaStory.AbsMedia.JSON_DESERIALIZER)
                     .registerTypeAdapter(Rating.class, Rating.JSON_DESERIALIZER)
                     .registerTypeAdapter(ReadingStatus.class, ReadingStatus.JSON_DESERIALIZER)
+                    .registerTypeAdapter(Relationship.class, Relationship.JSON_DESERIALIZER)
                     .registerTypeAdapter(SearchBundle.AbsResult.class, SearchBundle.AbsResult.JSON_DESERIALIZER)
                     .registerTypeAdapter(SimpleDate.class, SimpleDate.JSON_DESERIALIZER)
                     .registerTypeAdapter(SimpleDate.class, SimpleDate.JSON_SERIALIZER)

@@ -128,27 +128,19 @@ public final class JsoupUtils {
             return null;
         }
 
-        int endOfToken = -1;
+        int endOfToken = indexOf - 1;
 
-        for (int i = indexOf; i >= 0; --i) {
-            if (signInPage.charAt(i) == '"') {
-                endOfToken = i;
-                break;
-            }
+        while (endOfToken >= 0 && signInPage.charAt(endOfToken) != '"') {
+            --endOfToken;
         }
 
-        if (endOfToken < 0) {
-            return null;
+        int startOfToken = endOfToken - 1;
+
+        while (startOfToken >= 0 && signInPage.charAt(startOfToken) != '"') {
+            --startOfToken;
         }
 
-        int startOfToken = -1;
-
-        for (int i = endOfToken - 1; i >= 0; --i) {
-            if (signInPage.charAt(i) == '"') {
-                startOfToken = i + 1;
-                break;
-            }
-        }
+        ++startOfToken;
 
         if (startOfToken < 0 || endOfToken - startOfToken < 1) {
             return null;
