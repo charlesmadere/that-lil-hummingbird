@@ -80,7 +80,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
 
     // Google Play Services
-    compile 'com.google.android.gms:play-services-gcm:10.0.0'
+    compile 'com.google.android.gms:play-services-gcm:10.0.1'
 
     // jsoup
     compile 'org.jsoup:jsoup:1.9.2'
