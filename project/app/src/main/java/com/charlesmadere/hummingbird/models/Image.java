@@ -13,7 +13,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
-import java.lang.*;
 import java.lang.reflect.Type;
 
 import static com.charlesmadere.hummingbird.misc.Constants.LARGE;

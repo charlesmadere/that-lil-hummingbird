@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ActivityGroup implements DataObject, Parcelable {
+public class ActionGroup implements DataObject, Parcelable {
 
     @SerializedName("attributes")
     private Attributes mAttributes;
@@ -23,7 +23,7 @@ public class ActivityGroup implements DataObject, Parcelable {
 
     @Override
     public boolean equals(final Object o) {
-        return o instanceof ActivityGroup && mId.equals(((ActivityGroup) o).getId());
+        return o instanceof ActionGroup && mId.equals(((ActionGroup) o).getId());
     }
 
     @Override
@@ -72,10 +72,10 @@ public class ActivityGroup implements DataObject, Parcelable {
         dest.writeString(mId);
     }
 
-    public static final Creator<ActivityGroup> CREATOR = new Creator<ActivityGroup>() {
+    public static final Creator<ActionGroup> CREATOR = new Creator<ActionGroup>() {
         @Override
-        public ActivityGroup createFromParcel(final Parcel source) {
-            final ActivityGroup ag = new ActivityGroup();
+        public ActionGroup createFromParcel(final Parcel source) {
+            final ActionGroup ag = new ActionGroup();
             ag.mAttributes = source.readParcelable(Attributes.class.getClassLoader());
             ag.mDataType = source.readParcelable(DataType.class.getClassLoader());
             ag.mRelationships = source.readParcelable(Relationships.class.getClassLoader());
@@ -84,8 +84,8 @@ public class ActivityGroup implements DataObject, Parcelable {
         }
 
         @Override
-        public ActivityGroup[] newArray(final int size) {
-            return new ActivityGroup[size];
+        public ActionGroup[] newArray(final int size) {
+            return new ActionGroup[size];
         }
     };
 

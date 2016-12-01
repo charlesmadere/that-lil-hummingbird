@@ -44,6 +44,11 @@ public class Character implements DataObject, Parcelable {
         return mId;
     }
 
+    @Nullable
+    public Image getImage() {
+        return mAttributes.mImage;
+    }
+
     public Links getLinks() {
         return mLinks;
     }
@@ -101,6 +106,10 @@ public class Character implements DataObject, Parcelable {
 
     private static class Attributes implements Parcelable {
         @Nullable
+        @SerializedName("image")
+        private Image mImage;
+
+        @Nullable
         @SerializedName("description")
         private String mDescription;
 
@@ -118,6 +127,7 @@ public class Character implements DataObject, Parcelable {
 
         @Override
         public void writeToParcel(final Parcel dest, final int flags) {
+            dest.writeParcelable(mImage, flags);
             dest.writeString(mDescription);
             dest.writeString(mName);
             dest.writeString(mSlug);
@@ -127,6 +137,7 @@ public class Character implements DataObject, Parcelable {
             @Override
             public Attributes createFromParcel(final Parcel source) {
                 final Attributes a = new Attributes();
+                a.mImage = source.readParcelable(Image.class.getClassLoader());
                 a.mDescription = source.readString();
                 a.mName = source.readString();
                 a.mSlug = source.readString();

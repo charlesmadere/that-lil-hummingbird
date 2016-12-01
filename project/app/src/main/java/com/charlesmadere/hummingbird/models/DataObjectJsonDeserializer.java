@@ -38,11 +38,11 @@ public class DataObjectJsonDeserializer implements JsonDeserializer<DataObject> 
 
         switch (dataType) {
             case ACTIVITIES:
-                dataObject = context.deserialize(json, Activity.class);
+                dataObject = context.deserialize(json, Action.class);
                 break;
 
             case ACTIVITY_GROUPS:
-                dataObject = context.deserialize(json, ActivityGroup.class);
+                dataObject = context.deserialize(json, ActionGroup.class);
                 break;
 
             case ANIME:
@@ -55,6 +55,14 @@ public class DataObjectJsonDeserializer implements JsonDeserializer<DataObject> 
 
             case CHARACTERS:
                 dataObject = context.deserialize(json, Character.class);
+                break;
+
+            case COMMENT_LIKES:
+                dataObject = context.deserialize(json, CommentLike.class);
+                break;
+
+            case COMMENTS:
+                dataObject = context.deserialize(json, Comment.class);
                 break;
 
             case EPISODES:
@@ -91,6 +99,10 @@ public class DataObjectJsonDeserializer implements JsonDeserializer<DataObject> 
 
             case PEOPLE:
                 dataObject = context.deserialize(json, Person.class);
+                break;
+
+            case POST_LIKES:
+                dataObject = context.deserialize(json, PostLike.class);
                 break;
 
             case POSTS:

@@ -49,6 +49,11 @@ public class UserV3 implements DataObject, Hydratable, Parcelable {
         return mAttributes.mBio;
     }
 
+    @Nullable
+    public SimpleDate getBirthday() {
+        return mAttributes.mBirthday;
+    }
+
     public int getCommentsCount() {
         return mAttributes.mCommentsCount;
     }
@@ -131,6 +136,10 @@ public class UserV3 implements DataObject, Hydratable, Parcelable {
     @Nullable
     public Relationships getRelationships() {
         return mRelationships;
+    }
+
+    public int getReviewsCount() {
+        return mAttributes.mReviewsCount;
     }
 
     @Nullable
@@ -240,6 +249,13 @@ public class UserV3 implements DataObject, Hydratable, Parcelable {
         @SerializedName("ratingsCount")
         private int mRatingsCount;
 
+        @SerializedName("reviewsCount")
+        private int mReviewsCount;
+
+        @Nullable
+        @SerializedName("birthday")
+        private SimpleDate mBirthday;
+
         @Nullable
         @SerializedName("createdAt")
         private SimpleDate mCreatedAt;
@@ -301,6 +317,8 @@ public class UserV3 implements DataObject, Hydratable, Parcelable {
             dest.writeInt(mLikesReceivedCount);
             dest.writeInt(mPostsCount);
             dest.writeInt(mRatingsCount);
+            dest.writeInt(mReviewsCount);
+            dest.writeParcelable(mBirthday, flags);
             dest.writeParcelable(mCreatedAt, flags);
             dest.writeParcelable(mUpdatedAt, flags);
             dest.writeString(mAbout);
@@ -330,6 +348,8 @@ public class UserV3 implements DataObject, Hydratable, Parcelable {
                 a.mLikesReceivedCount = source.readInt();
                 a.mPostsCount = source.readInt();
                 a.mRatingsCount = source.readInt();
+                a.mReviewsCount = source.readInt();
+                a.mBirthday = source.readParcelable(SimpleDate.class.getClassLoader());
                 a.mCreatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
                 a.mUpdatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
                 a.mAbout = source.readString();

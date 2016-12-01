@@ -29,6 +29,10 @@ public class Relationships implements Parcelable {
     private Relationship mCharacter;
 
     @Nullable
+    @SerializedName("comment")
+    private Relationship mComment;
+
+    @Nullable
     @SerializedName("episodes")
     private Relationship mEpisodes;
 
@@ -77,6 +81,10 @@ public class Relationships implements Parcelable {
     private Relationship mLibraryEntry;
 
     @Nullable
+    @SerializedName("likes")
+    private Relationship mLikes;
+
+    @Nullable
     @SerializedName("linkedProfiles")
     private Relationship mLinkedProfiles;
 
@@ -93,12 +101,24 @@ public class Relationships implements Parcelable {
     private Relationship mMediaFollows;
 
     @Nullable
+    @SerializedName("parent")
+    private Relationship mParent;
+
+    @Nullable
     @SerializedName("person")
     private Relationship mPerson;
 
     @Nullable
+    @SerializedName("post")
+    private Relationship mPost;
+
+    @Nullable
     @SerializedName("primaryMedia")
     private Relationship mPrimaryMedia;
+
+    @Nullable
+    @SerializedName("replies")
+    private Relationship mReplies;
 
     @Nullable
     @SerializedName("review")
@@ -175,6 +195,11 @@ public class Relationships implements Parcelable {
     }
 
     @Nullable
+    public Relationship getComment() {
+        return mComment;
+    }
+
+    @Nullable
     public Relationship getEpisodes() {
         return mEpisodes;
     }
@@ -235,6 +260,11 @@ public class Relationships implements Parcelable {
     }
 
     @Nullable
+    public Relationship getLikes() {
+        return mLikes;
+    }
+
+    @Nullable
     public Relationship getLinkedProfiles() {
         return mLinkedProfiles;
     }
@@ -255,13 +285,28 @@ public class Relationships implements Parcelable {
     }
 
     @Nullable
+    public Relationship getParent() {
+        return mParent;
+    }
+
+    @Nullable
     public Relationship getPerson() {
         return mPerson;
     }
 
     @Nullable
+    public Relationship getPost() {
+        return mPost;
+    }
+
+    @Nullable
     public Relationship getPrimaryMedia() {
         return mPrimaryMedia;
+    }
+
+    @Nullable
+    public Relationship getReplies() {
+        return mReplies;
     }
 
     @Nullable
@@ -336,6 +381,7 @@ public class Relationships implements Parcelable {
         dest.writeParcelable(mBlocks, flags);
         dest.writeParcelable(mCastings, flags);
         dest.writeParcelable(mCharacter, flags);
+        dest.writeParcelable(mComment, flags);
         dest.writeParcelable(mEpisodes, flags);
         dest.writeParcelable(mFavorites, flags);
         dest.writeParcelable(mFollowed, flags);
@@ -348,12 +394,16 @@ public class Relationships implements Parcelable {
         dest.writeParcelable(mItem, flags);
         dest.writeParcelable(mLibraryEntries, flags);
         dest.writeParcelable(mLibraryEntry, flags);
+        dest.writeParcelable(mLikes, flags);
         dest.writeParcelable(mLinkedProfiles, flags);
         dest.writeParcelable(mMappings, flags);
         dest.writeParcelable(mMedia, flags);
         dest.writeParcelable(mMediaFollows, flags);
+        dest.writeParcelable(mParent, flags);
         dest.writeParcelable(mPerson, flags);
+        dest.writeParcelable(mPost, flags);
         dest.writeParcelable(mPrimaryMedia, flags);
+        dest.writeParcelable(mReplies, flags);
         dest.writeParcelable(mReview, flags);
         dest.writeParcelable(mReviews, flags);
         dest.writeParcelable(mSpoiledUnit, flags);
@@ -377,6 +427,7 @@ public class Relationships implements Parcelable {
             r.mBlocks = source.readParcelable(Relationship.class.getClassLoader());
             r.mCastings = source.readParcelable(Relationship.class.getClassLoader());
             r.mCharacter = source.readParcelable(Relationship.class.getClassLoader());
+            r.mComment = source.readParcelable(Relationship.class.getClassLoader());
             r.mEpisodes = source.readParcelable(Relationship.class.getClassLoader());
             r.mFavorites = source.readParcelable(Relationship.class.getClassLoader());
             r.mFollowed = source.readParcelable(Relationship.class.getClassLoader());
@@ -389,12 +440,16 @@ public class Relationships implements Parcelable {
             r.mItem = source.readParcelable(Relationship.class.getClassLoader());
             r.mLibraryEntries = source.readParcelable(Relationship.class.getClassLoader());
             r.mLibraryEntry = source.readParcelable(Relationship.class.getClassLoader());
+            r.mLikes = source.readParcelable(Relationship.class.getClassLoader());
             r.mLinkedProfiles = source.readParcelable(Relationship.class.getClassLoader());
             r.mMappings = source.readParcelable(Relationship.class.getClassLoader());
             r.mMedia = source.readParcelable(Relationship.class.getClassLoader());
             r.mMediaFollows = source.readParcelable(Relationship.class.getClassLoader());
+            r.mParent = source.readParcelable(Relationship.class.getClassLoader());
             r.mPerson = source.readParcelable(Relationship.class.getClassLoader());
+            r.mPost = source.readParcelable(Relationship.class.getClassLoader());
             r.mPrimaryMedia = source.readParcelable(Relationship.class.getClassLoader());
+            r.mReplies = source.readParcelable(Relationship.class.getClassLoader());
             r.mReview = source.readParcelable(Relationship.class.getClassLoader());
             r.mReviews = source.readParcelable(Relationship.class.getClassLoader());
             r.mSpoiledUnit = source.readParcelable(Relationship.class.getClassLoader());

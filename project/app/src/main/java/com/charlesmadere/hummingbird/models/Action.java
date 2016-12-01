@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Activity implements DataObject, Parcelable {
+public class Action implements DataObject, Parcelable {
 
     @SerializedName("attributes")
     private Attributes mAttributes;
@@ -23,7 +23,7 @@ public class Activity implements DataObject, Parcelable {
 
     @Override
     public boolean equals(final Object o) {
-        return o instanceof Activity && mId.equals(((Activity) o).getId());
+        return o instanceof Action && mId.equals(((Action) o).getId());
     }
 
     @Override
@@ -59,6 +59,7 @@ public class Activity implements DataObject, Parcelable {
         return mAttributes.mStatus;
     }
 
+    @Nullable
     public String getStreamId() {
         return mAttributes.mStreamId;
     }
@@ -89,10 +90,10 @@ public class Activity implements DataObject, Parcelable {
         dest.writeString(mId);
     }
 
-    public static final Creator<Activity> CREATOR = new Creator<Activity>() {
+    public static final Creator<Action> CREATOR = new Creator<Action>() {
         @Override
-        public Activity createFromParcel(final Parcel source) {
-            final Activity a = new Activity();
+        public Action createFromParcel(final Parcel source) {
+            final Action a = new Action();
             a.mAttributes = source.readParcelable(Attributes.class.getClassLoader());
             a.mDataType = source.readParcelable(DataType.class.getClassLoader());
             a.mRelationships = source.readParcelable(Relationships.class.getClassLoader());
@@ -101,8 +102,8 @@ public class Activity implements DataObject, Parcelable {
         }
 
         @Override
-        public Activity[] newArray(final int size) {
-            return new Activity[size];
+        public Action[] newArray(final int size) {
+            return new Action[size];
         }
     };
 
@@ -126,6 +127,7 @@ public class Activity implements DataObject, Parcelable {
         @SerializedName("foreignId")
         private String mForeignId;
 
+        @Nullable
         @SerializedName("streamId")
         private String mStreamId;
 
@@ -170,6 +172,9 @@ public class Activity implements DataObject, Parcelable {
     }
 
     public enum Verb implements Parcelable {
+        @SerializedName("follow")
+        FOLLOW,
+
         @SerializedName("post")
         POST,
 

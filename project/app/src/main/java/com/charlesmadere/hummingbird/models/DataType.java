@@ -22,6 +22,12 @@ public enum DataType implements Parcelable {
     @SerializedName("characters")
     CHARACTERS,
 
+    @SerializedName("commentLikes")
+    COMMENT_LIKES,
+
+    @SerializedName("comments")
+    COMMENTS,
+
     @SerializedName("episodes")
     EPISODES,
 
@@ -48,6 +54,9 @@ public enum DataType implements Parcelable {
 
     @SerializedName("people")
     PEOPLE,
+
+    @SerializedName("postLikes")
+    POST_LIKES,
 
     @SerializedName("posts")
     POSTS,
