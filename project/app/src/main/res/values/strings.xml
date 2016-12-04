@@ -74,6 +74,7 @@
     <string name="error_adding_library_entry">Error adding library entry! Please check your network connection and try again.</string>
     <string name="error_deleting_library_entry">Error deleting library entry! Please check your network connection and try again.</string>
     <string name="error_editing_library_entry">Error editing library entry! Please check your network connection and try again.</string>
+    <string name="error_loading_activity_feed">Error loading activity feed</string>
     <string name="error_loading_anime">Error loading anime! Please check your network connection and try again.</string>
     <string name="error_loading_anime_quotes">Error loading anime quotes</string>
     <string name="error_loading_anime_review">Error loading anime review</string>

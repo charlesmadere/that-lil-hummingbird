@@ -21,6 +21,12 @@
             android:theme="@style/HummingbirdTheme.WithDrawer" />
 
         <activity
+            android:label="@string/activity_feed"
+            android:launchMode="singleTop"
+            android:name=".activities.ActivityFeedV3Activity"
+            android:theme="@style/HummingbirdTheme.WithDrawer" />
+
+        <activity
             android:label=""
             android:name=".activities.AnimeActivity"
             android:theme="@style/HummingbirdTheme.WithDrawer" />
