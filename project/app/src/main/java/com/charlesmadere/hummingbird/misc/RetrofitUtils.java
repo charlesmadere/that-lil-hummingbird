@@ -1,6 +1,7 @@
 package com.charlesmadere.hummingbird.misc;
 
 import com.charlesmadere.hummingbird.networking.HummingbirdApi;
+import com.charlesmadere.hummingbird.networking.KitsuApi;
 import com.charlesmadere.hummingbird.networking.WebsiteApi;
 import com.google.gson.annotations.SerializedName;
 
@@ -19,7 +20,9 @@ public final class RetrofitUtils {
     private static EnumConverterFactory sEnumConverterFactory;
     private static GsonConverterFactory sGsonConverterFactory;
     private static HummingbirdApi sHummingbirdApi;
+    private static KitsuApi sKitsuApi;
     private static Retrofit sHummingbirdRetrofit;
+    private static Retrofit sKitsuRetrofit;
     private static Retrofit sWebsiteRetrofit;
     private static WebsiteApi sWebsiteApi;
 
@@ -64,6 +67,30 @@ public final class RetrofitUtils {
         }
 
         return sHummingbirdRetrofit;
+    }
+
+    public static synchronized KitsuApi getKitsuApi() {
+        if (sKitsuApi == null) {
+            Timber.d(TAG, "creating Kitsu Api instance");
+            final Retrofit retrofit = getKitsuRetrofit();
+            sKitsuApi = retrofit.create(KitsuApi.class);
+        }
+
+        return sKitsuApi;
+    }
+
+    public static synchronized Retrofit getKitsuRetrofit() {
+        if (sKitsuRetrofit == null) {
+            Timber.d(TAG, "creating Kitsu Retrofit instance");
+            sKitsuRetrofit = new Retrofit.Builder()
+                    .client(OkHttpUtils.getOkHttpClient())
+                    .addConverterFactory(getGsonConverterFactory())
+                    .addConverterFactory(getEnumConverterFactory())
+                    .baseUrl(Constants.KITSU_URL_HTTPS)
+                    .build();
+        }
+
+        return sKitsuRetrofit;
     }
 
     private static <E extends Enum<E>> String getSerializedName(final E e) {
