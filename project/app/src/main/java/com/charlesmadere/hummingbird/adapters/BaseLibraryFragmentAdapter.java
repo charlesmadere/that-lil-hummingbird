@@ -26,6 +26,7 @@ public abstract class BaseLibraryFragmentAdapter extends FragmentStatePagerAdapt
         mContext = context;
         mFragments = new SparseArrayCompat<>(getCount());
     }
+
     @Override
     public void destroyItem(final ViewGroup container, final int position, final Object object) {
         super.destroyItem(container, position, object);
