@@ -1,12 +1,13 @@
 package com.charlesmadere.hummingbird.fragments;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class GlobalFeedFragment extends BaseFragment implements OnRefreshListener {
+public class GlobalFeedFragment extends BaseFragment implements
+        SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "GlobalFeedFragment";
 
