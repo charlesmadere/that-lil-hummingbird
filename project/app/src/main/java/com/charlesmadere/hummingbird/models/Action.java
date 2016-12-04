@@ -181,6 +181,9 @@ public class Action implements DataObject, Parcelable {
         @SerializedName("progressed")
         PROGRESSED,
 
+        @SerializedName("rated")
+        RATED,
+
         @SerializedName("updated")
         UPDATED;
 
