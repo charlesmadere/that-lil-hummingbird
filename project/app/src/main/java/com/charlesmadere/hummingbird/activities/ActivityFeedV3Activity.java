@@ -12,7 +12,6 @@ import com.charlesmadere.hummingbird.adapters.ActivityFeedFragmentAdapter;
 import com.charlesmadere.hummingbird.models.LaunchScreen;
 import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.charlesmadere.hummingbird.views.NavigationDrawerItemView;
-import com.charlesmadere.hummingbird.views.RefreshLayout;
 
 import butterknife.BindView;
 
@@ -24,9 +23,6 @@ public class ActivityFeedV3Activity extends BaseDrawerActivity {
 
     @BindView(R.id.floatingActionButton)
     FloatingActionButton mPostComment;
-
-    @BindView(R.id.refreshLayout)
-    RefreshLayout mRefreshLayout;
 
     @BindView(R.id.tabLayout)
     TabLayout mTabLayout;
