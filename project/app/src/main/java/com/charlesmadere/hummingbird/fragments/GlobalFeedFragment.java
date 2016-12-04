@@ -73,7 +73,7 @@ public class GlobalFeedFragment extends BaseFragment implements
     public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-
+        fetchFeed();
     }
 
     @Override
