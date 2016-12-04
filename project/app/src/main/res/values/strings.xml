@@ -120,6 +120,7 @@
     <string name="franchise">Franchise</string>
     <string name="gallery">Gallery</string>
     <string name="general">General</string>
+    <string name="global">Global</string>
     <string name="google_play_services_error_cant_be_resolved">Sorry, but your Google Play Services error (%1$d) can\'t be resolved.</string>
     <string name="google_play_services_error_has_been_resolved">Google Play Services error has been resolved!</string>
     <string name="group_members">Group Members</string>
