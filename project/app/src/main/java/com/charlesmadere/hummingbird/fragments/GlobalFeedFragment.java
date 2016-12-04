@@ -132,10 +132,20 @@ public class GlobalFeedFragment extends BaseFragment implements
         mRefreshLayout.setRefreshing(false);
     }
 
+    private void showFeed() {
+        // TODO
+        mEmpty.setVisibility(View.GONE);
+        mError.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.VISIBLE);
+        // TODO
+        mRefreshLayout.setRefreshing(false);
+        // TODO
+    }
+
     @Override
     public void success(@Nullable final ArrayResponse<ActionGroup> actionGroups) {
         if (actionGroups != null && actionGroups.hasData()) {
-
+            showFeed();
         } else {
             showEmpty();
         }
