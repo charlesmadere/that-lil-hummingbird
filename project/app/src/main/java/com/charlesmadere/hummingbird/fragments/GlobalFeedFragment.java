@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
+import com.charlesmadere.hummingbird.adapters.FeedV3Adapter;
 import com.charlesmadere.hummingbird.models.ActionGroup;
 import com.charlesmadere.hummingbird.models.ArrayResponse;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
@@ -27,6 +28,7 @@ public class GlobalFeedFragment extends BaseFragment implements
 
     private static final String TAG = "GlobalFeedFragment";
 
+    private FeedV3Adapter mAdapter;
     private RecyclerViewPaginator mPaginator;
 
     @BindView(R.id.llEmpty)
