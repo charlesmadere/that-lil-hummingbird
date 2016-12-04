@@ -19,6 +19,7 @@ import com.charlesmadere.hummingbird.networking.ApiV3;
 import com.charlesmadere.hummingbird.networking.PaginationApiListener;
 import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
+import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import butterknife.BindView;
 
@@ -106,6 +107,11 @@ public class GlobalFeedFragment extends BaseFragment implements
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mRefreshLayout.setOnRefreshListener(this);
+        mRecyclerView.setHasFixedSize(true);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
+        mAdapter = new FeedV3Adapter(getContext());
+        mRecyclerView.setAdapter(mAdapter);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
     }
 

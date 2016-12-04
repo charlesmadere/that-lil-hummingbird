@@ -14,8 +14,8 @@ public class FeedV3Adapter extends BaseMultiPaginationAdapter {
         // TODO
     }
 
-    public FeedV3Adapter(final Context context, final HashMap<Class, Integer> viewKeyMap) {
-        super(context, viewKeyMap);
+    public FeedV3Adapter(final Context context) {
+        super(context, VIEW_KEY_MAP);
         setHasStableIds(true);
     }
 
