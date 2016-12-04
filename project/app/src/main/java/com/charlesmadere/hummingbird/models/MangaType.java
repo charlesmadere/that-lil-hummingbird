@@ -9,10 +9,10 @@ import com.google.gson.annotations.SerializedName;
 
 public enum MangaType implements Parcelable {
 
-    @SerializedName("Manga")
+    @SerializedName("manga")
     MANGA(R.string.manga),
 
-    @SerializedName("Novel")
+    @SerializedName("novel")
     NOVEL(R.string.novel);
 
     @StringRes

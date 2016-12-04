@@ -9,22 +9,22 @@ import com.google.gson.annotations.SerializedName;
 
 public enum AnimeType implements Parcelable {
 
-    @SerializedName("Movie")
+    @SerializedName("movie")
     MOVIE(R.string.movie),
 
-    @SerializedName("Music")
+    @SerializedName("music")
     MUSIC(R.string.music),
 
-    @SerializedName("ONA")
+    @SerializedName("ona")
     ONA(R.string.ona),
 
-    @SerializedName("OVA")
+    @SerializedName("ova")
     OVA(R.string.ova),
 
-    @SerializedName("Special")
+    @SerializedName("special")
     SPECIAL(R.string.special),
 
-    @SerializedName("TV")
+    @SerializedName("tv")
     TV(R.string.tv);
 
     @StringRes

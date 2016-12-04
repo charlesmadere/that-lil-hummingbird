@@ -100,6 +100,7 @@ public class AnimeV3 implements DataObject, Parcelable {
         return mRelationships;
     }
 
+    @Nullable
     public AnimeType getShowType() {
         return mAttributes.mShowType;
     }
