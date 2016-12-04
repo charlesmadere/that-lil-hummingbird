@@ -12,13 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
+import com.charlesmadere.hummingbird.misc.Heartbeat;
 import com.charlesmadere.hummingbird.misc.Timber;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFragment implements
-        DialogInterface.OnShowListener {
+        DialogInterface.OnShowListener, Heartbeat {
 
     private static final String TAG = "BaseBottomSheetDialogFragment";
 
@@ -97,8 +98,9 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
 
     public abstract String getFragmentName();
 
+    @Override
     public boolean isAlive() {
-        return mIsAlive;
+        return mIsAlive && isAdded() && !isRemoving();
     }
 
     @Override

@@ -4,12 +4,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.charlesmadere.hummingbird.misc.Heartbeat;
 import com.charlesmadere.hummingbird.misc.Timber;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements Heartbeat {
 
     private static final String TAG = "BaseFragment";
 
@@ -19,6 +20,7 @@ public abstract class BaseFragment extends Fragment {
 
     public abstract String getFragmentName();
 
+    @Override
     public boolean isAlive() {
         return mIsAlive && isAdded() && !isRemoving();
     }

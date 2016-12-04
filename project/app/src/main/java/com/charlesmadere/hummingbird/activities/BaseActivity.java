@@ -15,6 +15,7 @@ import android.view.View;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.misc.ActivityRegister;
+import com.charlesmadere.hummingbird.misc.Heartbeat;
 import com.charlesmadere.hummingbird.misc.Timber;
 import com.charlesmadere.hummingbird.models.UiColorSet;
 import com.charlesmadere.hummingbird.preferences.Preferences;
@@ -22,7 +23,7 @@ import com.charlesmadere.hummingbird.preferences.Preferences;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements Heartbeat {
 
     private static final String TAG = "BaseActivity";
     private static final String CNAME = BaseActivity.class.getCanonicalName();
@@ -57,6 +58,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
+    @Override
     public boolean isAlive() {
         return !isFinishing() && !isDestroyed();
     }
