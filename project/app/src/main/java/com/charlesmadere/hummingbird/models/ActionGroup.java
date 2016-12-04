@@ -11,7 +11,7 @@ public class ActionGroup implements DataObject, Parcelable {
     @SerializedName("attributes")
     private Attributes mAttributes;
 
-    @SerializedName("dataType")
+    @SerializedName("type")
     private DataType mDataType;
 
     @SerializedName("relationships")
