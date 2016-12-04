@@ -65,7 +65,7 @@ public class GlobalFeedFragment extends BaseFragment implements
 
     @Override
     public boolean isLoading() {
-        return mRefreshLayout.isRefreshing();
+        return mRefreshLayout.isRefreshing() || mAdapter.isPaginating();
     }
 
     @Override
