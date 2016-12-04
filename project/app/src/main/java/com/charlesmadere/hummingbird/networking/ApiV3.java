@@ -16,7 +16,7 @@ public final class ApiV3 {
     private static final KitsuApi KITSU = RetrofitUtils.getKitsuApi();
 
 
-    public static void getGlobalFeed(final ApiListener<ArrayResponse<ActionGroup>> listener) {
+    public static void getGlobalFeed(final ApiCall<ArrayResponse<ActionGroup>> listener) {
         TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
         tcs.getTask().continueWith(new Continuation<Void, ArrayResponse<ActionGroup>>() {
             @Override

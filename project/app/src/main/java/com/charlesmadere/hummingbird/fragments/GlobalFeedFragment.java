@@ -13,6 +13,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.ActionGroup;
 import com.charlesmadere.hummingbird.models.ArrayResponse;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
+import com.charlesmadere.hummingbird.networking.ApiCall;
 import com.charlesmadere.hummingbird.networking.ApiV3;
 import com.charlesmadere.hummingbird.networking.PaginationApiListener;
 import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
@@ -52,7 +53,7 @@ public class GlobalFeedFragment extends BaseFragment implements
 
     private void fetchFeed() {
         mRefreshLayout.setRefreshing(true);
-        ApiV3.getGlobalFeed(this);
+        ApiV3.getGlobalFeed(new ApiCall<>(this));
     }
 
     @Override
@@ -68,6 +69,8 @@ public class GlobalFeedFragment extends BaseFragment implements
     @Override
     public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+
     }
 
     @Override
