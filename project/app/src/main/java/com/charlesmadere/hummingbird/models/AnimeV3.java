@@ -3,7 +3,9 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
+import com.charlesmadere.hummingbird.preferences.Preferences;
 import com.google.gson.annotations.SerializedName;
 
 public class AnimeV3 implements DataObject, Parcelable {
@@ -116,6 +118,37 @@ public class AnimeV3 implements DataObject, Parcelable {
         return mAttributes.mSynopsis;
     }
 
+    public String getTitle() {
+        final TitleType titleType = Preferences.General.TitleLanguage.get();
+
+        if (titleType == null || titleType == TitleType.CANONICAL) {
+            return getCanonicalTitle();
+        }
+
+        String title = null;
+        final Titles titles = getTitles();
+
+        switch (titleType) {
+            case ENGLISH:
+                title = titles.getEn();
+                break;
+
+            case JAPANESE:
+                title = titles.getJaJp();
+
+                if (TextUtils.isEmpty(title)) {
+                    title = titles.getEnJp();
+                }
+                break;
+        }
+
+        if (TextUtils.isEmpty(title)) {
+            return getCanonicalTitle();
+        } else {
+            return title;
+        }
+    }
+
     public Titles getTitles() {
         return mAttributes.mTitles;
     }
@@ -127,6 +160,11 @@ public class AnimeV3 implements DataObject, Parcelable {
 
     public boolean isNsfw() {
         return mAttributes.mNsfw;
+    }
+
+    @Override
+    public String toString() {
+        return getTitle();
     }
 
     @Override
