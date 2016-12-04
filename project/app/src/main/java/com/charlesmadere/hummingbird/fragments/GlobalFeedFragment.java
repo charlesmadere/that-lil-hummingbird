@@ -50,6 +50,11 @@ public class GlobalFeedFragment extends BaseFragment implements
 
     }
 
+    private void fetchFeed() {
+        mRefreshLayout.setRefreshing(true);
+        ApiV3.getGlobalFeed(this);
+    }
+
     @Override
     public String getFragmentName() {
         return TAG;
@@ -57,13 +62,12 @@ public class GlobalFeedFragment extends BaseFragment implements
 
     @Override
     public boolean isLoading() {
-        return false;
+        return mRefreshLayout.isRefreshing();
     }
 
     @Override
     public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ApiV3.getGlobalFeed(this);
     }
 
     @Override
