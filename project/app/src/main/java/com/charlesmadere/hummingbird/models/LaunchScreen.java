@@ -7,7 +7,7 @@ import android.os.Parcelable;
 import android.support.annotation.StringRes;
 
 import com.charlesmadere.hummingbird.R;
-import com.charlesmadere.hummingbird.activities.ActivityFeedActivity;
+import com.charlesmadere.hummingbird.activities.ActivityFeedV3Activity;
 import com.charlesmadere.hummingbird.activities.CurrentUserAnimeLibraryActivity;
 import com.charlesmadere.hummingbird.activities.CurrentUserMangaLibraryActivity;
 import com.google.gson.annotations.SerializedName;
@@ -18,7 +18,7 @@ public enum LaunchScreen implements Parcelable {
     ACTIVITY_FEED(R.string.activity_feed) {
         @Override
         Intent createIntent(final Context context) {
-            return ActivityFeedActivity.getLaunchIntent(context);
+            return ActivityFeedV3Activity.getLaunchIntent(context);
         }
     },
 

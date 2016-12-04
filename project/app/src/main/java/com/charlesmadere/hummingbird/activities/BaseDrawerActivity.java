@@ -79,7 +79,7 @@ public abstract class BaseDrawerActivity extends BaseActivity implements
 
         switch (v.getEntry()) {
             case ACTIVITY_FEED:
-                intent = ActivityFeedActivity.getLaunchIntent(this);
+                intent = ActivityFeedV3Activity.getLaunchIntent(this);
                 break;
 
             case ANIME_LIBRARY:
