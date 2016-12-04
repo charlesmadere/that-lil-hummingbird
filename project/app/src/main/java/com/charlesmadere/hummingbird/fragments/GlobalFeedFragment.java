@@ -102,8 +102,8 @@ public class GlobalFeedFragment extends BaseFragment implements
 
     @Override
     public void paginationNoMore() {
+        mPaginator.setEnabled(false);
         mAdapter.setPaginating(false);
-
     }
 
     @Override
