@@ -15,16 +15,16 @@ public enum AnimeType implements Parcelable {
     @SerializedName("music")
     MUSIC(R.string.music),
 
-    @SerializedName("ona")
+    @SerializedName("ONA")
     ONA(R.string.ona),
 
-    @SerializedName("ova")
+    @SerializedName("OVA")
     OVA(R.string.ova),
 
     @SerializedName("special")
     SPECIAL(R.string.special),
 
-    @SerializedName("tv")
+    @SerializedName("TV")
     TV(R.string.tv);
 
     @StringRes
