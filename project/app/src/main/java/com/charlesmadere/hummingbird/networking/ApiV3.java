@@ -16,7 +16,7 @@ public final class ApiV3 {
     private static final KitsuApi KITSU = RetrofitUtils.getKitsuApi();
 
 
-    public static void getGlobalFeed(final ApiResponse<ArrayResponse<ActionGroup>> listener) {
+    public static void getGlobalFeed(final ApiListener<ArrayResponse<ActionGroup>> listener) {
         TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
         tcs.getTask().continueWith(new Continuation<Void, ArrayResponse<ActionGroup>>() {
             @Override
@@ -33,10 +33,12 @@ public final class ApiV3 {
         }, Task.BACKGROUND_EXECUTOR).continueWith(new Continuation<ArrayResponse<ActionGroup>, Void>() {
             @Override
             public Void then(final Task<ArrayResponse<ActionGroup>> task) throws Exception {
-                if (task.isFaulted()) {
-                    listener.failure(null);
-                } else {
-                    listener.success(task.getResult());
+                if (listener.isAlive()) {
+                    if (task.isFaulted()) {
+                        listener.failure(null);
+                    } else {
+                        listener.success(task.getResult());
+                    }
                 }
 
                 return null;

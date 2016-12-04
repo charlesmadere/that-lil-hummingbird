@@ -40,6 +40,10 @@ public class FollowingFeedFragment extends BaseFragment implements
     RefreshLayout mRefreshLayout;
 
 
+    public static FollowingFeedFragment create() {
+        return new FollowingFeedFragment();
+    }
+
     @Override
     public void failure(@Nullable final ErrorInfo error) {
 

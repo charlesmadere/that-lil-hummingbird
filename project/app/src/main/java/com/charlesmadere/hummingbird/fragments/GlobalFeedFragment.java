@@ -13,6 +13,7 @@ import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.ActionGroup;
 import com.charlesmadere.hummingbird.models.ArrayResponse;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
+import com.charlesmadere.hummingbird.networking.ApiV3;
 import com.charlesmadere.hummingbird.networking.PaginationApiListener;
 import com.charlesmadere.hummingbird.views.RecyclerViewPaginator;
 import com.charlesmadere.hummingbird.views.RefreshLayout;
@@ -40,6 +41,10 @@ public class GlobalFeedFragment extends BaseFragment implements
     RefreshLayout mRefreshLayout;
 
 
+    public static GlobalFeedFragment create() {
+        return new GlobalFeedFragment();
+    }
+
     @Override
     public void failure(@Nullable final ErrorInfo error) {
 
@@ -53,6 +58,12 @@ public class GlobalFeedFragment extends BaseFragment implements
     @Override
     public boolean isLoading() {
         return false;
+    }
+
+    @Override
+    public void onActivityCreated(final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        ApiV3.getGlobalFeed(this);
     }
 
     @Override
@@ -80,6 +91,13 @@ public class GlobalFeedFragment extends BaseFragment implements
     @Override
     public void paginationNoMore() {
 
+    }
+
+    @Override
+    public void onViewCreated(final View view, final Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
     }
 
     @Override
