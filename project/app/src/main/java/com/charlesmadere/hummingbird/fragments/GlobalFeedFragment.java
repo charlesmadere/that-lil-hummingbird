@@ -51,7 +51,7 @@ public class GlobalFeedFragment extends BaseFragment implements
 
     @Override
     public void failure(@Nullable final ErrorInfo error) {
-
+        showError();
     }
 
     private void fetchFeed() {
@@ -85,22 +85,23 @@ public class GlobalFeedFragment extends BaseFragment implements
 
     @Override
     public void onRefresh() {
-
+        fetchFeed();
     }
 
     @Override
     public void paginate() {
+        mAdapter.setPaginating(true);
 
     }
 
     @Override
     public void paginationComplete() {
-
+        mAdapter.setPaginating(false);
     }
 
     @Override
     public void paginationNoMore() {
-
+        mAdapter.setPaginating(false);
     }
 
     @Override
@@ -113,6 +114,20 @@ public class GlobalFeedFragment extends BaseFragment implements
         mAdapter = new FeedV3Adapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
         mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
+    }
+
+    private void showEmpty() {
+        mRecyclerView.setVisibility(View.GONE);
+        mError.setVisibility(View.GONE);
+        mEmpty.setVisibility(View.VISIBLE);
+        mRefreshLayout.setRefreshing(false);
+    }
+
+    private void showError() {
+        mRecyclerView.setVisibility(View.GONE);
+        mEmpty.setVisibility(View.GONE);
+        mError.setVisibility(View.VISIBLE);
+        mRefreshLayout.setRefreshing(false);
     }
 
     @Override
