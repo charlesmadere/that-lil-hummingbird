@@ -73,6 +73,11 @@ public class UserV3 implements DataObject, Hydratable, Parcelable {
         return mDataType;
     }
 
+    @Nullable
+    public String getFacebookId() {
+        return mAttributes.mFacebookId;
+    }
+
     public int getFavoritesCount() {
         return mAttributes.mFavoritesCount;
     }
@@ -129,6 +134,11 @@ public class UserV3 implements DataObject, Hydratable, Parcelable {
         return mAttributes.mPostsCount;
     }
 
+    @Nullable
+    public SimpleDate getProExpiresAt() {
+        return mAttributes.mProExpiresAt;
+    }
+
     public int getRatingsCount() {
         return mAttributes.mRatingsCount;
     }
@@ -169,6 +179,10 @@ public class UserV3 implements DataObject, Hydratable, Parcelable {
         } else if (!TextUtils.isEmpty(mAttributes.mAbout)) {
             mAttributes.mAboutCompiled = JsoupUtils.parse(mAttributes.mAbout);
         }
+    }
+
+    public boolean isPro() {
+        return mAttributes.mProExpiresAt != null && mAttributes.mProExpiresAt.isInTheFuture();
     }
 
     @Override
@@ -261,6 +275,10 @@ public class UserV3 implements DataObject, Hydratable, Parcelable {
         private SimpleDate mCreatedAt;
 
         @Nullable
+        @SerializedName("proExpiresAt")
+        private SimpleDate mProExpiresAt;
+
+        @Nullable
         @SerializedName("updatedAt")
         private SimpleDate mUpdatedAt;
 
@@ -275,6 +293,10 @@ public class UserV3 implements DataObject, Hydratable, Parcelable {
         @Nullable
         @SerializedName("bio")
         private String mBio;
+
+        @Nullable
+        @SerializedName("facebookId")
+        private String mFacebookId;
 
         @Nullable
         @SerializedName("gender")
@@ -320,10 +342,12 @@ public class UserV3 implements DataObject, Hydratable, Parcelable {
             dest.writeInt(mReviewsCount);
             dest.writeParcelable(mBirthday, flags);
             dest.writeParcelable(mCreatedAt, flags);
+            dest.writeParcelable(mProExpiresAt, flags);
             dest.writeParcelable(mUpdatedAt, flags);
             dest.writeString(mAbout);
             dest.writeString(mAboutFormatted);
             dest.writeString(mBio);
+            dest.writeString(mFacebookId);
             dest.writeString(mGender);
             dest.writeString(mLocation);
             dest.writeString(mName);
@@ -351,10 +375,12 @@ public class UserV3 implements DataObject, Hydratable, Parcelable {
                 a.mReviewsCount = source.readInt();
                 a.mBirthday = source.readParcelable(SimpleDate.class.getClassLoader());
                 a.mCreatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
+                a.mProExpiresAt = source.readParcelable(SimpleDate.class.getClassLoader());
                 a.mUpdatedAt = source.readParcelable(SimpleDate.class.getClassLoader());
                 a.mAbout = source.readString();
                 a.mAboutFormatted = source.readString();
                 a.mBio = source.readString();
+                a.mFacebookId = source.readString();
                 a.mGender = source.readString();
                 a.mLocation = source.readString();
                 a.mName = source.readString();
