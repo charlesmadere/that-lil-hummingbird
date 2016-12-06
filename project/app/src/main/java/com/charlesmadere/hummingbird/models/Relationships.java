@@ -109,6 +109,10 @@ public class Relationships implements Parcelable {
     private Relationship mPerson;
 
     @Nullable
+    @SerializedName("pinnedPost")
+    private Relationship mPinnedPost;
+
+    @Nullable
     @SerializedName("post")
     private Relationship mPost;
 
@@ -295,6 +299,11 @@ public class Relationships implements Parcelable {
     }
 
     @Nullable
+    public Relationship getPinnedPost() {
+        return mPinnedPost;
+    }
+
+    @Nullable
     public Relationship getPost() {
         return mPost;
     }
@@ -401,6 +410,7 @@ public class Relationships implements Parcelable {
         dest.writeParcelable(mMediaFollows, flags);
         dest.writeParcelable(mParent, flags);
         dest.writeParcelable(mPerson, flags);
+        dest.writeParcelable(mPinnedPost, flags);
         dest.writeParcelable(mPost, flags);
         dest.writeParcelable(mPrimaryMedia, flags);
         dest.writeParcelable(mReplies, flags);
@@ -447,6 +457,7 @@ public class Relationships implements Parcelable {
             r.mMediaFollows = source.readParcelable(Relationship.class.getClassLoader());
             r.mParent = source.readParcelable(Relationship.class.getClassLoader());
             r.mPerson = source.readParcelable(Relationship.class.getClassLoader());
+            r.mPinnedPost = source.readParcelable(Relationship.class.getClassLoader());
             r.mPost = source.readParcelable(Relationship.class.getClassLoader());
             r.mPrimaryMedia = source.readParcelable(Relationship.class.getClassLoader());
             r.mReplies = source.readParcelable(Relationship.class.getClassLoader());
