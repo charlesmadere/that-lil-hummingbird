@@ -31,7 +31,16 @@ public class FeedV3 implements Parcelable {
         }
     }
 
-    private void buildStory(final ArrayResponse<ActionGroup> response,
+    private void buildStory(final Action action) {
+        switch (action.getVerb()) {
+            case COMMENT:
+            case POST:
+
+                break;
+        }
+    }
+
+    private void findActions(final ArrayResponse<ActionGroup> response,
             final ArrayList<DataObject.Stub> array) {
         final ArrayList<DataObject> included = response.getIncluded();
 
@@ -57,8 +66,9 @@ public class FeedV3 implements Parcelable {
             return;
         }
 
-        actions.get(0).getVerb();
-        // TODO convert actions into a story
+        for (final Action action : actions) {
+            buildStory(action);
+        }
     }
 
     private void searchActionGroups(final ArrayResponse<ActionGroup> response,
@@ -81,7 +91,7 @@ public class FeedV3 implements Parcelable {
             return;
         }
 
-        buildStory(response, array);
+        findActions(response, array);
     }
 
     @Override
