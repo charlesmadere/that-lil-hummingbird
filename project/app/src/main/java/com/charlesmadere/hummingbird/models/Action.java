@@ -172,6 +172,9 @@ public class Action implements DataObject, Parcelable {
     }
 
     public enum Verb implements Parcelable {
+        @SerializedName("comment")
+        COMMENT,
+
         @SerializedName("follow")
         FOLLOW,
 
@@ -183,6 +186,9 @@ public class Action implements DataObject, Parcelable {
 
         @SerializedName("rated")
         RATED,
+
+        @SerializedName("reviewed")
+        REVIEWED,
 
         @SerializedName("updated")
         UPDATED;

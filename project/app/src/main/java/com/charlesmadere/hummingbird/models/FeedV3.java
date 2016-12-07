@@ -2,15 +2,20 @@ package com.charlesmadere.hummingbird.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class FeedV3 implements Parcelable {
 
+    @Nullable
     private ArrayList<AbsStoryV3> mStories;
 
+
+    private FeedV3() {
+
+    }
 
     @WorkerThread
     public FeedV3(final ArrayResponse<ActionGroup> response) {
@@ -21,45 +26,47 @@ public class FeedV3 implements Parcelable {
         final ArrayList<ActionGroup> actionGroups = response.getData();
 
         // noinspection ConstantConditions
-        final Iterator<ActionGroup> iterator = actionGroups.iterator();
-
-        while (iterator.hasNext()) {
-            searchActionGroups(response, iterator);
+        for (final ActionGroup actionGroup : actionGroups) {
+            searchActionGroups(response, actionGroup);
         }
     }
 
     private void buildStory(final ArrayResponse<ActionGroup> response,
             final ArrayList<DataObject.Stub> array) {
-        final Iterator<DataObject.Stub> iterator = array.iterator();
         final ArrayList<DataObject> included = response.getIncluded();
 
         ArrayList<Action> actions = null;
 
-        while (iterator.hasNext()) {
-            final DataObject.Stub object = iterator.next();
+        for (final DataObject.Stub object : array) {
+            final DataType dataType = object.getDataType();
             final String id = object.getId();
 
             // noinspection ConstantConditions
             for (final DataObject inc : included) {
-                if (id.equals(inc.getId())) {
+                if (dataType == inc.getDataType() && id.equals(inc.getId())) {
+                    if (actions == null) {
+                        actions = new ArrayList<>();
+                    }
 
+                    actions.add((Action) inc);
                 }
             }
         }
 
-        if (actions != null && !actions.isEmpty()) {
-
+        if (actions == null || actions.isEmpty()) {
+            return;
         }
+
+        actions.get(0).getVerb();
+        // TODO convert actions into a story
     }
 
     private void searchActionGroups(final ArrayResponse<ActionGroup> response,
-            final Iterator<ActionGroup> iterator) {
-        final ActionGroup actionGroup = iterator.next();
+            final ActionGroup actionGroup) {
         final Relationships relationships = actionGroup.getRelationships();
         final Relationship activities = relationships.getActivities();
 
         if (activities == null) {
-            iterator.remove();
             return;
         }
 
@@ -71,7 +78,6 @@ public class FeedV3 implements Parcelable {
             array = new ArrayList<>(1);
             array.add(activities.getObject());
         } else {
-            iterator.remove();
             return;
         }
 
@@ -85,14 +91,14 @@ public class FeedV3 implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-
+        // TODO
     }
 
     public static final Creator<FeedV3> CREATOR = new Creator<FeedV3>() {
         @Override
         public FeedV3 createFromParcel(final Parcel source) {
             final FeedV3 f = new FeedV3();
-
+            // TODO
             return f;
         }
 
