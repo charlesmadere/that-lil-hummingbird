@@ -1,6 +1,6 @@
 package com.charlesmadere.hummingbird.models;
 
-public class MediaStoryV3 extends AbsStoryV3 {
+public class UpdatedStory extends AbsStoryV3 {
 
 
 

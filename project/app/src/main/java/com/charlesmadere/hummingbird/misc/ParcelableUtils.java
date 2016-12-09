@@ -5,14 +5,23 @@ import android.support.annotation.Nullable;
 
 import com.charlesmadere.hummingbird.models.AbsNotification;
 import com.charlesmadere.hummingbird.models.AbsStory;
+import com.charlesmadere.hummingbird.models.AbsStoryV3;
 import com.charlesmadere.hummingbird.models.AbsSubstory;
 import com.charlesmadere.hummingbird.models.CommentStory;
+import com.charlesmadere.hummingbird.models.CommentStoryV3;
+import com.charlesmadere.hummingbird.models.FollowStory;
 import com.charlesmadere.hummingbird.models.FollowedStory;
 import com.charlesmadere.hummingbird.models.FollowedSubstory;
 import com.charlesmadere.hummingbird.models.MediaStory;
+import com.charlesmadere.hummingbird.models.PostStory;
+import com.charlesmadere.hummingbird.models.ProgressedStory;
+import com.charlesmadere.hummingbird.models.RatedStory;
 import com.charlesmadere.hummingbird.models.ReplySubstory;
+import com.charlesmadere.hummingbird.models.ReviewedStory;
 import com.charlesmadere.hummingbird.models.SearchBundle;
+import com.charlesmadere.hummingbird.models.UpdatedStory;
 import com.charlesmadere.hummingbird.models.UserDigest;
+import com.charlesmadere.hummingbird.models.Verb;
 import com.charlesmadere.hummingbird.models.WatchedEpisodeSubstory;
 import com.charlesmadere.hummingbird.models.WatchlistStatusUpdateSubstory;
 
@@ -91,6 +100,70 @@ public final class ParcelableUtils {
         return story;
     }
 
+    @Nullable
+    public static <T extends AbsStoryV3> T readAbsStoryV3(final Parcel source) {
+        final Verb verb = source.readParcelable(Verb.class.getClassLoader());
+
+        if (verb == null) {
+            return null;
+        }
+
+        final T story;
+
+        switch (verb) {
+            case COMMENT:
+                story = source.readParcelable(CommentStoryV3.class.getClassLoader());
+                break;
+
+            case FOLLOW:
+                story = source.readParcelable(FollowStory.class.getClassLoader());
+                break;
+
+            case POST:
+                story = source.readParcelable(PostStory.class.getClassLoader());
+                break;
+
+            case PROGRESSED:
+                story = source.readParcelable(ProgressedStory.class.getClassLoader());
+                break;
+
+            case RATED:
+                story = source.readParcelable(RatedStory.class.getClassLoader());
+                break;
+
+            case REVIEWED:
+                story = source.readParcelable(ReviewedStory.class.getClassLoader());
+                break;
+
+            case UPDATED:
+                story = source.readParcelable(UpdatedStory.class.getClassLoader());
+                break;
+
+            default:
+                throw new RuntimeException("encountered unknown " + Verb.class.getName()
+                        + ": \"" + verb + '"');
+        }
+
+        return story;
+    }
+
+    @Nullable
+    public static ArrayList<AbsStoryV3> readAbsStoryList(final Parcel source) {
+        final int count = source.readInt();
+
+        if (count == 0) {
+            return null;
+        }
+
+        final ArrayList<AbsStoryV3> list = new ArrayList<>(count);
+
+        for (int i = 0; i < count; ++i) {
+            list.add(readAbsStoryV3(source));
+        }
+
+        return list;
+    }
+
     public static void writeAbsStory(@Nullable final AbsStory story, final Parcel dest,
             final int flags) {
         if (story == null) {
@@ -98,6 +171,30 @@ public final class ParcelableUtils {
         } else {
             dest.writeParcelable(story.getType(), flags);
             dest.writeParcelable(story, flags);
+        }
+    }
+
+    public static void writeAbsStory(@Nullable final AbsStoryV3 story, final Parcel dest,
+            final int flags) {
+        if (story == null) {
+            dest.writeParcelable(null, flags);
+        } else {
+            dest.writeParcelable(story.getVerb(), flags);
+            dest.writeParcelable(story, flags);
+        }
+    }
+
+    public static void writeAbsStoryList(@Nullable final List<AbsStoryV3> list, final Parcel dest,
+            final int flags) {
+        if (list == null || list.isEmpty()) {
+            dest.writeInt(0);
+            return;
+        }
+
+        dest.writeInt(list.size());
+
+        for (final AbsStoryV3 story : list) {
+            writeAbsStory(story, dest, flags);
         }
     }
 

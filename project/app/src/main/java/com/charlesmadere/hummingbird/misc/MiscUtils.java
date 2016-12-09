@@ -69,13 +69,21 @@ public final class MiscUtils {
         }
 
         for (final T elementToAdd : elementsToAdd) {
-            final int indexOf = list.indexOf(elementToAdd);
+            exclusiveAdd(list, elementToAdd);
+        }
+    }
 
-            if (indexOf == -1) {
-                list.add(elementToAdd);
-            } else {
-                list.set(indexOf, elementToAdd);
-            }
+    public static <T> void exclusiveAdd(final List<T> list, @Nullable final T elementToAdd) {
+        if (elementToAdd == null) {
+            return;
+        }
+
+        final int indexOf = list.indexOf(elementToAdd);
+
+        if (indexOf == -1) {
+            list.add(elementToAdd);
+        } else {
+            list.set(indexOf, elementToAdd);
         }
     }
 
