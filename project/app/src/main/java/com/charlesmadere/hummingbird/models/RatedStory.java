@@ -4,22 +4,17 @@ import android.os.Parcel;
 
 public class RatedStory extends AbsStoryV3 {
 
-    protected RatedStory(final Parcel source) {
-        super(source);
+    protected RatedStory(final Action action) {
+        super(action);
     }
 
-    protected RatedStory(final String id) {
-        super(id);
+    private RatedStory(final Parcel source) {
+        super(source);
     }
 
     @Override
     public boolean equals(final Object o) {
         return o instanceof RatedStory && getId().equals(((RatedStory) o).getId());
-    }
-
-    @Override
-    public Verb getVerb() {
-        return Verb.RATED;
     }
 
     @Override

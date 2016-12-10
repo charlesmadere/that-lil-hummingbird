@@ -4,22 +4,17 @@ import android.os.Parcel;
 
 public class PostStory extends AbsStoryV3 {
 
-    protected PostStory(final Parcel source) {
-        super(source);
+    protected PostStory(final Action action) {
+        super(action);
     }
 
-    protected PostStory(final String id) {
-        super(id);
+    private PostStory(final Parcel source) {
+        super(source);
     }
 
     @Override
     public boolean equals(final Object o) {
         return o instanceof PostStory && getId().equals(((PostStory) o).getId());
-    }
-
-    @Override
-    public Verb getVerb() {
-        return Verb.POST;
     }
 
     @Override

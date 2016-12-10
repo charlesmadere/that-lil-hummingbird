@@ -3,8 +3,16 @@ package com.charlesmadere.hummingbird.adapters;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
+import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.models.AbsStoryV3;
+import com.charlesmadere.hummingbird.models.CommentStoryV3;
 import com.charlesmadere.hummingbird.models.FeedV3;
+import com.charlesmadere.hummingbird.models.FollowStory;
+import com.charlesmadere.hummingbird.models.PostStory;
+import com.charlesmadere.hummingbird.models.ProgressedStory;
+import com.charlesmadere.hummingbird.models.RatedStory;
+import com.charlesmadere.hummingbird.models.ReviewedStory;
+import com.charlesmadere.hummingbird.models.UpdatedStory;
 
 import java.util.HashMap;
 
@@ -16,8 +24,14 @@ public class FeedV3Adapter extends BaseMultiPaginationAdapter {
 
 
     static {
-        VIEW_KEY_MAP = new HashMap<>();
-        // TODO
+        VIEW_KEY_MAP = new HashMap<>(7);
+        VIEW_KEY_MAP.put(CommentStoryV3.class, R.layout.item_comment_story_v3);
+        VIEW_KEY_MAP.put(FollowStory.class, R.layout.item_follow_story);
+        VIEW_KEY_MAP.put(PostStory.class, R.layout.item_post_story);
+        VIEW_KEY_MAP.put(ProgressedStory.class, R.layout.item_progressed_story);
+        VIEW_KEY_MAP.put(RatedStory.class, R.layout.item_rated_story);
+        VIEW_KEY_MAP.put(ReviewedStory.class, R.layout.item_reviewed_story);
+        VIEW_KEY_MAP.put(UpdatedStory.class, R.layout.item_updated_story);
     }
 
     public FeedV3Adapter(final Context context) {
@@ -32,7 +46,13 @@ public class FeedV3Adapter extends BaseMultiPaginationAdapter {
 
     @Override
     public int getItemCount() {
-        return mFeed.getStoriesSize();
+        int itemCount = mFeed.getStoriesSize();
+
+        if (isPaginating()) {
+            ++itemCount;
+        }
+
+        return itemCount;
     }
 
     @Override
@@ -47,7 +67,7 @@ public class FeedV3Adapter extends BaseMultiPaginationAdapter {
             mFeed = null;
         }
 
-        super.set(null);
+        notifyDataSetChanged();
     }
 
 }

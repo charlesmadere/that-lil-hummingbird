@@ -10,7 +10,7 @@ import com.charlesmadere.hummingbird.misc.ParcelableUtils;
 
 import java.util.ArrayList;
 
-public class FeedV3 implements Parcelable {
+public class FeedV3 implements Hydratable, Parcelable {
 
     @Nullable
     private ArrayList<AbsStoryV3> mStories;
@@ -78,12 +78,27 @@ public class FeedV3 implements Parcelable {
             mStories = new ArrayList<>();
         }
 
-        mStories.add(story);
+        MiscUtils.exclusiveAdd(mStories, story);
+    }
+
+    @Nullable
+    protected ArrayList<AnimeV3> getAnime() {
+        return mAnime;
+    }
+
+    @Nullable
+    protected ArrayList<LibraryEntry> getLibraryEntries() {
+        return mLibraryEntries;
     }
 
     @Nullable
     public Links getLinks() {
         return mLinks;
+    }
+
+    @Nullable
+    protected ArrayList<MangaV3> getManga() {
+        return mManga;
     }
 
     public AbsStoryV3 getStory(final int index) {
@@ -100,8 +115,87 @@ public class FeedV3 implements Parcelable {
         return mStories == null ? 0 : mStories.size();
     }
 
+    @Nullable
+    protected ArrayList<UserV3> getUsers() {
+        return mUsers;
+    }
+
+    protected boolean hasAnime() {
+        return mAnime != null && !mAnime.isEmpty();
+    }
+
+    protected boolean hasLibraryEntries() {
+        return mLibraryEntries != null && !mLibraryEntries.isEmpty();
+    }
+
+    protected boolean hasManga() {
+        return mManga != null && !mManga.isEmpty();
+    }
+
     public boolean hasStories() {
         return mStories != null && !mStories.isEmpty();
+    }
+
+    protected boolean hasUsers() {
+        return mUsers != null && !mUsers.isEmpty();
+    }
+
+    @Override
+    @WorkerThread
+    public void hydrate() {
+        if (hasStories()) {
+            // noinspection ConstantConditions
+            for (final AbsStoryV3 story : mStories) {
+                story.hydrate(this);
+            }
+        }
+    }
+
+    private void setLinks(@Nullable final Links links) {
+        mLinks = links;
+    }
+
+    @WorkerThread
+    private void trimToSize() {
+        if (mStories != null) {
+            if (mStories.isEmpty()) {
+                mStories = null;
+            } else {
+                mStories.trimToSize();
+            }
+        }
+
+        if (mAnime != null) {
+            if (mAnime.isEmpty()) {
+                mAnime = null;
+            } else {
+                mAnime.trimToSize();
+            }
+        }
+
+        if (mLibraryEntries != null) {
+            if (mLibraryEntries.isEmpty()) {
+                mLibraryEntries = null;
+            } else {
+                mLibraryEntries.trimToSize();
+            }
+        }
+
+        if (mManga != null) {
+            if (mManga.isEmpty()) {
+                mManga = null;
+            } else {
+                mManga.trimToSize();
+            }
+        }
+
+        if (mUsers != null) {
+            if (mUsers.isEmpty()) {
+                mUsers = null;
+            } else {
+                mUsers.trimToSize();
+            }
+        }
     }
 
     @Override
@@ -147,55 +241,6 @@ public class FeedV3 implements Parcelable {
             mResponse = response;
         }
 
-        private void buildCommentStory(final Action action) {
-            final CommentStoryV3 story = new CommentStoryV3(action.getId());
-            // TODO
-
-            mFeed.addStory(story);
-        }
-
-        private void buildFollowStory(final Action action) {
-            final FollowStory story = new FollowStory(action.getId());
-            // TODO
-
-            mFeed.addStory(story);
-        }
-
-        private void buildPostStory(final Action action) {
-            final PostStory story = new PostStory(action.getId());
-            // TODO
-
-            mFeed.addStory(story);
-        }
-
-        private void buildProgressStory(final Action action) {
-            final ProgressedStory story = new ProgressedStory(action.getId());
-            // TODO
-
-            mFeed.addStory(story);
-        }
-
-        private void buildRatedStory(final Action action) {
-            final RatedStory story = new RatedStory(action.getId());
-            // TODO
-
-            mFeed.addStory(story);
-        }
-
-        private void buildReviewedStory(final Action action) {
-            final ReviewedStory story = new ReviewedStory(action.getId());
-            // TODO
-
-            mFeed.addStory(story);
-        }
-
-        private void buildUpdatedStory(final Action action) {
-            final UpdatedStory story = new UpdatedStory(action.getId());
-            // TODO
-
-            mFeed.addStory(story);
-        }
-
         private void findActions(final ArrayList<DataObject.Stub> array) {
             final ArrayList<DataObject> included = mResponse.getIncluded();
 
@@ -224,31 +269,31 @@ public class FeedV3 implements Parcelable {
             for (final Action action : actions) {
                 switch (action.getVerb()) {
                     case COMMENT:
-                        buildCommentStory(action);
+                        mFeed.addStory(new CommentStoryV3(action));
                         break;
 
                     case FOLLOW:
-                        buildFollowStory(action);
+                        mFeed.addStory(new FollowStory(action));
                         break;
 
                     case POST:
-                        buildPostStory(action);
+                        mFeed.addStory(new PostStory(action));
                         break;
 
                     case PROGRESSED:
-                        buildProgressStory(action);
+                        mFeed.addStory(new ProgressedStory(action));
                         break;
 
                     case RATED:
-                        buildRatedStory(action);
+                        mFeed.addStory(new RatedStory(action));
                         break;
 
                     case REVIEWED:
-                        buildReviewedStory(action);
+                        mFeed.addStory(new ReviewedStory(action));
                         break;
 
                     case UPDATED:
-                        buildUpdatedStory(action);
+                        mFeed.addStory(new UpdatedStory(action));
                         break;
 
                     default:
@@ -256,6 +301,13 @@ public class FeedV3 implements Parcelable {
                                 Verb.class.getName() + ": \"" + action.getVerb() + '"');
                 }
             }
+        }
+
+        @Nullable
+        @WorkerThread
+        public FeedV3 build() {
+            hydrate();
+            return mFeed;
         }
 
         @Nullable
@@ -274,13 +326,18 @@ public class FeedV3 implements Parcelable {
                 mFeed = new FeedV3();
             }
 
-            mFeed.mLinks = mResponse.getLinks();
+            mFeed.addIncludes(mResponse.getIncluded());
+            mFeed.setLinks(mResponse.getLinks());
+
             final ArrayList<ActionGroup> actionGroups = mResponse.getData();
 
             // noinspection ConstantConditions
             for (final ActionGroup actionGroup : actionGroups) {
                 searchActionGroups(actionGroup);
             }
+
+            mFeed.hydrate();
+            mFeed.trimToSize();
         }
 
         private void searchActionGroups(final ActionGroup actionGroup) {
@@ -305,7 +362,7 @@ public class FeedV3 implements Parcelable {
             findActions(array);
         }
 
-        public Builder setFeed(final FeedV3 feed) {
+        public Builder setFeed(@Nullable final FeedV3 feed) {
             mFeed = feed;
             return this;
         }

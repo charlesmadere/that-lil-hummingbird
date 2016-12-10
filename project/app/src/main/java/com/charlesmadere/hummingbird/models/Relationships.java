@@ -125,12 +125,20 @@ public class Relationships implements Parcelable {
     private Relationship mReplies;
 
     @Nullable
+    @SerializedName("resource")
+    private Relationship mResource;
+
+    @Nullable
     @SerializedName("review")
     private Relationship mReview;
 
     @Nullable
     @SerializedName("reviews")
     private Relationship mReviews;
+
+    @Nullable
+    @SerializedName("role")
+    private Relationship mRole;
 
     @Nullable
     @SerializedName("spoiledUnit")
@@ -319,6 +327,11 @@ public class Relationships implements Parcelable {
     }
 
     @Nullable
+    public Relationship getResource() {
+        return mResource;
+    }
+
+    @Nullable
     public Relationship getReview() {
         return mReview;
     }
@@ -326,6 +339,11 @@ public class Relationships implements Parcelable {
     @Nullable
     public Relationship getReviews() {
         return mReviews;
+    }
+
+    @Nullable
+    public Relationship getRole() {
+        return mRole;
     }
 
     @Nullable
@@ -414,8 +432,10 @@ public class Relationships implements Parcelable {
         dest.writeParcelable(mPost, flags);
         dest.writeParcelable(mPrimaryMedia, flags);
         dest.writeParcelable(mReplies, flags);
+        dest.writeParcelable(mResource, flags);
         dest.writeParcelable(mReview, flags);
         dest.writeParcelable(mReviews, flags);
+        dest.writeParcelable(mRole, flags);
         dest.writeParcelable(mSpoiledUnit, flags);
         dest.writeParcelable(mStreamer, flags);
         dest.writeParcelable(mStreamingLinks, flags);
@@ -461,8 +481,10 @@ public class Relationships implements Parcelable {
             r.mPost = source.readParcelable(Relationship.class.getClassLoader());
             r.mPrimaryMedia = source.readParcelable(Relationship.class.getClassLoader());
             r.mReplies = source.readParcelable(Relationship.class.getClassLoader());
+            r.mResource = source.readParcelable(Relationship.class.getClassLoader());
             r.mReview = source.readParcelable(Relationship.class.getClassLoader());
             r.mReviews = source.readParcelable(Relationship.class.getClassLoader());
+            r.mRole = source.readParcelable(Relationship.class.getClassLoader());
             r.mSpoiledUnit = source.readParcelable(Relationship.class.getClassLoader());
             r.mStreamer = source.readParcelable(Relationship.class.getClassLoader());
             r.mStreamingLinks = source.readParcelable(Relationship.class.getClassLoader());

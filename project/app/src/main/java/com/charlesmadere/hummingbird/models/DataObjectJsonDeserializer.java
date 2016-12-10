@@ -113,12 +113,20 @@ public class DataObjectJsonDeserializer implements JsonDeserializer<DataObject> 
                 dataObject = context.deserialize(json, Review.class);
                 break;
 
+            case ROLES:
+                dataObject = context.deserialize(json, Role.class);
+                break;
+
             case STREAMERS:
                 dataObject = context.deserialize(json, Streamer.class);
                 break;
 
             case STREAMING_LINKS:
                 dataObject = context.deserialize(json, StreamingLink.class);
+                break;
+
+            case USER_ROLES:
+                dataObject = context.deserialize(json, UserRole.class);
                 break;
 
             case USERS:

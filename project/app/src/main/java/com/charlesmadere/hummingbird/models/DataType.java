@@ -64,11 +64,17 @@ public enum DataType implements Parcelable {
     @SerializedName("reviews")
     REVIEWS,
 
+    @SerializedName("roles")
+    ROLES,
+
     @SerializedName("streamers")
     STREAMERS,
 
     @SerializedName("streamingLinks")
     STREAMING_LINKS,
+
+    @SerializedName("userRoles")
+    USER_ROLES,
 
     @SerializedName("users")
     USERS;

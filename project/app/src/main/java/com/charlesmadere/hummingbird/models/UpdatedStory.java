@@ -4,22 +4,17 @@ import android.os.Parcel;
 
 public class UpdatedStory extends AbsStoryV3 {
 
-    protected UpdatedStory(final Parcel source) {
-        super(source);
+    protected UpdatedStory(final Action action) {
+        super(action);
     }
 
-    protected UpdatedStory(final String id) {
-        super(id);
+    private UpdatedStory(final Parcel source) {
+        super(source);
     }
 
     @Override
     public boolean equals(final Object o) {
         return o instanceof UpdatedStory && getId().equals(((UpdatedStory) o).getId());
-    }
-
-    @Override
-    public Verb getVerb() {
-        return Verb.UPDATED;
     }
 
     @Override

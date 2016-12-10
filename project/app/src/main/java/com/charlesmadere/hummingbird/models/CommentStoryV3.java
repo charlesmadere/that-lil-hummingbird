@@ -4,22 +4,17 @@ import android.os.Parcel;
 
 public class CommentStoryV3 extends AbsStoryV3 {
 
-    protected CommentStoryV3(final Parcel source) {
-        super(source);
+    protected CommentStoryV3(final Action action) {
+        super(action);
     }
 
-    protected CommentStoryV3(final String id) {
-        super(id);
+    private CommentStoryV3(final Parcel source) {
+        super(source);
     }
 
     @Override
     public boolean equals(final Object o) {
         return o instanceof CommentStoryV3 && getId().equalsIgnoreCase(((CommentStoryV3) o).getId());
-    }
-
-    @Override
-    public Verb getVerb() {
-        return Verb.COMMENT;
     }
 
     @Override

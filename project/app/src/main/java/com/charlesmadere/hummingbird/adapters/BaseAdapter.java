@@ -14,7 +14,7 @@ import java.util.List;
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter<AdapterView.ViewHolder> {
 
     private final ArrayList<T> mItems;
-    private final Context mContext;
+    private final LayoutInflater mLayoutInflater;
 
 
     public BaseAdapter(final Context context) {
@@ -24,7 +24,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<AdapterView.Vi
             throw new IllegalArgumentException("context parameter can't be null");
         }
 
-        mContext = context;
+        mLayoutInflater = LayoutInflater.from(context);
     }
 
     public void add(@Nullable final T item) {
@@ -49,7 +49,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<AdapterView.Vi
     }
 
     public final Context getContext() {
-        return mContext;
+        return mLayoutInflater.getContext();
     }
 
     public T getItem(final int position) {
@@ -69,6 +69,10 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<AdapterView.Vi
     @Override
     public abstract int getItemViewType(final int position);
 
+    public final LayoutInflater getLayoutInflater() {
+        return mLayoutInflater;
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public void onBindViewHolder(final AdapterView.ViewHolder holder, final int position) {
@@ -78,8 +82,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<AdapterView.Vi
 
     @Override
     public AdapterView.ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
-        final LayoutInflater inflater = LayoutInflater.from(mContext);
-        final View view = inflater.inflate(viewType, parent, false);
+        final View view = mLayoutInflater.inflate(viewType, parent, false);
         return new AdapterView.ViewHolder(view);
     }
 

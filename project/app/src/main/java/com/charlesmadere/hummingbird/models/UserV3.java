@@ -59,6 +59,11 @@ public class UserV3 implements DataObject, Hydratable, Parcelable {
     }
 
     @Nullable
+    public String getCountry() {
+        return mAttributes.mCountry;
+    }
+
+    @Nullable
     public Image getCoverImage() {
         return mAttributes.mCoverImage;
     }
@@ -295,6 +300,10 @@ public class UserV3 implements DataObject, Hydratable, Parcelable {
         private String mBio;
 
         @Nullable
+        @SerializedName("country")
+        private String mCountry;
+
+        @Nullable
         @SerializedName("facebookId")
         private String mFacebookId;
 
@@ -347,6 +356,7 @@ public class UserV3 implements DataObject, Hydratable, Parcelable {
             dest.writeString(mAbout);
             dest.writeString(mAboutFormatted);
             dest.writeString(mBio);
+            dest.writeString(mCountry);
             dest.writeString(mFacebookId);
             dest.writeString(mGender);
             dest.writeString(mLocation);
@@ -380,6 +390,7 @@ public class UserV3 implements DataObject, Hydratable, Parcelable {
                 a.mAbout = source.readString();
                 a.mAboutFormatted = source.readString();
                 a.mBio = source.readString();
+                a.mCountry = source.readString();
                 a.mFacebookId = source.readString();
                 a.mGender = source.readString();
                 a.mLocation = source.readString();

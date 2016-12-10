@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Character implements DataObject, Parcelable {
+public class Role implements DataObject, Parcelable {
 
     @SerializedName("attributes")
     private Attributes mAttributes;
@@ -17,16 +17,13 @@ public class Character implements DataObject, Parcelable {
     @SerializedName("links")
     private Links mLinks;
 
-    @SerializedName("relationships")
-    private Relationships mRelationships;
-
     @SerializedName("id")
     private String mId;
 
 
     @Override
     public boolean equals(final Object o) {
-        return o instanceof Character && mId.equals(((Character) o).getId());
+        return o instanceof Role && mId.equals(((Role) o).getId());
     }
 
     @Override
@@ -34,19 +31,9 @@ public class Character implements DataObject, Parcelable {
         return mDataType;
     }
 
-    @Nullable
-    public String getDescription() {
-        return mAttributes.mDescription;
-    }
-
     @Override
     public String getId() {
         return mId;
-    }
-
-    @Nullable
-    public Image getImage() {
-        return mAttributes.mImage;
     }
 
     public Links getLinks() {
@@ -57,23 +44,19 @@ public class Character implements DataObject, Parcelable {
         return mAttributes.mName;
     }
 
-    public Relationships getRelationships() {
-        return mRelationships;
+    @Nullable
+    public String getResourceId() {
+        return mAttributes.mResourceId;
     }
 
     @Nullable
-    public String getSlug() {
-        return mAttributes.mSlug;
+    public String getResourceType() {
+        return mAttributes.mResourceType;
     }
 
     @Override
     public int hashCode() {
         return mId.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return getName();
     }
 
     @Override
@@ -86,44 +69,38 @@ public class Character implements DataObject, Parcelable {
         dest.writeParcelable(mAttributes, flags);
         dest.writeParcelable(mDataType, flags);
         dest.writeParcelable(mLinks, flags);
-        dest.writeParcelable(mRelationships, flags);
         dest.writeString(mId);
     }
 
-    public static final Creator<Character> CREATOR = new Creator<Character>() {
+    public static final Creator<Role> CREATOR = new Creator<Role>() {
         @Override
-        public Character createFromParcel(final Parcel source) {
-            final Character c = new Character();
-            c.mAttributes = source.readParcelable(Attributes.class.getClassLoader());
-            c.mDataType = source.readParcelable(DataType.class.getClassLoader());
-            c.mLinks = source.readParcelable(Links.class.getClassLoader());
-            c.mRelationships = source.readParcelable(Relationships.class.getClassLoader());
-            c.mId = source.readString();
-            return c;
+        public Role createFromParcel(final Parcel source) {
+            final Role r = new Role();
+            r.mAttributes = source.readParcelable(Attributes.class.getClassLoader());
+            r.mDataType = source.readParcelable(DataType.class.getClassLoader());
+            r.mLinks = source.readParcelable(Links.class.getClassLoader());
+            r.mId = source.readString();
+            return r;
         }
 
         @Override
-        public Character[] newArray(final int size) {
-            return new Character[size];
+        public Role[] newArray(final int size) {
+            return new Role[size];
         }
     };
 
 
     private static class Attributes implements Parcelable {
-        @Nullable
-        @SerializedName("image")
-        private Image mImage;
-
-        @Nullable
-        @SerializedName("description")
-        private String mDescription;
-
         @SerializedName("name")
         private String mName;
 
         @Nullable
-        @SerializedName("slug")
-        private String mSlug;
+        @SerializedName("resourceId")
+        private String mResourceId;
+
+        @Nullable
+        @SerializedName("resourceType")
+        private String mResourceType;
 
         @Override
         public int describeContents() {
@@ -132,20 +109,18 @@ public class Character implements DataObject, Parcelable {
 
         @Override
         public void writeToParcel(final Parcel dest, final int flags) {
-            dest.writeParcelable(mImage, flags);
-            dest.writeString(mDescription);
             dest.writeString(mName);
-            dest.writeString(mSlug);
+            dest.writeString(mResourceId);
+            dest.writeString(mResourceType);
         }
 
         public static final Creator<Attributes> CREATOR = new Creator<Attributes>() {
             @Override
             public Attributes createFromParcel(final Parcel source) {
                 final Attributes a = new Attributes();
-                a.mImage = source.readParcelable(Image.class.getClassLoader());
-                a.mDescription = source.readString();
                 a.mName = source.readString();
-                a.mSlug = source.readString();
+                a.mResourceId = source.readString();
+                a.mResourceType = source.readString();
                 return a;
             }
 

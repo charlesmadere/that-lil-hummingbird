@@ -5,29 +5,31 @@ import android.os.Parcelable;
 
 public abstract class AbsStoryV3 implements Parcelable {
 
-    private String mId;
+    private final Action mAction;
 
 
-    protected AbsStoryV3(final Parcel source) {
-        mId = source.readString();
+    protected AbsStoryV3(final Action action) {
+        mAction = action;
     }
 
-    protected AbsStoryV3(final String id) {
-        mId = id;
+    protected AbsStoryV3(final Parcel source) {
+        mAction = source.readParcelable(Action.class.getClassLoader());
     }
 
     @Override
     public abstract boolean equals(final Object o);
 
-    public String getId() {
-        return mId;
+    public Action getAction() {
+        return mAction;
     }
 
-    public abstract Verb getVerb();
+    public String getId() {
+        return mAction.getId();
+    }
 
     @Override
     public int hashCode() {
-        return mId.hashCode();
+        return getId().hashCode();
     }
 
     protected void hydrate(final FeedV3 feed) {
@@ -41,7 +43,7 @@ public abstract class AbsStoryV3 implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeString(mId);
+        dest.writeParcelable(mAction, flags);
     }
 
 }

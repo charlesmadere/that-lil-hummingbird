@@ -4,22 +4,17 @@ import android.os.Parcel;
 
 public class ProgressedStory extends AbsStoryV3 {
 
-    protected ProgressedStory(final Parcel source) {
-        super(source);
+    protected ProgressedStory(final Action action) {
+        super(action);
     }
 
-    protected ProgressedStory(final String id) {
-        super(id);
+    private ProgressedStory(final Parcel source) {
+        super(source);
     }
 
     @Override
     public boolean equals(final Object o) {
         return o instanceof ProgressedStory && getId().equals(((ProgressedStory) o).getId());
-    }
-
-    @Override
-    public Verb getVerb() {
-        return Verb.PROGRESSED;
     }
 
     @Override
