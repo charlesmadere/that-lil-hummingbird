@@ -80,7 +80,11 @@ public class FeedV3Adapter extends BaseMultiPaginationAdapter {
 
     @Override
     public long getItemId(final int position) {
-        return mFeed.getStory(position).hashCode();
+        if (isPaginating() && position == getItemCount() - 1) {
+            return Long.MIN_VALUE;
+        } else {
+            return getItem(position).hashCode();
+        }
     }
 
     public void set(@Nullable final FeedV3 feed) {
