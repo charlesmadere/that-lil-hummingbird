@@ -109,11 +109,14 @@ public class Relationship implements Parcelable {
                 if (!dataJson.isJsonNull()) {
                     if (dataJson.isJsonArray()) {
                         final JsonArray arrayJson = dataJson.getAsJsonArray();
-                        array = new ArrayList<>(arrayJson.size());
 
-                        for (final JsonElement arrayElement : arrayJson) {
-                            array.add((DataObject.Stub) context.deserialize(arrayElement,
-                                    DataObject.Stub.class));
+                        if (arrayJson.size() >= 1) {
+                            array = new ArrayList<>(arrayJson.size());
+
+                            for (final JsonElement arrayElement : arrayJson) {
+                                array.add((DataObject.Stub) context.deserialize(arrayElement,
+                                        DataObject.Stub.class));
+                            }
                         }
                     } else if (dataJson.isJsonObject()) {
                         object = context.deserialize(dataJson, DataObject.Stub.class);
