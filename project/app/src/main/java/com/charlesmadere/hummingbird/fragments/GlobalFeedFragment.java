@@ -89,6 +89,18 @@ public class GlobalFeedFragment extends BaseFragment implements
     }
 
     @Override
+    public void onViewCreated(final View view, final Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mRefreshLayout.setOnRefreshListener(this);
+        mRecyclerView.setHasFixedSize(true);
+        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
+        mAdapter = new FeedV3Adapter(getContext());
+        mRecyclerView.setAdapter(mAdapter);
+        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
+    }
+
+    @Override
     public void paginate() {
         mAdapter.setPaginating(true);
 
@@ -104,18 +116,6 @@ public class GlobalFeedFragment extends BaseFragment implements
     public void paginationNoMore() {
         mPaginator.setEnabled(false);
         mAdapter.setPaginating(false);
-    }
-
-    @Override
-    public void onViewCreated(final View view, final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        mRefreshLayout.setOnRefreshListener(this);
-        mRecyclerView.setHasFixedSize(true);
-        SpaceItemDecoration.apply(mRecyclerView, true, R.dimen.root_padding_half);
-        mAdapter = new FeedV3Adapter(getContext());
-        mRecyclerView.setAdapter(mAdapter);
-        mPaginator = new RecyclerViewPaginator(mRecyclerView, this);
     }
 
     private void showEmpty() {
