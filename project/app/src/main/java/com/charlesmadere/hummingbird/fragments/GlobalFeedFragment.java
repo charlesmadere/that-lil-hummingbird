@@ -73,7 +73,15 @@ public class GlobalFeedFragment extends BaseFragment implements PaginationApiLis
     public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        fetchFeed();
+        if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
+            mFeed = savedInstanceState.getParcelable(KEY_FEED);
+        }
+
+        if (mFeed != null && mFeed.hasStories()) {
+            showFeed(mFeed);
+        } else {
+            fetchFeed();
+        }
     }
 
     @Override
