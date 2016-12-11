@@ -55,6 +55,16 @@ public class Action implements DataObject, Parcelable {
     }
 
     @Nullable
+    public ReplyToType getReplyToType() {
+        return mAttributes.mReplyToType;
+    }
+
+    @Nullable
+    public String getReplyToUser() {
+        return mAttributes.mReplyToUser;
+    }
+
+    @Nullable
     public Status getStatus() {
         return mAttributes.mStatus;
     }
@@ -117,6 +127,10 @@ public class Action implements DataObject, Parcelable {
         @SerializedName("rating")
         private Rating mRating;
 
+        @Nullable
+        @SerializedName("replyToType")
+        private ReplyToType mReplyToType;
+
         @SerializedName("time")
         private SimpleDate mTime;
 
@@ -126,6 +140,10 @@ public class Action implements DataObject, Parcelable {
 
         @SerializedName("foreignId")
         private String mForeignId;
+
+        @Nullable
+        @SerializedName("replyToUser")
+        private String mReplyToUser;
 
         @Nullable
         @SerializedName("streamId")
@@ -143,9 +161,11 @@ public class Action implements DataObject, Parcelable {
         public void writeToParcel(final Parcel dest, final int flags) {
             dest.writeValue(mProgress);
             dest.writeParcelable(mRating, flags);
+            dest.writeParcelable(mReplyToType, flags);
             dest.writeParcelable(mTime, flags);
             dest.writeParcelable(mStatus, flags);
             dest.writeString(mForeignId);
+            dest.writeString(mReplyToUser);
             dest.writeString(mStreamId);
             dest.writeParcelable(mVerb, flags);
         }
@@ -156,9 +176,11 @@ public class Action implements DataObject, Parcelable {
                 final Attributes a = new Attributes();
                 a.mProgress = (Integer) source.readValue(Integer.class.getClassLoader());
                 a.mRating = source.readParcelable(Rating.class.getClassLoader());
+                a.mReplyToType = source.readParcelable(ReplyToType.class.getClassLoader());
                 a.mTime = source.readParcelable(SimpleDate.class.getClassLoader());
                 a.mStatus = source.readParcelable(Status.class.getClassLoader());
                 a.mForeignId = source.readString();
+                a.mReplyToUser = source.readString();
                 a.mStreamId = source.readString();
                 a.mVerb = source.readParcelable(Verb.class.getClassLoader());
                 return a;
