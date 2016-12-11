@@ -84,12 +84,7 @@ public class FeedV3Adapter extends BaseMultiPaginationAdapter {
     }
 
     public void set(@Nullable final FeedV3 feed) {
-        if (feed != null && feed.hasStories()) {
-            mFeed = feed;
-        } else {
-            mFeed = null;
-        }
-
+        mFeed = feed;
         notifyDataSetChanged();
     }
 
