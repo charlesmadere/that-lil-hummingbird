@@ -65,6 +65,10 @@ public class FeedV3Adapter extends BaseMultiPaginationAdapter {
 
     @Override
     public int getItemCount() {
+        if (mFeed == null) {
+            return 0;
+        }
+
         int itemCount = mFeed.getStoriesSize();
 
         if (isPaginating()) {
