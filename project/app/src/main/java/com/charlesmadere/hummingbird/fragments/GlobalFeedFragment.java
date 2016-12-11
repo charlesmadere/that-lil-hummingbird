@@ -11,9 +11,8 @@ import android.widget.LinearLayout;
 
 import com.charlesmadere.hummingbird.R;
 import com.charlesmadere.hummingbird.adapters.FeedV3Adapter;
-import com.charlesmadere.hummingbird.models.ActionGroup;
-import com.charlesmadere.hummingbird.models.ArrayResponse;
 import com.charlesmadere.hummingbird.models.ErrorInfo;
+import com.charlesmadere.hummingbird.models.FeedV3;
 import com.charlesmadere.hummingbird.networking.ApiV3;
 import com.charlesmadere.hummingbird.networking.PaginationApiCall;
 import com.charlesmadere.hummingbird.networking.PaginationApiListener;
@@ -23,12 +22,13 @@ import com.charlesmadere.hummingbird.views.SpaceItemDecoration;
 
 import butterknife.BindView;
 
-public class GlobalFeedFragment extends BaseFragment implements
-        PaginationApiListener<ArrayResponse<ActionGroup>>, RecyclerViewPaginator.Listeners,
-        SwipeRefreshLayout.OnRefreshListener {
+public class GlobalFeedFragment extends BaseFragment implements PaginationApiListener<FeedV3>,
+        RecyclerViewPaginator.Listeners, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "GlobalFeedFragment";
+    private static final String KEY_FEED = "Feed";
 
+    private FeedV3 mFeed;
     private FeedV3Adapter mAdapter;
     private RecyclerViewPaginator mPaginator;
 
@@ -56,7 +56,7 @@ public class GlobalFeedFragment extends BaseFragment implements
 
     private void fetchFeed() {
         mRefreshLayout.setRefreshing(true);
-        ApiV3.getGlobalFeed(new PaginationApiCall<>(this));
+        ApiV3.getGlobalFeed(new PaginationApiCall<>(this), mFeed);
     }
 
     @Override
@@ -86,6 +86,15 @@ public class GlobalFeedFragment extends BaseFragment implements
     @Override
     public void onRefresh() {
         fetchFeed();
+    }
+
+    @Override
+    public void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (mFeed != null && mFeed.hasStories()) {
+            outState.putParcelable(KEY_FEED, mFeed);
+        }
     }
 
     @Override
@@ -132,8 +141,9 @@ public class GlobalFeedFragment extends BaseFragment implements
         mRefreshLayout.setRefreshing(false);
     }
 
-    private void showFeed() {
-        // TODO
+    private void showFeed(final FeedV3 feed) {
+        mFeed = feed;
+        mAdapter.set(mFeed);
         mEmpty.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
@@ -143,9 +153,9 @@ public class GlobalFeedFragment extends BaseFragment implements
     }
 
     @Override
-    public void success(@Nullable final ArrayResponse<ActionGroup> actionGroups) {
-        if (actionGroups != null && actionGroups.hasData()) {
-            showFeed();
+    public void success(@Nullable final FeedV3 feed) {
+        if (feed != null && feed.hasStories()) {
+            showFeed(feed);
         } else {
             showEmpty();
         }

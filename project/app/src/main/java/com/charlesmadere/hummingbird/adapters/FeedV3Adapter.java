@@ -15,6 +15,7 @@ import com.charlesmadere.hummingbird.models.ReviewedStory;
 import com.charlesmadere.hummingbird.models.UpdatedStory;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class FeedV3Adapter extends BaseMultiPaginationAdapter {
 
@@ -37,6 +38,24 @@ public class FeedV3Adapter extends BaseMultiPaginationAdapter {
     public FeedV3Adapter(final Context context) {
         super(context, VIEW_KEY_MAP);
         setHasStableIds(true);
+    }
+
+    @Override
+    public void add(@Nullable final Object item) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void add(@Nullable final List<Object> items) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void clear() {
+        if (mFeed != null) {
+            mFeed = null;
+            notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -68,6 +87,11 @@ public class FeedV3Adapter extends BaseMultiPaginationAdapter {
         }
 
         notifyDataSetChanged();
+    }
+
+    @Override
+    public void set(@Nullable final List<Object> items) {
+        throw new UnsupportedOperationException();
     }
 
 }
