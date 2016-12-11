@@ -49,10 +49,20 @@ public final class ApiV3 {
             @Override
             public Void then(final Task<FeedV3> task) throws Exception {
                 if (listener.isAlive()) {
-                    if (task.isFaulted()) {
-                        listener.failure(null);
+                    if (feed != null && listener instanceof PaginationApiListener) {
+                        final PaginationApiListener pal = (PaginationApiListener) listener;
+
+                        if (task.isFaulted()) {
+                            pal.paginationNoMore();
+                        } else {
+                            pal.paginationComplete();
+                        }
                     } else {
-                        listener.success(task.getResult());
+                        if (task.isFaulted()) {
+                            listener.failure(null);
+                        } else {
+                            listener.success(task.getResult());
+                        }
                     }
                 }
 
