@@ -120,13 +120,13 @@ public class GlobalFeedFragment extends BaseFragment implements PaginationApiLis
     @Override
     public void paginate() {
         mAdapter.setPaginating(true);
-
+        ApiV3.getGlobalFeed(new PaginationApiCall<>(this), mFeed);
     }
 
     @Override
     public void paginationComplete() {
+        mAdapter.set(mFeed);
         mAdapter.setPaginating(false);
-
     }
 
     @Override
@@ -155,9 +155,8 @@ public class GlobalFeedFragment extends BaseFragment implements PaginationApiLis
         mEmpty.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
-        // TODO
+        // TODO enable / disable the paginator
         mRefreshLayout.setRefreshing(false);
-        // TODO
     }
 
     @Override
