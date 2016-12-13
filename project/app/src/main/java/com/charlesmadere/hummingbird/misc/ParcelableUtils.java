@@ -179,7 +179,7 @@ public final class ParcelableUtils {
         if (story == null) {
             dest.writeParcelable(null, flags);
         } else {
-            dest.writeParcelable(story.getAction().getVerb(), flags);
+            dest.writeParcelable(story.getMainAction().getVerb(), flags);
             dest.writeParcelable(story, flags);
         }
     }

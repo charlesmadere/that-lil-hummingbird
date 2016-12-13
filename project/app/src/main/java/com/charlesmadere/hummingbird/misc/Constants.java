@@ -33,7 +33,7 @@ public final class Constants {
     public static final String IMAGE_TEMPLATE_SMALL = "small";
     public static final String IMAGE_TEMPLATE_THUMB = "thumb";
     public static final String IMAGE_TEMPLATE_THUMB_SMALL = "thumb_small";
-    public static final String KITSU_URL_HTTPS = "https://staging.kitsu.io/api/edge/";
+    public static final String KITSU_URL_HTTPS = "https://kitsu.io/api/edge/";
     public static final String LARGE = "large";
     public static final String LIBRARY = "library";
     public static final String LOW_RAM_DEVICE = "low_ram_device";

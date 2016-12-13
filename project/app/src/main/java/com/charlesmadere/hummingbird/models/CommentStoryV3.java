@@ -4,8 +4,8 @@ import android.os.Parcel;
 
 public class CommentStoryV3 extends AbsStoryV3 {
 
-    protected CommentStoryV3(final Action action) {
-        super(action);
+    protected CommentStoryV3(final ActionGroup actionGroup, final Action mainAction) {
+        super(actionGroup, mainAction);
     }
 
     private CommentStoryV3(final Parcel source) {

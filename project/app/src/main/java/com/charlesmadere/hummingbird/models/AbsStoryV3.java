@@ -5,26 +5,33 @@ import android.os.Parcelable;
 
 public abstract class AbsStoryV3 implements Parcelable {
 
-    private final Action mAction;
+    private final Action mMainAction;
+    private final ActionGroup mActionGroup;
 
 
-    protected AbsStoryV3(final Action action) {
-        mAction = action;
+    protected AbsStoryV3(final ActionGroup actionGroup, final Action mainAction) {
+        mActionGroup = actionGroup;
+        mMainAction = mainAction;
     }
 
     protected AbsStoryV3(final Parcel source) {
-        mAction = source.readParcelable(Action.class.getClassLoader());
+        mActionGroup = source.readParcelable(ActionGroup.class.getClassLoader());
+        mMainAction = source.readParcelable(Action.class.getClassLoader());
     }
 
     @Override
     public abstract boolean equals(final Object o);
 
-    public Action getAction() {
-        return mAction;
+    public ActionGroup getActionGroup() {
+        return mActionGroup;
     }
 
     public String getId() {
-        return mAction.getId();
+        return mActionGroup.getId();
+    }
+
+    public Action getMainAction() {
+        return mMainAction;
     }
 
     @Override
@@ -43,7 +50,8 @@ public abstract class AbsStoryV3 implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeParcelable(mAction, flags);
+        dest.writeParcelable(mActionGroup, flags);
+        dest.writeParcelable(mMainAction, flags);
     }
 
 }

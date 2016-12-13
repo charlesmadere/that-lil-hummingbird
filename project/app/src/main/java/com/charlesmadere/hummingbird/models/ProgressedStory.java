@@ -4,8 +4,8 @@ import android.os.Parcel;
 
 public class ProgressedStory extends AbsStoryV3 {
 
-    protected ProgressedStory(final Action action) {
-        super(action);
+    protected ProgressedStory(final ActionGroup actionGroup, final Action mainAction) {
+        super(actionGroup, mainAction);
     }
 
     private ProgressedStory(final Parcel source) {

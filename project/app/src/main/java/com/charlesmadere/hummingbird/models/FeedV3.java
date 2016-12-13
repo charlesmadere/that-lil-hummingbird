@@ -241,64 +241,75 @@ public class FeedV3 implements Hydratable, Parcelable {
             mResponse = response;
         }
 
-        private void findActions(final ArrayList<DataObject.Stub> array) {
-            final ArrayList<DataObject> included = mResponse.getIncluded();
+        @WorkerThread
+        private void addStory(final ActionGroup actionGroup) {
+            final Relationships relationships = actionGroup.getRelationships();
+            final Relationship activities = relationships.getActivities();
 
-            ArrayList<Action> actions = null;
-
-            for (final DataObject.Stub object : array) {
-                final DataType dataType = object.getDataType();
-                final String id = object.getId();
-
-                // noinspection ConstantConditions
-                for (final DataObject inc : included) {
-                    if (dataType == inc.getDataType() && id.equals(inc.getId())) {
-                        if (actions == null) {
-                            actions = new ArrayList<>();
-                        }
-
-                        actions.add((Action) inc);
-                    }
-                }
-            }
-
-            if (actions == null || actions.isEmpty()) {
+            if (activities == null) {
                 return;
             }
 
-            for (final Action action : actions) {
-                switch (action.getVerb()) {
-                    case COMMENT:
-                        mFeed.addStory(new CommentStoryV3(action));
-                        break;
+            final ArrayList<DataObject.Stub> array;
 
-                    case FOLLOW:
-                        mFeed.addStory(new FollowStory(action));
-                        break;
+            if (activities.hasArray()) {
+                array = activities.getArray();
+            } else if (activities.hasObject()) {
+                array = new ArrayList<>(1);
+                array.add(activities.getObject());
+            } else {
+                return;
+            }
 
-                    case POST:
-                        mFeed.addStory(new PostStory(action));
-                        break;
+            final ArrayList<DataObject> included = mResponse.getIncluded();
 
-                    case PROGRESSED:
-                        mFeed.addStory(new ProgressedStory(action));
-                        break;
+            // noinspection ConstantConditions
+            final DataObject.Stub object = array.get(0);
 
-                    case RATED:
-                        mFeed.addStory(new RatedStory(action));
-                        break;
+            if (object.getDataType() != DataType.ACTIVITIES) {
+                return;
+            }
 
-                    case REVIEWED:
-                        mFeed.addStory(new ReviewedStory(action));
-                        break;
+            final String id = object.getId();
 
-                    case UPDATED:
-                        mFeed.addStory(new UpdatedStory(action));
-                        break;
+            // noinspection ConstantConditions
+            for (final DataObject include : included) {
+                if (include.getDataType() == DataType.ACTIVITIES && id.equals(include.getId())) {
+                    final Action action = (Action) include;
 
-                    default:
-                        throw new RuntimeException("encountered unknown " +
-                                Verb.class.getName() + ": \"" + action.getVerb() + '"');
+                    switch (action.getVerb()) {
+                        case COMMENT:
+                            mFeed.addStory(new CommentStoryV3(actionGroup, action));
+                            return;
+
+                        case FOLLOW:
+                            mFeed.addStory(new FollowStory(actionGroup, action));
+                            return;
+
+                        case POST:
+                            mFeed.addStory(new PostStory(actionGroup, action));
+                            return;
+
+                        case PROGRESSED:
+                            mFeed.addStory(new ProgressedStory(actionGroup, action));
+                            return;
+
+                        case RATED:
+                            mFeed.addStory(new RatedStory(actionGroup, action));
+                            return;
+
+                        case REVIEWED:
+                            mFeed.addStory(new ReviewedStory(actionGroup, action));
+                            return;
+
+                        case UPDATED:
+                            mFeed.addStory(new UpdatedStory(actionGroup, action));
+                            return;
+
+                        default:
+                            throw new RuntimeException("encountered unknown " +
+                                    Verb.class.getName() + ": \"" + action.getVerb() + '"');
+                    }
                 }
             }
         }
@@ -333,33 +344,11 @@ public class FeedV3 implements Hydratable, Parcelable {
 
             // noinspection ConstantConditions
             for (final ActionGroup actionGroup : actionGroups) {
-                searchActionGroups(actionGroup);
+                addStory(actionGroup);
             }
 
             mFeed.hydrate();
             mFeed.trimToSize();
-        }
-
-        private void searchActionGroups(final ActionGroup actionGroup) {
-            final Relationships relationships = actionGroup.getRelationships();
-            final Relationship activities = relationships.getActivities();
-
-            if (activities == null) {
-                return;
-            }
-
-            final ArrayList<DataObject.Stub> array;
-
-            if (activities.hasArray()) {
-                array = activities.getArray();
-            } else if (activities.hasObject()) {
-                array = new ArrayList<>(1);
-                array.add(activities.getObject());
-            } else {
-                return;
-            }
-
-            findActions(array);
         }
 
         public Builder setFeed(@Nullable final FeedV3 feed) {

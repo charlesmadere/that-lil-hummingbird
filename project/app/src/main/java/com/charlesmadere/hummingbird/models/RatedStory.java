@@ -4,8 +4,8 @@ import android.os.Parcel;
 
 public class RatedStory extends AbsStoryV3 {
 
-    protected RatedStory(final Action action) {
-        super(action);
+    protected RatedStory(final ActionGroup actionGroup, final Action mainAction) {
+        super(actionGroup, mainAction);
     }
 
     private RatedStory(final Parcel source) {

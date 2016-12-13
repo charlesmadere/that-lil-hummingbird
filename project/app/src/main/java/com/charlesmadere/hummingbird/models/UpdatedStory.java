@@ -4,8 +4,8 @@ import android.os.Parcel;
 
 public class UpdatedStory extends AbsStoryV3 {
 
-    protected UpdatedStory(final Action action) {
-        super(action);
+    protected UpdatedStory(final ActionGroup actionGroup, final Action mainAction) {
+        super(actionGroup, mainAction);
     }
 
     private UpdatedStory(final Parcel source) {

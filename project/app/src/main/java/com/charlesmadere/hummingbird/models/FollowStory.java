@@ -4,8 +4,8 @@ import android.os.Parcel;
 
 public class FollowStory extends AbsStoryV3 {
 
-    protected FollowStory(final Action action) {
-        super(action);
+    protected FollowStory(final ActionGroup actionGroup, final Action mainAction) {
+        super(actionGroup, mainAction);
     }
 
     private FollowStory(final Parcel source) {
