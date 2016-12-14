@@ -16,6 +16,9 @@ public class FeedV3 implements Hydratable, Parcelable {
     private ArrayList<AbsStoryV3> mStories;
 
     @Nullable
+    private ArrayList<Action> mActions;
+
+    @Nullable
     private ArrayList<AnimeV3> mAnime;
 
     @Nullable
@@ -38,6 +41,14 @@ public class FeedV3 implements Hydratable, Parcelable {
 
         for (final DataObject include : includes) {
             switch (include.getDataType()) {
+                case ACTIVITIES:
+                    if (mActions == null) {
+                        mActions = new ArrayList<>();
+                    }
+
+                    MiscUtils.exclusiveAdd(mActions, (Action) include);
+                    break;
+
                 case ANIME:
                     if (mAnime == null) {
                         mAnime = new ArrayList<>();
@@ -79,6 +90,11 @@ public class FeedV3 implements Hydratable, Parcelable {
         }
 
         MiscUtils.exclusiveAdd(mStories, story);
+    }
+
+    @Nullable
+    protected ArrayList<Action> getActions() {
+        return mActions;
     }
 
     @Nullable
@@ -165,6 +181,14 @@ public class FeedV3 implements Hydratable, Parcelable {
             }
         }
 
+        if (mActions != null) {
+            if (mActions.isEmpty()) {
+                mActions = null;
+            } else {
+                mActions.trimToSize();
+            }
+        }
+
         if (mAnime != null) {
             if (mAnime.isEmpty()) {
                 mAnime = null;
@@ -206,6 +230,7 @@ public class FeedV3 implements Hydratable, Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         ParcelableUtils.writeAbsStoryList(mStories, dest, flags);
+        dest.writeTypedList(mActions);
         dest.writeTypedList(mAnime);
         dest.writeTypedList(mLibraryEntries);
         dest.writeTypedList(mManga);
@@ -218,6 +243,7 @@ public class FeedV3 implements Hydratable, Parcelable {
         public FeedV3 createFromParcel(final Parcel source) {
             final FeedV3 f = new FeedV3();
             f.mStories = ParcelableUtils.readAbsStoryList(source);
+            f.mActions = source.createTypedArrayList(Action.CREATOR);
             f.mAnime = source.createTypedArrayList(AnimeV3.CREATOR);
             f.mLibraryEntries = source.createTypedArrayList(LibraryEntry.CREATOR);
             f.mManga = source.createTypedArrayList(MangaV3.CREATOR);
@@ -250,26 +276,19 @@ public class FeedV3 implements Hydratable, Parcelable {
                 return;
             }
 
-            final ArrayList<DataObject.Stub> array;
+            final ArrayList<DataObject.Stub> array = activities.toArray();
 
-            if (activities.hasArray()) {
-                array = activities.getArray();
-            } else if (activities.hasObject()) {
-                array = new ArrayList<>(1);
-                array.add(activities.getObject());
-            } else {
+            if (array == null || array.isEmpty()) {
                 return;
             }
 
-            final ArrayList<DataObject> included = mResponse.getIncluded();
-
-            // noinspection ConstantConditions
             final DataObject.Stub object = array.get(0);
 
             if (object.getDataType() != DataType.ACTIVITIES) {
                 return;
             }
 
+            final ArrayList<DataObject> included = mResponse.getIncluded();
             final String id = object.getId();
 
             // noinspection ConstantConditions

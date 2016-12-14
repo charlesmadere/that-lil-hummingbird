@@ -66,6 +66,19 @@ public class Relationship implements Parcelable {
         return mObject != null;
     }
 
+    @Nullable
+    public ArrayList<DataObject.Stub> toArray() {
+        if (hasArray()) {
+            return mArray;
+        } else if (hasObject()) {
+            final ArrayList<DataObject.Stub> array = new ArrayList<>(1);
+            array.add(mObject);
+            return array;
+        } else {
+            return null;
+        }
+    }
+
     @Override
     public int describeContents() {
         return 0;
