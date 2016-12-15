@@ -17,31 +17,25 @@ import java.util.ArrayList;
 public class Relationship implements Parcelable {
 
     @Nullable
-    private final ArrayList<DataObject.Stub> mArray;
-
-    @Nullable
-    private final DataObject.Stub mObject;
+    private final ArrayList<DataObject.Stub> mData;
 
     @Nullable
     private final Links mLinks;
 
 
-    private Relationship(final ArrayList<DataObject.Stub> array, final DataObject.Stub object,
-            final Links links) {
-        mArray = array;
-        mObject = object;
+    private Relationship(final ArrayList<DataObject.Stub> data, final Links links) {
+        mData = data;
         mLinks = links;
     }
 
     private Relationship(final Parcel source) {
-        mArray = source.createTypedArrayList(DataObject.Stub.CREATOR);
-        mObject = source.readParcelable(DataObject.Stub.class.getClassLoader());
+        mData = source.createTypedArrayList(DataObject.Stub.CREATOR);
         mLinks = source.readParcelable(Links.class.getClassLoader());
     }
 
     @Nullable
-    public ArrayList<DataObject.Stub> getArray() {
-        return mArray;
+    public ArrayList<DataObject.Stub> getData() {
+        return mData;
     }
 
     @Nullable
@@ -49,34 +43,12 @@ public class Relationship implements Parcelable {
         return mLinks;
     }
 
-    @Nullable
-    public DataObject.Stub getObject() {
-        return mObject;
-    }
-
-    public boolean hasArray() {
-        return mArray != null && !mArray.isEmpty();
+    public boolean hasData() {
+        return mData != null && !mData.isEmpty();
     }
 
     public boolean hasLinks() {
         return mLinks != null;
-    }
-
-    public boolean hasObject() {
-        return mObject != null;
-    }
-
-    @Nullable
-    public ArrayList<DataObject.Stub> toArray() {
-        if (hasArray()) {
-            return mArray;
-        } else if (hasObject()) {
-            final ArrayList<DataObject.Stub> array = new ArrayList<>(1);
-            array.add(mObject);
-            return array;
-        } else {
-            return null;
-        }
     }
 
     @Override
@@ -86,8 +58,7 @@ public class Relationship implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeTypedList(mArray);
-        dest.writeParcelable(mObject, flags);
+        dest.writeTypedList(mData);
         dest.writeParcelable(mLinks, flags);
     }
 
@@ -113,8 +84,7 @@ public class Relationship implements Parcelable {
 
             final JsonObject jsonObject = json.getAsJsonObject();
 
-            ArrayList<DataObject.Stub> array = null;
-            DataObject.Stub object = null;
+            ArrayList<DataObject.Stub> data = null;
 
             if (jsonObject.has("data")) {
                 final JsonElement dataJson = jsonObject.get("data");
@@ -124,15 +94,17 @@ public class Relationship implements Parcelable {
                         final JsonArray arrayJson = dataJson.getAsJsonArray();
 
                         if (arrayJson.size() >= 1) {
-                            array = new ArrayList<>(arrayJson.size());
+                            data = new ArrayList<>(arrayJson.size());
 
                             for (final JsonElement arrayElement : arrayJson) {
-                                array.add((DataObject.Stub) context.deserialize(arrayElement,
+                                data.add((DataObject.Stub) context.deserialize(arrayElement,
                                         DataObject.Stub.class));
                             }
                         }
                     } else if (dataJson.isJsonObject()) {
-                        object = context.deserialize(dataJson, DataObject.Stub.class);
+                        final DataObject.Stub object = context.deserialize(dataJson, DataObject.Stub.class);
+                        data = new ArrayList<>(1);
+                        data.add(object);
                     }
                 }
             }
@@ -147,10 +119,10 @@ public class Relationship implements Parcelable {
                 }
             }
 
-            if (array == null && object == null && links == null) {
+            if (data == null && links == null) {
                 return null;
             } else {
-                return new Relationship(array, object, links);
+                return new Relationship(data, links);
             }
         }
     };

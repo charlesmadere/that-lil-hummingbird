@@ -40,6 +40,11 @@ public interface DataObject {
         }
 
         @Override
+        public String toString() {
+            return mDataType + ":" + mId;
+        }
+
+        @Override
         public int describeContents() {
             return 0;
         }

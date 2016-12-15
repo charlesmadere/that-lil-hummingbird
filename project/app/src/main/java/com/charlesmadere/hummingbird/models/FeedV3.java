@@ -131,6 +131,30 @@ public class FeedV3 implements Hydratable, Parcelable {
         return mStories == null ? 0 : mStories.size();
     }
 
+    protected UserV3 getUser(final Relationship relationship) {
+        if (!relationship.hasData()) {
+            throw new RuntimeException("relationship has no data");
+        }
+
+        // noinspection ConstantConditions
+        final DataObject.Stub stub = relationship.getData().get(0);
+
+        if (!hasUsers()) {
+            throw new RuntimeException("no users to search from for: " + stub);
+        }
+
+        final String id = stub.getId();
+
+        // noinspection ConstantConditions
+        for (final UserV3 user : mUsers) {
+            if (id.equals(user.getId())) {
+                return user;
+            }
+        }
+
+        throw new RuntimeException("unable to get user: " + stub);
+    }
+
     @Nullable
     protected ArrayList<UserV3> getUsers() {
         return mUsers;
@@ -272,17 +296,12 @@ public class FeedV3 implements Hydratable, Parcelable {
             final Relationships relationships = actionGroup.getRelationships();
             final Relationship activities = relationships.getActivities();
 
-            if (activities == null) {
+            if (activities == null || !activities.hasData()) {
                 return;
             }
 
-            final ArrayList<DataObject.Stub> array = activities.toArray();
-
-            if (array == null || array.isEmpty()) {
-                return;
-            }
-
-            final DataObject.Stub object = array.get(0);
+            // noinspection ConstantConditions
+            final DataObject.Stub object = activities.getData().get(0);
 
             if (object.getDataType() != DataType.ACTIVITIES) {
                 return;

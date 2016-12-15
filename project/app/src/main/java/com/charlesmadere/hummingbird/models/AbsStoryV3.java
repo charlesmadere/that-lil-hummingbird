@@ -3,8 +3,6 @@ package com.charlesmadere.hummingbird.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-
 public abstract class AbsStoryV3 implements Parcelable {
 
     private final Action mMainAction;
@@ -43,17 +41,6 @@ public abstract class AbsStoryV3 implements Parcelable {
 
     protected void hydrate(final FeedV3 feed) {
         // TODO
-        final Relationships relationships = mActionGroup.getRelationships();
-        final Relationship activities = relationships.getActivities();
-
-        // noinspection ConstantConditions
-        final ArrayList<DataObject.Stub> array = activities.toArray();
-
-        // noinspection ConstantConditions
-        if (array.size() > 1) {
-            // intentionally starting from 1 as 0 is mMainAction
-
-        }
     }
 
     @Override
